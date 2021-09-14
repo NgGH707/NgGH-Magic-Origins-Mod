@@ -32,11 +32,6 @@ this.town_barber_dialog_module <- this.inherit("scripts/ui/screens/ui_module", {
 
 		foreach( b in brothers )
 		{
-			if (b.getFlags().has("Hexe"))
-			{
-				continue;
-			}
-
 			if (b.getFlags().has("egg"))
 			{
 				continue;
@@ -102,27 +97,16 @@ this.town_barber_dialog_module <- this.inherit("scripts/ui/screens/ui_module", {
 		local temp = this.World.getTemporaryRoster().getAll()[0];
 		local color;
 		local bros = this.World.getPlayerRoster().getAll();
-		local isFemale = false;
-		local ethnicity = 0;
-		local entity = null;
+		local bro = this.Tactical.getEntityByID(_entityID);
+		local isFemale = bro.getGender() == 1;
+		local ethnicity = bro.getEthnicity();
 
-		foreach( bro in bros )
-		{
-			if (bro.getID() == _entityID)
-			{
-				isFemale = bro.getBackground().isFemaleBackground();
-				ethnicity = bro.getBackground().getEthnicity();
-				entity = bro;
-				break;
-			}
-		}
-
-		if (entity != null && !entity.getFlags().has("human"))
+		if (!bro.getFlags().has("human"))
 		{
 			if (_layerID == "body")
 			{
 				local custom = null;
-				local isSerpent = this.isKindOf(entity, "serpent_player");
+				local isSerpent = this.isKindOf(bro, "serpent_player");
 
 				if (isSerpent)
 				{
@@ -131,7 +115,7 @@ this.town_barber_dialog_module <- this.inherit("scripts/ui/screens/ui_module", {
 					}
 				}
 
-				local result = this.changeIndexNonHuman(entity.getPossibleSprites(_layerID), temp.getSprite(_layerID), _change, custom);
+				local result = this.changeIndexNonHuman(bro.getPossibleSprites(_layerID), temp.getSprite(_layerID), _change, custom);
 
 				if (result != null && isSerpent)
 				{
@@ -141,9 +125,9 @@ this.town_barber_dialog_module <- this.inherit("scripts/ui/screens/ui_module", {
 			else if (_layerID == "head" && temp.hasSprite("head"))
 			{
 				local custom = null;
-				local isNacho = entity.getFlags().has("ghoul") && entity.getSize() >= 2;
+				local isNacho = bro.getFlags().has("ghoul") && bro.getSize() >= 2;
 
-				if (entity.getFlags().has("frenzy_wolf"))
+				if (bro.getFlags().has("frenzy_wolf"))
 				{
 					custom = {
 						isFrenzy = true,
@@ -158,22 +142,22 @@ this.town_barber_dialog_module <- this.inherit("scripts/ui/screens/ui_module", {
 					}
 				}
 
-				local result = this.changeIndexNonHuman(entity.getPossibleSprites(_layerID), temp.getSprite(_layerID), _change, custom);
+				local result = this.changeIndexNonHuman(bro.getPossibleSprites(_layerID), temp.getSprite(_layerID), _change, custom);
 
 				if (result != null && isNacho)
 				{
 					temp.getFlags().set("head", result);
 				}
 			}
-			else if (entity.getFlags().has("spider"))
+			else if (bro.getFlags().has("spider"))
 			{
 				if (_layerID == "hair")
 				{
-					this.changeIndexNonHuman(entity.getPossibleSprites("legs_back"), temp.getSprite("legs_back"), _change, null);
+					this.changeIndexNonHuman(bro.getPossibleSprites("legs_back"), temp.getSprite("legs_back"), _change, null);
 				}
 				if (_layerID == "beard")
 			    {
-			    	this.changeIndexNonHuman(entity.getPossibleSprites("legs_front"), temp.getSprite("legs_front"), _change, null);
+			    	this.changeIndexNonHuman(bro.getPossibleSprites("legs_front"), temp.getSprite("legs_front"), _change, null);
 			    }
 			}
 
@@ -277,7 +261,12 @@ this.town_barber_dialog_module <- this.inherit("scripts/ui/screens/ui_module", {
 				}
 				else
 				{
-					this.changeIndex(this.Const.Bodies.BarberNorthernFemale, temp.getSprite("body"), _change);
+					local ret = this.Const.Bodies.BarberNorthernFemale;
+					ret.extend([
+						"bust_hexen_true_body",
+						"bust_hexen_fake_body_00"
+					]);
+					this.changeIndex(ret, temp.getSprite("body"), _change);
 					this.changeIndexEx(this.Const.Tattoos.All, temp.getSprite("tattoo_body"), 0, "", "", temp.getSprite("body").getBrush().Name);
 				}
 			}
@@ -311,7 +300,10 @@ this.town_barber_dialog_module <- this.inherit("scripts/ui/screens/ui_module", {
 				}
 				else
 				{
-					this.changeIndex(this.Const.Faces.AllFemale, temp.getSprite("head"), _change);
+					local ret = this.Const.Faces.AllFemale;
+					ret.extend(this.Const.HexenOrigin.TrueHead);
+					ret.extend(this.Const.HexenOrigin.FakeHead);
+					this.changeIndex(ret, temp.getSprite("head"), _change);
 				}
 			}
 			else if (ethnicity == 1)
