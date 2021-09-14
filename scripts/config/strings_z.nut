@@ -1,0 +1,3 @@
+local gt = this.getroottable();
+gt.Const.Strings.PerkDescription.LegendHorseLiberty = "Though extensive roundpenning training, the mount gains trust in the movements of the rider. This increases resolve in battle by 25% of the rider\'s resolve and Movement while riding costs 25% less fatigue"; 
+gt.Const.Strings.PerkDescription.LegendHorseCharge = "Use the great weight and speed of the mount to charge forward. Move up to four spaces and attack an enemy";
