@@ -44,10 +44,8 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 
 	local wolves = [
 		"direwolf",
-		"direwolf_bodyguard",
 		"direwolf_high",
 		"legend_white_direwolf",
-		"legend_white_direwolf_bodyguard",
 	];
 	foreach ( name in wolves ) 
 	{
@@ -79,11 +77,9 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 
 	local spiders = [
 		[
-			"spider_bodyguard",
 			"spider",
 		],
 		[
-			"legend_redback_spider_bodyguard",
 			"legend_redback_spider",
 		]
 	];
