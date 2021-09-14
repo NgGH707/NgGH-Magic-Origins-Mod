@@ -55,13 +55,13 @@ this.gruesome_feast <- this.inherit("scripts/skills/skill", {
 				id = 4,
 				type = "text",
 				icon = "ui/icons/days_wounded.png",
-				text = "Restores [color=" + this.Const.UI.Color.PositiveValue + "]100[/color] health points"
+				text = "Restores [color=" + this.Const.UI.Color.PositiveValue + "]200[/color] health points"
 			},
 			{
 				id = 5,
 				type = "text",
 				icon = "ui/icons/days_wounded.png",
-				text = "Instantly heal a random [color=" + this.Const.UI.Color.PositiveValue + "]Injury[/color]"
+				text = "Instantly heal all [color=" + this.Const.UI.Color.PositiveValue + "]Injury[/color]"
 			}
 		];
 		
@@ -147,7 +147,7 @@ this.gruesome_feast <- this.inherit("scripts/skills/skill", {
 	function onFeasted( _effect )
 	{
 		local actor = _effect.getContainer().getActor();
-		local HealthAdded = actor.isPlayerControlled() ? 100 : 200;
+		local HealthAdded = 200;
 		_effect.addFeastStack();
 		_effect.getContainer().update();
 		actor.setHitpoints(this.Math.min(actor.getHitpoints() + HealthAdded, actor.getHitpointsMax()));
@@ -156,11 +156,6 @@ this.gruesome_feast <- this.inherit("scripts/skills/skill", {
 		foreach( s in skills )
 		{
 			s.removeSelf();
-
-			if (actor.isPlayerControlled())
-			{
-				break;
-			}
 		}
 
 		if (_effect.getContainer().hasSkill("perk.nacho_eat"))

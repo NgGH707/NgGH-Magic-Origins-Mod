@@ -1,5 +1,25 @@
 this.getroottable().HexenHooks.hookAI <- function ()
 {
+	//Allow ai to use my new skills
+	::mods_hookExactClass("ai/tactical/behaviors/ai_warcry", function ( o )
+	{
+		o.m.PossibleSkills.extend([
+			"actives.frenzy",
+			"actives.intimidate"
+		]);
+	});
+	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_default", function ( o )
+	{
+		o.m.PossibleSkills.extend([
+			"actives.unhold_hand_to_hand",
+			"actives.spit_acid"
+		]);
+	});
+	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_thresh", function ( o )
+	{
+		o.m.PossibleSkills.push("actives.uproot_aoe");
+	});
+
 	//fix strange behavior of enemy nacho with the modded skill
 	::mods_hookNewObject("ai/tactical/behaviors/ai_attack_swallow_whole", function ( o )
 	{

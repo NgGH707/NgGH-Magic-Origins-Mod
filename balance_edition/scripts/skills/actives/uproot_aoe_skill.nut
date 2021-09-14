@@ -41,6 +41,16 @@ this.uproot_aoe_skill <- this.inherit("scripts/skills/skill", {
 		this.m.MaxRange = 1;
 	}
 
+	function onAdded()
+	{
+		local AI = this.getContainer().getActor().getAIAgent();
+
+		if (AI != null && AI.getID() != this.Const.AI.Agent.ID.Player && AI.findBehavior(this.Const.AI.Behavior.ID.Thresh) == null)
+		{
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_thresh"));
+		}
+	}
+
 	function getTooltip()
 	{
 		local ret = this.getDefaultTooltip();

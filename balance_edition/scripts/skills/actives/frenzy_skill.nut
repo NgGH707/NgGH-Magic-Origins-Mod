@@ -26,6 +26,16 @@ this.frenzy_skill <- this.inherit("scripts/skills/skill", {
 		this.m.MaxRange = 0;
 	}
 
+	function onAdded()
+	{
+		local AI = this.getContainer().getActor().getAIAgent();
+
+		if (AI != null && AI.getID() != this.Const.AI.Agent.ID.Player && AI.findBehavior(this.Const.AI.Behavior.ID.Warcry) == null)
+		{
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_warcry"));
+		}
+	}
+
 	function getTooltip()
 	{
 		return [

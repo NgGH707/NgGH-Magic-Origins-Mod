@@ -16,6 +16,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	gt.HexenHooks.hookItem();
 	gt.HexenHooks.hookContracts();
 	gt.HexenHooks.hookCharacterScreenAndStates();
+	gt.HexenHooks.hookEnemies();
 	gt.HexenHooks.hookAI();
 
 	//Change perk tree of goblins/orcs with a suitable one from PTR mod
