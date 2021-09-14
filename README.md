@@ -30,7 +30,7 @@ There will be an upcoming new faction - The Necro Guild - where you can trade, a
 To install this mod you should do step-by-step:
 1. Download and install the latest "Battle Brothers" game.
 2. Download and install the latest "Legends" mod.
-3. Download the latest directory from "NgGH-Magic-Origins-Mod" release repo: [release link](https://www.nexusmods.com/battlebrothers/mods/207)
+3. Download the latest directory from "NgGH-Magic-Origins-Mod" release repo: [release link](https://github.com/NgGH707/NgGH-Magic-Origins-Mod/releases/)
 4. Put mod into the "data" dir (you should put zip without unzipping).
 5. All done, now just run the game.
 ![Selection screen](!info/display_02.jpg "NgGH-Magic-Origins-Mod repo: Select new campaign to play.")
