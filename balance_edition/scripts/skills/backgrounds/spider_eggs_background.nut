@@ -97,7 +97,7 @@ this.spider_eggs_background <- this.inherit("scripts/skills/backgrounds/characte
 			Traits = [],
 			Enemy = [],
 			Class = [],
-			Magic = [
+			Magic = [{
 				ID = "SpiderHive",
 				Name = "SpiderHive",
 				Descriptions = ["spider hive"],
@@ -105,12 +105,12 @@ this.spider_eggs_background <- this.inherit("scripts/skills/backgrounds/characte
 					[],
 					[],
 					[],
-					[gt.Const.Perks.PerkDefs.SpiderVenom, gt.Const.Perks.PerkDefs.EggBreedingMachine, gt.Const.Perks.PerkDefs.EggAttachSpider],
-					[gt.Const.Perks.PerkDefs.SpiderWeb],
-					[gt.Const.Perks.PerkDefs.SpiderBite, gt.Const.Perks.PerkDefs.EggInherit],
-					[gt.Const.Perks.PerkDefs.EggNaturalSelection]
+					[this.Const.Perks.PerkDefs.SpiderVenom, this.Const.Perks.PerkDefs.EggBreedingMachine, this.Const.Perks.PerkDefs.EggAttachSpider],
+					[this.Const.Perks.PerkDefs.SpiderWeb],
+					[this.Const.Perks.PerkDefs.SpiderBite, this.Const.Perks.PerkDefs.EggInherit],
+					[this.Const.Perks.PerkDefs.EggNaturalSelection]
 				]			
-			],
+			}],
 		};		
 	}
 	
