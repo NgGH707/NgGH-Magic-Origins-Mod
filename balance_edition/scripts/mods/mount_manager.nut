@@ -18,6 +18,8 @@ this.mount_manager <- {
 			Body = "",
 			Head = "",
 			Extra = "",
+			Extra1 = "",
+			Extra2 = "",
 			Injury = "",
 			Armor = "",
 			ArmorDamage = "",
@@ -188,6 +190,12 @@ this.mount_manager <- {
 			this.m.Attributes.Armor[1] = _a.Armor[1];
 			this.m.Attributes.ArmorMax = clone this.m.Attributes.Armor;
 		}
+
+		if (_a.rawin("ArmorMax"))
+		{
+			this.m.Attributes.ArmorMax[0] = _a.ArmorMax[0];
+			this.m.Attributes.ArmorMax[1] = _a.ArmorMax[1];
+		}
 	}
 
 	function addFlags()
@@ -333,6 +341,8 @@ this.mount_manager <- {
 			local mount = _actor.getSprite("mount");
 			local mount_head = _actor.getSprite("mount_head");
 			local mount_extra = _actor.getSprite("mount_extra");
+			local mount_extra1 = _actor.getSprite("mount_extra1");
+			local mount_extra2 = _actor.getSprite("mount_extra2");
 			local mount_armor = _actor.getSprite("mount_armor");
 			local mount_injury = _actor.getSprite("mount_injury");
 			local mount_restrain = _actor.getSprite("mount_restrain");
@@ -342,6 +352,8 @@ this.mount_manager <- {
 				mount.Visible = false;
 				mount_head.Visible = false;
 				mount_extra.Visible = false;
+				mount_extra1.Visible = false;
+				mount_extra2.Visible = false;
 				mount_armor.Visible = false;
 				mount_injury.Visible = false;
 				mount_restrain.Visible = false;
@@ -371,6 +383,32 @@ this.mount_manager <- {
 				mount_extra.setHorizontalFlipping(_appearance.Flipping ? !flip : flip);
 				mount_extra.Scale = _appearance.Scale;
 				_actor.setSpriteOffset("mount_extra", offset);
+			}
+			else 
+			{
+			    mount_extra.Visible = false;
+			}
+
+			if (_appearance.Extra1 != "")
+			{
+				mount_extra1.setBrush(_appearance.Extra1);
+				mount_extra1.Visible = true;
+				mount_extra1.setHorizontalFlipping(_appearance.Flipping ? !flip : flip);
+				mount_extra1.Scale = _appearance.Scale;
+				_actor.setSpriteOffset("mount_extra1", offset);
+			}
+			else 
+			{
+			    mount_extra1.Visible = false;
+			}
+
+			if (_appearance.Extra2 != "")
+			{
+				mount_extra2.setBrush(_appearance.Extra2);
+				mount_extra2.Visible = true;
+				mount_extra2.setHorizontalFlipping(_appearance.Flipping ? !flip : flip);
+				mount_extra2.Scale = _appearance.Scale;
+				_actor.setSpriteOffset("mount_extra2", offset);
 			}
 			else 
 			{
@@ -422,7 +460,14 @@ this.mount_manager <- {
 			return;
 		}
 
-		if (this.Const.GoblinRider.ID.find(_item.getID()) == null)
+		local id = _item.getID();
+
+		if (this.m.Actor.getExcludedMount().find(id) != null)
+		{
+			return;
+		}
+
+		if (this.Const.GoblinRider.ID.find(id) == null)
 		{
 			return;
 		}
@@ -795,13 +840,17 @@ this.mount_manager <- {
 			return;
 		}
 		
+		local isSpider = this.getMountType() == this.Const.GoblinRider.Mounts.Spider;
 		local appearance = this.getAppearance();
 		local decal;
+		local body_decal;
+		local head_decal;
 		local flip = this.Math.rand(0, 100) < 50;
 		local isCorpseFlipped = flip;
 		decal = _tile.spawnDetail(appearance.Corpse, this.Const.Tactical.DetailFlag.Corpse, flip);
 		decal.setBrightness(0.9);
 		decal.Scale = 0.95;
+		body_decal = decal;
 
 		if (appearance.CorpseArmor != "")
 		{
@@ -810,7 +859,46 @@ this.mount_manager <- {
 			decal.Scale = 0.95;
 		}
 
-		if (_fatalityType != this.Const.FatalityType.Decapitated)
+		if (isSpider && _fatalityType != this.Const.FatalityType.Decapitated)
+		{
+			decal = _tile.spawnDetail("bust_spider_head_01_dead", this.Const.Tactical.DetailFlag.Corpse, flip);
+			decal.Color = head.Color;
+			decal.Saturation = head.Saturation;
+			decal.Scale = 0.95;
+			head_decal = decal;
+
+			if (_fatalityType == this.Const.FatalityType.None)
+			{
+				local corpse_data = {
+					Body = body_decal,
+					Head = head_decal,
+					Start = this.Time.getRealTimeF(),
+					Vector = this.createVec(0.0, -1.0),
+					Iterations = 0,
+					function onCorpseEffect( _data )
+					{
+						if (this.Time.getRealTimeF() - _data.Start > 0.2)
+						{
+							if (++_data.Iterations > 5)
+							{
+								return;
+							}
+
+							_data.Vector = this.createVec(this.Math.rand(-100, 100) * 0.01, this.Math.rand(-100, 100) * 0.01);
+							_data.Start = this.Time.getRealTimeF();
+						}
+
+						local f = (this.Time.getRealTimeF() - _data.Start) / 0.2;
+						_data.Body.setOffset(this.createVec(0.0 + 0.5 * _data.Vector.X * f, 30.0 + 1.0 * _data.Vector.Y * f));
+						_data.Head.setOffset(this.createVec(0.0 + 0.5 * _data.Vector.X * f, 30.0 + 1.0 * _data.Vector.Y * f));
+						this.Time.scheduleEvent(this.TimeUnit.Real, 10, _data.onCorpseEffect, _data);
+					}
+
+				};
+				this.Time.scheduleEvent(this.TimeUnit.Real, 10, corpse_data.onCorpseEffect, corpse_data);
+			}
+		}
+		else if (_fatalityType != this.Const.FatalityType.Decapitated)
 		{
 			decal = _tile.spawnDetail(appearance.CorpseHead, this.Const.Tactical.DetailFlag.Corpse, flip);
 			decal.setBrightness(0.9);
@@ -838,12 +926,12 @@ this.mount_manager <- {
 			decap[0].setBrightness(0.9);
 			decap[0].Scale = 0.95;
 		}
-		else if (_skill && _skill.getProjectileType() == this.Const.ProjectileType.Arrow)
+		else if (!isSpider && _skill && _skill.getProjectileType() == this.Const.ProjectileType.Arrow)
 		{
 			decal = _tile.spawnDetail(appearance.Body + "_dead_arrows", this.Const.Tactical.DetailFlag.Corpse, flip);
 			decal.Scale = 0.95;
 		}
-		else if (_skill && _skill.getProjectileType() == this.Const.ProjectileType.Javelin)
+		else if (!isSpider &&_skill && _skill.getProjectileType() == this.Const.ProjectileType.Javelin)
 		{
 			decal = _tile.spawnDetail(appearance.Body + "_dead_javelin", this.Const.Tactical.DetailFlag.Corpse, flip);
 			decal.Scale = 0.95;
@@ -933,10 +1021,16 @@ this.mount_manager <- {
 		this.m.IsUpdating = false;
 	}
 
-	function applyingAttributes()
+	function applyingAttributes( _attr = null )
 	{
 		local key = this.Const.GoblinRiderMounts[this.m.MountType].Attributes;
-		this.setAttributes(this.Const.Tactical.Actor[key]);
+
+		if (_attr == null)
+		{
+			_attr = this.Const.Tactical.Actor[key];
+		}
+
+		this.setAttributes(_attr);
 		this.m.Attributes.HitpointsMax = this.m.Attributes.Hitpoints;
 		this.m.IsRegenHealth = false;
 
@@ -1071,6 +1165,8 @@ this.mount_manager <- {
 			Body = "",
 			Head = "",
 			Extra = "",
+			Extra1 = "",
+			Extra2 = "",
 			Injury = "",
 			Armor = "",
 			ArmorDamage = "",

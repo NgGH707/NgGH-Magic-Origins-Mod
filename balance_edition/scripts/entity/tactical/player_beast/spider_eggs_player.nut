@@ -1,8 +1,79 @@
 this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	m = {
+		Mount = null,
+		ExcludedMount = [],
 		Head = 0,
 		Count = 0,
 	},
+	function getExcludedMount()
+	{
+		return this.m.ExcludedMount;
+	}
+
+	function isMounted()
+	{
+		return this.m.Mount.isMounted();
+	}
+
+	function onDamageReceived( _attacker, _skill, _hitInfo )
+	{
+		if (this.isMounted() && this.Math.rand(1, 100) <= this.Const.ChanceToHitMount)
+		{
+			return this.m.Mount.onDamageReceived(_attacker, _skill, _hitInfo);
+		}
+
+		_hitInfo.BodyPart = this.Const.BodyPart.Body;
+		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
+	}
+
+	function onUpdateInjuryLayer()
+	{
+		this.actor.onUpdateInjuryLayer();
+
+		if (this.isMounted())
+		{
+			this.m.Mount.updateInjuryLayer();
+		}
+	}
+
+	function onAppearanceChanged( _appearance, _setDirty = true )
+	{
+		this.player_beast.onAppearanceChanged(_appearance, _setDirty);
+		this.onAdjustingSprite(_appearance, this.isMounted());
+	}
+	
+	function onAdjustingSprite( _appearance , _isMounted = false )
+	{
+		local offset = this.Const.EggSpriteOffsets[this.m.Head];
+		local x = offset[0];
+		local y = offset[1];
+		local adjust_x = 0;
+		local adjust_y = 0;
+
+		if (_isMounted)
+		{
+			adjust_x = this.Const.GoblinRiderMounts[this.m.Mount.getMountType()].Sprite[0][0];
+			adjust_y = this.Const.GoblinRiderMounts[this.m.Mount.getMountType()].Sprite[0][1];
+		}
+
+		foreach( a in this.Const.CharacterSprites.Helmets )
+		{
+			if (!this.hasSprite(a))
+			{
+				continue;
+			}
+
+			this.setSpriteOffset(a, this.createVec(x + adjust_x, y + adjust_y));
+			this.getSprite(a).Scale = 0.85;
+		}
+
+		this.getSprite("accessory").Scale = 0.7;
+		this.setSpriteOffset("accessory", this.createVec(adjust_x, adjust_y));
+		this.getSprite("accessory_special").Scale = 0.7;
+		this.setSpriteOffset("accessory_special", this.createVec(adjust_x, adjust_y));
+		this.setAlwaysApplySpriteOffset(true);
+	}
+
 	function getStrength()
 	{
 		return 1.25;
@@ -60,6 +131,8 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.m.Items.blockAllSlots();
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = false;
+		this.m.Mount = this.new("scripts/mods/mount_manager");
+		this.m.Mount.setActor(this);
 		this.m.AIAgent = this.new("scripts/ai/tactical/spider_egg_player_agent");
 		this.m.AIAgent.setActor(this);
 		this.m.Flags.add("egg");
@@ -98,12 +171,6 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		}
 
 		this.player_beast.onDeath(_killer, _skill, _tile, _fatalityType);
-	}
-
-	function onDamageReceived( _attacker, _skill, _hitInfo )
-	{
-		_hitInfo.BodyPart = this.Const.BodyPart.Body;
-		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 	}
 	
 	function onFactionChanged()
@@ -147,12 +214,24 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		b.DamageReceivedTotalMult = 0.9;
 		
 		this.m.CurrentProperties = clone b;
-		this.m.ActionPointCosts =  [0, 10, 10, 10, 10, 10, 10, 10, 10];
+		this.m.ActionPointCosts = this.Const.DefaultMovementAPCost;
 		this.m.FatigueCosts = this.Const.DefaultMovementFatigueCost;
 		
+		//mount sprites
+		this.addSprite("mount_extra1"); //spider legs_back
+		this.addSprite("mount_extra2"); //spider body
+
 		this.addSprite("body");
 		this.addSprite("accessory");
 		this.addSprite("accessory_special");
+
+		//mount sprites
+		this.addSprite("mount"); //spider legs_front
+		this.addSprite("mount_armor");
+		this.addSprite("mount_head"); //spider head
+		this.addSprite("mount_extra");
+		this.addSprite("mount_injury");
+		this.addSprite("mount_restrain");
 
 		foreach( a in this.Const.CharacterSprites.Helmets )
 		{
@@ -160,12 +239,17 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		}
 
 		this.addDefaultStatusSprites();
+
+		local rider = this.new("scripts/skills/special/egg_rider");
+		rider.setManager(this.m.Mount);
+		this.m.Mount.setRiderSkill(rider);
+		this.m.Skills.add(rider);
+
 		this.m.Skills.add(this.new("scripts/skills/racial/skeleton_racial"));
 		this.m.Skills.add(this.new("scripts/skills/eggs_actives/add_egg"));
 		this.m.Skills.add(this.new("scripts/skills/eggs_actives/spawn_more_spider"));
 		this.m.Skills.add(this.new("scripts/skills/eggs_actives/spawn_spider"));
 		this.m.Skills.add(this.new("scripts/skills/eggs_actives/auto_mode_spawned_spider"));
-		this.m.Skills.update();
 	}
 	
 	function setScenarioValues( _isElite = false, _Dub_two = false , _Dub_three = false, _Dub_four = false )
@@ -292,34 +376,6 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		
 		this.Tactical.EventLog.log("Fails to spawn Webknecht due to insufficient space");
 		return null;
-	}
-
-	function onAppearanceChanged( _appearance, _setDirty = true )
-	{
-		this.player_beast.onAppearanceChanged(_appearance, _setDirty);
-		this.onAdjustingSprite(_appearance);
-	}
-	
-	function onAdjustingSprite( _appearance )
-	{
-		local offset = this.Const.EggSpriteOffsets[this.m.Head];
-		local x = offset[0];
-		local y = offset[1];
-
-		foreach( a in this.Const.CharacterSprites.Helmets )
-		{
-			if (!this.hasSprite(a))
-			{
-				continue;
-			}
-
-			this.setSpriteOffset(a, this.createVec(x, y));
-			this.getSprite(a).Scale = 0.85;
-		}
-
-		this.getSprite("accessory").Scale = 0.7;
-		this.getSprite("accessory_special").Scale = 0.7;
-		this.setAlwaysApplySpriteOffset(true);
 	}
 	
 	function improveStats( _spiderling , _isGettingStronger = false )
@@ -583,6 +639,22 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		else
 		{
 			this.m.Talents[2] = 3;
+		}
+	}
+
+	function onActorEquip( _item )
+	{
+		if (_item.getSlotType() == this.Const.ItemSlot.Accessory && this.getSkills().hasSkill("perk.wolf_rider"))
+		{
+			this.m.Mount.onAccessoryEquip(_item);
+		}
+	}
+
+	function onActorUnequip( _item )
+	{
+		if (_item.getSlotType() == this.Const.ItemSlot.Accessory)
+		{
+			this.m.Mount.onAccessoryUnequip(_item);
 		}
 	}
 

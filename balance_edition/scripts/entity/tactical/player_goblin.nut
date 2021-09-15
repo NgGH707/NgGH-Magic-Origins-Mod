@@ -1,10 +1,15 @@
 this.player_goblin <- this.inherit("scripts/entity/tactical/player", {
 	m = {
 		Mount = null,
+		ExcludedMount = [],
 		IsWearingGoblinArmor = false,
 		IsWearingGoblinHelmet = false,
 		IsWearingSmallShield = false,
 	},
+	function getExcludedMount()
+	{
+		return this.m.ExcludedMount;
+	}
 	
 	function isMounted()
 	{
@@ -231,6 +236,11 @@ this.player_goblin <- this.inherit("scripts/entity/tactical/player", {
 		this.addSprite("background");
 		this.addSprite("socket").setBrush("bust_base_player");
 		this.addSprite("miniboss");
+
+		//mount sprites
+		this.addSprite("mount_extra1"); //spider legs_back
+		this.addSprite("mount_extra2"); //spider body
+
 		local quiver = this.addSprite("quiver");
 		quiver.Visible = false;
 		

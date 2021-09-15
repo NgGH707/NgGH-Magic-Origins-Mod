@@ -71,8 +71,8 @@ gt.Const.GoblinRider <- {
 		Hyena = 6,
 		HyenaFrenzied = 7,
 		Bear = 8,
-		//Spider = 9,
-		COUNT = 9
+		Spider = 9,
+		COUNT = 10
 	},
 
 	ID = [
@@ -91,13 +91,15 @@ gt.Const.GoblinRider <- {
 		"accessory.hyena_frenzied",
 		"accessory.direwolf",
 		"accessory.direwolf_frenzied",
-		//"accessory.spider",
+		"accessory.spider",
 	],
 
 	ShakeLayers = [
 		[
 			"mount",
 			"mount_armor",
+			"mount_extra1",
+			"mount_extra2",
 		],
 		[
 			"mount_head",
@@ -160,8 +162,8 @@ gt.Const.GoblinRider <- {
 		case "accessory.legend_warbear":
 			return this.Const.GoblinRider.Mounts.Bear;
 
-		/*case "accessory.spider":
-			return this.Const.GoblinRider.Mounts.Spider;*/
+		case "accessory.spider":
+			return this.Const.GoblinRider.Mounts.Spider;
 		}
 		
 		return null;
@@ -220,7 +222,6 @@ gt.Const.GoblinRider <- {
 			_appearance.Head = "bust_dog_01_head_0" + variant;
 			_appearance.Injury = "bust_dog_01_injured";
 			_appearance.Bloodpool = _appearance.Head + "_dead_bloodpool";
-			_appearance.Corpse = _appearance.Body + "_dead";
 			break;
 			
 		case "accessory.warhound":
@@ -230,7 +231,6 @@ gt.Const.GoblinRider <- {
 			_appearance.Head = "bust_hound_0" + variant + "_head";
 			_appearance.Injury = "bust_hound_01_injured";
 			_appearance.Bloodpool = _appearance.Head + "_dead_bloodpool";
-			_appearance.Corpse = _appearance.Body + "_dead";
 			break;
 
 		case "accessory.warwolf":
@@ -241,7 +241,6 @@ gt.Const.GoblinRider <- {
 			_appearance.Head = "bust_wolf_0" + variant + "_head";
 			_appearance.Injury = "bust_wolf_01_injured";
 			_appearance.Restrain = "bust_wolf_02_armor_01";
-			_appearance.Corpse = _appearance.Body + "_dead";
 			break;
 
 		case "accessory.direwolf":
@@ -272,7 +271,6 @@ gt.Const.GoblinRider <- {
 			_appearance.Head = "bust_direwolf_white_01_head";
 			_appearance.Injury = "bust_direwolf_white_injured";
 			_appearance.Restrain = "bust_wolf_02_armor_01";
-			_appearance.Corpse = _appearance.Body + "_dead";
 			break;
 
 		case "accessory.hyena":
@@ -292,22 +290,29 @@ gt.Const.GoblinRider <- {
 			_appearance.Body = "bear_01";
 			_appearance.Head = "bear_head_01";
 			_appearance.Injury = "bear_01_injured";
-			_appearance.Corpse = _appearance.Body + "_dead";
 			break;
 
-		/*case "accessory.spider":
-			ret = {
-				ArmorType = 0,
-				Body = "bust_wolf_01_body",
-				Head = "bust_wolf_01_head",
-				Injury = "bust_wolf_01_injured",
-				Armor = "",
-				Restrain = ""
-			};
-			break;*/
+		case "accessory.spider":
+			_appearance.Flipping = true;
+			_appearance.Extra1 = "bust_spider_legs_back";
+			_appearance.Extra2 = "bust_spider_body_0" + variant;
+			_appearance.Body = "bust_spider_legs_front";
+			_appearance.Head = "bust_spider_head_01";
+			_appearance.Injury = "bust_spider_01_injured";
+			_appearance.Corpse = "bust_spider_body_01_dead";
+			_appearance.CorpseHead = "bust_spider_head_01_dead";
+			break;
 		}
 
-		_appearance.CorpseHead = _appearance.Head + "_dead";
+		if (_appearance.Corpse == "")
+		{
+			_appearance.Corpse = _appearance.Body + "_dead";
+		}
+
+		if (_appearance.CorpseHead == "")
+		{
+			_appearance.CorpseHead = _appearance.Head + "_dead";
+		}
 	}
 };
 
@@ -645,7 +650,7 @@ gt.Const.GoblinRiderMounts <- [
 	//8 - Bear
 	{
 		Attributes = "LegendBear",
-		Skills = ["actives/wolf_bite", "actives/line_breaker"],
+		Skills = ["actives/wolf_bite", "actives/line_breaker", "perks/perk_battering_ram", "perks/perk_stalwart"],
 		Flags = ["ride_bear"],
 		Sprite = [
 			[-12, 15], //For rider
@@ -662,6 +667,55 @@ gt.Const.GoblinRiderMounts <- [
 		SoundsIdle = [
 			"sounds/enemies/bear_idle1.wav",
 			"sounds/enemies/bear_idle2.wav"
+		],
+	},
+
+	//9 - Spider
+	{
+		Attributes = "Spider",
+		Skills = ["actives/spider_bite_skill", "actives/web_skill" , "racial/spider_racial"],
+		Flags = ["spider"],
+		Sprite = [
+			[-12, 15], //For rider
+			[0, 0], //For mount
+		],
+		MountedBonus = { ActionPoints = 2, Stamina = 5, Initiative = 15, MeleeDefense = 5, RangedDefense = 5, Threat = 0, },
+		SoundsOther1 = [
+			"sounds/enemies/dlc2/giant_spider_hurt_01.wav",
+			"sounds/enemies/dlc2/giant_spider_hurt_02.wav",
+			"sounds/enemies/dlc2/giant_spider_hurt_03.wav",
+			"sounds/enemies/dlc2/giant_spider_hurt_04.wav",
+			"sounds/enemies/dlc2/giant_spider_hurt_05.wav",
+			"sounds/enemies/dlc2/giant_spider_hurt_06.wav",
+			"sounds/enemies/dlc2/giant_spider_hurt_07.wav"
+		],
+		SoundsOther2 = [
+			"sounds/enemies/dlc2/giant_spider_death_01.wav",
+			"sounds/enemies/dlc2/giant_spider_death_02.wav",
+			"sounds/enemies/dlc2/giant_spider_death_03.wav",
+			"sounds/enemies/dlc2/giant_spider_death_04.wav",
+			"sounds/enemies/dlc2/giant_spider_death_05.wav",
+			"sounds/enemies/dlc2/giant_spider_death_06.wav",
+			"sounds/enemies/dlc2/giant_spider_death_07.wav",
+			"sounds/enemies/dlc2/giant_spider_death_08.wav"
+		],
+		SoundsIdle = [
+			"sounds/enemies/dlc2/giant_spider_idle_01.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_02.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_03.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_04.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_05.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_06.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_07.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_08.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_09.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_10.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_11.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_12.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_13.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_14.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_15.wav",
+			"sounds/enemies/dlc2/giant_spider_idle_16.wav"
 		],
 	},
 ];
