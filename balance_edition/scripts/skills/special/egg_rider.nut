@@ -3,6 +3,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 		QuirksName = [],
 		Manager = null,
 		IsInBattle = false,
+		HasTemporaryMount = false,
 	},
 	function addQuirks( _array )
 	{
@@ -347,7 +348,8 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 	{
 		local b = _spider.getBaseProperties();
 		local stats = {
-			Hitpoints = this.Math.floor(b.Hitpoints * (b.HitpointsMult >= 0 ? b.HitpointsMult : 1.0 / b.HitpointsMult)),
+			HitpointsPct = _spider.getHitpointsPct();
+			HitpointsMax = this.Math.floor(b.Hitpoints * (b.HitpointsMult >= 0 ? b.HitpointsMult : 1.0 / b.HitpointsMult)),
 			Bravery = b.getBravery(),
 			Stamina = this.Math.floor(b.Bravery * (b.BraveryMult >= 0 ? b.BraveryMult : 1.0 / b.BraveryMult)),
 			MeleeSkill = b.getMeleeSkill(),
@@ -367,7 +369,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 
 		if (this.IsAccessoryCompanionsExist && _item != null)
 		{
-			_item.m.Attributes.Hitpoints = stats.Hitpoints;
+			_item.m.Attributes.Hitpoints = stats.HitpointsMax;
 			_item.m.Attributes.Stamina = stats.Stamina;
 			_item.m.Attributes.Bravery = stats.Bravery;
 			_item.m.Attributes.Initiative = stats.Initiative;
@@ -378,6 +380,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 		}
 
 		this.m.Manager.applyingAttributes(stats);
+		this.m.HasTemporaryMount = true;
 	}
 
 	function onDeath()
@@ -403,7 +406,14 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 	function onCombatFinished()
 	{
 		this.m.IsInBattle = false;
+
+		if (this.m.HasTemporaryMount && this.m.Manager.getMount() != null && !this.m.Manager.getMount().isNull())
+		{
+			this.getContainer().getActor().getItems().unequip(this.m.Manager.getMount().get());
+		}
+
 		this.m.Manager.onCombatFinished();
+		this.m.HasTemporaryMount = false;
 	}
 
 });

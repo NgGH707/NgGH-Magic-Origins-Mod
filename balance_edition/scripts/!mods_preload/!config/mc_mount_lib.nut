@@ -320,7 +320,7 @@ gt.Const.GoblinRiderMounts <- [
 	//0 - Wardog
 	{
 		Attributes = "Wardog",
-		Skills = ["actives/wardog_bite"],
+		Skills = ["actives/wardog_bite", "perks/perk_pathfinder"],
 		Flags = [],
 		Sprite = [
 			[-5, 10], //For rider
@@ -353,7 +353,7 @@ gt.Const.GoblinRiderMounts <- [
 	//1 - Hound
 	{
 		Attributes = "Warhound",
-		Skills = ["actives/warhound_bite"],
+		Skills = ["actives/warhound_bite", "perks/perk_pathfinder"],
 		Flags = [],
 		Sprite = [
 			[-5, 15], //For rider
@@ -386,7 +386,7 @@ gt.Const.GoblinRiderMounts <- [
 	//2 - Wolf
 	{
 		Attributes = "WarWolf",
-		Skills = ["actives/wolf_bite"],
+		Skills = ["actives/wolf_bite", "perks/perk_pathfinder"],
 		Flags = [],
 		Sprite = [
 			[-8, 13], //For rider
@@ -423,7 +423,7 @@ gt.Const.GoblinRiderMounts <- [
 	//3 - WhiteWolf
 	{
 		Attributes = "LegendWhiteWarwolf",
-		Skills = ["actives/werewolf_bite", "actives/rotation"],
+		Skills = ["actives/werewolf_bite", "actives/rotation", "perks/perk_pathfinder"],
 		Flags = ["frenzy"],
 		Sprite = [
 			[-8, 13], //For rider
@@ -460,7 +460,7 @@ gt.Const.GoblinRiderMounts <- [
 	//4 - Direwolf
 	{
 		Attributes = "Direwolf",
-		Skills = ["actives/werewolf_bite"],
+		Skills = ["actives/werewolf_bite", "perks/perk_pathfinder"],
 		Flags = [],
 		Sprite = [
 			[-8, 13], //For rider
@@ -508,7 +508,7 @@ gt.Const.GoblinRiderMounts <- [
 	//5 - DirewolfFrenzied
 	{
 		Attributes = "FrenziedDirewolf",
-		Skills = ["actives/werewolf_bite"],
+		Skills = ["actives/werewolf_bite", "perks/perk_pathfinder"],
 		Flags = ["frenzy"],
 		Sprite = [
 			[-8, 13], //For rider
@@ -556,7 +556,7 @@ gt.Const.GoblinRiderMounts <- [
 	//6 - Hyena
 	{
 		Attributes = "Hyena",
-		Skills = ["actives/hyena_bite_skill"],
+		Skills = ["actives/hyena_bite_skill", "perks/perk_pathfinder"],
 		Flags = [],
 		Sprite = [
 			[-8, 13], //For rider
@@ -603,7 +603,7 @@ gt.Const.GoblinRiderMounts <- [
 	//7 - HyenaFrenzied
 	{
 		Attributes = "FrenziedHyena",
-		Skills = ["actives/hyena_bite_skill"],
+		Skills = ["actives/hyena_bite_skill", "perks/perk_pathfinder"],
 		Flags = ["frenzy"],
 		Sprite = [
 			[-8, 13], //For rider

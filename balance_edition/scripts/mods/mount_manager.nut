@@ -184,6 +184,11 @@ this.mount_manager <- {
 			this.m.Attributes.HitpointsMax = _a.HitpointsMax;
 		}
 
+		if (_a.rawin("HitpointsPct"))
+		{
+			this.m.Attributes.Hitpoints = this.Math.round(this.m.Attributes.HitpointsMax * _a.HitpointsPct);
+		}
+
 		if (_a.rawin("Armor"))
 		{
 			this.m.Attributes.Armor[0] = _a.Armor[0];
@@ -230,11 +235,13 @@ this.mount_manager <- {
 
 	function addSkills()
 	{
+		local quirkNames = [];
+
 		foreach ( i, skill in this.Const.GoblinRiderMounts[this.m.MountType].Skills ) 
 		{
 		    local _s = this.new("scripts/skills/" + skill);
 		    _s.m.IsSerialized = false;
-		    _s.m.Item = this.m.Mount;
+		    _s.setItem(this.m.Mount);
 
 		    if (_s.rawin("setRestrained"))
 			{
@@ -247,14 +254,13 @@ this.mount_manager <- {
 				_s.setFatigueCost(this.Math.floor(_s.getFatigueCostRaw() * 0.75));
 			}
 
+			if (!_s.isType(this.Const.SkillType.Active)) quirkNames.push(_q.getName());
 			this.m.Actor.getSkills().add(_s);
 		    this.m.Skills.push(_s);
 		}
 
 		if (this.IsAccessoryCompanionsExist)
 		{
-			local quirkNames = [];
-
 			foreach( i, quirk in this.m.Mount.getQuirks() )
 			{
 				if (this.Const.ExcludedQuirks.find(quirk) != null)
@@ -264,17 +270,18 @@ this.mount_manager <- {
 
 				local _q = this.new(quirk);
 				_q.m.IsSerialized = false;
-			    _q.m.Item = this.m.Mount;
-			    this.m.Actor.getSkills().add(_q);
-				this.m.Skills.push(_q);
-				quirkNames.push(_q.getName());
-			}
+			    _q.setItem(this.m.Mount);
 
-			if (quirkNames.len() != 0)
-			{
-				this.m.RiderSkill.addQuirks(quirkNames);
+			    if (!this.m.Actor.getSkills().hasSkill(_q.getID()))
+			    {
+			   		this.m.Actor.getSkills().add(_q);
+					this.m.Skills.push(_q);
+					quirkNames.push(_q.getName());
+				}
 			}
 		}
+
+		if (quirkNames.len() != 0) this.m.RiderSkill.addQuirks(quirkNames);
 	}
 
 	function clearSkills()
