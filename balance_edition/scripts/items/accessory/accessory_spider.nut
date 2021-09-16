@@ -1,5 +1,11 @@
-this.accessory_spider <- this.inherit("scripts/items/accessory/accessory", {
+this.accessory_spider <- this.inherit("scripts/items/item", {
 	m = {
+		StaminaModifier = 0,
+		StashModifier = 0,
+		AddGenericSkill = true,
+		ShowOnCharacter = false,
+		Sprite = null,
+		SpriteCorpse = null,
 		Link = null,
 		Entity = null,
 		IsRedBack = false,
@@ -49,9 +55,18 @@ this.accessory_spider <- this.inherit("scripts/items/accessory/accessory", {
 		this.m.Name = _n;
 	}
 
+	function getStaminaModifier()
+	{
+		return this.m.StaminaModifier;
+	}
+
+	function getStashModifier()
+	{
+		return this.m.StashModifier;
+	}
+
 	function create()
 	{
-		this.accessory.create();
 		this.m.SlotType = this.Const.ItemSlot.Accessory;
 		this.m.ItemType = this.Const.Items.ItemType.Accessory;
 		this.m.ID = "accessory.tempo_spider";
@@ -107,7 +122,30 @@ this.accessory_spider <- this.inherit("scripts/items/accessory/accessory", {
 		this.setSkill(carry);
 		this.addSkill(carry);*/
 
-		this.accessory.onEquip();
+		this.item.onEquip();
+
+		if (this.m.AddGenericSkill)
+		{
+			this.addGenericItemSkill();
+		}
+
+		if (this.m.ShowOnCharacter)
+		{
+			local app = this.getContainer().getAppearance();
+			app.Accessory = this.m.Sprite;
+			this.getContainer().updateAppearance();
+		}
+
+		if (this.m.StashModifier > 0)
+		{
+			if (this.World.State.getPlayer() == null)
+			{
+				return;
+			}
+
+			this.World.State.getPlayer().calculateStashModifier();
+		}
+
 		local c = this.getContainer();
 		if (c != null && c.getActor() != null && !c.getActor().isNull()) this.m.Container.getActor().getFlags().add("has_tempo_spider");
 	}
@@ -116,7 +154,25 @@ this.accessory_spider <- this.inherit("scripts/items/accessory/accessory", {
 	{
 		local c = this.getContainer();
 		if (c != null && c.getActor() != null && !c.getActor().isNull()) this.m.Container.getActor().getFlags().remove("has_tempo_spider");
-		this.accessory.onUnequip();
+		this.item.onUnequip();
+
+		if (this.m.ShowOnCharacter)
+		{
+			local app = this.getContainer().getAppearance();
+			app.Accessory = "";
+			this.getContainer().updateAppearance();
+		}
+
+		if (this.World.State.getPlayer() == null)
+		{
+			return;
+		}
+
+		if (this.m.StashModifier > 0)
+		{
+			this.getContainer().unequipNoUpdate(this);
+			this.World.State.getPlayer().calculateStashModifier();
+		}
 	}
 
 	function onPlace( _tile )
@@ -147,6 +203,21 @@ this.accessory_spider <- this.inherit("scripts/items/accessory/accessory", {
 	function isDone()
 	{
 		this.getContainer().unequip(this);
+	}
+
+	function onUpdateProperties( _properties )
+	{
+	}
+
+	function onSerialize( _out )
+	{
+		this.item.onSerialize(_out);
+	}
+
+	function onDeserialize( _in )
+	{
+		this.item.onDeserialize(_in);
+		this.updateVariant();
 	}
 
 });

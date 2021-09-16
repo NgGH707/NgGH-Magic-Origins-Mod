@@ -347,7 +347,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 	{
 		local b = _spider.getBaseProperties();
 		local stats = {
-			HitpointsPct = _spider.getHitpointsPct();
+			HitpointsPct = _spider.getHitpointsPct(),
 			HitpointsMax = this.Math.floor(b.Hitpoints * (b.HitpointsMult >= 0 ? b.HitpointsMult : 1.0 / b.HitpointsMult)),
 			//Bravery = b.getBravery(),
 			//Stamina = this.Math.floor(b.Bravery * (b.BraveryMult >= 0 ? b.BraveryMult : 1.0 / b.BraveryMult)),
