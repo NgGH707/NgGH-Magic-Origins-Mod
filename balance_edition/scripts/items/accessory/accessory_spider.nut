@@ -16,6 +16,11 @@ this.accessory_spider <- this.inherit("scripts/items/item", {
 		this.m.Wounds = _w;
 	}
 
+	function getAttributes()
+	{
+		return this.Const.Tactical.Actor.Spider;
+	}
+
 	function setEntity( _e )
 	{
 		this.m.Entity = _e;
