@@ -1,17 +1,10 @@
-this.place_egg <- this.inherit("scripts/skills/skill", {
-	m = {
-		Item = null,
-	},
-	function setItem( _i )
-	{
-		this.m.Item = this.WeakTableRef(_i);
-	}
-
+this.unleash_tempo_spider <- this.inherit("scripts/skills/skill", {
+	m = {},
 	function create()
 	{
-		this.m.ID = "actives.place_egg";
-		this.m.Name = "Drop Eggs";
-		this.m.Description = "Drop your spider eggs friend to a nearby tile. Needs a free tile adjacent.";
+		this.m.ID = "actives.unleash_tempo_spider";
+		this.m.Name = "Dismount";
+		this.m.Description = "Get down from your mount.";
 		this.m.Icon = "skills/active_place_egg.png";
 		this.m.IconDisabled = "skills/active_place_egg_sw.png";
 		this.m.Overlay = "active_place_egg";
@@ -30,19 +23,9 @@ this.place_egg <- this.inherit("scripts/skills/skill", {
 		this.m.IsAttack = false;
 		this.m.IsTargetingActor = false;
 		this.m.ActionPointCost = 3;
-		this.m.FatigueCost = 15;
+		this.m.FatigueCost = 10;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
-	}
-
-	function getName()
-	{
-		if (this.m.Item != null)
-		{
-			return "Drop " + this.Const.UI.getColorizedEntityName(this.m.Item.getEntity());
-		}
-
-		return this.m.Name;
 	}
 
 	function getTooltip()
@@ -63,14 +46,13 @@ this.place_egg <- this.inherit("scripts/skills/skill", {
 				type = "text",
 				text = this.getCostString()
 			},
-			{
-				id = 5,
-				type = "text",
-				icon = "ui/tooltips/warning.png",
-				text = "Immediately [color=" + this.Const.UI.Color.NegativeValue + "]end your turn[/color] on used"
-			},
 		];
 		return ret;
+	}
+
+	function isHidden()
+	{
+		return this.m.IsHidden || !this.getContainer().getActor().getFlags().has("has_tempo_spider");
 	}
 
 	function onVerifyTarget( _originTile, _targetTile )
@@ -80,10 +62,16 @@ this.place_egg <- this.inherit("scripts/skills/skill", {
 
 	function onUse( _user, _targetTile )
 	{
-		this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " drops " + this.Const.UI.getColorizedEntityName(this.m.Item.getEntity()) + " down");
-		this.m.Item.onPlace(_targetTile);
-		this.m.Item.onDone();
-		this.Tactical.TurnSequenceBar.onNextTurnButtonPressed();
+		local spider = _user.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+
+		if (spider == null || spider.getID() != "accessory.tempo_spider")
+		{
+			return false;
+		}
+
+		this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " dismounts from " + this.Const.UI.getColorizedEntityName(spider.getEntity()));
+		spider.onPlace(_targetTile);
+		spider.isDone();
 		return true;
 	}
 

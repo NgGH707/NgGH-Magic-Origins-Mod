@@ -3,7 +3,6 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 		QuirksName = [],
 		Manager = null,
 		IsInBattle = false,
-		HasTemporaryMount = false,
 	},
 	function addQuirks( _array )
 	{
@@ -350,13 +349,13 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 		local stats = {
 			HitpointsPct = _spider.getHitpointsPct();
 			HitpointsMax = this.Math.floor(b.Hitpoints * (b.HitpointsMult >= 0 ? b.HitpointsMult : 1.0 / b.HitpointsMult)),
-			Bravery = b.getBravery(),
-			Stamina = this.Math.floor(b.Bravery * (b.BraveryMult >= 0 ? b.BraveryMult : 1.0 / b.BraveryMult)),
-			MeleeSkill = b.getMeleeSkill(),
-			RangedSkill = 0,
-			MeleeDefense = b.getMeleeDefense(),
-			RangedDefense = b.getRangedDefense(),
-			Initiative = b.getInitiative(),
+			//Bravery = b.getBravery(),
+			//Stamina = this.Math.floor(b.Bravery * (b.BraveryMult >= 0 ? b.BraveryMult : 1.0 / b.BraveryMult)),
+			//MeleeSkill = b.getMeleeSkill(),
+			//RangedSkill = 0,
+			//MeleeDefense = b.getMeleeDefense(),
+			//RangedDefense = b.getRangedDefense(),
+			//Initiative = b.getInitiative(),
 			Armor = [ 
 				this.Math.floor(b.Armor[0] * (b.ArmorMult[0] >= 0 ? b.ArmorMult[0] : 1.0 / b.ArmorMult[0])),
 				this.Math.floor(b.Armor[1] * (b.ArmorMult[1] >= 0 ? b.ArmorMult[1] : 1.0 / b.ArmorMult[0])),
@@ -367,7 +366,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 			],
 		};
 
-		if (this.IsAccessoryCompanionsExist && _item != null)
+		/*if (this.IsAccessoryCompanionsExist && _item != null)
 		{
 			_item.m.Attributes.Hitpoints = stats.HitpointsMax;
 			_item.m.Attributes.Stamina = stats.Stamina;
@@ -377,10 +376,9 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 			_item.m.Attributes.RangedSkill = stats.RangedSkill;
 			_item.m.Attributes.MeleeDefense = stats.MeleeDefense;
 			_item.m.Attributes.RangedDefense = stats.RangedDefense;
-		}
+		}*/
 
 		this.m.Manager.applyingAttributes(stats);
-		this.m.HasTemporaryMount = true;
 	}
 
 	function onDeath()
@@ -406,14 +404,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 	function onCombatFinished()
 	{
 		this.m.IsInBattle = false;
-
-		if (this.m.HasTemporaryMount && this.m.Manager.getMount() != null && !this.m.Manager.getMount().isNull())
-		{
-			this.getContainer().getActor().getItems().unequip(this.m.Manager.getMount().get());
-		}
-
 		this.m.Manager.onCombatFinished();
-		this.m.HasTemporaryMount = false;
 	}
 
 });

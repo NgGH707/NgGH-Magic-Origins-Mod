@@ -6,7 +6,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 		{
 			if (this.Math.rand(1, 100) <= _chance)
 			{
-				_actor.getSkills().add("scripts/skills/perks/" + scripts);
+				_actor.getSkills().add(this.new("scripts/skills/perks/" + scripts));
 			}
 		}
 	};

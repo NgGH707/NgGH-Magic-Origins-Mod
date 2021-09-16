@@ -300,7 +300,7 @@ gt.Const.Perks.MC_MagicTree <- {
 	ID = "MC_MagicTree",
 	Name = "MC Magic",
 	Descriptions = [
-		"MC"
+		"magic"
 	],
 	Tree = [
 		[

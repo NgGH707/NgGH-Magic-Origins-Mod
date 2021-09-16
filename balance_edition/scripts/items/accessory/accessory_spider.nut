@@ -1,12 +1,18 @@
-this.accessory_egg <- this.inherit("scripts/items/accessory/accessory", {
+this.accessory_spider <- this.inherit("scripts/items/accessory/accessory", {
 	m = {
-		Skill = null,
+		Link = null,
 		Entity = null,
+		IsRedBack = false,
 	},
 	function setEntity( _e )
 	{
 		this.m.Entity = _e;
-		this.setName(_e.getName());
+
+		if (_e != null)
+		{
+			this.setName(_e.getName());
+			this.m.IsRedBack = _e.getType() == this.Const.EntityType.LegendRedbackSpider;
+		}
 	}
 
 	function getEntity()
@@ -14,14 +20,28 @@ this.accessory_egg <- this.inherit("scripts/items/accessory/accessory", {
 		return this.m.Entity;
 	}
 
-	function setSkill( _s )
+	function setLink( _s )
 	{
-		this.m.Skill = this.WeakTableRef(_s);
+		if (_s == null)
+		{
+			this.m.Link = null;
+		}
+		else 
+		{
+		    if (typeof _s == "instance")
+			{
+				this.m.Link = _s;
+			}
+			else
+			{
+				this.m.Link = this.WeakTableRef(_s);
+			}
+		}
 	}
 
-	function getSkill()
+	function getLink()
 	{
-		return this.m.Skill;
+		return this.m.Link;
 	}
 
 	function setName( _n )
@@ -34,15 +54,15 @@ this.accessory_egg <- this.inherit("scripts/items/accessory/accessory", {
 		this.accessory.create();
 		this.m.SlotType = this.Const.ItemSlot.Accessory;
 		this.m.ItemType = this.Const.Items.ItemType.Accessory;
-		this.m.ID = "accessory.carried_egg";
-		this.m.Name = "Webknecht Hive";
-		this.m.Description = "Your spider egg friend is on your back.";
+		this.m.ID = "accessory.tempo_spider";
+		this.m.Name = "Webknecht";
+		this.m.Description = "A Spider, that\'s all.";
 		this.m.Icon = "tools/egg_70x70.png";
 		this.m.IsUsable = false;
 		this.m.IsAllowedInBag = false;
 		this.m.IsDroppedAsLoot = false;
 		this.m.ShowOnCharacter = false;
-		this.m.IsChangeableInBattle = true;
+		this.m.IsChangeableInBattle = false;
 		this.m.Value = 0;
 	}
 
@@ -67,12 +87,6 @@ this.accessory_egg <- this.inherit("scripts/items/accessory/accessory", {
 		});
 		
 		result.push({
-			id = 64,
-			type = "text",
-			text = "Carried on your back"
-		});
-		
-		result.push({
 			id = 3,
 			type = "image",
 			image = this.getIcon()
@@ -83,7 +97,7 @@ this.accessory_egg <- this.inherit("scripts/items/accessory/accessory", {
 
 	function onEquip()
 	{
-		this.accessory.onEquip();
+		/*
 		local place = this.new("scripts/skills/actives/place_egg");
 		place.setItem(this);
 		this.addSkill(place);
@@ -91,13 +105,24 @@ this.accessory_egg <- this.inherit("scripts/items/accessory/accessory", {
 		local carry = this.new("scripts/skills/special/egg_attachment");
 		carry.setItem(this);
 		this.setSkill(carry);
-		this.addSkill(carry);
+		this.addSkill(carry);*/
+
+		this.accessory.onEquip();
+		local c = this.getContainer();
+		if (c != null && c.getActor() != null && !c.getActor().isNull()) this.m.Container.getActor().getFlags().add("has_tempo_spider");
+	}
+
+	function onUnequip()
+	{
+		local c = this.getContainer();
+		if (c != null && c.getActor() != null && !c.getActor().isNull()) this.m.Container.getActor().getFlags().remove("has_tempo_spider");
+		this.accessory.onUnequip();
 	}
 
 	function onPlace( _tile )
 	{
 		local e = this.getEntity();
-		local hpPct = this.getSkill().getHealthPct();
+		local hpPct = this.getLink().getHealthPct();
 		this.Tactical.addEntityToMap(e, _tile.Coords.X, _tile.Coords.Y);
 		this.Tactical.getTemporaryRoster().remove(e);
 		e.setHitpointsPct(hpPct);
@@ -106,7 +131,7 @@ this.accessory_egg <- this.inherit("scripts/items/accessory/accessory", {
 
 	function onCombatFinished()
 	{
-		this.onDone();
+		this.isDone();
 	}
 
 	function onActorDied( _onTile )
@@ -116,16 +141,12 @@ this.accessory_egg <- this.inherit("scripts/items/accessory/accessory", {
 			this.onPlace(_onTile);
 		}
 
-		this.onDone();
+		this.isDone();
 	}
 
-	function onDone()
+	function isDone()
 	{
 		this.getContainer().unequip(this);
-	}
-
-	function updateVariant()
-	{
 	}
 
 });

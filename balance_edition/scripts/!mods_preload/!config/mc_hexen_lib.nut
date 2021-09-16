@@ -41,7 +41,7 @@ gt.Const.WitchHaters <- [
 ];
 
 gt.Const.EggSpriteOffsets <- [
-	[-25,  12],
+	[-25,  10],
 	[ 15,   4],
 	[-10, -20],
 ];

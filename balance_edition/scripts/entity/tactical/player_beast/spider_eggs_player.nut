@@ -446,6 +446,11 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		
 		foreach ( p in perks )
 		{
+			if (!p.isSerialized())
+			{
+				continue;
+			}
+			
 			if (exclude.find(p.getID()) != null)
 			{
 				continue;

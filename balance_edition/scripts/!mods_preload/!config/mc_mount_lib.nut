@@ -92,6 +92,7 @@ gt.Const.GoblinRider <- {
 		"accessory.direwolf",
 		"accessory.direwolf_frenzied",
 		"accessory.spider",
+		"accessory.tempo_spider"
 	],
 
 	ShakeLayers = [
@@ -163,6 +164,7 @@ gt.Const.GoblinRider <- {
 			return this.Const.GoblinRider.Mounts.Bear;
 
 		case "accessory.spider":
+		case "accessory.tempo_spider":
 			return this.Const.GoblinRider.Mounts.Spider;
 		}
 		
@@ -301,6 +303,19 @@ gt.Const.GoblinRider <- {
 			_appearance.Injury = "bust_spider_01_injured";
 			_appearance.Corpse = "bust_spider_body_01_dead";
 			_appearance.CorpseHead = "bust_spider_head_01_dead";
+			break;
+
+		case "accessory.tempo_spider":
+			_appearance.Flipping = true;
+			local entity = _item.getEntity();
+			_appearance.Extra1 = entity.getSprite("legs_back").getBrush().Name;
+			_appearance.Extra2 = entity.getSprite("body").getBrush().Name;
+			_appearance.Body = entity.getSprite("legs_front").getBrush().Name;
+			_appearance.Head = entity.getSprite("head").getBrush().Name;
+			_appearance.Injury = entity.getSprite("injury").getBrush().Name;
+			_appearance.Bloodpool = "bust_spider_head_01_dead_bloodpool";
+			_appearance.Corpse = _item.m.IsRedBack ? "bust_spider_redback_body_01_dead" : "bust_spider_body_01_dead";
+			_appearance.CorpseHead = _item.m.IsRedBack ? "bust_spider_redback_head_01_dead" : "bust_spider_head_01_dead";
 			break;
 		}
 

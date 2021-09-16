@@ -19,11 +19,17 @@ this.perk_attach_egg <- this.inherit("scripts/skills/skill", {
 		{
 			this.m.Container.add(this.new("scripts/skills/actives/attach_egg"));
 		}
+
+		if (!this.m.Container.hasSkill("actives.unleash_tempo_spider"))
+		{
+			this.m.Container.add(this.new("scripts/skills/actives/unleash_tempo_spider"));
+		}
 	}
 
 	function onRemoved()
 	{
 		this.m.Container.removeByID("actives.attach_egg");
+		this.m.Container.removeByID("actives.unleash_tempo_spider");
 	}
 
 });

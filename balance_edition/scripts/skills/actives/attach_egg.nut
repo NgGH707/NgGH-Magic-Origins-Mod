@@ -30,7 +30,7 @@ this.attach_egg <- this.inherit("scripts/skills/skill", {
 
 	function isHidden()
 	{
-		return this.m.IsHidden || this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+		return this.m.IsHidden || this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Accessory) != null;
 	}
 
 	function getTooltip()
@@ -77,7 +77,7 @@ this.attach_egg <- this.inherit("scripts/skills/skill", {
 		local e = _targetTile.getEntity();
 		local _item = this.new("scripts/items/accessory/accessory_spider");
 
-		if (this.IsAccessoryCompanionsExist)
+		/*if (this.IsAccessoryCompanionsExist)
 		{
 			_item = this.new("scripts/items/accessory/wardog_item");
 			_item.setType(this.Const.Companions.TypeList.Spider);
@@ -102,17 +102,13 @@ this.attach_egg <- this.inherit("scripts/skills/skill", {
 			}
 
 			_item.updateCompanion();
-		}
+		}*/
 
 		_item.setEntity(e);
 		_targetEntity.equipItem(_item);
 		local rider_skill = this.getContainer().getSkillByID("special.egg_rider");
-		local unleash = this.getContainer().getSkillByID("actives.unleash_companion");
-		local leash = this.getContainer().getSkillByID("actives.leash_companion");
 		if (rider_skill != null) rider_skill.setTemporarySpiderMount(e, _item);
-		if (unleash != null) unleash.m.IsHidden = true;
-		if (leash != null) leash.m.IsHidden = true;
-
+		_item.setLink(rider_skill);
 		this.Tactical.TurnSequenceBar.removeEntity(e);
 		this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " takes a ride on " + this.Const.UI.getColorizedEntityName(_targetEntity));
 
