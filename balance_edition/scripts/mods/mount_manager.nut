@@ -254,7 +254,7 @@ this.mount_manager <- {
 				_s.setFatigueCost(this.Math.floor(_s.getFatigueCostRaw() * 0.75));
 			}
 
-			if (!_s.isType(this.Const.SkillType.Active)) quirkNames.push(_q.getName());
+			if (!_s.isType(this.Const.SkillType.Active)) quirkNames.push(_s.getName());
 			this.m.Actor.getSkills().add(_s);
 		    this.m.Skills.push(_s);
 		}

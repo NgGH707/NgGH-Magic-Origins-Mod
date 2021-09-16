@@ -9,7 +9,13 @@ this.accessory_spider <- this.inherit("scripts/items/item", {
 		Link = null,
 		Entity = null,
 		IsRedBack = false,
+		Wounds = 0,
 	},
+	function setWounds( _w )
+	{
+		this.m.Wounds = _w;
+	}
+
 	function setEntity( _e )
 	{
 		this.m.Entity = _e;
@@ -24,6 +30,11 @@ this.accessory_spider <- this.inherit("scripts/items/item", {
 	function getEntity()
 	{
 		return this.m.Entity;
+	}
+
+	function getQuirks()
+	{
+		return [];
 	}
 
 	function setLink( _s )

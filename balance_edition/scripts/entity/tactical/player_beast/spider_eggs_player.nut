@@ -649,7 +649,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 
 	function onActorEquip( _item )
 	{
-		if (_item.getSlotType() == this.Const.ItemSlot.Accessory && this.getSkills().hasSkill("perk.wolf_rider"))
+		if (_item.getSlotType() == this.Const.ItemSlot.Accessory && this.getSkills().hasSkill("perk.attach_egg"))
 		{
 			this.m.Mount.onAccessoryEquip(_item);
 		}

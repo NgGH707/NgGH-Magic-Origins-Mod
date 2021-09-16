@@ -105,12 +105,12 @@ this.attach_egg <- this.inherit("scripts/skills/skill", {
 		}*/
 
 		_item.setEntity(e);
-		_targetEntity.equipItem(_item);
+		_user.equipItem(_item);
 		local rider_skill = this.getContainer().getSkillByID("special.egg_rider");
 		if (rider_skill != null) rider_skill.setTemporarySpiderMount(e, _item);
 		_item.setLink(rider_skill);
 		this.Tactical.TurnSequenceBar.removeEntity(e);
-		this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " takes a ride on " + this.Const.UI.getColorizedEntityName(_targetEntity));
+		this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " takes a ride on " + this.Const.UI.getColorizedEntityName(e));
 
 		if (this.Tactical.State.m.IsAutoRetreat)
 		{
@@ -130,7 +130,7 @@ this.attach_egg <- this.inherit("scripts/skills/skill", {
 					a.getAIAgent().removeBehavior(this.Const.AI.Behavior.ID.Protect);
 
 			    	local protect = this.new("scripts/ai/tactical/behaviors/ai_protect_person");
-			    	protect.setVIP(_targetEntity);
+			    	protect.setVIP(_user);
 			    	a.getAIAgent().addBehavior(protect);
 			    }
 			}

@@ -24,12 +24,28 @@ this.perk_attach_egg <- this.inherit("scripts/skills/skill", {
 		{
 			this.m.Container.add(this.new("scripts/skills/actives/unleash_tempo_spider"));
 		}
+
+		local actor = this.getContainer().getActor();
+		local item = actor.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+
+		if (item != null)
+		{
+			actor.m.Mount.onAccessoryEquip(item);
+		}
 	}
 
 	function onRemoved()
 	{
 		this.m.Container.removeByID("actives.attach_egg");
 		this.m.Container.removeByID("actives.unleash_tempo_spider");
+
+		local actor = this.getContainer().getActor();
+		local item = actor.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
+
+		if (item != null)
+		{
+			actor.m.Mount.onAccessoryUnequip(item);
+		}
 	}
 
 });
