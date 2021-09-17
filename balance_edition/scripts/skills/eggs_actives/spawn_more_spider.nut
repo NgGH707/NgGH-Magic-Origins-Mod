@@ -36,15 +36,15 @@ this.spawn_more_spider <- this.inherit("scripts/skills/skill", {
 			"sounds/enemies/dlc2/giant_spider_idle_09.wav"
 		];
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.UtilityTargeted + 1;
+		this.m.Order = this.Const.SkillOrder.UtilityTargeted - 1;
 		this.m.IsSerialized = false;
 		this.m.IsActive = true;
-		this.m.IsTargeted = true;
+		this.m.IsTargeted = false;
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
 		this.m.IsTargetingActor = false;
 		this.m.ActionPointCost = 8;
-		this.m.FatigueCost = 42;
+		this.m.FatigueCost = 40;
 		this.m.MinRange = 0;
 		this.m.MaxRange = 0;
 	}

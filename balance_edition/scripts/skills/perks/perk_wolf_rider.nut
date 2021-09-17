@@ -27,12 +27,7 @@ this.perk_wolf_rider <- this.inherit("scripts/skills/skill", {
 	function onRemoved()
 	{
 		local actor = this.getContainer().getActor();
-		local item = actor.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-
-		if (item != null)
-		{
-			actor.m.Mount.onAccessoryUnequip(item);
-		}
+		actor.m.Mount.onAccessoryUnequip();
 	}
 
 });

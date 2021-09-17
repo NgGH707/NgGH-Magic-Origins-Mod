@@ -51,6 +51,11 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 		return this.skill.isHidden() || !this.isMounted();
 	}
 
+	function getHealthPct()
+	{
+		return this.m.Manager.getHitpointsPct();
+	}
+
 	/*function getName()
 	{
 		if (this.getManager() == null)
@@ -190,7 +195,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 				}
 			]);
 
-			local a = this.Const.GoblinRiderMounts[type].MountedBonus.Stamina + penalty;
+			local a = this.Const.GoblinRiderMounts[type].MountedBonus.Stamina + penalty + 10;
 
 			if (a > 0)
 			{
@@ -211,7 +216,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 				});
 			}
 				
-			a = this.Const.GoblinRiderMounts[type].MountedBonus.Initiative;
+			a = this.Const.GoblinRiderMounts[type].MountedBonus.Initiative + 50;
 
 			if (a > 0)
 			{
@@ -219,7 +224,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 					id = 13,
 					type = "text",
 					icon = "ui/icons/initiative.png",
-					text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + a + "[/color] Initiative for turn order"
+					text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + a + "[/color] Initiative"
 				});
 			}
 			else if (a < 0) 
@@ -228,7 +233,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 					id = 14,
 					type = "text",
 					icon = "ui/icons/initiative.png",
-					text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + a + "[/color] Initiative for turn order"
+					text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + a + "[/color] Initiative"
 				});
 			}
 
@@ -317,6 +322,24 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 	{
 		if (this.isMounted())
 		{
+			local stats = {
+				MeleeSkill = 0,
+				RangedSkill = 0
+			};
+			local mount = this.m.Manager.getMount();
+
+			if (this.IsAccessoryCompanionsExist || ("getAttributes" in mount.get()))
+			{
+				stats = mount.getAttributes();
+			}
+			else 
+			{
+			    stats = this.Const.Tactical.Actor[this.Const.GoblinRiderMounts[this.getMountType].Attributes];
+			}
+			
+			_properties.MeleeSkill += stats.MeleeSkill;
+			_properties.RangedSkill += stats.RangedSkill;
+			_properties.MeleeDefense += 50;
 			_properties.IsRooted = false;
 			_properties.RangedSkillMult *= 0.65;
 			_properties.RangedDamageMult *= 0.9;
@@ -336,8 +359,8 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 		local penalty = this.m.Manager.getMountArmor().StaminaModifier;
 		_properties.AdditionalActionPointCost += 1;
 		_properties.ActionPoints += this.Const.GoblinRiderMounts[type].MountedBonus.ActionPoints;
-		_properties.Stamina += this.Const.GoblinRiderMounts[type].MountedBonus.Stamina + penalty;
-		_properties.InitiativeForTurnOrderAdditional += this.Const.GoblinRiderMounts[type].MountedBonus.Initiative;
+		_properties.Stamina += this.Const.GoblinRiderMounts[type].MountedBonus.Stamina + penalty + 10;
+		_properties.Initiative += this.Const.GoblinRiderMounts[type].MountedBonus.Initiative + 50;
 		_properties.MeleeDefense += this.Const.GoblinRiderMounts[type].MountedBonus.MeleeDefense;
 		_properties.RangedDefense += this.Const.GoblinRiderMounts[type].MountedBonus.RangedDefense;
 		_properties.Threat += this.Const.GoblinRiderMounts[type].MountedBonus.Threat;

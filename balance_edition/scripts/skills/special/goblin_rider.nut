@@ -220,7 +220,7 @@ this.goblin_rider <- this.inherit("scripts/skills/skill", {
 					id = 13,
 					type = "text",
 					icon = "ui/icons/initiative.png",
-					text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + a + "[/color] Initiative for turn order"
+					text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + a + "[/color] Initiative"
 				});
 			}
 			else if (a < 0) 
@@ -229,7 +229,7 @@ this.goblin_rider <- this.inherit("scripts/skills/skill", {
 					id = 14,
 					type = "text",
 					icon = "ui/icons/initiative.png",
-					text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + a + "[/color] Initiative for turn order"
+					text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + a + "[/color] Initiative"
 				});
 			}
 
@@ -351,7 +351,7 @@ this.goblin_rider <- this.inherit("scripts/skills/skill", {
 		_properties.AdditionalActionPointCost += 1;
 		_properties.ActionPoints += this.Const.GoblinRiderMounts[type].MountedBonus.ActionPoints;
 		_properties.Stamina += this.Const.GoblinRiderMounts[type].MountedBonus.Stamina + penalty;
-		_properties.InitiativeForTurnOrderAdditional += this.Const.GoblinRiderMounts[type].MountedBonus.Initiative;
+		_properties.Initiative += this.Const.GoblinRiderMounts[type].MountedBonus.Initiative;
 		_properties.MeleeDefense += this.Const.GoblinRiderMounts[type].MountedBonus.MeleeDefense;
 		_properties.RangedDefense += this.Const.GoblinRiderMounts[type].MountedBonus.RangedDefense;
 		_properties.Threat += this.Const.GoblinRiderMounts[type].MountedBonus.Threat;

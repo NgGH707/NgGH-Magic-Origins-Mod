@@ -195,6 +195,8 @@ this.player_goblin <- this.inherit("scripts/entity/tactical/player", {
 		this.m.Mount.setActor(this);
 		this.m.Formations = this.new("scripts/entity/tactical/formations_container");
 		this.m.LifetimeStats.Tags = this.new("scripts/tools/tag_collection");
+		this.m.ExcludedMount.push("accessory.spider");
+		this.m.ExcludedMount.push("accessory.tempo_spider");
 	}
 
 	function onInit()
@@ -1205,7 +1207,7 @@ this.player_goblin <- this.inherit("scripts/entity/tactical/player", {
 	{
 		if (_item.getSlotType() == this.Const.ItemSlot.Accessory)
 		{
-			this.m.Mount.onAccessoryUnequip(_item);
+			this.m.Mount.onAccessoryUnequip();
 		}
 
 		if (_item.isItemType(this.Const.Items.ItemType.Helmet))

@@ -1,5 +1,13 @@
 this.spider_bite_skill <- this.inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		IsRestrained = false,
+		IsSpent = false
+	},
+	function setRestrained( _f )
+	{
+		this.m.IsRestrained = _f;
+	}
+
 	function create()
 	{
 		this.m.ID = "actives.spider_bite";
@@ -42,12 +50,7 @@ this.spider_bite_skill <- this.inherit("scripts/skills/skill", {
 		this.m.ChanceDisembowel = 33;
 		this.m.ChanceSmash = 0;
 	}
-	
-	function getTooltip()
-	{
-		return this.getDefaultTooltip();
-	}
-	
+
 	function onAdded()
 	{
 		local actor = this.m.Container.getActor();
@@ -59,10 +62,30 @@ this.spider_bite_skill <- this.inherit("scripts/skills/skill", {
 
 		this.m.ActionPointCost = 5;
 	}
+	
+	function getTooltip()
+	{
+		return this.getDefaultTooltip();
+	}
+
+	function isUsable()
+	{
+		return this.skill.isUsable() && !this.m.IsSpent;
+	}
 
 	function onUse( _user, _targetTile )
 	{
+		if (this.m.IsRestrained)
+		{
+			this.m.IsSpent = true;
+		}
+
 		return this.attackEntity(_user, _targetTile.getEntity());
+	}
+
+	function onTurnStart()
+	{
+		this.m.IsSpent = false;
 	}
 	
 	function onUpdate( _properties )

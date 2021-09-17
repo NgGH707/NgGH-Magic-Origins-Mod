@@ -36,7 +36,7 @@ this.spawn_spider <- this.inherit("scripts/skills/skill", {
 			"sounds/enemies/dlc2/giant_spider_idle_09.wav"
 		];
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.UtilityTargeted;
+		this.m.Order = this.Const.SkillOrder.UtilityTargeted - 2;
 		this.m.IsSerialized = false;
 		this.m.IsActive = true;
 		this.m.IsTargeted = true;

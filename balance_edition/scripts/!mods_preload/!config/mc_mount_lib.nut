@@ -296,6 +296,7 @@ gt.Const.GoblinRider <- {
 
 		case "accessory.spider":
 			_appearance.Flipping = true;
+			_appearance.Scale = 0.8;
 			_appearance.Extra1 = "bust_spider_legs_back";
 			_appearance.Extra2 = "bust_spider_body_0" + variant;
 			_appearance.Body = "bust_spider_legs_front";
@@ -307,6 +308,7 @@ gt.Const.GoblinRider <- {
 
 		case "accessory.tempo_spider":
 			_appearance.Flipping = true;
+			_appearance.Scale = 0.8;
 			local entity = _item.getEntity();
 			_appearance.Extra1 = entity.getSprite("legs_back").getBrush().Name;
 			_appearance.Extra2 = entity.getSprite("body").getBrush().Name;
@@ -691,7 +693,7 @@ gt.Const.GoblinRiderMounts <- [
 		Skills = ["actives/spider_bite_skill", "actives/web_skill" , "racial/spider_racial"],
 		Flags = ["spider"],
 		Sprite = [
-			[-12, 15], //For rider
+			[-25, 40], //For rider
 			[0, 0], //For mount
 		],
 		MountedBonus = { ActionPoints = 2, Stamina = 5, Initiative = 15, MeleeDefense = 5, RangedDefense = 5, Threat = 0, },

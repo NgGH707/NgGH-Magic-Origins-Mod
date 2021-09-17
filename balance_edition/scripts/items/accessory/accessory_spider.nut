@@ -18,7 +18,12 @@ this.accessory_spider <- this.inherit("scripts/items/item", {
 
 	function getAttributes()
 	{
-		return this.Const.Tactical.Actor.Spider;
+		if (this.m.Entity == null)
+		{
+			return this.Const.Tactical.Actor.Spider;
+		}
+
+		return this.m.Entity.getBaseProperties();
 	}
 
 	function setEntity( _e )
@@ -48,7 +53,7 @@ this.accessory_spider <- this.inherit("scripts/items/item", {
 		{
 			this.m.Link = null;
 		}
-		else 
+		else
 		{
 		    if (typeof _s == "instance")
 			{

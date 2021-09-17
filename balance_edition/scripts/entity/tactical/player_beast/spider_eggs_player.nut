@@ -4,6 +4,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		ExcludedMount = [],
 		Head = 0,
 		Count = 0,
+		Size = 1.0,
 	},
 	function getExcludedMount()
 	{
@@ -36,14 +37,28 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		}
 	}
 
+	function getSize()
+	{
+		return this.m.Size;
+	}
+
+	function setSize( _s )
+	{
+		this.m.Size = _s;
+		this.getSprite("body").Scale = _s;
+		//this.getItems().updateAppearance();
+	}
+
 	function onAppearanceChanged( _appearance, _setDirty = true )
 	{
 		this.player_beast.onAppearanceChanged(_appearance, _setDirty);
+		this.m.Mount.updateAppearance();
 		this.onAdjustingSprite(_appearance, this.isMounted());
 	}
 	
 	function onAdjustingSprite( _appearance , _isMounted = false )
 	{
+		this.setSize(_isMounted ? 0.65 : 1.0);
 		local offset = this.Const.EggSpriteOffsets[this.m.Head];
 		local x = offset[0];
 		local y = offset[1];
@@ -54,6 +69,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		{
 			adjust_x = this.Const.GoblinRiderMounts[this.m.Mount.getMountType()].Sprite[0][0];
 			adjust_y = this.Const.GoblinRiderMounts[this.m.Mount.getMountType()].Sprite[0][1];
+			
 		}
 
 		foreach( a in this.Const.CharacterSprites.Helmets )
@@ -63,15 +79,19 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 				continue;
 			}
 
-			this.setSpriteOffset(a, this.createVec(x + adjust_x, y + adjust_y));
-			this.getSprite(a).Scale = 0.85;
+			local offsetX = (x + adjust_x) * this.m.Size;
+			local offsetY = (y + adjust_y) * this.m.Size;
+			this.setSpriteOffset(a, this.createVec(offsetX, offsetY));
+			this.getSprite(a).Scale = 0.85 * this.m.Size;
 		}
 
-		this.getSprite("accessory").Scale = 0.7;
-		this.setSpriteOffset("accessory", this.createVec(adjust_x, adjust_y));
-		this.getSprite("accessory_special").Scale = 0.7;
-		this.setSpriteOffset("accessory_special", this.createVec(adjust_x, adjust_y));
+		this.setSpriteOffset("body", this.createVec(adjust_x * this.m.Size, adjust_y * this.m.Size));
+		this.getSprite("accessory").Scale = 0.7 * this.m.Size;
+		this.setSpriteOffset("accessory", this.createVec(adjust_x * this.m.Size, adjust_y * this.m.Size));
+		this.getSprite("accessory_special").Scale = 0.7 * this.m.Size;
+		this.setSpriteOffset("accessory_special", this.createVec(adjust_x * this.m.Size, adjust_y * this.m.Size));
 		this.setAlwaysApplySpriteOffset(true);
+		this.setDirty(true);
 	}
 
 	function getStrength()
@@ -225,6 +245,11 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.addSprite("accessory");
 		this.addSprite("accessory_special");
 
+		foreach( a in this.Const.CharacterSprites.Helmets )
+		{
+			this.addSprite(a);
+		}
+
 		//mount sprites
 		this.addSprite("mount"); //spider legs_front
 		this.addSprite("mount_armor");
@@ -232,12 +257,6 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.addSprite("mount_extra");
 		this.addSprite("mount_injury");
 		this.addSprite("mount_restrain");
-
-		foreach( a in this.Const.CharacterSprites.Helmets )
-		{
-			this.addSprite(a);
-		}
-
 		this.addDefaultStatusSprites();
 
 		local rider = this.new("scripts/skills/special/egg_rider");
@@ -503,19 +522,19 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 			},
 			{
 				Min = 1,
-				Max = 1
+				Max = 3
 			},
 			{
 				Min = 1,
-				Max = 1
+				Max = 3
 			},
 			{
 				Min = 1,
-				Max = 1
+				Max = 3
 			},
 			{
 				Min = 1,
-				Max = 1
+				Max = 3
 			}
 		];
 		
@@ -649,6 +668,11 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 
 	function onActorEquip( _item )
 	{
+		if (_item.getSlotType() == this.Const.ItemSlot.Head)
+		{
+			this.m.Head = this.Math.rand(0, 2);
+		}
+
 		if (_item.getSlotType() == this.Const.ItemSlot.Accessory && this.getSkills().hasSkill("perk.attach_egg"))
 		{
 			this.m.Mount.onAccessoryEquip(_item);
@@ -659,7 +683,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 	{
 		if (_item.getSlotType() == this.Const.ItemSlot.Accessory)
 		{
-			this.m.Mount.onAccessoryUnequip(_item);
+			this.m.Mount.onAccessoryUnequip();
 		}
 	}
 
@@ -667,11 +691,11 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 	{
 		this.player_beast.onDeserialize(_in);
 
-		if (this.getFlags().has("head"))
+		/*if (this.getFlags().has("head"))
 		{
 			this.m.Head = this.getFlags().getAsInt("head");
 			this.m.Items.updateAppearance();
-		}
+		}*/
 	}
 
 });

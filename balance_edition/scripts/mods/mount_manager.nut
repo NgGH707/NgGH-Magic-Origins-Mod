@@ -481,7 +481,7 @@ this.mount_manager <- {
 
 		this.m.Mount = this.WeakTableRef(_item);
 		this.m.MountType = this.Const.GoblinRider.getMountType(_item);
-
+	
 		this.m.Appearance.OldSounds.push(this.m.Actor.m.Sound[this.Const.Sound.ActorEvent.Other1]);
 		this.m.Appearance.OldSounds.push(this.m.Actor.m.Sound[this.Const.Sound.ActorEvent.Other2]);
 		this.m.Appearance.OldSounds.push(this.m.Actor.m.Sound[this.Const.Sound.ActorEvent.Idle]);
@@ -497,7 +497,7 @@ this.mount_manager <- {
 		this.m.Actor.getItems().updateAppearance();
 	}
 
-	function onAccessoryUnequip( _item )
+	function onAccessoryUnequip()
 	{
 		if (this.m.Appearance.OldSounds.len() != 0)
 		{
