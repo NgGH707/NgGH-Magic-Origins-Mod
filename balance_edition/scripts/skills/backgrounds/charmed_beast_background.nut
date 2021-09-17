@@ -22,11 +22,9 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 			"trait.dastard",
 			"trait.insecure",
 			"trait.disloyal",
-			"trait.hesitant",
 			"trait.greedy",
 			"trait.craven",
 			"trait.fainthearted",
-			"trait.loyal"
 		];
 		
 		this.m.Faces = this.Const.Faces.AllMale;
@@ -36,7 +34,6 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 		this.m.Beards = null;
 		this.m.BeardChance = 0;
 		this.m.Ethnicity = 0
-		
 		this.m.AlignmentMin = this.Const.LegendMod.Alignment.NeutralMin;
 		this.m.AlignmentMax = this.Const.LegendMod.Alignment.NeutralMax;
 		this.m.CustomPerkTree = null;
@@ -278,7 +275,7 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 			return a;
 		}
 		
-		this.m.CustomPerkTree = this.m.Info.PerkTree;
+		this.m.CustomPerkTree = clone this.m.Info.PerkTree;
 		local isHumaniod = this.Const.HumanoidBeast.find(this.m.Info.Type) != null;
 		local hasAoE = this.Const.BeastHasAoE.find(this.m.Info.Type) != null;
 		local origin = this.World.Assets.getOrigin();
@@ -289,21 +286,11 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 		}
 		
 		local helper = this.getroottable().PerkTreeBuilder;
-		local dynamicPerks = helper.fillWithRandomPerk(this.m.CustomPerkTree, isHumaniod, hasAoE);
-		local Info = dynamicPerks.Data;
-		local PerkTree = dynamicPerks.Tree;
-
-		local pT = this.Const.Perks.BuildCustomPerkTree(PerkTree);
+		local newCustomPerk = helper.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), isHumaniod, hasAoE);
+		local pT = this.Const.Perks.BuildCustomPerkTree(newCustomPerk);
 		this.m.PerkTree = pT.Tree;
 		this.m.PerkTreeMap = pT.Map;
-		this.m.CustomPerkTree = PerkTree;
-		
-		for ( local i = 0 ; i < Info.PerkDefs.len() ; i = ++i )
-		{
-			this.addPerk(Info.PerkDefs[i], Info.Row[i]);
-			this.m.CustomPerkTree[Info.Row[i]].push(Info.PerkDefs[i]);
-		}
-		
+		this.m.CustomPerkTree = newCustomPerk;
 		return a;
 	}
 	

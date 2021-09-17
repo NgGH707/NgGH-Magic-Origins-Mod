@@ -86,32 +86,40 @@ this.spider_eggs_background <- this.inherit("scripts/skills/backgrounds/characte
 		this.m.Modifiers.Meds = this.Const.LegendMod.ResourceModifiers.Meds[1];
 		this.m.Modifiers.Stash = 0;
 		this.m.Modifiers.Healing = this.Const.LegendMod.ResourceModifiers.Healing[3];
-		this.m.Modifiers.Injury = this.Const.LegendMod.ResourceModifiers.Injury[2];
 		this.m.Modifiers.MedConsumption = this.Const.LegendMod.ResourceModifiers.MedConsumption[1];
 		this.m.Modifiers.Hunting = this.Const.LegendMod.ResourceModifiers.Hunting[2];
 		this.m.Modifiers.Scout = this.Const.LegendMod.ResourceModifiers.Scout[0];
 		
-		this.m.PerkTreeDynamic = {
-			Weapon = [],
-			Defense = [],
-			Traits = [],
-			Enemy = [],
-			Class = [],
-			Magic = [{
-				ID = "SpiderHive",
-				Name = "SpiderHive",
-				Descriptions = ["spider hive"],
-				Tree = [
-					[],
-					[],
-					[],
-					[this.Const.Perks.PerkDefs.SpiderVenom, this.Const.Perks.PerkDefs.EggBreedingMachine, this.Const.Perks.PerkDefs.EggAttachSpider],
-					[this.Const.Perks.PerkDefs.SpiderWeb],
-					[this.Const.Perks.PerkDefs.SpiderBite, this.Const.Perks.PerkDefs.EggInherit],
-					[this.Const.Perks.PerkDefs.EggNaturalSelection]
-				]			
-			}],
-		};		
+		this.m.CustomPerkTree = [
+			[
+				this.Const.Perks.PerkDefs.Recover,
+				this.Const.Perks.PerkDefs.Student,
+			],
+			[
+				this.Const.Perks.PerkDefs.HoldOut,
+			],
+			[
+				this.Const.Perks.PerkDefs.Gifted,
+			],
+			[],
+			[
+				this.Const.Perks.PerkDefs.NachoFrenzy,
+			],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[]
+		];
+
+		foreach (i, row in this.Const.Perks.SpiderHive.Tree )
+		{
+			foreach ( perkDef in row )
+			{
+				this.m.CustomPerkTree[i].push(perkDef);
+			}
+		}
 	}
 	
 	function onUpdate( _properties )
@@ -124,7 +132,7 @@ this.spider_eggs_background <- this.inherit("scripts/skills/backgrounds/characte
 	{
 		if (this.m.IsNew)
 		{
-			local attributes = this.buildPerkTree();
+			local attributes = this.buildPerkTreeBeast();
 			this.getContainer().getActor().m.StarWeights = this.buildAttributes(null, attributes);
 
 			if (!this.getContainer().hasSkill("racial.champion") && this.Math.rand(1, 100) == 33)
@@ -225,8 +233,29 @@ this.spider_eggs_background <- this.inherit("scripts/skills/backgrounds/characte
 		return weighted;
 	}
 
-	function onAddEquipment()
+	function buildPerkTreeBeast()
 	{
+		local a = {Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0]};
+		
+		if (this.m.PerkTree != null)
+		{
+			return a;
+		}
+
+		local origin = this.World.Assets.getOrigin();
+		
+		if (origin != null)
+		{
+			this.World.Assets.getOrigin().onBuildPerkTree(this.m.CustomPerkTree);
+		}
+		
+		local helper = this.getroottable().PerkTreeBuilder;
+		local newCustomPerk = helper.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), false, false, true);
+		local pT = this.Const.Perks.BuildCustomPerkTree(newCustomPerk);
+		this.m.PerkTree = pT.Tree;
+		this.m.PerkTreeMap = pT.Map;
+		this.m.CustomPerkTree = newCustomPerk;
+		return a;
 	}
 	
 	function onNewDay()

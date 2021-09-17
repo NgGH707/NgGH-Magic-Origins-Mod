@@ -727,6 +727,32 @@ foreach( i, v in gt.Const.Perks.PerkDefObjects )
 	gt.Const.Perks.PerkDefs[v.Const] <- i;
 }
 
+gt.Const.Perks.SpiderHive <- {
+	ID = "SpiderHive",
+	Name = "SpiderHive",
+	Descriptions = ["spider hive"],
+	Tree = [
+		[],
+		[],
+		[],
+		[
+			gt.Const.Perks.PerkDefs.SpiderVenom, 
+			gt.Const.Perks.PerkDefs.EggBreedingMachine, 
+			gt.Const.Perks.PerkDefs.EggAttachSpider
+		],
+		[
+			gt.Const.Perks.PerkDefs.SpiderWeb
+		],
+		[
+			gt.Const.Perks.PerkDefs.SpiderBite, 
+			gt.Const.Perks.PerkDefs.EggInherit
+		],
+		[
+			gt.Const.Perks.PerkDefs.EggNaturalSelection
+		]
+	]			
+};
+
 if (!("PerksCharmedUnit" in gt.Const))
 {
 	gt.Const.PerksCharmedUnit <- {};

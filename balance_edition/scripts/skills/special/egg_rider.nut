@@ -216,7 +216,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 				});
 			}
 				
-			a = this.Const.GoblinRiderMounts[type].MountedBonus.Initiative + 50;
+			a = this.Const.GoblinRiderMounts[type].MountedBonus.Initiative + 65;
 
 			if (a > 0)
 			{
@@ -273,7 +273,7 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 				});
 			}
 				
-			a = this.Const.GoblinRiderMounts[type].MountedBonus.RangedDefense;
+			a = this.Const.GoblinRiderMounts[type].MountedBonus.RangedDefense - 10;
 			
 			if (a != 0)
 			{
@@ -360,9 +360,9 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 		_properties.AdditionalActionPointCost += 1;
 		_properties.ActionPoints += this.Const.GoblinRiderMounts[type].MountedBonus.ActionPoints;
 		_properties.Stamina += this.Const.GoblinRiderMounts[type].MountedBonus.Stamina + penalty + 10;
-		_properties.Initiative += this.Const.GoblinRiderMounts[type].MountedBonus.Initiative + 50;
+		_properties.Initiative += this.Const.GoblinRiderMounts[type].MountedBonus.Initiative + 65;
 		_properties.MeleeDefense += this.Const.GoblinRiderMounts[type].MountedBonus.MeleeDefense;
-		_properties.RangedDefense += this.Const.GoblinRiderMounts[type].MountedBonus.RangedDefense;
+		_properties.RangedDefense += this.Const.GoblinRiderMounts[type].MountedBonus.RangedDefense - 10;
 		_properties.Threat += this.Const.GoblinRiderMounts[type].MountedBonus.Threat;
 	}
 

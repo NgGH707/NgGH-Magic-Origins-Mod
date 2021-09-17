@@ -696,7 +696,7 @@ gt.Const.GoblinRiderMounts <- [
 			[-25, 40], //For rider
 			[0, 0], //For mount
 		],
-		MountedBonus = { ActionPoints = 2, Stamina = 5, Initiative = 15, MeleeDefense = 5, RangedDefense = 5, Threat = 0, },
+		MountedBonus = { ActionPoints = 2, Stamina = 15, Initiative = 25, MeleeDefense = 10, RangedDefense = 5, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/dlc2/giant_spider_hurt_01.wav",
 			"sounds/enemies/dlc2/giant_spider_hurt_02.wav",

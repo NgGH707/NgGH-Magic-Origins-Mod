@@ -11,6 +11,11 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		return this.m.ExcludedMount;
 	}
 
+	function getMountType()
+	{
+		return this.m.Mount.getMountType();
+	}
+
 	function isMounted()
 	{
 		return this.m.Mount.isMounted();
@@ -58,7 +63,9 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 	
 	function onAdjustingSprite( _appearance , _isMounted = false )
 	{
-		this.setSize(_isMounted ? 0.65 : 1.0);
+		local size = 1.0;
+		if (_isMounted) size = this.getMountType() == this.Const.GoblinRider.Mounts.Spider ? 0.65 : 0.75;
+		this.setSize(size);
 		local offset = this.Const.EggSpriteOffsets[this.m.Head];
 		local x = offset[0];
 		local y = offset[1];
@@ -67,9 +74,8 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 
 		if (_isMounted)
 		{
-			adjust_x = this.Const.GoblinRiderMounts[this.m.Mount.getMountType()].Sprite[0][0];
-			adjust_y = this.Const.GoblinRiderMounts[this.m.Mount.getMountType()].Sprite[0][1];
-			
+			adjust_x = this.Const.GoblinRiderMounts[this.getMountType()].Sprite[0][0];
+			adjust_y = this.Const.GoblinRiderMounts[this.getMountType()].Sprite[0][1];
 		}
 
 		foreach( a in this.Const.CharacterSprites.Helmets )
@@ -94,6 +100,16 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.setDirty(true);
 	}
 
+	function isNonCombatant()
+	{
+		if (this.isMounted())
+		{
+			return false;
+		}
+
+		return this.m.IsNonCombatant;
+	}
+
 	function getStrength()
 	{
 		return 1.25;
@@ -103,7 +119,41 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 	{
 		this.player_beast.create();
 		this.m.IsNonCombatant = true;
-		this.m.IsShakingOnHit = false;
+		this.m.ShakeLayers = [
+			[
+				"body",
+				"helmet_vanity_lower",
+				"helmet_vanity_lower_2",
+				"helmet",
+				"helmet_damage",
+				"helmet_helm",
+				"helmet_top",
+				"helmet_vanity",
+				"helmet_vanity_2",
+			]
+			[
+				"body",
+				"helmet_vanity_lower",
+				"helmet_vanity_lower_2",
+				"helmet",
+				"helmet_damage",
+				"helmet_helm",
+				"helmet_top",
+				"helmet_vanity",
+				"helmet_vanity_2",
+			]
+			[
+				"body",
+				"helmet_vanity_lower",
+				"helmet_vanity_lower_2",
+				"helmet",
+				"helmet_damage",
+				"helmet_helm",
+				"helmet_top",
+				"helmet_vanity",
+				"helmet_vanity_2",
+			]
+		];
 		this.m.BloodType = this.Const.BloodType.None;
 		this.m.MoraleState = this.Const.MoraleState.Ignore;
 		this.m.XP = this.Const.Tactical.Actor.SpiderEggs.XP;
@@ -650,20 +700,6 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.m.CurrentProperties = clone b;
 		this.getSkills().update();
 		this.setDirty(true);
-	}
-	
-	function fillTalentValues( _r = 3 )
-	{
-		this.m.Talents.resize(this.Const.Attributes.COUNT, 0);
-
-		if (this.Math.rand(1, 100) <= 50)
-		{
-			this.m.Talents[0] = 3;
-		}
-		else
-		{
-			this.m.Talents[2] = 3;
-		}
 	}
 
 	function onActorEquip( _item )

@@ -1,20 +1,33 @@
 this.perk_tree_builder <- {
 	m = {},
 	
-	function fillWithRandomPerk( _tree , _addWeapon = false , _hasAoE = false )
+	function fillWithRandomPerk( _tree , _skills , _addWeapon = false , _hasAoE = false , _isSpecial = false )
 	{
-		local Perks = {
-			PerkDefs = [],
-			Row = [],
-		};
-		local perkPerRow = [8, 7, 6, 8, 6, 6, 5, 4, 4, 4, 4];
-		local perkAddPerRow = [];
-		local tools = {};
-		tools.hasPerk <- function( _table, _perk )
+		local currentPerksPerkRow = [];
+		local excludedPerks = [];
+
+		foreach ( _row in _tree )
 		{
-			foreach ( p in _table.PerkDefs )
+			foreach ( _perkDef in _row )
 			{
-				if (p == _perk)
+				excludedPerks.push(_perkDef);
+			}
+
+			currentPerksPerkRow.push(_row.len());
+		}
+
+		local maxPerksPerRow = [8, 7, 6, 9, 6, 6, 5, 0, 0, 0, 0, 0, 0, 0];
+		local favourPerksNum = this.Math.rand(1, 3);
+		local tools = {};
+		tools.hasPerk <- function( _perk , _excluded )
+		{
+			return _excluded.find(_perk) != null;
+		};
+		tools.isInTree <- function ( _tree, _perk )
+		{
+			foreach( row in _tree )
+			{
+				if (row.find(_perk) != null)
 				{
 					return true;
 				}
@@ -22,108 +35,308 @@ this.perk_tree_builder <- {
 
 			return false;
 		};
-		tools.isInTree <- function ( _treeMap, _perk )
+		tools.removePerk <- function( _lib , _perk )
 		{
-			foreach( row in _treeMap )
-			{
-				foreach( p in row )
-				{
-					if (p == _perk)
-					{
-						return true;
-					}
-				}
-			}
-
-			return false;
-		};
-		tools.removePerk <- function( _perkLib , _perk )
-		{
-			foreach ( _l in _perkLib )
+			foreach ( _l in _lib )
 			{
 				local index = _l.find(_perk);
 
 				if (index != null)
 				{
-					_l.remove(index);
-					return;
+					return _l.remove(index);
 				}
 			}
 		}
-		tools.removeExistingPerks <- function ( _treeMap, _perkLib ) 
+		tools.removeExistingPerks <- ( _lib , _excluded )
 		{
-			local remove = [];
-
-		    foreach ( _l in _perkLib )
+			foreach ( library in _lib ) 
 			{
-				foreach ( i, _p in _l )
-				{
-					if (this.isInTree(_treeMap, _p))
-					{
-						remove.push(_p);
-					}
-				}
+			    foreach ( _perk in _excluded )
+			    {
+			    	while (library.find(_perk) != null)
+			    	{
+			    		local index = library.find(perk);
+			    		library.remove(index);
+			    	}
+			    }
 			}
-
-			foreach ( perk in remove )
-			{
-				this.removePerk(_perkLib, perk)
-			}
-		};
+		}
 		
 		if (_addWeapon)
 		{
 			local Map = [];
 			local excluded = [];
 			
-			for ( local i = 0 ; i < 2 ; i = ++i )
+			for ( local i = 0 ; i < 2 ; i = i )
 			{
 				local t = this.Const.Perks.MeleeWeaponTrees.getRandom(excluded);
-				excluded.push(t.ID);
-				Map.push(t);
+
+				if (excluded.find(t.ID) == null)
+				{
+					excluded.push(t.ID);
+					Map.push(t.Tree);
+					i = ++i;
+					i = i;
+				}
 			}
 			
-			if (this.Math.rand(1, 10) <= 5)
+			if (this.Math.rand(1, 100) <= 50)
 			{
 				local t = this.Const.Perks.RangedWeaponTrees.getRandom(null);
-				Map.push(t);
+				Map.push(t.Tree);
 			}
 			else
 			{
-				Map.push(this.Const.Perks.ShieldTree);
+				Map.push(this.Const.Perks.ShieldTree.Tree);
 			}
 			
-			foreach( mT in Map )
+			foreach (i, tree in Map )
 			{
-				foreach( i, row in mT.Tree )
+				foreach (j, row in tree ) 
 				{
-					foreach( p in row )
-					{
-						if (tools.isInTree(_tree, p))
+				    foreach (k, perk in row )
+				    {
+				    	if (tools.hasPerk(perk, excludedPerks))
 						{
 							continue;
 						}
 
-						_tree[i].push(p);
-					}
+						excludedPerks.push(perk);
+				    	_tree[j].push(perk);
+				    }
 				}
 			}
+
+			currentPerksPerkRow = [];
+
+			foreach ( _row in _tree )
+			{
+				currentPerksPerkRow.push(_row.len());
+			}
+		}
+	
+		local lb = this.getLib();
+		local lbE = this.getEnemyLib();
+		this.addPTR_Perks(lb, _skills, _hasAoE, _isSpecial);
+		tools.removeExistingPerks(lb, excludedPerks);
+		tools.removeExistingPerks(lb, excludedPerks);
+		
+		for ( local i = 0 ; i < 10 ; i = i ) 
+		{
+		    foreach (j, row in _tree ) 
+		    {
+		        if (row.len() >= maxPerksPerRow[j])
+		        {
+		        	continue;
+		        }
+
+		        local lib_to_choose = [];
+
+		        if (j <= 2)
+		        {
+		        	lib_to_choose.extend(lib[0]);
+		        }
+		        else if (j == 3) 
+		        {
+		            lib_to_choose.extend(lib[0]);
+		            lib_to_choose.extend(lib[1]);
+		        }
+		        else if (j == 4) 
+		        {
+		            lib_to_choose.extend(lib[1]);
+		        }
+		        else if (j == 5) 
+		        {
+		            lib_to_choose.extend(lib[1]);
+		            lib_to_choose.extend(lib[2]);
+		        }
+		        else if (j == 6) 
+		        {
+		            lib_to_choose.extend(lib[2]);
+		        }
+
+		        if (lib_to_choose.len() == 0)
+		        {
+		        	continue;
+		        }
+
+		        local r;
+		        do
+		        {
+		        	if (r != null)
+		        	{
+		        		local index = lib_to_choose.find(r);
+
+						if (index != null)
+						{
+							lib_to_choose.remove(index);
+						}
+		        	}
+
+		        	r = lib_to_choose[this.Math.rand(0, lib_to_choose - 1)];
+		        }
+		        while(tools.hasPerk(r , excludedPerks) && lib_to_choose.len() > 0)
+
+		        if (r != null)
+		        {
+		        	excludedPerks.push(r);
+		        	row.push(r);
+		        }
+		    }
+
+		    i = ++i;
+		    i = i;
 		}
 		
-		local perkFavourNum = this.Math.rand(1, 3);
-		perkFavourNum = perkFavourNum == 3 ? this.Math.rand(1, 3) : perkFavourNum;
-		
-		for ( local i = 0 ; i < 7 ; i = ++i )
+		return _tree;
+	}
+
+	function getPerksForDamageType( _lib, _damageType = [] )
+	{
+		if (_damageType.len() == 0)
 		{
-			local numRow = _tree[i].len();
-			local different = this.Math.max(0, perkPerRow[i] - numRow)
-			local perkNeedToBeAdded =  different + this.Math.rand(0, 2);
-			perkAddPerRow.push(this.Math.max(this.Math.min(perkNeedToBeAdded, 13 - numRow), 0));
+			return;
 		}
 
-		perkAddPerRow[3] += perkFavourNum;
+		foreach ( damage in _damageType )
+		{
+			switch (damage.Type) 
+			{
+			case this.Const.Damage.DamageType.Blunt:
+				_lib[0].extend([
+					this.Const.Perks.PerkDefs.PTRRattle,
+					this.Const.Perks.PerkDefs.PTRDeepImpact,
+				]);
+				_lib[1].extend([
+					this.Const.Perks.PerkDefs.PTRSoftMetal,
+					this.Const.Perks.PerkDefs.PTRDismantle,
+					this.Const.Perks.PerkDefs.PTRBearDown,
+				]);
+				_lib[2].extend([
+					this.Const.Perks.PerkDefs.PTRDentArmor,
+					this.Const.Perks.PerkDefs.PTRHeavyStrikes,
+					this.Const.Perks.PerkDefs.PTRBoneBreaker,
+				]);
+				break;
+
+			case this.Const.Damage.DamageType.Piercing:
+				_lib[0].extend([
+					this.Const.Perks.PerkDefs.PTRBetweenTheRibs,
+					this.Const.Perks.PerkDefs.PTRPointyEnd,
+				]);
+				_lib[1].extend([
+					this.Const.Perks.PerkDefs.PTRThroughTheGaps,
+				]);
+				break;
+
+			case this.Const.Damage.DamageType.Cutting:
+				_lib[0].extend([
+					this.Const.Perks.PerkDefs.PTRDismemberment,
+					this.Const.Perks.PerkDefs.PTRBetweenTheEyes,
+					this.Const.Perks.PerkDefs.PTRVersatileWeapon,
+				]);
+				_lib[1].extend([
+					this.Const.Perks.PerkDefs.PTRDeepCuts,
+					this.Const.Perks.PerkDefs.PTRSanguinary,
+				]);
+				_lib[2].extend([
+					this.Const.Perks.PerkDefs.PTRBloodlust,
+					this.Const.Perks.PerkDefs.PTRBloodbath,
+					this.Const.Perks.PerkDefs.PTRMauler,
+				]);
+				break;
+
+			case this.Const.Damage.DamageType.Burning:
+				break;
+			}
+		}
+	}
+
+	function addPTR_Perks( _lib , _skill , _hasAoE = false , _isSpecial )
+	{
+		if (::mods_getRegisteredMod("mod_legends_PTR") == null)
+		{
+			return;
+		}
+
+		_lib[0].extend([
+			this.Const.Perks.PerkDefs.PTRSmallTarget,
+			this.Const.Perks.PerkDefs.PTRHeadSmasher,
+			this.Const.Perks.PerkDefs.PTRFromAllSides,
+			this.Const.Perks.PerkDefs.PTRSurvivalInstinct,
+			this.Const.Perks.PerkDefs.PTRRisingStar,
+			this.Const.Perks.PerkDefs.PTRKnowTheirWeakness,
+			this.Const.Perks.PerkDefs.PTRFreshAndFurious,
+			this.Const.Perks.PerkDefs.PTRVigilant,
+			this.Const.Perks.PerkDefs.PTRPersonalArmor,
+			this.Const.Perks.PerkDefs.PTRTunnelVision,
+			this.Const.Perks.PerkDefs.PTRMenacing,
+			this.Const.Perks.PerkDefs.PTRPatternRecognition,
+			this.Const.Perks.PerkDefs.PTRAlwaysAnEntertainer,
+		]);
+
+		_lib[1].extend([
+			this.Const.Perks.PerkDefs.PTRDeadlyPrecision,
+			this.Const.Perks.PerkDefs.PTRBulwark,
+			this.Const.Perks.PerkDefs.PTRExploitOpening,
+			this.Const.Perks.PerkDefs.PTRFluidWeapon,
+			this.Const.Perks.PerkDefs.PTRTempo,
+			this.Const.Perks.PerkDefs.PTRDiscoveredTalent,
+			this.Const.Perks.PerkDefs.PTRDynamicDuo,
+			this.Const.Perks.PerkDefs.PTRStrengthInNumbers,
+			this.Const.Perks.PerkDefs.PTRWearsItWell,
+			this.Const.Perks.PerkDefs.PTRBully,
+			this.Const.Perks.PerkDefs.PTRPaintASmile
+		]);
+
+		_lib[2].extend([
+			this.Const.Perks.PerkDefs.PTRTheRushOfBattle,
+			this.Const.Perks.PerkDefs.PTRFruitsOfLabor,
+			this.Const.Perks.PerkDefs.PTREnGarde,
+			this.Const.Perks.PerkDefs.PTRWearThemDown,
+			this.Const.Perks.PerkDefs.PTRUnstoppable,
+			this.Const.Perks.PerkDefs.PTRWhackASmack,
+		]);
 		
-		local lb = [
+		if (_hasAoE)
+		{
+			_lib[1].push(this.Const.Perks.PerkDefs.PTRSweepingStrikes);
+			_lib[2].push(this.Const.Perks.PerkDefs.PTRBloodyHarvest);
+		}
+
+		local damageTypes = [];
+
+		foreach( active in _skill.m.Skills )
+		{
+			if (active.isGarbage() || !active.isActive())
+			{
+				continue;
+			}
+
+			local damageType = active.getDamageType();
+
+			if (damageType.len() == 0)
+			{
+				continue;
+			}
+
+			damageTypes.push(damageType);
+		}
+
+		if (_isSpecial)
+		{
+			damageTypes.push({
+				Type = this.Const.Damage.DamageType.Piercing,
+				Weight = 100
+			});
+		}
+
+		this.getPerksForDamageType(_lib, damageTypes);
+	}
+
+	function getLib()
+	{
+		return [
 			[
 				this.Const.Perks.PerkDefs.LegendBackToBasics,
 				this.Const.Perks.PerkDefs.Colossus,
@@ -211,7 +424,11 @@ this.perk_tree_builder <- {
 				this.Const.Perks.PerkDefs.BattleFlow,
 			],
 		];
-		local lbE = [
+	}
+
+	function getEnemyLib()
+	{
+		return [
 			[
 				this.Const.Perks.PerkDefs.LegendFavouredEnemyGhoul,
 				this.Const.Perks.PerkDefs.LegendFavouredEnemyDirewolf,
@@ -241,133 +458,6 @@ this.perk_tree_builder <- {
 				this.Const.Perks.PerkDefs.LegendFavouredEnemySwordmaster,
 			],
 		];
-		
-		this.addPTR_Perks(lb, _hasAoE);
-		tools.removeExistingPerks(_tree, lb);
-		tools.removeExistingPerks(_tree, lbE);
-		
-		for ( local i = 0 ; i < 3 ; i = ++i )
-		{
-			for ( local j = 0 ; j < perkAddPerRow[i] ; j = j )
-			{
-				if (lb[0].len() <= 0)
-				{
-					break;
-				}
-				
-				local index = ::mc_randArrayIndex(lb[0]);
-				
-				if (lb[0][index] != null && !tools.hasPerk(Perks, lb[0][index]))
-				{
-					Perks.PerkDefs.push(lb[0][index]);
-					Perks.Row.push(i);
-					j = ++j;
-				}
-			}
-		}
-
-
-		for ( local i = 3 ; i < 5 ; i = ++i )
-		{
-			for ( local j = 0 ; j < perkAddPerRow[i] ; j = ++j )
-			{
-				if (lb[1].len() <= 0)
-				{
-					break;
-				}
-				
-				local index = ::mc_randArrayIndex(lb[1]);
-				
-				if (lb[1][index] != null && !tools.hasPerk(Perks, lb[1][index]))
-				{
-					Perks.PerkDefs.push(lb[1][index]);
-					Perks.Row.push(i);
-					j = ++j;
-				}
-			}
-		}
-
-		for ( local i = 5 ; i < 7 ; i = ++i )
-		{
-			for ( local j = 0 ; j < perkAddPerRow[i] ; j = ++j )
-			{
-				if (lb[2].len() == 0)
-				{
-					break;
-				}
-				
-				local index = ::mc_randArrayIndex(lb[2]);
-				
-				if (lb[2][index] != null && !tools.hasPerk(Perks, lb[2][index]))
-				{
-					Perks.PerkDefs.push(lb[2][index]);
-					Perks.Row.push(i);
-					j = ++j;
-				}
-			}
-		}
-		
-		for ( local i = 0 ; i < perkFavourNum ; i = ++i )
-		{
-			local r = this.Math.rand(0, 2);
-			local index = ::mc_randArrayIndex(lbE[r]);
-			
-			if (lbE[r][index] != null)
-			{
-				Perks.PerkDefs.push(lbE[r][index]);
-				Perks.Row.push(3);
-				lbE[r].remove(index);
-			}
-		}
-		
-		local result = {
-			Tree = _tree,
-			Data = Perks,
-		}
-		
-		return result;
 	}
 
-	function addPTR_Perks( _lib , _hasAoE = false )
-	{
-		if (::mods_getRegisteredMod("mod_legends_PTR") == null)
-		{
-			return;
-		}
-
-		_lib[0].extend([
-			this.Const.Perks.PerkDefs.PTRSmallTarget,
-			this.Const.Perks.PerkDefs.PTRHeadSmasher,
-			this.Const.Perks.PerkDefs.PTRSurvivalInstinct,
-			this.Const.Perks.PerkDefs.PTRDiscoveredTalent,
-			this.Const.Perks.PerkDefs.PTRRisingStar,
-			this.Const.Perks.PerkDefs.PTRFreshAndFurious,
-			this.Const.Perks.PerkDefs.PTRStrengthInNumbers,
-			this.Const.Perks.PerkDefs.PTRFruitsOfLabor,
-		]);
-
-		_lib[1].extend([
-			this.Const.Perks.PerkDefs.PTRSanguinary,
-			this.Const.Perks.PerkDefs.PTRBearDown,
-			//this.Const.Perks.PerkDefs.PTRHeightenedReflexes,
-			this.Const.Perks.PerkDefs.PTRWearThemDown,
-			this.Const.Perks.PerkDefs.PTRKnowTheirWeakness,
-			this.Const.Perks.PerkDefs.PTRPersonalArmor,
-			this.Const.Perks.PerkDefs.PTRTunnelVision,
-		]);
-
-		_lib[2].extend([
-			this.Const.Perks.PerkDefs.PTRBloodlust,
-			this.Const.Perks.PerkDefs.PTRBloodbath,
-			this.Const.Perks.PerkDefs.PTRUnstoppable,
-			this.Const.Perks.PerkDefs.PTRTheRushOfBattle,
-			this.Const.Perks.PerkDefs.PTRExudeConfidence,
-		]);
-		
-		if (_hasAoE)
-		{
-			_lib[1].push(this.Const.Perks.PerkDefs.PTRSweepingStrikes);
-			_lib[2].push(this.Const.Perks.PerkDefs.PTRBloodyHarvest);
-		}
-	}
 };

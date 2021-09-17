@@ -24,6 +24,16 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	{
 		local gt = this.getroottable();
 
+		gt.Const.PerksCharmedUnit.HyenaTree[3].push(gt.Const.Perks.PerkDefs.PTRDeepCuts);
+		gt.Const.PerksCharmedUnit.SerpentTree[3].push(gt.Const.Perks.PerkDefs.PTRLeverage);
+		gt.Const.PerksCharmedUnit.SerpentTree[5].push(gt.Const.Perks.PerkDefs.PTRUtilitarian);
+		gt.Const.PerksCharmedUnit.LindwurmTree[3].push(gt.Const.Perks.PerkDefs.PTRLeverage);
+		gt.Const.PerksCharmedUnit.LindwurmTree[5].push(gt.Const.Perks.PerkDefs.PTRUtilitarian);
+		gt.Const.PerksCharmedUnit.LindwurmTree[5].push(gt.Const.Perks.PerkDefs.PTRExudeConfidence);
+		gt.Const.PerksCharmedUnit.SchratTree[5].push(gt.Const.Perks.PerkDefs.PTRExudeConfidence);
+		
+
+
 		gt.Const.PerksCharmedUnit.GoblinAmbusher <- {
 			ExpertiseMultipliers = [
 			],
