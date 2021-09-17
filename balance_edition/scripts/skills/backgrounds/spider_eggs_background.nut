@@ -50,6 +50,14 @@ this.spider_eggs_background <- this.inherit("scripts/skills/backgrounds/characte
 			"trait.swift",
 			"trait.night_blind",
 			"trait.night_owl",
+			"trait.hate_nobles",
+			"trait.hate_greenskins",
+			"trait.hate_undead",
+			"trait.hate_beasts",
+			"trait.fear_beasts",
+			"trait.fear_nobles",
+			"trait.fear_undead",
+			"trait.fear_greenskins",
 			"trait.teamplayer",
 			"trait.weasel",
 			"trait.huge",
@@ -83,76 +91,27 @@ this.spider_eggs_background <- this.inherit("scripts/skills/backgrounds/characte
 		this.m.Modifiers.Hunting = this.Const.LegendMod.ResourceModifiers.Hunting[2];
 		this.m.Modifiers.Scout = this.Const.LegendMod.ResourceModifiers.Scout[0];
 		
-		this.m.CustomPerkTree = [
-			[
-				this.Const.Perks.PerkDefs.LegendGatherer,
-				this.Const.Perks.PerkDefs.CripplingStrikes,
-				this.Const.Perks.PerkDefs.NineLives,
-				this.Const.Perks.PerkDefs.Colossus,
-				this.Const.Perks.PerkDefs.Recover,
-				this.Const.Perks.PerkDefs.Student,
-				this.Const.Perks.PerkDefs.LegendBackToBasics,
-			],
-			[
-				this.Const.Perks.PerkDefs.LegendLacerate,
-				this.Const.Perks.PerkDefs.Anticipation,
-				this.Const.Perks.PerkDefs.Dodge,
-				this.Const.Perks.PerkDefs.LegendEvasion,
-				this.Const.Perks.PerkDefs.LegendHidden,
-				this.Const.Perks.PerkDefs.LegendHairSplitter,
-				this.Const.Perks.PerkDefs.Gifted,
-			],
-			[
-				this.Const.Perks.PerkDefs.FortifiedMind,
-				this.Const.Perks.PerkDefs.LegendAlert,
-				this.Const.Perks.PerkDefs.Relentless,
-				this.Const.Perks.PerkDefs.CoupDeGrace,
-				this.Const.Perks.PerkDefs.LegendAssassinate,
-				this.Const.Perks.PerkDefs.LegendLacerate,
-				this.Const.Perks.PerkDefs.Rotation,
-				this.Const.Perks.PerkDefs.Taunt
-			],
-			[
-				this.Const.Perks.PerkDefs.Underdog,
-				this.Const.Perks.PerkDefs.LegendAssuredConquest,
-				this.Const.Perks.PerkDefs.LegendComposure,
-				this.Const.Perks.PerkDefs.Fearsome,
-				this.Const.Perks.PerkDefs.Rebound,
-				this.Const.Perks.PerkDefs.LegendClarity,
-				this.Const.Perks.PerkDefs.EggBreedingMachine,
-				this.Const.Perks.PerkDefs.EggAttachSpider,
-			],
-			[
-				this.Const.Perks.PerkDefs.PushTheAdvantage,
-				this.Const.Perks.PerkDefs.LegendLithe,
-				this.Const.Perks.PerkDefs.Nimble,
-				this.Const.Perks.PerkDefs.LoneWolf,
-				this.Const.Perks.PerkDefs.LegendUntouchable,
-				this.Const.Perks.PerkDefs.SpiderBite,
-				this.Const.Perks.PerkDefs.BoondockBlade,
-			],
-			[
-				this.Const.Perks.PerkDefs.LegendGruesomeFeast,
-				this.Const.Perks.PerkDefs.Overwhelm,
-				this.Const.Perks.PerkDefs.LegendTumble,
-				this.Const.Perks.PerkDefs.LegendTerrifyingVisage,
-				this.Const.Perks.PerkDefs.LegendSecondWind,
-				this.Const.Perks.PerkDefs.SpiderVenom,
-				this.Const.Perks.PerkDefs.EggInherit,
-			],
-			[
-				this.Const.Perks.PerkDefs.Stalwart,
-				this.Const.Perks.PerkDefs.LastStand,
-				this.Const.Perks.PerkDefs.Berserk,
-				this.Const.Perks.PerkDefs.Indomitable,
-				this.Const.Perks.PerkDefs.BattleFlow,
-				this.Const.Perks.PerkDefs.EggNaturalSelection
-			],
-			[],
-			[],
-			[],
-			[]
-		];
+		this.m.PerkTreeDynamic = {
+			Weapon = [],
+			Defense = [],
+			Traits = [],
+			Enemy = [],
+			Class = [],
+			Magic = [{
+				ID = "SpiderHive",
+				Name = "SpiderHive",
+				Descriptions = ["spider hive"],
+				Tree = [
+					[],
+					[],
+					[],
+					[this.Const.Perks.PerkDefs.SpiderVenom, this.Const.Perks.PerkDefs.EggBreedingMachine, this.Const.Perks.PerkDefs.EggAttachSpider],
+					[this.Const.Perks.PerkDefs.SpiderWeb],
+					[this.Const.Perks.PerkDefs.SpiderBite, this.Const.Perks.PerkDefs.EggInherit],
+					[this.Const.Perks.PerkDefs.EggNaturalSelection]
+				]			
+			}],
+		};		
 	}
 	
 	function onUpdate( _properties )
