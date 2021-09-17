@@ -23,7 +23,7 @@ this.perk_tree_builder <- {
 		{
 			return _excluded.find(_perk) != null;
 		};
-		tools.isInTree <- function ( _tree, _perk )
+		tools.isInTree <- function( _tree, _perk )
 		{
 			foreach( row in _tree )
 			{
@@ -47,7 +47,7 @@ this.perk_tree_builder <- {
 				}
 			}
 		}
-		tools.removeExistingPerks <- ( _lib , _excluded )
+		tools.removeExistingPerks <- function( _lib , _excluded )
 		{
 			foreach ( library in _lib ) 
 			{
@@ -55,7 +55,7 @@ this.perk_tree_builder <- {
 			    {
 			    	while (library.find(_perk) != null)
 			    	{
-			    		local index = library.find(perk);
+			    		local index = library.find(_perk);
 			    		library.remove(index);
 			    	}
 			    }
@@ -115,11 +115,28 @@ this.perk_tree_builder <- {
 			}
 		}
 	
-		local lb = this.getLib();
-		local lbE = this.getEnemyLib();
-		this.addPTR_Perks(lb, _skills, _hasAoE, _isSpecial);
-		tools.removeExistingPerks(lb, excludedPerks);
-		tools.removeExistingPerks(lb, excludedPerks);
+		local lib = this.getLib();
+		local libE = this.getEnemyLib();
+
+		if (this.Math.rand(1, 100) <= 50)
+		{
+			lib[0].extend(libE[0]);
+			maxPerksPerRow[this.Math.rand(0, 6)] += 1;
+		}
+
+		if (this.Math.rand(1, 100) <= 50)
+		{
+			lib[1].extend(libE[1]);
+			maxPerksPerRow[this.Math.rand(0, 6)] += 1;
+		}
+
+		if (this.Math.rand(1, 100) <= 50)
+		{
+			lib[2].extend(libE[2]);
+		}
+		
+		this.addPTR_Perks(lib, _skills, _isSpecial, _hasAoE);
+		tools.removeExistingPerks(lib, excludedPerks);
 		
 		for ( local i = 0 ; i < 10 ; i = i ) 
 		{
@@ -173,7 +190,13 @@ this.perk_tree_builder <- {
 						}
 		        	}
 
-		        	r = lib_to_choose[this.Math.rand(0, lib_to_choose - 1)];
+		        	if (lib_to_choose.len() == 0)
+		        	{
+		        		r = null;
+		        		break;
+		        	}
+
+		        	r = lib_to_choose[this.Math.rand(0, lib_to_choose.len() - 1)];
 		        }
 		        while(tools.hasPerk(r , excludedPerks) && lib_to_choose.len() > 0)
 
@@ -191,9 +214,9 @@ this.perk_tree_builder <- {
 		return _tree;
 	}
 
-	function getPerksForDamageType( _lib, _damageType = [] )
+	function getPerksForDamageType( _lib, _damageType = null )
 	{
-		if (_damageType.len() == 0)
+		if (_damageType == null || _damageType.len() == 0)
 		{
 			return;
 		}
@@ -252,7 +275,7 @@ this.perk_tree_builder <- {
 		}
 	}
 
-	function addPTR_Perks( _lib , _skill , _hasAoE = false , _isSpecial )
+	function addPTR_Perks( _lib , _skill , _isSpecial , _hasAoE = false )
 	{
 		if (::mods_getRegisteredMod("mod_legends_PTR") == null)
 		{
@@ -320,7 +343,7 @@ this.perk_tree_builder <- {
 				continue;
 			}
 
-			damageTypes.push(damageType);
+			damageTypes.extend(damageType);
 		}
 
 		if (_isSpecial)

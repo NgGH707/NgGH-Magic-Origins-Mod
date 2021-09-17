@@ -130,7 +130,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 				"helmet_top",
 				"helmet_vanity",
 				"helmet_vanity_2",
-			]
+			],
 			[
 				"body",
 				"helmet_vanity_lower",
@@ -141,7 +141,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 				"helmet_top",
 				"helmet_vanity",
 				"helmet_vanity_2",
-			]
+			],
 			[
 				"body",
 				"helmet_vanity_lower",
@@ -358,8 +358,13 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.m.ActionPoints = c.ActionPoints;
 		this.m.Hitpoints = c.Hitpoints;
 		this.m.Talents = [];
-		this.fillTalentValues();
+		this.fillTalentValues(3);
 		this.fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
+	}
+
+	function fillTalentValues( _num, _force = false )
+	{
+		this.player.fillTalentValues(_num, _force);
 	}
 
 	function onRetreating()
