@@ -118,6 +118,14 @@ this.perk_tree_builder <- {
 		local lib = this.getLib();
 		local libE = this.getEnemyLib();
 
+		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+		{
+			for (local i = 0; i < 6; i++) 
+			{
+			    maxPerksPerRow[i] += 1;
+			}
+		}
+
 		if (this.Math.rand(1, 100) <= 50)
 		{
 			lib[0].extend(libE[0]);
@@ -138,7 +146,7 @@ this.perk_tree_builder <- {
 		this.addPTR_Perks(lib, _skillsContainer, _isSpecial, _hasAoE);
 		tools.removeExistingPerks(lib, excludedPerks);
 		
-		for ( local i = 0 ; i < 10 ; i = i ) 
+		for ( local i = 0 ; i < 20 ; i = i ) 
 		{
 		    foreach (j, row in _tree ) 
 		    {
@@ -294,8 +302,8 @@ this.perk_tree_builder <- {
 			this.Const.Perks.PerkDefs.PTRPersonalArmor,
 			this.Const.Perks.PerkDefs.PTRTunnelVision,
 			this.Const.Perks.PerkDefs.PTRMenacing,
-			this.Const.Perks.PerkDefs.PTRPatternRecognition,
 			this.Const.Perks.PerkDefs.PTRAlwaysAnEntertainer,
+			this.Const.Perks.PerkDefs.PTRDiscoveredTalent,
 		]);
 
 		_lib[1].extend([
@@ -304,18 +312,18 @@ this.perk_tree_builder <- {
 			this.Const.Perks.PerkDefs.PTRExploitOpening,
 			this.Const.Perks.PerkDefs.PTRFluidWeapon,
 			this.Const.Perks.PerkDefs.PTRTempo,
-			this.Const.Perks.PerkDefs.PTRDiscoveredTalent,
+			this.Const.Perks.PerkDefs.PTRPatternRecognition,
 			this.Const.Perks.PerkDefs.PTRDynamicDuo,
 			this.Const.Perks.PerkDefs.PTRStrengthInNumbers,
 			this.Const.Perks.PerkDefs.PTRWearsItWell,
 			this.Const.Perks.PerkDefs.PTRBully,
+			this.Const.Perks.PerkDefs.PTREnGarde,
 			this.Const.Perks.PerkDefs.PTRPaintASmile
 		]);
 
 		_lib[2].extend([
 			this.Const.Perks.PerkDefs.PTRTheRushOfBattle,
 			this.Const.Perks.PerkDefs.PTRFruitsOfLabor,
-			this.Const.Perks.PerkDefs.PTREnGarde,
 			this.Const.Perks.PerkDefs.PTRWearThemDown,
 			this.Const.Perks.PerkDefs.PTRUnstoppable,
 			this.Const.Perks.PerkDefs.PTRWhackASmack,

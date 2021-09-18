@@ -466,7 +466,7 @@ this.spider_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		    body.setBrush("bust_spider_redback_body_0" + this.Math.rand(1, 4));
 		    legs_front.setBrush("bust_spider_redback_legs_front");
 		    head.setBrush("bust_spider_redback_head_01");
-		    injury.setBrush("mc_bust_spider_01_injured");
+		    injury.setBrush("bust_spider_01_injured");
 		    this.setSize(this.Math.rand(90, 100) * 0.01);
 		    break;
 		
