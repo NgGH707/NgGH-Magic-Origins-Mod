@@ -1,7 +1,7 @@
 this.perk_tree_builder <- {
 	m = {},
 	
-	function fillWithRandomPerk( _tree , _skills , _addWeapon = false , _hasAoE = false , _isSpecial = false )
+	function fillWithRandomPerk( _tree , _skillsContainer , _addWeapon = false , _hasAoE = false , _isSpecial = false )
 	{
 		local currentPerksPerkRow = [];
 		local excludedPerks = [];
@@ -135,7 +135,7 @@ this.perk_tree_builder <- {
 			lib[2].extend(libE[2]);
 		}
 		
-		this.addPTR_Perks(lib, _skills, _isSpecial, _hasAoE);
+		this.addPTR_Perks(lib, _skillsContainer, _isSpecial, _hasAoE);
 		tools.removeExistingPerks(lib, excludedPerks);
 		
 		for ( local i = 0 ; i < 10 ; i = i ) 
@@ -275,7 +275,7 @@ this.perk_tree_builder <- {
 		}
 	}
 
-	function addPTR_Perks( _lib , _skill , _isSpecial , _hasAoE = false )
+	function addPTR_Perks( _lib , _skillsContainer , _isSpecial , _hasAoE = false )
 	{
 		if (::mods_getRegisteredMod("mod_legends_PTR") == null)
 		{
@@ -329,7 +329,7 @@ this.perk_tree_builder <- {
 
 		local damageTypes = [];
 
-		foreach( active in _skill.m.Skills )
+		foreach( active in _skillsContainer.m.Skills )
 		{
 			if (active.isGarbage() || !active.isActive())
 			{
