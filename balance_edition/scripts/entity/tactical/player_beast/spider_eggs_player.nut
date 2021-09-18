@@ -108,8 +108,13 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.getSprite("accessory_special").Scale = 0.7 * this.m.Size;
 		this.setSpriteOffset("accessory_special", this.createVec(this.m.BodyOffset[0] * this.m.Size, this.m.BodyOffset[1] * this.m.Size));
 		this.setAlwaysApplySpriteOffset(true);
-		this.setRenderCallbackEnabled(true);
 		this.setDirty(true);
+	}
+
+	function onCombatStart()
+	{
+		this.setRenderCallbackEnabled(true);
+		this.player_beast.onCombatStart();
 	}
 
 	function isNonCombatant()
@@ -238,7 +243,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 
 		foreach( a in this.Const.CharacterSprites.Helmets )
 		{
-			if (this.getSprite(a).HasBrush)
+			if (this.getSprite(a).HasBrush && this.getSprite(a).Visible)
 			{
 				this.moveSpriteOffset(a, this.m.DistortTargetPrevHelmet, this.m.DistortTargetHelmet, 1.0, this.m.DistortAnimationStartTimeA);
 			}

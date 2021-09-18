@@ -40,6 +40,7 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsShowingProjectile = false;
 		this.m.IsUsingHitchance = true;
+		this.m.IsIgnoreBlockTarget = true;
 		this.m.IsDoingForwardMove = false;
 		this.m.IsVisibleTileNeeded = true;
 		this.m.ActionPointCost = 7;

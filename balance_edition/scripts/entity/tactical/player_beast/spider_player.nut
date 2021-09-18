@@ -156,7 +156,7 @@ this.spider_player <- this.inherit("scripts/entity/tactical/player_beast", {
 
 		foreach( a in this.Const.CharacterSprites.Helmets )
 		{
-			if (this.getSprite(a).HasBrush)
+			if (this.getSprite(a).HasBrush && this.getSprite(a).Visible)
 			{
 				this.moveSpriteOffset(a, this.m.DistortTargetPrevHelmet, this.m.DistortTargetHelmet, 1.0, this.m.DistortAnimationStartTimeA);
 			}
@@ -405,8 +405,13 @@ this.spider_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		}
 
 		this.setAlwaysApplySpriteOffset(true);
-		this.setRenderCallbackEnabled(true);
 		this.setDirty(true);
+	}
+
+	function onCombatStart()
+	{
+		this.setRenderCallbackEnabled(true);
+		this.player_beast.onCombatStart();
 	}
 
 	function setSize( _s )
