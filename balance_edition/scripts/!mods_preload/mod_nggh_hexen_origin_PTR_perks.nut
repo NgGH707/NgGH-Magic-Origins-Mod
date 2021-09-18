@@ -11,6 +11,7 @@ this.getroottable().HexenHooks.hookPTR <- function ()
 	}
 	::mods_hookExactClass("skills/effects/ptr_whack_a_smack_effect", function ( obj )
 	{
+		obj.m.IsForceEnabled <- false;
 		obj.onAdded <- function()
 		{
 			AutoEnableForBeasts(this);

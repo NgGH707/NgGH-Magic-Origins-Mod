@@ -5,6 +5,14 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		Head = 0,
 		Count = 0,
 		Size = 1.0,
+		DistortTargetA = null,
+		DistortTargetPrevA = this.createVec(0, 0),
+		DistortTargetHelmet = null,
+		DistortTargetPrevHelmet = this.createVec(0, 0),
+		DistortAnimationStartTimeA = 0,
+		IsFlipping = false,
+		HelmetOffset = [0, 0],
+		BodyOffset = [0, 0]
 	},
 	function getExcludedMount()
 	{
@@ -78,6 +86,9 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 			adjust_y = this.Const.GoblinRiderMounts[this.getMountType()].Sprite[0][1];
 		}
 
+		this.m.HelmetOffset = [x + adjust_x, y + adjust_y];
+		this.m.BodyOffset = [adjust_x, adjust_y];
+
 		foreach( a in this.Const.CharacterSprites.Helmets )
 		{
 			if (!this.hasSprite(a))
@@ -85,18 +96,19 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 				continue;
 			}
 
-			local offsetX = (x + adjust_x) * this.m.Size;
-			local offsetY = (y + adjust_y) * this.m.Size;
+			local offsetX = this.m.HelmetOffset[0] * this.m.Size;
+			local offsetY = this.m.HelmetOffset[1] * this.m.Size;
 			this.setSpriteOffset(a, this.createVec(offsetX, offsetY));
 			this.getSprite(a).Scale = 0.85 * this.m.Size;
 		}
 
-		this.setSpriteOffset("body", this.createVec(adjust_x * this.m.Size, adjust_y * this.m.Size));
+		this.setSpriteOffset("body", this.createVec(this.m.BodyOffset[0] * this.m.Size, this.m.BodyOffset[1] * this.m.Size));
 		this.getSprite("accessory").Scale = 0.7 * this.m.Size;
-		this.setSpriteOffset("accessory", this.createVec(adjust_x * this.m.Size, adjust_y * this.m.Size));
+		this.setSpriteOffset("accessory", this.createVec(this.m.BodyOffset[0] * this.m.Size, this.m.BodyOffset[1] * this.m.Size));
 		this.getSprite("accessory_special").Scale = 0.7 * this.m.Size;
-		this.setSpriteOffset("accessory_special", this.createVec(adjust_x * this.m.Size, adjust_y * this.m.Size));
+		this.setSpriteOffset("accessory_special", this.createVec(this.m.BodyOffset[0] * this.m.Size, this.m.BodyOffset[1] * this.m.Size));
 		this.setAlwaysApplySpriteOffset(true);
+		this.setRenderCallbackEnabled(true);
 		this.setDirty(true);
 	}
 
@@ -111,6 +123,11 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 	}
 
 	function getStrength()
+	{
+		return 1.25;
+	}
+
+	function getHealthRecoverMult()
 	{
 		return 1.25;
 	}
@@ -207,10 +224,35 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.m.AIAgent.setActor(this);
 		this.m.Flags.add("egg");
 	}
-	
-	function getHealthRecoverMult()
+
+	function onRender()
 	{
-		return 1.25;
+		this.actor.onRender();
+
+		if (this.m.DistortTargetA == null)
+		{
+			this.m.DistortTargetA = this.m.IsFlipping ? this.createVec(this.m.BodyOffset[0] * this.m.Size, (this.m.BodyOffset[1] + 1.0) * this.m.Size) : this.createVec(this.m.BodyOffset[0] * this.m.Size, (this.m.BodyOffset[1] - 1.0) * this.m.Size);
+			this.m.DistortTargetHelmet = this.m.IsFlipping ? this.createVec(this.m.HelmetOffset[0] * this.m.Size, (this.m.HelmetOffset[1] + 1.0) * this.m.Size) : this.createVec(this.m.HelmetOffset[0] * this.m.Size, (this.m.HelmetOffset[1] - 1.0) * this.m.Size);
+			this.m.DistortAnimationStartTimeA = this.Time.getVirtualTimeF() - this.Math.rand(10, 100) * 0.01;
+		}
+
+		foreach( a in this.Const.CharacterSprites.Helmets )
+		{
+			if (this.getSprite(a).HasBrush)
+			{
+				this.moveSpriteOffset(a, this.m.DistortTargetPrevHelmet, this.m.DistortTargetHelmet, 1.0, this.m.DistortAnimationStartTimeA);
+			}
+		}
+
+		if (this.moveSpriteOffset("body", this.m.DistortTargetPrevA, this.m.DistortTargetA, 1.0, this.m.DistortAnimationStartTimeA))
+		{
+			this.m.DistortAnimationStartTimeA = this.Time.getVirtualTimeF();
+			this.m.DistortTargetPrevA = this.m.DistortTargetA;
+			this.m.DistortTargetA = this.m.IsFlipping ? this.createVec(this.m.BodyOffset[0] * this.m.Size, (this.m.BodyOffset[1] + 1.0) * this.m.Size) : this.createVec(this.m.BodyOffset[0] * this.m.Size, (this.m.BodyOffset[1] - 1.0) * this.m.Size);
+			this.m.DistortTargetPrevHelmet = this.m.DistortTargetHelmet;	
+			this.m.DistortTargetHelmet = this.m.IsFlipping ? this.createVec(this.m.HelmetOffset[0] * this.m.Size, (this.m.HelmetOffset[1] + 1.0) * this.m.Size) : this.createVec(this.m.HelmetOffset[0] * this.m.Size, (this.m.HelmetOffset[1] - 1.0) * this.m.Size);
+			this.m.IsFlipping = !this.m.IsFlipping;
+		}
 	}
 
 	function onCombatStart()
@@ -247,6 +289,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 	{
 		this.actor.onFactionChanged();
 		local flip = !this.isAlliedWithPlayer();
+		this.m.IsFlipping = !flip;
 		this.getSprite("body").setHorizontalFlipping(!flip);
 		this.getSprite("accessory").setHorizontalFlipping(flip);
 		this.getSprite("accessory_special").setHorizontalFlipping(flip);
@@ -265,6 +308,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 	function onInit()
 	{
 		this.player_beast.onInit();
+		this.setRenderCallbackEnabled(true);
 		local b = this.m.BaseProperties;
 		b.IsImmuneToKnockBackAndGrab = true;
 		b.IsImmuneToStun = true;

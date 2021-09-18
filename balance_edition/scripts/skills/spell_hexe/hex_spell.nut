@@ -35,6 +35,7 @@ this.hex_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
 		this.m.IsRanged = true;
+		this.m.IsIgnoreBlockTarget = true;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.ActionPointCost = 3;
 		this.m.FatigueCost = 10;

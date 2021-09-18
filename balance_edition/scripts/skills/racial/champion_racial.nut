@@ -43,9 +43,9 @@ this.champion_racial <- this.inherit("scripts/skills/skill", {
 		this.getContainer().getActor().m.IsMiniboss = true;
 		this.getContainer().update();
 		
-		if (this.isKindOf(this.getContainer().getActor(), "spider_player") && this.getContainer().getActor().getSize() < 1.0)
+		if (this.isKindOf(this.getContainer().getActor().get(), "spider_player") && this.getContainer().getActor().getSize() < 1.0)
 		{
-			this.getContainer().getActor().setSize(1);
+			this.getContainer().getActor().setSize(0.95);
 		}
 	}
 	

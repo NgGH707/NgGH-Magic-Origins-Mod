@@ -28,6 +28,28 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 		});
 	}
 
+	//Make huge and small trait to affect spider size
+	::mods_hookExactClass("skills/traits/huge_trait", function(obj) 
+	{
+	    obj.onAdded <- function()
+	    {
+	       if (this.isKindOf(this.getContainer().getActor().get(), "spider_player") && this.getContainer().getActor().getSize() < 0.9)
+			{
+				this.getContainer().getActor().setSize(0.9);
+			}
+	    }
+	});
+	::mods_hookExactClass("skills/traits/tiny_trait", function(obj) 
+	{
+	  	obj.onAdded <- function()
+	    {
+	       if (this.isKindOf(this.getContainer().getActor().get(), "spider_player") && this.getContainer().getActor().getSize() > 0.65)
+			{
+				this.getContainer().getActor().setSize(0.65);
+			}
+	    }
+	});
+
 	//Disallow the use of footwork while mounting
 	::mods_hookExactClass("skills/actives/footwork", function(obj) 
 	{

@@ -155,7 +155,7 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 			return;
 		}
 
-		this.m.Score = 15;
+		this.m.Score = 25;
 	}
 
 	function onDetermineStartScreen()

@@ -76,6 +76,7 @@ this.charm_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsUsingHitchance = true;
 		this.m.IsDoingForwardMove = false;
 		this.m.IsVisibleTileNeeded = true;
+		this.m.IsIgnoreBlockTarget = true;
 		this.m.ActionPointCost = 5;
 		this.m.FatigueCost = 20;
 		this.m.MinRange = 1;
