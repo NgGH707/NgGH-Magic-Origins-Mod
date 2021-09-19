@@ -222,8 +222,8 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 		b.HitpointsMult = _mult * 1.15;
 		b.MeleeSkillMult = _mult;
 		b.RangedSkillMult = _mult;
-		b.ArmorMult = _mult;
-		b.ArmorMult = _mult;
+		b.ArmorMult[0] = _mult;
+		b.ArmorMult[1] = _mult;
 
 		if (_mult > 1.25)
 		{
@@ -235,14 +235,14 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 			b.HitpointsMult *= 1.2;
 		}
 
+		this.m.ActionPoints = b.ActionPoints;
+		this.m.Skills.update();
+
 		if (_isEnhanced)
 		{
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_battle_forged"));
 		}
 
-		this.m.ActionPoints = b.ActionPoints;
-		this.m.CurrentProperties = clone b;
-		this.m.Skills.update();
 		this.setHitpointsPct(1.0);
 	}
 

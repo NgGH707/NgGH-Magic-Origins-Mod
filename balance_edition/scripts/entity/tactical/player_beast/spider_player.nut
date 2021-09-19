@@ -408,12 +408,6 @@ this.spider_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.setDirty(true);
 	}
 
-	function onCombatStart()
-	{
-		this.setRenderCallbackEnabled(true);
-		this.player_beast.onCombatStart();
-	}
-
 	function setSize( _s )
 	{
 		this.m.Size = _s;
@@ -703,6 +697,7 @@ this.spider_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	{
 		this.player_beast.onDeserialize(_in);
 		this.m.Size = _in.readF32();
+		this.setSize(this.m.Size);
 	}
 
 });

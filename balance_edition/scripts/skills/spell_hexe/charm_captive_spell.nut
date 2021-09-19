@@ -305,7 +305,7 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
 		local resist = (defenderProperties.getBravery() + defenderProperties.MoraleCheckBravery[1]) * defenderProperties.MoraleCheckBraveryMult[1];
 		
-		if (resist >= 500 && _targetEntity.getType() != 79)
+		if (resist >= 500 && _targetEntity.getType() != this.Const.EntityType.TricksterGod)
 		{
 			return 0;
 		}
@@ -349,12 +349,12 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		toHit = toHit + threatBonus;
 		toHit = toHit + bonus;
 		
-		if (_targetEntity.getType() == 112)
+		if (_targetEntity.getType() == this.Const.EntityType.LegendStollwurm)
 		{
 			return this.Math.max(5, this.Math.min(10, toHit));
 		}
 		
-		if (_targetEntity.getType() == 79)
+		if (_targetEntity.getType() == this.Const.EntityType.TricksterGod)
 		{
 			if (hpLeft >= 1.0)
 			{

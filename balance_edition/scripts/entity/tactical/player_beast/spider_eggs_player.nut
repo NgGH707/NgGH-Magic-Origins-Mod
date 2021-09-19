@@ -111,12 +111,6 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.setDirty(true);
 	}
 
-	function onCombatStart()
-	{
-		this.setRenderCallbackEnabled(true);
-		this.player_beast.onCombatStart();
-	}
-
 	function isNonCombatant()
 	{
 		if (this.isMounted())

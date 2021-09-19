@@ -558,61 +558,6 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 				this.updateAchievement("GiveMeBackMyLegions", 1, 1);
 			}
 		};
-
-		obj.executeEntitySkill = function( _activeEntity, _targetTile )
-		{
-			local skill = _activeEntity.getSkills().getSkillByID(this.m.SelectedSkillID);
-
-			if (skill != null && skill.isUsable() && skill.isAffordable())
-			{
-				if (_targetTile == null || skill.isTargeted() && this.wasInCameraMovementMode())
-				{
-					return;
-				}
-
-				if (skill.isUsableOn(_targetTile))
-				{
-					if (!_targetTile.IsEmpty)
-					{
-						local targetEntity = _targetTile.getEntity();
-
-						if (this.Tactical.getCamera().Level < _targetTile.Level)
-						{
-							this.Tactical.getCamera().Level = this.Tactical.getCamera().getBestLevelForTile(_targetTile);
-						}
-
-						if (this.isKindOf(targetEntity, "actor"))
-						{
-							this.logDebug("[" + _activeEntity.getName() + "] executes skill [" + skill.getName() + "] on target [" + targetEntity.getName() + "]");
-						}
-					}
-
-					skill.use(_targetTile);
-
-					if (_activeEntity.isAlive())
-					{
-						this.Tactical.TurnSequenceBar.updateEntity(_activeEntity.getID());
-
-						if (_activeEntity.getFlags().has("can_mount") && this.Const.UnleashSkills.find(skill.getID()) != null)
-						{
-							_activeEntity.m.Mount.onDismountPet();
-						}
-					}
-
-					this.Tooltip.reload();
-					this.Tactical.TurnSequenceBar.deselectActiveSkill();
-					this.Tactical.getHighlighter().clear();
-					this.m.CurrentActionState = null;
-					this.m.SelectedSkillID = null;
-					this.updateCursorAndTooltip();
-				}
-				else
-				{
-					this.Cursor.setCursor(this.Const.UI.Cursor.Denied);
-					this.Tactical.EventLog.log("[color=" + this.Const.UI.Color.NegativeValue + "]Invalid target![/color]");
-				}
-			}
-		}
 	});
 
 	delete this.HexenHooks.hookCharacterScreenAndStates;

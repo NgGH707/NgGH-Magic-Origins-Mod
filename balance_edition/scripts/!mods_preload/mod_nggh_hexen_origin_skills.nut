@@ -26,6 +26,48 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 				return true;
 			}
 		});
+
+		::mods_hookExactClass("companions/onequip/companions_unleash", function(obj) 
+		{
+			local onUse = ::mods_getMember(obj, "onUse");
+			obj.onUse = function(_user, _targetTile)
+			{
+				local ret = onUse(_user, _targetTile);
+
+				if (ret && ("isMounted" in _user.get()))
+				{
+					_user.m.Mount.onDismountPet();
+				}
+
+				return ret;
+			}
+		});
+	}
+
+	local dismount_skills = [
+		"unleash_wardog",
+		"unleash_wolf",
+		"legend_unleash_white_wolf",
+		"legend_unleash_warbear"
+	];
+
+	foreach ( active in dismount_skills )
+	{
+		::mods_hookExactClass("skills/actives/" + active, function(obj) 
+		{
+			local onUse = ::mods_getMember(obj, "onUse");
+			obj.onUse = function(_user, _targetTile)
+			{
+				local ret = onUse(_user, _targetTile);
+
+				if (ret && ("isMounted" in _user.get()))
+				{
+					_user.m.Mount.onDismountPet();
+				}
+
+				return ret;
+			}
+		});
 	}
 
 	//Make huge and small trait to affect spider size
