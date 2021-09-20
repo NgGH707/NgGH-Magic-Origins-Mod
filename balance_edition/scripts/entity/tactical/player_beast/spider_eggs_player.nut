@@ -559,6 +559,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 			"perk.natural_selection",
 			"perk.gifted",
 			"perk.attach_egg",
+			"perk.ptr_discovered_talent",
 		];
 		
 		foreach ( p in perks )
