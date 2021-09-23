@@ -114,7 +114,7 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 			{
 				this.Characters.push(_event.m.Simp1.getImagePath());
 				local up = _event.increaseSimpLevel(_event.m.Simp1);
-				local down = _event.increaseSimpLevel(_event.m.Simp2);
+				local down = _event.decreaseSimpLevel(_event.m.Simp2);
 
 				if (up != null)
 				{
@@ -180,7 +180,7 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 			{
 				this.Characters.push(_event.m.Simp2.getImagePath());
 				local up = _event.increaseSimpLevel(_event.m.Simp2);
-				local down = _event.increaseSimpLevel(_event.m.Simp1);
+				local down = _event.decreaseSimpLevel(_event.m.Simp1);
 
 				if (up != null)
 				{
