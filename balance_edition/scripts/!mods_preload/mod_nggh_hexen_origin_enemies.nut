@@ -10,6 +10,55 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			}
 		}
 	};
+	::mods_hookExactClass("entity/tactical/enemies/legend_stollwurm", function(obj) {
+		local onInit = obj.onInit;
+		obj.onInit = function()
+		{
+			onInit();
+			local chance = 10;
+
+			if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
+			{
+				chance = 100;
+			}
+
+			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 200)
+			{
+				chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 200));
+			}
+
+			randomlyRollPerk(this, [
+				"perk_lindwurm_acid"
+			], chance);
+			randomlyRollPerk(this, [
+				"perk_lindwurm_body"
+			], chance + 15);
+		}
+	});
+	::mods_hookExactClass("entity/tactical/enemies/lindwurm", function(obj) {
+		local onInit = obj.onInit;
+		obj.onInit = function()
+		{
+			onInit();
+			local chance = 25;
+
+			if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
+			{
+				chance = 75;
+			}
+
+			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 235)
+			{
+				chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 235));
+			}
+
+			randomlyRollPerk(this, [
+				"perk_lindwurm_acid",
+				"perk_lindwurm_body"
+			], chance);
+		}
+	});
+
 	local hyenas = [
 		"hyena",
 		"hyena_high"

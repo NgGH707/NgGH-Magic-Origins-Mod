@@ -159,6 +159,12 @@ gt.Const.HexenNameKeyWord <- [
 		"GREENDUMBOS",
 		"GREENSKIN"
 	],
+	[
+		"SIMPS",
+		"TWITCH",
+		"ASMR",
+		"STREAMER"
+	],
 ];
 
 gt.Const.HexenSeedKeyWord <- [
@@ -180,6 +186,8 @@ gt.Const.HexenSeedKeyWord <- [
 	"SCH",
 	"BEA",
 	"CIRCUS",
+	"GREEN"
+	"ASMR",
 ];
 
 gt.Const.HexenStartingRollName <- [
@@ -202,7 +210,7 @@ gt.Const.HexenStartingRollName <- [
 	"BEAR",
 	"CIRCUS",
 	"GREENSKINS",
-	"",
+	"AMOURANTH TWITCH",
 	"",
 ];
 

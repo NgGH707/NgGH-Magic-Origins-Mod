@@ -380,6 +380,57 @@ this.hexen_scenario <- this.inherit("scripts/scenarios/world/starting_scenario",
 					hexe.setTitle("Queen of Greenskin");
 					break;
 
+				case 19:
+					local donation = 0;
+					local free_perks = [
+						"scripts/skills/perks/perk_mastery_charm",
+						"scripts/skills/perks/perk_apppearance_charm", 
+						"scripts/skills/perks/perk_charm_nudist",
+					];
+					local free_charm_perk = free_perks[this.Math.rand(0, free_perks.len() - 1)];
+					for( local i = 0; i < 5; i = ++i )
+					{
+						local bro = roster.create("scripts/entity/tactical/player");
+						bro.setStartValuesEx(["beggar_southern_background", "beggar_background"]);
+						bro.getSkills().add(this.new("scripts/skills/traits/loyal_trait"));
+						bro.improveMood(0.5, "Amouranth\'s loyal simp");
+						bro.setPlaceInFormation(i + 2);
+						bro.addHeavyInjury();
+						bro.onHired();
+						local money = this.Math.rand(1, 8) * 10;
+						bro.improveMood(0.2, "Donated " + money + " crowns to Amouranth");
+						bro.improveMood(0.3, (money >= 70 ? "I'm broke, but feel good for supporting Amouranth" : "Feel good for supporting Amouranth"));
+						donation += money;
+					}
+
+					for( local i = 0; i < 5; i = ++i )
+					{
+						local isElite = this.Math.rand(1, 100) == 1;
+						local goblin = roster.create("scripts/entity/tactical/player_goblin");
+						goblin.getSkills().add(this.new("scripts/skills/traits/loyal_trait"));
+						goblin.improveMood(0.5, "Amouranth\'s loyal simp");
+						goblin.setScenarioValues(isElite);
+						goblin.setPlaceInFormation(i + 6);
+						goblin.addLightInjury();
+						goblin.onHired();
+						local money = this.Math.rand(1, 8) * 10;
+						bro.improveMood(0.2, "Donated " + money + " crowns to Amouranth");
+						bro.improveMood(0.3, (money >= 70 ? "I'm broke, but feel good for supporting Amouranth" : "Feel good for supporting Amouranth"));
+						donation += money;
+					}
+
+					hexe.getItems().addToBag(this.new("scripts/items/weapons/barbarians/thorned_whip"));
+					hexe.getSkills().add(this.new(free_charm_perk));
+					hexe.getSkills().add(this.new("scripts/skills/traits/seductive_trait"));
+					hexe.improveMood(0.5, "Finished a stream on Twitch");
+					hexe.improveMood(0.5, "Received " + donation + " crowns of donation from simps");
+					hexe.setName(this.Const.UI.getColorized("@Amouranth", "#1ac9b2"));
+					hexe.setTitle("ASMR streamer");
+					hexe.setPlaceInFormation(22);
+					this.World.Assets.addMoney(donation);
+					this.World.Assets.m.Name = this.removeFromBeginningOfText("The ", this.removeFromBeginningOfText("the ", "@Amouranth Simps Corp"));
+					break;
+
 				default:
 					for( local i = 0; i < 3; i = ++i )
 					{
@@ -455,8 +506,6 @@ this.hexen_scenario <- this.inherit("scripts/scenarios/world/starting_scenario",
 		{
 			this.World.Assets.getStash().add(this.new("scripts/items/special/fountain_of_youth_item"));
 		}
-		
-		this.World.Assets.m.Money = this.Math.round(this.World.Assets.m.Money * 0.95);
 	}
 
 	function onSpawnPlayer()

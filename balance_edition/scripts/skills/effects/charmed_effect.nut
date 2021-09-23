@@ -165,23 +165,14 @@ this.charmed_effect <- this.inherit("scripts/skills/skill", {
 	{
 		local actor = this.getContainer().getActor();
 		local flip = actor.isAlliedWithPlayer();
-		actor.getSprite("arrow").setHorizontalFlipping(flip);
-		actor.getSprite("status_rooted_back").setHorizontalFlipping(flip);
-		actor.getSprite("status_stunned").setHorizontalFlipping(flip);
-		actor.getSprite("shield_icon").setHorizontalFlipping(flip);
-		actor.getSprite("arms_icon").setHorizontalFlipping(flip);
-		actor.getSprite("status_rooted").setHorizontalFlipping(flip);
-		actor.getSprite("status_hex").setHorizontalFlipping(flip);
-
-		if (actor.m.MoraleState != this.Const.MoraleState.Ignore)
+		local sprites = ["surcoat", "body", "tattoo_body", "body_rage", "injury_body", "head", "tattoo_head", "beard", "hair", "beard_top", "injury", "body_blood", "head_frenzy", "accessory_special", "legs_back", "legs_front"];
+		
+		foreach (i, s in sprites)
 		{
-			local morale = actor.getSprite("morale");
-			morale.setHorizontalFlipping(flip);
-
-			if (actor.m.MoraleState == this.Const.MoraleState.Confident)
-			{
-				morale.setBrush(actor.m.ConfidentMoraleBrush);
-			}
+		    if (actor.hasSprite(s))
+		    {
+		    	actor.hasSprite(s).setHorizontalFlipping(flip);
+		    }
 		}
 	}
 
@@ -212,6 +203,12 @@ this.charmed_effect <- this.inherit("scripts/skills/skill", {
 		actor.setFaction(this.m.OriginalFaction);
 		actor.getSprite("socket").setBrush(this.m.OriginalSocket);
 		actor.getFlags().set("Charmed", false);
+
+		if (!actor.getFlags().has("human"))
+		{
+			this.onFactionChanged();
+		}
+		
 		actor.setDirty(true);
 
 		if (this.m.Master != null)

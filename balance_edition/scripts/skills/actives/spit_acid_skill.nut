@@ -28,8 +28,8 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsStacking = false;
 		this.m.IsAttack = true;
 		this.m.IsIgnoredAsAOO = true;
+		this.m.IsAOE = true;
 		this.m.IsShowingProjectile = true;
-		this.m.IsUsingHitchance = false;
 		this.m.IsDoingForwardMove = true;
 		this.m.IsUsingActorPitch = true;
 		this.m.InjuriesOnBody = [
@@ -52,7 +52,7 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 			},
 		];
 		this.m.DirectDamageMult = 0.5;
-		this.m.ActionPointCost = 3;
+		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = 25;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 3;
@@ -87,11 +87,11 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Has a [color=" + this.Const.UI.Color.DamageValue + "]33%[/color] chance to hit bystanders at the same or lower height level as well."
+				text = "Has a [color=" + this.Const.UI.Color.DamageValue + "]45%[/color] chance to hit bystanders at the same or lower height level as well."
 			}
 		]);
 
-		if (this.getContainer().getActor().getHitpoints() < this.m.HpCost + 10)
+		if (this.getContainer().getActor().getHitpoints() < this.m.HpCost + 25)
 		{
 			ret.push({
 				id = 6,
@@ -116,6 +116,18 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
+		local ret = this.attackEntity(_user, _target);
+
+		if (!ret)
+		{
+			return;
+		}
+
+		if (!_target.isAlive() || _target.isDying())
+		{
+			return;
+		}
+
 		local poison = _target.getSkills().getSkillByID("effects.acid");
 
 		if (poison == null)
@@ -128,12 +140,11 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 		}
 
 		this.spawnIcon("status_effect_78", _target.getTile());
-		this.attackEntity(_user, _target);
 	}
 
 	function isUsable()
 	{
-		return this.skill.isUsable() && this.getContainer().getActor().getHitpoints() >= this.m.HpCost + 10;
+		return this.skill.isUsable() && this.getContainer().getActor().getHitpoints() >= this.m.HpCost + 25;
 	}
 
 	function onUse( _user, _targetTile )
@@ -171,7 +182,6 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 		local targetEntity = _tag.TargetTile.getEntity();
 		_tag.Skill.getContainer().setBusy(false);
 		_tag.Skill.applyAcid(_tag.User, targetEntity);
-		_tag.User.spawnSmashSplatters(_tag.TargetTile, this.Const.Combat.BloodSplattersAtDeathMult * _tag.User.m.DeathBloodAmount);
 		_tag.User.spawnBloodPool(_tag.TargetTile, this.Math.rand(this.Const.Combat.BloodPoolsAtDeathMin, this.Const.Combat.BloodPoolsAtDeathMax));
 
 		for( local i = 0; i < 6; i = ++i )
@@ -183,7 +193,7 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 			{
 				local nextTile = _tag.TargetTile.getNextTile(i);
 
-				if (this.Math.rand(1, 100) > 33)
+				if (this.Math.rand(1, 100) > 45)
 				{
 				}
 				else if (nextTile.Level > _tag.TargetTile.Level)
@@ -200,6 +210,7 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 				{
 					local entity = nextTile.getEntity();
 					_tag.Skill.applyAcid(_tag.User, entity);
+					_tag.User.spawnBloodPool(_tag.TargetTile, this.Math.rand(this.Const.Combat.BloodPoolsAtDeathMin, this.Const.Combat.BloodPoolsAtDeathMax));
 				}
 			}
 		}

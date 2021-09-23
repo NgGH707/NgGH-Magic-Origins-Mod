@@ -23,7 +23,7 @@ gt.Const.Strings.PerkName.SpiderWeb <- "Weave Web Mastery";
 gt.Const.Strings.PerkName.SerpentBite <- "Gorge";
 gt.Const.Strings.PerkName.SerpentDrag <- "Constricting Grip";
 gt.Const.Strings.PerkName.SerpentVenom <- "Venom Gland";
-gt.Const.Strings.PerkName.SerpentGiant <- "Gigantic Snake";
+gt.Const.Strings.PerkName.SerpentGiant <- "Oversized Snake";
 gt.Const.Strings.PerkName.WolfBite <- "Strong Canine Jaw";
 gt.Const.Strings.PerkName.HyenaBite <- "Meat-Tearing Bite";
 gt.Const.Strings.PerkName.ThickHide <- "Thick Fur";
