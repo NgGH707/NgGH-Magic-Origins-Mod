@@ -8,6 +8,16 @@ this.player_hexen <- this.inherit("scripts/entity/tactical/player", {
 		CharmHair = null,
 		CharmBody = null
 	},
+
+	function getName()
+	{
+		if (!this.m.Flags.has("isBonus"))
+		{
+			return this.Const.UI.getColorized(this.player.getName(), "#ff0898");
+		}
+
+		return this.player.getName()
+	}
 	
 	function playIdleSound()
 	{

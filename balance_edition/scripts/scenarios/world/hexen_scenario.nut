@@ -388,34 +388,35 @@ this.hexen_scenario <- this.inherit("scripts/scenarios/world/starting_scenario",
 						"scripts/skills/perks/perk_charm_nudist",
 					];
 					local free_charm_perk = free_perks[this.Math.rand(0, free_perks.len() - 1)];
+					hexe.setPlaceInFormation(22);
 					for( local i = 0; i < 5; i = ++i )
 					{
 						local bro = roster.create("scripts/entity/tactical/player");
 						bro.setStartValuesEx(["beggar_southern_background", "beggar_background"]);
 						bro.getSkills().add(this.new("scripts/skills/traits/loyal_trait"));
-						bro.improveMood(0.5, "Amouranth\'s loyal simp");
 						bro.setPlaceInFormation(i + 2);
 						bro.addHeavyInjury();
 						bro.onHired();
 						local money = this.Math.rand(1, 8) * 10;
+						bro.improveMood(0.5, "Amouranth\'s loyal simp");
 						bro.improveMood(0.2, "Donated " + money + " crowns to Amouranth");
 						bro.improveMood(0.3, (money >= 70 ? "I'm broke, but feel good for supporting Amouranth" : "Feel good for supporting Amouranth"));
 						donation += money;
 					}
 
-					for( local i = 0; i < 5; i = ++i )
+					for( local j = 0; j < 5; j = ++j )
 					{
 						local isElite = this.Math.rand(1, 100) == 1;
 						local goblin = roster.create("scripts/entity/tactical/player_goblin");
 						goblin.getSkills().add(this.new("scripts/skills/traits/loyal_trait"));
-						goblin.improveMood(0.5, "Amouranth\'s loyal simp");
 						goblin.setScenarioValues(isElite);
-						goblin.setPlaceInFormation(i + 6);
+						goblin.setPlaceInFormation(j + 6);
 						goblin.addLightInjury();
 						goblin.onHired();
 						local money = this.Math.rand(1, 8) * 10;
-						bro.improveMood(0.2, "Donated " + money + " crowns to Amouranth");
-						bro.improveMood(0.3, (money >= 70 ? "I'm broke, but feel good for supporting Amouranth" : "Feel good for supporting Amouranth"));
+						goblin.improveMood(0.5, "Amouranth\'s loyal simp");
+						goblin.improveMood(0.2, "Donated " + money + " crowns to Amouranth");
+						goblin.improveMood(0.3, (money >= 70 ? "I'm broke, but feel good for supporting Amouranth" : "Feel good for supporting Amouranth"));
 						donation += money;
 					}
 
@@ -424,9 +425,8 @@ this.hexen_scenario <- this.inherit("scripts/scenarios/world/starting_scenario",
 					hexe.getSkills().add(this.new("scripts/skills/traits/seductive_trait"));
 					hexe.improveMood(0.5, "Finished a stream on Twitch");
 					hexe.improveMood(0.5, "Received " + donation + " crowns of donation from simps");
-					hexe.setName(this.Const.UI.getColorized("@Amouranth", "#1ac9b2"));
+					hexe.setName("@Amouranth");
 					hexe.setTitle("ASMR streamer");
-					hexe.setPlaceInFormation(22);
 					this.World.Assets.addMoney(donation);
 					this.World.Assets.m.Name = this.removeFromBeginningOfText("The ", this.removeFromBeginningOfText("the ", "@Amouranth Simps Corp"));
 					break;

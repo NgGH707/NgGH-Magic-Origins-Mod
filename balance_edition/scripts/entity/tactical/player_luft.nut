@@ -17,6 +17,11 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 		return this.m.Size;
 	}
 
+	function getName()
+	{
+		return this.Const.UI.getColorized(this.player.getName(), "#d68b09");
+	}
+
 	function setSize( _s ) 
 	{
 		if (this.m.Size == _s)
