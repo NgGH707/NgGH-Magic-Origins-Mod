@@ -269,6 +269,7 @@ this.perk_tree_builder <- {
 				_lib[1].extend([
 					this.Const.Perks.PerkDefs.PTRDeepCuts,
 					this.Const.Perks.PerkDefs.PTRSanguinary,
+					this.Const.Perks.PerkDefs.PTRCull,
 				]);
 				_lib[2].extend([
 					this.Const.Perks.PerkDefs.PTRBloodlust,
@@ -303,14 +304,14 @@ this.perk_tree_builder <- {
 			this.Const.Perks.PerkDefs.PTRTunnelVision,
 			this.Const.Perks.PerkDefs.PTRMenacing,
 			this.Const.Perks.PerkDefs.PTRAlwaysAnEntertainer,
-			this.Const.Perks.PerkDefs.PTRDiscoveredTalent,
+			this.Const.Perks.PerkDefs.PTRPunchingBag,
+			this.Const.Perks.PerkDefs.PTRTraumaSurvivor,
 		]);
 
 		_lib[1].extend([
 			this.Const.Perks.PerkDefs.PTRDeadlyPrecision,
 			this.Const.Perks.PerkDefs.PTRBulwark,
 			this.Const.Perks.PerkDefs.PTRExploitOpening,
-			this.Const.Perks.PerkDefs.PTRFluidWeapon,
 			this.Const.Perks.PerkDefs.PTRTempo,
 			this.Const.Perks.PerkDefs.PTRPatternRecognition,
 			this.Const.Perks.PerkDefs.PTRDynamicDuo,
@@ -319,6 +320,8 @@ this.perk_tree_builder <- {
 			this.Const.Perks.PerkDefs.PTRBully,
 			this.Const.Perks.PerkDefs.PTREnGarde,
 			this.Const.Perks.PerkDefs.PTRPaintASmile
+			this.Const.Perks.PerkDefs.PTRDiscoveredTalent,
+			this.Const.Perks.PerkDefs.PTRManOfSteel,
 		]);
 
 		_lib[2].extend([
@@ -327,6 +330,7 @@ this.perk_tree_builder <- {
 			this.Const.Perks.PerkDefs.PTRWearThemDown,
 			this.Const.Perks.PerkDefs.PTRUnstoppable,
 			this.Const.Perks.PerkDefs.PTRWhackASmack,
+			this.Const.Perks.PerkDefs.PTRLightWeapon,
 		]);
 		
 		if (_hasAoE)

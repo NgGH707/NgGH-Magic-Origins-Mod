@@ -114,7 +114,7 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 			{
 				this.Characters.push(_event.m.Simp1.getImagePath());
 				local up = _event.increaseSimpLevel(_event.m.Simp1);
-				local dowm = _event.increaseSimpLevel(_event.m.Simp2);
+				local down = _event.increaseSimpLevel(_event.m.Simp2);
 
 				if (up != null)
 				{
@@ -133,11 +133,11 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 					text = _event.m.Simp1.getName() + this.Const.MoodStateEvent[_event.m.Simp1.getMoodState()]
 				});
 
-				if (dowm != null)
+				if (down != null)
 				{
 					this.List.push({
 						id = 10,
-						icon = dowm.getIcon(),
+						icon = down.getIcon(),
 						text = _event.m.Simp2.getName() + " is heart broken"
 					});
 				}
@@ -180,7 +180,7 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 			{
 				this.Characters.push(_event.m.Simp2.getImagePath());
 				local up = _event.increaseSimpLevel(_event.m.Simp2);
-				local dowm = _event.increaseSimpLevel(_event.m.Simp1);
+				local down = _event.increaseSimpLevel(_event.m.Simp1);
 
 				if (up != null)
 				{
@@ -199,11 +199,11 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 					text = _event.m.Simp2.getName() + this.Const.MoodStateEvent[_event.m.Simp2.getMoodState()]
 				});
 
-				if (dowm != null)
+				if (down != null)
 				{
 					this.List.push({
 						id = 10,
-						icon = dowm.getIcon(),
+						icon = down.getIcon(),
 						text = _event.m.Simp1.getName() + " is heart broken"
 					});
 				}
@@ -251,11 +251,11 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 				{
 					down = _event.decreaseSimpLevel(_event.m.Simp1);
 
-					if (dowm != null)
+					if (down != null)
 					{
 						this.List.push({
 							id = 10,
-							icon = dowm.getIcon(),
+							icon = down.getIcon(),
 							text = _event.m.Simp1.getName() + " is heart broken"
 						});
 					}
@@ -277,11 +277,11 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 				{
 					down = _event.decreaseSimpLevel(_event.m.Simp2);
 
-					if (dowm != null)
+					if (down != null)
 					{
 						this.List.push({
 							id = 10,
-							icon = dowm.getIcon(),
+							icon = down.getIcon(),
 							text = _event.m.Simp2.getName() + " is heart broken"
 						});
 					}

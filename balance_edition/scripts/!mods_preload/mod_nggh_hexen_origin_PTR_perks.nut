@@ -8,7 +8,7 @@ this.getroottable().HexenHooks.hookPTR <- function ()
 		{
 			_skill.m.IsForceEnabled = true;
 		}
-	}
+	};
 	::mods_hookExactClass("skills/effects/ptr_whack_a_smack_effect", function ( obj )
 	{
 		obj.m.IsForceEnabled <- false;
@@ -38,14 +38,14 @@ this.getroottable().HexenHooks.hookPTR <- function ()
 			return true;
 		};
 	});
-	::mods_hookExactClass("skills/perks/perk_ptr_between_the_ribs", function ( obj )
+	::mods_hookExactClass("skills/perks/perk_ptr_light_weapon", function ( obj )
 	{
 		obj.onAdded <- function()
 		{
 			AutoEnableForBeasts(this);
 		};
 	});
-	::mods_hookExactClass("skills/perks/perk_ptr_fluid_weapon", function ( obj )
+	::mods_hookExactClass("skills/perks/perk_ptr_between_the_ribs", function ( obj )
 	{
 		obj.onAdded <- function()
 		{
@@ -75,6 +75,13 @@ this.getroottable().HexenHooks.hookPTR <- function ()
 			_properties.DamageDirectAdd += this.m.Bonus;
 			_properties.DamageArmorMult += this.m.Bonus;
 		}
+	});
+	::mods_hookExactClass("skills/perks/perk_ptr_cull", function ( obj )
+	{
+		obj.onAdded <- function()
+		{
+			AutoEnableForBeasts(this);
+		};
 	});
 	::mods_hookExactClass("skills/perks/perk_ptr_utilitarian", function ( obj )
 	{
