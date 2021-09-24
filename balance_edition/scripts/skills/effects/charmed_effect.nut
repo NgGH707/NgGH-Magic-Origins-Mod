@@ -171,7 +171,7 @@ this.charmed_effect <- this.inherit("scripts/skills/skill", {
 		{
 		    if (actor.hasSprite(s))
 		    {
-		    	actor.hasSprite(s).setHorizontalFlipping(flip);
+		    	actor.getSprite(s).setHorizontalFlipping(flip);
 		    }
 		}
 	}
