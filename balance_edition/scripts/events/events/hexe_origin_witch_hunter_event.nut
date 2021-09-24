@@ -113,12 +113,23 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 
 	function onUpdateScore()
 	{
-		if (this.World.Assets.getOrigin().getID() != "scenario.hexen")
+		if (this.World.getTime().Days < 30)
 		{
 			return;
 		}
 
-		if (this.World.getTime().Days < 30)
+		local brothers = this.World.getPlayerRoster().getAll();
+		local Hexe = 0;
+
+		foreach( bro in brothers )
+		{
+			if (bro.getFlags().has("Hexe"))
+			{
+				++Hexe;
+			}
+		}
+
+		if (Hexe == 0)
 		{
 			return;
 		}
@@ -155,7 +166,7 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 			return;
 		}
 
-		this.m.Score = 25;
+		this.m.Score = 15 * (Hexe + 1);
 	}
 
 	function onDetermineStartScreen()
