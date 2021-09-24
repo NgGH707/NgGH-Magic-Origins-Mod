@@ -164,6 +164,12 @@ this.charmed_effect <- this.inherit("scripts/skills/skill", {
 	function onFactionChanged()
 	{
 		local actor = this.getContainer().getActor();
+
+		if (this.isKindOf(actor.get(), "player"))
+		{
+			return;
+		}
+
 		local flip = actor.isAlliedWithPlayer();
 		local sprites = ["surcoat", "body", "tattoo_body", "body_rage", "injury_body", "head", "tattoo_head", "beard", "hair", "beard_top", "injury", "body_blood", "head_frenzy", "accessory_special", "legs_back", "legs_front"];
 		

@@ -54,6 +54,11 @@ this.legend_white_wolf_bite <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ActionPointCost = this.m.Container.getActor().isPlayerControlled() ? 4 : 6;
 		this.m.FatigueCost = this.m.Container.getActor().isPlayerControlled() ? 10 : 20;
+
+		if (this.getContainer().getActor().getFlags().has("bewitched"))
+		{
+			this.m.IsHidden = true;
+		}
 	}
 	
 	function getTooltip()
@@ -97,9 +102,20 @@ this.legend_white_wolf_bite <- this.inherit("scripts/skills/skill", {
 	{
 		if (_skill == this && this.m.IsRestrained)
 		{
-			_properties.DamageRegularMin = 45;
-			_properties.DamageRegularMax = 75;
-			_properties.DamageArmorMult = 0.8;
+			_properties.DamageRegularMin += 45;
+			_properties.DamageRegularMax += 75;
+			_properties.DamageArmorMult += 0.8;
+
+			local items = this.m.Container.getActor().getItems();
+			local mhand = items.getItemAtSlot(this.Const.ItemSlot.Mainhand);
+
+			if (mhand != null)
+			{
+				_properties.DamageRegularMin -= mhand.m.RegularDamage;
+				_properties.DamageRegularMax -= mhand.m.RegularDamageMax;
+				_properties.DamageArmorMult /= mhand.m.ArmorDamageMult;
+				_properties.DamageDirectAdd -= mhand.m.DirectDamageAdd;
+			}
 			
 			if (this.canDoubleGrip())
 			{
