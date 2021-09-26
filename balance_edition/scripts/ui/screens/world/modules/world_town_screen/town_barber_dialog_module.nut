@@ -261,7 +261,8 @@ this.town_barber_dialog_module <- this.inherit("scripts/ui/screens/ui_module", {
 				}
 				else
 				{
-					local ret = this.Const.Bodies.BarberNorthernFemale;
+					local ret = [];
+					ret.extend(this.Const.Bodies.BarberNorthernFemale);
 					ret.extend([
 						"bust_hexen_true_body",
 						"bust_hexen_fake_body_00"
@@ -300,7 +301,8 @@ this.town_barber_dialog_module <- this.inherit("scripts/ui/screens/ui_module", {
 				}
 				else
 				{
-					local ret = this.Const.Faces.AllFemale;
+					local ret = []; 
+					ret.extend(this.Const.Faces.AllFemale);
 					ret.extend(this.Const.HexenOrigin.TrueHead);
 					ret.extend(this.Const.HexenOrigin.FakeHead);
 					this.changeIndex(ret, temp.getSprite("head"), _change);
