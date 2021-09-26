@@ -160,6 +160,7 @@ gt.Const.HexenNameKeyWord <- [
 		"GREENSKIN"
 	],
 	[
+		//19
 		"SIMPS",
 		"TWITCH",
 		"ASMR",
@@ -168,26 +169,26 @@ gt.Const.HexenNameKeyWord <- [
 ];
 
 gt.Const.HexenSeedKeyWord <- [
-	"EGG",
-	"SPI",
-	"RED",
-	"WOL",
-	"WHI",
-	"HYE",
-	"SER",
-	"UNH",
-	"GHO",
-	"ALP",
-	"GOB",
-	"ORC",
-	"HUM",
-	"IJIROK",
-	"LIN",
-	"SCH",
-	"BEA",
-	"CIRCUS",
-	"GREEN"
-	"ASMR",
+	"EGG",//0
+	"SPI",//1
+	"RED",//2
+	"WOL",//3
+	"WHI",//4
+	"HYE",//5
+	"SER",//6
+	"UNH",//7
+	"GHO",//8
+	"ALP",//9
+	"GOB",//10
+	"ORC",//11
+	"HUM",//12
+	"IJIROK",//13
+	"LIN",//14
+	"SCH",//15
+	"BEA",//16
+	"CIRCUS",//17
+	"GREEN"//18
+	"ASMR",//19
 ];
 
 gt.Const.HexenStartingRollName <- [
