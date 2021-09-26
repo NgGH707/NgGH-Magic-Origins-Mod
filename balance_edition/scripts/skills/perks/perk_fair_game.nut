@@ -21,7 +21,7 @@ this.perk_fair_game <- this.inherit("scripts/skills/skill", {
 
 	function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )
 	{
-		if (_targetEntity != null || _skill == null)
+		if (_targetEntity == null || _skill == null)
 		{
 			return;
 		}

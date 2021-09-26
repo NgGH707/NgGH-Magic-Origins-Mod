@@ -95,6 +95,7 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 		this.addSprite("surcoat");
 		this.addSprite("armor_layer_cloak");
 		this.addSprite("armor_upgrade_back");
+		this.addSprite("shaft");
 		
 		local head = this.addSprite("head");
 		head.setBrush("bust_orc_01_head_0" + this.Math.rand(1, 3));
@@ -107,9 +108,12 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 		injury.Visible = false;
 		injury.setBrush("bust_orc_01_head_injured");
 		
-		this.addSprite("helmet");
-		local upgrade_front = this.addSprite("armor_upgrade_front");
-		upgrade_front.Scale = 1.05;
+		this.addSprite("armor_upgrade_front");
+
+		foreach( a in this.Const.CharacterSprites.Helmets )
+		{
+			this.addSprite(a);
+		}
 		
 		local body_blood = this.addSprite("body_blood");
 		body_blood.setBrush("bust_orc_01_body_bloodied");
@@ -205,6 +209,7 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 		}
 
 		flip = !this.isAlliedWithPlayer();
+		this.getSprite("armor").setHorizontalFlipping(flip);
 		this.getSprite("armor_layer_chain").setHorizontalFlipping(flip);
 		this.getSprite("armor_layer_plate").setHorizontalFlipping(flip);
 		this.getSprite("armor_layer_tabbard").setHorizontalFlipping(flip);
@@ -238,14 +243,14 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 
 		foreach( h in this.Const.CharacterSprites.Helmets )
 		{
-			if (a == "helmet" && this.m.IsWearingOrcHelmet)
+			if (h == "helmet" && this.m.IsWearingOrcHelmet)
 			{
-				this.setSpriteOffset(a, this.createVec(0, 0));
-				this.getSprite(a).Scale = 1.0;
+				this.setSpriteOffset(h, this.createVec(0, 0));
+				this.getSprite(h).Scale = 1.0;
 				continue;
 			}
 
-			this.setSpriteOffset(a, this.createVec(this.m.OffsetHelmet[0], this.m.OffsetHelmet[1]))
+			this.setSpriteOffset(h, this.createVec(this.m.OffsetHelmet[0], this.m.OffsetHelmet[1]))
 		}
 
 		this.setAlwaysApplySpriteOffset(true);
@@ -1599,12 +1604,12 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 
 			if (this.m.OrcType == 5)
 			{
-				return orc_armors[0] == _item.getID());
+				return orc_armors[0] == _item.getID();
 			}
 
 			if (this.m.OrcType == 4)
 			{
-				return orc_armors[1] == _item.getID());
+				return orc_armors[1] == _item.getID();
 			}
 
 			return orc_armors.find(_item.getID()) == null;
@@ -1655,7 +1660,7 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 				"armor.body.orc_young_very_light_armor"
 			];
 
-			this.m.IsWearingOrcArmor.find(_item.getID()) != null;
+			this.m.IsWearingOrcArmor = orc_armors.find(_item.getID()) != null;
 		}
 	}
 

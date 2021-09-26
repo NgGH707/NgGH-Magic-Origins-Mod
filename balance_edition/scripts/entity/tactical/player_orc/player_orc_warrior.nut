@@ -10,6 +10,7 @@ this.player_orc_warrior <- this.inherit("scripts/entity/tactical/player_orc", {
 	{
 		this.m.OffsetHelmet = [10, 3];
 		this.m.OrcType = 2;
+		this.m.ScaleArmor = 1.15;
 		this.player_orc.onInit();
 	}
 	
