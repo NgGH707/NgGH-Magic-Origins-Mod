@@ -1,24 +1,34 @@
 this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 	m = {
 		IsWearingOrcArmor = false,
+		OffsetArmor = [0, 0],
+		ScaleArmor = 1.1,
+		IsWearingOrcHelmet = false,
+		OffsetHelmet = [4, 0],
+		IsStengthen = false,
+		OrcType = 0, //0- Young, 1- Berserker, 2- Warrior, 3-Elite, 4-Warlord, 5-Behemoth
 		IsWarLord = false,
 		IsBehemoth = false,
 	},
+
+	function getHealthRecoverMult()
+	{
+		return 3.0;
+	}
 	
 	function setWarLord()
 	{
-		this.m.IsWarLord = this.getFlags().getAsInt("bewitched") == this.Const.EntityType.OrcWarlord;
 		this.onWarLordSpriteChange();
 	}
 	
 	function setBehemoth()
 	{
-		this.m.IsBehemoth = this.getFlags().getAsInt("bewitched") == this.Const.EntityType.LegendOrcBehemoth;
+		//this.m.IsBehemoth = this.getFlags().getAsInt("bewitched") == this.Const.EntityType.LegendOrcBehemoth;
 	}
 	
 	function getImageOffsetY()
 	{
-		if (this.m.IsWarLord)
+		if (this.m.OrcType == 4)
 		{
 			return -5;
 		}
@@ -30,15 +40,217 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 	{
 		return 1.33;
 	}
-	
-	function getTryoutCost()
-	{
-		return 0;
-	}
 
-	function getDailyCost()
+	function onInit()
 	{
-		return 0;
+		this.entity.onInit();
+
+		if (!this.isInitialized())
+		{
+			this.createOverlay();
+			this.m.BaseProperties = this.Const.HexenOrigin.CharacterProperties.getClone();
+			this.m.CurrentProperties = this.Const.HexenOrigin.CharacterProperties.getClone();
+			this.m.IsAttackable = true;
+
+			if (this.m.MoraleState != this.Const.MoraleState.Ignore)
+			{
+				this.m.Skills.add(this.new("scripts/skills/special/morale_check"));
+			}
+
+			this.m.Items.setUnlockedBagSlots(2);
+		}
+
+		local b = this.m.BaseProperties;
+		this.m.ActionPoints = b.ActionPoints;
+		this.m.CurrentProperties = clone b;
+		this.m.ActionPointCosts = this.Const.DefaultMovementAPCost;
+		this.m.FatigueCosts = this.Const.DefaultMovementFatigueCost;
+		
+		local arrow = this.addSprite("arrow");
+		arrow.setBrush("bust_arrow");
+		arrow.Visible = false;
+		this.setSpriteColorization("arrow", false);
+		local rooted = this.addSprite("status_rooted_back");
+		rooted.Visible = false;
+		rooted.Scale = 0.55;
+		
+		this.addSprite("background");
+		this.addSprite("socket").setBrush("bust_base_player");
+		
+		local body = this.addSprite("body");
+		body.setBrush("bust_orc_01_body");
+		body.varySaturation(0.05);
+		body.varyColor(0.07, 0.07, 0.07);
+		
+		this.addSprite("tattoo_body");
+		
+		local injury_body = this.addSprite("injury_body");
+		injury_body.Visible = false;
+		injury_body.setBrush("bust_orc_01_body_injured");
+		
+		this.addSprite("armor");
+		this.addSprite("armor_layer_chain");
+		this.addSprite("armor_layer_plate");
+		this.addSprite("armor_layer_tabbard");
+		this.addSprite("surcoat");
+		this.addSprite("armor_layer_cloak");
+		this.addSprite("armor_upgrade_back");
+		
+		local head = this.addSprite("head");
+		head.setBrush("bust_orc_01_head_0" + this.Math.rand(1, 3));
+		head.Saturation = body.Saturation;
+		head.Color = body.Color;
+		
+		this.addSprite("tattoo_head");
+		
+		local injury = this.addSprite("injury");
+		injury.Visible = false;
+		injury.setBrush("bust_orc_01_head_injured");
+		
+		this.addSprite("helmet");
+		local upgrade_front = this.addSprite("armor_upgrade_front");
+		upgrade_front.Scale = 1.05;
+		
+		local body_blood = this.addSprite("body_blood");
+		body_blood.setBrush("bust_orc_01_body_bloodied");
+		body_blood.Visible = false;
+		
+		local body_rage = this.addSprite("body_rage");
+		body_rage.Visible = false;
+		body_rage.Alpha = 220;
+		
+		this.addSprite("accessory");
+		this.addSprite("accessory_special");
+		
+		local body_dirt = this.addSprite("dirt");
+		body_dirt.setBrush("bust_body_dirt_02");
+		body_dirt.Visible = false;
+		
+		this.addDefaultStatusSprites();
+		this.getSprite("status_rooted").Scale = 0.6;
+
+		if (this.Const.DLC.Unhold)
+		{
+			this.m.Skills.add(this.new("scripts/skills/actives/wake_ally_skill"));
+		}
+		
+		this.m.Skills.add(this.new("scripts/skills/special/weapon_breaking_warning"));
+		this.m.Skills.add(this.new("scripts/skills/special/no_ammo_warning"));
+		this.m.Skills.add(this.new("scripts/skills/special/stats_collector"));
+		this.m.Skills.add(this.new("scripts/skills/special/bag_fatigue"));
+		this.m.Skills.add(this.new("scripts/skills/special/mood_check"));
+		this.m.Skills.add(this.new("scripts/skills/special/double_grip"));
+		this.m.Skills.add(this.new("scripts/skills/effects/captain_effect"));
+		this.m.Skills.add(this.new("scripts/skills/effects/battle_standard_effect"));
+		this.m.Skills.add(this.new("scripts/skills/actives/break_ally_free_skill"));
+		this.m.Skills.add(this.new("scripts/skills/effects/realm_of_nightmares_effect"));
+		this.m.Skills.add(this.new("scripts/skills/effects/legend_demon_hound_aura_effect"));
+		this.m.Skills.add(this.new("scripts/skills/actives/hand_to_hand_orc"));
+		this.setName("");
+		this.setPreventOcclusion(true);
+		this.setBlockSight(false);
+		this.setVisibleInFogOfWar(false);
+	}
+	
+	function onWarLordSpriteChange()
+	{
+		if (this.m.OrcType != 4)
+		{
+			return;
+		}
+		
+		this.setSpriteOffset("arms_icon", this.createVec(-8, 0));
+		this.setSpriteOffset("shield_icon", this.createVec(-5, 0));
+		this.setSpriteOffset("stunned", this.createVec(0, 10));
+		this.getSprite("status_rooted").Scale = 0.65;
+		this.setSpriteOffset("status_rooted", this.createVec(0, 16));
+		this.setSpriteOffset("status_stunned", this.createVec(-5, 30));
+		this.setSpriteOffset("arrow", this.createVec(-5, 30));
+	}
+	
+	function onFactionChanged()
+	{
+		this.actor.onFactionChanged();
+		local flip = this.isAlliedWithPlayer();
+		this.getSprite("background").setHorizontalFlipping(!flip);
+		this.getSprite("body").setHorizontalFlipping(flip);
+		this.getSprite("tattoo_body").setHorizontalFlipping(flip);
+		this.getSprite("injury_body").setHorizontalFlipping(flip);
+		this.getSprite("shaft").setHorizontalFlipping(!flip);
+		this.getSprite("head").setHorizontalFlipping(flip);
+		this.getSprite("tattoo_head").setHorizontalFlipping(flip);
+		this.getSprite("injury").setHorizontalFlipping(flip);
+		this.getSprite("helmet").setHorizontalFlipping(flip);
+		this.getSprite("body_blood").setHorizontalFlipping(flip);
+		this.getSprite("body_rage").setHorizontalFlipping(flip);
+		this.getSprite("accessory").setHorizontalFlipping(!flip);
+		this.getSprite("accessory_special").setHorizontalFlipping(!flip);
+		
+
+		flip = !this.isAlliedWithPlayer();
+
+		foreach( a in this.Const.CharacterSprites.Helmets )
+		{
+			if (!this.hasSprite(a))
+			{
+				continue;
+			}
+
+			this.getSprite(a).setHorizontalFlipping(flip);
+
+			if (this.m.IsWearingOrcHelmet && a == "helmet")
+			{
+				this.getSprite(a).setHorizontalFlipping(!flip);
+			}
+		}
+
+		flip = !this.isAlliedWithPlayer();
+		this.getSprite("armor_layer_chain").setHorizontalFlipping(flip);
+		this.getSprite("armor_layer_plate").setHorizontalFlipping(flip);
+		this.getSprite("armor_layer_tabbard").setHorizontalFlipping(flip);
+		this.getSprite("armor_layer_cloak").setHorizontalFlipping(flip);
+		this.getSprite("armor_upgrade_back").setHorizontalFlipping(flip);
+		this.getSprite("armor_upgrade_front").setHorizontalFlipping(flip);
+
+		if (this.m.IsWearingOrcArmor)
+		{
+			this.getSprite("armor").setHorizontalFlipping(!flip);
+		}
+	}
+	
+	function onAppearanceChanged( _appearance, _setDirty = true )
+	{
+		this.actor.onAppearanceChanged(_appearance, _setDirty);
+		local armors = ["armor", "armor_layer_chain", "armor_layer_plate", "armor_layer_tabbard", "armor_layer_cloak", "armor_upgrade_back", "armor_upgrade_front"];
+
+		foreach ( a in armors )
+		{
+			if (a == "armor" && this.m.IsWearingOrcArmor)
+			{
+				this.setSpriteOffset(a, this.createVec(0, 0));
+				this.getSprite(a).Scale = 1.0;
+				continue;
+			}
+
+			this.setSpriteOffset(a, this.createVec(this.m.OffsetArmor[0], this.m.OffsetArmor[1]))
+			this.getSprite(a).Scale = this.m.ScaleArmor;
+		}
+
+		foreach( h in this.Const.CharacterSprites.Helmets )
+		{
+			if (a == "helmet" && this.m.IsWearingOrcHelmet)
+			{
+				this.setSpriteOffset(a, this.createVec(0, 0));
+				this.getSprite(a).Scale = 1.0;
+				continue;
+			}
+
+			this.setSpriteOffset(a, this.createVec(this.m.OffsetHelmet[0], this.m.OffsetHelmet[1]))
+		}
+
+		this.setAlwaysApplySpriteOffset(true);
+		this.onFactionChanged();
+		this.setDirty(true);
 	}
 	
 	function onUpdateInjuryLayer()
@@ -340,11 +552,6 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 		this.playIdleSound();
 	}
 	
-	function getHealthRecoverMult()
-	{
-		return 3.0;
-	}
-	
 	function getDaysWounded()
 	{
 		if (this.getHitpoints() < this.getHitpointsMax())
@@ -357,197 +564,12 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 		}
 	}
 	
-	function onInit()
-	{
-		this.entity.onInit();
-
-		if (!this.isInitialized())
-		{
-			this.createOverlay();
-			this.m.BaseProperties = this.Const.HexenOrigin.CharacterProperties.getClone();
-			this.m.CurrentProperties = this.Const.HexenOrigin.CharacterProperties.getClone();
-			this.m.IsAttackable = true;
-
-			if (this.m.MoraleState != this.Const.MoraleState.Ignore)
-			{
-				this.m.Skills.add(this.new("scripts/skills/special/morale_check"));
-			}
-
-			this.m.Items.setUnlockedBagSlots(2);
-		}
-
-		local b = this.m.BaseProperties;
-		this.m.ActionPoints = b.ActionPoints;
-		this.m.CurrentProperties = clone b;
-		this.m.ActionPointCosts = this.Const.DefaultMovementAPCost;
-		this.m.FatigueCosts = this.Const.DefaultMovementFatigueCost;
-		
-		local arrow = this.addSprite("arrow");
-		arrow.setBrush("bust_arrow");
-		arrow.Visible = false;
-		this.setSpriteColorization("arrow", false);
-		local rooted = this.addSprite("status_rooted_back");
-		rooted.Visible = false;
-		rooted.Scale = 0.55;
-		
-		this.addSprite("background");
-		this.addSprite("socket").setBrush("bust_base_player");
-		
-		local body = this.addSprite("body");
-		body.setBrush("bust_orc_01_body");
-		body.varySaturation(0.05);
-		body.varyColor(0.07, 0.07, 0.07);
-		
-		this.addSprite("tattoo_body");
-		
-		local injury_body = this.addSprite("injury_body");
-		injury_body.Visible = false;
-		injury_body.setBrush("bust_orc_01_body_injured");
-		
-		this.addSprite("armor");
-		local upgrade_back = this.addSprite("armor_upgrade_back");
-		upgrade_back.Scale = 1.05;
-		this.addSprite("shaft");
-		
-		local head = this.addSprite("head");
-		head.setBrush("bust_orc_01_head_0" + this.Math.rand(1, 3));
-		head.Saturation = body.Saturation;
-		head.Color = body.Color;
-		
-		this.addSprite("tattoo_head");
-		
-		local injury = this.addSprite("injury");
-		injury.Visible = false;
-		injury.setBrush("bust_orc_01_head_injured");
-		
-		this.addSprite("helmet");
-		local upgrade_front = this.addSprite("armor_upgrade_front");
-		upgrade_front.Scale = 1.05;
-		
-		local body_blood = this.addSprite("body_blood");
-		body_blood.setBrush("bust_orc_01_body_bloodied");
-		body_blood.Visible = false;
-		
-		local body_rage = this.addSprite("body_rage");
-		body_rage.Visible = false;
-		body_rage.Alpha = 220;
-		
-		this.addSprite("accessory");
-		this.addSprite("accessory_special");
-		
-		local body_dirt = this.addSprite("dirt");
-		body_dirt.setBrush("bust_body_dirt_02");
-		body_dirt.Visible = false;
-		
-		this.addDefaultStatusSprites();
-		this.getSprite("status_rooted").Scale = 0.6;
-
-		if (this.Const.DLC.Unhold)
-		{
-			this.m.Skills.add(this.new("scripts/skills/actives/wake_ally_skill"));
-		}
-		
-		this.m.Skills.add(this.new("scripts/skills/special/weapon_breaking_warning"));
-		this.m.Skills.add(this.new("scripts/skills/special/no_ammo_warning"));
-		this.m.Skills.add(this.new("scripts/skills/special/stats_collector"));
-		this.m.Skills.add(this.new("scripts/skills/special/bag_fatigue"));
-		this.m.Skills.add(this.new("scripts/skills/special/mood_check"));
-		this.m.Skills.add(this.new("scripts/skills/special/double_grip"));
-		this.m.Skills.add(this.new("scripts/skills/effects/captain_effect"));
-		this.m.Skills.add(this.new("scripts/skills/effects/battle_standard_effect"));
-		this.m.Skills.add(this.new("scripts/skills/actives/break_ally_free_skill"));
-		this.m.Skills.add(this.new("scripts/skills/effects/realm_of_nightmares_effect"));
-		this.m.Skills.add(this.new("scripts/skills/effects/legend_demon_hound_aura_effect"));
-		this.m.Skills.add(this.new("scripts/skills/actives/hand_to_hand_orc"));
-		this.setName("");
-		this.setPreventOcclusion(true);
-		this.setBlockSight(false);
-		this.setVisibleInFogOfWar(false);
-	}
-	
 	function onAfterInit()
 	{
 		this.actor.onAfterInit();
 		this.setAlwaysApplySpriteOffset(true);
 		this.setFaction(this.Const.Faction.Player);
 		this.setDiscovered(true);
-	}
-	
-	function onWarLordSpriteChange()
-	{
-		if (!this.m.IsWarLord)
-		{
-			return;
-		}
-		
-		this.setSpriteOffset("arms_icon", this.createVec(-8, 0));
-		this.setSpriteOffset("shield_icon", this.createVec(-5, 0));
-		this.setSpriteOffset("stunned", this.createVec(0, 10));
-		this.getSprite("status_rooted").Scale = 0.65;
-		this.setSpriteOffset("status_rooted", this.createVec(0, 16));
-		this.setSpriteOffset("status_stunned", this.createVec(-5, 30));
-		this.setSpriteOffset("arrow", this.createVec(-5, 30));
-	}
-	
-	function onFactionChanged()
-	{
-		this.actor.onFactionChanged();
-		local flip = this.isAlliedWithPlayer();
-		this.getSprite("background").setHorizontalFlipping(!flip);
-		this.getSprite("body").setHorizontalFlipping(flip);
-		this.getSprite("tattoo_body").setHorizontalFlipping(flip);
-		this.getSprite("injury_body").setHorizontalFlipping(flip);
-		this.getSprite("armor").setHorizontalFlipping(flip);
-		this.getSprite("shaft").setHorizontalFlipping(!flip);
-		this.getSprite("head").setHorizontalFlipping(flip);
-		this.getSprite("tattoo_head").setHorizontalFlipping(flip);
-		this.getSprite("injury").setHorizontalFlipping(flip);
-		this.getSprite("helmet").setHorizontalFlipping(flip);
-		this.getSprite("body_blood").setHorizontalFlipping(flip);
-		this.getSprite("body_rage").setHorizontalFlipping(flip);
-		this.getSprite("accessory").setHorizontalFlipping(!flip);
-		this.getSprite("accessory_special").setHorizontalFlipping(!flip);
-		this.getSprite("armor_upgrade_back").setHorizontalFlipping(!flip);
-		this.getSprite("armor_upgrade_front").setHorizontalFlipping(!flip);
-
-		flip = !this.isAlliedWithPlayer();
-
-		foreach( a in this.Const.CharacterSprites.Helmets )
-		{
-			if (!this.hasSprite(a))
-			{
-				continue;
-			}
-
-			if (this.m.IsWearingOrcArmor)
-			{
-				flip = !flip;
-			}
-
-			this.getSprite(a).setHorizontalFlipping(flip);
-		}
-	}
-	
-	function onAppearanceChanged( _appearance, _setDirty = true )
-	{
-		this.actor.onAppearanceChanged(_appearance, _setDirty);
-		
-		local flip = !this.isAlliedWithPlayer();
-		
-		if (this.m.IsWearingOrcArmor)
-		{
-			flip = !flip
-		}
-
-		foreach( a in this.Const.CharacterSprites.Helmets )
-		{
-			if (!this.hasSprite(a))
-			{
-				continue;
-			}
-
-			this.getSprite(a).setHorizontalFlipping(flip);
-		}
 	}
 	
 	function updateRageVisuals( _rage )
@@ -931,11 +953,6 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 
 			this.World.Statistics.addFallen(this, killedBy);
 		}
-	}
-	
-	function isPerkTierUnlocked( _category, _tier )
-	{
-		return true;
 	}
 	
 	function fillAttributeLevelUpValues( _amount, _maxOnly = false, _minOnly = false )
@@ -1577,20 +1594,20 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 		{
 			local orc_armors = [
 				"armor.body.legend_orc_behemoth_armor",
-				"armor.body.orc_berserker_light_armor",
-				"armor.body.orc_berserker_medium_armor",
-				"armor.body.orc_elite_heavy_armor",
 				"armor.body.orc_warlord_armor",
-				"armor.body.orc_warrior_heavy_armor",
-				"armor.body.orc_warrior_light_armor",
-				"armor.body.orc_warrior_medium_armor",
-				"armor.body.orc_young_heavy_armor",
-				"armor.body.orc_young_light_armor",
-				"armor.body.orc_young_medium_armor",
-				"armor.body.orc_young_very_light_armor"
 			];
 
-			return orc_armors.find(_item.getID()) != null;
+			if (this.m.OrcType == 5)
+			{
+				return orc_armors[0] == _item.getID());
+			}
+
+			if (this.m.OrcType == 4)
+			{
+				return orc_armors[1] == _item.getID());
+			}
+
+			return orc_armors.find(_item.getID()) == null;
 		}
 
 		return true;
@@ -1618,7 +1635,27 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 				"armor.head.orc_warlord_helmet",
 			];
 
-			this.m.IsWearingOrcArmor = orc_helmets.find(_item.getID()) != null;
+			this.m.IsWearingOrcHelmet = orc_helmets.find(_item.getID()) != null;
+		}
+
+		if (_item.isItemType(this.Const.Items.ItemType.Armor))
+		{
+			local orc_armors = [
+				"armor.body.legend_orc_behemoth_armor",
+				"armor.body.orc_berserker_light_armor",
+				"armor.body.orc_berserker_medium_armor",
+				"armor.body.orc_elite_heavy_armor",
+				"armor.body.orc_warlord_armor",
+				"armor.body.orc_warrior_heavy_armor",
+				"armor.body.orc_warrior_light_armor",
+				"armor.body.orc_warrior_medium_armor",
+				"armor.body.orc_young_heavy_armor",
+				"armor.body.orc_young_light_armor",
+				"armor.body.orc_young_medium_armor",
+				"armor.body.orc_young_very_light_armor"
+			];
+
+			this.m.IsWearingOrcArmor.find(_item.getID()) != null;
 		}
 	}
 
@@ -1628,22 +1665,12 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 
 	function onActorAfterEquip( _item )
 	{
-		if (!_item.isItemType(this.Const.Items.ItemType.Shield) && !_item.isItemType(this.Const.Items.ItemType.Weapon) || _item.m.SkillPtrs.len() == 0)
-		{
-			return;
-		}
-
-		foreach( _skill in _item.m.SkillPtrs )
-		{
-			if (_skill.isType(this.Const.SkillType.Active))
-			{
-				_skill.setFatigueCost(this.Math.max(0, _skill.getFatigueCostRaw() + _item.m.FatigueOnSkillUse - 5));
-			}
-		}
+		if (_item.isItemType(this.Const.Items.ItemType.Weapon)) this.m.IsStengthen = true;
 	}
 
 	function onActorAfterUnequip( _item )
 	{
+		if (_item.isItemType(this.Const.Items.ItemType.Weapon)) this.m.IsStengthen = false;
 	}
 
 	function getBarberSpriteChange()

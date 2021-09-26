@@ -43,10 +43,9 @@ this.charmed_orc_background <- this.inherit("scripts/skills/backgrounds/characte
 			"trait.tiny"
 		];
 		this.m.ExcludedTalents = [
-			3,
-			5,
-			6,
-			7
+			this.Const.Attributes.Initiative,
+			this.Const.Attributes.RangedSkill,
+			this.Const.Attributes.RangedDefense
 		];
 		
 		this.addBackgroundType(this.Const.BackgroundType.Combat);
@@ -71,6 +70,7 @@ this.charmed_orc_background <- this.inherit("scripts/skills/backgrounds/characte
 	function onUpdate( _properties )
 	{
 		_properties.DailyFood += this.m.Food;
+		_properties.FatigueOnSkillUse -= 3;
 		this.character_background.onUpdate(_properties);
 	}
 	
