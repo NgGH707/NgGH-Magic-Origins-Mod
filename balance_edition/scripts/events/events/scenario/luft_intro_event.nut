@@ -64,10 +64,10 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 				}
 
 				this.Options.insert(2, {
-					Text = "No! But i\'ll let you eat [color=#bcad8c]" + this.m.Food.getName() + "[/color]",
+					Text = "No! But i\'ll let you eat [color=#bcad8c]" + _event.m.Food.getName() + "[/color]",
 					function getResult( _event )
 					{
-						return "F";
+						return "E";
 					}
 
 				});
@@ -215,7 +215,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 		});
 
 		this.m.Screens.push({
-			ID = "C",
+			ID = "E",
 			Text = "[img]gfx/ui/events/event_61.png[/img]%SPEECH_START%Thanks, man! It was delicious%SPEECH_OFF%",
 			Image = "",
 			Banner = "",
@@ -234,7 +234,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					this.Characters.push(_event.m.Luft.getImagePath());
 				}
 
-				switch (this.m.Food.getID()) 
+				switch (_event.m.Food.getID()) 
 				{
 				case "supplies.legend_yummy_sausages":
 					_event.m.Luft.getBaseProperties().Hitpoints += 5;
@@ -289,7 +289,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 
 				case "supplies.strange_meat":
 					this.Text = "[img]gfx/ui/events/event_14.png[/img]%SPEECH_START%Hmm yes! I hope this is not rat meat%SPEECH_OFF%";
-					op_text = "It\'s rat meat";
+					option_text = "It\'s rat meat";
 					isTrolled = true;
 					_event.m.Luft.getBaseProperties().Hitpoints += 2;
 					_event.m.Luft.getBaseProperties().Bravery += 2;

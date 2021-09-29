@@ -60,10 +60,10 @@ this.afterimage_effect <- this.inherit("scripts/skills/skill", {
 		];
 	}
 
-	function onRefresh()
+	/*function onRefresh()
 	{
 		++this.m.Count;
-	}
+	}*/
 
 	function onUpdate( _properties )
 	{

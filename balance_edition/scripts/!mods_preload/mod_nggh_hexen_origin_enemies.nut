@@ -267,21 +267,21 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 		obj.onInit = function()
 		{
 			onInit();
-			local chance = 25;
+			local chance = 15;
 
 			if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
 			{
 				chance = 100;
 			}
 
-			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 60)
+			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 120)
 			{
-				chance = this.Math.min(100, chance + this.Math.max(1, this.World.getTime().Days - 60));
+				chance = this.Math.min(100, chance + this.Math.max(1, this.World.getTime().Days - 120));
 			}
 
 			randomlyRollPerk(this, [
 				"perk_afterimage",
-			], chance + 15);
+			], chance - 5);
 			
 			randomlyRollPerk(this, [
 				"perk_mastery_nightmare",
