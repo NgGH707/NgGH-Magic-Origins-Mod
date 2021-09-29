@@ -119,9 +119,7 @@ this.diabolist_background <- this.inherit("scripts/skills/backgrounds/mc_mage_ba
 					[{Weight = 100, Tree = this.Const.Perks.DaggerTree}],
 					[{Weight = 50, Tree = this.Const.Perks.CleaverTree}],
 				],
-				Profession = [
-					[{Weight = 100, Tree = this.Const.Perks.PauperProfessionTree}]
-				],
+				Profession = [],
 				Styles = [
 					[{Weight = 100, Tree = this.Const.Perks.TwoHandedTree}],
 				],
