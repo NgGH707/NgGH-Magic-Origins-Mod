@@ -49,26 +49,26 @@ this.afterimage_effect <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/melee_defense.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + 20 * this.m.Count + "[/color] Melee Defense"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + (15 + 5 * this.m.Count) + "[/color] Melee Defense"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/ranged_defense.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + 20 * this.m.Count + "[/color] Ranged Defense"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + (15 + 5 * this.m.Count) + "[/color] Ranged Defense"
 			},
 		];
 	}
 
-	/*function onRefresh()
+	function onRefresh()
 	{
 		++this.m.Count;
-	}*/
+	}
 
 	function onUpdate( _properties )
 	{
-		_properties.MeleeDefense += 20 * this.m.Count;
-		_properties.RangedDefense += 20 * this.m.Count;
+		_properties.MeleeDefense += 15 + 5 * this.m.Count;
+		_properties.RangedDefense += 15 + 5 * this.m.Count;
 	}
 
 	function onTurnStart()
