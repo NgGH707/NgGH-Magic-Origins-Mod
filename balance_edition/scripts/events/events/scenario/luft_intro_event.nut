@@ -2,6 +2,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 	m = {
 		Luft = null,
 		Food = null,
+		IsReceivedBuff = false,
 	},
 	function create()
 	{
@@ -178,6 +179,14 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 			Characters = [],
 			Options = [
 				{
+					Text = "Please tell me more!",
+					function getResult( _event )
+					{
+						return "D";
+					}
+
+				},
+				{
 					Text = "How wise you\'re!",
 					function getResult( _event )
 					{
@@ -195,6 +204,11 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					this.Characters.push(_event.m.Luft.getImagePath());
 				}
 
+				if (_event.m.IsReceivedBuff)
+				{
+					return;
+				}
+
 				_event.m.Luft.improveMood(0.5, "Someone asked for my wisdom");
 				_event.m.Luft.getBaseProperties().Bravery += 5;
 				_event.m.Luft.getSkills().update();
@@ -210,6 +224,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					text = _event.m.Luft.getName() + " gains [color=" + this.Const.UI.Color.PositiveEventValue + "]+5[/color] Resolve"
 				});
 
+				_event.m.IsReceivedBuff = true;
 			}
 
 		});
@@ -407,6 +422,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 	{
 		this.m.Luft = null;
 		this.m.Food = null;
+		this.m.IsReceivedBuff = false;
 	}
 
 });

@@ -39,7 +39,7 @@ this.mod_kraken_ensnare_skill <- this.inherit("scripts/skills/skill", {
 			"sounds/enemies/dlc2/krake_break_free_success_05.wav"
 		];
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.OffensiveTargeted;
+		this.m.Order = this.Const.SkillOrder.UtilityTargeted - 1;
 		this.m.IsSerialized = false;
 		this.m.IsActive = true;
 		this.m.IsTargeted = true;
@@ -189,6 +189,7 @@ this.mod_kraken_ensnare_skill <- this.inherit("scripts/skills/skill", {
 				if (tile != null)
 				{
 					this.Tactical.addEntityToMap(_data.User, tile.Coords.X, tile.Coords.Y);
+					_data.User.updateVisibilityForFaction();
 
 					if (_data.LoseHitpoints)
 					{
@@ -197,8 +198,8 @@ this.mod_kraken_ensnare_skill <- this.inherit("scripts/skills/skill", {
 					}
 
 					_data.User.m.IsAbleToDie = true;
-					_data.User.updateMode();
 					_data.User.riseFromGround(0.1);
+					_data.User.updateMode();
 				}
 			}
 		}, _data);

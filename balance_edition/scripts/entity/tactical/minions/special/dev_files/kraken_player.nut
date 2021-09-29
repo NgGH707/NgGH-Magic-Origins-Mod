@@ -224,6 +224,34 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		hitInfo.BodyDamageMult = 1.0;
 		hitInfo.FatalityChanceMult = 0.0;
 		this.onDamageReceived(this, null, hitInfo);
+
+		if (!this.isAlive() || this.isDying())
+		{
+			return;
+		}
+
+		for( local numTentacles = this.Math.max(4, this.Math.min(8, this.Math.ceil(this.getHitpointsPct() * 2.0 * 8))); this.m.Tentacles.len() < numTentacles;  )
+		{
+			local mapSize = this.Tactical.getMapSize();
+			local myTile = this.getTile();
+
+			for( local attempts = 0; attempts < 500; attempts = ++attempts )
+			{
+				local x = this.Math.rand(this.Math.max(0, myTile.SquareCoords.X - 8), this.Math.min(mapSize.X - 1, myTile.SquareCoords.X + 8));
+				local y = this.Math.rand(this.Math.max(0, myTile.SquareCoords.Y - 8), this.Math.min(mapSize.Y - 1, myTile.SquareCoords.Y + 8));
+				local tile = this.Tactical.getTileSquare(x, y);
+
+				if (!tile.IsEmpty)
+				{
+				}
+				else
+				{
+					local tentacle = this.spawnTentacle(tile);
+					tentacle.updateVisibilityForFaction();
+					break;
+				}
+			}
+		}
 	}
 
 	function onDamageReceived( _attacker, _skill, _hitInfo )
@@ -352,6 +380,24 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.setEnraged(false);
 	}
 
+	function giveStats( _tentacle )
+	{
+		local b = _tentacle.m.BaseProperties;
+		local lv = this.m.Level;
+		b.ActionPoints += this.Math.rand(1, 10) <= 2 ? 1 : 0;
+		b.Hitpoints += 5 * lv;
+		b.Bravery += 2 * lv;
+		b.Stamina += 2 * lv;
+		b.MeleeSkill += this.Math.floor(1.5 * lv);
+		b.RangedSkill += 0;
+		b.MeleeDefense += lv;
+		b.RangedDefense += lv;
+		b.Initiative += 3 * lv;
+		_tentacle.m.ActionPoints = b.ActionPoints;
+		_tentacle.setHitpointsPct(1.0);
+		_tentacle.m.Skills.update();
+	}
+
 	function givePerk( _tentacle )
 	{
 		local perks = this.getSkills().query(this.Const.SkillType.Perk, true);
@@ -437,7 +483,9 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		}
 
 		this.givePerk(tentacle);
+		this.giveStats(tentacle);
 		this.m.Tentacles.push(this.WeakTableRef(tentacle));
+		return tentacle;
 	}
 
 	function setScenarioValues( _isElite = false , _dub = false , _dub_two = false , _dub_three = false )

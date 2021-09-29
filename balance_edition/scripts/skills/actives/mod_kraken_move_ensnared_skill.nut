@@ -67,12 +67,18 @@ this.mod_kraken_move_ensnared_skill <- this.inherit("scripts/skills/skill", {
 			OnTeleportStart = this.onTeleportStart,
 			IgnoreColors = false
 		};
+		local isGhoul = _user.getType() == this.Const.EntityType.Ghoul || _user.getType() == this.Const.EntityType.LegendSkinGhoul;
 
 		if (!_user.isHiddenToPlayer() || _targetTile.IsVisibleForPlayer)
 		{
 			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " is dragged towards certain death");
 		}
 
+		if (isGhoul && _user.m.Size > 1)
+		{
+			tag.IgnoreColors = true;
+			this.onTeleportStart(tag);
+		}
 		if (_user.getTile().IsVisibleForPlayer)
 		{
 			_user.sinkIntoGround(0.75);
@@ -109,7 +115,7 @@ this.mod_kraken_move_ensnared_skill <- this.inherit("scripts/skills/skill", {
 			_entity.restoreSpriteColors();
 		}
 
-		if (!_entity.isHiddenToPlayer())
+		if (!_entity.isHiddenToPlayer() && !_tag.IgnoreColors)
 		{
 			_entity.riseFromGround(0.75);
 		}

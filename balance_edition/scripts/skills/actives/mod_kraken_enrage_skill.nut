@@ -44,7 +44,7 @@ this.mod_kraken_enrage_skill <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/warning.png",
-				text = "Will lower your health down to [color=" + this.Const.UI.Color.PositiveValue + "]2000[/color] hitpoints"
+				text = "Will lower your health down to [color=" + this.Const.UI.Color.PositiveValue + "]50%[/color] of max hitpoints"
 			},
 		];
 	}
@@ -61,11 +61,11 @@ this.mod_kraken_enrage_skill <- this.inherit("scripts/skills/skill", {
 
 	function onUse( _user, _targetTile )
 	{
-		local HP = _user.getHitpoints();
+		local HP = _user.getHitpointsPct();
 
-		if (HP > 2000)
+		if (HP > 0.5)
 		{
-			_user.setHitpoints(2000);
+			_user.setHitpointsPct(0.5);
 		}
 
 		_user.setEnraged(true);

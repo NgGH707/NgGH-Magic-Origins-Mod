@@ -34,7 +34,7 @@ this.mod_kraken_devour_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsUsingActorPitch = true;
 		this.m.InjuriesOnBody = this.Const.Injury.CuttingBody;
 		this.m.InjuriesOnHead = this.Const.Injury.CuttingHead;
-		this.m.ActionPointCost = 5;
+		this.m.ActionPointCost = 2;
 		this.m.FatigueCost = 100;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
