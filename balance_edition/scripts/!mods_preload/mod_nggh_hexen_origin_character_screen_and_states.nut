@@ -306,6 +306,92 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 		}
 	});
 
+	::mods_hookNewObjectOnce("states/main_menu_state", function( obj )
+	{
+		local onCreditsPressed = obj.main_menu_module_onCreditsPressed;
+		obj.main_menu_module_onCreditsPressed = function()
+		{
+			this.getroottable().UnlockSecret = !this.getroottable().UnlockSecret;
+			
+			if (!this.getroottable().AddedSecret)
+			{
+				this.getroottable().AddedSecret = true;
+				this.m.ScenarioManager.m.Scenarios.sort(this.m.ScenarioManager.onOrderCompare);
+				this.m.MainMenuScreen.getNewCampaignMenuModule().setStartingScenarios(this.m.ScenarioManager.getScenariosForUI());
+				this.logDebug("mod_nggh_magic_concept - Unlocking Secret: " + this.getroottable().UnlockSecret);
+			}
+			
+			onCreditsPressed();
+		}
+	});
+	::mods_hookNewObject("scenarios/scenario_manager", function ( obj )
+	{
+		local s = this.new("scripts/entity/tactical/minions/special/dev_files/nggh_dev_scenario");
+		obj.m.Scenarios.push(s);
+	});
+	::mods_hookNewObject("entity/world/locations/legendary/kraken_cult_location", function ( obj )
+	{
+		local ws_onSpawned = obj.onSpawned; 
+		obj.onSpawned = function()
+		{
+			ws_onSpawned();
+
+			if (this.World.Flags.get("IsKrakenOrigin"))
+			{	
+				local self = this;
+				local tilePos = this.getTile().Pos;
+         		this.World.State.getPlayer().setPos(tilePos);
+         		this.World.setPlayerPos(tilePos);
+         		this.World.getCamera().setPos(tilePos);
+				this.onDiscovered();
+
+				this.Time.scheduleEvent(this.TimeUnit.Real, 1100, function ( _tag )
+				{
+					this.World.State.enterLocation(self);
+				}, null);
+			}
+		}
+	});
+
+	::mods_hookExactClass("events/events/dlc2/location/kraken_cult_enter_event", function (obj) 
+	{
+		local determineStartScreen = obj.onDetermineStartScreen;
+		obj.onDetermineStartScreen = function()
+		{
+			if (this.World.Flags.get("IsKrakenOrigin"))
+			{
+				return "H";
+			}
+
+			return onDetermineStartScreen();
+		}
+
+		local screens = ::mods_getField(obj, "Screens");
+		screens.push({
+			ID = "H",
+			Text = "[img]gfx/ui/events/event_103.png[/img]{You watch as one of the helpers suddenly lifts into the air, and in the green light you see the slick tentacle drag him backward and it seems as though the earth itself opens up, and a thousand wet boughs and branches crinkle and drip, and rows upon rows of fangs bristle, clattering against one another as though shouldering for a slice, and the helper is thrown into it the maw and the gums twist and he is disrobed and defleshed and delimbed and destroyed. The woman chomps on another mushroom and then her hands caress bulbs of green, and you can see the tentacles slithering beneath each.%SPEECH_ON%Join us, sellsword! Let the Beast of Beasts have its feast!%SPEECH_OFF%}",
+			Image = "",
+			List = [],
+			Characters = [],
+			Options = [
+				{
+					Text = "Let\'s Duel!",
+					function getResult( _event )
+					{
+						this.World.State.getLastLocation().setFaction(this.World.FactionManager.getFactionOfType(this.Const.FactionType.Beasts).getID());
+						this.World.Events.showCombatDialog(false, true, true);
+						return 0;
+					}
+
+				}
+			],
+			function start( _event )
+			{
+			}
+
+		});
+	});
+
 	//add siege weapon in battle and automatically put them in formation
 	::mods_hookNewObject("states/tactical_state", function ( obj )
 	{
@@ -420,6 +506,10 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 								bro.getAIAgent().setUseHeat(true);
 								bro.getAIAgent().getProperties().BehaviorMult[this.Const.AI.Behavior.ID.Retreat] = 1.0;
 								bro.onRetreating();
+							}
+							else if (bro.getFlags().has("boss") && bro.getFlags().has("kraken"))
+							{
+								bro.killSilently();
 							}
 							else if (bro.getSkills().hasSkill("effects.charmed"))
 							{

@@ -2,13 +2,11 @@ this.nggh707_item_container <- this.inherit("scripts/items/item_container", {
 	m = {
 		LockedSlots = [],
 		IsCosplaying = false,
-		IsGoblin = false,
 	},
 
 	function setActor( _a )
 	{
 		this.m.Actor = this.WeakTableRef(_a);
-		this.m.IsGoblin = _a != null && _a.getFlags().has("goblin");
 	}
 
 	function create()
@@ -389,7 +387,7 @@ this.nggh707_item_container <- this.inherit("scripts/items/item_container", {
 				{
 					this.m.Items[i][j].onActorDied(_onTile);
 
-					if (this.m.IsGoblin)
+					if ("isMounted" in this.m.Actor.get())
 					{
 						this.m.Actor.m.Mount.onActorDied(_onTile);
 					}

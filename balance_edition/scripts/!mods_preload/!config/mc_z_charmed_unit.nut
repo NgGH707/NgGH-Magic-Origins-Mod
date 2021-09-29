@@ -825,7 +825,29 @@ gt.Const.CharmedSlave <- {
 			},
 			
 		//Kraken = 66,
-			{},
+			{
+				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
+				Perks = [],
+				Difficulty = 999999,
+				Custom =  {
+					BgModifiers = {
+						Ammo = 100, ArmorParts = 100, Meds = 100, Stash = 300, Healing = 0.1, Injury = 0.1, Repair = 0.1, Salvage = 0.1, Crafting = 0.1, Barter = 0.1, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 1.0, Fletching = 0.1, Scout = 0.1, Gathering = 1.0, Training = 0.1, Enchanting = 50.0,
+						Terrain = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
+					},
+					Talents = {
+						ExcludedTalents = [0, 1, 2, 3, 4, 5, 6, 7],
+						PrimaryTalents = [],
+						SecondaryTalents = [],
+						StarsMax = 0,
+						StarsMin = 0,
+					},
+					Names = "KrakenNamesOnly",
+				},
+				PerkTree = "KrakenTree",
+				Script = "minions/special/dev_files/kraken_player",
+				Background = "charmed_beast_background",
+				Requirements = ["perk.mastery_charm"],
+			},
 			
 		//KrakenTentacle = 67,
 			{},

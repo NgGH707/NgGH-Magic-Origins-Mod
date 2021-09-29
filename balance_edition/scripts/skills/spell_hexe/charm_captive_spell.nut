@@ -305,7 +305,7 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
 		local resist = (defenderProperties.getBravery() + defenderProperties.MoraleCheckBravery[1]) * defenderProperties.MoraleCheckBraveryMult[1];
 		
-		if (resist >= 500 && _targetEntity.getType() != this.Const.EntityType.TricksterGod)
+		if (resist > 500 && _targetEntity.getType() != this.Const.EntityType.TricksterGod)
 		{
 			return 0;
 		}
@@ -348,23 +348,22 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		toHit = toHit - (penalty < 0 ? penalty * modifier : penalty / modifier);
 		toHit = toHit + threatBonus;
 		toHit = toHit + bonus;
-		
-		if (_targetEntity.getType() == this.Const.EntityType.LegendStollwurm)
-		{
-			return this.Math.max(5, this.Math.min(10, toHit));
-		}
-		
-		if (_targetEntity.getType() == this.Const.EntityType.TricksterGod)
-		{
-			if (hpLeft >= 1.0)
-			{
-				return 0;
-			}
-			
-			return this.Math.max(1, this.Math.min(5, toHit));
-		}
 
-		return this.Math.max(5, this.Math.min(95, toHit));
+		switch (_targetEntity.getType()) 
+		{
+	    case this.Const.EntityType.LegendStollwurm:
+	        return this.Math.max(5, this.Math.min(10, toHit));
+
+	    case this.Const.EntityType.TricksterGod:
+	       	if (hpLeft >= 1.0) {return 0}
+			return this.Math.max(1, this.Math.min(5, toHit));
+
+	    case this.Const.EntityType.Kraken:
+	        return this.Math.max(0, this.Math.min(3, toHit));
+	
+	    default:
+	    	return this.Math.max(5, this.Math.min(95, toHit));
+		}
 	}
 	
 	function getBonus()
@@ -520,6 +519,30 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 				text = "Target\'s resistance: [color=#0b0084]" + resist + "[/color]" 
 			}
 		]);
+
+		switch (_targetEntity.getType()) 
+		{
+	    case this.Const.EntityType.LegendStollwurm:
+	        ret.push({
+				icon = "ui/tooltips/chance_to_hit_head.png",
+				text = "A [color=" + this.Const.UI.Color.NegativeValue + "]Fearsome Beast[/color]"
+			});
+			break;
+
+	    case this.Const.EntityType.TricksterGod:
+	       	ret.push({
+				icon = "ui/tooltips/chance_to_hit_head.png",
+				text = "A [color=" + this.Const.UI.Color.NegativeValue + "]God[/color]"
+			});
+			break;
+
+	    case this.Const.EntityType.Kraken:
+	        ret.push({
+				icon = "ui/tooltips/chance_to_hit_head.png",
+				text = "A [color=" + this.Const.UI.Color.NegativeValue + "]True Terror[/color]"
+			});
+	        break;
+		}
 		
 		local targetTile = _targetEntity.getTile();
 		local numOpponentsAdjacent = 0;
@@ -675,22 +698,6 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 			ret.push({
 				icon = "ui/tooltips/positive.png",
 				text = "Too close: [color=" + this.Const.UI.Color.PositiveValue + "]10%[/color]"
-			});
-		}
-
-		if (targetEntity.getType() == 79)
-		{
-			ret.push({
-				icon = "ui/tooltips/chance_to_hit_head.png",
-				text = "A [color=" + this.Const.UI.Color.NegativeValue + "]God[/color]"
-			});
-		}
-
-		if (_targetEntity.getType() == 112)
-		{
-			ret.push({
-				icon = "ui/tooltips/chance_to_hit_head.png",
-				text = "A [color=" + this.Const.UI.Color.NegativeValue + "]Powerful Beast[/color]"
 			});
 		}
 		

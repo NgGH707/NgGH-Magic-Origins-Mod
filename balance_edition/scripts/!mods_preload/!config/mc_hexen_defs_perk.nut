@@ -64,6 +64,12 @@ gt.Const.Strings.PerkName.EggAttachSpider <- "I Need an Uber";
 gt.Const.Strings.PerkName.Daytime <- "Endure The Light";
 gt.Const.Strings.PerkName.Nighttime <- "Nocturnal";
 gt.Const.Strings.PerkName.FairGame <- "Fair Game";
+gt.Const.Strings.PerkName.KrakenBite <- "Rupturing Bite";
+gt.Const.Strings.PerkName.KrakenDevour <- "Insatiable Hunger";
+gt.Const.Strings.PerkName.KrakenEnsnare <- "Bone Shattering Grip";
+gt.Const.Strings.PerkName.KrakenMove <- "Slippery Tentacle";
+gt.Const.Strings.PerkName.KrakenSwing <- "Tentacle Sweep";
+gt.Const.Strings.PerkName.KrakenTentacle <- "Rubbering Skin";
 //-------------
 
 gt.Const.Strings.PerkDescription.CharmEnemySpider <- "The creepy crawlies in the depth of the forest. They would be suited to be your servants and soldiers. \n\nAllowing you to permanently charm Webknecht, and satisfy one of two conditions to permanently charm Redback Spider. \n\nGrants [color=" + this.Const.UI.Color.PositiveValue + "]Immunity[/color] to being rooted by nets, webs or grasping vines. \n\n[color=#0b0084]From the Hexen Magic perk group[/color]";
@@ -128,6 +134,12 @@ gt.Const.Strings.PerkDescription.EggAttachSpider <- "It sucks when you can move 
 gt.Const.Strings.PerkDescription.Daytime <- "Halve the penalty from daytime and increase Resolve by [color=" + this.Const.UI.Color.PositiveValue + "]10[/color]. \n\n[color=#0b0084]From the Alp perk group[/color]";
 gt.Const.Strings.PerkDescription.Nighttime <- "Become unaffected by nighttime and gain \'Nocturnal\' effect which gives [color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color] Attack Damage, [color=" + this.Const.UI.Color.PositiveValue + "]+15%[/color] Resolve, [color=" + this.Const.UI.Color.PositiveValue + "]+10%[/color] Melee Defense and [color=" + this.Const.UI.Color.PositiveValue + "]+10%[/color] Ranged Defense";
 gt.Const.Strings.PerkDescription.FairGame <- "Most of your attacks are gamble now. Gain [color=" + this.Const.UI.Color.PositiveValue + "]+25[/color] Melee Skill and Ranged Skill. Attacks either deal [color=" + this.Const.UI.Color.PositiveValue + "]50%[/color] more damage or [color=" + this.Const.UI.Color.NegativeValue + "]50%[/color] less damage, 50/50. May the goddess of luck bless you!\n\n[color=#0b0084]From the ??? perk group[/color]";
+gt.Const.Strings.PerkDescription.KrakenBite <- "Your bite become more dangerous with sharpen teeth that can easily cause grievous bleelding. [color=" + this.Const.UI.Color.NegativeValue + "]Bite[/color] skill deals [color=" + this.Const.UI.Color.NegativeValue + "]5[/color] - [color=" + this.Const.UI.Color.NegativeValue + "]12[/color] more damage and inflicts an additional [color=" + this.Const.UI.Color.NegativeValue + "]5[/color] bleeding damage.\n\n[color=#0b0084]From the Beast of Beasts perk group[/color]" ;
+gt.Const.Strings.PerkDescription.KrakenDevour <- "Become hungrier then ever, [color=" + this.Const.UI.Color.NegativeValue + "]Devour[/color] skill will always have 1 turn of cooldown instead of the randomized 1 - 2 turns of cooldown. Also heal [color=" + this.Const.UI.Color.PositiveValue + "]10[/color] of Hitpoints to all tentacles.\n\n[color=#0b0084]From the Beast of Beasts perk group[/color]";
+gt.Const.Strings.PerkDescription.KrakenEnsnare <- "When you think being drag to a big flicking mouth is bad enough, now you are being squeeze to death before getting eaten. [color=" + this.Const.UI.Color.NegativeValue + "]Squeeze Prey[/color] deals [color=" + this.Const.UI.Color.NegativeValue + "]25%[/color] more damage, this is also applied to the damage over time while being ensnared by tentacle.\n\n[color=#0b0084]From the Beast of Beasts perk group[/color]";
+gt.Const.Strings.PerkDescription.KrakenMove <- "With the help of natural slime, your tenticles can move better than ever. Tentacle builds up [color=" + this.Const.UI.Color.PositiveValue + "]2[/color] less fatigue for each tile travelled and its [color=" + this.Const.UI.Color.NegativeValue + "]Move Tentacle[/color] skill has its maximun range increased by [color=" + this.Const.UI.Color.PositiveValue + "]1[/color].\n\n[color=#0b0084]From the Beast of Beasts perk group[/color]";
+gt.Const.Strings.PerkDescription.KrakenSwing <- "Unlock the \'Sweep\' skill for you tentacle which can hit up to 3 targets at once.\n\n[color=#0b0084]From the Beast of Beasts perk group[/color]";
+gt.Const.Strings.PerkDescription.KrakenTentacle <- "Your skin is like a rubber, deflecting attacks and harder to be cut. Decrease damage taken by [color=" + this.Const.UI.Color.NegativeValue + "]10[/color] points and gain immunity to bleeding for your tentacle.\n\n[color=#0b0084]From the Beast of Beasts perk group[/color]";
 //-------------
 
 gt.Const.Perks.PerkDefObjects.extend([
@@ -718,6 +730,62 @@ gt.Const.Perks.PerkDefObjects.extend([
 		IconDisabled = "ui/perks/charge_perk_bw.png",
 		Const = "GoblinMountedCharge"
 	},
+
+	//Kraken
+	{
+		ID = "perk.kraken_bite",
+		Script = "scripts/skills/perks/perk_kraken_bite",
+		Name = this.Const.Strings.PerkName.KrakenBite,
+		Tooltip = this.Const.Strings.PerkDescription.KrakenBite,
+		Icon = "ui/perks/perk_kraken_bite.png",
+		IconDisabled = "ui/perks/perk_kraken_bite_sw.png",
+		Const = "KrakenBite"
+	},
+	{
+		ID = "perk.kraken_devour",
+		Script = "scripts/skills/perks/perk_kraken_devour",
+		Name = this.Const.Strings.PerkName.KrakenDevour,
+		Tooltip = this.Const.Strings.PerkDescription.KrakenDevour,
+		Icon = "ui/perks/perk_kraken_devour.png",
+		IconDisabled = "ui/perks/perk_kraken_devour_sw.png",
+		Const = "KrakenDevour"
+	},
+	{
+		ID = "perk.kraken_ensnare",
+		Script = "scripts/skills/perks/perk_kraken_ensnare",
+		Name = this.Const.Strings.PerkName.KrakenEnsnare,
+		Tooltip = this.Const.Strings.PerkDescription.KrakenEnsnare,
+		Icon = "ui/perks/perk_kraken_ensnare.png",
+		IconDisabled = "ui/perks/perk_kraken_ensnare_sw.png",
+		Const = "KrakenEnsnare"
+	},
+	{
+		ID = "perk.kraken_move",
+		Script = "scripts/skills/perks/perk_kraken_move",
+		Name = this.Const.Strings.PerkName.KrakenMove,
+		Tooltip = this.Const.Strings.PerkDescription.KrakenMove,
+		Icon = "ui/perks/perk_kraken_move.png",
+		IconDisabled = "ui/perks/perk_kraken_move_sw.png",
+		Const = "KrakenMove"
+	},
+	{
+		ID = "perk.kraken_swing",
+		Script = "scripts/skills/perks/perk_kraken_swing",
+		Name = this.Const.Strings.PerkName.KrakenSwing,
+		Tooltip = this.Const.Strings.PerkDescription.KrakenSwing,
+		Icon = "ui/perks/perk_kraken_sweep.png",
+		IconDisabled = "ui/perks/perk_kraken_sweep_sw.png",
+		Const = "KrakenSwing"
+	},
+	{
+		ID = "perk.kraken_tentacle",
+		Script = "scripts/skills/perks/perk_kraken_tentacle",
+		Name = this.Const.Strings.PerkName.KrakenTentacle,
+		Tooltip = this.Const.Strings.PerkDescription.KrakenTentacle,
+		Icon = "ui/perks/perk_kraken_tentacle.png",
+		IconDisabled = "ui/perks/perk_kraken_tentacle_sw.png",
+		Const = "KrakenTentacle"
+	},
 ]);
 
 gt.Const.Perks.PerkDefs.clear();
@@ -749,6 +817,33 @@ gt.Const.Perks.SpiderHive <- {
 		],
 		[
 			gt.Const.Perks.PerkDefs.EggNaturalSelection
+		]
+	]			
+};
+
+gt.Const.Perks.Kraken <- {
+	ID = "Kraken",
+	Name = "Kraken",
+	Descriptions = ["beast of beasts"],
+	Tree = [
+		[],
+		[
+			gt.Const.Perks.PerkDefs.KrakenDevour, 
+		],
+		[
+			gt.Const.Perks.PerkDefs.KrakenMove, 
+		],
+		[
+			gt.Const.Perks.PerkDefs.KrakenBite,
+		],
+		[
+			gt.Const.Perks.PerkDefs.KrakenSwing,
+		],
+		[ 
+			gt.Const.Perks.PerkDefs.KrakenEnsnare,
+		],
+		[
+			gt.Const.Perks.PerkDefs.KrakenTentacle,
 		]
 	]			
 };
@@ -828,6 +923,73 @@ gt.Const.PerksCharmedUnit.DemonAlpTree <- [
 	[
 		gt.Const.Perks.PerkDefs.LegendLevitate,
 		gt.Const.Perks.PerkDefs.LegendDistantVisions,
+	],
+	[],
+	[],
+	[],
+	[]
+];
+
+
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+
+gt.Const.PerksCharmedUnit.KrakenTree <- [
+	[
+		gt.Const.Perks.PerkDefs.SunderingStrikes,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyCaravan,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyBandit,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyGhoul,
+	],
+	[
+		gt.Const.Perks.PerkDefs.KrakenDevour,
+		gt.Const.Perks.PerkDefs.Backstabber,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyZombie,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyGoblin,
+	],
+	[
+		gt.Const.Perks.PerkDefs.KrakenMove,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemySkeleton,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyDirewolf,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemySpider,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyNoble,
+	],
+	[
+		gt.Const.Perks.PerkDefs.KrakenBite,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemySoutherner,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyNomad,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyOrk,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyVampire,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyAlps,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyUnhold,
+	],
+	[
+		gt.Const.Perks.PerkDefs.KrakenSwing,
+		gt.Const.Perks.PerkDefs.Fearsome,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyBarbarian,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyMercenary,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyArcher,
+	],
+	[ 
+		gt.Const.Perks.PerkDefs.KrakenEnsnare,
+		gt.Const.Perks.PerkDefs.DevastatingStrikes,
+		gt.Const.Perks.PerkDefs.Berserk,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyHexen,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemySchrat,
+	],
+	[
+		gt.Const.Perks.PerkDefs.KrakenTentacle,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemyLindwurm,
+		gt.Const.Perks.PerkDefs.LegendFavouredEnemySwordmaster,
 	],
 	[],
 	[],

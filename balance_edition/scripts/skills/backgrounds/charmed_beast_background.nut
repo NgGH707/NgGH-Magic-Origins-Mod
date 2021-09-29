@@ -334,19 +334,22 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 			b.setValues(info.Stats);
 		}
 
-		if (b.ArmorMax[0] >= 500 || b.ArmorMax[1] >= 500)
+		if (!this.getContainer().hasSkill("trait.player"))
 		{
-			b.ArmorMax[0] = this.Math.floor(b.ArmorMax[0] * 0.5);
-			b.ArmorMax[1] = this.Math.floor(b.ArmorMax[1] * 0.5);
-			b.Armor[0] = this.Math.floor(b.Armor[0] * 0.5);
-			b.Armor[1] = this.Math.floor(b.Armor[1] * 0.5);
-		}
-		else if (b.ArmorMax[0] >= 250 || b.ArmorMax[1] >= 250)
-		{
-			b.ArmorMax[0] = this.Math.floor(b.ArmorMax[0] * 0.75);
-			b.ArmorMax[1] = this.Math.floor(b.ArmorMax[1] * 0.75);
-			b.Armor[0] = this.Math.floor(b.Armor[0] * 0.75);
-			b.Armor[1] = this.Math.floor(b.Armor[1] * 0.75);
+			if (b.ArmorMax[0] >= 500 || b.ArmorMax[1] >= 500)
+			{
+				b.ArmorMax[0] = this.Math.floor(b.ArmorMax[0] * 0.5);
+				b.ArmorMax[1] = this.Math.floor(b.ArmorMax[1] * 0.5);
+				b.Armor[0] = this.Math.floor(b.Armor[0] * 0.5);
+				b.Armor[1] = this.Math.floor(b.Armor[1] * 0.5);
+			}
+			else if (b.ArmorMax[0] >= 250 || b.ArmorMax[1] >= 250)
+			{
+				b.ArmorMax[0] = this.Math.floor(b.ArmorMax[0] * 0.75);
+				b.ArmorMax[1] = this.Math.floor(b.ArmorMax[1] * 0.75);
+				b.Armor[0] = this.Math.floor(b.Armor[0] * 0.75);
+				b.Armor[1] = this.Math.floor(b.Armor[1] * 0.75);
+			}
 		}
 		
 		local Hitpoints1 = this.Math.rand(a.Hitpoints[0] - 2, a.Hitpoints[1] + 2);

@@ -1806,3 +1806,29 @@ gt.Const.Strings.BearNames <- [
 	"Vemados",
 	"Teddy",
 ];
+
+gt.Const.Strings.KrakenNamesOnly <- [
+	"Ogg-Sattoth",
+	"Kha-Athlu",
+	"Shaggaruth",
+	"Gla-Oth",
+	"Gu-Shogg",
+	"Chtan-Nahitil",
+	"Xa-Shutar",
+	"Thohochoth",
+	"Naccorath",
+	"Xapocathlu"
+];
+
+gt.Const.Strings.KrakenTitlesOnly <- [
+	"the Grand Devourer",
+	"the All-Ender",
+	"the Unending",
+	"the Endless Maw",
+	"the Thousand-Armed Thresher",
+	"the Gorger of All",
+	"the Eater of Worlds",
+	"the All-Ender",
+	"the Eternal",
+	"the All-Reaching"
+];

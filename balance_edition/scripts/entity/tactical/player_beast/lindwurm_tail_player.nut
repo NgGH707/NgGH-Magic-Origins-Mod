@@ -202,12 +202,8 @@ this.lindwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast"
 			"sounds/enemies/lindwurm_death_04.wav"
 		];
 		this.m.Sound[this.Const.Sound.ActorEvent.Idle] = [
-			"sounds/enemies/lindwurm_idle_06.wav",
-			"sounds/enemies/lindwurm_idle_07.wav",
-			"sounds/enemies/lindwurm_idle_08.wav",
-			"sounds/enemies/lindwurm_idle_09.wav",
-			"sounds/enemies/lindwurm_idle_10.wav",
-			"sounds/enemies/lindwurm_idle_11.wav"
+			"sounds/enemies/dlc2/krake_idle_13.wav",
+			"sounds/enemies/dlc2/krake_idle_14.wav"
 		];
 		this.m.Sound[this.Const.Sound.ActorEvent.Attack] = this.m.Sound[this.Const.Sound.ActorEvent.Idle];
 		this.m.SoundVolume[this.Const.Sound.ActorEvent.DamageReceived] = 1.5;
@@ -570,6 +566,18 @@ this.lindwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast"
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_hold_out"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_reach_advantage"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_fearsome"));
+	}
+
+	function onActorKilled( _actor, _tile, _skill )
+	{
+		if (this.m.Body != null && !this.m.Body.isNull() && this.m.Body.isAlive() && !this.m.Body.isDying())
+		{
+			this.m.Body.onActorKilled(_actor, _tile, _skill);
+		}
+		else 
+		{
+			this.player_beast.onActorKilled(_actor, _tile, _skill);
+		}
 	}
 	
 	function addXP( _xp, _scale = true )
