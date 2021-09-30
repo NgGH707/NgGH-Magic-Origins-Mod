@@ -259,7 +259,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		_hitInfo.BodyPart = this.Const.BodyPart.Head;
 		local ret = this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 
-		if (!this.m.IsEnraged && this.canBeEnraged() <= 0.25)
+		if (!this.m.IsEnraged && this.canBeEnraged())
 		{
 			this.setEnraged(true);
 		}
@@ -530,6 +530,34 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Talents = [];
 		this.m.Talents.resize(this.Const.Attributes.COUNT, 0);
 		this.fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
+	}
+
+	function onPlacedOnMap()
+	{
+		this.player_beast.onPlacedOnMap();
+		this.getTile().clear();
+		this.getTile().IsHidingEntity = false;
+		local myTile = this.getTile();
+
+		if (myTile.hasNextTile(this.Const.Direction.N))
+		{
+			local tile = myTile.getNextTile(this.Const.Direction.N);
+
+			if (tile.IsEmpty)
+			{
+				this.Tactical.spawnEntity("scripts/entity/tactical/objects/swamp_tree1", tile.Coords);
+			}
+
+			if (tile.hasNextTile(this.Const.Direction.N))
+			{
+				local tile = tile.getNextTile(this.Const.Direction.N);
+
+				if (tile.IsEmpty)
+				{
+					this.Tactical.spawnEntity("scripts/entity/tactical/objects/swamp_tree1", tile.Coords);
+				}
+			}
+		}
 	}
 	
 	function fillAttributeLevelUpValues( _amount, _maxOnly = false, _minOnly = false )

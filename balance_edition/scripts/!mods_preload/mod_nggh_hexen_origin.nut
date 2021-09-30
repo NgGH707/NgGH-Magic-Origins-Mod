@@ -31,8 +31,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		gt.Const.PerksCharmedUnit.LindwurmTree[5].push(gt.Const.Perks.PerkDefs.PTRExudeConfidence);
 		gt.Const.PerksCharmedUnit.SchratTree[5].push(gt.Const.Perks.PerkDefs.PTRExudeConfidence);
 		gt.Const.PerksCharmedUnit.GoblinAmbusher <- {
-			ExpertiseMultipliers = [
-			],
 			WeightMultipliers = [
 				{Multiplier = 2.0, Tree = this.Const.Perks.FitTree},
 				{Multiplier = 0.5, Tree = this.Const.Perks.CrossbowTree},
@@ -48,14 +46,15 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 					{Weight = 33, Tree = this.Const.Perks.ViciousTree}
 				]
 			],
+			Styles = [
+				[{Weight = 100, Tree = this.Const.Perks.RangedTree}]
+			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.LightArmorTree}]
 			]
 		};
 
 		gt.Const.PerksCharmedUnit.GoblinFighter <- {
-			ExpertiseMultipliers = [
-			],
 			WeightMultipliers = [
 				{Multiplier = 5.0, Tree = this.Const.Perks.ShieldTree},
 			],
@@ -83,8 +82,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		};
 
 		gt.Const.PerksCharmedUnit.GoblinLeader <- {
-			ExpertiseMultipliers = [
-			],
 			WeightMultipliers = [
 				{ Multiplier = 0.25, Tree = this.Const.Perks.OrganisedTree },
 				{ Multiplier = 0.25, Tree = this.Const.Perks.DeviousTree },
@@ -112,13 +109,12 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				[{Weight = 100, Tree = this.Const.Perks.SwordTree}]
 			]
 			Styles = [
-				[{Weight = 100, Tree = this.Const.Perks.OneHandedTree}]
+				[{Weight = 100, Tree = this.Const.Perks.OneHandedTree}],
+				[{Weight = 100, Tree = this.Const.Perks.RangedTree}]
 			]
 		};
 
 		gt.Const.PerksCharmedUnit.GoblinShaman <- {
-			ExpertiseMultipliers = [
-			],
 			WeightMultipliers = [
 			],
 			Profession = [
@@ -146,8 +142,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		};
 
 		gt.Const.PerksCharmedUnit.GoblinWolfrider <- {
-			ExpertiseMultipliers = [
-			],
 			WeightMultipliers = [
 				{Multiplier = 5.0, Tree = this.Const.Perks.ShieldTree},
 			],
@@ -175,8 +169,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		};
 
 		gt.Const.PerksCharmedUnit.OrcYoung <- {
-			ExpertiseMultipliers = [
-			],
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
 				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},
@@ -210,8 +202,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		};
 
 		gt.Const.PerksCharmedUnit.OrcBerserker <- {
-			ExpertiseMultipliers = [
-			],
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
 				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},
@@ -253,8 +243,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		};
 
 		gt.Const.PerksCharmedUnit.OrcWarrior <- {
-			ExpertiseMultipliers = [
-			],
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
 				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},
@@ -296,8 +284,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		};
 
 		gt.Const.PerksCharmedUnit.OrcWarlord <- {
-			ExpertiseMultipliers = [
-			],
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
 				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},
@@ -340,8 +326,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		};
 
 		gt.Const.PerksCharmedUnit.LegendOrcBehemoth <- {
-			ExpertiseMultipliers = [
-			],
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
 				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},
@@ -383,8 +367,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		};
 
 		gt.Const.PerksCharmedUnit.LegendOrcElite <- {
-			ExpertiseMultipliers = [
-			],
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
 				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},

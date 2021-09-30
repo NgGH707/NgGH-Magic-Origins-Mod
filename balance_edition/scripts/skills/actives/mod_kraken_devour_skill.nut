@@ -24,7 +24,7 @@ this.mod_kraken_devour_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsSerialized = false;
 		this.m.IsActive = true;
 		this.m.IsTargeted = true;
-		this.m.IsTargetingActor = true;
+		this.m.IsTargetingActor = false;
 		this.m.IsVisibleTileNeeded = true;
 		this.m.IsStacking = false;
 		this.m.IsAttack = true;
@@ -151,6 +151,32 @@ this.mod_kraken_devour_skill <- this.inherit("scripts/skills/skill", {
 
 	function onUse( _user, _targetTile )
 	{
+		local myTile = _user.getTile();
+
+		if (!_targetTile.IsOccupiedByActor || _targetTile.getEntity().isAlliedWith(_user))
+		{
+			for( local i = 0; i != 6; i = ++i )
+			{
+				if (!myTile.hasNextTile(i))
+				{
+				}
+				else
+				{
+					local tile = myTile.getNextTile(i);
+					
+					if (tile.IsOccupiedByActor && !tile.getEntity().isAlliedWith(_user))
+					{
+						_targetTile = tile;
+					}
+				}
+			}
+		}
+
+		if (!_targetTile.IsOccupiedByActor || _targetTile.getEntity().isAlliedWith(_user))
+		{
+			return false;
+		}
+
 		local tag = {
 			User = _user,
 			TargetTile = _targetTile
@@ -160,7 +186,7 @@ this.mod_kraken_devour_skill <- this.inherit("scripts/skills/skill", {
 		{
 			this.m.Cooldown = 1;
 		}
-		else 
+		else
 		{
 		    this.m.Cooldown = this.Math.rand(1, 2);
 		}

@@ -88,10 +88,10 @@ this.charmed_human_background <- this.inherit("scripts/skills/backgrounds/charac
 	
 	function onSetUp()
 	{
-		local attributes = this.buildPerkTree();
+		
 		local actor = this.getContainer().getActor();
 		actor.m.Background = this;
-		actor.m.StarWeights = this.buildAttributes(null, attributes);
+		actor.m.StarWeights = this.buildAttributes(null, null);
 		actor.fillTalentValues(3);
 
 		if (this.m.Info.Type == this.Const.EntityType.Swordmaster || this.m.Info.Type == this.Const.EntityType.DesertDevil)
@@ -112,6 +112,7 @@ this.charmed_human_background <- this.inherit("scripts/skills/backgrounds/charac
 		actor.fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
 		actor.getFlags().set("bewitched", this.m.Info.Type);
 		this.getContainer().add(this.new("scripts/skills/traits/intensive_training_trait"));
+		local attributes = this.buildPerkTree();
 		this.setAppearance();
 
 		if (this.m.Names.len() != 0)
@@ -136,6 +137,19 @@ this.charmed_human_background <- this.inherit("scripts/skills/backgrounds/charac
 		{
 			this.addPerk(this.Const.Perks.PerkDefs.FairGame, 2);
 		}
+
+		local b = this.getContainer().getActor().getBaseProperties();
+
+		b.Hitpoints += this.Math.rand(attributes.Hitpoints[0], attributes.Hitpoints[1]);
+		b.Bravery += this.Math.rand(attributes.Bravery[0], attributes.Bravery[1]);
+		b.Stamina += this.Math.rand(attributes.Stamina[0], attributes.Stamina[1]);
+		b.MeleeSkill += this.Math.rand(attributes.MeleeSkill[0], attributes.MeleeSkill[1]);
+		b.RangedSkill += this.Math.rand(attributes.RangedSkill[0], attributes.RangedSkill[1]);
+		b.MeleeDefense += this.Math.rand(attributes.MeleeDefense[0], attributes.MeleeDefense[1]);
+		b.RangedDefense += this.Math.rand(attributes.RangedDefense[0], attributes.RangedDefense[1]);
+		b.Initiative += this.Math.rand(attributes.Initiative[0], attributes.Initiative[1]);
+
+		this.getContainer().getActor().m.CurrentProperties = clone b;
 	}
 
 	function onBuildDescription()

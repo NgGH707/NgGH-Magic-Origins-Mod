@@ -135,7 +135,7 @@ this.mod_kraken_bite_skill <- this.inherit("scripts/skills/skill", {
 		{
 			if (_targetEntity != null && this.getContainer().getActor().getTile().getDistanceTo(_targetEntity.getTile()) == this.m.MaxRange)
 			{
-				_properties.MeleeSkill -= 10;
+				_properties.MeleeSkill -= 5;
 			}
 		}
 	}

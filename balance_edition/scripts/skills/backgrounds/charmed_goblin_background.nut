@@ -92,16 +92,19 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 	
 	function onSetUp()
 	{
+		this.getContainer().getActor().m.Background = this;
+		this.getContainer().getActor().m.StarWeights = this.buildAttributes(null, null);
+		this.getContainer().getActor().fillTalentValues();
+		this.getContainer().getActor().fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
+		this.getContainer().add(this.new("scripts/skills/traits/intensive_training_trait"));
 		local attributes = this.buildPerkTree();
+
 		this.addPerk(this.Const.Perks.PerkDefs.BoondockBlade, 0);
 		this.addPerk(this.Const.Perks.PerkDefs.GoblinWolfRider, 1);
 		this.addPerk(this.Const.Perks.PerkDefs.GoblinMountedCharge, 2);
 		this.addPerk(this.Const.Perks.PerkDefs.LegendHorseLiberty, 3);
 		this.addPerk(this.Const.Perks.PerkDefs.GoblinMountedArchery, 5);
-		this.getContainer().getActor().m.Background = this;
-		this.getContainer().getActor().m.StarWeights = this.buildAttributes(null, attributes);
-		this.getContainer().getActor().fillTalentValues();
-		this.getContainer().getActor().fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
+
 		this.setAppearance();
 
 		if (this.m.Names.len() != 0)
@@ -114,7 +117,6 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 			this.getContainer().getActor().setTitle(this.Const.Strings.GoblinTitles[this.Math.rand(0, this.Const.Strings.GoblinTitles.len() - 1)]);
 		}
 
-		this.getContainer().add(this.new("scripts/skills/traits/intensive_training_trait"));
 		this.getContainer().getActor().getFlags().set("bewitched", this.m.Info.Type);
 
 		if (this.m.AdditionalPerks != null)
@@ -134,6 +136,19 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 		{
 			this.addPerk(this.Const.Perks.PerkDefs.FairGame, 2);
 		}
+
+		local b = this.getContainer().getActor().getBaseProperties();
+
+		b.Hitpoints += this.Math.rand(attributes.Hitpoints[0], attributes.Hitpoints[1]);
+		b.Bravery += this.Math.rand(attributes.Bravery[0], attributes.Bravery[1]);
+		b.Stamina += this.Math.rand(attributes.Stamina[0], attributes.Stamina[1]);
+		b.MeleeSkill += this.Math.rand(attributes.MeleeSkill[0], attributes.MeleeSkill[1]);
+		b.RangedSkill += this.Math.rand(attributes.RangedSkill[0], attributes.RangedSkill[1]);
+		b.MeleeDefense += this.Math.rand(attributes.MeleeDefense[0], attributes.MeleeDefense[1]);
+		b.RangedDefense += this.Math.rand(attributes.RangedDefense[0], attributes.RangedDefense[1]);
+		b.Initiative += this.Math.rand(attributes.Initiative[0], attributes.Initiative[1]);
+
+		this.getContainer().getActor().m.CurrentProperties = clone b;
 	}
 	
 	function onUpdate( _properties )

@@ -304,8 +304,7 @@ this.perk_tree_builder <- {
 			this.Const.Perks.PerkDefs.PTRTunnelVision,
 			this.Const.Perks.PerkDefs.PTRMenacing,
 			this.Const.Perks.PerkDefs.PTRAlwaysAnEntertainer,
-			this.Const.Perks.PerkDefs.PTRPunchingBag,
-			this.Const.Perks.PerkDefs.PTRTraumaSurvivor,
+			this.Const.Perks.PerkDefs.PTREasyTarget,
 		]);
 
 		_lib[1].extend([
