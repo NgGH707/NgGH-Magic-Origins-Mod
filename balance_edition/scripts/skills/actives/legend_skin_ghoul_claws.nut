@@ -29,7 +29,7 @@ this.legend_skin_ghoul_claws <- this.inherit("scripts/skills/skill", {
 			"sounds/enemies/ghoul_claws_06.wav"
 		];
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.OffensiveTargeted;
+		this.m.Order = this.Const.SkillOrder.OffensiveTargeted + 3;
 		this.m.IsSerialized = false;
 		this.m.IsActive = true;
 		this.m.IsTargeted = true;
@@ -47,6 +47,11 @@ this.legend_skin_ghoul_claws <- this.inherit("scripts/skills/skill", {
 		this.m.ChanceDecapitate = 33;
 		this.m.ChanceDisembowel = 33;
 		this.m.ChanceSmash = 0;
+	}
+
+	function isHidden()
+	{
+		return this.m.Container.getActor().getMainhandItem() != null && !this.getContainer().hasSkill("effects.disarmed") || this.skill.isHidden();
 	}
 
 	function onAdded()
@@ -76,12 +81,17 @@ this.legend_skin_ghoul_claws <- this.inherit("scripts/skills/skill", {
 
 	function onUpdate( _properties )
 	{
-		local size = this.getContainer().getActor().getSize();
-		this.m.ChanceDecapitate = 25 * size;
-		this.m.ChanceDisembowel = 25 * size;
-		_properties.DamageRegularMin += 5 * size;
-		_properties.DamageRegularMax += 10 * size;
-		_properties.DamageArmorMult *= 0.75;
+		local actor = this.getContainer().getActor();
+
+		if (!this.isHidden())
+		{
+			local size = actor.getSize();
+			this.m.ChanceDecapitate = 25 * size;
+			this.m.ChanceDisembowel = 25 * size;
+			_properties.DamageRegularMin += 5 * size;
+			_properties.DamageRegularMax += 10 * size;
+			_properties.DamageArmorMult *= 0.75;
+		}
 	}
 
 	function onAfterUpdate( _properties )

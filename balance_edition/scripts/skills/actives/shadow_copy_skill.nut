@@ -253,7 +253,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 		this.Time.scheduleEvent(this.TimeUnit.Virtual, 500, function( _skill )
 		{
 			_skill.m.Copy = this.Tactical.spawnEntity("scripts/entity/tactical/minions/special/alp_shadow_minion", _tile.Coords);
-			_skill.m.Copy.setFaction(1);
+			_skill.m.Copy.setFaction(2);
 			_skill.m.Copy.setMaster(actor);
 			_skill.m.Copy.strengthen(actor);
 			_skill.m.Copy.spawnShadowEffect(_tile);

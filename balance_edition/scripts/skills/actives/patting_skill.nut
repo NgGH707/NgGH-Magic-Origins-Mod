@@ -20,7 +20,7 @@ this.patting_skill <- this.inherit("scripts/skills/skill", {
 		this.m.Overlay = "patting_skill";
 		this.m.SoundOnUse = this.Const.Sound.JesterImpact;
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.OffensiveTargeted - 1;
+		this.m.Order = this.Const.SkillOrder.OffensiveTargeted + 2;
 		this.m.IsSerialized = false;
 		this.m.IsActive = true;
 		this.m.IsTargeted = true;

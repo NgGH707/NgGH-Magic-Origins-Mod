@@ -327,7 +327,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 		if (wrongTitle)
 		{
 			this.getContainer().getActor().setTitle("The Rat Enjoyer");
-			this.getContainer().getActor().worsenMood(0.5, "I like rat. Please don\'t changing it");
+			this.getContainer().getActor().worsenMood(0.5, "I like rat. Please don\'t change it");
 		}
 
 		local actor = this.getContainer().getActor();

@@ -77,6 +77,7 @@ this.gruesome_feast_effect <- this.inherit("scripts/skills/skill", {
 	{
 		local size = this.getContainer().getActor().getSize();
 		local isPlayer = this.getContainer().getActor().isPlayerControlled();
+		local mainhand = this.getContainer().getActor().getMainhandItem();
 		this.m.IsHidden = size <= 1;
 
 		if (size == 2)
@@ -86,10 +87,19 @@ this.gruesome_feast_effect <- this.inherit("scripts/skills/skill", {
 			_properties.MeleeDefense += 5;
 			_properties.RangedDefense -= 5;
 			_properties.Bravery += 30;
-			_properties.DamageRegularMin += 15;
-			_properties.DamageRegularMax += 20;
 			_properties.Initiative -= 15;
 			_properties.DailyFood += 1;
+
+			if (mainhand == null || mainhand.isItemType(this.Const.Items.ItemType.TwoHanded) && !mainhand.isItemType(this.Const.Items.ItemType.RangedWeapon))
+			{
+				_properties.DamageRegularMin += 15;
+				_properties.DamageRegularMax += 20;
+			}
+			else
+			{
+				_properties.DamageRegularMin += 5;
+				_properties.DamageRegularMax += 8;
+			}
 		}
 		else if (size == 3)
 		{
@@ -98,10 +108,19 @@ this.gruesome_feast_effect <- this.inherit("scripts/skills/skill", {
 			_properties.MeleeDefense += 10;
 			_properties.RangedDefense -= 10;
 			_properties.Bravery += 60;
-			_properties.DamageRegularMin += 30;
-			_properties.DamageRegularMax += 40;
 			_properties.Initiative -= 30;
 			_properties.DailyFood += 4;
+
+			if (mainhand == null || mainhand.isItemType(this.Const.Items.ItemType.TwoHanded) && !mainhand.isItemType(this.Const.Items.ItemType.RangedWeapon))
+			{
+				_properties.DamageRegularMin += 30;
+				_properties.DamageRegularMax += 40;
+			}
+			else
+			{
+				_properties.DamageRegularMin += 10;
+				_properties.DamageRegularMax += 15;
+			}
 			
 			if (!isPlayer)
 			{

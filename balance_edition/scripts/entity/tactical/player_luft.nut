@@ -378,6 +378,8 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 		this.m.Items = this.new("scripts/items/nggh707_item_container");
 		this.m.Items.setActor(this);
 		this.m.Items.blockAllSlots();
+		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Mainhand] = false;
+		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Offhand] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = false;
 		this.m.AIAgent = this.new("scripts/ai/tactical/player_agent");
@@ -444,12 +446,16 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 		rooted.Visible = false;
 		rooted.Scale = 0.55;
 		
+		this.addSprite("background");
 		this.addSprite("socket").setBrush("bust_base_player");
 		this.addSprite("miniboss");
+		local quiver = this.addSprite("quiver");
+		quiver.Visible = false;
 		local body = this.addSprite("body");
 		body.setBrush("bust_ghoulskin_body_01");
 		this.addSprite("accessory");
 		this.addSprite("accessory_special");
+		this.addSprite("shaft");
 		local head = this.addSprite("head");
 		head.setBrush("bust_ghoulskin_head_01");
 		this.m.Head = this.Math.rand(1, 3);
@@ -560,14 +566,16 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 	{
 		this.actor.onFactionChanged();
 		local flip = this.isAlliedWithPlayer();
+		this.getSprite("background").setHorizontalFlipping(!flip);
+		this.getSprite("quiver").setHorizontalFlipping(flip);
+		this.getSprite("shaft").setHorizontalFlipping(!flip);
 		this.getSprite("body").setHorizontalFlipping(flip);
 		this.getSprite("head").setHorizontalFlipping(flip);
 		this.getSprite("injury").setHorizontalFlipping(flip);
 		
-		flip = !this.isAlliedWithPlayer();
-		this.getSprite("accessory").setHorizontalFlipping(flip);
-		this.getSprite("accessory_special").setHorizontalFlipping(flip);
-		this.getSprite("body_blood").setHorizontalFlipping(flip);
+		this.getSprite("accessory").setHorizontalFlipping(!flip);
+		this.getSprite("accessory_special").setHorizontalFlipping(!flip);
+		this.getSprite("body_blood").setHorizontalFlipping(!flip);
 
 		foreach( a in this.Const.CharacterSprites.Helmets )
 		{
@@ -576,7 +584,7 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 				continue;
 			}
 
-			this.getSprite(a).setHorizontalFlipping(flip);
+			this.getSprite(a).setHorizontalFlipping(!flip);
 		}
 	}
 	
@@ -635,6 +643,7 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 			}
 		}
 		
+		_appearance.Quiver = "bust_goblin_quiver";
 		this.actor.onAppearanceChanged(_appearance, _setDirty);
 		this.onAdjustingSprite();
 	}
@@ -1341,7 +1350,7 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 			Bravery = 50,
 			Stamina = 130,
 			MeleeSkill = 65,
-			RangedSkill = 0,
+			RangedSkill = 55,
 			MeleeDefense = 10,
 			RangedDefense = 7,
 			Initiative = 115,
@@ -1373,7 +1382,7 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 		
 		this.m.Talents = [];
 		this.m.Attributes = [];
-		this.fillBeastTalentValues(this.Math.rand(6, 9), true);
+		this.player.fillTalentValues(3);
 		this.fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
 	}
 	

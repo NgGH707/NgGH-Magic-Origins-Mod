@@ -22,7 +22,7 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 		this.World.Assets.m.VisionRadiusMult *= 1.5;
 		this.World.Assets.m.FoodAdditionalDays += 5;
 		this.World.Assets.m.ChampionChanceAdditional += 15;
-		this.World.Assets.updateLook(9993);
+		this.World.Assets.updateLook(9990);
 	}
 
 	function onCombatFinished()

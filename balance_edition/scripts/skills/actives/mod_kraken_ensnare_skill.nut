@@ -58,8 +58,8 @@ this.mod_kraken_ensnare_skill <- this.inherit("scripts/skills/skill", {
 	function getTooltip()
 	{
 		local ret = this.getDefaultUtilityTooltip();
-		local damage_regular_min = 15 * this.m.DamageMult;
-		local damage_regular_max = 20 * this.m.DamageMult;
+		local damage_regular_min = this.Math.floor(15 * this.m.DamageMult);
+		local damage_regular_max = this.Math.floor(20 * this.m.DamageMult);
 		local damage_direct_min = this.Math.floor(damage_regular_min * 0.3);
 		local damage_direct_max = this.Math.floor(damage_regular_max * 0.3);
 		local damage_armor_min = this.Math.floor(damage_regular_min * 1.25);

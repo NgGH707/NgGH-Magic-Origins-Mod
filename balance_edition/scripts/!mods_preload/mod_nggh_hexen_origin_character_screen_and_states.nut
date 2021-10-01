@@ -355,7 +355,7 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 
 	::mods_hookExactClass("events/events/dlc2/location/kraken_cult_enter_event", function (obj) 
 	{
-		local determineStartScreen = obj.onDetermineStartScreen;
+		local determineStartScreen = ::mods_getMember(obj, "onDetermineStartScreen");
 		obj.onDetermineStartScreen = function()
 		{
 			if (this.World.Flags.get("IsKrakenOrigin"))
@@ -363,7 +363,7 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 				return "H";
 			}
 
-			return onDetermineStartScreen();
+			return determineStartScreen();
 		}
 
 		local screens = ::mods_getField(obj, "Screens");

@@ -38,6 +38,10 @@ this.ghoul_claws_zoc <- this.inherit("scripts/skills/skill", {
 		this.m.ChanceSmash = 0;
 	}
 
+	function isIgnoredAsAOO()
+	{
+		return this.m.Container.getActor().getMainhandItem() != null;
+	}
 
 	function isUsable()
 	{
