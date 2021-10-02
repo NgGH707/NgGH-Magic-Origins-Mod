@@ -1,0 +1,64 @@
+<brush name="gfx/quotes.png" version="17" b1="2" b5="0">
+
+  <sprite id="luft_charm_quote_1" ic="FF2E326F" img="luft\luft_charm_quote_1.png" />
+  <sprite id="luft_charm_quote_2" ic="FF2E326F" img="luft\luft_charm_quote_2.png" />
+  <sprite id="luft_charm_quote_3" ic="FF2E326F" img="luft\luft_charm_quote_3.png" />
+  <sprite id="luft_charm_quote_4" ic="FF2E326F" img="luft\luft_charm_quote_4.png" />
+  <sprite id="luft_charm_quote_5" ic="FF2E326F" img="luft\luft_charm_quote_5.png" />
+  <sprite id="luft_charm_quote_6" ic="FF2E326F" img="luft\luft_charm_quote_6.png" />
+  <sprite id="luft_charm_quote_7" ic="FF2E326F" img="luft\luft_charm_quote_7.png" />
+  
+  <sprite id="luft_damage_taken_quote_1" ic="FF2E326F" img="luft\luft_damage_taken_quote_1.png" />
+  <sprite id="luft_damage_taken_quote_2" ic="FF2E326F" img="luft\luft_damage_taken_quote_2.png" />
+  <sprite id="luft_damage_taken_quote_3" ic="FF2E326F" img="luft\luft_damage_taken_quote_3.png" />
+  
+  <sprite id="luft_eat_quote_1" ic="FF2E326F" img="luft\luft_eat_quote_1.png" />
+  <sprite id="luft_eat_quote_2" ic="FF2E326F" img="luft\luft_eat_quote_2.png" />
+  <sprite id="luft_eat_quote_3" ic="FF2E326F" img="luft\luft_eat_quote_3.png" />
+  
+  <sprite id="luft_idle_quote_1" ic="FF2E326F" img="luft\luft_idle_quote_1.png" />
+  <sprite id="luft_idle_quote_2" ic="FF2E326F" img="luft\luft_idle_quote_2.png" />
+  <sprite id="luft_idle_quote_3" ic="FF2E326F" img="luft\luft_idle_quote_3.png" />
+  <sprite id="luft_idle_quote_4" ic="FF2E326F" img="luft\luft_idle_quote_4.png" />
+  <sprite id="luft_idle_quote_5" ic="FF2E326F" img="luft\luft_idle_quote_5.png" />
+  <sprite id="luft_idle_quote_6" ic="FF2E326F" img="luft\luft_idle_quote_6.png" />
+  
+  <sprite id="luft_move_quote_1" ic="FF2E326F" img="luft\luft_move_quote_1.png" />
+  <sprite id="luft_move_quote_2" ic="FF2E326F" img="luft\luft_move_quote_2.png" />
+  <sprite id="luft_move_quote_3" ic="FF2E326F" img="luft\luft_move_quote_3.png" />
+  
+  <sprite id="luft_pet_quote_1" ic="FF2E326F" img="luft\luft_pet_quote_1.png" />
+  <sprite id="luft_pet_quote_2" ic="FF2E326F" img="luft\luft_pet_quote_2.png" />
+  <sprite id="luft_pet_quote_3" ic="FF2E326F" img="luft\luft_pet_quote_3.png" />
+  <sprite id="luft_pet_quote_4" ic="FF2E326F" img="luft\luft_pet_quote_4.png" />
+  <sprite id="luft_pet_quote_5" ic="FF2E326F" img="luft\luft_pet_quote_5.png" />
+  
+  <sprite id="luft_swallow_quote_1" ic="FF2E326F" img="luft\luft_swallow_quote_1.png" />
+  <sprite id="luft_swallow_quote_2" ic="FF2E326F" img="luft\luft_swallow_quote_2.png" />
+  <sprite id="luft_swallow_quote_3" ic="FF2E326F" img="luft\luft_swallow_quote_3.png" />
+  <sprite id="luft_swallow_quote_4" ic="FF2E326F" img="luft\luft_swallow_quote_4.png" />
+  
+  <sprite id="luft_claw_quote_1" ic="FF2E326F" img="luft\luft_claw_quote_1.png" />
+  <sprite id="luft_claw_quote_2" ic="FF2E326F" img="luft\luft_claw_quote_2.png" />
+  <sprite id="luft_claw_quote_3" ic="FF2E326F" img="luft\luft_claw_quote_3.png" />
+  <sprite id="luft_claw_quote_4" ic="FF2E326F" img="luft\luft_claw_quote_4.png" />
+  <sprite id="luft_claw_quote_5" ic="FF2E326F" img="luft\luft_claw_quote_5.png" />
+
+  <sprite id="necro_quote_1" ic="FF2E326F" img="necromancer\necromancer_quote_1.png" />
+  <sprite id="necro_quote_2" ic="FF2E326F" img="necromancer\necromancer_quote_2.png" />
+  <sprite id="necro_quote_3" ic="FF2E326F" img="necromancer\necromancer_quote_3.png" />
+  <sprite id="necro_quote_4" ic="FF2E326F" img="necromancer\necromancer_quote_4.png" />
+  <sprite id="necro_quote_5" ic="FF2E326F" img="necromancer\necromancer_quote_5.png" />
+  <sprite id="necro_quote_6" ic="FF2E326F" img="necromancer\necromancer_quote_6.png" />
+  <sprite id="necro_quote_10" ic="FF2E326F" img="necromancer\necromancer_quote_10.png" />
+  <sprite id="necro_quote_11" ic="FF2E326F" img="necromancer\necromancer_quote_11.png" />
+  <sprite id="necro_quote_12" ic="FF2E326F" img="necromancer\necromancer_quote_12.png" />
+  
+  <sprite id="sword_saint_quote_1" ic="FF2E326F" img="zombie\sword_saint_quote_1.png" />
+  <sprite id="sword_saint_quote_2" ic="FF2E326F" img="zombie\sword_saint_quote_2.png" />
+  <sprite id="sword_saint_quote_3" ic="FF2E326F" img="zombie\sword_saint_quote_3.png" />
+  <sprite id="sword_saint_quote_4" ic="FF2E326F" img="zombie\sword_saint_quote_4.png" />
+  <sprite id="sword_saint_quote_5" ic="FF2E326F" img="zombie\sword_saint_quote_5.png" />
+  <sprite id="sword_saint_quote_6" ic="FF2E326F" img="zombie\sword_saint_quote_6.png" />
+  
+</brush>

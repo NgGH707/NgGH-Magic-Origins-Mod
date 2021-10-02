@@ -89,6 +89,15 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					});
 				}
 
+				this.Options.push({
+					Text = "Bless me with your wisdom",
+					function getResult( _event )
+					{
+						return "Tips";
+					}
+
+				});
+
 				if (_event.m.HasMeal && _event.m.HasGivenWeapon && _event.m.HasNewPerks)
 				{
 					this.Options.push({
@@ -100,15 +109,6 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 
 					});
 				}
-
-				this.Options.insert(2, {
-					Text = "Bless me with your wisdom",
-					function getResult( _event )
-					{
-						return "Tips";
-					}
-
-				});
 			}
 
 		});
@@ -377,7 +377,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					
 					this.List.push({
 						id = 10,
-						icon = perk.getIcon(),
+						icon = "ui/perks/perk_afterimage.png",
 						text = _event.m.Luft.getName() + " can learn '" + this.Const.Strings.PerkName.AlpShadowCopy + "' perk"
 					});
 					break;
@@ -410,6 +410,25 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					{
 						item = this.new("scripts/items/accessory/wardog_item");
 						item.setType(this.Const.Companions.TypeList.Nacho);
+						local nacho = this.World.getTemporaryRoster().create("scripts/entity/tactical/enemies/ghoul");
+						local nacho_perks = nacho.getSkills().query(this.Const.SkillType.Perk);
+						foreach(perk in nacho_perks)
+						{
+							local quirk = "";
+							foreach( i, v in this.getroottable().Const.Perks.PerkDefObjects )
+							{
+								if (perk.getID() == v.ID)
+								{
+									quirk = v.Script;
+									break;
+								}
+							}
+							if (quirk != "" && item.m.Quirks.find(quirk) == null)
+							{
+								item.m.Quirks.push(quirk);
+							}			
+						}
+
 						item.updateCompanion();
 					}
 					_event.m.Luft.getItems().equip(item);
@@ -418,19 +437,20 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 						icon = "ui/items/" + item.getIcon(),
 						text = _event.m.Luft.getName() + " gets " + item.getName() + " as pet"
 					});
-					_event.m.Luft.PerkPoints += 1;
+					_event.m.Luft.m.PerkPoints += 1;
 					this.List.push({
 						id = 10,
-						icon = perk.getIcon(),
+						icon = "ui/icons/perks",
 						text = _event.m.Luft.getName() + " gains [color=" + this.Const.UI.Color.PositiveValue + "]1[/color] perk point"
 					});
+					this.World.getTemporaryRoster().clear();
 					break;
 
 				case "Uberbagel":
 					_event.m.Luft.grow(true);
 					this.List.push({
 						id = 10,
-						icon = perk.getIcon(),
+						icon = "skills/patting_skill.png",
 						text = _event.m.Luft.getName() + " grows rapidly"
 					});
 					local perk;
