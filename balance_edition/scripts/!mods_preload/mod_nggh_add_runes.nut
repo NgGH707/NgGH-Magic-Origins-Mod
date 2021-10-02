@@ -127,10 +127,10 @@ this.getroottable().Nggh_MagicConcept.hookAddRunes <- function ()
 				return "This item has the power of the rune sigil of Unstable:\nAttacks have [color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] to deal triple the original damage.";
 			
 			case 102:
-				return "This item has the power of the rune sigil of Thorns:\n[color=" + this.Const.UI.Color.PositiveValue + "]+25%[/color] Damage taken to armor.\nReflect [color=" + this.Const.UI.Color.PositiveValue + "]35[/color]-[color=" + this.Const.UI.Color.PositiveValue + "]65%[/color] Damage taken to armor back to the attacker.";
+				return "This item has the power of the rune sigil of Thorns:\n[color=" + this.Const.UI.Color.PositiveValue + "]+25%[/color] Damage taken to your armor.\nReflect [color=" + this.Const.UI.Color.PositiveValue + "]35[/color]-[color=" + this.Const.UI.Color.PositiveValue + "]65%[/color] Damage taken to armor back to the attacker.";
 			
 			case 103:
-				return "This item has the power of the rune sigil of Repulsion:\n[color=" + this.Const.UI.Color.PositiveValue + "]40%[/color] to knock back your attacker. [color=" + this.Const.UI.Color.PositiveValue + "]Immune[/color] to knockbacks and grabs.";
+				return "This item has the power of the rune sigil of Repulsion:\n[color=" + this.Const.UI.Color.PositiveValue + "]50%[/color] to knock back your attacker. [color=" + this.Const.UI.Color.PositiveValue + "]Immune[/color] to knockbacks and grabs.";
 
 			case 104:
 				return "This item has the power of the rune sigil of Corrosion:\n[color=" + this.Const.UI.Color.PositiveValue + "]1 to 2[/color] turn(s) of acid applied, which capable of destroying [color=" + this.Const.UI.Color.NegativeValue + "]10%[/color] of affected target\'s armor per turn.";

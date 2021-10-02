@@ -42,7 +42,7 @@ this.legend_RSA_repulsion <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (_damageArmor > 0 && this.Math.rand(1, 100) <= 40)
+		if (_damageArmor > 0 && this.Math.rand(1, 100) <= 50)
 		{
 			local knockToTile = this.findTileToKnockBackTo(actor.getTile(), _attacker.getTile());
 
@@ -53,8 +53,9 @@ this.legend_RSA_repulsion <- this.inherit("scripts/skills/skill", {
 
 			this.applyFatigueDamage(_attacker, 10);
 
-			if (_attacker.getCurrentProperties().IsImmuneToKnockBackAndGrab || _attacker.getCurrentProperties().IsRooted)
+			if ((_attacker.getCurrentProperties().IsImmuneToKnockBackAndGrab && this.Math.rand(1, 100) <= 50) || _attacker.getCurrentProperties().IsRooted)
 			{
+				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_attacker) + " resists being knocked back");
 				return;
 			}
 
@@ -69,7 +70,7 @@ this.legend_RSA_repulsion <- this.inherit("scripts/skills/skill", {
 			skills.removeByID("effects.riposte");
 
 			_attacker.setCurrentMovementType(this.Const.Tactical.MovementType.Involuntary);
-			local damage = this.Math.max(0, this.Math.abs(knockToTile.Level - _attacker.getTile().Level) - 1) * this.Const.Combat.FallingDamage;
+			local damage = this.Math.max(0, this.Math.abs(knockToTile.Level - _attacker.getTile().Level) - 1) * this.Const.Combat.FallingDamage + 10;
 
 			if (damage == 0)
 			{

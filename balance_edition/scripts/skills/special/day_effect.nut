@@ -104,7 +104,7 @@ this.day_effect <- this.inherit("scripts/skills/skill", {
 
 	function onAfterUpdate( _properties )
 	{
-		if (this.m.IsHidden)
+		if (this.isHidden)
 		{
 			return;
 		}
@@ -127,14 +127,23 @@ this.day_effect <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onCombatStarted()
+	function isHidden()
 	{
-		this.m.IsHidden = !this.World.getTime().IsDaytime;
-	}
+		local actor = this.getContainer().getActor();
 
-	function onCombatFinished()
-	{
-		this.m.IsHidden = true;
+		if (actor.isPlacedOnMap())
+		{
+			local myTile = actor.getTile();
+
+			if (myTile.Properties.Effect != null && myTile.Properties.Effect.Type == "shadows")
+			{
+				return false;
+			}
+
+			return !this.World.getTime().IsDaytime;
+		}
+
+		return true;
 	}
 
 });

@@ -29,7 +29,7 @@ this.legend_rune_repulsion <- this.inherit("scripts/items/legend_armor/legend_ar
 			id = 7,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "This item has the power of the rune sigil of Repulsion:\n[color=" + this.Const.UI.Color.PositiveValue + "]40%[/color] to knock back your attacker. [color=" + this.Const.UI.Color.PositiveValue + "]Immune[/color] to knockbacks and grabs."
+			text = "This item has the power of the rune sigil of Repulsion:\n[color=" + this.Const.UI.Color.PositiveValue + "]50%[/color] to knock back your attacker. [color=" + this.Const.UI.Color.PositiveValue + "]Immune[/color] to knockbacks and grabs."
 		});
 		return result;
 	}
@@ -40,7 +40,7 @@ this.legend_rune_repulsion <- this.inherit("scripts/items/legend_armor/legend_ar
 			id = 7,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "This item has the power of the rune sigil of Repulsion:\n[color=" + this.Const.UI.Color.PositiveValue + "]40%[/color] to knock back your attacker. [color=" + this.Const.UI.Color.PositiveValue + "]Immune[/color] to knockbacks and grabs."
+			text = "This item has the power of the rune sigil of Repulsion:\n[color=" + this.Const.UI.Color.PositiveValue + "]50%[/color] to knock back your attacker. [color=" + this.Const.UI.Color.PositiveValue + "]Immune[/color] to knockbacks and grabs."
 		});
 	}
 

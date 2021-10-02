@@ -27,11 +27,19 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsAttack = false;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.ActionPointCost = 0;
-		this.m.FatigueCost = 40;
-		this.m.FatigueCostMult = 0.0;
+		this.m.FatigueCost = 0;
+		this.m.FatigueCostMult = 1.0;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 99;
 		this.m.MaxLevelDifference = 4;
+	}
+
+	function onAdded()
+	{
+		if (this.getContainer().getActor().isPlayerControlled())
+		{
+			this.m.FatigueCost = 40;
+		}
 	}
 
 	function onCombatStarted()
@@ -42,7 +50,7 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 	function onCombatFinished()
 	{
 		this.m.IsAtNight = false;
-		this.m.FatigueCostMult = 1.0;
+		this.m.FatigueCost = 40;
 	}
 	
 	function onTurnStart()
@@ -53,7 +61,7 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 		}
 		
 		this.m.IsVisibleTileNeeded = true;
-		this.m.FatigueCostMult = this.m.IsAtNight ? 0.75 : 1.0;
+		this.m.FatigueCost = this.m.IsAtNight ? 30 : 40;
 		this.getContainer().update();
 	}
 	
@@ -65,7 +73,7 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 		}
 		
 		this.m.IsVisibleTileNeeded = true;
-		this.m.FatigueCostMult = this.m.IsAtNight ? 0.75 : 1.0;
+		this.m.FatigueCost = this.m.IsAtNight ? 30 : 40;
 		this.getContainer().update();
 	}
 	
@@ -77,7 +85,7 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 		}
 		
 		this.m.IsVisibleTileNeeded = false;
-		this.m.FatigueCostMult = 0.0;
+		this.m.FatigueCost = 0;
 		this.getContainer().update();
 	}
 	
@@ -89,7 +97,7 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 		}
 		
 		this.m.IsVisibleTileNeeded = false;
-		this.m.FatigueCostMult = 0.0;
+		this.m.FatigueCost = 0;
 		this.getContainer().update();
 	}
 

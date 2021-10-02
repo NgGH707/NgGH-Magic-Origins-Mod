@@ -3,6 +3,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 		Luft = null,
 		Foods = [],
 		Food = null,
+		Index = 0,
 		DiscordMembers = [],
 		DiscordMember = null,
 		Weapon = null,
@@ -35,46 +36,71 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 
 				if (!_event.m.HasPet)
 				{
-					this.Options.push({
-						Text = "No! I will pet you instead",
-						function getResult( _event )
-						{
-							return "Pet1";
-						}
+					switch (this.Math.rand(1, 3)) 
+					{
+				    case 1:
+				        this.Options.push({
+							Text = "No! I will pet you instead",
+							function getResult( _event )
+							{
+								return "Pet1";
+							}
 
-					});
-					this.Options.push({
-						Text = "Ok! But just one",
-						function getResult( _event )
-						{
-							return "Pet2";
-						}
+						});
+				        break;
 
-					});
+				    case 2:
+				     	this.Options.push({
+							Text = "Ok! But just one",
+							function getResult( _event )
+							{
+								return "Pet2";
+							}
+
+						});
+				     	break;
+
+				    case 3:
+						this.Options.push({
+							Text = "Yes and bless me with your wisdom",
+							function getResult( _event )
+							{
+								return "Tips";
+							}
+
+						});
+					}
+				}
+
+				if (_event.m.Index == 0)
+				{
+					_event.m.Index = this.Math.rand(1, 2);
 				}
 
 				if (!_event.m.HasMeal)
 				{
-					this.Options.push({
-						Text = "Are you hungry, Luft?",
-						function getResult( _event )
-						{
-							return "Eat";
-						}
+					if (_event.m.Index == 1)
+					{
+						this.Options.push({
+							Text = "I heard you eat discord member for snack, is that true?",
+							function getResult( _event )
+							{
+								return "EatDiscordMember";
+							}
 
-					});
-				}
+						});
+					}
+					else 
+					{
+					    this.Options.push({
+							Text = "Are you hungry, Luft?",
+							function getResult( _event )
+							{
+								return "Eat";
+							}
 
-				if (!_event.m.HasGivenWeapon)
-				{
-					this.Options.push({
-						Text = "I have a gift for you!",
-						function getResult( _event )
-						{
-							return "Weapons";
-						}
-
-					});
+						});
+					}
 				}
 
 				if (!_event.m.HasNewPerks)
@@ -89,16 +115,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					});
 				}
 
-				this.Options.push({
-					Text = "Bless me with your wisdom",
-					function getResult( _event )
-					{
-						return "Tips";
-					}
-
-				});
-
-				if (_event.m.HasMeal && _event.m.HasGivenWeapon && _event.m.HasNewPerks)
+				if (_event.m.HasMeal || _event.m.HasNewPerks || _event.m.HasPet)
 				{
 					this.Options.push({
 						Text = "I\'ll set you free, Luft!",
@@ -134,6 +151,18 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 							_event.m.Luft.getBackground().addPerkGroup(new.Tree);
 						}
 
+						local weapons = [
+							"wooden_stick",
+							"wooden_flail",
+							"legend_staff",
+							"shortsword",
+							"scramasax",
+							"militia_spear",
+							"hand_axe"
+						];
+						_event.m.Weapon = this.new("scripts/items/weapons/" + weapons[this.Math.rand(0, weapons.len() - 1)]);
+						_event.m.Luft.getItems().equip(_event.m.Weapon);
+
 						if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 						{
 							_event.m.Luft.getBackground().addPerkGroup(this.Math.rand(1, 2) == 1 ? this.Const.Perks.OneHandedTree.Tree : this.Const.Perks.TwoHandedTree.Tree);
@@ -153,6 +182,15 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 						_event.m.Luft.m.Attributes = [];
 						_event.m.Luft.fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
 
+						local items = [
+							["short_bow", "quiver_of_arrows"],
+							["light_crossbow", "quiver_of_bolts"],
+						];
+						local choose = items[this.Math.rand(0, items.len() - 1)];
+						_event.m.Weapon = this.new("scripts/items/weapons/" + choose[0]);
+						_event.m.Luft.getItems().equip(_event.m.Weapon);
+						_event.m.Luft.getItems().equip(this.new("scripts/items/weapons/" + choose[1]));
+
 						if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 						{
 							_event.m.Luft.getBackground().addPerkGroup(this.Const.Perks.RangedTree.Tree);
@@ -171,6 +209,8 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 						_event.m.Luft.getTalents()[this.Const.Attributes.RangedSkill] = 3;
 						_event.m.Luft.m.Attributes = [];
 						_event.m.Luft.fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
+						_event.m.Weapon = this.new("scripts/items/weapons/legend_sling");
+						_event.m.Luft.getItems().equip(_event.m.Weapon);
 
 						if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 						{
@@ -181,7 +221,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 
 				},
 				{
-					Text = "How to be useless",
+					Text = "How to do nothing",
 					function getResult( _event )
 					{
 						_event.m.Luft.improveMood(1.0, "Yay i have become useless");
@@ -211,16 +251,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 			Banner = "",
 			List = [],
 			Characters = [],
-			Options = [
-				{
-					Text = "I heard you eat discord member for snack, is that true?",
-					function getResult( _event )
-					{
-						return "EatDiscordMember";
-					}
-
-				}
-			],
+			Options = [],
 			function start( _event )
 			{
 				this.Banner = "ui/banners/" + this.World.Assets.getBanner() + "s.png";
@@ -295,6 +326,8 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 
 					});
 				}
+
+				_event.m.HasMeal = true;
 			}
 
 		});
@@ -341,10 +374,9 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					break;
 
 				case "Enduriel":
-					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendFavouredEnemySkeleton, 4);
-					local perk = this.new("scripts/skills/perks/perk_legend_favoured_enemy_skeleton");
+					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendSkillfulStacking, 4);
+					local perk = this.new("scripts/skills/perks/perk_legend_skillful_stacking");
 					_event.m.Luft.getSkills().add(perk);
-					_event.m.Luft.getLifetimeStats().Tags.increment("Enemy" + this.Const.EntityType.SkeletonLight, 20);
 
 					this.List.push({
 						id = 10,
@@ -354,44 +386,40 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					break;
 
 				case "TaroEd":
-					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.BearLineBreaker, 4);
-					local perk = this.new("scripts/skills/perks/perk_line_breaker");
-					_event.m.Luft.getBaseProperties().Stamina += 10;
+					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.HoldOut, 2);
+					local perk = this.new("scripts/skills/perks/perk_hold_out");
 					_event.m.Luft.getSkills().add(perk);
+					local trait = this.new("scripts/skills/traits/strong_trait");
+					_event.m.Luft.getSkills().add(trait);
 					this.List.extend([
-					{
+						{
+							id = 10,
+							icon = trait.getIcon(),
+							text = _event.m.Luft.getName() + " gains '" + trait.getName() + "' trait"
+						},
+						{
 							id = 10,
 							icon = perk.getIcon(),
 							text = _event.m.Luft.getName() + " gains '" + perk.getName() + "' perk"
-						},
-						{
-							id = 17,
-							icon = "ui/icons/fatigue.png",
-							text = _event.m.Luft.getName() + " gains [color=" + this.Const.UI.Color.PositiveEventValue + "]+10[/color] Fatigue"
-						},
+						}
 					]);
 					break;
 
 				case "MuffledMagda":
-					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.AlpShadowCopy, 5);
-					
+					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendTeacher, 4);
+					local perk = this.new("scripts/skills/perks/perk_legend_teacher");
+					_event.m.Luft.getSkills().add(perk);
+
 					this.List.push({
 						id = 10,
-						icon = "ui/perks/perk_afterimage.png",
-						text = _event.m.Luft.getName() + " can learn '" + this.Const.Strings.PerkName.AlpShadowCopy + "' perk"
+						icon = perk.getIcon(),
+						text = _event.m.Luft.getName() + " gains '" + perk.getName() + "' perk"
 					});
 					break;
 
 				case "Fallen Wolf (Luke)":
 					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendFavouredEnemyDirewolf, 2);
 					local perk = this.new("scripts/skills/perks/perk_charm_enemy_direwolf");
-					_event.m.Luft.getSkills().add(perk);
-					this.List.push({
-						id = 10,
-						icon = perk.getIcon(),
-						text = _event.m.Luft.getName() + " gains '" + perk.getName() + "' perk"
-					});
-					perk = this.new("scripts/skills/perks/perk_legend_favoured_enemy_direwolf");
 					_event.m.Luft.getSkills().add(perk);
 					this.List.push({
 						id = 10,
@@ -447,12 +475,6 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					break;
 
 				case "Uberbagel":
-					_event.m.Luft.grow(true);
-					this.List.push({
-						id = 10,
-						icon = "skills/patting_skill.png",
-						text = _event.m.Luft.getName() + " grows rapidly"
-					});
 					local perk;
 					if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 					{
@@ -473,7 +495,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					break;
 
 				case "LordMidas":
-					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.PTRDiscoveredTalent, 2);
+					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.PTRDiscoveredTalent, 3);
 					perk = this.new("scripts/skills/perks/perk_ptr_discovered_talent");
 					_event.m.Luft.getSkills().add(perk);
 					this.List.push({
@@ -484,12 +506,12 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					break;
 
 				case "Necro":
-					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendRaiseUndead, 6);
-					perk = this.new("scripts/skills/perks/perk_legend_raise_undead");
+					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.AlpShadowCopy, 5);
+					perk = this.new("scripts/skills/perks/perk_shadow_copy");
 					_event.m.Luft.getSkills().add(perk);
 					this.List.push({
 						id = 10,
-						icon = perk.getIcon(),
+						icon = "ui/perks/perk_afterimage.png",
 						text = _event.m.Luft.getName() + " gains '" + perk.getName() + "' perk"
 					});
 					break;
@@ -559,8 +581,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 							Text = "A Stick",
 							function getResult( _event )
 							{
-								_event.m.Weapon = this.new("scripts/items/weapons/wooden_stick");
-								_event.m.Luft.getItems().equip(_event.m.Weapon);
+							
 								return "Weapons";
 							}
 
@@ -589,19 +610,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 							Text = "A Stick With A String",
 							function getResult( _event )
 							{
-								local items = [
-									["legend_sling", ""],
-									["short_bow", "quiver_of_arrows"],
-									["light_crossbow", "quiver_of_bolts"],
-								];
-								local choose = items[this.Math.rand(0, items.len() - 1)];
-								_event.m.Weapon = this.new("scripts/items/weapons/" + choose[0]);
-								_event.m.Luft.getItems().equip(_event.m.Weapon);
-
-								if (choose[1] != "")
-								{
-									_event.m.Luft.getItems().equip(this.new("scripts/items/weapons/" + choose[1]));
-								}
+								
 
 								return "Weapons";
 							}
@@ -777,6 +786,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 						text = _event.m.Luft.getName() + " gains [color=" + this.Const.UI.Color.PositiveEventValue + "]+5[/color] Resolve"
 					});
 					_event.m.IsReceivedBuff = true;
+					_event.m.HasPet = true;
 				}
 			}
 

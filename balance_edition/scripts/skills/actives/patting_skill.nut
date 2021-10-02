@@ -27,7 +27,7 @@ this.patting_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsStacking = false;
 		this.m.IsAttack = true;
 		this.m.IsIgnoredAsAOO = false;
-		this.m.DirectDamageMult = 0.6;
+		this.m.DirectDamageMult = 0.5;
 		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = 10;
 		this.m.MinRange = 1;
@@ -121,9 +121,9 @@ this.patting_skill <- this.inherit("scripts/skills/skill", {
 		if (_skill == this)
 		{
 			local size = this.getContainer().getActor().getSize();
-			_properties.DamageRegularMin = 10 + 10 * size;
-			_properties.DamageRegularMax = 20 + 10 * size;
-			_properties.DamageArmorMult *= 0.5;
+			_properties.DamageRegularMin = 10 + 15 * size;
+			_properties.DamageRegularMax = 20 + 15 * size;
+			_properties.DamageArmorMult = 0.5;
 			_properties.DamageDirectAdd += 0.2;
 			_properties.HitChance[this.Const.BodyPart.Head] += 100.0;
 			
