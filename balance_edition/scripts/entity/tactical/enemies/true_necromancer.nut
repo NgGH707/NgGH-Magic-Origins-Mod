@@ -106,16 +106,17 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 	function onDamageReceived( _attacker, _skill, _hitInfo )
 	{
 		local hitInfo = clone _hitInfo;
-		
-		this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
+		local ret = this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 		
 		if (_attacker != null && _attacker.isAlive() && _attacker.getHitpoints() > 0 && _attacker.getID() != this.getID())
 		{
 			this.Tactical.spawnSpriteEffect("effect_skull_02", this.createColor("#ffffff"), _attacker.getTile(), 0, 40, 1.0, 0.25, 0, 400, 300);
 			hitInfo.DamageRegular *= 0.5;
 			hitInfo.DamageMinimum = 10;
-			_attacker.onDamageReceived(this, _skill, hitInfo);
+			return _attacker.onDamageReceived(this, _skill, hitInfo);
 		}
+
+		return ret;
 	}
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )

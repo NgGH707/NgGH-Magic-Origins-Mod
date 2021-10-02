@@ -14,7 +14,18 @@ this.minion <- this.inherit("scripts/entity/tactical/actor", {
 	
 	function setMaster( _m )
 	{
-		this.m.Master = _m;
+		if (_m == null)
+		{
+			this.m.Master = null;
+		}
+		else if (typeof _m == "instance")
+		{
+			this.m.Master = _m;
+		}
+		else 
+		{
+		 	this.m.Master = this.WeakTableRef(_m);   
+		}
 	}
 	
 	function getDominate()
@@ -130,10 +141,11 @@ this.minion <- this.inherit("scripts/entity/tactical/actor", {
 			this.addXP(XPkiller);
 			local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
 			
-			if (this.getMaster() != null)
+			if (this.m.Master != null && !this.m.Master.isNull() && this.m.Master.isAlive() && !this.m.Master.isDying())
 			{
 				this.getMaster().getCombatStats().Kills += 1;
 				this.getMaster().getLifetimeStats().Kills += 1;
+				this.Const.LegendMod.SetFavoriteEnemyKill(this.getMaster(), _actor);
 			}
 			
 			if (brothers.len() == 1)
@@ -154,7 +166,7 @@ this.minion <- this.inherit("scripts/entity/tactical/actor", {
 	
 	function addXP( _xp, _scale = true )
 	{
-		if (this.getMaster() != null)
+		if (this.m.Master != null && !this.m.Master.isNull() && this.m.Master.isAlive() && !this.m.Master.isDying())
 		{
 			this.getMaster().addXP(_xp);
 		}
@@ -162,7 +174,7 @@ this.minion <- this.inherit("scripts/entity/tactical/actor", {
 	
 	function afterLoad()
 	{
-		this.setFaction(this.Const.Faction.Player);
+		this.setFaction(this.Const.Faction.PlayerAnimals);
 	}
 
 	function onAfterInit()

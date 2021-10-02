@@ -178,6 +178,11 @@ this.mod_kraken_ensnare_effect <- this.inherit("scripts/skills/skill", {
 		_properties.InitiativeForTurnOrderAdditional = -100;
 	}
 
+	function onNewRound()
+	{
+		this.getContainer().getActor().getTile().addVisibilityForFaction(this.Const.Faction.Player);
+	}
+
 	function onTurnEnd()
 	{
 		this.applyDamage();

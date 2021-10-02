@@ -296,9 +296,9 @@ this.spider_minion <- this.inherit("scripts/entity/tactical/minion", {
 	    	local protect = this.new("scripts/ai/tactical/behaviors/ai_protect_person");
 	    	this.getAIAgent().addBehavior(protect);
 
-	    	if (this.m.Master != null)
-	    	{
-	    		protect.setVIP(this.m.Master);
+	    	if (this.m.Master != null && !this.m.Master.isNull() && this.m.Master.isAlive() && !this.m.Master.isDying())
+			{
+	    		protect.setVIP(this.m.Master.get());
 	    	}
 		}
 		else if (!this.isPlayerControlled())

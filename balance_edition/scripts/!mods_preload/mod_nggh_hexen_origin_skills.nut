@@ -114,6 +114,31 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 			}
 	    }
 	});
+	::mods_hookNewObject("skills/traits/seductive_trait", function ( obj )
+	{
+		obj.m.Bonus <- 5;
+		obj.getBonus <- function()
+		{
+			return this.m.Bonus;
+		};
+		local tooltip = obj.getTooltip;
+		obj.getTooltip = function()
+		{
+			local ret = tooltip();
+
+			if (this.getContainer().hasSkill("spells.charm"))
+			{
+				ret.push({
+					id = 10,
+					type = "text",
+					icon = "ui/icons/health.png",
+					text = "Increases chance to charm a target by [color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color]"
+				});
+			}
+
+			return ret;
+		};
+	});
 
 	//Disallow the use of footwork while mounting
 	::mods_hookExactClass("skills/actives/footwork", function(obj) 
@@ -154,6 +179,27 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 	        	_properties.MovementFatigueCostMult *= 0.75;
 	        	_properties.BraveryMult *= 1.25;
 	        }
+	    }
+	});
+
+	//Add the general properties a ghost should have
+	::mods_hookExactClass("skills/racial/ghost_racial", function(obj) 
+	{
+	    obj.onUpdate <- function( _properties )
+	    {
+	    	_properties.IsImmuneToZoneOfControl = true;
+	    	_properties.IsImmuneToBleeding = true;
+			_properties.IsImmuneToPoison = true;
+			_properties.IsImmuneToKnockBackAndGrab = true;
+			_properties.IsImmuneToStun = true;
+			_properties.IsImmuneToRoot = true;
+			_properties.IsImmuneToDisarm = true;
+			_properties.IsIgnoringArmorOnAttack = true;
+			_properties.IsAffectedByRain = false;
+			_properties.IsAffectedByNight = false;
+			_properties.IsAffectedByInjuries = false;
+			_properties.IsMovable = false;
+			_properties.MoraleCheckBraveryMult[this.Const.MoraleCheckType.MentalAttack] *= 1000.0;
 	    }
 	});
 

@@ -260,8 +260,15 @@ this.kraken_tentacle_player <- this.inherit("scripts/entity/tactical/player_beas
 		if (this.m.Parent != null && !this.m.Parent.isNull() && this.m.Parent.isAlive() && !this.m.Parent.isDying())
 		{
 			this.m.Parent.onActorKilled(_actor, _tile, _skill);
+
+			if (!this.m.IsAlive || this.m.IsDying)
+			{
+				return;
+			}
+
+			this.m.Skills.onTargetKilled(_actor, _skill);
 		}
-		else 
+		else
 		{
 			this.player_beast.onActorKilled(_actor, _tile, _skill);
 		}

@@ -175,11 +175,6 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 	{
 		return "lindwurm_tail_orientation";
 	}
-	
-	function getName()
-	{
-		return this.m.Body != null ? this.getBody().getName() + " Tail" : "Stollwurm Tail";
-	}
 
 	function create()
 	{
@@ -595,6 +590,25 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_reach_advantage"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_fearsome"));
 		this.m.Skills.add(this.new("scripts/skills/actives/legend_stollwurm_move_tail_skill"));
+	}
+
+	function onActorKilled( _actor, _tile, _skill )
+	{
+		if (this.m.Body != null && !this.m.Body.isNull() && this.m.Body.isAlive() && !this.m.Body.isDying())
+		{
+			this.m.Body.onActorKilled(_actor, _tile, _skill);
+
+			if (!this.m.IsAlive || this.m.IsDying)
+			{
+				return;
+			}
+
+			this.m.Skills.onTargetKilled(_actor, _skill);
+		}
+		else 
+		{
+			this.player_beast.onActorKilled(_actor, _tile, _skill);
+		}
 	}
 	
 	function addXP( _xp, _scale = true )

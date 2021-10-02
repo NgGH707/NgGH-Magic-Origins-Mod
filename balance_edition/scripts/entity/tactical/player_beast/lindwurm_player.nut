@@ -324,10 +324,11 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 				local body = this.getSprite("body");				
 				this.m.Tail = this.WeakTableRef(this.Tactical.spawnEntity("scripts/entity/tactical/player_beast/" + type, spawnTile.Coords.X, spawnTile.Coords.Y, this.getID()));
 				this.m.Tail.m.Body = this.WeakTableRef(this);
+				this.m.Tail.setName(this.getName() + "\'s Tail");
 				this.m.Tail.setFaction(this.getFaction());
 				this.m.Tail.getSprite("body").Color = body.Color;
 				this.m.Tail.getSprite("body").Saturation = body.Saturation;
-				this.bonusPerk(this.m.Tail);
+				this.addPerksAndTraits(this.m.Tail);
 			}
 		}
 	}
@@ -393,6 +394,7 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 				local body = this.getSprite("body");				
 				this.m.Tail = this.WeakTableRef(this.Tactical.spawnEntity("scripts/entity/tactical/player_beast/" + type, spawnTile.Coords.X, spawnTile.Coords.Y, this.getID()));
 				this.m.Tail.m.Body = this.WeakTableRef(this);
+				this.m.Tail.setName(this.getName() + "\'s Tail");
 				this.m.Tail.setFaction(this.getFaction());
 				this.m.Tail.getSprite("body").Color = body.Color;
 				this.m.Tail.getSprite("body").Saturation = body.Saturation;

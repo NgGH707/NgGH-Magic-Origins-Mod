@@ -520,7 +520,7 @@ this.unhold_player <- this.inherit("scripts/entity/tactical/player_beast", {
 
 	function onDamageReceived( _attacker, _skill, _hitInfo )
 	{
-		this.actor.onDamageReceived(_attacker, _skill, _hitInfo)
+		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo)
 	}
 	
 	function fillAttributeLevelUpValues( _amount, _maxOnly = false, _minOnly = false )

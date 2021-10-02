@@ -240,7 +240,7 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 		this.m.Skills.add(touch);
 		touch.setOrder(this.Const.SkillOrder.First);
 		
-		switch (this.Math.rand(0, 4))
+		switch (this.Math.rand(0, 5))
 		{
 	    case 1:
 	        this.m.Skills.add(this.new("scripts/skills/actives/insects_skill"));
@@ -257,6 +257,10 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 	    case 4:
 	    	this.m.Skills.add(this.new("scripts/skills/actives/legend_drain"));
 	        break;
+
+	    case 5:
+	        this.m.Skills.add(this.new("scripts/skills/actives/sleep_skill"));
+	        break;
 	
 	    default:
 	    	this.m.Skills.add(this.new("scripts/skills/actives/legend_rust"));
@@ -266,6 +270,7 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 		{
 			local skill = this.new("scripts/skills/actives/legend_hex_skill")
 	    	skill.m.Cooldown = 0;
+	    	skill.m.Delay = 0;
 		    this.m.Skills.add(skill);
 		}
 	}
@@ -346,7 +351,7 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 			}
 		}
 		
-		this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
+		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 	}
 	
 	function onPlacedOnMap()

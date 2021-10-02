@@ -1,5 +1,6 @@
 this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 	m = {
+		Link = null,
 		Bust = "bust_alp_shadow_01",
 		DistortTargetA = null,
 		DistortTargetPrevA = this.createVec(0, 0),
@@ -14,6 +15,27 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		DistortTargetPrevD = this.createVec(0, 0),
 		DistortAnimationStartTimeD = 0
 	},
+	function getLink()
+	{
+		return this.m.Link;
+	}
+	
+	function setLink( _l )
+	{
+		if (_l == null)
+		{
+			this.m.Link = null;
+		}
+		else if (typeof _l == "instance")
+		{
+			this.m.Link = _l;
+		}
+		else 
+		{
+		 	this.m.Link = this.WeakTableRef(_l);
+		}
+	}
+
 	function create()
 	{
 		this.m.Type = this.Const.EntityType.AlpShadow;
@@ -21,6 +43,7 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		this.m.MoraleState = this.Const.MoraleState.Ignore;
 		this.m.XP = this.Const.Tactical.Actor.AlpShadow.XP;
 		this.m.IsSummoned = true;
+		this.m.IsActingImmediately = true;
 		this.m.IsEmittingMovementSounds = false;
 		this.minion.create();
 		this.m.Sound[this.Const.Sound.ActorEvent.Death] = [
@@ -34,10 +57,9 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )
 	{
-		if (this.m.Master != null && this.m.Master.isAlive() && !this.m.Master.isDying())
+		if (this.m.Link != null && !this.m.Link.isNull() && this.m.Master != null && !this.m.Master.isNull() && this.m.Master.isAlive() && !this.m.Master.isDying())
 		{
-			local skill = this.m.Master.getSkills().getSkillByID("actives.shadow_copy");
-			skill.removeCopy();
+			this.m.Link.removeCopy();
 		}
 
 		if (_tile != null)
@@ -54,6 +76,7 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		{
 			_tile = this.getTile();
 		}
+
 		local brush = this.getSprite("body").getBrush().Name;
 
 		if (this.isPlayerControlled())
@@ -147,9 +170,9 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		}
 	}
 
-	function strengthen( _alp )
+	function strengthen( _summoner )
 	{
-		local resolve = _alp.getCurrentProperties().getBravery();
+		local resolve = _summoner.getCurrentProperties().getBravery();
 
 		if (resolve <= 100)
 		{
@@ -164,7 +187,23 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		b.RangedSkill += this.Math.max(1, this.Math.ceil(r * 0.5));
 		b.MeleeDefense += this.Math.max(1, this.Math.ceil(r * 0.33));
 		b.RangedDefense += this.Math.max(1, this.Math.ceil(r * 0.33));
-		this.m.CurrentProperties = clone b;
+
+		if (this.Math.rand(1, 100) <= r)
+		{
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_fearsome"));
+		}
+
+		if (this.Math.rand(1, 100) <= r - 10)
+		{
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_nine_lives"));
+		}
+
+		if (this.Math.rand(1, 100) <= r - 25)
+		{
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_lone_wolf"));
+		}
+
+		this.m.Skills.update();
 	}
 
 	function onInit()
@@ -181,9 +220,9 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		}
 
 		b.MeleeSkill += 10;
-		b.MeleeDefense += 20;
-		b.RangedDefense += 20;
-		b.Vision = 6;
+		b.MeleeDefense += 15;
+		b.RangedDefense += 15;
+		b.Vision = 5;
 		b.IsImmuneToBleeding = true;
 		b.IsImmuneToPoison = true;
 		b.IsImmuneToKnockBackAndGrab = true;
@@ -191,6 +230,7 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		b.IsImmuneToRoot = true;
 		b.IsImmuneToDisarm = true;
 		b.IsIgnoringArmorOnAttack = true;
+		b.IsAffectedByRain = false;
 		b.IsAffectedByNight = false;
 		b.IsAffectedByInjuries = false;
 		b.IsMovable = false;
@@ -225,12 +265,44 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		this.getSprite("status_rooted").Scale = 0.55;
 		this.setSpriteOffset("status_rooted", this.createVec(-5, -5));
 		this.m.Skills.add(this.new("scripts/skills/racial/ghost_racial"));
-		this.m.Skills.add(this.new("scripts/skills/actives/ghastly_touch"));
-		this.m.Skills.add(this.new("scripts/skills/actives/horrific_scream"));
 		this.m.Skills.add(this.new("scripts/skills/actives/nightmare_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/alp_shadow_teleport_skill"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_anticipation"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_underdog"));
+		local touch = this.new("scripts/skills/actives/ghastly_touch");
+		this.m.Skills.add(touch);
+		touch.setOrder(this.Const.SkillOrder.First);
+
+		switch (this.Math.rand(0, 4))
+		{
+	    case 1:
+	        this.m.Skills.add(this.new("scripts/skills/actives/legend_wither"));
+	        break;
+
+	    case 2:
+	    	this.m.Skills.add(this.new("scripts/skills/actives/horrific_scream"));
+	        break;
+
+	    case 3:
+	    	this.m.Skills.add(this.new("scripts/skills/actives/sleep_skill"));
+	        break;
+
+	    default:
+	    	local skill = this.new("scripts/skills/actives/legend_hex_skill")
+	    	skill.m.Cooldown = 0;
+	    	skill.m.Delay = 0;
+		    this.m.Skills.add(skill);
+		}
+	}
+
+	function onActorKilled( _actor, _tile, _skill )
+	{
+		this.minion.onActorKilled(_actor, _tile, _skill);
+
+		if (this.m.Link != null && !this.m.Link.isNull())
+		{
+			this.m.Link.spawnReignOfShadow(_tile);
+		}
 	}
 
 	function onRender()
@@ -290,11 +362,17 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		}
 	}
 
+	function onMissed( _attacker, _skill, _dontShake = false )
+	{
+		this.spawnShadowEffect();
+		this.actor.onMissed(_attacker, _skill, _dontShake);
+	}
+
 	function onRoundStart()
 	{
 		if (this.getTile().Properties.Effect == null || this.getTile().Properties.Effect.Timeout == this.Time.getRound() || this.getTile().Properties.Effect.Type != "shadows")
 		{
-			this.killSilently();
+			this.kill(null, null, this.Const.FatalityType.None, false);
 		}
 		else
 		{
@@ -306,9 +384,9 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 	{
 		if (this.getTile().Properties.Effect == null || this.getTile().Properties.Effect.Type != "shadows")
 		{
-			this.killSilently();
+			this.kill(null, null, this.Const.FatalityType.None, false);
 		}
-		else 
+		else
 		{
 		    this.actor.onMovementFinish(_tile);
 		}

@@ -1075,7 +1075,7 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 	
 	function onDamageReceived( _attacker, _skill, _hitInfo )
 	{
-		this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
+		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 	}
 	
 	function setScenarioValues( _isElite = false, _isWarrior = false, _isBerserker = false, _isWarlord = false )

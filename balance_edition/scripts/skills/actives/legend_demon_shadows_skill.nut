@@ -45,7 +45,7 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "actives.legend_demon_shadows";
 		this.m.Name = "Realm of Burning Nightmares";
-		this.m.Description = "Burn in hell fire.";
+		this.m.Description = "Summon the hellfire to bring out the agony pain from your foe, fueling the juicy nightmare to the inferno.";
 		this.m.Icon = "skills/active_160.png";
 		this.m.IconDisabled = "skills/active_160.png";
 		this.m.Overlay = "active_160";
@@ -72,13 +72,15 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsTargeted = true;
 		this.m.IsTargetingActor = false;
 		this.m.IsStacking = false;
-		this.m.IsAttack = false;
-		this.m.IsRanged = false;
+		this.m.IsAttack = true;
+		this.m.IsRanged = true;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsShowingProjectile = false;
 		this.m.IsUsingHitchance = false;
-		this.m.IsDoingForwardMove = false;
+		this.m.IsDoingForwardMove = true;
 		this.m.IsVisibleTileNeeded = false;
+		this.m.InjuriesOnBody = this.Const.Injury.BurningBody;
+		this.m.InjuriesOnHead = this.Const.Injury.BurningHead;
 		this.m.DirectDamageMult = 0.5;
 		this.m.ActionPointCost = 3;
 		this.m.FatigueCost = 0;
@@ -165,7 +167,7 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 			Specialized_1 = specialized_1,
 			Specialized_2 = specialized_2,
 			Specialized_3 = specialized_3,
-			User = _user,
+			UserID = _user.getID(),
 		};
 		local p = {
 			Type = "alp_hellfire",
@@ -232,9 +234,14 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 		local damage = this.Math.rand(10, 20);
 		local damageMult = 1.0;
 		local injuries = null;
-		local attacker = custom.User;
+		local attacker = this.Tactical.getEntityByID(custom.UserID);
 
-		if (custom.Specialized_2 && _entity.getID() == custom.User.getID())
+		if (attacker == null || !attacker.isAlive() || attacker.isDying())
+		{
+			attacker = null;
+		}
+
+		if (custom.Specialized_2 && _entity.getID() == custom.UserID)
 		{
 			return;
 		}
@@ -250,14 +257,31 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 			injuries = this.Const.Injury.Burning;
 		}
 
+		if (_entity.getCurrentProperties().IsImmuneToFire)
+		{
+			damageMult *= 0.33;
+		}
+
 		if (_entity.getSkills().hasSkill("items.firearms_resistance"))
 		{
-			damageMult *= 0.66;
+			damageMult *= 0.67;
 		}
 
 		if (_entity.getSkills().hasSkill("racial.serpent"))
 		{
-			damageMult *= 0.66;
+			damageMult *= 0.67;
+		}
+
+		local types = [
+			this.Const.EntityType.Schrat,
+			this.Const.EntityType.SchratSmall,
+			this.Const.EntityType.LegendGreenwoodSchrat,
+			this.Const.EntityType.LegendGreenwoodSchratSmall,
+		];
+
+		if (types.find(_entity.getType()) != null || _entity.getFlags().has("isSmallSchrat") || _entity.getFlags().has("isSchrat"))
+		{
+			damageMult *= 2.0;
 		}
 
 		this.Tactical.spawnIconEffect("fire_circle", _tile, this.Const.Tactical.Settings.SkillIconOffsetX, this.Const.Tactical.Settings.SkillIconOffsetY, this.Const.Tactical.Settings.SkillIconScale, this.Const.Tactical.Settings.SkillIconFadeInDuration, this.Const.Tactical.Settings.SkillIconStayDuration, this.Const.Tactical.Settings.SkillIconFadeOutDuration, this.Const.Tactical.Settings.SkillIconMovement);
@@ -272,13 +296,13 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 		this.Sound.play(sounds[this.Math.rand(0, sounds.len() - 1)], this.Const.Sound.Volume.Actor, _entity.getPos());
 		local hitInfo = clone this.Const.Tactical.HitInfo;
 		hitInfo.DamageRegular = damage * damageMult;
-		hitInfo.DamageArmor = damage;
+		hitInfo.DamageArmor = hitInfo.DamageRegular;
 		hitInfo.DamageDirect = 0.5;
 		hitInfo.BodyPart = this.Const.BodyPart.Body;
 		hitInfo.BodyDamageMult = 1.0;
 		hitInfo.FatalityChanceMult = 0.0;
 		hitInfo.Injuries = injuries;
-		hitInfo.InjuryThresholdMult = 1.25;
+		hitInfo.InjuryThresholdMult = 1.15;
 		hitInfo.IsPlayingArmorSound = false;
 		_entity.onDamageReceived(attacker, null, hitInfo);
 	}
@@ -315,6 +339,23 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 	function onCombatFinished()
 	{
 		this.m.Tiles = [];
+	}
+
+	function onTargetSelected( _targetTile )
+	{
+		this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);	
+
+		for( local i = 0; i < 6; i = ++i )
+		{
+			if (!_targetTile.hasNextTile(i))
+			{
+			}
+			else
+			{
+				local nextTile = _targetTile.getNextTile(i);
+				this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, nextTile, nextTile.Pos.X, nextTile.Pos.Y);	
+			}
+		}
 	}
 
 });

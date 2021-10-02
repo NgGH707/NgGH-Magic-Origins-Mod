@@ -770,7 +770,7 @@ this.player_beast <- this.inherit("scripts/entity/tactical/player", {
 	
 	function onDamageReceived( _attacker, _skill, _hitInfo )
 	{
-		this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
+		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 	}
 	
 	function getRiderID()

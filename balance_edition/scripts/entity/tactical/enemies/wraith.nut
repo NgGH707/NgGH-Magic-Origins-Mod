@@ -358,7 +358,7 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 			}
 		}
 		
-		this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
+		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 	}
 	
 	function onPlacedOnMap()

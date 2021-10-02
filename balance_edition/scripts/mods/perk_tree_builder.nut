@@ -1,7 +1,7 @@
 this.perk_tree_builder <- {
 	m = {},
 	
-	function fillWithRandomPerk( _tree , _skillsContainer , _addWeapon = false , _hasAoE = false , _isSpecial = false )
+	function fillWithRandomPerk( _tree , _skillsContainer , _addWeaponPerks = false , _hasAoE = false , _isSpecial = false )
 	{
 		local currentPerksPerkRow = [];
 		local excludedPerks = [];
@@ -17,7 +17,6 @@ this.perk_tree_builder <- {
 		}
 
 		local maxPerksPerRow = [8, 7, 6, 9, 6, 6, 5, 0, 0, 0, 0, 0, 0, 0];
-		local favourPerksNum = this.Math.rand(1, 3);
 		local tools = {};
 		tools.hasPerk <- function( _perk , _excluded )
 		{
@@ -61,66 +60,13 @@ this.perk_tree_builder <- {
 			    }
 			}
 		}
-		
-		if (_addWeapon)
-		{
-			local Map = [];
-			local excluded = [];
-			
-			for ( local i = 0 ; i < 2 ; i = i )
-			{
-				local t = this.Const.Perks.MeleeWeaponTrees.getRandom(excluded);
-
-				if (excluded.find(t.ID) == null)
-				{
-					excluded.push(t.ID);
-					Map.push(t.Tree);
-					i = ++i;
-					i = i;
-				}
-			}
-			
-			if (this.Math.rand(1, 100) <= 50)
-			{
-				local t = this.Const.Perks.RangedWeaponTrees.getRandom(null);
-				Map.push(t.Tree);
-			}
-			else
-			{
-				Map.push(this.Const.Perks.ShieldTree.Tree);
-			}
-			
-			foreach (i, tree in Map )
-			{
-				foreach (j, row in tree ) 
-				{
-				    foreach (k, perk in row )
-				    {
-				    	if (tools.hasPerk(perk, excludedPerks))
-						{
-							continue;
-						}
-
-						excludedPerks.push(perk);
-				    	_tree[j].push(perk);
-				    }
-				}
-			}
-
-			currentPerksPerkRow = [];
-
-			foreach ( _row in _tree )
-			{
-				currentPerksPerkRow.push(_row.len());
-			}
-		}
 	
 		local lib = this.getLib();
 		local libE = this.getEnemyLib();
 
 		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 		{
-			for (local i = 0; i < 6; i++) 
+			for ( local i = 0; i < 6; i = ++i ) 
 			{
 			    maxPerksPerRow[i] += 1;
 			}
@@ -216,7 +162,62 @@ this.perk_tree_builder <- {
 		    }
 
 		    i = ++i;
-		    i = i;
+		}
+
+		if (_addWeaponPerks)
+		{
+			local Map = [];
+			local excluded = [];
+			local addRangedPerks = this.Math.rand(1, 100) <= 50;
+			local num = 2 + (addRangedPerks ? 1 : 0);
+			
+			for ( local i = 0 ; i < num ; i = i )
+			{
+				local t = this.Const.Perks.MeleeWeaponTrees.getRandom(excluded);
+
+				if (excluded.find(t.ID) == null)
+				{
+					excluded.push(t.ID);
+					Map.push(t.Tree);
+					i = ++i;
+				}
+			}
+
+			if (addRangedPerks)
+			{
+				for ( local i = 0 ; i < 2 ; i = i )
+				{
+					local t = this.Const.Perks.RangedWeaponTrees.getRandom(excluded);
+
+					if (excluded.find(t.ID) == null)
+					{
+						excluded.push(t.ID);
+						Map.push(t.Tree);
+						i = ++i;
+					}
+				}
+			}
+			else 
+			{
+			    Map.push(this.Const.Perks.ShieldTree.Tree);
+			}
+			
+			foreach (i, tree in Map )
+			{
+				foreach (j, row in tree ) 
+				{
+				    foreach (k, perk in row )
+				    {
+				    	if (tools.hasPerk(perk, excludedPerks))
+						{
+							continue;
+						}
+
+						excludedPerks.push(perk);
+				    	_tree[j].push(perk);
+				    }
+				}
+			}
 		}
 		
 		return _tree;

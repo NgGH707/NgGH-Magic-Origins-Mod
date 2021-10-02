@@ -33,7 +33,6 @@ this.alp_shadow_teleport_skill <- this.inherit("scripts/skills/skill", {
 
 	function getTooltip()
 	{
-		local p = this.getContainer().getActor().getCurrentProperties();
 		local ret = [
 			{
 				id = 1,
@@ -69,6 +68,11 @@ this.alp_shadow_teleport_skill <- this.inherit("scripts/skills/skill", {
 
 	function onVerifyTarget( _originTile, _targetTile )
 	{
+		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
+		{
+			return false;
+		}
+
 		if (!_targetTile.IsEmpty)
 		{
 			return false;

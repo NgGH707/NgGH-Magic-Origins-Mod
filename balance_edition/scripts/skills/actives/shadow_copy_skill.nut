@@ -59,7 +59,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "actives.shadow_copy";
 		this.m.Name = "Shadow Copy";
-		this.m.Description = "Invoke a replicate copy makes out of shadow to aid you in battle while also expanding your realm of darkness. Your shadow copy can only exist within the reign of darkness. Can\'t create more than one shadow copy.";
+		this.m.Description = "Invoke a replicate copy makes out of shadow to aid you in battle while also expanding your realm of darkness. Your shadow copy can only exist within the reign of darkness and will respawned as long as darkness persists. Can\'t create more than one shadow copy.";
 		this.m.Icon = "skills/active_160.png";
 		this.m.IconDisabled = "skills/active_160.png";
 		this.m.Overlay = "active_160";
@@ -87,7 +87,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsTargetingActor = false;
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
-		this.m.IsRanged = false;
+		this.m.IsRanged = true;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsShowingProjectile = false;
 		this.m.IsUsingHitchance = false;
@@ -163,6 +163,14 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 			i = ++i;
 		}
 
+		this.spawnReignOfShadow(targets)
+		this.spawnShadow(::mc_randArray(targets));
+		return true;
+	}
+
+	function spawnReignOfShadow( _tiles )
+	{
+		local _user = this.getContainer().getActor();
 		local p = {
 			Type = "shadows",
 			Tooltip = "Darkness reigns this place, be fear and be cautious.",
@@ -217,9 +225,6 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 				this.onApplyShadow(tile, tile.getEntity());
 			}
 		}
-
-		this.spawnShadow(::mc_randArray(targets));
-		return true;
 	}
 
 	function spawnShadow( _tile = null )
@@ -255,12 +260,9 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 			_skill.m.Copy = this.Tactical.spawnEntity("scripts/entity/tactical/minions/special/alp_shadow_minion", _tile.Coords);
 			_skill.m.Copy.setFaction(2);
 			_skill.m.Copy.setMaster(actor);
+			_skill.m.Copy.setLink(_skill);
 			_skill.m.Copy.strengthen(actor);
 			_skill.m.Copy.spawnShadowEffect(_tile);
-			this.Tactical.TurnSequenceBar.removeEntity(_skill.m.Copy);
-			_skill.m.Copy.m.IsActingImmediately = true;
-			_skill.m.Copy.m.IsTurnDone = false;
-			this.Tactical.TurnSequenceBar.insertEntity(_skill.m.Copy);
 		}.bindenv(this), this);
 	}
 
@@ -333,6 +335,23 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.Copy = null;
 		this.m.Tiles = [];
+	}
+
+	function onTargetSelected( _targetTile )
+	{
+		this.Tactical.getHighlighter().addOverlayIcon("mortar_target_02", _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);	
+
+		for( local i = 0; i < 6; i = ++i )
+		{
+			if (!_targetTile.hasNextTile(i))
+			{
+			}
+			else
+			{
+				local nextTile = _targetTile.getNextTile(i);
+				this.Tactical.getHighlighter().addOverlayIcon("mortar_target_02", nextTile, nextTile.Pos.X, nextTile.Pos.Y);	
+			}
+		}
 	}
 
 });

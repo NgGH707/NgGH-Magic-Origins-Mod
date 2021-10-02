@@ -153,11 +153,6 @@ this.lindwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast"
 	{
 		return "lindwurm_tail_orientation";
 	}
-	
-	function getName()
-	{
-		return this.m.Body != null ? this.getBody().getName() + " Tail" : "Lindwurm Tail";
-	}
 
 	function create()
 	{
@@ -573,6 +568,13 @@ this.lindwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast"
 		if (this.m.Body != null && !this.m.Body.isNull() && this.m.Body.isAlive() && !this.m.Body.isDying())
 		{
 			this.m.Body.onActorKilled(_actor, _tile, _skill);
+
+			if (!this.m.IsAlive || this.m.IsDying)
+			{
+				return;
+			}
+
+			this.m.Skills.onTargetKilled(_actor, _skill);
 		}
 		else 
 		{
