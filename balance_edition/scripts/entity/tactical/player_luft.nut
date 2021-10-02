@@ -269,7 +269,7 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 	{
 		local r = this.Math.rand(1, 30);
 
-		if (r <= 5)
+		if (r >= 5)
 		{
 			this.playSound(this.Const.Sound.ActorEvent.Idle, this.Const.Sound.Volume.Actor * this.Const.Sound.Volume.ActorIdle * this.m.SoundVolume[this.Const.Sound.ActorEvent.Idle] * this.m.SoundVolumeOverall * (this.Math.rand(60, 100) * 0.01) * (this.isHiddenToPlayer ? 0.33 : 1.0), this.m.SoundPitch * (this.Math.rand(85, 115) * 0.01));
 		}
@@ -377,11 +377,7 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 		onArmorHitSounds[this.Const.BodyPart.Head] = this.Const.Sound.ArmorLeatherImpact;
 		this.m.Items = this.new("scripts/items/nggh707_item_container");
 		this.m.Items.setActor(this);
-		this.m.Items.blockAllSlots();
-		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Mainhand] = false;
-		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Offhand] = false;
-		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
-		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = false;
+		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Body] = true;
 		this.m.AIAgent = this.new("scripts/ai/tactical/player_agent");
 		this.m.AIAgent.setActor(this);
 		this.m.Formations = this.new("scripts/entity/tactical/formations_container");

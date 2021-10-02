@@ -191,7 +191,7 @@ this.sleeping_effect <- this.inherit("scripts/skills/skill", {
 	{
 		if (_attacker != null && _attacker.isAlive() && !_attacker.isDying())
 		{
-			if (_attacker.getSkills().hasSkill("perk.after_wake") && this.Math.rand(1, 100) <= 33)
+			if (_attacker.getSkills().hasSkill("perk.after_wake") && this.Math.rand(1, 100) <= 40)
 			{
 				this.m.HasTerror = false;
 				return;

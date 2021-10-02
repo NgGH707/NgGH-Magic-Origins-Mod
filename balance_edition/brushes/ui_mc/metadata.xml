@@ -95,6 +95,7 @@
   <sprite id="active_mc_10" ic="FF2E326F" img="skills\active_mc_10.png" />
   <sprite id="active_mc_11" ic="FF2E326F" img="skills\active_mc_11.png" />
 
+  <sprite id="active_mind_break" ic="FF2E326F" img="skills\active_mind_break.png" />
   <sprite id="active_spawn_spider" ic="FF2E326F" img="skills\active_spawn_spider.png" />
   <sprite id="active_spawn_more_spider" ic="FF2E326F" img="skills\active_spawn_more_spider.png" />
   <sprite id="active_more_egg" ic="FF2E326F" img="skills\active_more_egg.png" />
@@ -116,6 +117,8 @@
   <sprite id="perk_energize_meal" ic="FF2E326F" img="skills\perk_energize_meal.png" />
   <sprite id="perk_energize_meal_mini" offsetY="35" ic="FF2E326F" img="skills\mini\perk_energize_meal_mini.png" />
   
+  <sprite id="perk_alp_living_nightmare" ic="FF2E326F" img="skills\perk_alp_living_nightmare.png" />
+
   <sprite id="perk_intimidate" ic="FF2E326F" img="skills\perk_intimidate.png" />
   <sprite id="perk_intimidate_mini" offsetY="35" ic="FF2E326F" img="skills\mini\perk_intimidate_mini.png" />
   

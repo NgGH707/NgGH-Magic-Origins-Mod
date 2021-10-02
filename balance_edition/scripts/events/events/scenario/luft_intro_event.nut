@@ -385,7 +385,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 					});
 					break;
 
-				case "TaroEd":
+				case "TaroEld":
 					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.HoldOut, 2);
 					local perk = this.new("scripts/skills/perks/perk_hold_out");
 					_event.m.Luft.getSkills().add(perk);
@@ -1063,7 +1063,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 		
 		local foods = [
 			"Enduriel",
-			"TaroEd",
+			"TaroEld",
 			"MuffledMagda",
 			"Fallen Wolf (Luke)",
 			"Uberbagel",

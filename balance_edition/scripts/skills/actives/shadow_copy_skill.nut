@@ -189,7 +189,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 			}
 		};
 
-		foreach( tile in targets )
+		foreach( tile in _tiles )
 		{
 			if (tile.Properties.Effect != null && tile.Properties.Effect.Type == "shadows")
 			{
@@ -254,6 +254,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
+		this.Tactical.EventLog.log("A ghastly entity emerges from the darkness");
 		local actor = this.getContainer().getActor();
 		this.Time.scheduleEvent(this.TimeUnit.Virtual, 500, function( _skill )
 		{

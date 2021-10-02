@@ -23,7 +23,7 @@ this.intimidate_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsAttack = true;
 		this.m.IsVisibleTileNeeded = false;
 		this.m.ActionPointCost = 2;
-		this.m.FatigueCost = 25;
+		this.m.FatigueCost = 18;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 3;
 	}

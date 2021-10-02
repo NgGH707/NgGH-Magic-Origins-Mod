@@ -70,6 +70,8 @@ gt.Const.Strings.PerkName.KrakenEnsnare <- "Bone Shattering Grip";
 gt.Const.Strings.PerkName.KrakenMove <- "Slippery Tentacle";
 gt.Const.Strings.PerkName.KrakenSwing <- "Tentacle Sweep";
 gt.Const.Strings.PerkName.KrakenTentacle <- "Rubbering Skin";
+gt.Const.Strings.PerkName.AlpLivingNightmare <- "Living Nightmare";
+gt.Const.Strings.PerkName.AlpMindBreak <- "Mind Break";
 //-------------
 
 gt.Const.Strings.PerkDescription.CharmEnemySpider <- "The creepy crawlies in the depth of the forest. They would be suited to be your servants and soldiers. \n\nAllowing you to permanently charm Webknecht, and satisfy one of two conditions to permanently charm Redback Spider. \n\nGrants [color=" + this.Const.UI.Color.PositiveValue + "]Immunity[/color] to being rooted by nets, webs or grasping vines. \n\n[color=#0b0084]From the Hexen Magic perk group[/color]";
@@ -101,22 +103,22 @@ gt.Const.Strings.PerkDescription.EnrageWolf <- "Fast and furious attacks that le
 gt.Const.Strings.PerkDescription.Rabies <- "Your puppy has rabies. That\'s not good, right? Don\'t pet it! \n\nHitpoints and Resolve are increased by [color=" + this.Const.UI.Color.PositiveValue + "]+20[/color] points, Melee Skill is inceased by [color=" + this.Const.UI.Color.PositiveValue + "]+5[/color] points and Attack Damage is inceased by [color=" + this.Const.UI.Color.PositiveValue + "]+25%[/color]. \n\nGives rabies to this puppy, makes it look more intimidating. \n\n[color=#0b0084]From the Canine perk group[/color]";
 gt.Const.Strings.PerkDescription.NightmareSpec <- "Feed on the nightmare and terror of your victim to restore your own vitality. \n\n[color=" + this.Const.UI.Color.NegativeValue + "]Nightmare[/color] skill builds up [color=" + this.Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue and gains additional damage equal to another [color=" + this.Const.UI.Color.PositiveValue + "]15%[/color] of your current Resolve. \n\nUp to [color=" + this.Const.UI.Color.PositiveValue + "]33%[/color] of the damage dealt by [color=" + this.Const.UI.Color.NegativeValue + "]Nightmare[/color] is restored to your Hitpoints . \n\n[color=#0b0084]From the Alp perk group[/color]";
 gt.Const.Strings.PerkDescription.SleepSpec <- "Mastered your ability to put your prey on a long lasting sleep. \n\n[color=" + this.Const.UI.Color.NegativeValue + "]10%[/color] of your current Resolve is used to increase the chance to put a target to sleep. \n\nIncrease the duration of sleep effect by [color=" + this.Const.UI.Color.PositiveValue + "]1[/color] turn. This bonus duration is not affected by Resilient perk. \n\n[color=" + this.Const.UI.Color.NegativeValue + "]Sleep[/color] has a reduced Action Point cost. \n\n[color=#0b0084]From the Alp perk group[/color]";
-gt.Const.Strings.PerkDescription.AfterWake <- "Preys that wake up from a nightmare are easy to break. \n\nWaking up from a [color=" + this.Const.UI.Color.NegativeValue + "]Nightmare[/color] would cause the victim to experience a mental attack. \n\nAttacks from this Alp have [color=" + this.Const.UI.Color.PositiveValue + "]33%[/color] to not wake up its prey. \n\n[color=#0b0084]From the Alp perk group[/color]";
+gt.Const.Strings.PerkDescription.AfterWake <- "Preys that wake up from a nightmare are easy to break. \n\nWaking up from a [color=" + this.Const.UI.Color.NegativeValue + "]Nightmare[/color] would cause the victim to experience a mental attack. \n\n[color=" + this.Const.UI.Color.NegativeValue + "]Nightmare[/color] skill can ignore up to [color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] defender Resolve and has [color=" + this.Const.UI.Color.PositiveValue + "]40%[/color] to not wake up its poor victim. \n\n[color=#0b0084]From the Alp perk group[/color]";
 gt.Const.Strings.PerkDescription.PattingSpec <- "Master the art of petting head. No head can be left without being petted. \n\n[color=" + this.Const.UI.Color.NegativeValue + "]Petting[/color] skill builds up [color=" + this.Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue.\n\n[color=" + this.Const.UI.Color.NegativeValue + "]Petting[/color] has a [color=" + this.Const.UI.Color.PositiveValue + "]50%[/color] chance to distract the target and increases its damage by [color=" + this.Const.UI.Color.PositiveValue + "]+50%[/color]. \n\n[color=#0b0084]From the Luft Naughty Tricks perk group[/color]";
 gt.Const.Strings.PerkDescription.UnholyFruits <- "Luft has learnt how to use his two unholy fruits for certain purposes.\nNacho can\'t resist these unholy juicy fruits? \n\n[color=" + this.Const.UI.Color.PositiveValue + "]Charm[/color] and [color=" + this.Const.UI.Color.PositiveValue + "]Captive Charm[/color] gain an additional [color=" + this.Const.UI.Color.PositiveValue + "]5%[/color] to charm a target, and also grants +10% barter skill, increasing sell prices, reducing buy prices and increasing pay for delivery contracts. \n\n[color=#0b0084]From the Luft Naughty Tricks perk group[/color]";
 gt.Const.Strings.PerkDescription.InnocentLook <- "Using his innocence nacho look to make more human think he\'s cute. \nI\'ll pet them when they have lower their guard. \n\n[color=" + this.Const.UI.Color.PositiveValue + "]Expanding[/color] your charm capability to affect more stronger human enemies. Knight, Sergent, Officer, Nomad Leader, Bandit Leader, Barbarian Chosen, etc.\nResolve is increased by [color=" + this.Const.UI.Color.PositiveValue + "]5%[/color] and Max Fatigue is increased by [color=" + this.Const.UI.Color.PositiveValue + "]5%[/color].\n\n[color=#0b0084]From the Luft Naughty Tricks perk group[/color]";
 gt.Const.Strings.PerkDescription.GhoulBeauty <- "Charming ghoulish body that can make any perverted human falls in love with Luft. They like me, they love me, they let me pet them! \n\nAllowing you to [color=" + this.Const.UI.Color.PositiveValue + "]Charm[/color] Swordmaster, Blade Dancer, Master Archer, Desert Stalker, Hedge Knight, Nomad Executioner, Barbarian King, Bandit Warlord. \n\nCharm magic has [color=" + this.Const.UI.Color.PositiveValue + "]50%[/color] chance to double its duration, the bonus duration can\'t be reduced by Resilient perk. \n\n[color=#0b0084]From the Luft Naughty Tricks perk group[/color]";
 gt.Const.Strings.PerkDescription.Nacho <- "Mastered your ghoulish abilities to accumulated less fatigue.\n.[color=" + this.Const.UI.Color.NegativeValue + "]Frenzy[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Ghoul Claws[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Skin Ghoul Claws[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Gruesome Feast[/color] and [color=" + this.Const.UI.Color.NegativeValue + "]Swallow Whole[/color] build up [color=" + this.Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue.\nMax Fatigue is increased by [color=" + this.Const.UI.Color.PositiveValue + "]5%[/color]. \n\n[color=#0b0084]From the Ghoul perk group[/color]";
 gt.Const.Strings.PerkDescription.NachoEat <- "Eating corpse would make you stronger and recover from fatigue faster. \nEach time [color=" + this.Const.UI.Color.NegativeValue + "]Gruesome Feast[/color] is used, temporarily inceases your Attack Damage by [color=" + this.Const.UI.Color.DamageValue + "]+15%[/color] and [color=" + this.Const.UI.Color.PositiveValue + "]+3[/color] Fatigue Recovery per turn for [color=" + this.Const.UI.Color.PositiveValue + "]3[/color] turns.\n\n[color=#0b0084]From the Ghoul perk group[/color]";
-gt.Const.Strings.PerkDescription.NachoFrenzy <- "Unlocks the \'Frenzy\' skill which grants [color=" + this.Const.UI.Color.PositiveValue + "]+40%[/color] Attack Damage, [color=" + this.Const.UI.Color.PositiveValue + "]+50%[/color] Initiative, all skills cost [color=" + this.Const.UI.Color.PositiveValue + "]1[/color] less AP, able to apply additional [color=" + this.Const.UI.Color.PositiveValue + "]Overwhelmed[/color] debuff while receives [color=" + this.Const.UI.Color.NegativeValue + "]15%[/color] more of any damage and has [color=" + this.Const.UI.Color.NegativeValue + "]-25%[/color] Melee Defense for 2 turns. \n\n[color=#0b0084]From the Ghoul perk group[/color]";
-gt.Const.Strings.PerkDescription.UnholdUnarmedAttack <- "Unlocks the \'Hand-to-Hand Attack\' skill. \n\n[color=#0b0084]From the Unhold perk group[/color]";
+gt.Const.Strings.PerkDescription.NachoFrenzy <- "Unlocks the \'Frenzy\' skill ([color=" + this.Const.UI.Color.NegativeValue + "]3[/color] AP and [color=" + this.Const.UI.Color.NegativeValue + "]25[/color] Fatigue Cost) which grants [color=" + this.Const.UI.Color.PositiveValue + "]+40%[/color] Attack Damage, [color=" + this.Const.UI.Color.PositiveValue + "]+50%[/color] Initiative, all skills cost [color=" + this.Const.UI.Color.PositiveValue + "]1[/color] less AP, able to apply additional [color=" + this.Const.UI.Color.PositiveValue + "]Overwhelmed[/color] debuff while receives [color=" + this.Const.UI.Color.NegativeValue + "]15%[/color] more of any damage and has [color=" + this.Const.UI.Color.NegativeValue + "]-25%[/color] Melee Defense for 2 turns. \n\n[color=#0b0084]From the Ghoul perk group[/color]";
+gt.Const.Strings.PerkDescription.UnholdUnarmedAttack <- "Unlocks the \'Hand-to-Hand Attack\' skill ([color=" + this.Const.UI.Color.NegativeValue + "]5[/color] AP and [color=" + this.Const.UI.Color.NegativeValue + "]15[/color] Fatigue Cost). \n\n[color=#0b0084]From the Unhold perk group[/color]";
 gt.Const.Strings.PerkDescription.UnholdFling <- "Using more force to fling your foe away. \n[color=" + this.Const.UI.Color.NegativeValue + "]Fling Back[/color] skill builds up [color=" + this.Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue. Costs only [color=" + this.Const.UI.Color.PositiveValue + "]3[/color] AP and also can [color=" + this.Const.UI.Color.PositiveValue + "]Daze[/color] your foe on impact.\n\n[color=#0b0084]From the Unhold perk group[/color]";
 gt.Const.Strings.PerkDescription.SchratShield <- "Experience and instinct let you to grow and use shield more efficient. \n[color=" + this.Const.UI.Color.NegativeValue + "]Grow Shield[/color] and [color=" + this.Const.UI.Color.NegativeValue + "]Grow Greenwood Shield[/color] skills build up [color=" + this.Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue. Automatically agained [color=" + this.Const.UI.Color.PositiveValue + "]Shieldwall[/color] effect when growing a new shield.\n\n[color=#0b0084]From the Schrat perk group[/color]";
 gt.Const.Strings.PerkDescription.SchratSapling <- "Life-filled broken body part can easily reborn into an intelligent Sapling. \n\nIncrease chance to spawn Sapling by [color=" + this.Const.UI.Color.PositiveValue + "]+10%[/color]. \n\nSaplings may be controlled directly by player. \n\n[color=#0b0084]From the Schrat perk group[/color]";
 gt.Const.Strings.PerkDescription.SchratUproot <- "[color=" + this.Const.UI.Color.NegativeValue + "]Uproot[/color] and [color=" + this.Const.UI.Color.NegativeValue + "]Shatter The Earth[/color] skills build up [color=" + this.Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue and their Attack Damage are increased by [color=" + this.Const.UI.Color.DamageValue + "]5[/color]-[color=" + this.Const.UI.Color.DamageValue + "]15[/color] points. \n\nEffectiveness vs. Armor of all attacks are increased by [color=" + this.Const.UI.Color.PositiveValue + "]+10%[/color]. \n\n[color=#0b0084]From the Schrat perk group[/color]";
-gt.Const.Strings.PerkDescription.SchratUprootAoE <- "Unlocks the \'Shatter The Earth\' skill which can remove Spearwall, Shieldwall and Riposte effect of any affected target even when it fails to deal damage. \n\n[color=#0b0084]From the Schrat perk group[/color]";
-gt.Const.Strings.PerkDescription.LindwurmAcid <- "Unlocks the \'Spit Acid Blood\' skill which is an 3 tiles ranged attack. It will cover your target and may be anyone nearby in acidic blood, creating grievous burn wounds, melting away any kind of armor. \n\n[color=#0b0084]From the Lindwurm perk group[/color]";;
-gt.Const.Strings.PerkDescription.LindwurmIntimidate <- "Unlocks the \'Intimidate\' skill which can decrease [color=" + this.Const.UI.Color.PositiveValue + "]5%[/color] of Melee Skill, Ranged Skill, Melee Defense, Ranged Defense, and Resolve of any enemy within 3 tiles radius, this effect lasts for [color=" + this.Const.UI.Color.PositiveValue + "]1[/color] turn and can be stacked. \n\n[color=#0b0084]From the Lindwurm perk group[/color]";
+gt.Const.Strings.PerkDescription.SchratUprootAoE <- "Unlocks the \'Shatter The Earth\' skill ([color=" + this.Const.UI.Color.NegativeValue + "]5[/color] AP and [color=" + this.Const.UI.Color.NegativeValue + "]20[/color] Fatigue Cost) which can remove Spearwall, Shieldwall and Riposte effect of any affected target even when it fails to deal damage. \n\n[color=#0b0084]From the Schrat perk group[/color]";
+gt.Const.Strings.PerkDescription.LindwurmAcid <- "Unlocks the \'Spit Acid Blood\' skill ([color=" + this.Const.UI.Color.NegativeValue + "]4[/color] AP and [color=" + this.Const.UI.Color.NegativeValue + "]25[/color] Fatigue Cost) which is an 3 tiles ranged attack. It will cover your target and may be anyone nearby in acidic blood, creating grievous burn wounds, melting away any kind of armor. \n\n[color=#0b0084]From the Lindwurm perk group[/color]";;
+gt.Const.Strings.PerkDescription.LindwurmIntimidate <- "Unlocks the \'Intimidate\' skill ([color=" + this.Const.UI.Color.NegativeValue + "]3[/color] AP and [color=" + this.Const.UI.Color.NegativeValue + "]18[/color] Fatigue Cost) which can decrease [color=" + this.Const.UI.Color.PositiveValue + "]5%[/color] of Melee Skill, Ranged Skill, Melee Defense, Ranged Defense, and Resolve of any enemy within 3 tiles radius, this effect lasts for [color=" + this.Const.UI.Color.PositiveValue + "]1[/color] turn and can be stacked. \n\n[color=#0b0084]From the Lindwurm perk group[/color]";
 gt.Const.Strings.PerkDescription.LindwurmBody <- "[color=" + this.Const.UI.Color.NegativeValue + "]Gorge[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Tail Thresh[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Tail Sweep[/color] and [color=" + this.Const.UI.Color.NegativeValue + "]Tail Split[/color] skills build up [color=" + this.Const.UI.Color.NegativeValue + "]25%[/color] less Fatigue and their Attack Damage are increased by [color=" + this.Const.UI.Color.DamageValue + "]10%[/color]. \n\n[color=#0b0084]From the Lindwurm perk group[/color]";
 gt.Const.Strings.PerkDescription.GoblinWolfRider <- "Learn how to ride a mount to gain great mobility in battle. Can use Wolves, Wardogs and Warhounds as mount. \n\n[color=#0b0084]From the Goblin perk group[/color]";
 gt.Const.Strings.PerkDescription.GoblinMountedArchery <- "Learn the proper ways to use ranged weapon while riding. \n\nRemove ranged damage penalty while riding, reduce the ranged skill penalty from [color=" + this.Const.UI.Color.NegativeValue + "]-35%[/color] down to [color=" + this.Const.UI.Color.NegativeValue + "]-10%[/color]. \n\n[color=#0b0084]From the Goblin perk group[/color]";
@@ -124,11 +126,11 @@ gt.Const.Strings.PerkDescription.Afterimage <- "After teleporting, either by bei
 gt.Const.Strings.PerkDescription.EggBreedingMachine <- "Mastered what you are good at, giving birth to more spiders. Spawning spider builds up [color=" + this.Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue.\n\nHas [color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] to gain a free egg each turn. \n\n[color=#0b0084]From the ??? perk group[/color]";
 gt.Const.Strings.PerkDescription.EggInherit <- "Like father like son. Spawned spider inherits most of your perks.\n\n[color=#0b0084]From the ??? perk group[/color]";
 gt.Const.Strings.PerkDescription.EggNaturalSelection <- "Spiders you spawn later have better stats than those spawn first. Better pumping spider out of that ass fast! \n\n[color=#0b0084]From the ??? perk group[/color]";
-gt.Const.Strings.PerkDescription.BearLineBreaker <- "Unlocks the \'Liner Breaker\' skill which can help you break through enemy defensive line to reach those at backline. \n\n[color=#0b0084]From the Brute perk group[/color]";
+gt.Const.Strings.PerkDescription.BearLineBreaker <- "Unlocks the \'Liner Breaker\' skill ([color=" + this.Const.UI.Color.NegativeValue + "]4[/color] AP and [color=" + this.Const.UI.Color.NegativeValue + "]30[/color] Fatigue Cost) which can help you break through enemy defensive line to reach those at backline. \n\n[color=#0b0084]From the Brute perk group[/color]";
 gt.Const.Strings.PerkDescription.AlpControlFlame <- "[color=" + this.Const.UI.Color.NegativeValue + "]Realm of Burning Nightmares[/color] skill builds up [color=" + this.Const.UI.Color.PositiveValue + "]25%[/color] less fatigue, and flames from it will never hurt the user. Be careful when having more than 2 demon alps, their flames can override each other. \n\n[color=#0b0084]From the Demonology perk group[/color]";
 gt.Const.Strings.PerkDescription.AlpFieceFlame <- "Flames from [color=" + this.Const.UI.Color.NegativeValue + "]Realm of Burning Nightmares[/color] skill deals [color=" + this.Const.UI.Color.DamageValue + "]10[/color]-[color=" + this.Const.UI.Color.DamageValue + "]20[/color] more damage and can cause burn injuries. But the duration of flame is [color=" + this.Const.UI.Color.NegativeValue + "]halved[/color]. \n\n[color=#0b0084]From the Demonology perk group[/color]";
 gt.Const.Strings.PerkDescription.AlpHellishFlame <- "Apply fire damage as soon as [color=" + this.Const.UI.Color.NegativeValue + "]Realm of Burning Nightmares[/color] skill is used and also increases fire damage by [color=" + this.Const.UI.Color.DamageValue + "]10[/color]-[color=" + this.Const.UI.Color.DamageValue + "]20[/color] points. \n\n[color=#0b0084]From the Demonology perk group[/color]";
-gt.Const.Strings.PerkDescription.AlpShadowCopy <- "Unlocks the \'Shadow Copy\' skill which let you engulf an area with nightmarish darkness, from where a copy made out of shadow would emerge and fight for you, it will keep respawning as long as the darkness still persists. \n\n[color=#0b0084]From the Demonology perk group[/color]";
+gt.Const.Strings.PerkDescription.AlpShadowCopy <- "Unlocks the \'Shadow Copy\' skill ([color=" + this.Const.UI.Color.NegativeValue + "]7[/color] AP and [color=" + this.Const.UI.Color.NegativeValue + "]30[/color] Fatigue Cost) which let you engulf an area with nightmarish darkness, from where a copy made out of shadow would emerge and fight for you, it will keep respawning as long as the darkness still persists. \n\n[color=#0b0084]From the Demonology perk group[/color]";
 gt.Const.Strings.PerkDescription.HexenChampion <- "Become the toughest of the strongest of your kind. Obtain \'Champion\' racial skill which grants you all the benefits a champion enemy can has, a tons of stats boost of course. \n\n[color=#0b0084]From the Brokenly Overpowered perk group[/color]";
 gt.Const.Strings.PerkDescription.EggAttachSpider <- "It sucks when you can move around. Wishing for a pairs of leg would be asking too much. Well!!! At least you can request an Uber ride from your spider friends or from your own offsprings. It\'s technically free after all and also allow you to use mount.\n\n[color=#0b0084]From the ??? perk group[/color]";
 gt.Const.Strings.PerkDescription.Daytime <- "Halve the penalty from daytime and increase Resolve by [color=" + this.Const.UI.Color.PositiveValue + "]10[/color]. \n\n[color=#0b0084]From the Alp perk group[/color]";
@@ -140,6 +142,8 @@ gt.Const.Strings.PerkDescription.KrakenEnsnare <- "When you think being drag to 
 gt.Const.Strings.PerkDescription.KrakenMove <- "With the help of natural slime, your tenticles can move better than ever. Tentacle builds up [color=" + this.Const.UI.Color.PositiveValue + "]2[/color] less fatigue for each tile travelled and its [color=" + this.Const.UI.Color.NegativeValue + "]Move Tentacle[/color] skill has its maximun range increased by [color=" + this.Const.UI.Color.PositiveValue + "]1[/color].\n\n[color=#0b0084]From the Beast of Beasts perk group[/color]";
 gt.Const.Strings.PerkDescription.KrakenSwing <- "Unlock the \'Sweep\' skill for you tentacle which can hit up to 3 targets at once.\n\n[color=#0b0084]From the Beast of Beasts perk group[/color]";
 gt.Const.Strings.PerkDescription.KrakenTentacle <- "Your skin is like a rubber, deflecting attacks and harder to be cut. Decrease damage taken by [color=" + this.Const.UI.Color.NegativeValue + "]10[/color] points and gain immunity to bleeding for your tentacle.\n\n[color=#0b0084]From the Beast of Beasts perk group[/color]";
+gt.Const.Strings.PerkDescription.AlpLivingNightmare <- "What would be more terrifying than a nightmare? A Nightmare outside of a dream. Enemy killed by [color=" + this.Const.UI.Color.NegativeValue + "]Nightmare[/color] skill has a chance to spawn a living Nightmare to fight for you, the chance will increase as you use [color=" + this.Const.UI.Color.NegativeValue + "]Nightmare[/color] skill on the same target more than one. \n\n[color=#0b0084]From the Alp perk group[/color]";
+gt.Const.Strings.PerkDescription.AlpMindBreak <- "Unlocks the \'Mind Break\' skill ([color=" + this.Const.UI.Color.NegativeValue + "]4[/color] AP and [color=" + this.Const.UI.Color.NegativeValue + "]5[/color] Fatigue Cost) , this skill can deal armor ignoring damage but has very low damage output, but it can inflicts [color=" + this.Const.UI.Color.PositiveValue + "]Mind Broken[/color] effect which lower resolve for up to 3 turns and can be stacked. \n\n[color=#0b0084]From the Alp perk group[/color]";;
 //-------------
 
 gt.Const.Perks.PerkDefObjects.extend([
@@ -786,6 +790,26 @@ gt.Const.Perks.PerkDefObjects.extend([
 		IconDisabled = "ui/perks/perk_kraken_tentacle_sw.png",
 		Const = "KrakenTentacle"
 	},
+
+	//alp
+	{
+		ID = "perk.alp_living_nightmare",
+		Script = "scripts/skills/perks/perk_alp_living_nightmare",
+		Name = this.Const.Strings.PerkName.AlpLivingNightmare,
+		Tooltip = this.Const.Strings.PerkDescription.AlpLivingNightmare,
+		Icon = "ui/perks/perk_alp_living_nightmare.png",
+		IconDisabled = "ui/perks/perk_alp_living_nightmare_sw.png",
+		Const = "AlpLivingNightmare"
+	},
+	{
+		ID = "perk.mind_break",
+		Script = "scripts/skills/perks/perk_mind_break",
+		Name = this.Const.Strings.PerkName.AlpMindBreak,
+		Tooltip = this.Const.Strings.PerkDescription.AlpMindBreak,
+		Icon = "ui/perks/perk_mind_break.png",
+		IconDisabled = "ui/perks/perk_mind_break_sw.png",
+		Const = "AlpMindBreak"
+	},
 ]);
 
 gt.Const.Perks.PerkDefs.clear();
@@ -859,6 +883,7 @@ gt.Const.PerksCharmedUnit.AlpTree <- [
 		gt.Const.Perks.PerkDefs.Daytime,
 	],
 	[
+		gt.Const.Perks.PerkDefs.AlpMindBreak,
 		gt.Const.Perks.PerkDefs.Dodge,
 	],
 	[
@@ -875,6 +900,7 @@ gt.Const.PerksCharmedUnit.AlpTree <- [
 		gt.Const.Perks.PerkDefs.Overwhelm,
 		gt.Const.Perks.PerkDefs.Nimble,
 		gt.Const.Perks.PerkDefs.Nighttime,
+		gt.Const.Perks.PerkDefs.AfterWake,
 	],
 	[
 		gt.Const.Perks.PerkDefs.ReturnFavor,
@@ -883,7 +909,7 @@ gt.Const.PerksCharmedUnit.AlpTree <- [
 	],
 	[
 		gt.Const.Perks.PerkDefs.LegendLevitate,
-		gt.Const.Perks.PerkDefs.AfterWake,
+		gt.Const.Perks.PerkDefs.AlpLivingNightmare,
 	],
 	[],
 	[],
@@ -897,6 +923,7 @@ gt.Const.PerksCharmedUnit.DemonAlpTree <- [
 		gt.Const.Perks.PerkDefs.Daytime,
 	],
 	[
+		gt.Const.Perks.PerkDefs.AlpMindBreak,
 		gt.Const.Perks.PerkDefs.Dodge,
 	],
 	[

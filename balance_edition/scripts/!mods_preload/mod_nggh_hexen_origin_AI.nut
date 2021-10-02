@@ -12,7 +12,8 @@ this.getroottable().HexenHooks.hookAI <- function ()
 	{
 		o.m.PossibleSkills.extend([
 			"actives.unhold_hand_to_hand",
-			"actives.spit_acid"
+			"actives.spit_acid",
+			"actives.mind_break",
 		]);
 	});
 	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_thresh", function ( o )

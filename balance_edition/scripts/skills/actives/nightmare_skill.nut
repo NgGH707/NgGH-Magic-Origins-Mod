@@ -31,7 +31,7 @@ this.nightmare_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsUsingHitchance = false;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsUsingHitchance = false;
-		this.m.IsDoingForwardMove = false;
+		this.m.IsDoingForwardMove = true;
 		this.m.IsVisibleTileNeeded = false;
 		this.m.DirectDamageMult = 1.0;
 		this.m.ActionPointCost = 4;
@@ -82,7 +82,8 @@ this.nightmare_skill <- this.inherit("scripts/skills/skill", {
 			_properties = _actor.getCurrentProperties();
 		}
 
-		return this.Math.max(5, 25 - this.Math.floor(_properties.getBravery() * 0.25));
+		local mult = this.getContainer().hasSkill("perk.after_wake") ? this.Math.rand(85, 95) * 0.01 : 1.0;
+		return this.Math.max(5, 25 - this.Math.floor(_properties.getBravery() * mult * 0.25));
 	}
 	
 	function getAdditionalDamage( _properties = null )
@@ -170,6 +171,7 @@ this.nightmare_skill <- this.inherit("scripts/skills/skill", {
 		hitInfo.BodyPart = this.Const.BodyPart.Body;
 		hitInfo.BodyDamageMult = 1.0;
 		hitInfo.FatalityChanceMult = 0.0;
+		this.getContainer().onBeforeTargetHit(this, target, hitInfo);
 		target.onDamageReceived(user, this, hitInfo);
 		this.getContainer().onTargetHit(this, target, hitInfo.BodyPart, hitInfo.DamageInflictedHitpoints, hitInfo.DamageInflictedArmor);
 	}
