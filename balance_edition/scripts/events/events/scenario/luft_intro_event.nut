@@ -893,7 +893,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 				
 				case "supplies.goat_cheese":
 					_event.m.Luft.getBaseProperties().Hitpoints += 5;
-					_event.m.Luft.getBaseProperties().Resolve += 2;
+					_event.m.Luft.getBaseProperties().Bravery += 2;
 					this.List.extend([
 						{
 							id = 17,
