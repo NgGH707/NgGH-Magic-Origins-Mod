@@ -25,7 +25,7 @@ this.mind_break_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsStacking = false;
 		this.m.IsAttack = true;
 		this.m.IsUsingHitchance = false;
-		this.m.IsIgnoredAsAOO = true;
+		this.m.IsIgnoredAsAOO = false;
 		this.m.IsUsingHitchance = false;
 		this.m.IsDoingForwardMove = true;
 		this.m.IsVisibleTileNeeded = false;

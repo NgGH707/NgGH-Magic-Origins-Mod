@@ -189,7 +189,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 						local choose = items[this.Math.rand(0, items.len() - 1)];
 						_event.m.Weapon = this.new("scripts/items/weapons/" + choose[0]);
 						_event.m.Luft.getItems().equip(_event.m.Weapon);
-						_event.m.Luft.getItems().equip(this.new("scripts/items/weapons/" + choose[1]));
+						_event.m.Luft.getItems().equip(this.new("scripts/items/ammo/" + choose[1]));
 
 						if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 						{
@@ -496,7 +496,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 
 				case "LordMidas":
 					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.PTRDiscoveredTalent, 3);
-					perk = this.new("scripts/skills/perks/perk_ptr_discovered_talent");
+					local perk = this.new("scripts/skills/perks/perk_ptr_discovered_talent");
 					_event.m.Luft.getSkills().add(perk);
 					this.List.push({
 						id = 10,
@@ -507,7 +507,7 @@ this.luft_intro_event <- this.inherit("scripts/events/event", {
 
 				case "Necro":
 					_event.m.Luft.getBackground().addPerk(this.Const.Perks.PerkDefs.AlpShadowCopy, 5);
-					perk = this.new("scripts/skills/perks/perk_shadow_copy");
+					local perk = this.new("scripts/skills/perks/perk_shadow_copy");
 					_event.m.Luft.getSkills().add(perk);
 					this.List.push({
 						id = 10,

@@ -7,6 +7,12 @@
 	this.Nggh_MagicConcept.hookAddRunes();
 	this.Nggh_MagicConcept.hookAddSituation();
 	this.Nggh_MagicConcept.hookHexeOrigin();
+	this.Const.CharacterBackgroundsRandom.extend([
+		"geomancer_background",
+		"battlemage_background",
+		"elementalist_background",
+		"diabolist_background",
+	]);
 });
 
 ::mods_queue("mod_nggh_assets", "<mod_AC", function()
