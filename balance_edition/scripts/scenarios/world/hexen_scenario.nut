@@ -200,7 +200,7 @@ this.hexen_scenario <- this.inherit("scripts/scenarios/world/starting_scenario",
 					{
 						local beast = roster.create("scripts/entity/tactical/player_beast/alp_player");
 						beast.improveMood(1.0, "Enthralled");
-						beast.setScenarioValues(i == 1, false, i == 2, i < 2);
+						beast.setScenarioValues(false, false, i == 2, i < 2);
 						beast.setPlaceInFormation(i == 2 ? 12 : i + 3);
 						beast.addHeavyInjury();
 						beast.onHired();

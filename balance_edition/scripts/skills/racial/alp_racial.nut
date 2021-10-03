@@ -6,7 +6,7 @@ this.alp_racial <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "racial.alp";
 		this.m.Name = "Partly Exist In Dreams";
-		this.m.Description = "Has strong resistance against ranged, slashing and piercing attacks due to part of its real body only existing in a dream. It has the habbit to haunt and stalk its prey.";
+		this.m.Description = "Has strong resistance against ranged and piercing attacks due to part of its real body only existing in a dream. It has the habbit to haunt and stalk its prey.";
 		this.m.Icon = "skills/status_effect_102.png";
 		this.m.IconMini = "status_effect_102_mini";
 		this.m.SoundOnUse = [
@@ -62,8 +62,8 @@ this.alp_racial <- this.inherit("scripts/skills/skill", {
 	
 	function onUpdate( _properties )
 	{
-		_properties.MeleeDamageMult *= 0.85;
-		_properties.RangedDamageMult *= 0.85;
+		_properties.MeleeDamageMult *= 0.9;
+		_properties.RangedDamageMult *= 0.9;
 	}
 
 	function onTurnStart()

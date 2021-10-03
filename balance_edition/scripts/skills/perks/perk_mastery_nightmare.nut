@@ -37,7 +37,7 @@ this.perk_mastery_nightmare <- this.inherit("scripts/skills/skill", {
 
 		if (!actor.isHiddenToPlayer())
 		{
-			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(actor) + " heals for " + this.Math.min(actor.getHitpointsMax(), actor.getHitpoints() + heal) + " points");
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(actor) + " heals for " + this.Math.min(actor.getHitpointsMax() - actor.getHitpoints(), heal) + " points");
 		}
 
 		actor.setHitpoints(this.Math.min(actor.getHitpointsMax(), actor.getHitpoints() + heal));

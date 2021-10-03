@@ -86,6 +86,7 @@ this.perk_alp_living_nightmare <- this.inherit("scripts/skills/skill", {
 	function spawnReignOfShadow( _tiles )
 	{
 		local _user = this.getContainer().getActor();
+		local self = this;
 		local p = {
 			Type = "shadows",
 			Tooltip = "Darkness reigns this place, be fear and be cautious.",

@@ -1,7 +1,5 @@
 this.mind_break_skill <- this.inherit("scripts/skills/skill", {
-	m = {
-		ConvertRate = 0.15,
-	},
+	m = {},
 	function create()
 	{
 		this.m.ID = "actives.mind_break";
@@ -51,7 +49,7 @@ this.mind_break_skill <- this.inherit("scripts/skills/skill", {
 				id = 8,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Inflicts [color=" + this.Const.UI.Color.PositiveValue + "]Mind Break[/color] which lowers your target Resolve"
+				text = "Inflicts [color=" + this.Const.UI.Color.PositiveValue + "]Mind Broken[/color] effect which lowers your target Resolve"
 			}
 		]);
 		
@@ -98,9 +96,9 @@ this.mind_break_skill <- this.inherit("scripts/skills/skill", {
 		{
 			local mind_break = _targetEntity.getSkills().getSkillByID("effects.mind_break");
 
-			if (mind_break != null && mind_break.m.Count >= 5)
+			if (mind_break != null)
 			{
-				_targetEntity.checkMorale(-1, 0, this.Const.MoraleCheckType.MentalAttack);
+				_targetEntity.checkMorale(-1, -mind_break.m.Count, this.Const.MoraleCheckType.MentalAttack);
 			}
 
 			_targetEntity.getSkills().add(this.new("scripts/skills/effects/mind_break_effect"));
@@ -114,7 +112,9 @@ this.mind_break_skill <- this.inherit("scripts/skills/skill", {
 			_properties.DamageRegularMin = 5;
 			_properties.DamageRegularMax = 10;
 			_properties.DamageArmorMult = 0;
+			_properties.MeleeDamageMult /= 0.9;
 			_properties.IsIgnoringArmorOnAttack = true;
+			_properties.HitChance[this.Const.BodyPart.Head] += 100;
 		}
 	}
 

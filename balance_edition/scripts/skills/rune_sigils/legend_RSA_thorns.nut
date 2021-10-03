@@ -35,7 +35,7 @@ this.legend_RSA_thorns <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (_attacker.getID() == this.getContainer().getActor().getID() || _attacker.getTile().getDistanceTo(this.getContainer().getActor().getTile()) != 1)
+		if (_attacker.getID() == this.getContainer().getActor().getID() || _attacker.getTile().getDistanceTo(this.getContainer().getActor().getTile()) > 2)
 		{
 			return;
 		}
@@ -56,6 +56,7 @@ this.legend_RSA_thorns <- this.inherit("scripts/skills/skill", {
 			hitInfo.BodyPart = this.Const.BodyPart.Body;
 			hitInfo.BodyDamageMult = 1.0;
 			hitInfo.FatalityChanceMult = 0.0;
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s [b]rune sigil of Thorns[/b] returns its favor back to " + this.Const.UI.getColorizedEntityName(_attacker));
 			_attacker.onDamageReceived(this.getContainer().getActor(), this, hitInfo);
 		}
 	}

@@ -21,12 +21,6 @@ this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
 		}
 
 		local actor = this.getContainer().getActor();
-
-		if (_targetEntity.isAlliedWith(actor))
-		{
-			return;
-		}
-
 		local chance = this.Math.floor(_targetEntity.getXPValue() / 7);
 		local rolled = this.Math.rand(1, 100);
 
