@@ -1,7 +1,8 @@
 this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 	m = {
 		Copy = null,
-		Tiles = []
+		Tiles = [],
+		LastRoundSummoned = -1,
 	},
 	function setShadowCopy( _c )
 	{
@@ -245,7 +246,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 
 			if (tile.IsOccupiedByActor)
 			{
-				this.onApplyShadow(tile, tile.getEntity());
+				this.Const.MC_Combat.onApplyShadow(tile, tile.getEntity());
 			}
 		}
 	}
@@ -258,6 +259,11 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 		}
 
 		if (this.m.Copy != null && !this.m.Copy.isNull() && this.m.Copy.isAlive())
+		{
+			return;
+		}
+
+		if (this.m.LastRoundSummoned == this.Time.getRound())
 		{
 			return;
 		}
@@ -282,6 +288,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
+		this.m.LastRoundSummoned = this.Time.getRound();
 		this.Tactical.EventLog.log("A ghastly entity emerges from the darkness");
 		local actor = this.getContainer().getActor();
 		this.Time.scheduleEvent(this.TimeUnit.Virtual, 500, function( _skill )
@@ -316,6 +323,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 	function onResumeTurn()
 	{
 		this.updateTiles();
+		this.spawnShadow();
 	}
 
 	function onDeath()
@@ -326,6 +334,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 
 	function onCombatStarted()
 	{
+		this.m.LastRoundSummoned = -1;
 		this.m.Copy = null;
 		this.m.Tiles = [];
 	}

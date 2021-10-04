@@ -232,7 +232,7 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 	{
 		local data = _tile.Properties.Effect;
 		local custom = data.Custom;
-		local damage = this.Math.rand(12, 20);
+		local damage = this.Math.rand(15, 20);
 		local damageMult = 1.0;
 		local injuries = null;
 		local attacker = this.Tactical.getEntityByID(custom.UserID);
@@ -297,7 +297,7 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 		this.Sound.play(sounds[this.Math.rand(0, sounds.len() - 1)], this.Const.Sound.Volume.Actor, _entity.getPos());
 		local hitInfo = clone this.Const.Tactical.HitInfo;
 		hitInfo.DamageRegular = damage * damageMult;
-		hitInfo.DamageArmor = hitInfo.DamageRegular;
+		hitInfo.DamageArmor = hitInfo.DamageRegular * 1.25;
 		hitInfo.DamageDirect = 0.35;
 		hitInfo.BodyPart = this.Const.BodyPart.Body;
 		hitInfo.BodyDamageMult = 1.0;
@@ -314,9 +314,9 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 		{
 			local specialized_1 = this.getContainer().hasSkill("perk.hellish_flame");
 			local specialized_3 = this.getContainer().hasSkill("perk.fiece_flame");
-			_properties.DamageRegularMin = 12;
+			_properties.DamageRegularMin = 15;
 			_properties.DamageRegularMax = 20;
-			_properties.DamageArmorMult = 1.0;
+			_properties.DamageArmorMult = 1.25;
 			_properties.RangedDamageMult /= 0.9;
 
 			if (specialized_1)

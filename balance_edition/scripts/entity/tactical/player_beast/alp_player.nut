@@ -115,6 +115,16 @@ this.alp_player <- this.inherit("scripts/entity/tactical/player_beast", {
 			this.playSound(this.Const.Sound.ActorEvent.Idle, this.Const.Sound.Volume.Actor * this.Const.Sound.Volume.ActorIdle * this.m.SoundVolume[this.Const.Sound.ActorEvent.Idle] * this.m.SoundVolumeOverall * (this.Math.rand(50, 100) * 0.01) * (this.isHiddenToPlayer ? 0.5 : 1.0), this.m.SoundPitch * (this.Math.rand(60, 105) * 0.01));
 		}
 	}
+
+	function onCombatStart()
+	{
+		if (this.World.getTime().IsDaytime)
+		{
+			this.m.Skills.add(this.new("scripts/skills/special/day_effect"));
+		}
+
+		this.player_beast.onCombatStart();
+	}
 	
 	function loadResources()
 	{
@@ -367,7 +377,6 @@ this.alp_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Skills.add(this.new("scripts/skills/special/bag_fatigue"));
 		this.m.Skills.add(this.new("scripts/skills/special/no_ammo_warning"));
 		this.m.Skills.add(this.new("scripts/skills/special/double_grip"));
-		this.m.Skills.add(this.new("scripts/skills/special/day_effect"));
 		this.m.Skills.update();
 	}
 	

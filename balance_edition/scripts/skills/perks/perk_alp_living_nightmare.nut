@@ -133,7 +133,7 @@ this.perk_alp_living_nightmare <- this.inherit("scripts/skills/skill", {
 
 			if (tile.IsOccupiedByActor && tile.getEntity().isAlive() && !tile.getEntity().isDying())
 			{
-				this.onApplyShadow(tile, tile.getEntity());
+				this.Const.MC_Combat.onApplyShadow(tile, tile.getEntity());
 			}
 		}
 	}

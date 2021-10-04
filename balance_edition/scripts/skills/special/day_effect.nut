@@ -10,7 +10,8 @@ this.day_effect <- this.inherit("scripts/skills/skill", {
 		this.m.Type = this.Const.SkillType.StatusEffect | this.Const.SkillType.Special;
 		this.m.IsActive = false;
 		this.m.IsSerialized = false;
-		this.m.IsHidden = true;
+		this.m.IsHidden = false;
+		this.m.IsRemovedAfterBattle = true;
 	}
 
 	function getTooltip()
@@ -104,7 +105,7 @@ this.day_effect <- this.inherit("scripts/skills/skill", {
 
 	function onAfterUpdate( _properties )
 	{
-		if (this.isHidden)
+		if (this.isHidden())
 		{
 			return;
 		}
@@ -137,13 +138,13 @@ this.day_effect <- this.inherit("scripts/skills/skill", {
 
 			if (myTile.Properties.Effect != null && myTile.Properties.Effect.Type == "shadows")
 			{
-				return false;
+				return true;
 			}
 
-			return !this.World.getTime().IsDaytime;
+			return false;
 		}
 
-		return true;
+		return false;
 	}
 
 });
