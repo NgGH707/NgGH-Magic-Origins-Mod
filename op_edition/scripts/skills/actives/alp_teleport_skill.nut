@@ -34,6 +34,17 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 		this.m.MaxLevelDifference = 4;
 	}
 
+	function onAdded()
+	{
+		local auto_button = this.new("scripts/skills/actives/auto_mode_alp_teleport");
+		this.getContainer().add(auto_button);
+
+		if (!this.getContainer().getActor().isPlayerControlled())
+		{
+			auto_button.onCombatStarted();
+		}
+	}
+
 	function onCombatStarted()
 	{
 		this.m.IsAtNight = !this.World.getTime().IsDaytime;

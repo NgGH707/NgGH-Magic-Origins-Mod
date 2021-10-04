@@ -13,13 +13,13 @@ this.perk_alp_living_nightmare <- this.inherit("scripts/skills/skill", {
 		this.m.IsHidden = false;
 	}
 
-	function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )
+	/*function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )
 	{
 		if (_skill != null && _skill.getID() == "actives.nightmare")
 		{
 			_targetEntity.getFlags().increment("nightmare_hits");
 		}
-	}
+	}*/
 
 	function onTargetKilled( _targetEntity, _skill )
 	{
@@ -28,10 +28,10 @@ this.perk_alp_living_nightmare <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (this.Math.rand(1, 100) > _targetEntity.getFlags().getAsInt("nightmare_hits") * 50)
+		/*if (this.Math.rand(1, 100) > _targetEntity.getFlags().getAsInt("nightmare_hits") * 50)
 		{
 			return;
-		}
+		}*/
 
 		local centerTile = _targetEntity.getTile();
 		local tiles = [centerTile];
@@ -97,7 +97,7 @@ this.perk_alp_living_nightmare <- this.inherit("scripts/skills/skill", {
 			IsPositive = false,
 			Timeout = this.Time.getRound() + 3,
 			IsByPlayer = _user.isPlayerControlled(),
-			Callback = self.onApplyShadow,
+			Callback = this.Const.MC_Combat.onApplyShadow,
 			UserID = _user.getID(),
 			function Applicable( _a )
 			{
@@ -135,37 +135,6 @@ this.perk_alp_living_nightmare <- this.inherit("scripts/skills/skill", {
 			{
 				this.onApplyShadow(tile, tile.getEntity());
 			}
-		}
-	}
-
-	function onApplyShadow( _tile, _entity )
-	{
-		if (_entity.getMoraleState() == this.Const.MoraleState.Ignore)
-		{
-			return;
-		}
-
-		if (_entity.getFlags().has("alp"))
-		{
-			return;
-		}
-
-		local exclude = [
-			this.Const.EntityType.Alp,
-			this.Const.EntityType.AlpShadow,
-			this.Const.EntityType.LegendDemonAlp,
-		];
-
-		if (exclude.find(_entity.getType()) != null)
-		{
-			return;
-		}
-
-		local shadow = _entity.getSkills().getSkillByID("effects.reign_of_darkness");
-
-		if (shadow == null)
-		{
-			_entity.getSkills().add(this.new("scripts/skills/effects/reign_of_darkness_effect"));
 		}
 	}
 

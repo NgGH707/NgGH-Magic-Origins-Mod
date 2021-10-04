@@ -94,7 +94,9 @@ this.magic_shield <- this.inherit("scripts/skills/skill", {
 			return true;
 		}
 
-		if (this.getContainer().getActor().getArmor(this.Const.BodyPart.Head) <= 0)
+		local helmet = this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Head);
+
+		if (helmet == null || helmet.getArmor() <= 0)
 		{
 			return true;
 		}

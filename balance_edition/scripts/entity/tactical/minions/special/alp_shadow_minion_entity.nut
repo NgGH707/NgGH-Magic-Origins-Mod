@@ -62,6 +62,7 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 		this.m.Sound[this.Const.Sound.ActorEvent.DamageReceived] = [];
 		this.m.SoundPitch = this.Math.rand(90, 110) * 0.01;
 		this.m.Flags.add("alp");
+		this.m.Flags.add("shadow");
 		this.setName("Shadow Demon");
 	}
 
@@ -398,7 +399,7 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 			IsPositive = true,
 			Timeout = this.Time.getRound() + 2,
 			IsByPlayer = this.isPlayerControlled(),
-			Callback = function(_tile, _entity){},
+			Callback = this.Const.MC_Combat.onApplyShadow,
 			UserID = this.getID(),
 			function Applicable( _a )
 			{

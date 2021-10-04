@@ -34,6 +34,14 @@ this.mind_break_skill <- this.inherit("scripts/skills/skill", {
 		this.m.MaxRange = 2;
 		this.m.MaxLevelDifference = 4;
 	}
+
+	function onAdded()
+	{
+		if (this.getContainer().getActor().getFlags().getAsInt("bewitched") == this.Const.EntityType.LegendDemonAlp)
+		{
+			this.m.Order = this.Const.SkillOrder.OffensiveTargeted - 2;
+		}
+	}
 	
 	function getTooltip()
 	{
@@ -98,7 +106,7 @@ this.mind_break_skill <- this.inherit("scripts/skills/skill", {
 
 			if (mind_break != null)
 			{
-				_targetEntity.checkMorale(-1, -mind_break.m.Count, this.Const.MoraleCheckType.MentalAttack);
+				_targetEntity.checkMorale(-1, 5 - mind_break.m.Count, this.Const.MoraleCheckType.MentalAttack);
 			}
 
 			_targetEntity.getSkills().add(this.new("scripts/skills/effects/mind_break_effect"));

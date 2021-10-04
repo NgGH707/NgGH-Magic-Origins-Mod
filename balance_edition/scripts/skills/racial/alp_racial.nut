@@ -143,6 +143,11 @@ this.alp_racial <- this.inherit("scripts/skills/skill", {
 		{
 			if (a.isAlive() && a.getHitpoints() > 0 && a.getSkills().hasSkill("actives.alp_teleport"))
 			{
+				if (a.getFlags().get("disable_auto_teleport"))
+				{
+					continue;
+				}
+
 				if (!a.getAIAgent().hasKnownOpponent())
 				{
 					local strategy = a.getAIAgent().getStrategy().update();

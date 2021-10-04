@@ -409,6 +409,8 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		local exclude = [
 			"perk.lindwurm_acid",
 			"perk.intimidate",
+			"perk.ptr_discovered_talent"
+			"perk.gifted",
 			"trait.double_tongued",
 			"trait.seductive",
 			"trait.determined",

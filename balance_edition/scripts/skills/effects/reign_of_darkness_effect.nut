@@ -108,7 +108,7 @@ this.reign_of_darkness_effect <- this.inherit("scripts/skills/skill", {
 
 	function onBeforeDamageReceived( _attacker, _skill, _hitInfo, _properties )
 	{
-		if (_skill != null && _skill.getID() == "actives.nightmare")
+		if ((_skill != null && _skill.getID() == "actives.nightmare") || (_attacker != null && _attacker.getFlags().has("shadow")))
 		{
 			_properties.DamageReceivedTotalMult *= 1.25;
 		}

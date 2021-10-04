@@ -114,7 +114,6 @@ this.getroottable().Nggh_MagicConcept.hookAddRunes <- function ()
 			}
 		}
 
-
 		local getRuneSigilTooltip = obj.getRuneSigilTooltip;
 		obj.getRuneSigilTooltip = function()
 		{
@@ -142,7 +141,7 @@ this.getroottable().Nggh_MagicConcept.hookAddRunes <- function ()
 				return "This item has the power of the rune sigil of Brimstone:\n[color=" + this.Const.UI.Color.PositiveValue + "]Immune[/color] to fire, gain [color=" + this.Const.UI.Color.NegativeValue + "]+10[/color] Fatigue recovery per turn and a slight damage reduction while standing on fire.";
 			}
 
-			getRuneSigilTooltip();
+			return getRuneSigilTooltip();
 		}
 
 		/*local setRuneBonus = obj.setRuneBonus;

@@ -3,6 +3,37 @@ local gt = this.getroottable();
 gt.Const.MC_Combat <- {
 	NoStaffDamageMult = 0.5,
 	NoStaffWithMasteryDamageMult = 0.85,
+
+	function onApplyShadow( _tile, _entity )
+	{
+		if (_entity.getMoraleState() == this.Const.MoraleState.Ignore)
+		{
+			return;
+		}
+
+		if (_entity.getFlags().has("alp"))
+		{
+			return;
+		}
+
+		local exclude = [
+			this.Const.EntityType.Alp,
+			this.Const.EntityType.AlpShadow,
+			this.Const.EntityType.LegendDemonAlp,
+		];
+
+		if (exclude.find(_entity.getType()) != null)
+		{
+			return;
+		}
+
+		local shadow = _entity.getSkills().getSkillByID("effects.reign_of_darkness");
+
+		if (shadow == null)
+		{
+			_entity.getSkills().add(this.new("scripts/skills/effects/reign_of_darkness_effect"));
+		}
+	}
 };
 
 gt.Const.MC_Backgrounds <- [
@@ -229,6 +260,132 @@ gt.Const.SmokeParticles <- [
 	}
 ];
 
+gt.Const.ShadowParticles <- [
+	{
+		Delay = 0,
+		Quantity = 50,
+		LifeTimeQuantity = 0,
+		SpawnRate = 10,
+		Brushes = [
+			"effect_lightning_01",
+			"effect_lightning_02",
+			"effect_lightning_03"
+		],
+		Stages = [
+			{
+				LifeTimeMin = 0.75,
+				LifeTimeMax = 1.25,
+				ColorMin = this.createColor("00000000"),
+				ColorMax = this.createColor("00000000"),
+				ScaleMin = 0.25,
+				ScaleMax = 0.5,
+				RotationMin = 0,
+				RotationMax = 359,
+				TorqueMin = -10,
+				TorqueMax = 10,
+				VelocityMin = 10,
+				VelocityMax = 30,
+				DirectionMin = this.createVec(-0.5, -0.5),
+				DirectionMax = this.createVec(0.5, -0.5),
+				SpawnOffsetMin = this.createVec(-50, 0),
+				SpawnOffsetMax = this.createVec(50, 40),
+				ForceMin = this.createVec(0, 0),
+				ForceMax = this.createVec(0, 10),
+				FlickerEffect = false
+			},
+			{
+				LifeTimeMin = 4.0,
+				LifeTimeMax = 6.0,
+				ColorMin = this.createColor("0000002d"),
+				ColorMax = this.createColor("0000002d"),
+				ScaleMin = 0.5,
+				ScaleMax = 1.0,
+				VelocityMin = 10,
+				VelocityMax = 30,
+				DirectionMin = this.createVec(-0.4, -0.6),
+				DirectionMax = this.createVec(0.4, -0.6),
+				ForceMin = this.createVec(0, 0),
+				ForceMax = this.createVec(0, 10),
+				FlickerEffect = false
+			},
+			{
+				LifeTimeMin = 0.5,
+				LifeTimeMax = 1.0,
+				ColorMin = this.createColor("00000000"),
+				ColorMax = this.createColor("00000000"),
+				ScaleMin = 0.5,
+				ScaleMax = 1.0,
+				VelocityMin = 10,
+				VelocityMax = 30,
+				ForceMin = this.createVec(0, 0),
+				ForceMax = this.createVec(0, 10),
+				FlickerEffect = false
+			}
+		]
+	},
+	{
+		Delay = 0,
+		Quantity = 50,
+		LifeTimeQuantity = 0,
+		SpawnRate = 8,
+		Brushes = [
+			"miasma_effect_02",
+			"miasma_effect_03"
+		],
+		Stages = [
+			{
+				LifeTimeMin = 0.75,
+				LifeTimeMax = 1.25,
+				ColorMin = this.createColor("00000000"),
+				ColorMax = this.createColor("00000000"),
+				ScaleMin = 0.5,
+				ScaleMax = 1.0,
+				RotationMin = 0,
+				RotationMax = 359,
+				TorqueMin = -10,
+				TorqueMax = 10,
+				VelocityMin = 10,
+				VelocityMax = 30,
+				DirectionMin = this.createVec(-0.25, -0.25),
+				DirectionMax = this.createVec(0.25, -0.25),
+				SpawnOffsetMin = this.createVec(-50, 0),
+				SpawnOffsetMax = this.createVec(50, 40),
+				ForceMin = this.createVec(0, 0),
+				ForceMax = this.createVec(0, 10),
+				FlickerEffect = false
+			},
+			{
+				LifeTimeMin = 4.0,
+				LifeTimeMax = 6.0,
+				ColorMin = this.createColor("00000030"),
+				ColorMax = this.createColor("00000030"),
+				ScaleMin = 0.75,
+				ScaleMax = 1.25,
+				VelocityMin = 10,
+				VelocityMax = 30,
+				DirectionMin = this.createVec(-0.2, -0.3),
+				DirectionMax = this.createVec(0.2, -0.3),
+				ForceMin = this.createVec(0, 0),
+				ForceMax = this.createVec(0, 10),
+				FlickerEffect = false
+			},
+			{
+				LifeTimeMin = 0.5,
+				LifeTimeMax = 1.0,
+				ColorMin = this.createColor("00000000"),
+				ColorMax = this.createColor("00000000"),
+				ScaleMin = 0.75,
+				ScaleMax = 1.25,
+				VelocityMin = 10,
+				VelocityMax = 30,
+				ForceMin = this.createVec(0, 0),
+				ForceMax = this.createVec(0, 10),
+				FlickerEffect = false
+			}
+		]
+	}
+];
+
 gt.Const.Strings.PerkName.MC_MagicTraining1 <- "Magical Study - 1";
 gt.Const.Strings.PerkName.MC_MagicTraining2 <- "Magical Study - 2";
 gt.Const.Strings.PerkName.MC_MagicTraining3 <- "Magical Study - 3";
@@ -322,5 +479,7 @@ gt.Const.Perks.MC_MagicTree <- {
 		[]
 	]
 };
+
+
 
 

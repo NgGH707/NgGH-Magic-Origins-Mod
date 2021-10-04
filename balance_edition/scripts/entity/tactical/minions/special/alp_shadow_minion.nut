@@ -53,6 +53,7 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		this.m.Sound[this.Const.Sound.ActorEvent.DamageReceived] = [];
 		this.m.SoundPitch = this.Math.rand(90, 110) * 0.01;
 		this.m.Flags.add("alp");
+		this.m.Flags.add("shadow");
 	}
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )
@@ -70,7 +71,7 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		this.actor.onDeath(_killer, _skill, _tile, _fatalityType);
 	}
 
-	function spawnShadowEffect( _tile )
+	function spawnShadowEffect( _tile = null )
 	{
 		if (_tile == null)
 		{
@@ -190,17 +191,17 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 
 		if (this.Math.rand(1, 100) <= r)
 		{
-			this.m.Skills.add(this.new("scripts/skills/perks/perk_fearsome"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_mind_break"));
 		}
 
 		if (this.Math.rand(1, 100) <= r - 10)
 		{
-			this.m.Skills.add(this.new("scripts/skills/perks/perk_nine_lives"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_fearsome"));
 		}
 
 		if (this.Math.rand(1, 100) <= r - 25)
 		{
-			this.m.Skills.add(this.new("scripts/skills/perks/perk_lone_wolf"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_nine_lives"));
 		}
 
 		this.m.Skills.update();
@@ -301,7 +302,7 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 
 		if (this.m.Link != null && !this.m.Link.isNull())
 		{
-			this.m.Link.spawnReignOfShadow(_tile);
+			this.m.Link.spawnReignOfShadow([_tile]);
 		}
 	}
 

@@ -46,9 +46,9 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 		this.m.ID = "actives.legend_demon_shadows";
 		this.m.Name = "Realm of Burning Nightmares";
 		this.m.Description = "Summon the hellfire to bring out the agony pain from your foe, fueling the juicy nightmare to the inferno.";
-		this.m.Icon = "skills/active_160.png";
-		this.m.IconDisabled = "skills/active_160.png";
-		this.m.Overlay = "active_160";
+		this.m.Icon = "skills/active_alp_hellfire.png";
+		this.m.IconDisabled = "skills/active_alp_hellfire_sw.png";
+		this.m.Overlay = "active_alp_hellfire";
 		this.m.SoundOnUse = [
 			"sounds/enemies/dlc2/alp_sleep_01.wav",
 			"sounds/enemies/dlc2/alp_sleep_02.wav",
@@ -81,7 +81,7 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsVisibleTileNeeded = false;
 		this.m.InjuriesOnBody = this.Const.Injury.BurningBody;
 		this.m.InjuriesOnHead = this.Const.Injury.BurningHead;
-		this.m.DirectDamageMult = 0.5;
+		this.m.DirectDamageMult = 0.35;
 		this.m.ActionPointCost = 3;
 		this.m.FatigueCost = 0;
 		this.m.MinRange = 0;
@@ -97,6 +97,7 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 		}
 
 		this.m.FatigueCost = 13;
+		this.m.MaxRange = 8;
 		this.m.IsVisibleTileNeeded = true;
 	}
 
@@ -231,7 +232,7 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 	{
 		local data = _tile.Properties.Effect;
 		local custom = data.Custom;
-		local damage = this.Math.rand(10, 20);
+		local damage = this.Math.rand(12, 20);
 		local damageMult = 1.0;
 		local injuries = null;
 		local attacker = this.Tactical.getEntityByID(custom.UserID);
@@ -248,12 +249,12 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 
 		if (custom.Specialized_1)
 		{
-			damage += this.Math.rand(10, 20);
+			damage += this.Math.rand(5, 12);
 		}
 
 		if (custom.Specialized_3)
 		{
-			damage += this.Math.rand(10, 20);
+			damage += this.Math.rand(5, 20);
 			injuries = this.Const.Injury.Burning;
 		}
 
@@ -297,7 +298,7 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 		local hitInfo = clone this.Const.Tactical.HitInfo;
 		hitInfo.DamageRegular = damage * damageMult;
 		hitInfo.DamageArmor = hitInfo.DamageRegular;
-		hitInfo.DamageDirect = 0.5;
+		hitInfo.DamageDirect = 0.35;
 		hitInfo.BodyPart = this.Const.BodyPart.Body;
 		hitInfo.BodyDamageMult = 1.0;
 		hitInfo.FatalityChanceMult = 0.0;
@@ -313,19 +314,20 @@ this.legend_demon_shadows_skill <- this.inherit("scripts/skills/skill", {
 		{
 			local specialized_1 = this.getContainer().hasSkill("perk.hellish_flame");
 			local specialized_3 = this.getContainer().hasSkill("perk.fiece_flame");
-			_properties.DamageRegularMin = 10;
+			_properties.DamageRegularMin = 12;
 			_properties.DamageRegularMax = 20;
 			_properties.DamageArmorMult = 1.0;
+			_properties.RangedDamageMult /= 0.9;
 
 			if (specialized_1)
 			{
-				_properties.DamageRegularMin += 10;
-				_properties.DamageRegularMax += 20;
+				_properties.DamageRegularMin += 5;
+				_properties.DamageRegularMax += 12;
 			}
 
 			if (specialized_3)
 			{
-				_properties.DamageRegularMin += 10;
+				_properties.DamageRegularMin += 5;
 				_properties.DamageRegularMax += 20;
 			}
 		}

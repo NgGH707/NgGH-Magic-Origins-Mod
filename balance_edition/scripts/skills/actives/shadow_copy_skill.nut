@@ -3,15 +3,31 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 		Copy = null,
 		Tiles = []
 	},
+	function setShadowCopy( _c )
+	{
+		if (_c == null)
+		{
+			this.m.Copy = null;
+		}
+		else if (typeof _c == "instance")
+		{
+			this.m.Copy = _c;
+		}
+		else 
+		{
+		 	this.m.Copy = this.WeakTableRef(_c);
+		}
+	}
+
 	function removeCopy( _terminate = false )
 	{
-		if (_terminate && this.m.Copy != null)
+		if (_terminate && this.m.Copy != null && !this.m.Copy.isNull())
 		{
 			this.m.Copy.setMaster(null);
 			this.m.Copy.killSilently();
 		}
 
-		this.m.Copy = null;
+		this.setShadowCopy(null);
 	}
 
 	function hasTile( _id )
@@ -33,7 +49,12 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 
 		foreach ( t in this.m.Tiles )
 		{
-			if (t.Properties.Effect != null && t.Properties.Effect.Type == "shadows" && t.Properties.Effect.UserID == this.getContainer().getActor().getID())
+			if (t.Properties.Effect == null || t.Properties.Effect.Type != "shadows")
+			{
+				continue;
+			}
+
+			if (("UserID" in t.Properties.Effect) && t.Properties.Effect.UserID == this.getContainer().getActor().getID())
 			{
 				new.push(t);
 			}
@@ -115,7 +136,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 		}
 		else 
 		{
-			if (this.m.Copy != null)
+			if (this.m.Copy != null && !this.m.Copy.isNull())
 			{
 			    ret.push({
 					id = 10,
@@ -140,7 +161,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 
 	function onAfterUpdate( _properties )
 	{
-		this.m.FatigueCostMult = this.m.Copy != null ? 0.5 : 1.0;
+		this.m.FatigueCostMult = this.m.Copy != null && !this.m.Copy.isNull() && this.m.Copy.isAlive() ? 0.5 : 1.0;
 	}
 
 	function onUse( _user, _targetTile )
@@ -182,7 +203,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 			IsPositive = false,
 			Timeout = this.Time.getRound() + 3,
 			IsByPlayer = _user.isPlayerControlled(),
-			Callback = self.onApplyShadow,
+			Callback = this.Const.MC_Combat.onApplyShadow,
 			UserID = _user.getID(),
 			function Applicable( _a )
 			{
@@ -194,8 +215,9 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 		{
 			if (tile.Properties.Effect != null && tile.Properties.Effect.Type == "shadows")
 			{
+				local timeOut = tile.Properties.Effect.Timeout;
 				tile.Properties.Effect = clone p;
-				tile.Properties.Effect.Timeout = this.Time.getRound() + 2;
+				tile.Properties.Effect.Timeout = timeOut + 2;
 			}
 			else
 			{
@@ -230,7 +252,12 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 
 	function spawnShadow( _tile = null )
 	{
-		if (this.m.Tiles.len() == 0 || this.m.Copy != null)
+		if (this.m.Tiles.len() == 0)
+		{
+			return;
+		}
+
+		if (this.m.Copy != null && !this.m.Copy.isNull() && this.m.Copy.isAlive())
 		{
 			return;
 		}
@@ -259,44 +286,14 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 		local actor = this.getContainer().getActor();
 		this.Time.scheduleEvent(this.TimeUnit.Virtual, 500, function( _skill )
 		{
-			_skill.m.Copy = this.Tactical.spawnEntity("scripts/entity/tactical/minions/special/alp_shadow_minion", _tile.Coords);
-			_skill.m.Copy.setFaction(2);
-			_skill.m.Copy.setMaster(actor);
-			_skill.m.Copy.setLink(_skill);
-			_skill.m.Copy.strengthen(actor);
-			_skill.m.Copy.spawnShadowEffect(_tile);
+			local shadow_copy = this.Tactical.spawnEntity("scripts/entity/tactical/minions/special/alp_shadow_minion", _tile.Coords);
+			shadow_copy.setFaction(2);
+			shadow_copy.setMaster(actor);
+			shadow_copy.setLink(_skill);
+			shadow_copy.strengthen(actor);
+			shadow_copy.spawnShadowEffect(_tile);
+			_skill.setShadowCopy(shadow_copy);
 		}.bindenv(this), this);
-	}
-
-	function onApplyShadow( _tile, _entity )
-	{
-		if (_entity.getMoraleState() == this.Const.MoraleState.Ignore)
-		{
-			return;
-		}
-
-		if (_entity.getFlags().has("alp"))
-		{
-			return;
-		}
-
-		local exclude = [
-			this.Const.EntityType.Alp,
-			this.Const.EntityType.AlpShadow,
-			this.Const.EntityType.LegendDemonAlp,
-		];
-
-		if (exclude.find(_entity.getType()) != null)
-		{
-			return;
-		}
-
-		local shadow = _entity.getSkills().getSkillByID("effects.reign_of_darkness");
-
-		if (shadow == null)
-		{
-			_entity.getSkills().add(this.new("scripts/skills/effects/reign_of_darkness_effect"));
-		}
 	}
 
 	function onNewRound()
