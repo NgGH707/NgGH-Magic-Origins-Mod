@@ -50,12 +50,12 @@ this.minion <- this.inherit("scripts/entity/tactical/actor", {
 
 	function getCombatStats()
 	{
-		return this.m.Master != null && !this.m.Master.isNull() ? this.m.Master.getCombatStats() : this.player_beast.getCombatStats();
+		return this.m.Master != null && !this.m.Master.isNull() ? this.m.Master.getCombatStats() : this.m.CombatStats;
 	}
 
 	function getLifetimeStats()
 	{
-		return this.m.Master != null && !this.m.Master.isNull() : this.m.Master.getLifetimeStats() : ;
+		return this.m.Master != null && !this.m.Master.isNull() ? this.m.Master.getLifetimeStats() : this.m.LifetimeStats;
 	}
 	
 	function getDominate()
