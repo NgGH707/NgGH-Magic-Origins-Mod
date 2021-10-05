@@ -440,8 +440,7 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 			}
 		}
 
-		local p = actor.getBaseProperties();
-		ret.extend(this.Const.HexenOrigin.CharmedSlave.getTooltip(p));
+		ret.extend(this.Const.HexenOrigin.CharmedSlave.getTooltip(this.getContainer().getActor()));
 		ret.extend(this.getAttributesTooltip());
 		return ret;
 	}

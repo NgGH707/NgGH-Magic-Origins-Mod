@@ -757,30 +757,32 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 		return ret;
 	}
 
-	function getTooltip( _properties )
+	function getTooltip( _actor )
 	{
 		local ret = [];
+		local _baseProperties = _actor.getBaseProperties();
+		local _currentProperties = _actor.getCurrentProperties();
 
-		if (_properties.FatigueRecoveryRate > 15)
+		if (_baseProperties.FatigueRecoveryRate > 15)
 		{
 			ret.push({
 				id = 10,
 				type = "text",
 				icon = "ui/icons/fatigue.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + (_properties.FatigueRecoveryRate - 15) + "[/color] Fatigue Recovery per turn"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + (_baseProperties.FatigueRecoveryRate - 15) + "[/color] Fatigue Recovery per turn"
 			});
 		}
-		else if (_properties.FatigueRecoveryRate < 15)
+		else if (_baseProperties.FatigueRecoveryRate < 15)
 		{
 			ret.push({
 				id = 10,
 				type = "text",
 				icon = "ui/icons/fatigue.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + (15 - _properties.FatigueRecoveryRate) + "[/color] Fatigue Recovery per turn"
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + (15 - _baseProperties.FatigueRecoveryRate) + "[/color] Fatigue Recovery per turn"
 			});
 		}
 
-		local value = this.Math.floor(_properties.DamageTotalMult * 100);
+		local value = this.Math.floor(_baseProperties.DamageTotalMult * 100);
 
 		if (value > 100)
 		{
@@ -801,7 +803,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 
-		local value = this.Math.floor(_properties.DamageDirectMult * 100);
+		local value = this.Math.floor(_baseProperties.DamageDirectMult * 100);
 
 		if (value > 100)
 		{
@@ -822,7 +824,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 
-		if (_properties.IsImmuneToOverwhelm)
+		if (_currentProperties.IsImmuneToOverwhelm)
 		{
 			ret.push({
 				id = 10,
@@ -832,7 +834,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (_properties.IsImmuneToZoneOfControl)
+		if (_currentProperties.IsImmuneToZoneOfControl)
 		{
 			ret.push({
 				id = 10,
@@ -842,7 +844,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (_properties.IsImmuneToStun)
+		if (_currentProperties.IsImmuneToStun)
 		{
 			ret.push({
 				id = 10,
@@ -852,7 +854,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (_properties.IsImmuneToRoot)
+		if (_currentProperties.IsImmuneToRoot)
 		{
 			ret.push({
 				id = 10,
@@ -862,7 +864,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (_properties.IsImmuneToKnockBackAndGrab)
+		if (_currentProperties.IsImmuneToKnockBackAndGrab)
 		{
 			ret.push({
 				id = 10,
@@ -872,7 +874,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (_properties.IsImmuneToRotation)
+		if (_currentProperties.IsImmuneToRotation)
 		{
 			ret.push({
 				id = 10,
@@ -882,7 +884,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (_properties.IsImmuneToDisarm)
+		if (_currentProperties.IsImmuneToDisarm)
 		{
 			ret.push({
 				id = 10,
@@ -892,7 +894,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (_properties.IsImmuneToSurrounding)
+		if (_currentProperties.IsImmuneToSurrounding)
 		{
 			ret.push({
 				id = 10,
@@ -902,7 +904,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (_properties.IsImmuneToBleeding)
+		if (_currentProperties.IsImmuneToBleeding)
 		{
 			ret.push({
 				id = 10,
@@ -912,7 +914,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (_properties.IsImmuneToPoison)
+		if (_currentProperties.IsImmuneToPoison)
 		{
 			ret.push({
 				id = 10,
@@ -922,7 +924,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (_properties.IsImmuneToDamageReflection)
+		if (_currentProperties.IsImmuneToDamageReflection)
 		{
 			ret.push({
 				id = 10,
@@ -932,7 +934,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 			
-		if (_properties.IsImmuneToFire)
+		if (_currentProperties.IsImmuneToFire)
 		{
 			ret.push({
 				id = 10,
@@ -942,7 +944,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}	
 		
-		if (!_properties.IsAffectedByNight)
+		if (!_currentProperties.IsAffectedByNight)
 		{
 			ret.push({
 				id = 10,
@@ -952,7 +954,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (!_properties.IsAffectedByInjuries)
+		if (!_currentProperties.IsAffectedByInjuries)
 		{
 			ret.push({
 				id = 10,
@@ -962,7 +964,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (!_properties.IsAffectedByFreshInjuries)
+		if (!_currentProperties.IsAffectedByFreshInjuries)
 		{
 			ret.push({
 				id = 10,

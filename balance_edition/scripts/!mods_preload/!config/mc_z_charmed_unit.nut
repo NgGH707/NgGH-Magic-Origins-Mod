@@ -978,7 +978,7 @@ gt.Const.CharmedSlave <- {
 			{
 				StatMod = { Hitpoints = [5, -5], Bravery = [5, -5], Stamina = [5, -5], MeleeSkill = [5, -5], RangedSkill = [5, -5], MeleeDefense = [3, -3], RangedDefense = [3, -3], Initiative = [10, -10] },
 				Perks = [],
-				Difficulty = -499,
+				Difficulty = -500,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 50, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.5, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.5, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -995,7 +995,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "UnholdTree",
 				Script = "player_beast/trickster_god_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.boobas_charm", "perk.appearance_charm", "perk.mastery_charm", "perk.charm_nudist"],
+				Requirements = ["perk.mastery_charm"],
 			},
 			
 		//BarbarianMadman = 80,

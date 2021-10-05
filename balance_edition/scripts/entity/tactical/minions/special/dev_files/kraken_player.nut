@@ -5,7 +5,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		IsEnraged = false,
 		Script = "scripts/entity/tactical/minions/special/dev_files/kraken_tentacle_player",
 	},
-	function getStrength() {return 100}
+	function getStrength() {return 90}
 	function getHealthRecoverMult() {return 20.0}
 	function getTentacles()
 	{
@@ -29,7 +29,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 
 	function canBeEnraged()
 	{
-		return this.getHitpointsPct() <= 0.25;
+		return this.getHitpointsPct() <= 0.5;
 	}
 
 	function setEnraged( _s )

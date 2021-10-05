@@ -344,8 +344,7 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 	        return this.Math.max(5, this.Math.min(10, toHit));
 
 	    case this.Const.EntityType.TricksterGod:
-	       	if (hpLeft >= 1.0) {return 0}
-			return this.Math.max(1, this.Math.min(5, toHit));
+	       	return (hpLeft == 1.0 ? 0 : this.Math.max(1, this.Math.min(5, toHit)));
 
 	    case this.Const.EntityType.Kraken:
 	        return this.Math.max(0, this.Math.min(3, toHit));
@@ -513,21 +512,21 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		{
 	    case this.Const.EntityType.LegendStollwurm:
 	        ret.push({
-				icon = "ui/tooltips/chance_to_hit_head.png",
+				icon = "ui/icons/chance_to_hit_head.png",
 				text = "A [color=" + this.Const.UI.Color.NegativeValue + "]Fearsome Beast[/color]"
 			});
 			break;
 
 	    case this.Const.EntityType.TricksterGod:
 	       	ret.push({
-				icon = "ui/tooltips/chance_to_hit_head.png",
+				icon = "ui/icons/chance_to_hit_head.png",
 				text = "A [color=" + this.Const.UI.Color.NegativeValue + "]God[/color]"
 			});
 			break;
 
 	    case this.Const.EntityType.Kraken:
 	        ret.push({
-				icon = "ui/tooltips/chance_to_hit_head.png",
+				icon = "ui/icons/chance_to_hit_head.png",
 				text = "A [color=" + this.Const.UI.Color.NegativeValue + "]True Terror[/color]"
 			});
 	        break;

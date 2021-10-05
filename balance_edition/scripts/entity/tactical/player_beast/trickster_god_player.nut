@@ -171,8 +171,6 @@ this.trickster_god_player <- this.inherit("scripts/entity/tactical/player_beast"
 		local b = this.m.BaseProperties;
 		b.IsImmuneToDisarm = true;
 		b.IsImmuneToRoot = true;
-		b.IsImmuneToStun = true;
-		b.IsImmuneToPoison = true;
 		b.IsAffectedByNight = false;
 		b.IsAffectedByInjuries = false;
 		b.IsAffectedByRain = false;
@@ -259,7 +257,7 @@ this.trickster_god_player <- this.inherit("scripts/entity/tactical/player_beast"
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
-		local perks = ["perk_crippling_strikes", "perk_steel_brow", "perk_stalwart", "perk_hold_out"];
+		local perks = ["perk_legend_poison_immunity", "perk_steel_brow", "perk_stalwart", "perk_battering_ram", "perk_hold_out"];
 		
 		foreach ( script in perks )
 		{

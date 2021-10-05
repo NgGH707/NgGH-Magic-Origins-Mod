@@ -18,7 +18,7 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 	function onInit()
 	{
 		this.starting_scenario.onInit();
-		this.m.RosterTier = 0;
+		this.m.RosterTier = 1;
 		this.World.Assets.m.VisionRadiusMult *= 1.5;
 		this.World.Assets.m.FoodAdditionalDays += 5;
 		this.World.Assets.m.ChampionChanceAdditional += 15;
@@ -105,6 +105,7 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 		local roster = this.World.getPlayerRoster();
 		local kraken = roster.create("scripts/entity/tactical/minions/special/dev_files/kraken_player");
 		kraken.setScenarioValues();
+		kraken.setVeteranPerks(2);
 		kraken.getBackground().m.RawDescription = "A true terror of the depth, has decided to start its hunt on the land of human. Time to hunt and kill, let your hunger be satiety with fresh prey.";
 		kraken.getBackground().buildDescription(true);
 		kraken.getSkills().removeByID("trait.survivor");

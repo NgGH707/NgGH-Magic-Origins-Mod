@@ -434,8 +434,7 @@ this.charmed_orc_background <- this.inherit("scripts/skills/backgrounds/characte
 			return ret;
 		}
 
-		local p = this.getContainer().getActor().getBaseProperties();
-		ret.extend(this.Const.HexenOrigin.CharmedSlave.getTooltip(p));
+		ret.extend(this.Const.HexenOrigin.CharmedSlave.getTooltip(this.getContainer().getActor()));
 		ret.extend(this.getAttributesTooltip());
 		return ret;
 	}

@@ -369,7 +369,13 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 		}
 
 		this.onSetAppearance();
+	}
+
+	function buildPerkTree()
+	{
+		local a = this.character_background.buildPerkTree();
 		this.onFinishingPerkTree();
+		return a;
 	}
 
 	function onCombatStarted()

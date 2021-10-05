@@ -139,6 +139,16 @@ this.lindwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast"
 		return this.m.Body != null ? this.m.Body.getWorldTroop() : null;
 	}
 
+	function getCombatStats()
+	{
+		return this.m.Body != null ? this.m.Body.getCombatStats() : this.player_beast.getCombatStats();
+	}
+
+	function getLifetimeStats()
+	{
+		return this.m.Body != null ? this.m.Body.getLifetimeStats() : this.player_beast.getLifetimeStats();
+	}
+
 	function getBody()
 	{
 		return this.m.Body;

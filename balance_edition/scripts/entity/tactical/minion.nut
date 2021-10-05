@@ -5,6 +5,26 @@ this.minion <- this.inherit("scripts/entity/tactical/actor", {
 		Weight = 0,
 		IsGuest = true,
 		Talents = [],
+		CombatStats = {
+			DamageDealtHitpoints = 0,
+			DamageDealtArmor = 0,
+			DamageReceivedHitpoints = 0,
+			DamageReceivedArmor = 0,
+			Kills = 0,
+			XPGained = 0
+		},
+		LifetimeStats = {
+			Kills = 0,
+			Battles = 0,
+			BattlesWithoutMe = 0,
+			MostPowerfulVanquished = "",
+			MostPowerfulVanquishedXP = 0,
+			MostPowerfulVanquishedType = 0,
+			FavoriteWeapon = "",
+			FavoriteWeaponUses = 0,
+			CurrentWeaponUses = 0,
+			Tags = null
+		},
 	},
 	
 	function getMaster()
@@ -26,6 +46,16 @@ this.minion <- this.inherit("scripts/entity/tactical/actor", {
 		{
 		 	this.m.Master = this.WeakTableRef(_m);   
 		}
+	}
+
+	function getCombatStats()
+	{
+		return this.m.Master != null && !this.m.Master.isNull() ? this.m.Master.getCombatStats() : this.player_beast.getCombatStats();
+	}
+
+	function getLifetimeStats()
+	{
+		return this.m.Master != null && !this.m.Master.isNull() : this.m.Master.getLifetimeStats() : ;
 	}
 	
 	function getDominate()
@@ -113,6 +143,7 @@ this.minion <- this.inherit("scripts/entity/tactical/actor", {
 		this.getFlags().add("can_be_possessed");
 		this.getFlags().set("PotionLastUsed", 0.0);
 		this.getFlags().set("PotionsUsed", 0);
+		this.m.LifetimeStats.Tags = this.new("scripts/tools/tag_collection");
 	}
 
 	function onInit()
