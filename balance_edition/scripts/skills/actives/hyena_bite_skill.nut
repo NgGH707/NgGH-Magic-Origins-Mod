@@ -130,7 +130,9 @@ this.hyena_bite_skill <- this.inherit("scripts/skills/skill", {
 
 		if (success && target.isAlive() && !target.isDying() && !target.getCurrentProperties().IsImmuneToBleeding && hp - target.getHitpoints() >= this.Const.Combat.MinDamageToApplyBleeding)
 		{
-			local damage = _user.isHigh() ? 10 : 5;
+			_user = _user.get();
+			local isHigh = _user.getFlags().has("frenzy") || (("isHigh" in _user) && _user.isHigh())
+			local damage = isHigh ? 10 : 5;
 			damage = _user.getCurrentProperties().IsSpecializedInCleavers ? damage + 5 : damage;
 			local effect = this.new("scripts/skills/effects/bleeding_effect");
 			effect.setDamage(damage);

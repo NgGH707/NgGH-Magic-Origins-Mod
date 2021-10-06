@@ -94,23 +94,26 @@ this.spider_racial <- this.inherit("scripts/skills/skill", {
 		}
 
 		this.spawnIcon("status_effect_54", _targetEntity.getTile());
-		local properties = this.getContainer().getActor().getCurrentProperties();
+		local isSpecialized = this.getContainer().getActor().getCurrentProperties().IsSpecializedInDaggers;
 		local poison = _targetEntity.getSkills().getSkillByID("effects.spider_poison");
+
 
 		if (poison == null)
 		{
 			local effect = this.new("scripts/skills/effects/spider_poison_effect");
-			effect.m.TurnsLeft = properties.IsSpecializedInDaggers ? 2 : 3;
-			effect.setDamage(properties.IsSpecializedInDaggers ? 10 : 5);
+			effect.m.TurnsLeft = isSpecialized ? 2 : 3;
+			effect.setDamage(isSpecialized ? 10 : 5);
+			effect.setActorID(this.getContainer().getActor().getID());
 			_targetEntity.getSkills().add(effect);
 		}
 		else
 		{
 			poison.resetTime();
+			poison.setActorID(this.getContainer().getActor().getID());
 			
-			if (properties.IsSpecializedInDaggers)
+			if (isSpecialized)
 			{
-				poison.setDamage(poison.getDamage() + 5);
+				poison.m.Count += 1;
 				poison.m.TurnsLeft = 2;
 			}
 		}
@@ -135,9 +138,9 @@ this.spider_racial <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 		
-		local targetStatus = _targetEntity.getSkills();
+		local targetStatus = _targetEntity.getCurrentProperties();
 		
-		if (targetStatus.hasSkill("effects.net") || targetStatus.hasSkill("effects.web") || targetStatus.hasSkill("effects.rooted"))
+		if (targetStatus.IsRooted && !targetStatus.IsImmuneToRoot)
 		{
 			_properties.DamageDirectMult *= 2.0;
 		}

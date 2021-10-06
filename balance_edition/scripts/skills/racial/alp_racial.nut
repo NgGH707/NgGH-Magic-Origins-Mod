@@ -102,7 +102,7 @@ this.alp_racial <- this.inherit("scripts/skills/skill", {
 		{
 			_properties.DamageReceivedRegularMult *= 0.5;
 		}
-		else if (_skill.getID() == "actives.wardog_bite" || _skill.getID() == "actives.wolf_bite" || _skill.getID() == "actives.warhound_bite")
+		else if (_skill.hasDamageType(this.Const.Damage.DamageType.Piercing))
 		{
 			_properties.DamageReceivedRegularMult *= 0.33;
 		}

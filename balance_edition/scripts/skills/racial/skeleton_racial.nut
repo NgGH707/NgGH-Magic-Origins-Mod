@@ -68,6 +68,10 @@ this.skeleton_racial <- this.inherit("scripts/skills/skill", {
 		{
 			_properties.DamageReceivedRegularMult *= 0.5;
 		}
+		else if (_skill.hasDamageType(this.Const.Damage.DamageType.Piercing))
+		{
+		    _properties.DamageReceivedRegularMult *= 0.33;
+		}
 
 		if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
 		{

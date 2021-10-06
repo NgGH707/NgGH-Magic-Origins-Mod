@@ -25,7 +25,7 @@ this.reign_of_darkness_effect <- this.inherit("scripts/skills/skill", {
 
 	function getDescription()
 	{
-		return "This character is consumed by unnatural darkness and is show signs of fear. As the horrors eat away at his sanity, he would soon be broken.";
+		return "This character is consumed by unnatural darkness and is showing signs of fear. As the horrors eat away at his sanity, he would soon be broken.";
 	}
 
 	function getTooltip()

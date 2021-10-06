@@ -203,6 +203,116 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 	    }
 	});
 
+	//Allow poison count as kill
+	::mods_hookExactClass("skills/effects/spider_poison_effect", function(obj) 
+	{
+		obj.m.ActorID <- null;
+		obj.m.Count <- 1;
+		obj.getName <- function()
+		{
+			if (this.m.Count <= 1)
+			{
+				return this.m.Name;
+			}
+			else
+			{
+				return this.m.Name + " (x" + this.m.Count + ")";
+			}
+		}
+		obj.setActorID <- function( _id )
+		{
+	   		this.m.ActorID = _id;
+	   	};
+	   	obj.applyDamage = function()
+		{
+			if (this.m.LastRoundApplied != this.Time.getRound())
+			{
+				this.m.LastRoundApplied = this.Time.getRound();
+				this.spawnIcon("status_effect_54", this.getContainer().getActor().getTile());
+
+				if (this.m.SoundOnUse.len() != 0)
+				{
+					this.Sound.play(this.m.SoundOnUse[this.Math.rand(0, this.m.SoundOnUse.len() - 1)], this.Const.Sound.Volume.RacialEffect * 1.0, this.getContainer().getActor().getPos());
+				}
+
+				local hitInfo = clone this.Const.Tactical.HitInfo;
+				hitInfo.DamageRegular = this.m.Damage + 5 * (this.m.Count - 1);
+
+				if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
+				{
+					hitInfo.DamageRegular = 2 * this.m.Damage;
+				}
+
+				local attacker = this.getContainer().getActor();
+				hitInfo.DamageDirect = 1.0;
+				hitInfo.BodyPart = this.Const.BodyPart.Body;
+				hitInfo.BodyDamageMult = 1.0;
+				hitInfo.FatalityChanceMult = 0.0;
+
+				if (this.m.ActorID != null)
+				{
+					local e = this.Tactical.getEntityByID(this.m.ActorID);
+
+					if (e != null && e.isPlacedOnMap() && e.isAlive() && !e.isDying())
+					{
+						attacker = e;
+					}
+				}
+
+				this.getContainer().getActor().onDamageReceived(attacker, this, hitInfo);
+			}
+		};
+	});
+	::mods_hookExactClass("skills/effects/legend_redback_spider_poison_effect", function(obj) 
+	{
+		obj.m.ActorID <- null;
+		obj.setActorID <- function( _id )
+		{
+	   		this.m.ActorID = _id;
+	   	};
+	   	obj.applyDamage = function()
+		{
+			if (this.m.LastRoundApplied != this.Time.getRound())
+			{
+				this.m.LastRoundApplied = this.Time.getRound();
+				this.spawnIcon("status_effect_54", this.getContainer().getActor().getTile());
+
+				if (this.m.SoundOnUse.len() != 0)
+				{
+					this.Sound.play(this.m.SoundOnUse[this.Math.rand(0, this.m.SoundOnUse.len() - 1)], this.Const.Sound.Volume.RacialEffect * 1.0, this.getContainer().getActor().getPos());
+				}
+
+				local timeDamage = this.m.Damage * this.m.TurnsLeft;
+				local hitInfo = clone this.Const.Tactical.HitInfo;
+				hitInfo.DamageRegular = timeDamage;
+
+				if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
+				{
+					local timeDamage = this.m.Damage * this.m.TurnsLeft;
+					hitInfo.DamageRegular = 2 * timeDamage;
+				}
+
+				local attacker = this.getContainer().getActor();
+				hitInfo.DamageDirect = 1.0;
+				hitInfo.BodyPart = this.Const.BodyPart.Body;
+				hitInfo.BodyDamageMult = 1.0;
+				hitInfo.FatalityChanceMult = 0.0;
+
+				if (this.m.ActorID != null)
+				{
+					local e = this.Tactical.getEntityByID(this.m.ActorID);
+
+					if (e != null && e.isPlacedOnMap() && e.isAlive() && !e.isDying())
+					{
+						attacker = e;
+					}
+				}
+
+				this.getContainer().getActor().onDamageReceived(attacker, this, hitInfo);
+			}
+		};
+	});
+
 	//Allow all humans or atleast intelligent enough creatures to use siege weapon
 	::mods_hookExactClass("skills/special/double_grip", function(obj) 
 	{

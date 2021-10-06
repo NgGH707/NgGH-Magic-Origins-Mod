@@ -102,13 +102,15 @@ this.legend_redback_spider_racial <- this.inherit("scripts/skills/skill", {
 		{
 			local effect = this.new("scripts/skills/effects/legend_redback_spider_poison_effect");
 			effect.setDamage(properties.IsSpecializedInDaggers ? effect.getDamage() * 2 : 1);
+			effect.setActorID(this.getContainer().getActor().getID());
 			_targetEntity.getSkills().add(effect);
 		}
 		else
 		{
 			poison.resetTime();
+			poison.setActorID(this.getContainer().getActor().getID());
 			
-			if (properties.IsSpecializedInDaggers && this.Math.rand(1, 10) <= 4)
+			if (properties.IsSpecializedInDaggers && this.Math.rand(1, 10) <= 5)
 			{
 				poison.setDamage(poison.getDamage() + 1);
 			}
@@ -136,7 +138,7 @@ this.legend_redback_spider_racial <- this.inherit("scripts/skills/skill", {
 		
 		local targetStatus = _targetEntity.getSkills();
 		
-		if (targetStatus.hasSkill("effects.net") || targetStatus.hasSkill("effects.web") || targetStatus.hasSkill("effects.rooted"))
+		if (targetStatus.IsRooted && !targetStatus.IsImmuneToRoot)
 		{
 			_properties.DamageDirectMult *= 2.0;
 		}
