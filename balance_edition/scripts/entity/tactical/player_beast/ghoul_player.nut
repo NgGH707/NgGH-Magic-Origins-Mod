@@ -7,6 +7,7 @@ this.ghoul_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		ScaleStartTime = 0,
 		IsLoadingSaveData = false,
 		IsBringInBattle = false,
+		IsDegrade = false,
 	},
 	
 	function getStrength()
@@ -68,30 +69,43 @@ this.ghoul_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	function onCombatStart()
 	{
 		this.player_beast.onCombatStart();
-		this.m.IsBringInBattle = true;
+		
+		if (!this.m.IsBringInBattle)
+		{
+			local size = this.getSize();
+
+			if (size <= 2)
+			{
+				return;
+			}
+
+			local count = this.getFlags().getAsInt("hunger");
+
+			if (--count <= 0)
+			{
+				this.m.IsDegrade = true;
+				this.getFlags().set("hunger", 2);
+			}
+			else 
+			{
+				this.m.IsDegrade = false;
+			    this.getFlags().set("hunger", count);
+			}
+
+			this.m.IsBringInBattle = true;
+		}
 	} 
 
 	function onCombatFinished()
 	{
 		this.player_beast.onCombatFinished();
-		local size = this.getSize();
 
-		if (size <= 2 || !this.m.IsBringInBattle)
+		if (this.m.IsBringInBattle && this.m.IsDegrade)
 		{
-			return;
-		}
-
-		local count = this.getFlags().getAsInt("hunger");
-
-		if (count - 1 <= 0)
-		{
+			local size = this.getSize();
 			local newSize = this.Math.max(2, size - 1);
 			this.setSize(newSize);
-			this.getFlags().set("hunger", 2);
-		}
-		else 
-		{
-		    this.getFlags().set("hunger", count - 1);
+			this.m.IsDegrade = false;
 		}
 
 		this.m.IsBringInBattle = false;
