@@ -99,16 +99,61 @@ this.ghoul_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	function onCombatFinished()
 	{
 		this.player_beast.onCombatFinished();
-
-		if (this.m.IsBringInBattle && this.m.IsDegrade)
+		
+		if (this.m.IsBringInBattle)
 		{
-			local size = this.getSize();
-			local newSize = this.Math.max(2, size - 1);
-			this.setSize(newSize);
+			if (this.onFeastingLeftOverCorpse())
+			{
+				this.m.IsDegrade = false;
+			}
+
+			if (this.m.IsDegrade)
+			{
+				local size = this.getSize();
+				local newSize = this.Math.max(2, size - 1);
+				this.setSize(newSize);
+			}
+
 			this.m.IsDegrade = false;
 		}
 
 		this.m.IsBringInBattle = false;
+	}
+
+	function onFeastingLeftOverCorpse()
+	{
+		if (this.getFlags().getAsInt("hunger") >= 2)
+		{
+			return true;
+		}
+
+		local allCorpses = this.Tactical.Entities.getCorpses();
+		local tiles = [];
+		local isFull = false;
+
+		foreach (i, tile in allCorpses)
+		{
+		    if (tile.Properties.get("Corpse").IsConsumable)
+		    {
+		    	tiles.push(tile);
+				tile.Properties.remove("Corpse");
+				this.getFlags().set("hunger", this.Math.min(2, _user.getFlags().getAsInt("hunger") + 1));
+				this.setHitpoints(this.Math.min(this.getHitpoints() + 50, this.getHitpointsMax()));
+		    }
+
+		    if (this.getFlags().getAsInt("hunger") >= 2)
+			{
+				isFull = true;
+				break;
+			}
+		}
+		
+		foreach ( tile in tiles ) 
+		{
+			this.Tactical.Entities.removeCorpse(tile);
+		}
+
+		return isFull;
 	}
 	
 	function create()

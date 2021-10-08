@@ -1476,6 +1476,7 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 
 	function onCombatFinished()
 	{
+		this.onFeastingLeftOverCorpse();
 		this.actor.resetRenderEffects();
 		this.m.IsAlive = true;
 		this.m.IsDying = false;
@@ -1503,6 +1504,42 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 			this.updateLevel();
 			this.setDirty(true);
 		}
+	}
+
+	function onFeastingLeftOverCorpse()
+	{
+		if (this.getFlags().getAsInt("hunger") >= 3)
+		{
+			return true;
+		}
+
+		local allCorpses = this.Tactical.Entities.getCorpses();
+		local tiles = [];
+		local isFull = false;
+
+		foreach (i, tile in allCorpses)
+		{
+		    if (tile.Properties.get("Corpse").IsConsumable)
+		    {
+		    	tiles.push(tile);
+				tile.Properties.remove("Corpse");
+				this.getFlags().set("hunger", this.Math.min(3, _user.getFlags().getAsInt("hunger") + 1));
+				this.setHitpoints(this.Math.min(this.getHitpoints() + 50, this.getHitpointsMax()));
+		    }
+
+		    if (this.getFlags().getAsInt("hunger") >= 3)
+			{
+				isFull = true;
+				break;
+			}
+		}
+		
+		foreach ( tile in tiles ) 
+		{
+			this.Tactical.Entities.removeCorpse(tile);
+		}
+
+		return isFull;
 	}
 	
 	function resetPerkTree()

@@ -345,7 +345,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 		{
 			local newSize = this.Math.max(1, actor.getSize() - 1);
 			actor.setSize(newSize);
-			actor.getFlags().set("hunger", 2);
+			actor.getFlags().set("hunger", 3);
 			this.World.Flags.set("looks",  9990 + newSize);
 			this.World.Assets.updateLook( 9990 + newSize);
 			return;

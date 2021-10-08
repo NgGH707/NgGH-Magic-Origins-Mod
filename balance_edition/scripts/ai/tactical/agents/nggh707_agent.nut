@@ -12,7 +12,7 @@ this.nggh707_agent <- this.inherit("scripts/ai/tactical/agent", {
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_flee"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_break_free"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_puncture"));
-		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_default_nggh707"));
+		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_default"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_raise_undead_nggh707"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_possess_undead_nggh707"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_engage_ranged"));

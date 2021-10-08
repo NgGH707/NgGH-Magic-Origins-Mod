@@ -39,12 +39,12 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		b.DamageMinimum = 25;
 		b.MoraleEffectMult = 0.0;
 		b.Vision = 99;
-		b.Threat = 999;
+		b.Threat = 100;
 		b.DamageReceivedTotalMult = 0.67;
 		b.FatigueReceivedPerHitMult = 0.0;
-		b.FatigueDealtPerHitMult = 1000.0;
+		b.FatigueDealtPerHitMult = 10.0;
 		b.ThresholdToReceiveInjuryMult = 1000.0;
-		b.ThresholdToInflictInjuryMult = 0.1;
+		b.ThresholdToInflictInjuryMult = 0.01;
 		b.TargetAttractionMult = 3.0;
 		b.FatalityChanceMult = 10000.0;
 		b.IsImmuneToKnockBackAndGrab = true;

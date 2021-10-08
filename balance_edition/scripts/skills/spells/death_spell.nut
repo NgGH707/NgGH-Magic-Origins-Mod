@@ -3,19 +3,9 @@ this.death_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		Cooldown = 2,
 	},
 	
-	function setCaster( _c )
-	{
-		this.m.Caster = _c;
-	}
-	
-	function getCaster()
-	{
-		return this.m.Caster;
-	}
-	
 	function create()
 	{
-		this.m.ID = "spells.death";
+		this.m.ID = "actives.death";
 		this.m.Name = "True Death";
 		this.m.Description = "Die, just simply die. For NgGH707 only";
 		this.m.KilledString = "Sucked all life";
@@ -37,8 +27,8 @@ this.death_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsIgnoredAsAOO = false;
 		this.m.IsIgnoringRiposte = true;
 		this.m.IsUsingHitchance = false;
+		this.m.IsDoingForwardMove = true;
 		this.m.DirectDamageMult = 1.0;
-		this.m.BonusMagicAccuracy = 15;
 		this.m.ActionPointCost = 3;
 		this.m.FatigueCost = 15;
 		this.m.MinRange = 1;
@@ -62,7 +52,6 @@ this.death_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 				type = "text",
 				icon = "ui/icons/special.png",
 				text = "Death"
-				
 			}
 		]);
 		return ret;
@@ -74,10 +63,8 @@ this.death_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		{
 			return false;
 		}
-		
-		local _target = _targetTile.getEntity();
-		
-		if (_target.getSkills().hasSkill("trait.player"))
+
+		if (this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player).len() <= 1)
 		{
 			return false;
 		}
@@ -92,6 +79,7 @@ this.death_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 
 	function onUse( _user, _targetTile )
 	{
+		this.onSpawnEffect(_user.getTile());
 		this.Tactical.CameraDirector.addMoveToTileEvent(0, _targetTile);
 		this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " points at " + this.Const.UI.getColorizedEntityName(_targetTile.getEntity()));
 		//this.onSpawnEffect(_targetTile);

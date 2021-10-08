@@ -1,6 +1,7 @@
 this.sleeping_effect <- this.inherit("scripts/skills/skill", {
 	m = {
-		HasTerror = false,
+		PreventWakeUp = false,
+		AppliedMoraleCheck = false,
 		TurnsSleeping = 0,
 		TurnApplied = 0,
 		TurnsLeft = 4
@@ -144,7 +145,7 @@ this.sleeping_effect <- this.inherit("scripts/skills/skill", {
 
 		actor.setDirty(true);
 		
-		if (this.m.HasTerror && actor.isAlive() && !actor.isDying())
+		if (this.m.AppliedMoraleCheck && actor.isAlive() && !actor.isDying())
 		{
 			actor.checkMorale(-1, -10, this.Const.MoraleCheckType.MentalAttack);
 			actor.checkMorale(-1, -5, this.Const.MoraleCheckType.MentalAttack);
@@ -183,25 +184,20 @@ this.sleeping_effect <- this.inherit("scripts/skills/skill", {
 	{
 		if (_attacker != null && _skill != null && _skill.getID() == "actives.nightmare")
 		{
-			this.m.HasTerror = _attacker.getSkills().hasSkill("perk.after_wake");
+			local specialized = _attacker.getSkills().hasSkill("perk.after_wake");
+			this.m.PreventWakeUp = specialized && this.Math.rand(1, 100) <= 40;
+			this.m.AppliedMoraleCheck = specialized && !this.m.PreventWakeUp;
 		}
 	}
 
 	function onDamageReceived( _attacker, _damageHitpoints, _damageArmor )
 	{
-		if (_attacker != null && _attacker.isAlive() && !_attacker.isDying())
-		{
-			if (_attacker.getSkills().hasSkill("perk.after_wake") && this.Math.rand(1, 100) <= 40)
-			{
-				this.m.HasTerror = false;
-				return;
-			}
-		}
-		
-		if (_damageHitpoints > 0)
+		if (_damageHitpoints > 0 && !this.m.PreventWakeUp)
 		{
 			this.removeSelf();
 		}
+
+		this.m.PreventWakeUp = false;
 	}
 
 });
