@@ -79,7 +79,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Deal [color=" + this.Const.UI.Color.PositiveValue + "]25%[/color] more damage"
+				text = "Deal [color=" + this.Const.UI.Color.PositiveValue + "]33%[/color] more damage"
 			},
 			{
 				id = 8,
@@ -113,7 +113,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Deal [color=" + this.Const.UI.Color.NegativeValue + "]25%[/color] less damage"
+				text = "Deal [color=" + this.Const.UI.Color.NegativeValue + "]33%[/color] less damage"
 			},
 			{
 				id = 8,
@@ -212,11 +212,6 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 			}
 		}
 
-		if (_targetTile.IsOccupiedByActor && _targetTile.getEntity().isAlive())
-		{
-			this.Const.Tactical.Common.onApplyFire(_targetTile, _targetTile.getEntity());
-		}
-
 		this.m.ElementType = 0;
 	}
 
@@ -224,10 +219,10 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		if (_targetTile.IsOccupiedByActor)
 		{
-			local entitiy = _targetTile.getEntity()
-			entitiy.getSkills().add(this.new("scripts/skills/effects/chilled_effect"));
+			local entity = _targetTile.getEntity()
+			entity.getSkills().add(this.new("scripts/skills/effects/chilled_effect"));
 			this.m.ElementType = 2;
-			this.attackEntity(_user, entitiy);
+			this.attackEntity(_user, entity);
 		}
 
 		if (_targetTile.Subtype != this.Const.Tactical.TerrainSubtype.Snow && _targetTile.Subtype != this.Const.Tactical.TerrainSubtype.LightSnow)
@@ -323,7 +318,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 			switch (this.m.ElementType) 
 			{
 		    case 1:
-			   	_properties.DamageTotalMult *= 1.25;
+			   	_properties.DamageTotalMult *= 1.33;
 			   	_properties.DamageArmorMult /= 0.5;
 			   	this.m.DirectDamageMult = 0.2;
 			   	this.m.InjuriesOnBody = this.Const.Injury.BurningBody;
@@ -331,7 +326,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 			    break;
 
 		    case 3:
-				_properties.DamageTotalMult *= 0.75;
+				_properties.DamageTotalMult *= 0.67;
 				_properties.DamageArmorMult = 0.0;
 				_properties.IsIgnoringArmorOnAttack = true;
 				this.m.DirectDamageMult = 1.0;

@@ -10,6 +10,9 @@ this.hexen_scenario <- this.inherit("scripts/scenarios/world/starting_scenario",
 		this.m.Difficulty = 1;
 		this.m.Order = 109;
 		this.m.IsFixedLook = true;
+		this.m.StartingBusinessReputation = 0;
+		this.m.StartingRosterTier = this.Const.Roster.getTierForSize(12);
+		this.setRosterReputationTiers(this.Const.Roster.createReputationTiers(this.m.StartingBusinessReputation));
 	}
 
 	function onSpawnAssets()
@@ -476,7 +479,7 @@ this.hexen_scenario <- this.inherit("scripts/scenarios/world/starting_scenario",
 			"legend_stollwurm_blood_flask_item",
 		];
 		
-		this.World.Assets.m.BusinessReputation = 0;
+		this.World.Assets.addBusinessReputation(this.m.StartingBusinessReputation);
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/dates_item"));
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/black_marsh_stew_item"));
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/black_marsh_stew_item"));
@@ -576,8 +579,7 @@ this.hexen_scenario <- this.inherit("scripts/scenarios/world/starting_scenario",
 	function onInit()
 	{
 		this.starting_scenario.onInit();
-		this.m.RosterTier = 3;
-		this.World.Assets.m.FootprintVision = 1.5;
+		this.World.Assets.m.FootprintVision *= 1.5;
 		local looks = this.World.Flags.getAsInt("looks") == 0 ? 9997 : this.World.Flags.getAsInt("looks");
 		this.World.Assets.updateLook(this.World.Flags.has("isExposed") ? 9994 : looks);
 	}

@@ -118,6 +118,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Flags.add("boss");
 		this.m.Flags.add("kraken");
 		this.m.Items.blockAllSlots();
+		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
 	}
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )
@@ -282,6 +283,12 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		}
 
 		this.setDirty(true);
+	}
+
+	function onAppearanceChanged( _appearance, _setDirty = true )
+	{
+		_appearance.Accessory = "";
+		this.player_beast.onAppearanceChanged(_appearance, _setDirty);
 	}
 
 	function onInit()

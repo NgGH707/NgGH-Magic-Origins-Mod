@@ -8,6 +8,10 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 		this.m.Description = "[p=c][img]gfx/ui/events/event_103.png[/img][/p][p]How can you find this? You are not suppose to see this. Oh well! you earn this. Go ahead, try it!!!.\n\n[color=#bcad8c]Only You:[/color] Start with only one starter and the campaign will end if said starter dies.\n[color=#bcad8c]Beast of Beasts:[/color] As you can see you are a fearsome Kraken with unstoppable power.\n[color=#bcad8c]Stranger Thing:[/color] Your food spoils at much slower rate, don\'t ask why.\n[color=#c90000]Kaiju Fight:[/color] Have an epic battle with another Kraken at start, there is no turning back.[/p]";
 		this.m.Difficulty = 1;
 		this.m.Order = 0;
+		this.m.StartingBusinessReputation = 500;
+		this.m.StartingRosterTier = this.Const.Roster.getTierForSize(1);
+		this.m.RosterTierMax = this.Const.Roster.getTierForSize(15);
+		this.setRosterReputationTiers(this.Const.Roster.createReputationTiers(this.m.StartingBusinessReputation));
 	}
 
 	function isValid()
@@ -18,7 +22,6 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 	function onInit()
 	{
 		this.starting_scenario.onInit();
-		this.m.RosterTier = 1;
 		this.World.Assets.m.VisionRadiusMult *= 1.5;
 		this.World.Assets.m.FoodAdditionalDays += 5;
 		this.World.Assets.m.ChampionChanceAdditional += 15;
@@ -115,6 +118,7 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 		kraken.setPlaceInFormation(13);
 		kraken.m.HireTime = this.Time.getVirtualTimeF();
 		kraken.getSprite("miniboss").setBrush("bust_miniboss");
+		this.World.Assets.addBusinessReputation(this.m.StartingBusinessReputation);
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/strange_meat_item"));
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/strange_meat_item"));
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/strange_meat_item"));

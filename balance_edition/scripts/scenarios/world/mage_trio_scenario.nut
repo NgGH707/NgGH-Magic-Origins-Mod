@@ -7,6 +7,9 @@ this.mage_trio_scenario <- this.inherit("scripts/scenarios/world/starting_scenar
 		this.m.Description = "[p=c][img]gfx/ui/events/event_76.png[/img][/p]A trio of mages begin their adventure to seek true wisdom.\n\n[color=#bcad8c]It\'s magic:[/color] Start with three unique mages with each possesses extraordinary powers.\n[color=#bcad8c]Runestone:[/color] Start with a runestone, you can choose one of four types.\n[color=#bcad8c]Mage Guild:[/color] Mages cost less to hire and demand lower wage, and also automatically be tried out.";
 		this.m.Difficulty = 3;
 		this.m.Order = 101;
+		this.m.StartingBusinessReputation = 50;
+		this.m.StartingRosterTier = this.Const.Roster.getTierForSize(10);
+		this.setRosterReputationTiers(this.Const.Roster.createReputationTiers(this.m.StartingBusinessReputation));
 	}
 
 	function onSpawnAssets()
@@ -73,10 +76,10 @@ this.mage_trio_scenario <- this.inherit("scripts/scenarios/world/starting_scenar
 		bros[2].m.XP = this.Const.LevelXP[0];
 		bros[2].setVeteranPerks(2);
 		
-		this.World.Assets.m.BusinessReputation = 150;
 		this.World.Assets.m.Money += 500;
 		this.World.Assets.m.Ammo = this.World.Assets.m.Ammo / 2;
 		this.World.Assets.m.Medicine += 5;
+		this.World.Assets.addBusinessReputation(this.m.StartingBusinessReputation);
 		this.World.Assets.getStash().resize(this.World.Assets.getStash().getCapacity() + 20);
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/goat_cheese_item"));
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/preserved_mead_item"));
@@ -160,9 +163,8 @@ this.mage_trio_scenario <- this.inherit("scripts/scenarios/world/starting_scenar
 	function onInit()
 	{
 		this.starting_scenario.onInit();
-		this.m.RosterTier = 3;
-		this.World.Assets.m.ChampionChanceAdditional = 10;
-		this.World.Assets.m.XPMult = 1.15;
+		this.World.Assets.m.ChampionChanceAdditional += 10;
+		this.World.Assets.m.XPMult *= 1.15;
 		this.World.Assets.updateLook(9999);
 	}
 

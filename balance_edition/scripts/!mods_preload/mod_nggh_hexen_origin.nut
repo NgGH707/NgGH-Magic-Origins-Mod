@@ -11,6 +11,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	    gt.Const.HexenOrigin <- {};
 	}
 
+	gt.HexenHooks.hookPerkDefs();
 	gt.HexenHooks.hookCharacterProperties();
 	gt.HexenHooks.hookActorAndEntity();
 	gt.HexenHooks.hookItem();

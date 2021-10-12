@@ -7,6 +7,9 @@ this.geomancer_trio_scenario <- this.inherit("scripts/scenarios/world/starting_s
 		this.m.Description = "[p=c][img]gfx/ui/events/event_153.png[/img][/p]A trio of geomancers who are expert of controlling and commanding the earth.\n\n[color=#bcad8c]Geomancer:[/color] Start with three geomancers with each possesses incredible powers.\n[color=#bcad8c]Pocket Sand:[/color] All southern recruit can throw sand at enemy\'s face.\n[color=#bcad8c]Three Best Friends:[/color] If all of your three starting geomancers should die, your campaign ends.";
 		this.m.Difficulty = 2;
 		this.m.Order = 101;
+		this.m.StartingBusinessReputation = 200;
+		this.m.StartingRosterTier = this.Const.Roster.getTierForSize(8);
+		this.setRosterReputationTiers(this.Const.Roster.createReputationTiers(this.m.StartingBusinessReputation));
 	}
 
 	function onSpawnAssets()
@@ -61,10 +64,10 @@ this.geomancer_trio_scenario <- this.inherit("scripts/scenarios/world/starting_s
 		bros[2].getBackground().m.RawDescription = "{He once told to be a member of a secret organization. His past is still a mystery, but his skill in geomancy is splenlid to say the least. At best, don\'t you dare asking about his past or a mountain will be your grave.}";
 		bros[2].setPlaceInFormation(5);
 		
-		this.World.Assets.m.BusinessReputation = 150;
 		this.World.Assets.m.Money += 500;
 		this.World.Assets.m.ArmorParts = this.World.Assets.m.ArmorParts / 1.2;
 		this.World.Assets.m.Ammo = this.World.Assets.m.Ammo * 2;
+		this.World.Assets.addBusinessReputation(this.m.StartingBusinessReputation);
 		this.World.Assets.getStash().resize(this.World.Assets.getStash().getCapacity() + 10);
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/dried_lamb_item"));
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/wine_item"));
@@ -137,8 +140,7 @@ this.geomancer_trio_scenario <- this.inherit("scripts/scenarios/world/starting_s
 	function onInit()
 	{
 		this.starting_scenario.onInit();
-		this.m.RosterTier = 2;
-		this.World.Assets.m.ExtraLootChance = 33;
+		this.World.Assets.m.ExtraLootChance += 33;
 		this.World.Assets.m.RosterSizeAdditionalMin = 3,
 		this.World.Assets.m.RosterSizeAdditionalMax = 5,
 		this.World.Assets.updateLook(9998);

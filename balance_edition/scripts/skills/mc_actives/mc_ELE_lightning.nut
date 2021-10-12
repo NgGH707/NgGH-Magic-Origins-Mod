@@ -42,7 +42,7 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.InjuriesOnBody = this.Const.Injury.BurningBody;
 		this.m.InjuriesOnHead = this.Const.Injury.BurningHead;
 		this.m.DirectDamageMult = 1.0;
-		this.m.ActionPointCost = 5;
+		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = 18;
 		this.m.MaxRangeBonus = 9;
 		this.m.MinRange = 1;
@@ -80,7 +80,7 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 				id = 8,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Can chain through wet surface and deal more damage"
+				text = "Can and deal more damage if struck on a wet tile"
 			},
 		]);
 
@@ -154,44 +154,9 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 					tile.spawnDetail("impact_decal", this.Const.Tactical.DetailFlag.Scorchmark, false, true);
 				}
 
-				local targets = [];
-				targets.push(tile);
-
-				if (isWetTile)
+				if (tile.IsOccupiedByActor && tile.getEntity().isAttackable())
 				{
-					_data.Skill.m.IsUsingHitchance = false;
-
-					for( local i = 0; i < 6; i = ++i )
-					{
-						if (!tile.hasNextTile(i))
-						{
-						}
-						else
-						{
-							local nextTile = tile.getNextTile(i);
-
-							if (!nextTile.IsOccupiedByActor || !nextTile.getEntity().isAttackable() || excludedTile.find(nextTile.Type) != null)
-							{
-							}
-							else
-							{
-								targets.push(nextTile);
-							}
-						}
-					}
-				}
-				else
-				{
-				    _data.Skill.m.IsUsingHitchance = true;
-				}
-
-				foreach (i, t in targets) 
-				{
-					if (t.IsOccupiedByActor && t.getEntity().isAttackable())
-					{
-						_data.Skill.m.IsChained = i > 0;
-						_data.Skill.attackEntity(_data.User, t.getEntity());
-					}
+					_data.Skill.attackEntity(_data.User, tile.getEntity());
 				}
 
 				_data.Skill.reset(i + 1 >= num);
@@ -203,7 +168,6 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 			});
 
 			i = ++i;
-			i = i;
 		}
 
 		return true;
@@ -213,13 +177,13 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 25;
-			_properties.DamageRegularMax += 45;
+			_properties.DamageRegularMin += 15;
+			_properties.DamageRegularMax += 40;
 			_properties.DamageArmorMult *= 0.0;
 			_properties.IsIgnoringArmorOnAttack = true;
 			_properties.MeleeSkill += 999;
 
-			if (_targetEntity != null && !this.m.IsChained)
+			if (_targetEntity != null)
 			{
 				local wet_tiles = [
 					this.Const.Tactical.TerrainType.ShallowWater,
@@ -241,7 +205,7 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 
 			if (this.getContainer().hasSkill("special.mc_focus") || this.m.IsEnhanced)
 			{
-				_properties.DamageTotalMult *= 0.25;
+				_properties.DamageTotalMult *= 0.20;
 			}
 
 			_properties.DamageTotalMult *= this.getBonusDamageFromResolve(_properties);
@@ -251,11 +215,6 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 
 	function onTargetSelected( _targetTile )
 	{
-		local excludedTile = [
-			this.Const.Tactical.TerrainType.ShallowWater,
-			this.Const.Tactical.TerrainType.DeepWater,
-			this.Const.Tactical.TerrainType.Swamp
-		];
 		this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);
 
 		if (this.getContainer().hasSkill("special.mc_focus"))
@@ -269,27 +228,6 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 				{
 					local tile = _targetTile.getNextTile(i);
 					this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, tile, tile.Pos.X, tile.Pos.Y);	
-				}
-			}
-		}
-		else if (excludedTile.find(_targetTile.Type) != null)
-		{
-			for( local i = 0; i < 6; i = ++i )
-			{
-				if (!_targetTile.hasNextTile(i))
-				{
-				}
-				else
-				{
-					local nextTile = _targetTile.getNextTile(i);
-
-					if (!nextTile.IsOccupiedByActor || !nextTile.getEntity().isAttackable() || excludedTile.find(nextTile.Type) != null)
-					{
-					}
-					else
-					{
-						this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, nextTile, nextTile.Pos.X, nextTile.Pos.Y);	
-					}
 				}
 			}
 		}
