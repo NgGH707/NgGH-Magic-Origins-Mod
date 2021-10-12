@@ -39,8 +39,8 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		b.DamageMinimum = 25;
 		b.MoraleEffectMult = 0.0;
 		b.Vision = 99;
-		b.Threat = 100;
-		b.DamageReceivedTotalMult = 0.67;
+		b.Threat = 50;
+		b.DamageReceivedTotalMult = 0.1;
 		b.FatigueReceivedPerHitMult = 0.0;
 		b.FatigueDealtPerHitMult = 10.0;
 		b.ThresholdToReceiveInjuryMult = 1000.0;
@@ -73,14 +73,13 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		this.m.Skills.removeByID("actives.hand_to_hand");
 		
 		local touch = this.new("scripts/skills/actives/ghastly_touch");
-		touch.m.ActionPointCost = 2;
+		touch.m.ActionPointCost = 3;
 		this.m.Skills.add(touch);
 		this.m.Skills.add(this.new("scripts/skills/actives/raise_all_undead"));
 		this.m.Skills.add(this.new("scripts/skills/actives/possess_all_undead"));
 		this.m.Skills.add(this.new("scripts/skills/spells/death_spell"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_anticipation"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_steel_brow"));
-		this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
 		this.m.Skills.add(this.new("scripts/skills/traits/fearless_trait"));
 		this.m.Skills.add(this.new("scripts/skills/traits/iron_jaw_trait"));
 		this.makeMiniboss();
@@ -106,17 +105,16 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 	function onDamageReceived( _attacker, _skill, _hitInfo )
 	{
 		local hitInfo = clone _hitInfo;
-		local ret = this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 		
 		if (_attacker != null && _attacker.isAlive() && _attacker.getHitpoints() > 0 && _attacker.getID() != this.getID())
 		{
 			this.Tactical.spawnSpriteEffect("effect_skull_02", this.createColor("#ffffff"), _attacker.getTile(), 0, 40, 1.0, 0.25, 0, 400, 300);
 			hitInfo.DamageRegular *= 0.5;
 			hitInfo.DamageMinimum = 10;
-			return _attacker.onDamageReceived(this, _skill, hitInfo);
+			_attacker.onDamageReceived(this, _skill, hitInfo);
 		}
 
-		return ret;
+		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 	}
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )
@@ -127,6 +125,12 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		}
 		
 		this.Tactical.EventLog.log("[color=" + this.Const.UI.Color.DamageValue + "]IMPOSSIBLE!!![/color]");
+
+		if (_killer != null)
+		{
+			_killer.kill(null, null, this.Const.FatalityType.Decapitated);
+		}
+
 		this.human.onDeath(_killer, _skill, _tile, _fatalityType);
 	}
 
@@ -166,6 +170,8 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 			this.Tactical.CameraDirector.addDelay(1.5);
 			poorVictim.kill(this, null, this.Const.FatalityType.Decapitated);
 		}
+
+		return true;
 	}
 	
 	function killSilently()

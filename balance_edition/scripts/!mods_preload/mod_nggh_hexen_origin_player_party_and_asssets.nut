@@ -226,9 +226,12 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 		local updateLook = obj.updateLook;
 		obj.updateLook = function( _updateTo = -1 )
 		{
-			if (_updateTo > 9000)
+			if (_updateTo >= 9000 || this.m.Look >= 9000)
 			{
-				this.m.Look = _updateTo;
+				if (_updateTo != -1)
+				{
+					this.m.Look = _updateTo;
+				}
 
 				if (this.World.State.getPlayer() != null)
 				{

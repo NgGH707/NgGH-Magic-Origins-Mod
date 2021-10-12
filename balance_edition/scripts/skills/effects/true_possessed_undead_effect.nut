@@ -30,10 +30,10 @@ this.true_possessed_undead_effect <- this.inherit("scripts/skills/skill", {
 		_properties.MeleeSkill += 15;
 		_properties.MeleeDefense += 15;
 		_properties.RangedDefense += 15;
-		_properties.DamageReceivedTotalMult *= 0.75;
+		_properties.DamageReceivedTotalMult *= 0.85;
+		_properties.IsImmuneToRoot = true;
 		_properties.IsImmuneToDisarm = true;
 		_properties.IsImmuneToSurrounding = true;
-		_properties.IsImmuneToDamageReflection = true;
 	}
 
 	function onAdded()

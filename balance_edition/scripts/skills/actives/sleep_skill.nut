@@ -80,6 +80,16 @@ this.sleep_skill <- this.inherit("scripts/skills/skill", {
 			return false;
 		}
 
+		if (_targetTile.getEntity().getMoraleState() == this.Const.MoraleState.Ignore)
+		{
+			return false;
+		}
+
+		if (_targetTile.getEntity().isNonCombatant())
+		{
+			return false;
+		}
+
 		return true;
 	}
 

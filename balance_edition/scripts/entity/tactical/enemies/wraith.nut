@@ -12,7 +12,7 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		DistortTargetD = null,
 		DistortTargetPrevD = this.createVec(0, 0),
 		DistortAnimationStartTimeD = 0,
-		NineLivesCount = 5,
+		NineLivesCount = 9,
 	},
 	function create()
 	{
@@ -113,6 +113,28 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 			this.onSpawnMiasma(_tile);
 		}
 
+		local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
+
+		foreach ( poorVictim in brothers ) 
+		{
+		    if (!poorVictim.getFlags().get("IsPlayerCharacter"))
+		    {
+		    	local color;
+				do
+				{
+					color = this.createColor("#ff0000");
+					color.varyRGB(0.75, 0.75, 0.75);
+				}
+				while (color.R + color.G + color.B <= 150);
+				this.Tactical.spawnSpriteEffect("effect_pentagram_02", color, poorVictim.getTile(), !poorVictim.getSprite("status_hex").isFlippedHorizontally() ? 10 : -5, 88, 3.0, 1.0, 0, 400, 300);
+		    	this.Tactical.CameraDirector.addMoveToTileEvent(0, poorVictim.getTile());
+				this.Tactical.CameraDirector.addDelay(1.5);
+				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this) + " isn't died alone");
+				poorVictim.kill(this, null, this.Const.FatalityType.Decapitated);
+		    	break;
+		    }
+		}
+
 		this.actor.onDeath(_killer, _skill, _tile, _fatalityType);
 	}
 
@@ -123,18 +145,17 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Ghost);
 		b.ActionPoints = 9;
-		b.Hitpoints = 10;
+		b.Hitpoints = 50;
 		b.Bravery = 999;
 		b.Stamina = 100;
 		b.MeleeSkill = 100;
 		b.MeleeDefense = 50;
-		b.RangedDefense = 9999999;
+		b.RangedDefense = 999;
 		b.Initiative = 100;
 		b.InitiativeForTurnOrderAdditional = -190;
 		b.Vision = 99;
 		b.Threat = 9999999;
 		b.ThreatOnHit = 9999999;
-		b.SurroundedBonus = 9999999;
 		b.DamageMinimum = 25;
 		b.DamageRegularMin = 25;
 		b.DamageRegularMax = 35;
@@ -349,13 +370,11 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		
 		local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
 		
-		if (NineLives != null)
+		if (this.m.NineLivesCount > 0 && NineLives != null && NineLives.isSpent())
 		{
-			if (this.m.NineLivesCount > 0 && NineLives.isSpent())
-			{
-				NineLives.m.IsSpent = false;
-				NineLives.m.LastFrameUsed = 0;
-			}
+			NineLives.m.IsSpent = false;
+			NineLives.m.LastFrameUsed = 0;
+			--this.m.NineLivesCount;
 		}
 		
 		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
@@ -419,7 +438,7 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		local p = {
 			Type = "miasma",
 			Tooltip = "Miasma lingers here, harmful to any living being",
-			IsPositive = false,
+			IsPositive = true,
 			IsAppliedAtRoundStart = false,
 			IsAppliedAtTurnEnd = true,
 			IsAppliedOnMovement = true,
