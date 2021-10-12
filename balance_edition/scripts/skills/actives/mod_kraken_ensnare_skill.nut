@@ -118,11 +118,13 @@ this.mod_kraken_ensnare_skill <- this.inherit("scripts/skills/skill", {
 		_user.sinkIntoGround(0.75);
 		_user.getSkills().setBusy(true);
 		_user.m.IsAbleToDie = false;
+
 		this.Time.scheduleEvent(this.TimeUnit.Real, 800, this.onNetSpawn.bindenv(this), {
 			User = _user,
 			Skill = this,
 			TargetEntity = _targetTile.getEntity(),
-			LoseHitpoints = true
+			LoseHitpoints = true,
+			IsLast = this.Tactical.TurnSequenceBar.m.CurrentEntities[this.Tactical.TurnSequenceBar.m.CurrentEntities.len() - 1].getID() == _user.getID()
 		});
 		return true;
 	}
@@ -214,6 +216,13 @@ this.mod_kraken_ensnare_skill <- this.inherit("scripts/skills/skill", {
 		_data.TargetEntity.getSkills().add(breakFree);
 		_data.TargetEntity.raiseRootsFromGround(_data.User.getHitpointsPct() > 0.5 ? "kraken_ensnare_front" : "kraken_ensnare_front_injured", _data.User.getMode() == 0 ? "kraken_ensnare_back" : "kraken_ensnare_back_2");
 		_data.User.getSkills().setBusy(false);
+
+		if (_data.IsLast)
+		{
+			this.Tactical.TurnSequenceBar.initNextTurn();
+			this.Tactical.TurnSequenceBar.update();
+		}
+
 		_data.User.removeFromMap();
 	}
 
