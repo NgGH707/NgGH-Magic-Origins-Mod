@@ -154,7 +154,9 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 					tile.spawnDetail("impact_decal", this.Const.Tactical.DetailFlag.Scorchmark, false, true);
 				}
 
-				if (tile.IsOccupiedByActor && tile.getEntity().isAttackable())
+				_data.Skill.getContainer().setBusy(true);
+
+				if (tile.IsOccupiedByActor && tile.getEntity().isAttackable() && tile.getEntity().isAlive())
 				{
 					_data.Skill.attackEntity(_data.User, tile.getEntity());
 				}
@@ -241,6 +243,7 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 		if (_isDone)
 		{
 			this.m.IsEnhanced = false;
+			this.getContainer().setBusy(false);
 		}
 	}
 

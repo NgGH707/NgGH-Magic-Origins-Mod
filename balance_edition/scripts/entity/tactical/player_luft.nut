@@ -1523,7 +1523,7 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 		    {
 		    	tiles.push(tile);
 				tile.Properties.remove("Corpse");
-				this.getFlags().set("hunger", this.Math.min(3, _user.getFlags().getAsInt("hunger") + 1));
+				this.getFlags().set("hunger", this.Math.min(3, this.getFlags().getAsInt("hunger") + 1));
 				this.setHitpoints(this.Math.min(this.getHitpoints() + 50, this.getHitpointsMax()));
 		    }
 

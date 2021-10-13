@@ -127,7 +127,7 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 		]);
 
 		local mastery = this.getContainer().getSkillByID("perk.legend_smashing_shields");
-		local mult = mastery != null ? mastery.Modifier : 1.0;
+		local mult = mastery != null ? mastery.getModifier() : 1.0;
 		local damage = this.Math.floor(this.m.ShieldDamage * mult);
 
 		ret.extend([
@@ -244,8 +244,13 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 		local shield = _info.Shield;
 		local user = _info.User;
 		local targetEntity = _info.TargetEntity;
-		local perk = _info.Skill.getContainer().hasSkill("perk.legend_smashing_shields");
-		local mult = perk != null ? perk.Modifier : 1.0;
+		local perk = _info.Skill.getContainer().getSkillByID("perk.legend_smashing_shields");
+		local mult = 1.0;
+
+		if (perk != null && ("getModifier" in perk))
+		{
+			mult *= perk.getModifier();
+		}
 
 		if (_info.Skill.m.SoundOnHitShield.len() != 0)
 		{
@@ -321,7 +326,7 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 			{
 				_properties.HitChanceAdditionalWithEachTile -= 5 + this.m.AdditionalHitChance;
 			}
-			else 
+			else
 			{
 			    _properties.DamageRegularMin += 10;
 				_properties.DamageRegularMax += 10;
