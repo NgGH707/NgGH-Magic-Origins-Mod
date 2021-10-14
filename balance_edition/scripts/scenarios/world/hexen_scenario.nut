@@ -10,7 +10,7 @@ this.hexen_scenario <- this.inherit("scripts/scenarios/world/starting_scenario",
 		this.m.Difficulty = 1;
 		this.m.Order = 109;
 		this.m.IsFixedLook = true;
-		this.m.StartingBusinessReputation = 0;
+		this.m.StartingBusinessReputation = 25;
 		this.m.StartingRosterTier = this.Const.Roster.getTierForSize(12);
 		this.setRosterReputationTiers(this.Const.Roster.createReputationTiers(this.m.StartingBusinessReputation));
 	}

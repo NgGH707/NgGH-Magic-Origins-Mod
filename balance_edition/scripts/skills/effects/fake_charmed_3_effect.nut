@@ -3,7 +3,7 @@ this.fake_charmed_3_effect <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "effects.fake_charmed_3";
-		this.m.Name = "Obsessive Love";
+		this.m.Name = "Obsessive Simp";
 		this.m.Icon = "skills/status_effect_85.png";
 		this.m.IconMini = "status_effect_85_mini";
 		this.m.Overlay = "status_effect_85";
@@ -14,7 +14,7 @@ this.fake_charmed_3_effect <- this.inherit("scripts/skills/skill", {
 	
 	function getDescription()
 	{
-		return "From a simp, this character has been a true simp. Love is an obsession, he will do everything to please his one true love. Killing, stealing, whatever it\'s, he shall do it only for one person. Will you want this kind of love?";
+		return "From a simple horny simp, this character has become a true simp. Simping is an obsession for this character, he will do everything to please his one true big boody girl. Donating his own house, murdering, stealing, whatever it is, he shall do it only to touch that sweet ass.";
 	}
 
 	function getTooltip()
@@ -46,7 +46,7 @@ this.fake_charmed_3_effect <- this.inherit("scripts/skills/skill", {
 				id = 10,
 				type = "text",
 				icon = "ui/icons/fatigue.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+10%[/color] Max Fatigue"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color] Max Fatigue"
 			},
 			{
 				id = 10,
@@ -73,6 +73,7 @@ this.fake_charmed_3_effect <- this.inherit("scripts/skills/skill", {
 	function onAfterUpdate( _properties )
 	{
 		_properties.BraveryMult += 0.10;
+		_properties.StaminaMult += 0.5;
 		_properties.InitiativeMult += 0.05;
 		_properties.DamageTotalMult += 0.05;
 		_properties.HitChance[this.Const.BodyPart.Head] += 10;

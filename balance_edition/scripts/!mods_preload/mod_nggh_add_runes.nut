@@ -135,7 +135,7 @@ this.getroottable().Nggh_MagicConcept.hookAddRunes <- function ()
 				return "This item has the power of the rune sigil of Corrosion:\n[color=" + this.Const.UI.Color.PositiveValue + "]1 to 2[/color] turn(s) of acid applied, which capable of destroying [color=" + this.Const.UI.Color.NegativeValue + "]10%[/color] of affected target\'s armor per turn.";
 			
 			case 105:
-				return "This item has the power of the rune sigil of Lucky:\nKilled enemy has [color=" + this.Const.UI.Color.PositiveValue + "](XP / 7)%[/color] to drop a random item, you may get a free named item if you are super lucky!";
+				return "This item has the power of the rune sigil of Lucky:\nKilled enemy has [color=" + this.Const.UI.Color.PositiveValue + "](XP / " + this.Const.MC_Combat.LuckyRuneChanceModifier + ")%[/color] to drop a random item, you may get a free named item if you are super lucky!";
 			
 			case 106:
 				return "This item has the power of the rune sigil of Brimstone:\n[color=" + this.Const.UI.Color.PositiveValue + "]Immune[/color] to fire, gain [color=" + this.Const.UI.Color.NegativeValue + "]+10[/color] Fatigue recovery per turn and a slight damage reduction while standing on fire.";

@@ -3,6 +3,7 @@ local gt = this.getroottable();
 gt.Const.MC_Combat <- {
 	NoStaffDamageMult = 0.5,
 	NoStaffWithMasteryDamageMult = 0.85,
+	LuckyRuneChanceModifier = 8,
 
 	function onApplyShadow( _tile, _entity )
 	{

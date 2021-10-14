@@ -3,7 +3,7 @@ this.fake_charmed_1_effect <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "effects.fake_charmed_1";
-		this.m.Name = "Enduring Love";
+		this.m.Name = "Horny Simp";
 		this.m.Icon = "skills/status_effect_85.png";
 		this.m.IconMini = "status_effect_85_mini";
 		this.m.Overlay = "status_effect_85";
@@ -14,7 +14,7 @@ this.fake_charmed_1_effect <- this.inherit("scripts/skills/skill", {
 	
 	function getDescription()
 	{
-		return "From a captive of charm, This character is starting to be lover of some kind. In love of someone in your company, though not really with his own hearth.";
+		return "This kind of simp is just a regular pervert whom always asks for nudes and likes to go around saying horny things and cat calling girls.";
 	}
 
 	function getTooltip()

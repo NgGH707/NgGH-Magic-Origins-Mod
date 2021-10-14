@@ -298,18 +298,14 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		local dis = this.getContainer().getActor().getTile().getDistanceTo(_targetEntity.getTile());
 		this.m.IsRanged = dis > 1;
-		local ret = this.skill.getHitchance(_targetEntity);
-		this.m.IsRanged = false;
-		return ret;
+		return this.skill.getHitchance(_targetEntity);
 	}
 
 	function getHitFactors( _targetTile )
 	{
 		local dis = this.getContainer().getActor().getTile().getDistanceTo(_targetTile);
 		this.m.IsRanged = dis > 1;
-		local ret = this.skill.getHitFactors(_targetTile);
-		this.m.IsRanged = false;
-		return ret;
+		return this.skill.getHitFactors(_targetTile);
 	}
 
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
@@ -321,15 +317,20 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 			_properties.DamageArmorMult *= 0.75;
 			_properties.MeleeSkill += 20;
 			_properties.RangedSkill += 10 + this.m.AdditionalAccuracy;
-			
-			if (this.m.IsRanged)
+				
+			if (_targetEntity != null)
 			{
-				_properties.HitChanceAdditionalWithEachTile -= 5 + this.m.AdditionalHitChance;
-			}
-			else
-			{
-			    _properties.DamageRegularMin += 10;
-				_properties.DamageRegularMax += 10;
+				local dis = this.getContainer().getActor().getTile().getDistanceTo(_targetEntity.getTile());
+
+				if (dis > 1)
+				{
+					_properties.HitChanceAdditionalWithEachTile -= 5 + this.m.AdditionalHitChance;
+				}
+				else
+				{
+				    _properties.DamageRegularMin += 10;
+					_properties.DamageRegularMax += 10;
+				}
 			}
 
 			if (this.getContainer().hasSkill("special.mc_focus"))

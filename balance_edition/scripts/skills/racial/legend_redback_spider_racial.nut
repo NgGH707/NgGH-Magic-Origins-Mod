@@ -136,7 +136,7 @@ this.legend_redback_spider_racial <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 		
-		local targetStatus = _targetEntity.getSkills();
+		local targetStatus = _targetEntity.getCurrentProperties();
 		
 		if (targetStatus.IsRooted && !targetStatus.IsImmuneToRoot)
 		{

@@ -79,16 +79,6 @@ this.charm_skill <- this.inherit("scripts/skills/skill", {
 		{
 			return false;
 		}
-
-		if (_target.getSkills().hasSkill("effects.charmed"))
-		{
-			return false;
-		}
-		
-		if (_target.getSkills().hasSkill("effects.charmed_captive"))
-		{
-			return false;
-		}
 		
 		if (_target.getType() == this.Const.EntityType.Hexe || _target.getType() == this.Const.EntityType.LegendHexeLeader)
 		{
@@ -99,10 +89,20 @@ this.charm_skill <- this.inherit("scripts/skills/skill", {
 		{
 			return false;
 		}
-		
-		if (_target.getSkills().hasSkill("effects.legend_intensely_charmed"))
+
+		local skills = [
+			"effects.fake_charmed_broken",
+			"effects.charmed",
+			"effects.charmed_captive",
+			"effects.legend_intensely_charmed",
+		];
+
+		foreach ( id in skills ) 
 		{
-			return false;
+		    if (_target.getSkills().hasSkill(id))
+		    {
+		    	return false;
+		    }
 		}
 		
 		if (_target.getFlags().has("Hexe"))

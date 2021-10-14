@@ -70,6 +70,70 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 		});
 	}
 
+	//Stop hexe background from getting this skill
+	::mods_hookExactClass("skills/actives/legend_hex_skill", function(obj) 
+	{
+		obj.onAdded <- function()
+		{
+			this.m.IsHidden = this.getContainer().getActor().getFlags().has("Hexe");
+		}
+	});
+	::mods_hookExactClass("skills/effects/hex_master_effect", function(obj) 
+	{
+		obj.onDamageReceived = function(_attacker,_damageHitpoints,_damageArmor)
+		{
+			if (this.m.Slave == null || this.m.Slave.isNull() || !this.m.Slave.isAlive())
+			{
+				this.removeSelf();
+				return;
+			}
+
+			if (_damageHitpoints > 0)
+			{
+				this.m.Slave.applyDamage(_damageHitpoints, this.getContainer().getActor());
+			}
+
+			if (this.m.Slave == null || this.m.Slave.isNull() || !this.m.Slave.isAlive())
+			{
+				this.removeSelf();
+			}
+		}
+	});
+	::mods_hookExactClass("skills/effects/hex_slave_effect", function(obj) 
+	{
+		obj.applyDamage = function(_damage , _caster)
+		{
+			if (this.m.SoundOnUse.len() != 0)
+			{
+				this.Sound.play(this.m.SoundOnUse[this.Math.rand(0, this.m.SoundOnUse.len() - 1)], this.Const.Sound.Volume.RacialEffect * 1.25, this.getContainer().getActor().getPos());
+			}
+
+			if (_caster == null || _caster.isNull())
+			{
+				_caster = this.getContainer().getActor();
+			}
+
+			if (typeof _caster == "instance")
+			{
+				_caster = _caster.get();
+			}
+
+			if (("getMaster" in _caster) && _caster.getMaster() != null && !_caster.getMaster().isNull() && _caster.getMaster().isAlive() && !_caster.getMaster().isDying())
+			{
+				_caster = _caster.getMaster();
+			}
+
+			local hitInfo = clone this.Const.Tactical.HitInfo;
+			hitInfo.DamageRegular = _damage;
+			hitInfo.DamageDirect = 1.0;
+			hitInfo.BodyPart = this.Const.BodyPart.Body;
+			hitInfo.BodyDamageMult = 1.0;
+			hitInfo.FatalityChanceMult = 0.0;
+			this.getContainer().getActor().onDamageReceived(_caster, this, hitInfo);
+		}
+	});
+
+	//prevent tentacles to ensnare each others
 	::mods_hookExactClass("skills/actives/kraken_ensnare_skill", function(obj) 
 	{
 		obj.onVerifyTarget = function( _originTile, _targetTile )

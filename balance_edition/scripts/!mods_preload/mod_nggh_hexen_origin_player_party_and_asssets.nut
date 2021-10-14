@@ -287,12 +287,22 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 
 			local roster = this.World.getPlayerRoster().getAll();
 			local candidates = [];
+			local deserters = [];
+			local deserting_chance = this.World.Flags.get("isExposed") ? 75 : 10;
 
 			foreach( bro in roster )
 			{
 				if (bro.getFlags().has("IsPlayerCharacter"))
 				{
 					continue;
+				}
+
+				if (bro.getSkills().hasSkill("effects.fake_charmed_broken"))
+				{
+					if (this.Math.rand(1, 100) <= deserting_chance)
+					{
+						deserters.push(bro);
+					}
 				}
 
 				if (bro.getMood() < 1.0)
@@ -306,7 +316,22 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 				}
 			}
 
-			if (candidates.len() != 0)
+			if (deserters.len() != 0) 
+			{
+				local bro = deserters[this.Math.rand(0, deserters.len() - 1)];
+
+				if (this.World.getPlayerRoster().getSize() > 1)
+				{
+					local event = this.World.Events.getEvent("event.desertion");
+					event.setDeserter(bro);
+					this.World.Events.fire("event.desertion", false);
+				}
+				else
+				{
+					this.World.State.showGameFinishScreen(false);
+				}
+			}
+			else if (candidates.len() != 0)
 			{
 				local bro = candidates[this.Math.rand(0, candidates.len() - 1)];
 

@@ -142,7 +142,7 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 					});
 				}
 
-				_event.m.Simp2.worsenMood(1.5, "Heart broken by " + _event.m.Hexe.getName() + " words");
+				_event.m.Simp2.worsenMood(2.5, "Heart broken by " + _event.m.Hexe.getName() + " words");
 
 				this.List.push({
 					id = 10,
@@ -208,7 +208,7 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 					});
 				}
 
-				_event.m.Simp1.worsenMood(1.5, "Heart broken by " + _event.m.Hexe.getName() + " words");
+				_event.m.Simp1.worsenMood(2.5, "Heart broken by " + _event.m.Hexe.getName() + " words");
 
 				this.List.push({
 					id = 10,
@@ -260,7 +260,7 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 						});
 					}
 
-					_event.m.Simp1.worsenMood(1.5, "Heart broken by " + _event.m.Hexe.getName() + " words");
+					_event.m.Simp1.worsenMood(2.5, "Heart broken by " + _event.m.Hexe.getName() + " words");
 				}
 				else 
 				{
@@ -286,7 +286,7 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 						});
 					}
 
-					_event.m.Simp2.worsenMood(1.5, "Heart broken by " + _event.m.Hexe.getName() + " words");
+					_event.m.Simp2.worsenMood(2.5, "Heart broken by " + _event.m.Hexe.getName() + " words");
 				}
 				else 
 				{
@@ -318,6 +318,8 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 		local hasHexe = false;
 		local simps = 0;
 		local ids = [
+			"effects.fake_charmed_broken",
+			"effects.fake_charmed_0",
 			"effects.fake_charmed",
 			"effects.fake_1_charmed",
 			"effects.fake_2_charmed",
@@ -347,7 +349,7 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 			return;
 		}
 
-		this.m.Score = simps * 15;
+		this.m.Score = simps * 12;
 	}
 
 	function onPrepare()
@@ -358,9 +360,13 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 			[],
 			[],
 			[],
+			[],
+			[],
 			[]
 		];
 		local ids = [
+			"effects.fake_charmed_broken",
+			"effects.fake_charmed_0",
 			"effects.fake_charmed",
 			"effects.fake_1_charmed",
 			"effects.fake_2_charmed",
@@ -395,37 +401,47 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 
 		if (simps[1].len() > 0)
 		{
-			if (candidates.len() < 10)
-			{
-				candidates.extend(simps[1]);
-			}
-			else if (this.Math.rand(1, 100) <= 67)
-			{
-				candidates.extend(simps[1]);
-			}
+			candidates.extend(simps[1]);
 		}
 
 		if (simps[2].len() > 0)
 		{
-			if (candidates.len() < 10)
-			{
-				candidates.extend(simps[2]);
-			}
-			else if (this.Math.rand(1, 100) <= 33)
-			{
-				candidates.extend(simps[2]);
-			}
+			candidates.extend(simps[2]);
 		}
 
 		if (simps[3].len() > 0)
 		{
-			if (candidates.len() < 10)
+			if (candidates.len() <= 10)
 			{
 				candidates.extend(simps[3]);
 			}
-			else if (this.Math.rand(1, 100) <= 25)
+			else if (this.Math.rand(1, 100) <= 67)
 			{
 				candidates.extend(simps[3]);
+			}
+		}
+
+		if (simps[4].len() > 0)
+		{
+			if (candidates.len() <= 10)
+			{
+				candidates.extend(simps[4]);
+			}
+			else if (this.Math.rand(1, 100) <= 34)
+			{
+				candidates.extend(simps[5]);
+			}
+		}
+
+		if (simps[5].len() > 0)
+		{
+			if (candidates.len() < 10)
+			{
+				candidates.extend(simps[5]);
+			}
+			else if (this.Math.rand(1, 100) <= 25)
+			{
+				candidates.extend(simps[6]);
 			}
 		}
 
@@ -440,6 +456,14 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 	function getSimpLib()
 	{
 		return [
+			{
+				ID = "effects.fake_charmed_broken",
+				Script = "scripts/skills/effects/fake_charmed_effect"
+			},
+			{
+				ID = "effects.fake_charmed_0",
+				Script = "scripts/skills/effects/fake_charmed_effect"
+			},
 			{
 				ID = "effects.fake_charmed",
 				Script = "scripts/skills/effects/fake_charmed_effect"

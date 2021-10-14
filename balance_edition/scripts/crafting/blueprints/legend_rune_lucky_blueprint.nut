@@ -11,7 +11,7 @@ this.legend_rune_lucky_blueprint <- this.inherit("scripts/crafting/legend_rune",
 
 	function getRuneSigilTooltip()
 	{
-		return "This item has the power of the rune sigil of Lucky:\nKilled enemy has [color=" + this.Const.UI.Color.PositiveValue + "](XP / 7)%[/color] to drop a random item, you may get a free named item if you are super lucky!";
+		return "This item has the power of the rune sigil of Lucky:\nKilled enemy has [color=" + this.Const.UI.Color.PositiveValue + "](XP / " + this.Const.MC_Combat.LuckyRuneChanceModifier + ")%[/color] to drop a random item, you may get a free named item if you are super lucky!";
 	}
 
 	function onEnchant( _stash, _bonus )

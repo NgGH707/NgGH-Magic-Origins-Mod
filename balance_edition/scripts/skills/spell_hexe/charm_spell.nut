@@ -130,6 +130,35 @@ this.charm_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		return ret;
 	}
 
+	function onVerifyTarget( _originTile, _targetTile )
+	{
+		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
+		{
+			return false;
+		}
+
+		local _target = _targetTile.getEntity();
+		local skills = [
+			"effects.fake_charmed_broken",
+			"effects.charmed_captive",
+		];
+
+		foreach ( id in skills ) 
+		{
+		    if (_target.getSkills().hasSkill(id))
+		    {
+		    	return false;
+		    }
+		}
+		
+		if (_target.getFlags().has("Hexe"))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	function isViableTarget( _user, _target )
 	{
 		if (_target.isAlliedWith(_user))

@@ -131,6 +131,12 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		}
 		
 		local _target = _targetTile.getEntity();
+
+		if (_target.getSkills().hasSkill("fake_charmed_broken"))
+		{
+			return false;
+		}
+
 		local charm = _target.getSkills().getSkillByID("effects.charmed");
 		
 		if (charm != null && charm.m.Master != null && charm.m.Master.getContainer() != null && charm.m.Master.getContainer().getActor().getID() != this.getContainer().getActor().getID())

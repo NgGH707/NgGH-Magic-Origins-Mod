@@ -196,7 +196,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 				
 				FM.makeNoblesUnfriendlyToPlayer();
 				FM.makeSettlementsUnfriendlyToPlayer();
-				this.World.Flags.add("isExposed");
+				this.World.Flags.add("isExposed", true);
 				this.World.Assets.updateLook(9994);
 			}
 
@@ -265,7 +265,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 		}
 
 		local Money = this.Math.ceil(Required * 0.33);
-		this.logInfo("first money to offer? " + Money);
+		this.logInfo("Pay a portion with money? " + Money);
 		Required = this.Math.max(0, Required - Money);
 		local Has = 0;
 		local QualifiedItems = this.onPrepareOfferings();
@@ -279,7 +279,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 		{
 			this.m.Money += this.World.Assets.getMoney();
 			Required += Money - this.World.Assets.getMoney();
-			this.logInfo("Insufficient money? " + (Money - this.World.Assets.getMoney()));
+			this.logInfo("Insufficient money! " + (Money - this.World.Assets.getMoney()));
 		}
 		
 		foreach ( a in QualifiedItems.First )
@@ -289,7 +289,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 				break;
 			}
 			
-			this.logInfo("Sacrifice  item? " + a.Item.getName());
+			this.logInfo("Sacrifice item? " + a.Item.getName());
 			this.m.Offerings.push(a.Item);
 			Has += a.Value;
 		}
@@ -305,7 +305,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 
 				if (find != null)
 				{
-					this.logInfo("Sacrifice  item? " + find.Item.getName());
+					this.logInfo("Sacrifice item? " + find.Item.getName());
 					this.m.Offerings.push(find.Item);
 					Has += find.Value;
 				}
@@ -323,7 +323,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 		
 		if (Has < Required && this.World.Assets.getMoney() > Required - Has)
 		{
-			this.logInfo("Sacrifice the rest of money - 100% is paid");
+			this.logInfo("Sacrifice the rest of required money - 100% is paid");
 			this.m.Money += Required - Has;
 			Has = Required;
 		}

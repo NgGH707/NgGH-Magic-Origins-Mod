@@ -3,7 +3,7 @@ this.fake_charmed_2_effect <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "effects.fake_charmed_2";
-		this.m.Name = "Passionate Love";
+		this.m.Name = "Loyal Simp";
 		this.m.Icon = "skills/status_effect_85.png";
 		this.m.IconMini = "status_effect_85_mini";
 		this.m.Overlay = "status_effect_85";
@@ -14,7 +14,7 @@ this.fake_charmed_2_effect <- this.inherit("scripts/skills/skill", {
 	
 	function getDescription()
 	{
-		return "A big step in a relationship. This character is in love of someone in your company and feel great joy because of it. he\'s true with his own heart for his love is eternal and he will thoughtlessly die for it. This love will give him strength.";
+		return "This simp has already subscribed to an e-girl OnlyFans, and always donate his hard earned savings for some nudes and a simple thanks. At very least he puts his horniness in check, what a good simp!";
 	}
 
 	function getTooltip()
@@ -46,7 +46,7 @@ this.fake_charmed_2_effect <- this.inherit("scripts/skills/skill", {
 				id = 10,
 				type = "text",
 				icon = "ui/icons/fatigue.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+10%[/color] Max Fatigue"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color] Max Fatigue"
 			}
 		];
 

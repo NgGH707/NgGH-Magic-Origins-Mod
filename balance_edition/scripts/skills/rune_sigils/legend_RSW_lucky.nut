@@ -15,13 +15,13 @@ this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
 
 	function onTargetKilled( _targetEntity, _skill )
 	{
-		if (this.getItem() == null)
+		if (this.getItem() == null || _targetEntity.getXPValue() <= 0)
 		{
 			return;
 		}
 
 		local actor = this.getContainer().getActor();
-		local chance = this.Math.floor(_targetEntity.getXPValue() / 7);
+		local chance = this.Math.floor(_targetEntity.getXPValue() / this.Const.MC_Combat.LuckyRuneChanceModifier);
 		local rolled = this.Math.rand(1, 100);
 
 		if (rolled <= chance)
@@ -250,13 +250,15 @@ this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
 			
 			local tile = _targetEntity.getTile();
 			local item = this.Const.World.Common.pickItem(drops_table, "scripts/items/");
-			if (item.getID() == "supplies.money") item.setAmount(this.Math.rand(100, 300));
+			if (item.getID() == "supplies.money") item.setAmount(this.Math.rand(10, 20) * 10);
 			item.drop(tile);
 
 			for( local i = 0; i < this.Const.Tactical.DazeParticles.len(); i = ++i )
 			{
 				this.Tactical.spawnParticleEffect(false, this.Const.Tactical.DazeParticles[i].Brushes, tile, this.Const.Tactical.DazeParticles[i].Delay, this.Const.Tactical.DazeParticles[i].Quantity, this.Const.Tactical.DazeParticles[i].LifeTimeQuantity, this.Const.Tactical.DazeParticles[i].SpawnRate, this.Const.Tactical.DazeParticles[i].Stages);
 			}
+
+			this.Tactical.EventLog.logEx("Wow!!! you get a bonus loot due to " + this.Const.UI.getColorizedEntityName(actor) + "\'s Lucky rune");
 		}
 	}
 

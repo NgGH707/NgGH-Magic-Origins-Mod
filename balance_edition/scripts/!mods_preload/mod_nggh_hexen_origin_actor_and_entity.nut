@@ -8,7 +8,7 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			obj = obj[obj.SuperName];
 		}
 
-		local fn = obj.retreat;
+		local ws_retreat = obj.retreat;
 		obj.retreat = function ()
 		{
 			local s = this.m.Skills.getSkillByID("effects.charmed_pet");
@@ -19,7 +19,7 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				s.onAddPetToLoot();
 			}
 
-			fn();
+			ws_retreat();
 		}
 	});
 
@@ -399,7 +399,7 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 	if (!this.IsAccessoryCompanionsExist)
 	{
 		//Add variant of warwolf to wolf_item
-		::mods_hookNewObject("entity/tactical/warwolf", function ( obj )
+		::mods_hookExactClass("entity/tactical/warwolf", function ( obj )
 		{
 			obj.setVariant <- function( _v )
 			{
@@ -437,7 +437,7 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 	}
 
 	//change equipment for goblins
-	::mods_hookClass("entity/tactical/enemies/goblin_ambusher", function (obj) {
+	::mods_hookExactClass("entity/tactical/enemies/goblin_ambusher", function (obj) {
 	    obj.assignRandomEquipment = function()
 		{
 			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
@@ -486,10 +486,41 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Items.addToBag(this.new("scripts/items/accessory/poison_item"));
 			}
 		}
-	}, true, false);
+	});
+	::mods_hookExactClass("entity/tactical/enemies/goblin_ambusher_low", function (obj) {
+	    obj.assignRandomEquipment = function()
+		{
+			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
+			{
+				this.m.Items.equip(this.new("scripts/items/weapons/greenskins/goblin_bow"));
+			}
+
+			this.m.Items.equip(this.new("scripts/items/ammo/quiver_of_arrows"));
+			this.m.Items.addToBag(this.new("scripts/items/weapons/greenskins/goblin_notched_blade"));
+
+			local pre1 = "greenskins/";
+			local pre2 = "";
+
+			if (this.LegendsMod.Configs().LegendArmorsEnabled())
+			{
+				pre1 = "layer_greenskins/";
+				pre2 = "_base";
+			}
+
+			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Body) == null)
+			{
+				this.m.Items.equip(this.new("scripts/items/armor/" + pre1 + "goblin_skirmisher" + pre2 + "_armor"));
+			}
+
+			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Head) == null)
+			{
+				this.m.Items.equip(this.new("scripts/items/helmets/" + pre1 + "goblin_skirmisher" + pre2 + "_helmet"));
+			}
+		}
+	});
 
 
-	::mods_hookClass("entity/tactical/enemies/goblin_fighter", function (obj) {
+	::mods_hookExactClass("entity/tactical/enemies/goblin_fighter", function (obj) {
 	    obj.assignRandomEquipment = function ()
 		{
 			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
@@ -568,9 +599,83 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Items.equip(this.new("scripts/items/helmets/" + pre1 + helmets[this.Math.rand(0, helmets.len() - 1)] + pre2 + "_helmet"));
 			}
 		}
-	}, true, false);
+	});
+	::mods_hookExactClass("entity/tactical/enemies/goblin_fighter_low", function (obj) {
+	    obj.assignRandomEquipment = function ()
+		{
+			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
+			{
+				local weapons = [
+					"weapons/greenskins/goblin_falchion",
+					"weapons/greenskins/goblin_spear",
+					"weapons/legend_chain",
+					"weapons/greenskins/goblin_notched_blade"
+				];
 
-	::mods_hookClass("entity/tactical/enemies/goblin_wolfrider", function (obj) {
+				if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Offhand))
+				{
+					weapons.extend([
+						"weapons/greenskins/goblin_pike"
+					]);
+				}
+
+				this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+			}
+
+			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand).getID() != "weapon.goblin_spear" && this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand).getID() != "weapon.named_goblin_spear")
+			{
+				this.m.Items.addToBag(this.new("scripts/items/weapons/greenskins/goblin_spiked_balls"));
+			}
+
+			if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
+			{
+				this.m.Items.addToBag(this.new("scripts/items/weapons/greenskins/goblin_spiked_balls"));
+				this.m.Items.addToBag(this.new("scripts/items/weapons/greenskins/goblin_spiked_balls"));
+			}
+
+			if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Offhand))
+			{
+				if (this.Math.rand(1, 100) <= 50)
+				{
+					this.m.Items.equip(this.new("scripts/items/tools/throwing_net"));
+				}
+				else
+				{
+					this.m.Items.equip(this.new("scripts/items/" + "shields/greenskins/goblin_light_shield"));
+				}
+			}
+
+			local pre1 = "greenskins/";
+			local pre2 = "";
+
+			if (this.LegendsMod.Configs().LegendArmorsEnabled())
+			{
+				pre1 = "layer_greenskins/";
+				pre2 = "_base";
+			}
+
+			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Body) == null)
+			{
+				local armors = [
+					"goblin_light",
+					"goblin_medium",
+				]; 
+				this.m.Items.equip(this.new("scripts/items/armor/" + pre1 + armors[this.Math.rand(0, armors.len() - 1)] + pre2 + "_armor"));
+			}
+
+			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Head) == null)
+			{
+				local helmets = [
+					"goblin_light",
+					"goblin_light",
+					"goblin_light",
+				]; 
+				this.m.Items.equip(this.new("scripts/items/helmets/" + pre1 + helmets[this.Math.rand(0, helmets.len() - 1)] + pre2 + "_helmet"));
+			}
+		}
+	});
+
+	::mods_hookExactClass("entity/tactical/enemies/goblin_wolfrider", function (obj) {
 	    obj.assignRandomEquipment = function()
 		{
 			local r;
@@ -616,9 +721,9 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Items.equip(this.new("scripts/items/helmets/" + pre1 + helmets[this.Math.rand(0, helmets.len() - 1)] + pre2 + "_helmet"));
 			}
 		}
-	}, true, false);
+	});
 
-	::mods_hookClass("entity/tactical/enemies/goblin_leader", function (obj) {
+	::mods_hookExactClass("entity/tactical/enemies/goblin_leader", function (obj) {
 	    obj.assignRandomEquipment = function()
 		{
 			this.m.Items.equip(this.new("scripts/items/ammo/quiver_of_bolts"));
@@ -644,9 +749,9 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Items.equip(this.new("scripts/items/helmets/" + pre1 + "goblin_leader" + pre2 + "_helmet"));
 			}
 		}
-	}, true, false);
+	});
 
-	::mods_hookClass("entity/tactical/enemies/goblin_shaman", function (obj) {
+	::mods_hookExactClass("entity/tactical/enemies/goblin_shaman", function (obj) {
 	    obj.assignRandomEquipment = function()
 		{
 			this.m.Items.equip(this.new("scripts/items/weapons/greenskins/goblin_staff"));
@@ -670,10 +775,10 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Items.equip(this.new("scripts/items/helmets/" + pre1 + "goblin_shaman" + pre2 + "_helmet"));
 			}
 		}
-	}, true, false);
+	});
 
 	//change equipment for orcs
-	::mods_hookClass("entity/tactical/enemies/legend_orc_behemoth", function (obj) {
+	::mods_hookExactClass("entity/tactical/enemies/legend_orc_behemoth", function (obj) {
 		obj.assignRandomEquipment = function()
 		{
 			local r;
@@ -711,9 +816,9 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			local armor = this.LegendsMod.Configs().LegendArmorsEnabled() ? "layer_greenskins/legend_orc_behemoth_base_armor" : "greenskins/legend_orc_behemoth_armor";
 			this.m.Items.equip(this.new("scripts/items/armor/" + armor));
 		}
-	}, true, false);
+	});
 
-	::mods_hookClass("entity/tactical/enemies/legend_orc_elite", function (obj) {
+	::mods_hookExactClass("entity/tactical/enemies/legend_orc_elite", function (obj) {
 		obj.assignRandomEquipment = function()
 		{
 			local r;
@@ -777,9 +882,9 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			local armor = this.LegendsMod.Configs().LegendArmorsEnabled() ? "layer_greenskins/orc_elite_heavy_base_armor" : "greenskins/orc_elite_heavy_armor";
 			this.m.Items.equip(this.new("scripts/items/armor/" + armor));
 		}
-	}, true, false);
+	});
 
-	::mods_hookClass("entity/tactical/enemies/orc_berserker", function (obj) {
+	::mods_hookExactClass("entity/tactical/enemies/orc_berserker", function (obj) {
 		obj.assignRandomEquipment = function()
 		{
 			local r = this.Math.rand(1, 8);
@@ -841,9 +946,9 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Items.equip(this.new("scripts/items/helmets/" + pre1 + helmet + pre2 + "_helmet"));
 			}
 		}
-	}, true, false);
+	});
 
-	::mods_hookClass("entity/tactical/enemies/orc_warlord", function (obj) {
+	::mods_hookExactClass("entity/tactical/enemies/orc_warlord", function (obj) {
 		obj.assignRandomEquipment = function()
 		{
 			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
@@ -882,9 +987,9 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				}
 			}
 		}
-	}, true, false);
+	});
 
-	::mods_hookClass("entity/tactical/enemies/orc_warrior", function (obj) {
+	::mods_hookExactClass("entity/tactical/enemies/orc_warrior", function (obj) {
 		obj.assignRandomEquipment = function()
 		{
 			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
@@ -931,9 +1036,51 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Items.equip(item);
 			}
 		}
-	}, true, false);
+	});
+	::mods_hookExactClass("entity/tactical/enemies/orc_warrior_low", function (obj) {
+		obj.assignRandomEquipment = function()
+		{
+			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
+			{
+				local weapons = [
+					"weapons/greenskins/orc_axe",
+					"weapons/greenskins/legend_skin_flayer",
+					"weapons/greenskins/orc_cleaver"
+				];
+				this.m.Items.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+			}
 
-	::mods_hookClass("entity/tactical/enemies/orc_young", function (obj) {
+			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Offhand) == null)
+			{
+				this.m.Items.equip(this.new("scripts/items/shields/greenskins/orc_heavy_shield"));
+			}
+
+			local armors = [
+				"orc_warrior_light",
+				"orc_warrior_medium",
+			];
+			local armor = this.LegendsMod.Configs().LegendArmorsEnabled() ? "layer_greenskins/" + armors[this.Math.rand(0, armors.len() -1)] + "_base_armor" : "greenskins/" + armors[this.Math.rand(0, armors.len() -1)] + "_armor";
+			this.m.Items.equip(this.new("scripts/items/armor/" + armor));
+
+			if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Head) == null)
+			{
+				local helmet = [
+					[
+						1,
+						"greenskins/orc_warrior_light_helmet"
+					],
+					[
+						1,
+						"greenskins/orc_warrior_medium_helmet"
+					],
+				];
+				local item = this.Const.World.Common.pickHelmet(helmet);
+				this.m.Items.equip(item);
+			}
+		}
+	});
+
+	::mods_hookExactClass("entity/tactical/enemies/orc_young", function (obj) {
 		obj.assignRandomEquipment = function()
 		{
 			local r;
@@ -1053,10 +1200,126 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Items.equip(item);
 			}
 		}
-	}, true, false);
+	});
+	::mods_hookExactClass("entity/tactical/enemies/orc_young_low", function (obj) {
+		obj.assignRandomEquipment = function()
+		{
+			local r;
+			local weapon;
+
+			if (this.Math.rand(1, 100) <= 25)
+			{
+				this.m.Items.addToBag(this.new("scripts/items/weapons/greenskins/orc_javelin"));
+			}
+
+			if (this.Math.rand(1, 100) <= 75)
+			{
+				if (this.Math.rand(1, 100) <= 50)
+				{
+					local r = this.Math.rand(1, 2);
+
+					if (r == 1)
+					{
+						weapon = this.new("scripts/items/weapons/greenskins/orc_axe");
+					}
+					else if (r == 2)
+					{
+						weapon = this.new("scripts/items/weapons/greenskins/orc_cleaver");
+					}
+					else if (r == 3)
+					{
+						weapon = this.new("scripts/items/weapons/greenskins/legend_skin_flayer");
+					}
+				}
+				else
+				{
+					local r = this.Math.rand(1, 3);
+
+					if (r == 1)
+					{
+						weapon = this.new("scripts/items/weapons/greenskins/orc_wooden_club");
+					}
+					else if (r == 2)
+					{
+						weapon = this.new("scripts/items/weapons/greenskins/orc_metal_club");
+					}
+					else if (r == 3)
+					{
+						weapon = this.new("scripts/items/weapons/legend_chain");
+					}
+				}
+			}
+			else
+			{
+				r = this.Math.rand(1, 4);
+
+				if (r == 1)
+				{
+					weapon = this.new("scripts/items/weapons/greenskins/goblin_falchion");
+				}
+				else if (r == 2)
+				{
+					weapon = this.new("scripts/items/weapons/morning_star");
+				}
+				else if (r == 3)
+				{
+					weapon = this.new("scripts/items/weapons/greenskins/legend_meat_hacker");
+				}
+				else if (r == 4)
+				{
+					weapon = this.new("scripts/items/weapons/greenskins/legend_bone_carver");
+				}
+			}
+
+			if (this.m.Items.hasEmptySlot(this.Const.ItemSlot.Mainhand))
+			{
+				this.m.Items.equip(weapon);
+			}
+			else
+			{
+				this.m.Items.addToBag(weapon);
+			}
+
+			if (this.Math.rand(1, 100) <= 50)
+			{
+				this.m.Items.equip(this.new("scripts/items/shields/greenskins/orc_light_shield"));
+			}
+
+			if (this.Math.rand(1, 5) <= 4)
+			{
+				local armors = [
+					"orc_young_very_light",
+					"orc_young_light",
+					"orc_young_medium",
+				];
+				local armor = this.LegendsMod.Configs().LegendArmorsEnabled() ? "layer_greenskins/" + armors[this.Math.rand(0, armors.len() -1)] + "_base_armor" : "greenskins/" + armors[this.Math.rand(0, armors.len() -1)] + "_armor";
+				this.m.Items.equip(this.new("scripts/items/armor/" + armor));
+			}
+
+			local item = this.Const.World.Common.pickHelmet([
+				[
+					1,
+					""
+				],
+				[
+					2,
+					"greenskins/orc_young_light_helmet"
+				],
+				[
+					1,
+					"greenskins/orc_young_medium_helmet"
+				],
+			]);
+
+			if (item != null)
+			{
+				this.m.Items.equip(item);
+			}
+		}
+	});
 
 	//change equipment for armored unhold
-	::mods_hookClass("entity/tactical/enemies/unhold_armored", function (obj) {
+	::mods_hookExactClass("entity/tactical/enemies/unhold_armored", function (obj) {
 		obj.assignRandomEquipment = function()
 		{
 			if (!this.LegendsMod.Configs().LegendArmorsEnabled())
@@ -1070,9 +1333,9 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Items.equip(this.new("scripts/items/helmets/layer_barbarians/unhold_helmet_base_light"));
 			}
 		}
-	}, true, false);
+	});
 
-	::mods_hookClass("entity/tactical/enemies/unhold_frost_armored", function (obj) {
+	::mods_hookExactClass("entity/tactical/enemies/unhold_frost_armored", function (obj) {
 		obj.assignRandomEquipment = function()
 		{
 			if (!this.LegendsMod.Configs().LegendArmorsEnabled())
@@ -1086,7 +1349,7 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Items.equip(this.new("scripts/items/helmets/layer_barbarians/unhold_helmet_base_heavy"));
 			}
 		}
-	}, true, false);
+	});
 
 	delete this.HexenHooks.hookActorAndEntity;
 }
