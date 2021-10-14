@@ -813,19 +813,6 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		[]
 	];
 
-
-		
-		
-		
-
-		
-		
-		
-		
-		
-		
-		
-
 	gt.Const.PerksCharmedUnit.KrakenTree <- [
 		[
 			gt.Const.Perks.PerkDefs.SunderingStrikes,
@@ -1173,7 +1160,6 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			gt.Const.Perks.PerkDefs.Backstabber,
 			gt.Const.Perks.PerkDefs.Dodge,
 			gt.Const.Perks.PerkDefs.LegendEntice,
-			gt.Const.Perks.PerkDefs.LegendClarity,
 		],
 		[
 			gt.Const.Perks.PerkDefs.Anticipation,
@@ -1186,7 +1172,7 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		[
 			gt.Const.Perks.PerkDefs.Nimble,
 			gt.Const.Perks.PerkDefs.SerpentBite,
-			
+			gt.Const.Perks.PerkDefs.LegendClarity,
 		],
 		[
 			gt.Const.Perks.PerkDefs.LegendGruesomeFeast,
