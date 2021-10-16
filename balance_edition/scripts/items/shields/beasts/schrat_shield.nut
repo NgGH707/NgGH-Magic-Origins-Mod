@@ -9,6 +9,7 @@ this.schrat_shield <- this.inherit("scripts/items/shields/shield", {
 		this.m.AddGenericSkill = true;
 		this.m.ShowOnCharacter = true;
 		this.m.IsDroppedAsLoot = false;
+		//this.m.IsAllowedInBag = false;
 		this.m.Variants = [1];
 		this.m.Variant = 1;
 		this.updateVariant();
@@ -62,7 +63,14 @@ this.schrat_shield <- this.inherit("scripts/items/shields/shield", {
 
 	function onCombatFinished()
 	{
-		this.getContainer().unequip(this);
+		if (this.isInBag())
+		{
+			this.getContainer().removeFromBag(this);
+		}
+		else 
+		{
+		    this.getContainer().unequip(this);
+		}
 	}
 
 });

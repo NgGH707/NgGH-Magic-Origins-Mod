@@ -123,6 +123,7 @@ this.mod_kraken_command_drag_skill <- this.inherit("scripts/skills/skill", {
 	}
 
 	function onTargetSelected( _targetTile ) {}
+	function getHitFactors( _targetTile ) {return []}
 
 });
 

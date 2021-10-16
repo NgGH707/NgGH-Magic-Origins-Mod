@@ -140,6 +140,11 @@ this.mod_kraken_devour_skill <- this.inherit("scripts/skills/skill", {
 
 		foreach (i, t in tentacles)
 		{
+			if (t == null || t.isNull() || !t.isAlive() || t.isDying())
+			{
+				continue;
+			}
+
 		    t.setHitpoints(this.Math.min(t.getHitpointsMax(), t.getHitpoints() + 10));
 
 		    if (t.isPlacedOnMap())

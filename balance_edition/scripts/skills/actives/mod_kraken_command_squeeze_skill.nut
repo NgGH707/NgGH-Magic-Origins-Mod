@@ -89,6 +89,11 @@ this.mod_kraken_command_squeeze_skill <- this.inherit("scripts/skills/skill", {
 
 		foreach ( t in tentacles )
 		{
+			if (t == null || t.isNull() || !t.isAlive() || t.isDying())
+			{
+				continue;
+			}
+			
 			if (!t.isPlacedOnMap())
 			{
 				return true;

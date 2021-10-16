@@ -79,16 +79,6 @@ this.legend_intensely_charm_skill <- this.inherit("scripts/skills/skill", {
 		{
 			return false;
 		}
-
-		if (_target.getSkills().hasSkill("effects.charmed"))
-		{
-			return false;
-		}
-		
-		if (_target.getSkills().hasSkill("effects.charmed_captive"))
-		{
-			return false;
-		}
 		
 		if (_target.getType() == this.Const.EntityType.Hexe || _target.getType() == this.Const.EntityType.LegendHexeLeader)
 		{
@@ -99,10 +89,20 @@ this.legend_intensely_charm_skill <- this.inherit("scripts/skills/skill", {
 		{
 			return false;
 		}
-		
-		if (_target.getSkills().hasSkill("effects.legend_intensely_charmed"))
+
+		local skills = [
+			"effects.fake_charmed_broken",
+			"effects.charmed",
+			"effects.charmed_captive",
+			"effects.legend_intensely_charmed",
+		];
+
+		foreach ( id in skills ) 
 		{
-			return false;
+		    if (_target.getSkills().hasSkill(id))
+		    {
+		    	return false;
+		    }
 		}
 		
 		if (_target.getFlags().has("Hexe"))
@@ -134,7 +134,7 @@ this.legend_intensely_charm_skill <- this.inherit("scripts/skills/skill", {
 		{
 			local bonus = _targetTile.getDistanceTo(_user.getTile()) == 1 ? -5 : 0;
 
-			if (target.getSkills().hasSkill("background.eunuch") || target.getSkills().hasSkill("trait.player") || target.getSkills().hasSkill("trait.loyal"))
+			if (!this.isViableTarget(_user, target) || target.getSkills().hasSkill("background.eunuch") || target.getSkills().hasSkill("trait.player") || target.getSkills().hasSkill("trait.loyal"))
 			{
 				if (!_user.isHiddenToPlayer() && !target.isHiddenToPlayer())
 				{

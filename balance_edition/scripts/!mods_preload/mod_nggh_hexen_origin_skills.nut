@@ -489,6 +489,22 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 		}
 	});
 
+	::mods_hookBaseClass("skills/injury_permanent/permanent_injury", function (obj)
+	{
+		obj = obj[obj.SuperName];
+		obj.onAdded = function()
+		{
+			if (this.getContainer().getActor().getFlags().has("human"))
+			{
+				this.onApplyAppearance();
+			}
+			else 
+			{
+			    this.removeSelf();
+			}
+		}
+	});
+
 	//Fix tooltip bug when character has properties.AdditionalActionPointCost
 	::mods_hookBaseClass("skills/skill", function (obj)
 	{
