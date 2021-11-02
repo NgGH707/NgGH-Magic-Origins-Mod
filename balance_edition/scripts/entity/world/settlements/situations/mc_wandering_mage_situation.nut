@@ -4,8 +4,8 @@ this.mc_wandering_mage_situation <- this.inherit("scripts/entity/world/settlemen
 	{
 		this.situation.create();
 		this.m.ID = "situation.mc_wandering_mage";
-		this.m.Name = "Mysterious Traveler";
-		this.m.Description = "A strange figure has come to this place, the locals gossip about that mysterious traveler taking a stop in here. Some say that person can use unnatural force and do things no other can...";
+		this.m.Name = "Mysterious Travelers";
+		this.m.Description = "A group of strange figures have come to this place, the locals gossip about them taking a stop in here. Some say that person can use unnatural force and do things no other can, maybe you can recruit some of them.";
 		this.m.Icon = "ui/settlement_status/settlement_effect_wandering_mage.png";
 		this.m.Rumors = [
 			"Some witch hunters came by yesterday. They didn\'t find what they were looking for and headed on to %settlement%.",
@@ -27,29 +27,21 @@ this.mc_wandering_mage_situation <- this.inherit("scripts/entity/world/settlemen
 
 	function onAdded( _settlement )
 	{
-		_settlement.resetShop();
+		_settlement.resetShop(true);
 		_settlement.updateRoster(true);
-		local tempo_roster = this.World.getTemporaryRoster();
-		tempo_roster.clear();
-		local mage = tempo_roster.create("scripts/entity/tactical/player");
-		mage.setStartValuesEx(this.Const.MC_Backgrounds);
-		this.World.Assets.getOrigin().onUpdateHiringRoster(tempo_roster);
-		local roster = this.World.getRoster(_settlement.getID());
-		roster.add(mage);
-		tempo_roster.clear();
-	}
-
-	function onRemoved( _settlement )
-	{
-		_settlement.resetShop();
-		_settlement.resetRoster();
 	}
 
 	function onUpdate( _modifiers )
 	{
-		_modifiers.PriceMult *= 1.05;
-		_modifiers.RarityMult *= 1.5;
-		_modifiers.RecruitsMult *= 0.75;
+		_modifiers.PriceMult *= 1.1;
+		_modifiers.RarityMult *= 1.25;
+		_modifiers.RecruitsMult *= 1.25;
+	}
+
+	function onUpdateDraftList( _draftList )
+	{
+		_draftList.extend(this.Const.MC_Backgrounds);
+		_draftList.extend(this.Const.MC_Backgrounds);
 	}
 
 });

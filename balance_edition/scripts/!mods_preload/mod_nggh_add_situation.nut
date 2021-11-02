@@ -12,7 +12,7 @@ this.getroottable().Nggh_MagicConcept.hookAddSituation <- function ()
 				return;
 			}
 
-			local chance = this.Math.rand(1, 100) <= 10;
+			local chance = this.Math.rand(1, 100) <= 5;
 			this.m.Situation = chance ? "mc_wandering_mage_situation" : this.m.Situation;
 			this.m.Score = 1;
 		}

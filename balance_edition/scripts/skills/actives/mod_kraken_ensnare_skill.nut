@@ -88,6 +88,11 @@ this.mod_kraken_ensnare_skill <- this.inherit("scripts/skills/skill", {
 		return ret;
 	}
 
+	function isUsable()
+	{
+		return this.skill.isUsable() && this.Tactical.TurnSequenceBar.getActiveEntity() != null && this.Tactical.TurnSequenceBar.getActiveEntity().getID() == this.getContainer().getActor().getID() && !this.Tactical.TurnSequenceBar.isLastEntityActive();
+	}
+
 	function onAfterUpdate( _properties )
 	{
 		this.m.DamageMult = _properties.IsSpecializedInNets ? 1.25 : 1.0;
@@ -124,7 +129,6 @@ this.mod_kraken_ensnare_skill <- this.inherit("scripts/skills/skill", {
 			Skill = this,
 			TargetEntity = _targetTile.getEntity(),
 			LoseHitpoints = true,
-			IsLast = this.Tactical.TurnSequenceBar.m.CurrentEntities[this.Tactical.TurnSequenceBar.m.CurrentEntities.len() - 1].getID() == _user.getID()
 		});
 		return true;
 	}
@@ -217,13 +221,6 @@ this.mod_kraken_ensnare_skill <- this.inherit("scripts/skills/skill", {
 		_data.TargetEntity.raiseRootsFromGround(_data.User.getHitpointsPct() > 0.5 ? "kraken_ensnare_front" : "kraken_ensnare_front_injured", _data.User.getMode() == 0 ? "kraken_ensnare_back" : "kraken_ensnare_back_2");
 		_data.User.getSkills().setBusy(false);
 		_data.User.removeFromMap();
-
-		if (_data.IsLast)
-		{
-			this.Tactical.TurnSequenceBar.removeEntity(_data.User.get());
-			this.Tactical.TurnSequenceBar.initNextTurn();
-			this.Tactical.TurnSequenceBar.update();
-		}
 	}
 
 });

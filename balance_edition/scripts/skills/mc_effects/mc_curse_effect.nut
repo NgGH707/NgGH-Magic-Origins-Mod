@@ -25,7 +25,7 @@ this.mc_curse_effect <- this.inherit("scripts/skills/skill", {
 
 	function addDamage( _d )
 	{
-		this.m.Damage = this.Math.min(125, this.m.Damage + _d);
+		this.m.Damage = this.Math.min(105, this.m.Damage + _d);
 	}
 
 	function setActor( _a )
@@ -108,9 +108,10 @@ this.mc_curse_effect <- this.inherit("scripts/skills/skill", {
 			this.spawnIcon(this.m.Overlay, this.getContainer().getActor().getTile());
 			local hitInfo = clone this.Const.Tactical.HitInfo;
 			local damage = this.Math.rand(this.Math.floor(this.m.Damage * 0.67), this.m.Damage);
-			hitInfo.DamageRegular = damage;
-			hitInfo.DamageArmor = damage;
-			hitInfo.DamageDirect = this.Math.rand(1, 4) * 0.1;
+			local mult = _ignoreCount ? 0.67 : 1.0;
+			hitInfo.DamageRegular = damage * mult;
+			hitInfo.DamageArmor = damage * mult;
+			hitInfo.DamageDirect = this.Math.rand(10, 40) * 0.01;
 			hitInfo.BodyPart = this.Math.rand(0, 1);
 			hitInfo.BodyDamageMult = 1.0;
 			hitInfo.FatalityChanceMult = 0.0;
@@ -126,11 +127,6 @@ this.mc_curse_effect <- this.inherit("scripts/skills/skill", {
 				}
 			}
 		}
-	}
-
-	function onAdded()
-	{
-		this.m.TurnsLeft = this.Math.max(1, 2 + this.getContainer().getActor().getCurrentProperties().NegativeStatusEffectDuration);
 	}
 
 	function onUpdate( _properties )

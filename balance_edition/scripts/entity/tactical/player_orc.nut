@@ -613,7 +613,8 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 	
 	function isReallyKilled( _fatalityType )
 	{
-		return true;
+		this.m.CurrentProperties.SurvivesAsUndead = false;
+		return this.player.isReallyKilled(_fatalityType);
 	}
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )

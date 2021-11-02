@@ -37,7 +37,7 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsWeaponSkill = false;
 		this.m.IsUsingHitchance = false;
-		this.m.DirectDamageMult = 1.0;
+		this.m.DirectDamageMult = 0.3;
 		this.m.ActionPointCost = 6;
 		this.m.FatigueCost = 20;
 		this.m.MinRange = 1;
@@ -247,6 +247,7 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 	function onUse( _user, _targetTile )
 	{
 		local target = _targetTile.getEntity();
+		local distance = _user.getTile().getDistanceTo(_targetTile);
 		local pullToTile;
 
 		if (this.m.DestinationTile != null)
@@ -318,9 +319,17 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 		skills.removeByID("effects.spearwall");
 		skills.removeByID("effects.riposte");
 		target.setCurrentMovementType(this.Const.Tactical.MovementType.Involuntary);
-		local bonus = _user.getCurrentProperties().IsSpecializedInThrowing ? this.Math.rand(5, 10) : 0;
-		bonus = this.isImprovedDrag() ? bonus + 5 : bonus;
-		local damage = this.Math.max(0, this.Math.abs(pullToTile.Level - _targetTile.Level) - 1) * this.Const.Combat.FallingDamage + bonus;
+
+		local properties = this.getContainer().buildPropertiesForUse(this, target);
+		local damage = properties.IsSpecializedInThrowing ? this.Math.rand(5, 15) : 0;
+		damage = properties.IsSpecializedInShields ? damage + this.Math.rand(10, 15) : damage;
+		local total_damage = damage * properties.DamageRegularMult;
+		local damage_mult = properties.DamageTotalMult * properties.MeleeDamageMult;
+		local damageArmor = damage * properties.DamageArmorMult;
+		damageArmor = this.Math.max(0, damageArmor + distance * _info.Properties.DamageAdditionalWithEachTile) * damage_mult;
+		total_damage = this.Math.max(0, total_damage + distance * _info.Properties.DamageAdditionalWithEachTile) * damage_mult;
+		total_damage = this.Math.max(0, this.Math.abs(pullToTile.Level - _targetTile.Level) - 1) * this.Const.Combat.FallingDamage + total_damage;
+		local damageDirect = this.Math.minf(1.0, properties.DamageDirectMult * (this.m.DirectDamageMult + properties.DamageDirectAdd));
 
 		if (target.isAlliedWith(_user) || damage == 0)
 		{
@@ -333,14 +342,15 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 				Skill = this,
 				HitInfo = clone this.Const.Tactical.HitInfo
 			};
-			tag.HitInfo.DamageRegular = damage;
+			tag.HitInfo.DamageRegular = total_damage;
+			tag.HitInfo.DamageArmor = damageArmor;
 			tag.HitInfo.DamageFatigue = this.Const.Combat.FatigueReceivedPerHit;
-			tag.HitInfo.DamageDirect = 1.0;
+			tag.HitInfo.DamageDirect = damageDirect;
 			tag.HitInfo.BodyPart = this.Const.BodyPart.Body;
 			this.Tactical.getNavigator().teleport(_targetTile.getEntity(), pullToTile, this.onPulledDown, tag, true);
 		}
 		
-		if (!target.isAlliedWith(_user))
+		if (!target.isAlliedWith(_user) || this.Math.rand(1, 100) <= 50)
 		{
 			target.getSkills().add(this.new("scripts/skills/effects/staggered_effect"));
 			
@@ -648,21 +658,20 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.IsIgnoringArmorOnAttack = true;
 			_properties.DamageRegularMin = 0;
 			_properties.DamageRegularMax = 0;
-			_properties.DamageArmorMult *= 0.0;
+			_properties.DamageArmorMult *= 0.7;
 
 			if (this.isUpgradeDrag())
 			{
 				_properties.DamageRegularMin +=  5;
-				_properties.DamageRegularMax += 10;
+				_properties.DamageRegularMax += 15;
 			}
 
 			if (this.isImprovedDrag())
 			{
-				_properties.DamageRegularMin += 5;
-				_properties.DamageRegularMax += 10;
+				_properties.DamageRegularMin += 10;
+				_properties.DamageRegularMax += 15;
 			}
 		}
 	}

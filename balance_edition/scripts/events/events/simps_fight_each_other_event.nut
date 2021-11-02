@@ -349,7 +349,7 @@ this.simps_fight_each_other_event <- this.inherit("scripts/events/event", {
 			return;
 		}
 
-		this.m.Score = simps * 12;
+		this.m.Score = simps * 20;
 	}
 
 	function onPrepare()

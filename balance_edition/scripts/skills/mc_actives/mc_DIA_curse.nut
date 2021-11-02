@@ -1,6 +1,6 @@
 this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 	m = {
-		ChanceBonus = 0
+		ChanceBonus = -25
 	},
 	function create()
 	{
@@ -38,6 +38,7 @@ this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsVisibleTileNeeded = false;
 		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = 18;
+		this.m.DirectDamageMult = 0.3;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 6;
 		this.m.IsIgnoreBlockTarget = true;
@@ -79,7 +80,6 @@ this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 		local toHit = this.Math.min(95, skill + this.m.ChanceBonus);
 		local rolled = this.Math.rand(1, 100);
 		local success = rolled <= toHit;
-		this.Tactical.EventLog.log_newline();
 
 		if (success)
 		{
