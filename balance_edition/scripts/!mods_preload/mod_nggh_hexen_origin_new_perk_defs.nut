@@ -2,7 +2,7 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 {
 	local gt = this.getroottable();
 	
-	gt.Const.Perks.PerkDefObjects.extend([
+	gt.Const.Perks.addPerkDefObjects([
 	//Hexe
 		{
 			ID = "perk.charm_enemy_ghoul",

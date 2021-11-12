@@ -38,7 +38,7 @@ this.perk_magic_training_3 <- this.inherit("scripts/skills/skill", {
 				return 0;
 			}
 
-			if (!staff.isWeaponType(this.Const.Items.WeaponType.MagicStaff, true))
+			if (!staff.isWeaponType(this.Const.Items.WeaponType.MagicStaff))
 			{
 				return 0;
 			}
