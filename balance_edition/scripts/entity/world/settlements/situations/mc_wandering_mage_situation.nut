@@ -27,7 +27,7 @@ this.mc_wandering_mage_situation <- this.inherit("scripts/entity/world/settlemen
 
 	function onAdded( _settlement )
 	{
-		_settlement.resetShop(true);
+		_settlement.resetShop();
 		_settlement.updateRoster(true);
 	}
 

@@ -3,11 +3,7 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 	//make charmed dogs on retreating would add themselves as loot
 	::mods_hookBaseClass("entity/tactical/actor", function (obj)
 	{
-		while (!("BloodSaturation" in obj.m))
-		{
-			obj = obj[obj.SuperName];
-		}
-
+		obj = obj[obj.SuperName];
 		local ws_retreat = obj.retreat;
 		obj.retreat = function ()
 		{

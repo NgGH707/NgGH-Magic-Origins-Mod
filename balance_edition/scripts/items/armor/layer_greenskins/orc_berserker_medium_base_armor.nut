@@ -4,9 +4,9 @@ this.orc_berserker_medium_base_armor <- this.inherit("scripts/items/legend_armor
 	{
 		this.legend_armor.create();
 		this.m.Variants = [
-			1
+			2
 		];
-		this.m.Variant = 1;
+		this.m.Variant = 2;
 		this.updateVariant();
 		this.m.ID = "armor.body.orc_berserker_medium_armor";
 		this.m.Name = "Bone Armor";

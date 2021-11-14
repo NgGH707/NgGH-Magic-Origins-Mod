@@ -1,6 +1,7 @@
 ::mods_registerMod("mod_nggh_magic_concept", 2.2, "It\'s magic");
 ::mods_registerMod("mod_nggh_assets", 2.2);
 ::mods_registerMod("mod_nggh_skills", 2.2);
+::mods_registerJS("mod_nggh_origins.js");
 
 ::mods_queue("mod_nggh_magic_concept", "mod_legends,>mod_legends_PTR", function()
 {

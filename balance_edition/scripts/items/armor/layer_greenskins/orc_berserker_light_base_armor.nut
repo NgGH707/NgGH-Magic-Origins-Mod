@@ -7,6 +7,7 @@ this.orc_berserker_light_base_armor <- this.inherit("scripts/items/legend_armor/
 			1
 		];
 		this.m.Variant = 1;
+		this.updateVariant();
 		this.m.ID = "armor.body.orc_berserker_light_armor";
 		this.m.Name = "Trophy Bones";
 		this.m.Description = "A harness made out of the bone of what this warrior had ever hunted. A token to honor its warrior skill.";
