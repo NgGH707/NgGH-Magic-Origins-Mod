@@ -47,6 +47,53 @@ this.mc_siphon_strength_slave_effect <- this.inherit("scripts/skills/skill", {
 		return "This character has been cursed to feel the same pain and receive the same wounds as another character. Be careful, as it could kill him. The effect will persist for another [color=" + this.Const.UI.Color.NegativeValue + "]1[/color] turn(s).";
 	}
 
+	function getTooltip()
+	{
+		local ret = [
+			{
+				id = 1,
+				type = "title",
+				text = this.getName()
+			},
+			{
+				id = 2,
+				type = "description",
+				text = this.getDescription()
+			},
+		];
+
+		local mod = this.getStatMod();
+
+		ret.extend([
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/melee_skill.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "[/color] Resolve"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/ranged_skill.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "%[/color] Resolve"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/melee_defense.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "%[/color] Resolve"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/ranged_defense.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "%[/color] Resolve"
+			}
+		]);
+
+		return ret;
+	}
+
 	function applyStatMod()
 	{
 		return this.m.Master.getStatMod();

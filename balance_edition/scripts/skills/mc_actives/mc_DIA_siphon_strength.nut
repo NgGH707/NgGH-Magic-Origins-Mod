@@ -1,6 +1,8 @@
 this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 	m = {
 		ChanceBonus = 0
+		AdditionalAccuracy = 0,
+		AdditionalHitChance = -3
 	},
 	function create()
 	{
@@ -59,8 +61,7 @@ this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 	{	
 		local target = _targetTile.getEntity();
 		this.Tactical.spawnSpriteEffect("bust_nightmare", this.createColor("#ffffff"), _targetTile, 0, 40, 1.0, 0.25, 0, 400, 300);
-		local skill = _user.getCurrentProperties().getRangedSkill();
-		local toHit = this.Math.min(95, skill + this.m.ChanceBonus);
+		local toHit = this.getHitchance(target);
 		local rolled = this.Math.rand(1, 100);
 		this.Tactical.EventLog.log_newline();
 
@@ -94,16 +95,13 @@ this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 		return true;
 	}
 
-	function getHitchance( _targetEntity )
+	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
-		local skill = this.getContainer().getActor().getCurrentProperties().getRangedSkill();
-		local toHit = this.Math.min(95, skill + this.m.ChanceBonus);
-		return toHit;
-	}
-
-	function getHitFactors( _targetTile )
-	{
-		return [];
+		if (_skill == this)
+		{
+			_properties.RangedSkill += this.m.AdditionalAccuracy;
+			_properties.HitChanceAdditionalWithEachTile += this.m.AdditionalHitChance;
+		}
 	}
 
 });

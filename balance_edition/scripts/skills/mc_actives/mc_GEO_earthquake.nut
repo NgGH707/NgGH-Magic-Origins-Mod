@@ -9,7 +9,7 @@ this.mc_GEO_earthquake <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.mc_magic_skill.create();
 		this.m.ID = "actives.mc_earthquake";
 		this.m.Name = "Earthquake";
-		this.m.Description = "Cause a large scale seismic activity in a huge area that can potentially daze enemies, make them lose their balance. Fatigue damage based on resolve, deal reduced fatigue damage if you don\'t have a magic staff.";
+		this.m.Description = "Cause a large scale seismic activity in a huge area that can potentially daze enemies, make them lose their balance. Fatigue damage based on resolve, deal reduced fatigue damage if you don\'t have a magic staff. Can not be used while engaged in melee.";
 		this.m.KilledString = "Swallowed by the Earth";
 		this.m.Icon = "skills/active_mc_09.png";
 		this.m.IconDisabled = "skills/active_mc_09_sw.png";
@@ -88,8 +88,23 @@ this.mc_GEO_earthquake <- this.inherit("scripts/skills/mc_magic_skill", {
 			icon = "ui/icons/special.png",
 			text = "Has a small chance to [color=" + this.Const.UI.Color.NegativeValue + "]Distract[/color] affected target"
 		});
+
+		if (this.Tactical.isActive() && this.getContainer().getActor().getTile().hasZoneOfControlOtherThan(this.getContainer().getActor().getAlliedFactions()))
+		{
+			ret.push({
+				id = 9,
+				type = "text",
+				icon = "ui/tooltips/warning.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Can not be used because this character is engaged in melee[/color]"
+			});
+		}
 		
 		return ret;
+	}
+
+	function isUsable()
+	{
+		return !this.Tactical.isActive() || this.skill.isUsable() && !this.getContainer().getActor().getTile().hasZoneOfControlOtherThan(this.getContainer().getActor().getAlliedFactions());
 	}
 	
 	function onAfterUpdate( _properties )

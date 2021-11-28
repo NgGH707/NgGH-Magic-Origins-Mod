@@ -1,13 +1,15 @@
 this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 	m = {
-		ChanceBonus = -25
+		ChanceBonus = -25,
+		AdditionalAccuracy = 0,
+		AdditionalHitChance = -5
 	},
 	function create()
 	{
 		this.mc_magic_skill.create();
 		this.m.ID = "actives.mc_curse";
 		this.m.Name = "Curse";
-		this.m.Description = "Put a sinister curse on a target. The curse will slowly kill that target, the more curse you put on the more damage per turn that target receives. Accuracy based on ranged skill. Damage based on resolve, deal reduced damage if you don\'t have a magic staff.";
+		this.m.Description = "Put a sinister curse on a target. The curse will slowly kill that target, the more curse you put on the more damage per turn that target receives. Accuracy based on ranged skill. Damage based on resolve, deal reduced damage if you don\'t have a magic staff. Can not be used while engaged in melee.";
 		this.m.Icon = "skills/active_119.png";
 		this.m.IconDisabled = "skills/active_119_sw.png";
 		this.m.Overlay = "active_119";
@@ -37,7 +39,7 @@ this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsDoingForwardMove = false;
 		this.m.IsVisibleTileNeeded = false;
 		this.m.ActionPointCost = 4;
-		this.m.FatigueCost = 18;
+		this.m.FatigueCost = 20;
 		this.m.DirectDamageMult = 0.3;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 6;
@@ -46,15 +48,31 @@ this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 
 	function getTooltip()
 	{
-		local ret = this.skill.getDefaultTooltip();
+		local ret = this.skill.getDefaultRangedTooltip();
+
 		ret.push({
-			id = 7,
+			id = 6,
 			type = "text",
-			icon = "ui/icons/vision.png",
-			text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles on even ground, more if casting downhill"
+			icon = "ui/icons/special.png",
+			text = "Curse can stack the damage up to [color=" + this.Const.UI.Color.PositiveValue + "]105[/color] damage per turn"
 		});
-		
+
+		if (this.Tactical.isActive() && this.getContainer().getActor().getTile().hasZoneOfControlOtherThan(this.getContainer().getActor().getAlliedFactions()))
+		{
+			ret.push({
+				id = 9,
+				type = "text",
+				icon = "ui/tooltips/warning.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Can not be used because this character is engaged in melee[/color]"
+			});
+		}
+
 		return ret;
+	}
+
+	function isUsable()
+	{
+		return !this.Tactical.isActive() || this.skill.isUsable() && !this.getContainer().getActor().getTile().hasZoneOfControlOtherThan(this.getContainer().getActor().getAlliedFactions());
 	}
 
 	function onUse( _user, _targetTile )
@@ -76,10 +94,11 @@ this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 		local self = _tag.Skill;
 		local d = self.getDamage(target);
 
-		local skill = _user.getCurrentProperties().getRangedSkill();
-		local toHit = this.Math.min(95, skill + this.m.ChanceBonus);
+		local toHit = this.getHitchance(target);
 		local rolled = this.Math.rand(1, 100);
 		local success = rolled <= toHit;
+		local container = this.getContainer();
+		container.setBusy(true);
 
 		if (success)
 		{
@@ -127,6 +146,7 @@ this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 				}
 			}
 
+			container.setBusy(false);
 		}.bindenv(this), null);
 	}
 
@@ -141,24 +161,14 @@ this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 20;
-			_properties.DamageRegularMax += 20;
+			_properties.DamageRegularMin += 25;
+			_properties.DamageRegularMax += 25;
 			_properties.DamageTotalMult *= this.getBonusDamageFromResolve(_properties);
 			this.removeBonusesFromWeapon(_properties);
 			_properties.DamageArmorMult = 1.0;
+			_properties.RangedSkill += this.m.AdditionalAccuracy;
+			_properties.HitChanceAdditionalWithEachTile += this.m.AdditionalHitChance;
 		}
-	}
-
-	function getHitchance( _targetEntity )
-	{
-		local skill = this.getContainer().getActor().getCurrentProperties().getRangedSkill();
-		local toHit = this.Math.min(95, skill + this.m.ChanceBonus);
-		return toHit;
-	}
-
-	function getHitFactors( _targetTile )
-	{
-		return [];
 	}
 
 });

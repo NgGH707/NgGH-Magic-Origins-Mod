@@ -8,7 +8,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		this.m.ID = "actives.mc_elemental_storm";
 		this.m.Name = "Elemental Storm";
-		this.m.Description = "Summon a storm of chaotic element to destroy you enemies. Accuracy based on ranged skill. Damage based on resolve, deal reduced damage if you don\'t have a magic staff.";
+		this.m.Description = "Summon a storm of chaotic element to destroy you enemies. Accuracy based on ranged skill. Damage based on resolve, deal reduced damage if you don\'t have a magic staff. Can not be used while engaged in melee.";
 		this.m.KilledString = "Burned, curshed and freezed to death";
 		this.m.Icon = "skills/active_mc_06.png";
 		this.m.IconDisabled = "skills/active_mc_06_sw.png";
@@ -37,7 +37,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsConsumeConcentrate = false;
 		this.m.DirectDamageMult = 0.5;
 		this.m.ActionPointCost = 7;
-		this.m.FatigueCost = 40;
+		this.m.FatigueCost = 45;
 		this.m.MinRange = 2;
 		this.m.MaxRange = 4;
 
@@ -122,8 +122,23 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 				text = "Completely ignores armor"
 			},
 		]);
+
+		if (this.Tactical.isActive() && this.getContainer().getActor().getTile().hasZoneOfControlOtherThan(this.getContainer().getActor().getAlliedFactions()))
+		{
+			ret.push({
+				id = 9,
+				type = "text",
+				icon = "ui/tooltips/warning.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Can not be used because this character is engaged in melee[/color]"
+			});
+		}
 			
 		return ret;
+	}
+
+	function isUsable()
+	{
+		return !this.Tactical.isActive() || this.skill.isUsable() && !this.getContainer().getActor().getTile().hasZoneOfControlOtherThan(this.getContainer().getActor().getAlliedFactions());
 	}
 
 	function onUse( _user, _targetTile )

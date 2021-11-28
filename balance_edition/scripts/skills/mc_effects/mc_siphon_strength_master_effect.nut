@@ -55,6 +55,58 @@ this.mc_siphon_strength_master_effect <- this.inherit("scripts/skills/skill", {
 		this.m.IsHidden = false;
 	}
 
+	function getDescription()
+	{
+		return "You can feel a new strength is running inside you, too bad this strength is borrowed from a poor soul. Wear off after [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.TurnsLeft + "[/color] turn(s).";
+	}
+
+	function getTooltip()
+	{
+		local ret = [
+			{
+				id = 1,
+				type = "title",
+				text = this.getName()
+			},
+			{
+				id = 2,
+				type = "description",
+				text = this.getDescription()
+			},
+		];
+
+		local mod = this.getStatMod();
+
+		ret.extend([
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/melee_skill.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + mod + "[/color] Resolve"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/ranged_skill.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + mod + "%[/color] Resolve"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/melee_defense.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + mod + "%[/color] Resolve"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/ranged_defense.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + mod + "%[/color] Resolve"
+			}
+		]);
+
+		return ret;
+	}
+
 	function onRefresh()
 	{
 		this.m.TurnsLeft = 2;

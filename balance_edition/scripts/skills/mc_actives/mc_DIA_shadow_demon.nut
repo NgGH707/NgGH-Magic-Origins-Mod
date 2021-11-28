@@ -100,11 +100,11 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 		
 		if (this.getEntity() != null)
 		{
-		    ret.push({
+			ret.push({
 				id = 10,
 				type = "text",
-				icon = "ui/tooltips/warning.png",
-				text = "You already have a shadow demon"
+				icon = "ui/tooltips/health.png",
+				text = "Give your shadow demon an extra life"
 			});
 		}
 
@@ -199,7 +199,7 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 			FatigueEffectMult = 0.0,
 			MoraleEffectMult = 0.0,
 			FatigueRecoveryRate = 15,
-			Vision = this.Math.rand(3, 5),
+			Vision = this.Math.rand(4, 5),
 			Armor = [
 				0,
 				0

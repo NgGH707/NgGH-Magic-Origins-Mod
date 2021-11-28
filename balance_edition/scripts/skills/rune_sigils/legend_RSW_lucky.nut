@@ -23,8 +23,12 @@ this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
 		local actor = this.getContainer().getActor();
 		local chance = this.Math.floor(_targetEntity.getXPValue() / this.Const.MC_Combat.LuckyRuneChanceModifier);
 		local rolled = this.Math.rand(1, 100);
-
-		if (rolled <= chance)
+		
+		if (rolled > chance)
+		{
+			this.Tactical.EventLog.logEx("Hope you get lucky next time " + " (Chance: " + chance + ", Rolled: " + rolled + ")");
+		}
+		else
 		{
 			local r = this.Math.rand(1, 100);
 			local drops_table = [
@@ -42,19 +46,31 @@ this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
 				],
 				[
 					10,
-					"misc/ghoul_teeth_item"
-				],
-				[
-					10,
 					"trade/cloth_rolls_item"
 				],
 				[
-					10,
+					5,
+					"misc/ghoul_teeth_item"
+				],
+				[
+					5,
 					"tools/throwing_net"
 				],
 				[
-					10,
-					"tools/legend_broken_throwing_net"
+					5,
+					"loot/goblin_rank_insignia_item"
+				],
+				[
+					5,
+					"loot/bead_necklace_item"
+				],
+				[
+					5,
+					"trade/quality_wood_item"
+				],
+				[
+					5,
+					"trade/peat_bricks_item"
 				],
 			];
 
@@ -222,20 +238,32 @@ this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
 						"trade/copper_ingots_item"
 					],
 					[
-						20,
+						15,
 						"trade/amber_shards_item"
 					],
 					[
-						15,
+						10,
 						"tools/smoke_bomb_item"
 					],
 					[
-						15,
+						10,
 						"accessory/night_vision_elixir_item"
 					],
 					[
 						10,
 						"accessory/iron_will_potion_item"
+					],
+					[
+						5,
+						"tools/fire_bomb_item"
+					],
+					[
+						5,
+						"tools/acid_flask_item"
+					],
+					[
+						5,
+						"tools/daze_bomb_item"
 					],
 					[
 						10,
@@ -250,15 +278,24 @@ this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
 			
 			local tile = _targetEntity.getTile();
 			local item = this.Const.World.Common.pickItem(drops_table, "scripts/items/");
-			if (item.getID() == "supplies.money") item.setAmount(this.Math.rand(10, 20) * 10);
-			item.drop(tile);
+			local name = item.getName();
+
+			if (item.getID() == "supplies.money")
+			{
+				item.setAmount(this.Math.rand(10, 20) * 10);
+				name =  item.getAmount() + " crowns";
+			}
 
 			for( local i = 0; i < this.Const.Tactical.DazeParticles.len(); i = ++i )
 			{
 				this.Tactical.spawnParticleEffect(false, this.Const.Tactical.DazeParticles[i].Brushes, tile, this.Const.Tactical.DazeParticles[i].Delay, this.Const.Tactical.DazeParticles[i].Quantity, this.Const.Tactical.DazeParticles[i].LifeTimeQuantity, this.Const.Tactical.DazeParticles[i].SpawnRate, this.Const.Tactical.DazeParticles[i].Stages);
 			}
 
-			this.Tactical.EventLog.logEx("Wow!!! you get a bonus loot due to " + this.Const.UI.getColorizedEntityName(actor) + "\'s Lucky rune");
+			//item.drop(tile);
+			tile.Items.push(this);
+			tile.IsContainingItems = true;
+			item.m.Tile = _tile;
+			this.Tactical.EventLog.logEx("[color=" + this.Const.UI.Color.NegativeValue + "]Wow!!![/color] you get [color=#0b0084]" + name + "[/color] as bonus loot due to " + this.Const.UI.getColorizedEntityName(actor) + "\'s Lucky rune");
 		}
 	}
 

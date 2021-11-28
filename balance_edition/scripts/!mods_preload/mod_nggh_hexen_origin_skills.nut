@@ -251,7 +251,6 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 	{
 	    obj.onUpdate <- function( _properties )
 	    {
-	    	_properties.IsImmuneToZoneOfControl = true;
 	    	_properties.IsImmuneToBleeding = true;
 			_properties.IsImmuneToPoison = true;
 			_properties.IsImmuneToKnockBackAndGrab = true;
