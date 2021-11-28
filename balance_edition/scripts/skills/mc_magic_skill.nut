@@ -119,12 +119,14 @@ this.mc_magic_skill <- this.inherit("scripts/skills/skill", {
 	function use( _targetTile, _forFree = false )
 	{
 		local ret = this.skill.use(_targetTile, _forFree);
-		if (this.m.IsConsumeConcentrate) this.getContainer().removeByID("special.mc_focus");
+		//if (this.m.IsConsumeConcentrate) this.getContainer().removeByID("special.mc_focus");
 		return ret;
 	}
 
 	function onBeforeUse( _user, _targetTile )
 	{
+		return;
+
 		if (this.getContainer().hasSkill("special.mc_focus"))
 		{
 			this.m.IsEnhanced = true;

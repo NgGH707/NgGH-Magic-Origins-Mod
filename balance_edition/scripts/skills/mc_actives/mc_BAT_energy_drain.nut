@@ -43,7 +43,7 @@ this.mc_BAT_energy_drain <- this.inherit("scripts/skills/mc_magic_skill", {
 			text = "Completely ignores armor"
 		});
 
-		local e = this.getContainer().getSkillByID("special.mc_focus");
+		/*local e = this.getContainer().getSkillByID("special.mc_focus");
 
 		if (e != null)
 		{
@@ -64,15 +64,17 @@ this.mc_BAT_energy_drain <- this.inherit("scripts/skills/mc_magic_skill", {
 		}
 		else 
 		{
-		    ret.push({
-				id = 6,
-				type = "text",
-				icon = "ui/icons/special.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.Efficiency[0] + "[/color] - [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.Efficiency[1] + "%[/color] of damage done is turned into [color=" + this.Const.UI.Color.NegativeValue + "]Energy[/color]"
-			});
-		}
+		    
+		}*/
 
-		e = this.getContainer().getSkillByID("effects.mc_stored_energy");
+		ret.push({
+			id = 6,
+			type = "text",
+			icon = "ui/icons/special.png",
+			text = "[color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.Efficiency[0] + "[/color] - [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.Efficiency[1] + "%[/color] of damage done is turned into [color=" + this.Const.UI.Color.NegativeValue + "]Energy[/color]"
+		});
+
+		local e = this.getContainer().getSkillByID("effects.mc_stored_energy");
 
 		if (e != null)
 		{

@@ -171,7 +171,7 @@ this.mc_GEO_earthen_puppet <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.Tactical.CameraDirector.addDelay(0.2);
 		local spawn = this.Tactical.spawnEntity(this.m.Script, _targetTile.Coords.X, _targetTile.Coords.Y);
 		spawn.setFaction(2);
-		spawn.setNewStats(this.getBonusDamageFromResolve(_user.getCurrentProperties()), this.m.IsEnhanced);
+		spawn.setNewStats(this.getBonusDamageFromResolve(_user.getCurrentProperties()), false);
 		spawn.grow();
 		this.onPowering(_user, spawn, true);
 		this.m.Puppet = spawn;

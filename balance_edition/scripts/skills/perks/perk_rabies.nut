@@ -1,6 +1,6 @@
 this.perk_rabies <- this.inherit("scripts/skills/skill", {
 	m = {
-		IsRemoving = false,
+		IsRemoved = false,
 	},
 	function create()
 	{
@@ -22,7 +22,7 @@ this.perk_rabies <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		local actor = this.getContainer().getActor();
+		local actor = this.getContainer().getActor().get();
 		
 		if (actor.hasSprite("head_frenzy"))
 		{
@@ -33,7 +33,7 @@ this.perk_rabies <- this.inherit("scripts/skills/skill", {
 			
 			this.logInfo("Is setting frenzy bust for " + actor.getName());
 		}
-		else
+		else if ("IsHigh" in actor.m)
 		{
 			local head = actor.getSprite("head");
 			local variant = this.Math.rand(4, 6);
@@ -61,12 +61,12 @@ this.perk_rabies <- this.inherit("scripts/skills/skill", {
 	
 	function onRemoved()
 	{
-		if (this.m.IsRemoving)
+		if (this.m.IsRemoved)
 		{
 			return;
 		}
 		
-		local actor = this.getContainer().getActor();
+		local actor = this.getContainer().getActor().get();
 		
 		if (actor.hasSprite("head_frenzy"))
 		{
@@ -74,7 +74,7 @@ this.perk_rabies <- this.inherit("scripts/skills/skill", {
 			head_frenzy.Visible = false;
 			actor.getFlags().remove("frenzy_wolf");
 		}
-		else
+		else if ("IsHigh" in actor.m)
 		{
 			local head = actor.getSprite("head");
 			local variant = this.Math.rand(1, 3);
@@ -87,7 +87,7 @@ this.perk_rabies <- this.inherit("scripts/skills/skill", {
 		}
 		
 		actor.setDirty(true);
-		this.m.IsRemoving = true;
+		this.m.IsRemoved = true;
 	}
 	
 	function removeSelf()

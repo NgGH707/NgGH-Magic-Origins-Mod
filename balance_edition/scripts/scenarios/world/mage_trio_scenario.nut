@@ -4,7 +4,7 @@ this.mage_trio_scenario <- this.inherit("scripts/scenarios/world/starting_scenar
 	{
 		this.m.ID = "scenario.mage_trio";
 		this.m.Name = "Mage Trio";
-		this.m.Description = "[p=c][img]gfx/ui/events/event_76.png[/img][/p]A trio of mages begin their adventure to seek true wisdom.\n\n[color=#bcad8c]It\'s magic:[/color] Start with three unique mages with each possesses extraordinary powers.\n[color=#bcad8c]Runestone:[/color] Start with a runestone, you can choose one of four types.\n[color=#bcad8c]Mage Guild:[/color] Mages cost less to hire and demand lower wage, and also automatically be tried out.";
+		this.m.Description = "[p=c][img]gfx/ui/events/event_76.png[/img][/p]A trio of mages begin their adventure to seek true wisdom.\n\n[color=#bcad8c]It\'s magic:[/color] Start with three unique mages with each possesses extraordinary powers.\n[color=#bcad8c]Runestone:[/color] Start with a runestone, you can choose one of four types.\n[color=#bcad8c]Mage Guild:[/color] Mage recruits cost less to hire and demand lower wage.";
 		this.m.Difficulty = 3;
 		this.m.Order = 101;
 		this.m.StartingBusinessReputation = 50;
@@ -181,7 +181,6 @@ this.mage_trio_scenario <- this.inherit("scripts/scenarios/world/starting_scenar
 
 	    	bro.m.HiringCost = this.Math.ceil(bro.m.HiringCost * 0.5);
 	    	bro.getBackground().m.DailyCostMult *= 0.5;
-	    	bro.setTryoutDone(true);
 		}
 	}
 	

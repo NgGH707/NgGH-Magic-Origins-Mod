@@ -38,7 +38,7 @@ this.mc_wandering_mage_situation <- this.inherit("scripts/entity/world/settlemen
 		_modifiers.RecruitsMult *= 1.25;
 	}
 
-	function onUpdateDraftList( _draftList )
+	function onUpdateDraftList( _draftList , _gender )
 	{
 		_draftList.extend(this.Const.MC_Backgrounds);
 		_draftList.extend(this.Const.MC_Backgrounds);

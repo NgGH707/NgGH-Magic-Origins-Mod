@@ -177,14 +177,6 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 			demon.setLink(_skill);
 			demon.setNewStats(stats);
 			_skill.setEntity(demon);
-
-			if (_skill.m.IsEnhanced)
-			{
-				demon.addNineLivesCount();
-				demon.addNineLivesCount();
-			}
-
-			_skill.m.IsEnhanced = false;
 		}.bindenv(this), this);
 		
 		return true;

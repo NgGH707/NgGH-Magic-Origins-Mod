@@ -28,7 +28,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		VisionMult = 1.0,
 		Body = "figure_noble_02",
 		MaxR = 530,
-		MinR = 55,
+		MinR = 75,
 		Fixed = [
 			{
 				Weight = 100,

@@ -80,29 +80,9 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 				id = 8,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Can and deal more damage if struck on a wet tile"
+				text = "Deal extra damage to target standing on wet tile"
 			},
 		]);
-
-		local e = this.getContainer().getSkillByID("special.mc_focus");
-
-		if (e != null)
-		{
-			ret.extend([
-				{
-					id = 6,
-					type = "text",
-					icon = "ui/icons/special.png",
-					text = "Is enhanced by [color=" + this.Const.UI.Color.PositiveValue + "]Concentrate[/color] effect"
-				},
-				{
-					id = 6,
-					type = "text",
-					icon = "ui/icons/special.png",
-					text = "A lightning shower"
-				}
-			]);
-		}
 
 		return ret;
 	}
@@ -205,11 +185,6 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 				}
 			}
 
-			if (this.getContainer().hasSkill("special.mc_focus") || this.m.IsEnhanced)
-			{
-				_properties.DamageTotalMult *= 0.20;
-			}
-
 			_properties.DamageTotalMult *= this.getBonusDamageFromResolve(_properties);
 			this.removeBonusesFromWeapon(_properties);
 		}
@@ -218,21 +193,6 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 	function onTargetSelected( _targetTile )
 	{
 		this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);
-
-		if (this.getContainer().hasSkill("special.mc_focus"))
-		{
-			for( local i = 0; i < 6; i = ++i )
-			{
-				if (!_targetTile.hasNextTile(i))
-				{
-				}
-				else
-				{
-					local tile = _targetTile.getNextTile(i);
-					this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, tile, tile.Pos.X, tile.Pos.Y);	
-				}
-			}
-		}
 	}
 
 	function reset( _isDone = false )

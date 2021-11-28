@@ -41,17 +41,26 @@ this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.InjuriesOnBody = this.Const.Injury.PiercingBody;
 		this.m.InjuriesOnHead = this.Const.Injury.BluntHead;
 		this.m.DirectDamageMult = 0.3;
-		this.m.ActionPointCost = 5;
-		this.m.FatigueCost = 25;
+		this.m.ActionPointCost = 6;
+		this.m.FatigueCost = 35;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
 		this.m.ChanceDecapitate = 0;
 		this.m.ChanceDisembowel = 35;
 		this.m.ChanceSmash = 15;
+
+		this.m.Name = "Root";
+		this.m.Description = "Conjure up the force of nature to bind your foes. Affect targets in a straight line. Accuracy based on ranged skill.";
+		this.m.Icon = "skills/active_70.png";
+		this.m.IconDisabled = "skills/active_70_sw.png";
+		this.m.Overlay = "active_70";
+		this.m.IsVines = true;
 	}
 
 	function onUpdate( _properties )
 	{
+		return;
+
 		if (!this.getContainer().getSkillByID("special.mc_focus"))
 		{
 			this.m.Name = "Root";
@@ -205,7 +214,7 @@ this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		local myTile = _user.getTile();
 		local self = this;
-		local func = this.m.IsEnhanced ? "spawnUprootAttack" : "spawnRoot";
+		local func = "spawnRoot";
 		local dir = myTile.getDirectionTo(_targetTile);
 		self[func](_user, _targetTile);
 
@@ -228,7 +237,6 @@ this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 			}
 		}
 
-		this.m.IsEnhanced = false;
 		return true;
 	}
 

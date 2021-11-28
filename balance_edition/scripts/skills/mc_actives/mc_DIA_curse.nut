@@ -124,15 +124,9 @@ this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 					curse.setDamage(d);
 					curse.setActor(_user);
 					curse.applyDamage(true);
-
-					if (self.m.IsEnhanced)
-					{
-						curse.onRefresh();
-					}
 				}
 			}
 
-			self.m.IsEnhanced = false;
 		}.bindenv(this), null);
 	}
 

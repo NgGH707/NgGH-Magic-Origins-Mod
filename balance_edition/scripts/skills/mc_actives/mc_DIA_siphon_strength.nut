@@ -30,7 +30,7 @@ this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsDoingForwardMove = false;
 		this.m.IsVisibleTileNeeded = false;
-		this.m.ActionPointCost = 4;
+		this.m.ActionPointCost = 5;
 		this.m.FatigueCost = 13;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 6;
@@ -75,11 +75,6 @@ this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 			local master = this.new("scripts/skills/mc_effects/mc_siphon_strength_master_effect");
 			local efficiency = this.getBonusDamageFromResolve(_user.getCurrentProperties());
 
-			if (this.m.IsEnhanced)
-			{
-				efficiency *= 1.25;
-			}
-
 			slave.setMaster(master);
 			target.getSkills().add(slave);
 
@@ -93,11 +88,9 @@ this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 		else
 		{
 			this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(_user) + " fails to curse " + this.Const.UI.getColorizedEntityName(target) + " (Chance: " + toHit + ", Rolled: " + rolled + ")");
-			this.m.IsEnhanced = false;
 			return false;
 		}
 
-		this.m.IsEnhanced = false;
 		return true;
 	}
 

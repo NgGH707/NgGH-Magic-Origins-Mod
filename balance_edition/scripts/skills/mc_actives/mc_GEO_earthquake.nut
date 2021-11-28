@@ -2,7 +2,7 @@ this.mc_GEO_earthquake <- this.inherit("scripts/skills/mc_magic_skill", {
 	m = {
 		DamageMin = 10,
 		DamageMax = 25,
-		DazeChance = 10
+		DazeChance = 25
 	},
 	function create()
 	{
@@ -82,34 +82,12 @@ this.mc_GEO_earthquake <- this.inherit("scripts/skills/mc_magic_skill", {
 			}
 		]);
 
-		local e = this.getContainer().getSkillByID("special.mc_focus");
-
-		if (e != null)
-		{
-			ret.extend([
-				{
-					id = 6,
-					type = "text",
-					icon = "ui/icons/special.png",
-					text = "Is enhanced by [color=" + this.Const.UI.Color.PositiveValue + "]Concentrate[/color] effect"
-				},
-				{
-					id = 6,
-					type = "text",
-					icon = "ui/icons/special.png",
-					text = "Has a decent chance to [color=" + this.Const.UI.Color.NegativeValue + "]Distract[/color] or even [color=" + this.Const.UI.Color.NegativeValue + "]Daze[/color] affected target"
-				}
-			]);
-		}
-		else 
-		{
-		    ret.push({
-				id = 6,
-				type = "text",
-				icon = "ui/icons/special.png",
-				text = "Has a small chance to [color=" + this.Const.UI.Color.NegativeValue + "]Distract[/color] affected target"
-			});
-		}
+	    ret.push({
+			id = 6,
+			type = "text",
+			icon = "ui/icons/special.png",
+			text = "Has a small chance to [color=" + this.Const.UI.Color.NegativeValue + "]Distract[/color] affected target"
+		});
 		
 		return ret;
 	}
@@ -138,11 +116,6 @@ this.mc_GEO_earthquake <- this.inherit("scripts/skills/mc_magic_skill", {
 		}
 
 		local chance = this.m.DazeChance;
-
-		if (this.m.IsEnhanced)
-		{
-			chance *= 1.5;
-		}
 		
 		if (this.Math.rand(1, 100) > this.m.DazeChance)
 		{
@@ -151,7 +124,7 @@ this.mc_GEO_earthquake <- this.inherit("scripts/skills/mc_magic_skill", {
 		
 		local effect = this.Math.rand(1, 3);
 		
-		if (!_target.getCurrentProperties().IsImmuneToStun && this.m.IsEnhanced && effect == 1)
+		if (!_target.getCurrentProperties().IsImmuneToStun && effect == 1)
 		{
 			_target.getSkills().add(this.new("scripts/skills/effects/dazed_effect"));
 			
@@ -224,7 +197,6 @@ this.mc_GEO_earthquake <- this.inherit("scripts/skills/mc_magic_skill", {
 		}
 		
 		this.getContainer().setBusy(false);
-		this.m.IsEnhanced = true;
 		return true;
 	}
 	

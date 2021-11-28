@@ -144,7 +144,7 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 			}
 		]);
 
-		local e = this.getContainer().getSkillByID("special.mc_focus");
+		/*local e = this.getContainer().getSkillByID("special.mc_focus");
 
 		if (e != null)
 		{
@@ -162,9 +162,9 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 					text = "Can penetrate shield and hit the shieldbearer"
 				}
 			]);
-		}
+		}*/
 
-		e = this.getContainer().getSkillByID("effects.mc_stored_energy");
+		local e = this.getContainer().getSkillByID("effects.mc_stored_energy");
 
 		if (e != null)
 		{
@@ -283,12 +283,12 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 
 		_info.TargetEntity.getItems().onShieldHit(_info.User, this);
 
-		if (_info.Skill.m.IsEnhanced)
+		if (this.Math.rand(1, 100) <= 50)
 		{
 			_info.Container <- _info.Skill.getContainer();
 			_info.DistanceToTarget <- _info.User.getTile().getDistanceTo(_info.TargetEntity.getTile());
 			_info.Properties <- _info.Container.buildPropertiesForUse(_info.Skill, _info.TargetEntity);
-			_info.Properties.DamageTotalMult *= 0.5;
+			_info.Properties.DamageTotalMult *= 0.33;
 			_info.Skill.onScheduledTargetHit(_info);
 			_info.Skill.m.IsEnhanced = false;
 		}
