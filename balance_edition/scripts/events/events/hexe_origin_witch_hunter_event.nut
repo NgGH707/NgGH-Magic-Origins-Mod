@@ -118,6 +118,8 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 			return;
 		}
 
+		return;
+
 		local brothers = this.World.getPlayerRoster().getAll();
 		local Hexe = 0;
 

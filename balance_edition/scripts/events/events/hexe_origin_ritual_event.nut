@@ -344,6 +344,8 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 
 	function getAmbushChance()
 	{
+		return 0;
+
 		local playerTile = this.World.State.getPlayer().getTile();
 		local towns = this.World.EntityManager.getSettlements();
 		local nearest = 9999;

@@ -57,7 +57,7 @@ this.mc_concentrate <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/bravery.png",
-				text = "Grant [color=" + this.Const.UI.Color.PositiveValue + "]Concentrate[/color]"
+				text = "Grant [color=" + this.Const.UI.Color.PositiveValue + "]Concentrate[/color] which gives [color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color] Resolve per stack"
 			}
 		];
 	}

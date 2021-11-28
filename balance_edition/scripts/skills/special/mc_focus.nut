@@ -36,7 +36,7 @@ this.mc_focus <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/bravery.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + (this.m.Count * 5) + "[/color] Resolve"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + (this.m.Count * 5) + "%[/color] Resolve"
 			}
 		];
 	}

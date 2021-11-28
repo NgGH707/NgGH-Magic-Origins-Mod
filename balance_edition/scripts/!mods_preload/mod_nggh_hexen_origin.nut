@@ -27,40 +27,36 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		VisibilityMult = 1.0,
 		VisionMult = 1.0,
 		Body = "figure_noble_02",
-		MaxR = 530,
-		MinR = 75,
+		Fixed = [],
+		MaxR = 650,
 		Troops = [
 			{
-				Weight = 55,
+				Weight = 59,
+				Types = [
+					{				
+						MinR = 320,
+						Type = gt.Const.World.Spawn.Troops.MercenaryLOW,
+						Cost = 20
+					},
+					{
+						MinR = 600,
+						Type = gt.Const.World.Spawn.Troops.Mercenary,
+						Cost = 30
+					}
+				]
+			},
+			{
+				Weight = 18,
 				Types = [
 					{
-						MaxR = 200,
-						Type = this.Const.World.Spawn.Troops.MercenaryLOW,
+						Type = gt.Const.World.Spawn.Troops.LegendPeasantWitchHunter,
 						Cost = 18
 					},
 					{
-						MinR = 100,
-						Type = this.Const.World.Spawn.Troops.Mercenary,
-						Cost = 25
-					}
-				]
-			},
-			{
-				Weight = 15,
-				Types = [
-					{
-						MinR = 20,
-						Type = this.Const.World.Spawn.Troops.LegendPeasantWitchHunter,
-						Cost = 20
-					}
-				]
-			},
-			{
-				Weight = 15,
-				Types = [
-					{
-						Type = this.Const.World.Spawn.Troops.LegendPeasantMonk,
-						Cost = 20
+						MinR = 600,
+						Type = gt.Const.World.Spawn.Troops.MasterArcher,
+						Cost = 40,
+						Roll = true
 					}
 				]
 			},
@@ -68,35 +64,58 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				Weight = 5,
 				Types = [
 					{
-						Type = this.Const.World.Spawn.Troops.HedgeKnight,
-						Cost = 40
+						Type = gt.Const.World.Spawn.Troops.Wardog,
+						Cost = 5
+					}
+				]
+			},
+			{
+				Weight = 5,
+				MinR = 600,
+				Types = [
+					{
+						Type = gt.Const.World.Spawn.Troops.MasterArcher,
+						Cost = 40,
+						Roll = true
+					}
+				]
+			},
+			{
+				Weight = 12,
+				MinR = 150,
+				Types = [
+					{
+						Type = gt.Const.World.Spawn.Troops.LegendPeasantMinstrel,
+						Cost = 20
 					},
 					{
-						Type = this.Const.World.Spawn.Troops.Swordmaster,
-						Cost = 40
+						Type = gt.Const.World.Spawn.Troops.LegendPeasantMonk,
+						Cost = 20
+					},
+				]
+			},
+			{
+				Weight = 1,
+				MinR = 600,
+				Types = [
+					{
+						Type = gt.Const.World.Spawn.Troops.HedgeKnight,
+						Cost = 40,
+						Roll = true
 					}
 				]
 			},
 			{
-				Weight = 5,
+				Weight = 1,
+				MinR = 600,
 				Types = [
 					{
-						MaxR = 80,
-						Type = this.Const.World.Spawn.Troops.MasterArcher,
-						Cost = 40
+						Type = gt.Const.World.Spawn.Troops.Swordmaster,
+						Cost = 40,
+						Roll = true
 					}
 				]
-			},
-			{
-				Weight = 5,
-				Types = [
-					{
-						MaxR = 80,
-						Type = this.Const.World.Spawn.Troops.Wardog,
-						Cost = 8
-					}
-				]
-			},
+			}
 		]
 	};
 
