@@ -29,53 +29,34 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		Body = "figure_noble_02",
 		MaxR = 530,
 		MinR = 75,
-		Fixed = [
-			{
-				Weight = 100,
-				Type = this.Const.World.Spawn.Troops.LegendPeasantWitchHunter,
-				Cost = 20
-			}
-		],
 		Troops = [
 			{
-				Weight = 60,
+				Weight = 55,
 				Types = [
 					{
-						MaxR = 400,
+						MaxR = 200,
 						Type = this.Const.World.Spawn.Troops.MercenaryLOW,
 						Cost = 18
 					},
 					{
+						MinR = 100,
 						Type = this.Const.World.Spawn.Troops.Mercenary,
 						Cost = 25
 					}
 				]
 			},
 			{
-				Weight = 5,
-				Types = [
-					{
-						Type = this.Const.World.Spawn.Troops.Wardog,
-						Cost = 8
-					}
-				]
-			},
-			{
 				Weight = 15,
 				Types = [
 					{
+						MinR = 20,
 						Type = this.Const.World.Spawn.Troops.LegendPeasantWitchHunter,
 						Cost = 20
-					},
-					{
-						Type = this.Const.World.Spawn.Troops.MasterArcher,
-						Cost = 40
 					}
 				]
 			},
 			{
 				Weight = 15,
-				MinR = 0.5 * 385,
 				Types = [
 					{
 						Type = this.Const.World.Spawn.Troops.LegendPeasantMonk,
@@ -95,7 +76,27 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 						Cost = 40
 					}
 				]
-			}
+			},
+			{
+				Weight = 5,
+				Types = [
+					{
+						MaxR = 80,
+						Type = this.Const.World.Spawn.Troops.MasterArcher,
+						Cost = 40
+					}
+				]
+			},
+			{
+				Weight = 5,
+				Types = [
+					{
+						MaxR = 80,
+						Type = this.Const.World.Spawn.Troops.Wardog,
+						Cost = 8
+					}
+				]
+			},
 		]
 	};
 

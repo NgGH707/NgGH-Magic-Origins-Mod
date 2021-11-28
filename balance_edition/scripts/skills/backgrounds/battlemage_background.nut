@@ -144,6 +144,11 @@ this.battlemage_background <- this.inherit("scripts/skills/backgrounds/mc_mage_b
 		}
 	}
 
+	function onBuildDescription()
+	{
+		return "{%name% appears distant, barely concious of the outside world. There is a whole universe unfolding behind those eyes, and at times the trance drives limbs to move and utterances to spill forth.  It can be unerving, but at times the serenity of it all soothes you and draws you into the trance state. }";
+	}
+
 	function setGender( _gender = -1 )
 	{
 		local r = _gender;

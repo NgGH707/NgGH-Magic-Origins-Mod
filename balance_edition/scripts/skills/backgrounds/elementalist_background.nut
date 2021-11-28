@@ -154,6 +154,11 @@ this.elementalist_background <- this.inherit("scripts/skills/backgrounds/mc_mage
 		this.addBackgroundType(this.Const.BackgroundType.Female);
 	}
 
+	function onBuildDescription()
+	{
+		return "{ The air around %name% seems thicker, almost charged. It makes breathing itself difficult. %name% doesn't seem to mind though. Instead, %name%'s eyes reflects a strength of spirit able to bind the laws of nature themselves. }";
+	}
+
 	function onChangeAttributes()
 	{
 		local c = {

@@ -10,7 +10,7 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		this.m.ID = "actives.mc_lightning";
 		this.m.Name = "Lightning Strike";
-		this.m.Description = "Call down a lightning strike to electrocute your target. Can be enhanced to summon more than one strike. Damage based on resolve, deal reduced damage if you don\'t have a magic staff.";
+		this.m.Description = "Call down a lightning strike to electrocute your target. Damage based on resolve, deal reduced damage if you don\'t have a magic staff.";
 		this.m.KilledString = "Electrocuted";
 		this.m.Icon = "skills/active_216.png";
 		this.m.IconDisabled = "skills/active_216_sw.png";
@@ -160,7 +160,7 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 		if (_skill == this)
 		{
 			_properties.DamageRegularMin += 15;
-			_properties.DamageRegularMax += 40;
+			_properties.DamageRegularMax += 35;
 			_properties.DamageArmorMult *= 0.0;
 			_properties.IsIgnoringArmorOnAttack = true;
 			_properties.MeleeSkill += 999;
