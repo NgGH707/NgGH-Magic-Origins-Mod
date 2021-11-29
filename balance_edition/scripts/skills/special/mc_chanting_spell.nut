@@ -18,6 +18,7 @@ this.mc_chanting_spell <- this.inherit("scripts/skills/skill", {
 		this.m.Type = this.Const.SkillType.StatusEffect;
 		this.m.IsActive = false;
 		this.m.IsStacking = false;
+		this.m.IsHidden = false;
 		this.m.IsRemovedAfterBattle = true;
 	}
 
@@ -76,7 +77,7 @@ this.mc_chanting_spell <- this.inherit("scripts/skills/skill", {
 			"effects.sleeping",
 		];
 
-		foreach (idx, e in effects) 
+		foreach ( e in effects) 
 		{
 		    if (this.getContainer().hasSkill(e))
 			{

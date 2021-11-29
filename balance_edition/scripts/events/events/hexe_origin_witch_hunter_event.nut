@@ -113,12 +113,12 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 
 	function onUpdateScore()
 	{
+		return;
+
 		if (this.World.getTime().Days < 30)
 		{
 			return;
 		}
-
-		return;
 
 		local brothers = this.World.getPlayerRoster().getAll();
 		local Hexe = 0;

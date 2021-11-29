@@ -180,7 +180,7 @@ this.elementalist_background <- this.inherit("scripts/skills/backgrounds/mc_mage
 			],
 			RangedSkill = [
 				5,
-				10
+				15
 			],
 			MeleeDefense = [
 				0,

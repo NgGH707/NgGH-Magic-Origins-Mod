@@ -109,10 +109,15 @@ this.mc_magic_skill <- this.inherit("scripts/skills/skill", {
 			}
 		}
 
-		if (this.m.IsOnlyInCalculation && this.m.IsRanged && this.m.IsIgnoreBlockTarget && this.m.IsShowingProjectile)
+		/*if (this.m.IsOnlyInCalculation && this.m.IsRanged && this.m.IsIgnoreBlockTarget && this.m.IsShowingProjectile)
 		{
 			_properties.RangedSkill += 15;
 			_properties.DamageTotalMult /= 0.75;
+		}*/
+
+		if (this.m.IsIgnoreBlockTarget)
+		{
+			_properties.RangedAttackBlockedChanceMult = 0.0;
 		}
 	}
 
@@ -133,7 +138,7 @@ this.mc_magic_skill <- this.inherit("scripts/skills/skill", {
 		}
 	}
 	
-	function attackEntity( _user, _targetEntity, _allowDiversion = true )
+	/*function attackEntity( _user, _targetEntity, _allowDiversion = true )
 	{	
 		this.m.IsOnlyInCalculation = true;
 
@@ -156,7 +161,7 @@ this.mc_magic_skill <- this.inherit("scripts/skills/skill", {
 		local ret = this.skill.attackEntity(_user, _targetEntity, _allowDiversion);
 		this.m.IsOnlyInCalculation = false;
 		return ret;
-	}
+	}*/
 
 	function getCursorForTile( _tile )
 	{

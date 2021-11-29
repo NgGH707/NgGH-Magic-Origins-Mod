@@ -88,19 +88,19 @@ this.mc_siphon_strength_master_effect <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/ranged_skill.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + mod + "%[/color] Resolve"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + mod + "[/color] Resolve"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/melee_defense.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + mod + "%[/color] Resolve"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + mod + "[/color] Resolve"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/ranged_defense.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + mod + "%[/color] Resolve"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + mod + "[/color] Resolve"
 			}
 		]);
 

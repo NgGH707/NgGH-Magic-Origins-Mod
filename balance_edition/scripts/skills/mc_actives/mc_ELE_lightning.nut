@@ -5,8 +5,8 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 			"sounds/combat/dlc2/legendary_lightning_02.wav"
 		],
 		IsChained = false,
-		AdditionalAccuracy = 10,
-		AdditionalHitChance = -4
+		AdditionalAccuracy = 0,
+		AdditionalHitChance = -5
 	},
 	function create()
 	{

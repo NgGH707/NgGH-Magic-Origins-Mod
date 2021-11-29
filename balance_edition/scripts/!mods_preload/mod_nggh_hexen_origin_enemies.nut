@@ -415,7 +415,6 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 	};
 
 	local bandits = [
-		"legend_bandit_veteran",
 		"legend_bandit_warlord",
 		"bandit_leader",
 		"nomad_leader"
@@ -562,6 +561,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 		"legend_noble_fencer",
 		"noble_sergeant",
 		"legend_peasant_squire",
+		"legend_bandit_veteran"
 	];
 
 	::mods_hookExactClass("entity/tactical/humans/gladiator", function(obj) {

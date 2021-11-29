@@ -50,14 +50,14 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		this.mc_magic_skill.onAfterUpdate(_properties);
 
-		if (this.getContainer().hasSkill("special.mc_chanting"))
+		if (!this.getContainer().hasSkill("special.mc_chanting"))
 		{
-			this.m.FatigueCostMult /= 2;
 			this.m.ActionPointCost = 7;
 			this.m.IsTargeted = false;
 		}
 		else 
 		{
+			this.m.FatigueCostMult /= 2;
 			this.m.ActionPointCost = 7;
 			this.m.IsTargeted = true;
 		}
@@ -163,10 +163,10 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 
 		this.spawnIcon("active_mc_06", _user.getTile());
 		local tiles = this.getAffectedTiles(_targetTile);
-
+		this.getContainer().setBusy(true);
 		foreach (i, tile in tiles)
 		{
-			this.Time.scheduleEvent(this.TimeUnit.Real, 250 * i + 150, function ( _data )
+			this.Time.scheduleEvent(this.TimeUnit.Real, 300 * i + 150, function ( _data )
 			{
 				switch (this.Math.rand(1, 3)) 
 				{
@@ -180,6 +180,11 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 
 			    default:
 				_data.Skill.spawnThunder(_data.User, _data.Tile);  
+				}
+
+				if (tiles.len() == i - 1)
+				{
+					_data.Skill.getContainer().setBusy(false);
 				}
 			},
 			{

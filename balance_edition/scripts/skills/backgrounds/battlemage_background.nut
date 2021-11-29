@@ -198,7 +198,7 @@ this.battlemage_background <- this.inherit("scripts/skills/backgrounds/mc_mage_b
 			],
 			RangedSkill = [
 				11,
-				7
+				11
 			],
 			MeleeDefense = [
 				5,

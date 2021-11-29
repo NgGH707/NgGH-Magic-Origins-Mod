@@ -73,7 +73,7 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 
 	::mods_hookExactClass("skills/perks/perk_nine_lives", function(obj) 
 	{
-		obj.m.ShowTotalLives = false;
+		obj.m.ShowTotalLives <- false;
 		obj.onAdded <- function()
 		{
 			local actor = this.getContainer().getActor();

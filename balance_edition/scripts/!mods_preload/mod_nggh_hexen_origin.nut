@@ -34,30 +34,23 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				Weight = 59,
 				Types = [
 					{				
-						MinR = 320,
+						MaxR = 320,
 						Type = gt.Const.World.Spawn.Troops.MercenaryLOW,
 						Cost = 20
 					},
 					{
-						MinR = 600,
 						Type = gt.Const.World.Spawn.Troops.Mercenary,
 						Cost = 30
 					}
 				]
 			},
 			{
-				Weight = 18,
+				Weight = 21,
 				Types = [
 					{
 						Type = gt.Const.World.Spawn.Troops.LegendPeasantWitchHunter,
 						Cost = 18
 					},
-					{
-						MinR = 600,
-						Type = gt.Const.World.Spawn.Troops.MasterArcher,
-						Cost = 40,
-						Roll = true
-					}
 				]
 			},
 			{
@@ -66,17 +59,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 					{
 						Type = gt.Const.World.Spawn.Troops.Wardog,
 						Cost = 5
-					}
-				]
-			},
-			{
-				Weight = 5,
-				MinR = 600,
-				Types = [
-					{
-						Type = gt.Const.World.Spawn.Troops.MasterArcher,
-						Cost = 40,
-						Roll = true
 					}
 				]
 			},
@@ -92,6 +74,17 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 						Type = gt.Const.World.Spawn.Troops.LegendPeasantMonk,
 						Cost = 20
 					},
+				]
+			},
+			{
+				Weight = 1,
+				MinR = 600,
+				Types = [
+					{
+						Type = gt.Const.World.Spawn.Troops.MasterArcher,
+						Cost = 40,
+						Roll = true
+					}
 				]
 			},
 			{

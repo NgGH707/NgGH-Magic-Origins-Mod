@@ -2,7 +2,7 @@ this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 	m = {
 		ChanceBonus = 0
 		AdditionalAccuracy = 0,
-		AdditionalHitChance = -3
+		AdditionalHitChance = -5
 	},
 	function create()
 	{
@@ -101,6 +101,7 @@ this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 		{
 			_properties.RangedSkill += this.m.AdditionalAccuracy;
 			_properties.HitChanceAdditionalWithEachTile += this.m.AdditionalHitChance;
+			_properties.RangedAttackBlockedChanceMult = 0.0;
 		}
 	}
 

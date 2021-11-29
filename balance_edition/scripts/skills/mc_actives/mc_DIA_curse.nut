@@ -168,6 +168,7 @@ this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 			_properties.DamageArmorMult = 1.0;
 			_properties.RangedSkill += this.m.AdditionalAccuracy;
 			_properties.HitChanceAdditionalWithEachTile += this.m.AdditionalHitChance;
+			_properties.RangedAttackBlockedChanceMult = 0.0;
 		}
 	}
 

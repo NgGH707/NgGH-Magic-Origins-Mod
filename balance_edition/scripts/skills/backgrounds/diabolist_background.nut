@@ -181,8 +181,8 @@ this.diabolist_background <- this.inherit("scripts/skills/backgrounds/mc_mage_ba
 				5
 			],
 			RangedSkill = [
-				11,
-				7
+				7,
+				15
 			],
 			MeleeDefense = [
 				0,
