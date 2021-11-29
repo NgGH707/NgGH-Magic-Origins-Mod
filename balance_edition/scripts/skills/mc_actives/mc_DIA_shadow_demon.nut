@@ -103,7 +103,7 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 			ret.push({
 				id = 10,
 				type = "text",
-				icon = "ui/tooltips/health.png",
+				icon = "ui/icons/health.png",
 				text = "Give your shadow demon an extra life"
 			});
 		}

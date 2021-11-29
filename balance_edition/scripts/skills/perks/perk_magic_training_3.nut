@@ -45,7 +45,7 @@ this.perk_magic_training_3 <- this.inherit("scripts/skills/skill", {
 		}
 
 		local bonus = actor.getBaseProperties().getBravery();
-		return this.Math.max(5, this.Math.floor(bonus / 3));
+		return this.Math.max(5, this.Math.floor(bonus / 4));
 	}
 
 	function getTooltip()

@@ -1,7 +1,7 @@
 this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 	m = {
 		AdditionalAccuracy = 0,
-		AdditionalHitChance = 0,
+		AdditionalHitChance = -5,
 		ShieldDamage = 5, 
 		SoundOnMissTarget = [
 			"sounds/combat/dlc2/throwing_spear_miss_01.wav",
@@ -86,13 +86,13 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 			}
 		]);
 
-		if (10 + this.m.AdditionalAccuracy >= 0)
+		if (this.m.AdditionalAccuracy >= 0)
 		{
 			ret.push({
 				id = 7,
 				type = "text",
 				icon = "ui/icons/hitchance.png",
-				text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]+" + (10 + this.m.AdditionalAccuracy) + "%[/color] chance to hit, and [color=" + this.Const.UI.Color.NegativeValue + "]" + (-5 + this.m.AdditionalHitChance) + "%[/color] per tile of distance"
+				text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]+" + this.m.AdditionalAccuracy + "%[/color] chance to hit, and [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.AdditionalHitChance + "%[/color] per tile of distance"
 			});
 		}
 		else
@@ -101,7 +101,7 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 				id = 7,
 				type = "text",
 				icon = "ui/icons/hitchance.png",
-				text = "Has [color=" + this.Const.UI.Color.NegativeValue + "]+" + (10 + this.m.AdditionalAccuracy) + "%[/color] chance to hit, and [color=" + this.Const.UI.Color.NegativeValue + "]" + (-5 + this.m.AdditionalHitChance) + "%[/color] per tile of distance"
+				text = "Has [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.AdditionalHitChance + "%[/color] chance to hit per tile of distance"
 			});
 		}
 
@@ -312,11 +312,12 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 45;
-			_properties.DamageRegularMax += 65;
+			_properties.DamageRegularMin += 35;
+			_properties.DamageRegularMax += 60;
 			_properties.DamageArmorMult *= 0.75;
 			_properties.MeleeSkill += 20;
-			_properties.RangedSkill += 10 + this.m.AdditionalAccuracy;
+			_properties.RangedSkill += this.m.AdditionalAccuracy;
+			_properties.HitChanceAdditionalWithEachTile += this.m.AdditionalHitChance;
 				
 			if (_targetEntity != null)
 			{
@@ -328,15 +329,9 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 				}
 				else
 				{
-				    _properties.DamageRegularMin += 10;
+				    _properties.DamageRegularMin += 5;
 					_properties.DamageRegularMax += 10;
 				}
-			}
-
-			if (this.getContainer().hasSkill("special.mc_focus"))
-			{
-				_properties.DamageDirectAdd += 0.2;
-				_properties.DamageArmorMult += 0.1;
 			}
 
 			_properties.DamageTotalMult *= this.getBonusDamageFromResolve(_properties);

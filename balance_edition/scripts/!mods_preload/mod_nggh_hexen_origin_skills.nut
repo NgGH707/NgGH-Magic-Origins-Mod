@@ -70,6 +70,54 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 		});
 	}
 
+
+	::mods_hookExactClass("skills/perks/perk_nine_lives", function(obj) 
+	{
+		obj.m.ShowTotalLives = false;
+		obj.onAdded <- function()
+		{
+			local actor = this.getContainer().getActor().get();
+
+			if ("NineLivesCount" in actor.m)
+			{
+				this.setUpAsStatusEffect();
+			}
+		};
+		obj.setUpAsStatusEffect <- function()
+		{
+			this.m.Type = this.Const.SkillType.Perk | this.Const.SkillType.StatusEffect;
+			this.m.ShowTotalLives = true;
+		}
+		obj.getTooltip <- function()
+		{
+			if (!this.m.ShowTotalLives)
+			{
+				return [];
+			}
+
+			local actor = this.getContainer().getActor();
+
+			return [
+				{
+					id = 1,
+					type = "title",
+					text = this.getName()
+				},
+				{
+					id = 2,
+					type = "description",
+					text = this.getDescription()
+				},
+				{
+					id = 6,
+					type = "text",
+					icon = "ui/icons/health.png",
+					text = "Lives left: [color=" + this.Const.UI.Color.PositiveValue + "]" + actor.m.NineLivesCount + "[/color]"
+				}
+			];
+		};
+	});
+
 	//Stop hexe background from getting this skill
 	::mods_hookExactClass("skills/actives/legend_hex_skill", function(obj) 
 	{

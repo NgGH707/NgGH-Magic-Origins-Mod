@@ -21,7 +21,7 @@ this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 		];
 		this.m.IsUsingActorPitch = true;
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.TemporaryInjury + 1;
+		this.m.Order = this.Const.SkillOrder.TemporaryInjury + 2;
 		this.m.IsActive = true;
 		this.m.IsSerialized = false;
 		this.m.IsTargeted = true;

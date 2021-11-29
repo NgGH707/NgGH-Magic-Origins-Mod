@@ -26,7 +26,7 @@ this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
 		
 		if (rolled > chance)
 		{
-			this.Tactical.EventLog.logEx("Hope you get lucky next time " + " (Chance: " + chance + ", Rolled: " + rolled + ")");
+			this.Tactical.EventLog.log("Hope you get lucky next time " + " (Chance: " + chance + ", Rolled: " + rolled + ")");
 		}
 		else
 		{
@@ -292,9 +292,9 @@ this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
 			}
 
 			//item.drop(tile);
-			tile.Items.push(this);
+			tile.Items.push(item);
 			tile.IsContainingItems = true;
-			item.m.Tile = _tile;
+			item.m.Tile = tile;
 			this.Tactical.EventLog.logEx("[color=" + this.Const.UI.Color.NegativeValue + "]Wow!!![/color] you get [color=#0b0084]" + name + "[/color] as bonus loot due to " + this.Const.UI.getColorizedEntityName(actor) + "\'s Lucky rune");
 		}
 	}

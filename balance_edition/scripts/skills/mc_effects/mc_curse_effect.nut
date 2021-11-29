@@ -55,7 +55,7 @@ this.mc_curse_effect <- this.inherit("scripts/skills/skill", {
 
 	function getName()
 	{
-		return this.m.Name + " (" + this.getDamage() + " damage)";
+		return this.m.Name + " (" + this.Math.floor(this.getDamage()) + " damage)";
 	}
 
 	function getDescription()

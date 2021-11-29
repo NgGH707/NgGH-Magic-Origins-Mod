@@ -27,7 +27,7 @@ this.mc_DIA_curse <- this.inherit("scripts/skills/mc_magic_skill", {
 			"sounds/enemies/dlc2/hexe_hex_damage_04.wav"
 		];
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.TemporaryInjury + 2;
+		this.m.Order = this.Const.SkillOrder.TemporaryInjury + 1;
 		this.m.Delay = 500;
 		this.m.IsSerialized = false;
 		this.m.IsActive = true;

@@ -38,7 +38,6 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsDoingForwardMove = true;
 		this.m.IsShieldwallRelevant = false;
 		this.m.IsIgnoreBlockTarget = true;
-		this.m.IsTargetingActor = false;
 		this.m.IsOnlyInCalculation = true;
 		this.m.IsRanged = true;
 		this.m.InjuriesOnBody = this.Const.Injury.BurningBody;
@@ -143,8 +142,8 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 20;
-			_properties.DamageRegularMax += 40;
+			_properties.DamageRegularMin += 15;
+			_properties.DamageRegularMax += 35;
 			_properties.DamageArmorMult *= 0.0;
 			_properties.IsIgnoringArmorOnAttack = true;
 			_properties.RangedSkill += this.m.AdditionalAccuracy;
