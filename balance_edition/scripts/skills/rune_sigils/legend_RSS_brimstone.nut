@@ -1,5 +1,7 @@
 this.legend_RSS_brimstone <- this.inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		IsForceEnabled = false,
+	},
 	function create()
 	{
 		this.m.ID = "special.legend_RSS_brimstone";
@@ -15,7 +17,10 @@ this.legend_RSS_brimstone <- this.inherit("scripts/skills/skill", {
 
 	function onAfterUpdate( _properties )
 	{
-		if (this.getItem() == null)
+		if (this.m.IsForceEnabled)
+		{
+		}
+		else if (this.getItem() == null)
 		{
 			return;
 		}

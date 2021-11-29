@@ -1,5 +1,7 @@
 this.legend_RSA_repulsion <- this.inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		IsForceEnabled = false
+	},
 	function create()
 	{
 		this.m.ID = "special.legend_RSA_repulsion";
@@ -15,7 +17,10 @@ this.legend_RSA_repulsion <- this.inherit("scripts/skills/skill", {
 
 	function onAfterUpdate( _properties )
 	{
-		if (this.getItem() == null)
+		if (this.m.IsForceEnabled)
+		{
+		}
+		else if (this.getItem() == null)
 		{
 			return;
 		}
@@ -25,7 +30,15 @@ this.legend_RSA_repulsion <- this.inherit("scripts/skills/skill", {
 
 	function onDamageReceived( _attacker, _damageHitpoints, _damageArmor )
 	{
-		if (this.getItem() == null || _attacker == null)
+		if (_attacker == null)
+		{
+			return;
+		}
+
+		if (this.m.IsForceEnabled)
+		{
+		}
+		else if (this.getItem() == null)
 		{
 			return;
 		}

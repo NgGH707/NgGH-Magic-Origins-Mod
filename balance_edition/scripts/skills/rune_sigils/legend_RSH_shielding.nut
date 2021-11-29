@@ -5,7 +5,8 @@ this.legend_RSH_shielding <- this.inherit("scripts/skills/skill", {
 		HitpointsThreshold = 50,
 		IsActivated = true,
 		IsRegenerate = false,
-		Cooldown = 2
+		Cooldown = 2,
+		IsForceEnabled = false
 	},
 	
 	function getCooldown()
@@ -47,6 +48,7 @@ this.legend_RSH_shielding <- this.inherit("scripts/skills/skill", {
 		this.m.IconMini = "effect_mc_02_mini";
 		this.m.Overlay = "effect_mc_02";
 		this.m.Type = this.Const.SkillType.StatusEffect;
+		this.m.Order = this.Const.SkillOrder.VeryLast;
 		this.m.IsActive = false;
 		this.m.IsSerialized = false;
 	}

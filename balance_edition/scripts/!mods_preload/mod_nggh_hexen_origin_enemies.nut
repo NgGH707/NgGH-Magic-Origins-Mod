@@ -323,5 +323,268 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 		});
 	}
 
+	local runes_melee = [
+		[
+			"legend_RSH_shielding"
+		],
+		[
+			"legend_RSA_diehard",
+			"legend_RSA_repulsion",
+			"legend_RSA_thorns"
+		],
+		[
+			"legend_RSW_corrosion",
+			"legend_RSW_flame",
+			"legend_RSW_precision",
+			"legend_RSW_steadfast",
+		],
+	];
+	local runes_ranged = [
+		[
+			"legend_RSH_shielding"
+		],
+		[
+			"legend_RSA_diehard",
+			"legend_RSA_repulsion",
+		],
+		[
+			"legend_RSW_corrosion",
+			"legend_RSW_flame",
+			"legend_RSW_precision",
+			"legend_RSW_steadfast",
+			"legend_RSW_snipping"
+		],
+	];
+	local rune_weak = [
+		[],
+		[
+			"legend_RSA_repulsion",
+		],
+		[
+			"legend_RSW_corrosion",
+			"legend_RSW_precision",
+		],
+	];
+	local getRandomeWeakRune = function( _items )
+	{
+		local valid = [];
+
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Body) == null)
+		{
+			valid.extend(rune_weak[1]);
+		}
+
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
+		{
+			valid.extend(rune_weak[2]);
+		}
+
+		return valid[this.Math.rand(0, valid.len() - 1)];
+	};
+	local getRandomeRuneForMelee = function( _items )
+	{
+		local valid = [];
+
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Body) == null)
+		{
+			valid.extend(runes_melee[1]);
+		}
+
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
+		{
+			valid.extend(runes_melee[2]);
+		}
+
+		return valid[this.Math.rand(0, valid.len() - 1)];
+	};
+	local getRandomeRuneForRanged = function( _items )
+	{
+		local valid = [];
+
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Body) == null)
+		{
+			valid.extend(runes_ranged[1]);
+		}
+
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
+		{
+			valid.extend(runes_ranged[2]);
+		}
+
+		return valid[this.Math.rand(0, valid.len() - 1)];
+	};
+
+	local bandits = [
+		"legend_bandit_veteran",
+		"legend_bandit_warlord",
+		"bandit_leader",
+		"nomad_leader"
+	];
+	foreach ( name in bandits )
+	{
+		::mods_hookExactClass("entity/tactical/enemies/" + name, function(obj) {
+			local ws_assignRandomEquipment = obj.assignRandomEquipment;
+			obj.assignRandomEquipment = function()
+			{
+				ws_assignRandomEquipment();
+
+				if (this.World.getTime().Days > 30)
+				{
+					local days = this.World.getTime().Days;
+					local chance = 30;
+
+					if (days > 75) chance += days - 75;
+					if (this.Math.rand(1, 100) <= chance) 
+					{
+						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForMelee(this.m.Items));
+						rune.m.IsForceEnabled = true;
+						this.m.Skills.add(rune);
+					}
+				}
+			}
+
+			local ws_makeMiniBoss = ::mods_getMember(obj, "makeMiniboss");
+			obj.makeMiniboss = function()
+			{
+				ws_makeMiniBoss();
+
+				if (this.World.getTime().Days > 30)
+				{
+					if (this.Math.rand(1, 100) <= 50) 
+					{
+						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForMelee(this.m.Items));
+						rune.m.IsForceEnabled = true;
+						this.m.Skills.add(rune);
+					}
+				}
+			}
+		});
+	}
+
+	local strong = [
+		"desert_devil",
+		"executioner",
+		"hedge_knight",
+		"swordmaster",
+		"knight",
+		"officer",
+		"barbarian_chosen",
+	];
+	foreach ( name in strong )
+	{
+		::mods_hookExactClass("entity/tactical/humans/" + name, function(obj) {
+			local ws_assignRandomEquipment = obj.assignRandomEquipment;
+			obj.assignRandomEquipment = function()
+			{
+				ws_assignRandomEquipment();
+
+				if (this.World.getTime().Days > 50)
+				{
+					local days = this.World.getTime().Days;
+					local chance = 15;
+
+					if (days > 100) chance += days - 100;
+					if (this.Math.rand(1, 100) <= chance) 
+					{
+						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForMelee(this.m.Items));
+						rune.m.IsForceEnabled = true;
+						this.m.Skills.add(rune);
+					}
+				}
+			}
+
+			local ws_makeMiniBoss = ::mods_getMember(obj, "makeMiniboss");
+			obj.makeMiniboss = function()
+			{
+				ws_makeMiniBoss();
+
+				if (this.World.getTime().Days > 50)
+				{
+					if (this.Math.rand(1, 100) <= 10) 
+					{
+						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForMelee(this.m.Items));
+						rune.m.IsForceEnabled = true;
+						this.m.Skills.add(rune);
+					}
+				}
+			}
+		});
+	}
+
+	local ranged = [
+		"desert_stalker",
+		"master_archer",
+	];
+	foreach ( name in ranged )
+	{
+		::mods_hookExactClass("entity/tactical/humans/" + name, function(obj) {
+			local ws_assignRandomEquipment = obj.assignRandomEquipment;
+			obj.assignRandomEquipment = function()
+			{
+				ws_assignRandomEquipment();
+
+				if (this.World.getTime().Days > 50)
+				{
+					local days = this.World.getTime().Days;
+					local chance = 15;
+
+					if (days > 100) chance += days - 100;
+					if (this.Math.rand(1, 100) <= chance) 
+					{
+						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForRanged(this.m.Items));
+						rune.m.IsForceEnabled = true;
+						this.m.Skills.add(rune);
+					}
+				}
+			}
+
+			local ws_makeMiniBoss = ::mods_getMember(obj, "makeMiniboss");
+			obj.makeMiniboss = function()
+			{
+				ws_makeMiniBoss();
+
+				if (this.World.getTime().Days > 50)
+				{
+					if (this.Math.rand(1, 100) <= 10) 
+					{
+						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForRanged(this.m.Items));
+						rune.m.IsForceEnabled = true;
+						this.m.Skills.add(rune);
+					}
+				}
+			}
+		});
+	}
+
+	local pretty_strong = [
+		"noble_greatsword",
+		"gladiator",
+		"legend_noble_fencer",
+		"noble_sergeant",
+		"legend_peasant_squire",
+	];
+
+	::mods_hookExactClass("entity/tactical/humans/gladiator", function(obj) {
+		local ws_assignRandomEquipment = obj.assignRandomEquipment;
+		obj.assignRandomEquipment = function()
+		{
+			ws_assignRandomEquipment();
+
+			if (this.World.getTime().Days > 70)
+			{
+				local days = this.World.getTime().Days;
+				local chance = 25;
+
+				if (days > 120) chance += days - 120;
+				if (this.Math.rand(1, 100) <= chance) 
+				{
+					local rune = this.new("scripts/skills/rune_sigils/" + getRandomeWeakRune(this.m.Items));
+					rune.m.IsForceEnabled = true;
+					this.m.Skills.add(rune);
+				}
+			}
+		}
+	});
+
 	delete this.HexenHooks.hookEnemies;
 }

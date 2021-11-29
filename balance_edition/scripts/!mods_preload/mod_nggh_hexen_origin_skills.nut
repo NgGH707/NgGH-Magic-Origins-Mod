@@ -76,18 +76,33 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 		obj.m.ShowTotalLives = false;
 		obj.onAdded <- function()
 		{
-			local actor = this.getContainer().getActor().get();
+			local actor = this.getContainer().getActor();
 
 			if ("NineLivesCount" in actor.m)
 			{
 				this.setUpAsStatusEffect();
 			}
 		};
+		local ws_setSpent = obj.setSpent;
+		obj.setSpent = function(_f)
+		{
+			ws_setSpent(_f);
+
+			if (_f)
+			{
+				local rune = this.getContainer().getSkillByID("special.legend_RSA_diehard");
+				if (rune != null) rune.activate();
+			}
+		}
 		obj.setUpAsStatusEffect <- function()
 		{
 			this.m.Type = this.Const.SkillType.Perk | this.Const.SkillType.StatusEffect;
 			this.m.ShowTotalLives = true;
 		}
+		obj.isHidden <- function()
+		{
+			return this.isSpent();
+		};
 		obj.getTooltip <- function()
 		{
 			if (!this.m.ShowTotalLives)
@@ -112,7 +127,7 @@ this.getroottable().HexenHooks.hookSkills <- function ()
 					id = 6,
 					type = "text",
 					icon = "ui/icons/health.png",
-					text = "Lives left: [color=" + this.Const.UI.Color.PositiveValue + "]" + actor.m.NineLivesCount + "[/color]"
+					text = "Lives left: [color=" + this.Const.UI.Color.PositiveValue + "]" + (actor.m.NineLivesCount + 1) + "[/color]"
 				}
 			];
 		};

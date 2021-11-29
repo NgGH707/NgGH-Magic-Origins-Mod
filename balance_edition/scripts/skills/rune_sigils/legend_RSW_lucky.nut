@@ -1,5 +1,7 @@
 this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		IsForceEnabled = false
+	},
 	function create()
 	{
 		this.m.ID = "special.legend_RSW_lucky";
@@ -15,7 +17,10 @@ this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
 
 	function onTargetKilled( _targetEntity, _skill )
 	{
-		if (this.getItem() == null || _targetEntity.getXPValue() <= 0)
+		if (this.m.IsForceEnabled)
+		{
+		}
+		else if (this.getItem() == null || _targetEntity.getXPValue() <= 0)
 		{
 			return;
 		}

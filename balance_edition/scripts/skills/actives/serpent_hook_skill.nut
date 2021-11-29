@@ -326,8 +326,8 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 		local total_damage = damage * properties.DamageRegularMult;
 		local damage_mult = properties.DamageTotalMult * properties.MeleeDamageMult;
 		local damageArmor = damage * properties.DamageArmorMult;
-		damageArmor = this.Math.max(0, damageArmor + distance * _info.Properties.DamageAdditionalWithEachTile) * damage_mult;
-		total_damage = this.Math.max(0, total_damage + distance * _info.Properties.DamageAdditionalWithEachTile) * damage_mult;
+		damageArmor = this.Math.max(0, damageArmor + distance * properties.DamageAdditionalWithEachTile) * damage_mult;
+		total_damage = this.Math.max(0, total_damage + distance * properties.DamageAdditionalWithEachTile) * damage_mult;
 		total_damage = this.Math.max(0, this.Math.abs(pullToTile.Level - _targetTile.Level) - 1) * this.Const.Combat.FallingDamage + total_damage;
 		local damageDirect = this.Math.minf(1.0, properties.DamageDirectMult * (this.m.DirectDamageMult + properties.DamageDirectAdd));
 

@@ -48,7 +48,7 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.InjuriesOnHead = this.Const.Injury.PiercingHead;
 		this.m.DirectDamageMult = 0.45;
 		this.m.ActionPointCost = 6;
-		this.m.FatigueCost = 20;
+		this.m.FatigueCost = 23;
 		this.m.MaxRangeBonus = 9;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 6;
@@ -254,7 +254,7 @@ this.mc_BAT_silver_lance <- this.inherit("scripts/skills/mc_magic_skill", {
 
 		if (_info.Skill.m.SoundOnHitShield.len() != 0)
 		{
-			this.Sound.play(_info.Skill.m.SoundOnHitShield[this.Math.rand(0, _info.Skill.m.SoundOnHitShield.len() - 1)], this.Const.Sound.Volume.Skill * this.m.SoundVolume, user.getPos());
+			this.Sound.play(_info.Skill.m.SoundOnHitShield[this.Math.rand(0, _info.Skill.m.SoundOnHitShield.len() - 1)], this.Const.Sound.Volume.Skill * _info.Skill.m.SoundVolume, user.getPos());
 		}
 
 		shield.applyShieldDamage(_info.Skill.m.ShieldDamage * mult, _info.Skill.m.SoundOnHitShield.len() == 0);

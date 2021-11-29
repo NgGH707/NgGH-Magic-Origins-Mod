@@ -1,5 +1,7 @@
 this.legend_RSW_corrosion <- this.inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		IsForceEnabled = false
+	},
 	function create()
 	{
 		this.m.ID = "special.legend_RSW_corrosion";
@@ -15,7 +17,10 @@ this.legend_RSW_corrosion <- this.inherit("scripts/skills/skill", {
 
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
-		if (this.getItem() == null)
+		if (this.m.IsForceEnabled)
+		{
+		}
+		else if (this.getItem() == null || _skill == null || !_skill.m.IsWeaponSkill)
 		{
 			return;
 		}

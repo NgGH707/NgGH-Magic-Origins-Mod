@@ -146,7 +146,7 @@ this.mc_BAT_energy_drain <- this.inherit("scripts/skills/mc_magic_skill", {
 			if (this.getContainer().hasSkill("special.mc_focus"))
 			{
 				_properties.DamageRegularMin += 5;
-				_properties.DamageRegularMax += 10;
+				_properties.DamageRegularMax += 5;
 			}
 
 			_properties.DamageTotalMult *= this.getBonusDamageFromResolve(_properties);

@@ -8,11 +8,10 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		this.m.ID = "actives.mc_elemental_storm";
 		this.m.Name = "Elemental Storm";
-		this.m.Description = "Summon a storm of chaotic element to destroy you enemies. Accuracy based on ranged skill. Damage based on resolve, deal reduced damage if you don\'t have a magic staff. Can not be used while engaged in melee.";
+		this.m.Description = "Summon a storm of chaotic element to destroy you enemies. Damage based on resolve, deal reduced damage if you don\'t have a magic staff. Can not be used while engaged in melee.";
 		this.m.KilledString = "Burned, curshed and freezed to death";
 		this.m.Icon = "skills/active_mc_06.png";
 		this.m.IconDisabled = "skills/active_mc_06_sw.png";
-		this.m.Overlay = "active_mc_06";
 		this.m.SoundOnUse = [
 			"sounds/enemies/dlc2/schrat_uproot_01.wav",
 			"sounds/enemies/dlc2/schrat_uproot_02.wav",
@@ -37,13 +36,30 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsConsumeConcentrate = false;
 		this.m.DirectDamageMult = 0.5;
 		this.m.ActionPointCost = 7;
-		this.m.FatigueCost = 45;
+		this.m.FatigueCost = 35;
 		this.m.MinRange = 2;
 		this.m.MaxRange = 4;
 
 		for( local i = 1; i <= 3; i = ++i )
 		{
 			this.m.SnowTiles.push(this.MapGen.get("tactical.tile.snow" + i));
+		}
+	}
+
+	function onAfterUpdate( _properties )
+	{
+		this.mc_magic_skill.onAfterUpdate(_properties);
+
+		if (this.getContainer().hasSkill("special.mc_chanting"))
+		{
+			this.m.FatigueCostMult /= 2;
+			this.m.ActionPointCost = 7;
+			this.m.IsTargeted = false;
+		}
+		else 
+		{
+			this.m.ActionPointCost = 7;
+			this.m.IsTargeted = true;
 		}
 	}
 	
@@ -62,7 +78,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 				id = 9,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Can hit up to 7 targets"
+				text = "Can hit up to 7 targets but requiring to spend a turn to prepare"
 			},
 			{
 				id = 9,
@@ -91,12 +107,6 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 				id = 3,
 				type = "text",
 				text = "[u][size=14]Ice[/size][/u]"
-			},
-			{
-				id = 6,
-				type = "text",
-				icon = "ui/icons/special.png",
-				text = "Always hit"
 			},
 			{
 				id = 8,
@@ -143,6 +153,15 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 
 	function onUse( _user, _targetTile )
 	{
+		if (!this.getContainer().hasSkill("special.mc_chanting"))
+		{
+			local chant = this.new("scripts/skills/special/mc_chanting_spell");
+			chant.setSpell(this);
+			this.getContainer().add(chant);
+			return false;
+		}
+
+		this.spawnIcon("active_mc_06", _user.getTile());
 		local tiles = this.getAffectedTiles(_targetTile);
 
 		foreach (i, tile in tiles)
@@ -170,6 +189,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 			});
 		}
 
+		this.getContainer().removeByID("special.mc_chanting");
 		return true;
 	}
 

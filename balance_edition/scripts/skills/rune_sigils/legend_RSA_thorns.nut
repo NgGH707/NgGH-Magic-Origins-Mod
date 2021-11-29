@@ -1,5 +1,8 @@
 this.legend_RSA_thorns <- this.inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		IsForceEnabled = false,
+		Efficiency = 1.0,
+	},
 	function create()
 	{
 		this.m.ID = "special.legend_RSA_thorns";
@@ -15,7 +18,10 @@ this.legend_RSA_thorns <- this.inherit("scripts/skills/skill", {
 
 	function onUpdate( _properties )
 	{
-		if (this.getItem() == null)
+		if (this.m.IsForceEnabled)
+		{
+		}
+		else if (this.getItem() == null)
 		{
 			return;
 		}
@@ -25,7 +31,15 @@ this.legend_RSA_thorns <- this.inherit("scripts/skills/skill", {
 
 	function onDamageReceived( _attacker, _damageHitpoints, _damageArmor )
 	{
-		if (this.getItem() == null || _attacker == null)
+		if (_attacker == null)
+		{
+			return;
+		}
+
+		if (this.m.IsForceEnabled)
+		{
+		}
+		else if (this.getItem() == null)
 		{
 			return;
 		}
@@ -47,12 +61,12 @@ this.legend_RSA_thorns <- this.inherit("scripts/skills/skill", {
 
 		if (_damageArmor > 0)
 		{
-			local mult = this.Math.rand(35, 65) * 0.01;
+			local mult = this.Math.rand(35, 65) * 0.01 * this.m.Efficiency;
 			local hitInfo = clone this.Const.Tactical.HitInfo;
 			hitInfo.DamageRegular = _damageArmor * mult;
 			hitInfo.DamageArmor = hitInfo.DamageRegular;
 			hitInfo.DamageFatigue = 0;
-			hitInfo.DamageDirect = this.Math.rand(25, 55) * 0.01;
+			hitInfo.DamageDirect = this.Math.rand(25, 55) * 0.01 * this.m.Efficiency;
 			hitInfo.BodyPart = this.Const.BodyPart.Body;
 			hitInfo.BodyDamageMult = 1.0;
 			hitInfo.FatalityChanceMult = 0.0;

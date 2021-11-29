@@ -1,5 +1,7 @@
 this.legend_RSW_unstable <- this.inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		IsForceEnabled = false
+	},
 	function create()
 	{
 		this.m.ID = "special.legend_RSW_unstable";
@@ -20,7 +22,10 @@ this.legend_RSW_unstable <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (this.getItem() == null)
+		if (this.m.IsForceEnabled)
+		{
+		}
+		else if (this.getItem() == null)
 		{
 			return;
 		}
@@ -30,8 +35,8 @@ this.legend_RSW_unstable <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		_hitInfo.DamageRegular *= 3.0;
-		_hitInfo.DamageArmor *= 3.0;
+		_hitInfo.DamageRegular *= 2.0;
+		_hitInfo.DamageArmor *= 2.0;
 		this.spawnIcon("status_effect_106", _targetEntity.getTile());
 		this.Tactical.EventLog.logEx("It\'s a devastating strike thanks to the rune on your weapon");
 	}

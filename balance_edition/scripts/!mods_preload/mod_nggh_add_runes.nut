@@ -123,7 +123,7 @@ this.getroottable().Nggh_MagicConcept.hookAddRunes <- function ()
 				return "This item has the power of the rune sigil of Shielding:\nGrant a [color=" + this.Const.UI.Color.PositiveValue + "]Protective Barrier[/color] that can repel physical attacks.";
 			
 			case 101:
-				return "This item has the power of the rune sigil of Unstable:\nAttacks have [color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] to deal triple the original damage.";
+				return "This item has the power of the rune sigil of Unstable:\nAttacks have [color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] to deal double the original damage.";
 			
 			case 102:
 				return "This item has the power of the rune sigil of Thorns:\n[color=" + this.Const.UI.Color.PositiveValue + "]+25%[/color] Damage taken to your armor.\nReflect [color=" + this.Const.UI.Color.PositiveValue + "]35[/color]-[color=" + this.Const.UI.Color.PositiveValue + "]65%[/color] Damage taken to armor back to the attacker.";
