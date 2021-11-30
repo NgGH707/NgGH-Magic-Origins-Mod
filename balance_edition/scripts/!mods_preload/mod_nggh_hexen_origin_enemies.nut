@@ -356,7 +356,9 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 		],
 	];
 	local rune_weak = [
-		[],
+		[
+			"legend_RSH_shielding"
+		],
 		[
 			"legend_RSA_repulsion",
 		],
@@ -369,49 +371,63 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 	{
 		local valid = [];
 
-		if (_items.getItemAtSlot(this.Const.ItemSlot.Body) == null)
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Body) != null)
 		{
 			valid.extend(rune_weak[1]);
 		}
 
-		if (_items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Mainhand) != null)
 		{
 			valid.extend(rune_weak[2]);
 		}
 
-		return valid[this.Math.rand(0, valid.len() - 1)];
+		return valid.len() == 0 ? null : valid[this.Math.rand(0, valid.len() - 1)];
 	};
 	local getRandomeRuneForMelee = function( _items )
 	{
 		local valid = [];
 
-		if (_items.getItemAtSlot(this.Const.ItemSlot.Body) == null)
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Body) != null)
 		{
 			valid.extend(runes_melee[1]);
 		}
 
-		if (_items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Mainhand) != null)
 		{
 			valid.extend(runes_melee[2]);
 		}
 
-		return valid[this.Math.rand(0, valid.len() - 1)];
+		return valid.len() == 0 ? null : valid[this.Math.rand(0, valid.len() - 1)];
 	};
 	local getRandomeRuneForRanged = function( _items )
 	{
 		local valid = [];
 
-		if (_items.getItemAtSlot(this.Const.ItemSlot.Body) == null)
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Head) != null)
+		{
+			valid.extend(runes_ranged[0]);
+		}
+
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Body) != null)
 		{
 			valid.extend(runes_ranged[1]);
 		}
 
-		if (_items.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
+		if (_items.getItemAtSlot(this.Const.ItemSlot.Mainhand) != null)
 		{
 			valid.extend(runes_ranged[2]);
 		}
 
-		return valid[this.Math.rand(0, valid.len() - 1)];
+		return valid.len() == 0 ? null : valid[this.Math.rand(0, valid.len() - 1)];
+	};
+	local addRune = function(script, actor)
+	{
+		if (script != null)
+		{
+			local rune = this.new("scripts/skills/rune_sigils/" + script);
+			rune.m.IsForceEnabled = true;
+			actor.m.Skills.add(rune);
+		}
 	};
 
 	local bandits = [
@@ -435,9 +451,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					if (days > 75) chance += days - 75;
 					if (this.Math.rand(1, 100) <= chance) 
 					{
-						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForMelee(this.m.Items));
-						rune.m.IsForceEnabled = true;
-						this.m.Skills.add(rune);
+						addRune(getRandomeRuneForMelee(this.m.Items), this);
 					}
 				}
 			}
@@ -451,9 +465,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				{
 					if (this.Math.rand(1, 100) <= 50) 
 					{
-						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForMelee(this.m.Items));
-						rune.m.IsForceEnabled = true;
-						this.m.Skills.add(rune);
+						addRune(getRandomeRuneForMelee(this.m.Items), this);
 					}
 				}
 			}
@@ -485,9 +497,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					if (days > 100) chance += days - 100;
 					if (this.Math.rand(1, 100) <= chance) 
 					{
-						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForMelee(this.m.Items));
-						rune.m.IsForceEnabled = true;
-						this.m.Skills.add(rune);
+						addRune(getRandomeRuneForMelee(this.m.Items), this);
 					}
 				}
 			}
@@ -501,9 +511,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				{
 					if (this.Math.rand(1, 100) <= 10) 
 					{
-						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForMelee(this.m.Items));
-						rune.m.IsForceEnabled = true;
-						this.m.Skills.add(rune);
+						addRune(getRandomeRuneForMelee(this.m.Items), this);
 					}
 				}
 			}
@@ -530,9 +538,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					if (days > 100) chance += days - 100;
 					if (this.Math.rand(1, 100) <= chance) 
 					{
-						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForRanged(this.m.Items));
-						rune.m.IsForceEnabled = true;
-						this.m.Skills.add(rune);
+						addRune(getRandomeRuneForRanged(this.m.Items), this);
 					}
 				}
 			}
@@ -546,9 +552,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				{
 					if (this.Math.rand(1, 100) <= 10) 
 					{
-						local rune = this.new("scripts/skills/rune_sigils/" + getRandomeRuneForRanged(this.m.Items));
-						rune.m.IsForceEnabled = true;
-						this.m.Skills.add(rune);
+						addRune(getRandomeRuneForRanged(this.m.Items), this);
 					}
 				}
 			}
@@ -556,35 +560,36 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 	}
 
 	local pretty_strong = [
-		"noble_greatsword",
-		"gladiator",
-		"legend_noble_fencer",
-		"noble_sergeant",
-		"legend_peasant_squire",
-		"legend_bandit_veteran"
+		"humans/noble_greatsword",
+		"humans/gladiator",
+		"humans/legend_noble_fencer",
+		"humans/noble_sergeant",
+		"humans/legend_peasant_squire",
+		"enemies/legend_bandit_veteran"
 	];
 
-	::mods_hookExactClass("entity/tactical/humans/gladiator", function(obj) {
-		local ws_assignRandomEquipment = obj.assignRandomEquipment;
-		obj.assignRandomEquipment = function()
-		{
-			ws_assignRandomEquipment();
-
-			if (this.World.getTime().Days > 70)
+	foreach ( name in pretty_strong )
+	{
+		::mods_hookExactClass("entity/tactical/" + name, function(obj) {
+			local ws_assignRandomEquipment = obj.assignRandomEquipment;
+			obj.assignRandomEquipment = function()
 			{
-				local days = this.World.getTime().Days;
-				local chance = 25;
+				ws_assignRandomEquipment();
 
-				if (days > 120) chance += days - 120;
-				if (this.Math.rand(1, 100) <= chance) 
+				if (this.World.getTime().Days > 70)
 				{
-					local rune = this.new("scripts/skills/rune_sigils/" + getRandomeWeakRune(this.m.Items));
-					rune.m.IsForceEnabled = true;
-					this.m.Skills.add(rune);
+					local days = this.World.getTime().Days;
+					local chance = 25;
+
+					if (days > 120) chance += days - 120;
+					if (this.Math.rand(1, 100) <= chance) 
+					{
+						addRune(getRandomeWeakRune(this.m.Items), this);
+					}
 				}
 			}
-		}
-	});
+		});
+	}
 
 	delete this.HexenHooks.hookEnemies;
 }

@@ -1,7 +1,7 @@
 this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", {
 	m = {
 		Link = null,
-		NineLivesCount = 2,
+		NineLivesCount = 1,
 		Bust = "bust_alp_shadow_01",
 		DistortTargetA = null,
 		DistortTargetPrevA = this.createVec(0, 0),
@@ -18,7 +18,7 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 	},
 	function addNineLivesCount()
 	{
-		++this.m.NineLivesCount;
+		this.m.NineLivesCount = this.Math.min(9, this.m.NineLivesCount + 1);
 	}
 
 	function setLink( _l )
