@@ -123,8 +123,7 @@
   <sprite id="perk_intimidate" ic="FF2E326F" img="skills\perk_intimidate.png" />
   <sprite id="perk_intimidate_mini" offsetY="35" ic="FF2E326F" img="skills\mini\perk_intimidate_mini.png" />
   
-  <sprite id="status_effect_chanting" ic="FF2E326F" img="skills\status_effect_chanting.png" />
-  <sprite id="status_effect_chanting_mini" offsetY="35" ic="FF2E326F" img="skills\mini\status_effect_chanting_mini.png" />
+  <sprite id="status_effect_79_mini" offsetY="35" ic="FF2E326F" img="skills\mini\status_effect_79_mini.png" />
   
   <sprite id="impulse_perk_mini" offsetY="35" ic="FF2E326F" img="skills\mini\impulse_perk_mini.png" />
   <sprite id="status_effect_daytime_mini" offsetY="35" ic="FF2E326F" img="skills\mini\status_effect_daytime_mini.png" />
