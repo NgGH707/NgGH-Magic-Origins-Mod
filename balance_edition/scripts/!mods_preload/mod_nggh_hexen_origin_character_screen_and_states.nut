@@ -3,6 +3,7 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 	//help siege weapon toggle "bring in batte" or "put in reserve" and make charmed simp does not cost any crowns to kick them out of party
 	::mods_hookNewObject("ui/screens/character/character_screen", function ( obj )
 	{
+		local ws_general_onEquipStashItem = obj.general_onEquipStashItem;
 		obj.general_onEquipStashItem = function( _data )
 		{
 			local data = this.helper_queryStashItemData(_data);
@@ -24,22 +25,20 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 				return allowed;
 			}
 
-			if (!this.Tactical.isActive() && data.sourceItem.isUsable())
+			if (!this.Tactical.isActive() && data.sourceItem.isUsable() && data.sourceItem.isIndestructible())
 			{
 				if (data.sourceItem.onUse(data.inventory.getActor()))
 				{
 					data.stash.removeByIndex(data.sourceIndex);
 					data.inventory.getActor().getSkills().update();
+					
+					local item = data.sourceItem.onUseIndestructibleItem();
 
-					if (data.sourceItem.isIndestructible())
+					if (item != null)
 					{
-						local item = data.sourceItem.onUseIndestructibleItem();
-
-						if (item != null)
-						{
-							this.World.Assets.getStash().insert(item, data.sourceIndex);
-						}
+						this.World.Assets.getStash().insert(item, data.sourceIndex);
 					}
+					
 					return this.UIDataHelper.convertStashAndEntityToUIData(data.entity, null, false, this.m.InventoryFilter);
 				}
 				else
@@ -48,120 +47,7 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 				}
 			}
 
-			if (!data.stash.isResizable() && data.stash.getNumberOfEmptySlots() < targetItems.slotsNeeded - 1)
-			{
-				return this.helper_convertErrorToUIData(this.Const.CharacterScreen.ErrorCode.NotEnoughStashSpace);
-			}
-
-			if (targetItems.firstItem != null)
-			{
-				if (!targetItems.firstItem.isInBag() && !data.inventory.unequip(targetItems.firstItem) || targetItems.firstItem.isInBag() && !data.inventory.removeFromBag(targetItems.firstItem))
-				{
-					return this.helper_convertErrorToUIData(this.Const.CharacterScreen.ErrorCode.FailedToRemoveItemFromTargetSlot);
-				}
-
-				if (targetItems.secondItem != null)
-				{
-					if (data.inventory.unequip(targetItems.secondItem) == false)
-					{
-						data.inventory.equip(targetItems.firstItem);
-						return this.helper_convertErrorToUIData(this.Const.CharacterScreen.ErrorCode.FailedToRemoveItemFromTargetSlot);
-					}
-				}
-			}
-
-			if (data.stash.removeByIndex(data.sourceIndex) == null)
-			{
-				if (targetItems != null && targetItems.firstItem != null)
-				{
-					data.inventory.equip(targetItems.firstItem);
-
-					if (targetItems.secondItem != null)
-					{
-						data.inventory.equip(targetItems.secondItem);
-					}
-				}
-
-				return this.helper_convertErrorToUIData(this.Const.CharacterScreen.ErrorCode.FailedToRemoveItemFromSourceSlot);
-			}
-
-			if (data.inventory.equip(data.sourceItem) == false)
-			{
-				data.stash.insert(data.sourceItem, data.sourceIndex);
-
-				if (targetItems != null && targetItems.firstItem != null)
-				{
-					data.inventory.equip(targetItems.firstItem);
-
-					if (targetItems.secondItem != null)
-					{
-						data.inventory.equip(targetItems.secondItem);
-					}
-				}
-
-				return this.helper_convertErrorToUIData(this.Const.CharacterScreen.ErrorCode.FailedToEquipBagItem);
-			}
-
-			if (targetItems != null && targetItems.firstItem != null)
-			{
-				local firstItemIdx = data.sourceIndex;
-
-				if (data.swapItem == true)
-				{
-					data.stash.insert(targetItems.firstItem, data.sourceIndex);
-				}
-				else
-				{
-					firstItemIdx = data.stash.add(targetItems.firstItem);
-
-					if (firstItemIdx == null)
-					{
-						data.inventory.unequip(data.sourceItem);
-						data.stash.insert(data.sourceItem, data.sourceIndex);
-						data.inventory.equip(targetItems.firstItem);
-
-						if (targetItems.secondItem != null)
-						{
-							data.inventory.equip(targetItems.secondItem);
-						}
-
-						return this.helper_convertErrorToUIData(this.Const.CharacterScreen.ErrorCode.FailedToPutItemIntoBag);
-					}
-				}
-
-				local secondItemIdx = data.stash.add(targetItems.secondItem);
-
-				if (targetItems.secondItem != null && secondItemIdx == null)
-				{
-					data.stash.removeByIndex(firstItemIdx);
-					data.inventory.unequip(data.sourceItem);
-					data.stash.insert(data.sourceItem, data.sourceIndex);
-					data.inventory.equip(targetItems.firstItem);
-
-					if (targetItems.secondItem != null)
-					{
-						data.inventory.equip(targetItems.secondItem);
-					}
-
-					return this.helper_convertErrorToUIData(this.Const.CharacterScreen.ErrorCode.FailedToPutItemIntoBag);
-				}
-			}
-
-			data.sourceItem.playInventorySound(this.Const.Items.InventoryEventType.Equipped);
-			this.helper_payForAction(data.entity, [
-				data.sourceItem,
-				targetItems.firstItem,
-				targetItems.secondItem
-			]);
-
-			if (this.Tactical.isActive())
-			{
-				return this.UIDataHelper.convertStashAndEntityToUIData(data.entity, this.Tactical.TurnSequenceBar.getActiveEntity(), false, this.m.InventoryFilter);
-			}
-			else
-			{
-				return this.UIDataHelper.convertStashAndEntityToUIData(data.entity, null, false, this.m.InventoryFilter);
-			}
+			return ws_general_onEquipStashItem(_data);
 		}
 
 		obj.onDismissCharacter = function( _data )
@@ -283,15 +169,6 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 					}
 
 					result.push(this.UIDataHelper.convertEntityToUIData(entity, activeEntity));
-				}
-
-				foreach( entity in entities )
-				{
-					if (entity.isSummoned() && entity.isPlayerControlled() && entity.getID() == activeEntity.getID())
-					{
-						extra = entity;
-						break;
-					}
 				}
 
 				if (result.len() <= 26 && extra != null)

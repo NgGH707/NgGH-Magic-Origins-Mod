@@ -31,7 +31,7 @@ this.legend_RSW_precision <- this.inherit("scripts/skills/skill", {
 		{
 			this.m.TurnsLefts = 0;
 			this.m.IsSpent = false;
-			this.spawnIcon("falcon_circle", this.getContainter().getActor().getTile());
+			this.spawnIcon("falcon_circle", this.getContainer().getActor().getTile());
 		}
 	}
 
