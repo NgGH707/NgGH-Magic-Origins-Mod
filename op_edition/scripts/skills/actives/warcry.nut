@@ -46,12 +46,6 @@ this.warcry <- this.inherit("scripts/skills/skill", {
 				text = this.getCostString()
 			},
 			{
-				id = 6,
-				type = "text",
-				icon = "ui/icons/vision.png",
-				text = "Affects every entity within [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles distance"
-			},
-			{
 				id = 7,
 				type = "text",
 				icon = "ui/icons/special.png",
@@ -67,7 +61,7 @@ this.warcry <- this.inherit("scripts/skills/skill", {
 				id = 7,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Removes the Sleeping status effect of anyone within range"
+				text = "Removes the Sleeping status effect of everyone"
 			}
 		];
 		
@@ -82,15 +76,6 @@ this.warcry <- this.inherit("scripts/skills/skill", {
 		}
 
 		return ret;
-	}
-
-	function onAdded()
-	{
-		if (this.getContainer().getActor().isPlayerControlled())
-		{
-			this.m.FatigueCost = 30;
-			this.m.ActionPointCost = 4;
-		}
 	}
 
 	function isUsable()
@@ -137,11 +122,6 @@ this.warcry <- this.inherit("scripts/skills/skill", {
 				}
 
 				local dis = a.getTile().getDistanceTo(mytile);
-
-				if (dis > _tag.Skill.getMaxRange())
-				{
-					continue;
-				} 
 
 				if (a.getFaction() == _tag.User.getFaction())
 				{

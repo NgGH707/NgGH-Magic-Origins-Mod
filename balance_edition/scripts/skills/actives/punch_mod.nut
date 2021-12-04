@@ -4,7 +4,7 @@ this.punch_mod <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "actives.mega_punch";
 		this.m.Name = "Rocky Punch";
-		this.m.Description = "Deliberately hit an hard with your huge rock hard hand, dealing massive damamge. Do not even think about blocking this with a shield.";
+		this.m.Description = "A punch with an impact of a rolling boulder. Do not even think about blocking this with a shield.";
 		this.m.Icon = "skills/active_194.png";
 		this.m.IconDisabled = "skills/active_194_sw.png";
 		this.m.Overlay = "active_194";
@@ -55,7 +55,7 @@ this.punch_mod <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/hitchance.png",
-				text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color] chance to hit. [color=" + this.Const.UI.Color.NegativeValue + "]Stunned[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Dazed[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Staggered[/color] or [color=" + this.Const.UI.Color.NegativeValue + "]Distracted[/color] target will give you [color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color] more chance to hit that target"
+				text = "Gains [ [color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color] hit chance for each negative status effect on the target"
 			},
 			{
 				id = 8,
@@ -219,6 +219,63 @@ this.punch_mod <- this.inherit("scripts/skills/skill", {
 			_entity.onDamageReceived(_tag.Attacker, _tag.Skill, _tag.HitInfo);
 		}
 	}
+
+	function getHitFactors( _targetTile )
+	{
+		local ret = this.skill.getHitFactors(_targetTile);
+		local user = this.getContainer().getActor();
+		local myTile = user.getTile();
+		local targetEntity = _targetTile.IsOccupiedByActor ? _targetTile.getEntity() : null;
+		local targetStatus = targetEntity.getSkills();
+		local bonus = 0;
+		local effects = [
+			"effects.staggered",
+			"effects.shellshocked",
+			"effects.distracted",
+			"effects.dazed",
+			"effects.chilled",
+			"effects.debilitated",
+			"effects.goblin_poison",
+			"effects.horrified",
+			"effects.insect_swarm",
+			"effects.legend_baffled",
+			"effects.legend_beer_buzz_effect",
+			"effects.legend_dazed",
+			"effects.legend_grappled",
+			"effects.legend_marked_target",
+			"effects.mummy_curse",
+			"effects.overwhelmed",
+			"effects.withered",
+		];
+
+		if (targetEntity.getCurrentProperties().IsStunned)
+		{
+			bonus += 5;
+		}
+
+		if (targetEntity.getCurrentProperties().IsRooted)
+		{
+			bonus += 5;
+		}
+
+		foreach (idx, id in effects) 
+		{
+		    if (targetStatus.hasSkill(id))
+			{
+				bonus += 5;
+			}
+		}
+
+		if (bonus > 0)
+		{
+			ret.push({
+				icon = "ui/tooltips/positive.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]" + bonus + "%[/color]" + " Has negative status effect"
+			});
+		}
+
+		return ret;
+	}
 	
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
@@ -227,7 +284,6 @@ this.punch_mod <- this.inherit("scripts/skills/skill", {
 			_properties.DamageRegularMin += 105;
 			_properties.DamageRegularMax += 135;
 			_properties.DamageArmorMult *= 0.75;
-			_properties.MeleeSkill += 5;
 			
 			if (_targetEntity == null)
 			{
@@ -235,10 +291,42 @@ this.punch_mod <- this.inherit("scripts/skills/skill", {
 			}
 			
 			local targetStatus = _targetEntity.getSkills();
-			
-			if (targetStatus.hasSkill("effects.staggered") || targetStatus.hasSkill("effects.shellshocked") || targetStatus.hasSkill("effects.distracted") || targetStatus.hasSkill("effects.dazed") || targetStatus.hasSkill("effects.stunned") || targetStatus.hasSkill("effects.sleeping"))
+			local effects = [
+				"effects.staggered",
+				"effects.shellshocked",
+				"effects.distracted",
+				"effects.dazed",
+				"effects.chilled",
+				"effects.debilitated",
+				"effects.goblin_poison",
+				"effects.horrified",
+				"effects.insect_swarm",
+				"effects.legend_baffled",
+				"effects.legend_beer_buzz_effect",
+				"effects.legend_dazed",
+				"effects.legend_grappled",
+				"effects.legend_marked_target",
+				"effects.mummy_curse",
+				"effects.overwhelmed",
+				"effects.withered",
+			];
+
+			if (_targetEntity.getCurrentProperties().IsStunned)
 			{
 				_properties.MeleeSkill += 5;
+			}
+
+			if (_targetEntity.getCurrentProperties().IsRooted)
+			{
+				_properties.MeleeSkill += 5;
+			}
+
+			foreach (idx, id in effects) 
+			{
+			    if (targetStatus.hasSkill(id))
+				{
+					_properties.MeleeSkill += 5;
+				}
 			}
 		}
 	}

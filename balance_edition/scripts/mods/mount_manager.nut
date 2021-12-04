@@ -354,6 +354,11 @@ this.mount_manager <- {
 			local mount_injury = _actor.getSprite("mount_injury");
 			local mount_restrain = _actor.getSprite("mount_restrain");
 
+			if (mount == null || mount_head == null || mount_extra == null || mount_extra1 == null || mount_extra2 == null || mount_armor == null || mount_injury == null || mount_restrain == null)
+			{
+				return;
+			}
+
 			if (!this.isMounted())
 			{
 				mount.Visible = false;
