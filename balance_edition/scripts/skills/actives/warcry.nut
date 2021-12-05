@@ -124,7 +124,7 @@ this.warcry <- this.inherit("scripts/skills/skill", {
 		local mytile = _tag.User.getTile();
 		local actors = this.Tactical.Entities.getAllInstances();
 		local p = _tag.User.getCurrentProperties();
-		local bonus = p.Threat;
+		local bonus = p.Threat + this.Math.min(15, p.ThreatOnHit);
 		local isPlayer = _tag.User.getFaction() == this.Const.Faction.Player;
 
 		foreach( i in actors )
