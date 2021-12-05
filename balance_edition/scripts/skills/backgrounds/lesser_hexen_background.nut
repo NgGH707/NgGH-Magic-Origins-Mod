@@ -112,11 +112,7 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 			Magic = []
 		};
 
-		local classes = [
-			this.Const.Perks.ChefClassTree,
-			this.Const.Perks.BardClassTree,
-		];
-		this.m.PerkTreeDynamic.Class.push(this.Math.rand(1, 2) == 1 ? classes[0] : classes[1]);
+		this.m.PerkTreeDynamic.Class.push(this.Math.rand(1, 2) == 1 ? this.Const.Perks.ChefClassTree : this.Const.Perks.BardClassTree);
 
 		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 		{
@@ -133,7 +129,8 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 					[{Weight = 100, Tree = this.Const.Perks.LightArmorTree}]
 				],
 				Weapon = [
-					[{Weight = 100, Tree = this.Const.Perks.StavesTree}]
+					[{Weight = 100, Tree = this.Const.Perks.StavesTree}],
+					[{Weight = 25 , Tree = this.Const.Perks.SlingsTree}],
 				],
 				Profession = [
 					[{Weight = 100, Tree = this.Const.Perks.ApothecaryProfessionTree}],
@@ -169,10 +166,15 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 		this.addPerk(this.Const.Perks.PerkDefs.CharmNudist, 4);
 		this.addPerk(this.Const.Perks.PerkDefs.CharmSpec, 6);
 
+		if (this.Math.rand(1, 100) <= 15)
+		{
+			this.addPerk(this.Const.Perks.PerkDefs.CharmAppearance, 6);
+		}
+
 		local tier_1 = [
 			"CharmEnemySpider",
 			"CharmEnemyAlps",
-			"CharmEnemyAlps",
+			"CharmEnemyDirewolf",
 		];
 		local tier_2 = [
 			"CharmEnemyGoblin",

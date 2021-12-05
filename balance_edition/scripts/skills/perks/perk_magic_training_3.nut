@@ -29,22 +29,15 @@ this.perk_magic_training_3 <- this.inherit("scripts/skills/skill", {
 			return 5;
 		}
 
-		if (!actor.getCurrentProperties().IsSpecializedInMC_Magic)
+		local staff = actor.getItems().getItemAtSlot(this.Const.ItemSlot.Mainhand);
+		local mult = 1.0;
+
+		if (staff == null || !staff.isWeaponType(this.Const.Items.WeaponType.MagicStaff))
 		{
-			local staff = actor.getItems().getItemAtSlot(this.Const.ItemSlot.Mainhand);
-
-			if (staff == null)
-			{
-				return 0;
-			}
-
-			if (!staff.isWeaponType(this.Const.Items.WeaponType.MagicStaff))
-			{
-				return 0;
-			}
+			mult = actor.getCurrentProperties().IsSpecializedInMC_Magic ? 0.67 : 0;
 		}
 
-		local bonus = actor.getBaseProperties().getBravery();
+		local bonus = actor.getBaseProperties().getBravery() * mult;
 		return this.Math.max(5, this.Math.floor(bonus / 4));
 	}
 

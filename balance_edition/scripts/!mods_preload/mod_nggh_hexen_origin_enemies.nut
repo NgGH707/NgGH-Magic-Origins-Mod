@@ -6,7 +6,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 		{
 			if (this.Math.rand(1, 100) <= _chance)
 			{
-				_actor.getSkills().add(this.new("scripts/skills/perks/" + scripts));
+				_actor.getSkills().add(this.new("scripts/skills/" + scripts));
 			}
 		}
 	};
@@ -28,11 +28,14 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			}
 
 			randomlyRollPerk(this, [
-				"perk_lindwurm_acid"
+				"perks/perk_lindwurm_acid"
 			], chance);
 			randomlyRollPerk(this, [
-				"perk_lindwurm_body"
+				"perks/perk_lindwurm_body"
 			], chance + 15);
+			randomlyRollPerk(this, [
+				"racial/champion_racial"
+			], 5);
 		}
 	});
 	::mods_hookExactClass("entity/tactical/enemies/lindwurm", function(obj) {
@@ -47,15 +50,18 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				chance = 75;
 			}
 
-			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 235)
+			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 170)
 			{
-				chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 235));
+				chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 170));
 			}
 
 			randomlyRollPerk(this, [
-				"perk_lindwurm_acid",
-				"perk_lindwurm_body"
+				"perks/perk_lindwurm_acid",
+				"perks/perk_lindwurm_body"
 			], chance);
+			randomlyRollPerk(this, [
+				"racial/champion_racial"
+			], 3);
 		}
 	});
 
@@ -83,10 +89,13 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				}
 
 				randomlyRollPerk(this, [
-					"perk_hyena_bite",
-					"perk_thick_hide",
-					"perk_enrage_wolf"
+					"perks/perk_hyena_bite",
+					"perks/perk_thick_hide",
+					"perks/perk_enrage_wolf"
 				], chance);
+				randomlyRollPerk(this, [
+					"racial/champion_racial"
+				], 1);
 			}
 		});
 	}
@@ -116,10 +125,13 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				}
 
 				randomlyRollPerk(this, [
-					"perk_wolf_bite",
-					"perk_thick_hide",
-					"perk_enrage_wolf"
+					"perks/perk_wolf_bite",
+					"perks/perk_thick_hide",
+					"perks/perk_enrage_wolf"
 				], chance);
+				randomlyRollPerk(this, [
+					"racial/champion_racial"
+				], 1);
 			}
 		});
 	}
@@ -148,20 +160,22 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				else 
 				{
 				    randomlyRollPerk(this, [
-						"perk_spider_web"
+						"perks/perk_spider_web"
 					], chance - 10);
 				}
 
-				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 300)
+				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 150)
 				{
-					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 300));
+					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 150));
 				}
 
 				randomlyRollPerk(this, [
-					"perk_spider_bite",
-					"perk_spider_venom",
+					"perks/perk_spider_bite",
+					"perks/perk_spider_venom",
 				], chance);
-				
+				randomlyRollPerk(this, [
+					"racial/champion_racial"
+				], 1);
 			}
 		});
 	}
@@ -181,19 +195,22 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				else 
 				{
 				    randomlyRollPerk(this, [
-						"perk_spider_web"
+						"perks/perk_spider_web"
 					], chance - 15);
 				}
 
-				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 200)
+				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 135)
 				{
-					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 200));
+					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 135));
 				}
 
 				randomlyRollPerk(this, [
-					"perk_spider_bite",
-					"perk_spider_venom",
+					"perks/perk_spider_bite",
+					"perks/perk_spider_venom",
 				], chance);
+				randomlyRollPerk(this, [
+					"racial/champion_racial"
+				], 5);
 			}
 		});
 	}
@@ -210,19 +227,22 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				chance = 100;
 			}
 
-			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 200)
+			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 100)
 			{
 				chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 200));
 			}
 
 			randomlyRollPerk(this, [
-				"perk_serpent_bite",
-				"perk_snake_venom",
+				"perks/perk_serpent_bite",
+				"perks/perk_snake_venom",
 			], chance - 15);
 			randomlyRollPerk(this, [
-				"perk_serpent_drag",
-				"perk_giant_serpent",
+				"perks/perk_serpent_drag",
+				"perks/perk_giant_serpent",
 			], chance);
+			randomlyRollPerk(this, [
+				"racial/champion_racial"
+			], 3);
 		}
 	});
 
@@ -248,16 +268,19 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					chance = 100;
 				}
 
-				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 200)
+				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 125)
 				{
 					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 200));
 				}
 
 				randomlyRollPerk(this, [
-					"perk_frenzy",
-					"perk_nacho",
-					"perk_nacho_eat"
+					"perks/perk_frenzy",
+					"perks/perk_nacho",
+					"perks/perk_nacho_eat"
 				], chance);
+				randomlyRollPerk(this, [
+					"racial/champion_racial"
+				], 1);
 			}
 		});
 	}
@@ -280,14 +303,17 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			}
 
 			randomlyRollPerk(this, [
-				"perk_afterimage",
+				"perks/perk_afterimage",
 			], chance - 5);
 			
 			randomlyRollPerk(this, [
-				"perk_mastery_nightmare",
-				"perk_mastery_sleep",
-				"perk_after_wake",
+				"perks/perk_mastery_nightmare",
+				"perks/perk_mastery_sleep",
+				"perks/perk_after_wake",
 			], chance);
+			randomlyRollPerk(this, [
+				"racial/champion_racial"
+			], 3);
 		}
 	});
 
@@ -315,9 +341,9 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				}
 
 				randomlyRollPerk(this, [
-					"perk_grow_shield",
-					"perk_uproot",
-					"perk_uproot_aoe"
+					"perks/perk_grow_shield",
+					"perks/perk_uproot",
+					"perks/perk_uproot_aoe"
 				], chance);
 			}
 		});
