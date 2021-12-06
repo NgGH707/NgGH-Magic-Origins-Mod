@@ -41,6 +41,7 @@ this.mc_BAT_teleportation <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsTargeted = true;
 		this.m.IsTargetingActor = false;
 		this.m.IsVisibleTileNeeded = true;
+		this.m.IsIgnoreBlockTarget = true;
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
 		this.m.IsRanged = true;
@@ -55,7 +56,6 @@ this.mc_BAT_teleportation <- this.inherit("scripts/skills/mc_magic_skill", {
 	function getTooltip()
 	{
 		local ret = this.skill.getDefaultUtilityTooltip();
-		local chance = this.getContainer().hasSkill("special.mc_focus") ? 25 : this.m.StunChance;
 		ret.extend([
 			{
 				id = 7,
@@ -281,11 +281,6 @@ this.mc_BAT_teleportation <- this.inherit("scripts/skills/mc_magic_skill", {
 		
 		local applyEffect = this.Math.rand(1, 100);
 		local chance = _tag.Skill.m.StunChance;
-
-		if (_tag.Skill.m.IsEnhanced)
-		{
-			chance = 25;
-		}
 		
 		if (applyEffect <= chance)
 		{
@@ -298,8 +293,6 @@ this.mc_BAT_teleportation <- this.inherit("scripts/skills/mc_magic_skill", {
 			_tag.Skill.m.StunChance = this.Math.min(95, _tag.Skill.m.StunChance + 25);
 			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_tag.User) + " teleports away");
 		}
-
-		_tag.Skill.m.IsEnhanced = false;
 	}
 
 	function onTurnStart()

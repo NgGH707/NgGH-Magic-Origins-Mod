@@ -82,13 +82,6 @@ this.mc_GEO_earthquake <- this.inherit("scripts/skills/mc_magic_skill", {
 			}
 		]);
 
-	    ret.push({
-			id = 6,
-			type = "text",
-			icon = "ui/icons/special.png",
-			text = "Has a small chance to [color=" + this.Const.UI.Color.NegativeValue + "]Distract[/color] affected target"
-		});
-
 		if (this.Tactical.isActive() && this.getContainer().getActor().getTile().hasZoneOfControlOtherThan(this.getContainer().getActor().getAlliedFactions()))
 		{
 			ret.push({
