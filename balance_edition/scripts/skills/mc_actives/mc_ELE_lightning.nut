@@ -170,6 +170,7 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 			}
 
 			_properties.DamageTotalMult *= this.getBonusDamageFromResolve(_properties);
+			_properties.RangedAttackBlockedChanceMult = 0.0;
 			this.removeBonusesFromWeapon(_properties);
 		}
 	}

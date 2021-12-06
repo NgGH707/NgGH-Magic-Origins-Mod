@@ -221,7 +221,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 						properties.Entities = [];
 						properties.PlayerDeploymentType = this.Const.Tactical.DeploymentType.Center;
 						properties.EnemyDeploymentType = this.Const.Tactical.DeploymentType.Circle;
-						this.Const.World.Common.addUnitsToCombat(properties.Entities, this.Const.World.Spawn.MC_WitchHunter, (100 + _event.m.ResourceBoost) * _event.m.DifficultyMult * _event.m.DifficultyMultScale, this.Const.Faction.Enemy, _event.m.ChampionChance);
+						this.Const.World.Common.addUnitsToCombat(properties.Entities, this.Const.World.Spawn.MC_WitchHunter, (100 + _event.m.ResourceBoost) * _event.m.DifficultyMult * _event.m.DifficultyMultScale, this.World.FactionManager.getFactionOfType(this.Const.FactionType.Arena).getID(), _event.m.ChampionChance);
 						this.World.State.startScriptedCombat(properties, false, false, true);
 						return 0;
 					}
@@ -344,8 +344,6 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 
 	function getAmbushChance()
 	{
-		return 0;
-
 		local playerTile = this.World.State.getPlayer().getTile();
 		local towns = this.World.EntityManager.getSettlements();
 		local nearest = 9999;

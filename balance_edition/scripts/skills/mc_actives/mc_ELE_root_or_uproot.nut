@@ -168,7 +168,7 @@ this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 				this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(target) + " can\'t be rooted in vines");
 			}
 			
-			this.Time.scheduleEvent(this.TimeUnit.Virtual, 250, function( _skill )
+			this.Time.scheduleEvent(this.TimeUnit.Virtual, 350, function( _skill )
 			{
 				target.getSprite("status_rooted").Visible = false;
 				target.getSprite("status_rooted_back").Visible = false;
@@ -183,7 +183,7 @@ this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 				this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(_user) + " fails to root " + this.Const.UI.getColorizedEntityName(target) + " in vines (Chance: " + toHit + ", Rolled: " + rolled + ")");
 			}
 
-			this.Time.scheduleEvent(this.TimeUnit.Virtual, 250, function( _skill )
+			this.Time.scheduleEvent(this.TimeUnit.Virtual, 350, function( _skill )
 			{
 				target.getSprite("status_rooted").Visible = false;
 				target.getSprite("status_rooted_back").Visible = false;
@@ -327,6 +327,7 @@ this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 		{
 			_properties.RangedSkill += this.m.AdditionalAccuracy;
 			_properties.HitChanceAdditionalWithEachTile += this.m.AdditionalHitChance;
+			_properties.RangedAttackBlockedChanceMult = 0.0;
 		}
 	}
 

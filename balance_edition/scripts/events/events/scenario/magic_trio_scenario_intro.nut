@@ -13,7 +13,7 @@ this.magic_trio_scenario_intro <- this.inherit("scripts/events/event", {
 			Characters = [],
 			Options = [
 				{
-					Text = "Lucky.",
+					Text = "Lucky",
 					function getResult( _event )
 					{
 						_event.createRune(105);
@@ -22,7 +22,7 @@ this.magic_trio_scenario_intro <- this.inherit("scripts/events/event", {
 
 				},
 				{
-					Text = "Brimstone.",
+					Text = "Brimstone",
 					function getResult( _event )
 					{
 						_event.createRune(106);
@@ -31,7 +31,7 @@ this.magic_trio_scenario_intro <- this.inherit("scripts/events/event", {
 
 				},
 				{
-					Text = "Shielding.",
+					Text = "Shielding",
 					function getResult( _event )
 					{
 						_event.createRune(100);
@@ -40,7 +40,7 @@ this.magic_trio_scenario_intro <- this.inherit("scripts/events/event", {
 
 				},
 				{
-					Text = "Repulsion.",
+					Text = "Repulsion",
 					function getResult( _event )
 					{
 						_event.createRune(103);

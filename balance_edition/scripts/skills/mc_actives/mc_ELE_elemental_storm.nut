@@ -166,7 +166,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.getContainer().setBusy(true);
 		foreach (i, tile in tiles)
 		{
-			this.Time.scheduleEvent(this.TimeUnit.Real, 300 * i + 150, function ( _data )
+			this.Time.scheduleEvent(this.TimeUnit.Real, 400 * i + 150, function ( _data )
 			{
 				switch (this.Math.rand(1, 3)) 
 				{
@@ -349,8 +349,8 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 50;
-			_properties.DamageRegularMax += 70;
+			_properties.DamageRegularMin += 46;
+			_properties.DamageRegularMax += 68;
 			_properties.DamageArmorMult *= 0.5;
 			_properties.DamageTotalMult *= this.getBonusDamageFromResolve(_properties);
 			this.removeBonusesFromWeapon(_properties);
@@ -363,6 +363,24 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 			   	this.m.DirectDamageMult = 0.2;
 			   	this.m.InjuriesOnBody = this.Const.Injury.BurningBody;
 				this.m.InjuriesOnHead = this.Const.Injury.BurningHead;
+
+				if (_targetEntity != null)
+				{
+					if (_targetEntity.getType() == this.Const.EntityType.Schrat)
+					{
+						_properties.DamageTotalMult *= 3.0;
+					}
+
+					if (_targetEntity.getSkills().hasSkill("racial.skeleton"))
+					{
+						_properties.DamageTotalMult *= 0.33;
+					}
+
+					if (_targetEntity.getSkills().hasSkill("items.firearms_resistance") || _targetEntity.getSkills().hasSkill("racial.serpent"))
+					{
+						_properties.DamageTotalMult *= 0.66;
+					}
+				}
 			    break;
 
 		    case 3:

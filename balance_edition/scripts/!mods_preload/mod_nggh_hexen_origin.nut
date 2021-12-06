@@ -20,92 +20,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	gt.HexenHooks.hookEnemies();
 	gt.HexenHooks.hookAI();
 
-	gt.Const.World.Spawn.MC_WitchHunter <- {
-		Name = "MC_WitchHunter",
-		IsDynamic = true,
-		MovementSpeedMult = 1.0,
-		VisibilityMult = 1.0,
-		VisionMult = 1.0,
-		Body = "figure_noble_02",
-		MaxR = 650,
-		Troops = [
-			{
-				Weight = 59,
-				Types = [
-					{				
-						Type = gt.Const.World.Spawn.Troops.MercenaryLOW,
-						MaxR = 180,
-						Cost = 20
-					},
-					{
-						Type = gt.Const.World.Spawn.Troops.Mercenary,
-						Cost = 30
-					}
-				]
-			},
-			{
-				Weight = 22,
-				Types = [
-					{
-						Type = gt.Const.World.Spawn.Troops.LegendPeasantWitchHunter,
-						Cost = 20
-					},
-					{
-						MinR = 400,
-						Type = this.Const.World.Spawn.Troops.MasterArcher,
-						Cost = 60,
-						Roll = true
-					}
-				]
-			},
-			{
-				Weight = 5,
-				Types = [
-					{
-						Type = gt.Const.World.Spawn.Troops.Wardog,
-						Cost = 5
-					}
-				]
-			},
-			{
-				Weight = 12,
-				Types = [
-					{
-						Type = gt.Const.World.Spawn.Troops.LegendPeasantMinstrel,
-						Cost = 20
-					},
-					{
-						Type = gt.Const.World.Spawn.Troops.LegendPeasantMonk,
-						Cost = 20
-					},
-				]
-			},
-			{
-				Weight = 1,
-				MinR = 400,
-				Types = [
-					{
-						Type = gt.Const.World.Spawn.Troops.HedgeKnight,
-						Cost = 60,
-						Roll = true
-					}
-				]
-			},
-			{
-				Weight = 1,
-				MinR = 400,
-				Types = [
-					{
-						Type = gt.Const.World.Spawn.Troops.Swordmaster,
-						Cost = 60,
-						Roll = true
-					}
-				]
-			}
-		]
-	};
-
-
 	//Create Champion Beast
 	/*foreach(i, troop in gt.Const.World.Spawn.Troops)
 	{
@@ -119,23 +33,23 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	}*/
 
 	// wolf
-	gt.Const.World.Spawn.Troops.Direwolf.NameList <- gt.Const.Strings.WolfName;
+	gt.Const.World.Spawn.Troops.Direwolf.NameList <- gt.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.Direwolf.TitleList <- null;
 	gt.Const.World.Spawn.Troops.Direwolf.Variant = 1;
 
-	gt.Const.World.Spawn.Troops.DirewolfHIGH.NameList <- gt.Const.Strings.WolfName;
+	gt.Const.World.Spawn.Troops.DirewolfHIGH.NameList <- gt.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.DirewolfHIGH.TitleList <- null;
 	gt.Const.World.Spawn.Troops.DirewolfHIGH.Variant = 2;
 
-	gt.Const.World.Spawn.Troops.DirewolfBodyguard.NameList <- gt.Const.Strings.WolfName;
+	gt.Const.World.Spawn.Troops.DirewolfBodyguard.NameList <- gt.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.DirewolfBodyguard.TitleList <- null;
 	gt.Const.World.Spawn.Troops.DirewolfBodyguard.Variant = 1;
 
-	gt.Const.World.Spawn.Troops.LegendWhiteDirewolf.NameList <- gt.Const.Strings.WolfName;
+	gt.Const.World.Spawn.Troops.LegendWhiteDirewolf.NameList <- gt.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.LegendWhiteDirewolf.TitleList <- null;
 	gt.Const.World.Spawn.Troops.LegendWhiteDirewolf.Variant = 5;
 
-	gt.Const.World.Spawn.Troops.LegendWhiteDirewolfBodyguard.NameList <- gt.Const.Strings.WolfName;
+	gt.Const.World.Spawn.Troops.LegendWhiteDirewolfBodyguard.NameList <- gt.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.LegendWhiteDirewolfBodyguard.TitleList <- null;
 	gt.Const.World.Spawn.Troops.LegendWhiteDirewolfBodyguard.Variant = 3;
 
