@@ -1,4 +1,4 @@
-this.fling_back_mod <- this.inherit("scripts/skills/skill", {
+this.mod_fling_back <- this.inherit("scripts/skills/skill", {
 	m = {},
 	function create()
 	{

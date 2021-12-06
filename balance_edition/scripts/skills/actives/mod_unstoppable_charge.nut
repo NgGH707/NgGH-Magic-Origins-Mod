@@ -1,4 +1,4 @@
-this.unstoppable_charge_mod <- this.inherit("scripts/skills/skill", {
+this.mod_unstoppable_charge <- this.inherit("scripts/skills/skill", {
 	m = {
 		TilesUsed = []
 	},
@@ -38,11 +38,11 @@ this.unstoppable_charge_mod <- this.inherit("scripts/skills/skill", {
 		this.m.IsUsingHitchance = false;
 		this.m.InjuriesOnBody = this.Const.Injury.BluntBody;
 		this.m.InjuriesOnHead = this.Const.Injury.BluntHead;
-		this.m.DirectDamageMult = 0.4;
+		this.m.DirectDamageMult = 0.35;
 		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = 30;
 		this.m.MinRange = 1;
-		this.m.MaxRange = 3;
+		this.m.MaxRange = 2;
 		this.m.MaxLevelDifference = 1;
 	}
 
@@ -364,7 +364,7 @@ this.unstoppable_charge_mod <- this.inherit("scripts/skills/skill", {
 		{
 			_properties.DamageRegularMin += 20;
 			_properties.DamageRegularMax += 55;
-			_properties.DamageArmorMult *= 1.25;
+			_properties.DamageArmorMult *= 1.0;
 		}
 	}
 

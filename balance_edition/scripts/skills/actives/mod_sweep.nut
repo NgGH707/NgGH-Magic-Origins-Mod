@@ -1,4 +1,4 @@
-this.sweep_mod <- this.inherit("scripts/skills/skill", {
+this.mod_sweep <- this.inherit("scripts/skills/skill", {
 	m = {
 		TilesUsed = []
 	},
@@ -51,15 +51,14 @@ this.sweep_mod <- this.inherit("scripts/skills/skill", {
 		ret.push({
 			id = 6,
 			type = "text",
-			icon = "ui/icons/special.png",
-			text = "Can hit up to 3 targets"
+			icon = "ui/icons/hitchance.png",
+			text = "Has [color=" + this.Const.UI.Color.NegativeValue + "]-15%[/color] chance to hit"
 		});
-
 		ret.push({
 			id = 6,
 			type = "text",
-			icon = "ui/icons/hitchance.png",
-			text = "Has [color=" + this.Const.UI.Color.NegativeValue + "]-15%[/color] chance to hit"
+			icon = "ui/icons/special.png",
+			text = "Can hit up to 3 targets"
 		});
 
 		return ret;
@@ -284,7 +283,7 @@ this.sweep_mod <- this.inherit("scripts/skills/skill", {
 			_properties.DamageRegularMin += 65;
 			_properties.DamageRegularMax += 95;
 			_properties.DamageArmorMult *= 0.85;
-			_properties.MeleeSkill += -15;
+			_properties.MeleeSkill -= 15;
 		}
 	}
 

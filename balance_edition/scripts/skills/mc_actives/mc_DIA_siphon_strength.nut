@@ -1,7 +1,7 @@
 this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 	m = {
 		ChanceBonus = 0
-		AdditionalAccuracy = 0,
+		AdditionalAccuracy = 10,
 		AdditionalHitChance = -5
 	},
 	function create()
@@ -74,7 +74,7 @@ this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 
 			local slave = this.new("scripts/skills/mc_effects/mc_siphon_strength_slave_effect");
 			local master = this.new("scripts/skills/mc_effects/mc_siphon_strength_master_effect");
-			local efficiency = this.getBonusDamageFromResolve(_user.getCurrentProperties());
+			local efficiency = this.getBonusDamageFromResolve(_user.getCurrentProperties()) * this.Math.rand(9, 15) * 0.1;
 
 			slave.setMaster(master);
 			target.getSkills().add(slave);

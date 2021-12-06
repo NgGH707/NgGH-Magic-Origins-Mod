@@ -1,7 +1,7 @@
-this.throw_rock_mod <- this.inherit("scripts/skills/skill", {
+this.mod_throw_rock <- this.inherit("scripts/skills/skill", {
 	m = {
-		AdditionalAccuracy = 0,
-		AdditionalHitChance = 0
+		AdditionalAccuracy = 20,
+		AdditionalHitChance = -10
 	},
 	function create()
 	{
@@ -53,41 +53,14 @@ this.throw_rock_mod <- this.inherit("scripts/skills/skill", {
 		this.m.MaxRange = 6;
 		this.m.MaxLevelDifference = 3;
 		this.m.ProjectileType = this.Const.ProjectileType.Rock;
-		this.m.ProjectileTimeScale = 1.33;
+		this.m.ProjectileTimeScale = 1.5;
 		this.m.IsProjectileRotated = true;
 		this.m.ChanceSmash = 50;
 	}
 	
 	function getTooltip()
 	{
-		local ret = this.getDefaultTooltip();
-		ret.extend([
-			{
-				id = 6,
-				type = "text",
-				icon = "ui/icons/vision.png",
-				text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles on even ground, more if throwing downhill"
-			}
-		]);
-
-		if (30 + this.m.AdditionalAccuracy >= 0)
-		{
-			ret.push({
-				id = 7,
-				type = "text",
-				icon = "ui/icons/hitchance.png",
-				text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]+" + (25 + this.m.AdditionalAccuracy) + "%[/color] chance to hit, and [color=" + this.Const.UI.Color.NegativeValue + "]" + (-10 + this.m.AdditionalHitChance) + "%[/color] per tile of distance"
-			});
-		}
-		else
-		{
-			ret.push({
-				id = 7,
-				type = "text",
-				icon = "ui/icons/hitchance.png",
-				text = "Has [color=" + this.Const.UI.Color.NegativeValue + "]" + (25 + this.m.AdditionalAccuracy) + "%[/color] chance to hit, and [color=" + this.Const.UI.Color.NegativeValue + "]" + (-10 + this.m.AdditionalHitChance) + "%[/color] per tile of distance"
-			});
-		}
+		local ret = this.getDefaultRangedTooltip();
 
 		ret.push({
 			id = 7,
@@ -181,8 +154,8 @@ this.throw_rock_mod <- this.inherit("scripts/skills/skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.RangedSkill += 15 + this.m.AdditionalAccuracy;
-			_properties.HitChanceAdditionalWithEachTile += -10 + this.m.AdditionalHitChance;
+			_properties.RangedSkill += this.m.AdditionalAccuracy;
+			_properties.HitChanceAdditionalWithEachTile += this.m.AdditionalHitChance;
 			_properties.DamageRegularMin += 105;
 			_properties.DamageRegularMax += 135;
 			_properties.DamageArmorMult *= 0.75;

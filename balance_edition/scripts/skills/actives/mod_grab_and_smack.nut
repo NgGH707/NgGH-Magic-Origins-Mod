@@ -1,4 +1,4 @@
-this.grab_and_smack_mod <- this.inherit("scripts/skills/skill", {
+this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 	m = {
 		Count = 3
 	},
@@ -6,7 +6,7 @@ this.grab_and_smack_mod <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.grab_and_smack";
-		this.m.Name = "Grab \'N\' Smack";
+		this.m.Name = "Grab \'n\' Smack";
 		this.m.Description = "Grabs a target and smacks that target to the side 3 times, dealing consistent damage and may stun said target.";
 		this.m.Icon = "skills/active_111_a.png";
 		this.m.IconDisabled = "skills/active_111_a_sw.png";
@@ -48,13 +48,19 @@ this.grab_and_smack_mod <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/hitchance.png",
-				text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]+20%[/color] chance to hit. [color=" + this.Const.UI.Color.NegativeValue + "]Stunned[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Dazed[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Staggered[/color] or [color=" + this.Const.UI.Color.NegativeValue + "]Distracted[/color] target will give target can never escape your grab"
+				text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]+20%[/color] chance to hit. "
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/hitchance.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Stunned[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Dazed[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Staggered[/color] or [color=" + this.Const.UI.Color.NegativeValue + "]Distracted[/color] target can never escape your grab"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]3[/color] hits smacking combo"
+				text = "A [color=" + this.Const.UI.Color.PositiveValue + "]3[/color] hits smacking combo"
 			},
 			{
 				id = 7,
@@ -74,40 +80,22 @@ this.grab_and_smack_mod <- this.inherit("scripts/skills/skill", {
 
 	function findTileToKnockBackTo( _userTile, _targetTile )
 	{
-		local dir = _targetTile.getDirectionTo(_userTile);
+		//local dir = _targetTile.getDirectionTo(_userTile);
 		local availableTiles = [];
 
-		if (_userTile.hasNextTile(dir))
+		for( local i = 0; i < 6; i = ++i )
 		{
-			local flingToTile = _userTile.getNextTile(dir);
-
-			if (flingToTile.IsEmpty && this.Math.abs(flingToTile.Level - _userTile.Level) <= 1)
+			if (!_userTile.hasNextTile(i))
 			{
-				availableTiles.push(flingToTile);
 			}
-		}
-
-		local altdir = dir - 1 >= 0 ? dir - 1 : 5;
-
-		if (_userTile.hasNextTile(altdir))
-		{
-			local flingToTile = _userTile.getNextTile(altdir);
-
-			if (flingToTile.IsEmpty && this.Math.abs(flingToTile.Level - _userTile.Level) <= 1)
+			else
 			{
-				availableTiles.push(flingToTile);
-			}
-		}
+				local flingToTile = _userTile.getNextTile(i);
 
-		altdir = dir + 1 <= 5 ? dir + 1 : 0;
-
-		if (_userTile.hasNextTile(altdir))
-		{
-			local flingToTile = _userTile.getNextTile(altdir);
-
-			if (flingToTile.IsEmpty && this.Math.abs(flingToTile.Level - _userTile.Level) <= 1)
-			{
-				availableTiles.push(flingToTile);
+				if (flingToTile.IsEmpty && flingToTile.Level <= _userTile.Level)
+				{
+					availableTiles.push(flingToTile);
+				}
 			}
 		}
 		
@@ -137,10 +125,7 @@ this.grab_and_smack_mod <- this.inherit("scripts/skills/skill", {
 		local roll = this.Math.rand(1, 100);
 		local hitChance = this.getHitchance(_targetTile.getEntity());
 		
-		if (roll <= hitChance)
-		{
-		}
-		else
+		if (roll > hitChance)
 		{
 			this.spawnAttackEffect(_targetTile, this.Const.Tactical.AttackEffectSwing);
 			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " fails to grab " + this.Const.UI.getColorizedEntityName(target) + " (Chance: " + hitChance + ", Rolled: " + roll + ")");
@@ -256,8 +241,7 @@ this.grab_and_smack_mod <- this.inherit("scripts/skills/skill", {
 				TargetTile = flingToTile,
 				HitInfo = clone this.Const.Tactical.HitInfo
 			};
-			tag.HitInfo.DamageRegular = 0;
-			tag.HitInfo.DamageMinimum = this.Math.max(20, damage);
+			tag.HitInfo.DamageRegular = this.Math.max(20, damage);
 			tag.HitInfo.DamageArmor = damage;
 			tag.HitInfo.DamageFatigue = this.Const.Combat.FatigueReceivedPerHit;
 			tag.HitInfo.DamageDirect = 0.0;
@@ -305,7 +289,11 @@ this.grab_and_smack_mod <- this.inherit("scripts/skills/skill", {
 		if (_entity.isAlive() || !_entity.isDying())
 		{
 			_tag.Skill.applyEffectToTarget(_tag.User, _entity, _entity.getTile());
-			this.Time.scheduleEvent(this.TimeUnit.Virtual, 100, _tag.Skill.onFollowUp, _tag);
+
+			if (this.Math.abs(_entity.getTile().Level - _tag.User.getTile().Level) <= 1)
+			{
+				this.Time.scheduleEvent(this.TimeUnit.Virtual, 100, _tag.Skill.onFollowUp, _tag);
+			}
 		}
 	}
 	
@@ -321,8 +309,8 @@ this.grab_and_smack_mod <- this.inherit("scripts/skills/skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin = 23 + this.Math.maxf(1, _properties.DamageRegularMin / 3);
-			_properties.DamageRegularMax = 23 + this.Math.maxf(1, _properties.DamageRegularMax / 3);
+			_properties.DamageRegularMin = 23 + this.Math.max(1, _properties.DamageRegularMin / 3);
+			_properties.DamageRegularMax = 23 + this.Math.max(1, _properties.DamageRegularMax / 3);
 			_properties.DamageArmorMult = 1;
 			_properties.DamageMinimum = 20;
 			_properties.MeleeSkill += 20;
@@ -335,10 +323,23 @@ this.grab_and_smack_mod <- this.inherit("scripts/skills/skill", {
 			}
 			
 			local targetStatus = _targetEntity.getSkills();
+			local effects = [
+				"effects.staggered",
+				"effects.shellshocked",
+				"effects.distracted",
+				"effects.dazed",
+				"effects.horrified",
+				"effects.legend_dazed",
+			];
 			
-			if (targetStatus.hasSkill("effects.staggered") || targetStatus.hasSkill("effects.shellshocked") || targetStatus.hasSkill("effects.distracted") || targetStatus.hasSkill("effects.dazed") || targetStatus.hasSkill("effects.stunned") || targetStatus.hasSkill("effects.sleeping"))
+			this.m.IsUsingHitchance = !_targetEntity.getCurrentProperties().IsStunned;
+			
+			foreach (idx, id in effects) 
 			{
-				this.m.IsUsingHitchance = false;
+			    if (targetStatus.hasSkill(id))
+				{
+					this.m.IsUsingHitchance = false;
+				}
 			}
 		}
 	}

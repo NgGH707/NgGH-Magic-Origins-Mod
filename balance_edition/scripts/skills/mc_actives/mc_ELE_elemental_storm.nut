@@ -221,7 +221,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 		if (_targetTile.IsOccupiedByActor)
 		{
 			this.m.ElementType = 1;
-			this.attackEntity(_user, _targetTile.getEntity());
+			this.attackEntity(_user, _targetTile.getEntity(), false);
 		}
 		
 		if (_targetTile.Properties.Effect != null && _targetTile.Properties.Effect.Type == "fire")
@@ -262,7 +262,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 			local entity = _targetTile.getEntity()
 			entity.getSkills().add(this.new("scripts/skills/effects/chilled_effect"));
 			this.m.ElementType = 2;
-			this.attackEntity(_user, entity);
+			this.attackEntity(_user, entity, false);
 		}
 
 		if (_targetTile.Subtype != this.Const.Tactical.TerrainSubtype.Snow && _targetTile.Subtype != this.Const.Tactical.TerrainSubtype.LightSnow)
@@ -305,7 +305,7 @@ this.mc_ELE_elemental_storm <- this.inherit("scripts/skills/mc_magic_skill", {
 		if (_targetTile.IsOccupiedByActor && _targetTile.getEntity().isAttackable())
 		{
 			this.m.ElementType = 3;
-			this.attackEntity(_user, _targetTile.getEntity());
+			this.attackEntity(_user, _targetTile.getEntity(), false);
 		}
 
 		this.m.ElementType = 0;

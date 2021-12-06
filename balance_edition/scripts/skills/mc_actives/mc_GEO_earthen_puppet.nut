@@ -4,6 +4,18 @@ this.mc_GEO_earthen_puppet <- this.inherit("scripts/skills/mc_magic_skill", {
 		Puppet = null,
 		Script = "scripts/entity/tactical/minions/special/sand_puppet"
 	},
+
+	function setPuppet( _p )
+	{
+		if (_p == null)
+		{
+			this.m.Puppet = null;
+		}
+		else 
+		{
+		    this.m.Puppet = typeof _p == "instance" ? _p : this.WeakTableRef(_p);
+		}
+	}
 	
 	function create()
 	{
@@ -28,7 +40,7 @@ this.mc_GEO_earthen_puppet <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsAttack = false;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsTargetingActor = false;
-		this.m.ActionPointCost = 9;
+		this.m.ActionPointCost = 8;
 		this.m.FatigueCost = 45;
 		this.m.MaxRangeBonus = 1;
 		this.m.IsRanged = true;
@@ -161,7 +173,6 @@ this.mc_GEO_earthen_puppet <- this.inherit("scripts/skills/mc_magic_skill", {
 			this.getContainer().setBusy(false);
 		}
 		
-		this.m.IsEnhanced = false;
 		return true;
 	}
 	
@@ -169,12 +180,14 @@ this.mc_GEO_earthen_puppet <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		this.Tactical.CameraDirector.addMoveToTileEvent(this.m.Delay, _targetTile);
 		this.Tactical.CameraDirector.addDelay(0.2);
+		local mod = this.getBonusDamageFromResolve(_user.getCurrentProperties());
+		local faction = _user.getFaction();
 		local spawn = this.Tactical.spawnEntity(this.m.Script, _targetTile.Coords.X, _targetTile.Coords.Y);
-		spawn.setFaction(2);
-		spawn.setNewStats(this.getBonusDamageFromResolve(_user.getCurrentProperties()), false);
+		spawn.setFaction(faction == this.Const.Faction.Player ? this.Const.Faction.PlayerAnimals : faction);
+		spawn.setNewStats(mod);
 		spawn.grow();
 		this.onPowering(_user, spawn, true);
-		this.m.Puppet = spawn;
+		this.setPuppet(spawn);
 		this.getContainer().setBusy(false);
 	}
 	
@@ -203,17 +216,17 @@ this.mc_GEO_earthen_puppet <- this.inherit("scripts/skills/mc_magic_skill", {
 		}
 	}
 	
-	function actitvateGolem( _golem )
+	function actitvateGolem( _puppet )
 	{
-		local effect = _golem.getSkills().getSkillByID("effects.mc_powering");
+		local effect = _puppet.getSkills().getSkillByID("effects.mc_powering");
 		
 		if (effect != null)
 		{
-			this.Tactical.TurnSequenceBar.removeEntity(_golem);
-			_golem.m.IsActingImmediately = true;
-			_golem.m.IsTurnDone = false;
-			_golem.m.IsWaitActionSpent = false;
-			this.Tactical.TurnSequenceBar.insertEntity(_golem);
+			this.Tactical.TurnSequenceBar.removeEntity(_puppet);
+			_puppet.m.IsActingImmediately = true;
+			_puppet.m.IsTurnDone = false;
+			_puppet.m.IsWaitActionSpent = false;
+			this.Tactical.TurnSequenceBar.insertEntity(_puppet);
 		}
 	}
 	
@@ -225,21 +238,13 @@ this.mc_GEO_earthen_puppet <- this.inherit("scripts/skills/mc_magic_skill", {
 	
 	function onCombatStarted()
 	{
-		if (this.m.IsUsed)
-		{
-			this.m.IsUsed = false;
-		}
-		
+		this.m.IsUsed = false;
 		this.m.Puppet = null;
 	}
 	
 	function onCombatFinished()
 	{
-		if (this.m.IsUsed)
-		{
-			this.m.IsUsed = false;
-		}
-		
+		this.m.IsUsed = false;
 		this.m.Puppet = null;
 	}
 	

@@ -22,9 +22,12 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				chance = 100;
 			}
 
-			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 200)
+			if (!this.Tactical.State.isScenarioMode())
 			{
-				chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 200));
+				if (this.World.getTime().Days >= 200)
+				{
+					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 200));
+				}
 			}
 
 			randomlyRollPerk(this, [
@@ -33,9 +36,17 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			randomlyRollPerk(this, [
 				"perks/perk_lindwurm_body"
 			], chance + 15);
-			randomlyRollPerk(this, [
-				"racial/champion_racial"
-			], 5);
+		}
+
+		obj.makeMiniboss <- function()
+		{
+			if (!this.actor.makeMiniboss())
+			{
+				return false;
+			}
+
+			this.m.XP *= 1.5;
+			return true;
 		}
 	});
 	::mods_hookExactClass("entity/tactical/enemies/lindwurm", function(obj) {
@@ -50,18 +61,29 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				chance = 75;
 			}
 
-			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 170)
+			if (!this.Tactical.State.isScenarioMode())
 			{
-				chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 170));
+				if (this.World.getTime().Days >= 170)
+				{
+					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 170));
+				}
 			}
 
 			randomlyRollPerk(this, [
 				"perks/perk_lindwurm_acid",
 				"perks/perk_lindwurm_body"
 			], chance);
-			randomlyRollPerk(this, [
-				"racial/champion_racial"
-			], 3);
+		}
+
+		obj.makeMiniboss <- function()
+		{
+			if (!this.actor.makeMiniboss())
+			{
+				return false;
+			}
+
+			this.m.XP *= 1.5;
+			return true;
 		}
 	});
 
@@ -83,9 +105,13 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					chance = 100;
 				}
 
-				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 100)
+				if (!this.Tactical.State.isScenarioMode())
 				{
-					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 100));
+					if (this.World.getTime().Days >= 100)
+					{
+						chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 100));
+					}
+					
 				}
 
 				randomlyRollPerk(this, [
@@ -93,9 +119,17 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					"perks/perk_thick_hide",
 					"perks/perk_enrage_wolf"
 				], chance);
-				randomlyRollPerk(this, [
-					"racial/champion_racial"
-				], 1);
+			}
+
+			obj.makeMiniboss <- function()
+			{
+				if (!this.actor.makeMiniboss())
+				{
+					return false;
+				}
+
+				this.m.XP *= 1.5;
+				return true;
 			}
 		});
 	}
@@ -119,9 +153,12 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					chance = 100;
 				}
 
-				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 100)
+				if (!this.Tactical.State.isScenarioMode())
 				{
-					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 100));
+					if (this.World.getTime().Days >= 100)
+					{
+						chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 100));
+					}
 				}
 
 				randomlyRollPerk(this, [
@@ -129,9 +166,17 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					"perks/perk_thick_hide",
 					"perks/perk_enrage_wolf"
 				], chance);
-				randomlyRollPerk(this, [
-					"racial/champion_racial"
-				], 1);
+			}
+
+			obj.makeMiniboss <- function()
+			{
+				if (!this.actor.makeMiniboss())
+				{
+					return false;
+				}
+
+				this.m.XP *= 1.5;
+				return true;
 			}
 		});
 	}
@@ -164,18 +209,29 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					], chance - 10);
 				}
 
-				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 150)
+				if (!this.Tactical.State.isScenarioMode())
 				{
-					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 150));
+					if (this.World.getTime().Days >= 150)
+					{
+						chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 150));
+					}
 				}
 
 				randomlyRollPerk(this, [
 					"perks/perk_spider_bite",
 					"perks/perk_spider_venom",
 				], chance);
-				randomlyRollPerk(this, [
-					"racial/champion_racial"
-				], 1);
+
+				obj.makeMiniboss <- function()
+				{
+					if (!this.actor.makeMiniboss())
+					{
+						return false;
+					}
+
+					this.m.XP *= 1.5;
+					return true;
+				}
 			}
 		});
 	}
@@ -199,18 +255,29 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					], chance - 15);
 				}
 
-				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 135)
+				if (!this.Tactical.State.isScenarioMode())
 				{
-					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 135));
+					if (this.World.getTime().Days >= 135)
+					{
+						chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 135));
+					}
 				}
 
 				randomlyRollPerk(this, [
 					"perks/perk_spider_bite",
 					"perks/perk_spider_venom",
 				], chance);
-				randomlyRollPerk(this, [
-					"racial/champion_racial"
-				], 5);
+			}
+
+			obj.makeMiniboss <- function()
+			{
+				if (!this.actor.makeMiniboss())
+				{
+					return false;
+				}
+
+				this.m.XP *= 1.5;
+				return true;
 			}
 		});
 	}
@@ -227,9 +294,12 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				chance = 100;
 			}
 
-			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 100)
+			if (!this.Tactical.State.isScenarioMode())
 			{
-				chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 200));
+				if (this.World.getTime().Days >= 100)
+				{
+					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 200));
+				}
 			}
 
 			randomlyRollPerk(this, [
@@ -240,17 +310,23 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				"perks/perk_serpent_drag",
 				"perks/perk_giant_serpent",
 			], chance);
-			randomlyRollPerk(this, [
-				"racial/champion_racial"
-			], 3);
+		}
+
+		obj.makeMiniboss <- function()
+		{
+			if (!this.actor.makeMiniboss())
+			{
+				return false;
+			}
+
+			this.m.XP *= 1.5;
+			return true;
 		}
 	});
 
 	local ghouls = [
-		"ghoul",
 		"ghoul_medium",
 		"ghoul_high",
-		"legend_skin_ghoul",
 		"legend_skin_ghoul_medium",
 		"legend_skin_ghoul_high"
 	];
@@ -278,9 +354,17 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					"perks/perk_nacho",
 					"perks/perk_nacho_eat"
 				], chance);
-				randomlyRollPerk(this, [
-					"racial/champion_racial"
-				], 1);
+			}
+
+			obj.makeMiniboss <- function()
+			{
+				if (!this.actor.makeMiniboss())
+				{
+					return false;
+				}
+
+				this.m.XP *= 1.5;
+				return true;
 			}
 		});
 	}
@@ -311,9 +395,17 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				"perks/perk_mastery_sleep",
 				"perks/perk_after_wake",
 			], chance);
-			randomlyRollPerk(this, [
-				"racial/champion_racial"
-			], 3);
+		}
+
+		obj.makeMiniboss <- function()
+		{
+			if (!this.actor.makeMiniboss())
+			{
+				return false;
+			}
+
+			this.m.XP *= 1.5;
+			return true;
 		}
 	});
 
@@ -345,6 +437,17 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					"perks/perk_uproot",
 					"perks/perk_uproot_aoe"
 				], chance);
+			}
+
+			obj.makeMiniboss <- function()
+			{
+				if (!this.actor.makeMiniboss())
+				{
+					return false;
+				}
+
+				this.m.XP *= 1.5;
+				return true;
 			}
 		});
 	}

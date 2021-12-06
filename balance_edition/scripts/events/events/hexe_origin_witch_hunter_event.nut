@@ -32,7 +32,7 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 						properties.Entities = [];
 						properties.PlayerDeploymentType = this.Const.Tactical.DeploymentType.Auto;
 						properties.EnemyDeploymentType = this.Const.Tactical.DeploymentType.Auto;
-						this.Const.World.Common.addUnitsToCombat(properties.Entities, this.Const.World.Spawn.WitchHunter, (100 + _event.m.ResourceBoost) * _event.m.DifficultyMult * _event.m.DifficultyMultScale, this.Const.Faction.Enemy, _event.m.ChampionChance);
+						this.Const.World.Common.addUnitsToCombat(properties.Entities, this.Const.World.Spawn.MC_WitchHunter, (100 + _event.m.ResourceBoost) * _event.m.DifficultyMult * _event.m.DifficultyMultScale, this.Const.Faction.Enemy, _event.m.ChampionChance);
 						this.World.State.startScriptedCombat(properties, false, false, true);
 						return 0;
 					}
@@ -63,7 +63,7 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 						properties.Entities = [];
 						properties.PlayerDeploymentType = this.Const.Tactical.DeploymentType.Center;
 						properties.EnemyDeploymentType = this.Const.Tactical.DeploymentType.Circle;
-						this.Const.World.Common.addUnitsToCombat(properties.Entities, this.Const.World.Spawn.WitchHunter, (100 + _event.m.ResourceBoost) * _event.m.DifficultyMult * _event.m.DifficultyMultScale, this.Const.Faction.Enemy, _event.m.ChampionChance);
+						this.Const.World.Common.addUnitsToCombat(properties.Entities, this.Const.World.Spawn.MC_WitchHunter, (100 + _event.m.ResourceBoost) * _event.m.DifficultyMult * _event.m.DifficultyMultScale, this.Const.Faction.Enemy, _event.m.ChampionChance);
 						this.World.State.startScriptedCombat(properties, false, false, true);
 						return 0;
 					}
@@ -113,7 +113,7 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 
 	function onUpdateScore()
 	{
-		return;
+		//return;
 
 		if (this.World.getTime().Days < 30)
 		{

@@ -115,7 +115,7 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 			_tile.Properties.set("Corpse", corpse);
 			this.Tactical.Entities.addCorpse(_tile);
 
-			if ((_killer == null || _killer.getFaction() == this.Const.Faction.Player || _killer.getFaction() == this.Const.Faction.PlayerAnimals) && this.Math.rand(1, 100) <= 40)
+			if (this.Math.rand(1, 100) <= 40)
 			{
 				local n = 0 + this.Math.rand(0, 1) + (!this.Tactical.State.isScenarioMode() && this.Math.rand(1, 100) <= this.World.Assets.getExtraLootChance() ? 1 : 0);
 
@@ -148,6 +148,26 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 	{
 		this.minion.onInit();
 		local b = this.m.BaseProperties;
+		local stats = {
+			XP = 500,
+			ActionPoints = 9,
+			Hitpoints = 200,
+			Bravery = 100,
+			Stamina = 400,
+			MeleeSkill = this.Math.rand(50, 60),
+			RangedSkill = this.Math.rand(50, 60),
+			MeleeDefense = -50,
+			RangedDefense = -50,
+			Initiative = 25,
+			FatigueEffectMult = 0.0,
+			MoraleEffectMult = 0.0,
+			FatigueRecoveryRate = 200,
+			Armor = [
+				150,
+				150
+			]
+		};
+		b.setValues(stats);
 		b.IsAffectedByNight = false;
 		b.IsAffectedByInjuries = false;
 		b.IsImmuneToDisarm = true;
@@ -159,8 +179,8 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 		b.IsImmuneToRoot = true;
 		b.IsImmuneToKnockBackAndGrab = true;
 		b.IsImmuneToSurrounding = true;
-		b.DamageReceivedArmorMult = 0.75;
-		b.FatigueDealtPerHitMult = 3.0;
+		//b.DamageReceivedArmorMult = 0.75;
+		b.FatigueDealtPerHitMult = 1.5;
 		this.m.ActionPoints = b.ActionPoints;
 		this.m.Hitpoints = b.Hitpoints;
 		this.m.CurrentProperties = clone b;
@@ -185,45 +205,24 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_steel_brow"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_hold_out"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_bullseye"));
-		this.m.Skills.add(this.new("scripts/skills/actives/punch_mod"));
-		this.m.Skills.add(this.new("scripts/skills/actives/sweep_mod"));
-		this.m.Skills.add(this.new("scripts/skills/actives/throw_rock_mod"));
-		this.m.Skills.add(this.new("scripts/skills/actives/unstoppable_charge_mod"));
-		this.m.Skills.add(this.new("scripts/skills/actives/fling_back_mod"));
-		this.m.Skills.add(this.new("scripts/skills/actives/grab_and_smack_mod"));
-		this.m.Skills.add(this.new("scripts/skills/actives/stomp_mod"));
+		this.m.Skills.add(this.new("scripts/skills/actives/mod_punch"));
+		this.m.Skills.add(this.new("scripts/skills/actives/mod_sweep"));
+		this.m.Skills.add(this.new("scripts/skills/actives/mod_throw_rock"));
+		this.m.Skills.add(this.new("scripts/skills/actives/mod_unstoppable_charge"));
+		this.m.Skills.add(this.new("scripts/skills/actives/mod_fling_back"));
+		this.m.Skills.add(this.new("scripts/skills/actives/mod_grab_and_smack"));
+		this.m.Skills.add(this.new("scripts/skills/actives/mod_stomp"));
 		this.grow(true);
 	}
 
-	function setNewStats( _mult , _isEnhanced = false )
+	function setNewStats( _mult )
 	{
-		local stats = {
-			XP = 500,
-			ActionPoints = 9,
-			Hitpoints = 200,
-			Bravery = 100,
-			Stamina = 400,
-			MeleeSkill = 55,
-			RangedSkill = 55,
-			MeleeDefense = -50,
-			RangedDefense = -50,
-			Initiative = 25,
-			FatigueEffectMult = 0.0,
-			MoraleEffectMult = 0.0,
-			FatigueRecoveryRate = 200,
-			Armor = [
-				150,
-				150
-			]
-		};
-
 		local b = this.m.BaseProperties;
-		b.setValues(stats);
-		b.HitpointsMult = _mult * 1.15;
-		b.MeleeSkillMult = _mult;
-		b.RangedSkillMult = _mult;
-		b.ArmorMult[0] = _mult;
-		b.ArmorMult[1] = _mult;
+		b.HitpointsMult *= _mult * (1.0 + this.Math.rand(0, 15) * 0.01);
+		b.MeleeSkillMult *= _mult;
+		b.RangedSkillMult *= _mult;
+		b.ArmorMult[0] *= _mult;
+		b.ArmorMult[1] *= _mult;
 
 		if (_mult > 1.25)
 		{
@@ -235,14 +234,12 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 			b.HitpointsMult *= 1.2;
 		}
 
-		this.m.ActionPoints = b.ActionPoints;
-		this.m.Skills.update();
-
-		if (_isEnhanced)
+		if (_mult > 1.5)
 		{
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_battle_forged"));
 		}
 
+		this.m.Skills.update();
 		this.setHitpointsPct(1.0);
 	}
 
@@ -260,7 +257,6 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 
 		this.m.Size = this.Math.min(3, this.m.Size + 1);
 		this.m.IsShrinking = false;
-		local b = this.m.BaseProperties;
 
 		if (this.m.Size == 2)
 		{
@@ -291,7 +287,6 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 			this.getSprite("status_rooted_back").Scale = 0.6;
 			this.setSpriteOffset("status_rooted", this.createVec(-7, 14));
 			this.setSpriteOffset("status_rooted_back", this.createVec(-7, 14));
-			b.IsImmuneToKnockBackAndGrab = true;
 		}
 
 		this.m.SoundPitch = 1.2 - this.m.Size * 0.1;
@@ -313,7 +308,6 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 
 		this.m.Size = this.Math.max(1, this.m.Size - 1);
 		this.m.IsShrinking = true;
-		local b = this.m.BaseProperties;
 
 		if (this.m.Size == 2)
 		{
@@ -507,33 +501,27 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 
 	function registerRageEvent()
 	{
-		this.Time.scheduleEvent(this.TimeUnit.Rounds, 1, this.onLosingRage.bindenv(this), this);
-	}
+		this.Time.scheduleEvent(this.TimeUnit.Rounds, 1, function( _actorID )
+		{
+			local _actor = this.Tactical.getEntityByID(_actorID);
 
-	function onLosingRage( _actor )
-	{
-		if (typeof _actor == "instance" && _actor.isNull() || !_actor.isAlive() || _actor.isDying())
-		{
-			return;
-		}
-		
-		local rage = _actor.getSkills().getSkillByID("racial.berserker_rage");
-		
-		if (rage == null)
-		{
-			return;
-		}
-		
-		local r = this.Math.rand(1, 3);
-		
-		if (r == 3)
-		{
-			r = this.Math.rand(1, 3);
-		}
-		
-		rage.addRage(-r);
-		this.registerRageEvent();
-	}
+			if (_actor == null || !_actor.isAlive() || _actor.isDying())
+			{
+				return;
+			}
+			
+			local rage = _actor.getSkills().getSkillByID("racial.berserker_rage");
+			
+			if (rage == null)
+			{
+				return;
+			}
+			
+			local r = this.Math.rand(1, 2);
+			rage.addRage(-r);
+			_actor.registerRageEvent();
+		}, this.getID());
+	} 
 
 });
 

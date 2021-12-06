@@ -1,4 +1,4 @@
-this.punch_mod <- this.inherit("scripts/skills/skill", {
+this.mod_punch <- this.inherit("scripts/skills/skill", {
 	m = {},
 	function create()
 	{

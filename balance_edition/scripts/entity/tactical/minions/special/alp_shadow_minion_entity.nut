@@ -18,7 +18,17 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 	},
 	function addNineLivesCount()
 	{
-		this.m.NineLivesCount = this.Math.min(9, this.m.NineLivesCount + 1);
+		local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
+		
+		if (this.m.NineLivesCount == 0 && NineLives != null && NineLives.isSpent())
+		{
+			NineLives.m.IsSpent = false;
+			NineLives.m.LastFrameUsed = 0;
+		}
+		else
+		{
+		    this.m.NineLivesCount = this.Math.min(8, this.m.NineLivesCount + 1);
+		}
 	}
 
 	function setLink( _l )
@@ -199,8 +209,12 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 		b.IsAffectedByRain = false;
 		b.IsAffectedByInjuries = false;
 		b.IsMovable = false;
-		b.DamageRegularMin = 5;
+		b.DamageRegularMin = 0;
 		b.DamageRegularMax = 5;
+		b.HitChance = [
+			100,
+			0
+		];
 		this.m.ActionPoints = b.ActionPoints;
 		this.m.Hitpoints = b.Hitpoints;
 		this.m.CurrentProperties = clone b;
@@ -267,7 +281,7 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 	    	this.m.Skills.add(this.new("scripts/skills/actives/legend_rust"));
 		}
 
-		if (this.Math.rand(1, 100) <= 33)
+		if (this.Math.rand(1, 100) <= 25)
 		{
 			local skill = this.new("scripts/skills/actives/legend_hex_skill")
 	    	skill.m.Cooldown = 0;

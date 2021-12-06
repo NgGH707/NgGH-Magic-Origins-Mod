@@ -1,4 +1,4 @@
-this.stomp_mod <- this.inherit("scripts/skills/skill", {
+this.mod_stomp <- this.inherit("scripts/skills/skill", {
 	m = {},
 	function create()
 	{
@@ -29,7 +29,7 @@ this.stomp_mod <- this.inherit("scripts/skills/skill", {
 		this.m.IsIgnoredAsAOO = true;
 		this.m.InjuriesOnBody = this.Const.Injury.BluntBody;
 		this.m.InjuriesOnHead = this.Const.Injury.BluntHead;
-		this.m.DirectDamageMult = 0.30;
+		this.m.DirectDamageMult = 0.25;
 		this.m.ActionPointCost = 5;
 		this.m.FatigueCost = 20;
 		this.m.MinRange = 1;
@@ -56,10 +56,7 @@ this.stomp_mod <- this.inherit("scripts/skills/skill", {
 		return ret;
 	}
 	
-	function onUpdate( _properties )
-	{	
-	}
-	
+
 	function onUse( _user, _targetTile )
 	{
 		local myTile = _user.getTile();
@@ -94,7 +91,6 @@ this.stomp_mod <- this.inherit("scripts/skills/skill", {
 					skills.removeByID("effects.riposte");
 					
 					this.applyEffectToTarget(_user, target, nextTile);
-					this.applyFatigueDamage(target, 10);
 				}
 			}
 		}
@@ -109,8 +105,24 @@ this.stomp_mod <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 		
-		if (!_target.getCurrentProperties().IsImmuneToStun)
+		local effect = this.Math.rand(1, 4);
+		
+		if (effect == 1)
 		{
+			_target.getSkills().add(this.new("scripts/skills/effects/distracted_effect"));
+			
+			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
+			{
+				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has distracted " + this.Const.UI.getColorizedEntityName(_target) + " for one turn");
+			}
+		}
+		else if (effect == 2)
+		{
+			if (!_target.getCurrentProperties().IsImmuneToStun)
+			{
+				return;
+			}
+
 			_target.getSkills().add(this.new("scripts/skills/effects/dazed_effect"));
 			
 			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
@@ -120,25 +132,11 @@ this.stomp_mod <- this.inherit("scripts/skills/skill", {
 		}
 		else
 		{
-			local effect = this.Math.rand(1, 3);
-			
-			if (effect == 1)
+			_target.getSkills().add(this.new("scripts/skills/effects/staggered_effect"));
+		
+			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
 			{
-				_target.getSkills().add(this.new("scripts/skills/effects/distracted_effect"));
-				
-				if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
-				{
-					this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has distracted " + this.Const.UI.getColorizedEntityName(_target) + " for one turn");
-				}
-			}
-			else
-			{
-				_target.getSkills().add(this.new("scripts/skills/effects/staggered_effect"));
-			
-				if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
-				{
-					this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has staggered " + this.Const.UI.getColorizedEntityName(_target) + " for 2 turns");
-				}
+				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has staggered " + this.Const.UI.getColorizedEntityName(_target) + " for 2 turns");
 			}
 		}
 	}
@@ -168,8 +166,8 @@ this.stomp_mod <- this.inherit("scripts/skills/skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 30;
-			_properties.DamageRegularMax += 65;
+			_properties.DamageRegularMin += 32;
+			_properties.DamageRegularMax += 62;
 			_properties.DamageArmorMult *= 0.75;
 		}
 	}

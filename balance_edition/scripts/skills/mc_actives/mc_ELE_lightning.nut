@@ -124,7 +124,7 @@ this.mc_ELE_lightning <- this.inherit("scripts/skills/mc_magic_skill", {
 
 			if (tile.IsOccupiedByActor && tile.getEntity().isAttackable() && tile.getEntity().isAlive())
 			{
-				_data.Skill.attackEntity(_data.User, tile.getEntity());
+				_data.Skill.attackEntity(_data.User, tile.getEntity(), false);
 			}
 
 			_data.Skill.reset(true);

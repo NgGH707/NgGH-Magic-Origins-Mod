@@ -1,6 +1,8 @@
 this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 	m = {
 		IsVines = false,
+		AdditionalAccuracy = 15,
+		AdditionalHitChance = -10
 	},
 	function create()
 	{
@@ -38,6 +40,8 @@ this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsVisibleTileNeeded = true;
 		this.m.IsRanged = true;
 		this.m.IsAttack = true;
+		this.m.IsShieldRelevant = false;
+		this.m.IsShieldwallRelevant = false;
 		this.m.InjuriesOnBody = this.Const.Injury.PiercingBody;
 		this.m.InjuriesOnHead = this.Const.Injury.BluntHead;
 		this.m.DirectDamageMult = 0.3;
@@ -84,31 +88,47 @@ this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 	function getTooltip()
 	{
 		local ret = this.m.IsVines ? this.skill.getDefaultUtilityTooltip() : this.skill.getDefaultTooltip();
+		
+		local accuText = "";
+		if (this.m.AdditionalAccuracy != 0)
+		{
+			local color = this.m.AdditionalAccuracy > 0 ? this.Const.UI.Color.PositiveValue : this.Const.UI.Color.NegativeValue;
+			local sign = this.m.AdditionalAccuracy > 0 ? "+" : "";
+			accuText = "Has [color=" + color + "]" + sign + this.m.AdditionalAccuracy + "%[/color] chance to hit";
+		}
+
+		if (this.m.AdditionalHitChance != 0)
+		{
+			accuText += this.m.AdditionalAccuracy == 0 ? "Has" : ", and";
+			local additionalHitChance = this.m.AdditionalHitChance + this.getContainer().getActor().getCurrentProperties().HitChanceAdditionalWithEachTile;
+			local sign = additionalHitChance > 0 ? "+" : "";
+			accuText += " [color=" + (additionalHitChance > 0 ? this.Const.UI.Color.PositiveValue : this.Const.UI.Color.NegativeValue) + "]" + sign + additionalHitChance + "%[/color]";
+			accuText += this.m.AdditionalAccuracy == 0 ? " chance to hit " : "";
+			accuText += " per tile of distance";
+		}
+
+		if (accuText.len() != 0)
+		{
+			ret.push({
+				id = 7,
+				type = "text",
+				icon = "ui/icons/hitchance.png",
+				text = accuText
+			});
+		}
+
 		ret.push({
 			id = 8,
 			type = "text",
 			icon = "ui/icons/special.png",
 			text = "Can hit up to 3 targets"
 		});
-
-		if (this.m.IsVines)
-		{
-			ret.push({
-				id = 9,
-				type = "text",
-				icon = "ui/icons/special.png",
-				text = "Trapped targets in Vines, also affect allies"
-			});
-		}
-		else 
-		{
-			ret.push({
-				id = 6,
-				type = "text",
-				icon = "ui/icons/special.png",
-				text = "Is enhanced by [color=" + this.Const.UI.Color.PositiveValue + "]Concentrate[/color] effect"
-			});    
-		}
+		ret.push({
+			id = 9,
+			type = "text",
+			icon = "ui/icons/special.png",
+			text = "Trapped targets in Vines, also affect allies"
+		});
 
 		return ret;
 	}
@@ -147,6 +167,12 @@ this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 			{
 				this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(target) + " can\'t be rooted in vines");
 			}
+			
+			this.Time.scheduleEvent(this.TimeUnit.Virtual, 250, function( _skill )
+			{
+				target.getSprite("status_rooted").Visible = false;
+				target.getSprite("status_rooted_back").Visible = false;
+			}.bindenv(this), this);
 			return;
 		}
 
@@ -156,6 +182,12 @@ this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 			{
 				this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(_user) + " fails to root " + this.Const.UI.getColorizedEntityName(target) + " in vines (Chance: " + toHit + ", Rolled: " + rolled + ")");
 			}
+
+			this.Time.scheduleEvent(this.TimeUnit.Virtual, 250, function( _skill )
+			{
+				target.getSprite("status_rooted").Visible = false;
+				target.getSprite("status_rooted_back").Visible = false;
+			}.bindenv(this), this);
 			return;
 		}
 
@@ -293,11 +325,8 @@ this.mc_ELE_root_or_uproot <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 53;
-			_properties.DamageRegularMax += 86;
-			_properties.DamageArmorMult *= 0.75;
-			_properties.DamageTotalMult *= this.getBonusDamageFromResolve(_properties);
-			this.removeBonusesFromWeapon(_properties);
+			_properties.RangedSkill += this.m.AdditionalAccuracy;
+			_properties.HitChanceAdditionalWithEachTile += this.m.AdditionalHitChance;
 		}
 	}
 

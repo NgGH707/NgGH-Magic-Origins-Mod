@@ -28,12 +28,12 @@ this.berserker_rage_racial <- this.inherit("scripts/skills/skill", {
 
 	function getDescription()
 	{
-		return "Accumulating rage everytime land a hit, kill an enemy or taken a hit from enemy. Stacks of rage give this character more attack power, more accuracy, more resilient. Lose a stack everyturn.";
+		return "Accumulating rage everytime land a hit, kill an enemy or taken a hit from enemy. Stacks of rage give this character more attack power, more accuracy, more resilient. Lose [color=" + this.Const.UI.Color.NegativeValue + "]1[/color] - [color=" + this.Const.UI.Color.NegativeValue + "]3[/color] stacks at the start of the round.";
 	}
 	
 	function getTooltip()
 	{
-		local i = this.Math.maxf(33, (1.0 - 0.02 * this.m.RageStacks) * 100);
+		local i = this.Math.max(30, (1.0 - 0.02 * this.m.RageStacks) * 100);
 		
 		local ret = [
 			{
@@ -56,7 +56,19 @@ this.berserker_rage_racial <- this.inherit("scripts/skills/skill", {
 				id = 8,
 				type = "text",
 				icon = "ui/icons/damage_dealt.png",
-				text = "Gain [color=" + this.Const.UI.Color.PositiveValue + "]+" + this.Math.floor(1.5 * this.m.RageStacks) + "[/color] bonus damage"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + this.m.RageStacks + "[/color] Attack Damage"
+			},
+			{
+				id = 9,
+				type = "text",
+				icon = "ui/icons/melee_skill.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + this.m.RageStacks + "[/color] Melee Skill"
+			},
+			{
+				id = 9,
+				type = "text",
+				icon = "ui/icons/ranged_skill.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + this.m.RageStacks + "[/color] Ranged Skill"
 			},
 			{
 				id = 9,
@@ -100,16 +112,17 @@ this.berserker_rage_racial <- this.inherit("scripts/skills/skill", {
 		local HP = 1 - (actor.getHitpoints() / actor.getHitpointsMax());
 		_properties.DamageReceivedTotalMult *= this.Math.maxf(0.3, 1.0 - 0.02 * this.m.RageStacks);
 		_properties.MoraleCheckBraveryMult[1] *= 10000.0;
-		_properties.DamageRegularMin += this.Math.floor(1 * this.m.RageStacks);
-		_properties.DamageRegularMax += this.Math.floor(1 * this.m.RageStacks);
-		_properties.MeleeSkill += 1 * this.m.RageStacks;
-		_properties.RangedSkill += 1 * this.m.RageStacks;
-		_properties.MeleeSkillMult *= this.Math.minf(1.5, 1.0 + HP);
-		_properties.RangedSkillMult *= this.Math.minf(1.5, 1.0 + HP);
+		_properties.DamageRegularMin += this.m.RageStacks;
+		_properties.DamageRegularMax += this.m.RageStacks;
+		_properties.MeleeSkill += this.m.RageStacks;
+		_properties.RangedSkill += this.m.RageStacks;
+		_properties.MeleeSkillMult *= this.Math.minf(1.25, 1.0 + HP);
+		_properties.RangedSkillMult *= this.Math.minf(1.25, 1.0 + HP);
 	}
 
 	function onRoundEnd()
 	{
+		return;
 		local r = this.Math.rand(-2, -1);
 		this.logDebug("This Earthen Puppet loses rage!");
 		this.addRage(r);
@@ -117,7 +130,7 @@ this.berserker_rage_racial <- this.inherit("scripts/skills/skill", {
 	
 	function onDamageReceived( _attacker, _damageHitpoints, _damageArmor )
 	{
-		if (_damageHitpoints != 0 || _damageArmor != 0)
+		if (_damageHitpoints > 0 || _damageArmor > 0)
 		{
 			this.addRage(2);
 		}
@@ -125,7 +138,7 @@ this.berserker_rage_racial <- this.inherit("scripts/skills/skill", {
 
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
-		this.addRage(2);
+		this.addRage(1);
 	}
 
 	function onTargetKilled( _targetEntity, _skill )

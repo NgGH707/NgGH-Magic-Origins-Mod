@@ -52,7 +52,7 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		this.m.ID = "actives.mc_shadow_demon";
 		this.m.Name = "Shadow Demon";
-		this.m.Description = "Summon a shadow demon that will fight for you. Can\'t have more than one shadow demon. The higher your resolve the stronger your shadow demon can be.";
+		this.m.Description = "Summon a shadow demon that will fight for you. Can\'t have more than one shadow demon at the same time. The higher your resolve the stronger your shadow demon can be.";
 		this.m.Icon = "skills/active_117.png";
 		this.m.IconDisabled = "skills/active_117_sw.png";
 		this.m.Overlay = "active_117";
@@ -88,7 +88,7 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsDoingForwardMove = true;
 		this.m.IsVisibleTileNeeded = false;
 		this.m.ActionPointCost = 6;
-		this.m.FatigueCost = 40;
+		this.m.FatigueCost = 36;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
 		this.m.MaxLevelDifference = 4;
@@ -132,13 +132,11 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 
 		if (this.getEntity() != null)
 		{
-			this.m.FatigueCostMult /= 3;
-			this.m.ActionPointCost = 3;
+			this.m.FatigueCostMult /= 2;
 			this.m.IsTargeted = false;
 		}
 		else 
 		{
-			this.m.ActionPointCost = 6;
 			this.m.IsTargeted = true;
 		}
 	}
@@ -199,14 +197,14 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 			FatigueEffectMult = 0.0,
 			MoraleEffectMult = 0.0,
 			FatigueRecoveryRate = 15,
-			Vision = this.Math.rand(4, 5),
+			Vision = 4,
 			Armor = [
 				0,
 				0
 			]
 		};
 
-		stats.DamageTotalMult <- mult;
+		stats.DamageTotalMult <- this.Math.minf(1.5, mult);
 		stats.MeleeSkill = this.Math.floor(stats.MeleeSkill * mult);
 		stats.RangedSkill = this.Math.floor(stats.RangedSkill * mult);
 		stats.MeleeDefense = this.Math.floor(stats.MeleeDefense * mult);
