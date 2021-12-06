@@ -69,25 +69,25 @@ this.mc_siphon_strength_slave_effect <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/melee_skill.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "[/color] Resolve"
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "[/color] Melee Skill"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/ranged_skill.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "%[/color] Resolve"
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "%[/color] Ranged Skill"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/melee_defense.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "%[/color] Resolve"
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "%[/color] Melee Defense"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/ranged_defense.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "%[/color] Resolve"
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-" + mod + "%[/color] Ranged Defense"
 			}
 		]);
 

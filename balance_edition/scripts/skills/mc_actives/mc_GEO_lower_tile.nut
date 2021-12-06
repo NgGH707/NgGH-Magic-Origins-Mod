@@ -26,7 +26,7 @@ this.mc_GEO_lower_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = 25;
 		this.m.MinRange = 0;
-		this.m.MaxRange = 4;
+		this.m.MaxRange = 3;
 		this.m.MaxRangeBonus = 9;
 		this.m.IsRanged = true;
 		this.m.IsUtility = true;

@@ -48,18 +48,42 @@ this.mc_DIA_siphon_strength <- this.inherit("scripts/skills/mc_magic_skill", {
 			icon = "ui/icons/vision.png",
 			text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles on even ground, more if casting downhill"
 		});
+
+		local accuText = "";
+		if (this.m.AdditionalAccuracy != 0)
+		{
+			local color = this.m.AdditionalAccuracy > 0 ? this.Const.UI.Color.PositiveValue : this.Const.UI.Color.NegativeValue;
+			local sign = this.m.AdditionalAccuracy > 0 ? "+" : "";
+			accuText = "Has [color=" + color + "]" + sign + this.m.AdditionalAccuracy + "%[/color] chance to hit";
+		}
+
+		if (this.m.AdditionalHitChance != 0)
+		{
+			accuText += this.m.AdditionalAccuracy == 0 ? "Has" : ", and";
+			local additionalHitChance = this.m.AdditionalHitChance + this.getContainer().getActor().getCurrentProperties().HitChanceAdditionalWithEachTile;
+			local sign = additionalHitChance > 0 ? "+" : "";
+			accuText += " [color=" + (additionalHitChance > 0 ? this.Const.UI.Color.PositiveValue : this.Const.UI.Color.NegativeValue) + "]" + sign + additionalHitChance + "%[/color]";
+			accuText += this.m.AdditionalAccuracy == 0 ? " chance to hit " : "";
+			accuText += " per tile of distance";
+		}
+
+		if (accuText.len() != 0)
+		{
+			ret.push({
+				id = 7,
+				type = "text",
+				icon = "ui/icons/hitchance.png",
+				text = accuText
+			});
+		}
 		
 		return ret;
-	}
-
-	function isUsable()
-	{
-		return this.skill.isUsable() && !this.getContainer().hasSkill("effects.mc_siphon_strength_master");
 	}
 
 	function onUse( _user, _targetTile )
 	{	
 		local target = _targetTile.getEntity();
+		this.getContainer().removeByID("effects.mc_siphon_strength_master");
 		this.Tactical.spawnSpriteEffect("bust_nightmare", this.createColor("#ffffff"), _targetTile, 0, 40, 1.0, 0.25, 0, 400, 300);
 		local toHit = this.getHitchance(target);
 		local rolled = this.Math.rand(1, 100);
