@@ -23,7 +23,7 @@ this.mc_GEO_lower_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsTargeted = true;
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
-		this.m.ActionPointCost = 4;
+		this.m.ActionPointCost = 6;
 		this.m.FatigueCost = 25;
 		this.m.MinRange = 0;
 		this.m.MaxRange = 3;
