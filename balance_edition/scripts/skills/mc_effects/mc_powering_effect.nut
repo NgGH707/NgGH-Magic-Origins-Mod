@@ -71,6 +71,15 @@ this.mc_powering_effect <- this.inherit("scripts/skills/skill", {
 				type = "description",
 				text = this.getDescription()
 			},
+			{
+				id = 5,
+				type = "progressbar",
+				icon = "ui/icons/asset_business_reputation.png",
+				value = this.m.TurnLefts,
+				valueMax = 5,
+				text = "" + this.m.TurnLefts + " / " + 5 + "",
+				style = "fatigue-slim"
+			}
 		];
 	}
 
@@ -122,6 +131,7 @@ this.mc_powering_effect <- this.inherit("scripts/skills/skill", {
 		}
 		
 		_properties.MeleeDefense += 50;
+		_properties.TargetAttractionMult *= 0.85;
 	}
 	
 	function onTurnStart()

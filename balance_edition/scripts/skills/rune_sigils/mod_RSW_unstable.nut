@@ -1,10 +1,10 @@
-this.legend_RSW_unstable <- this.inherit("scripts/skills/skill", {
+this.mod_RSW_unstable <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false
 	},
 	function create()
 	{
-		this.m.ID = "special.legend_RSW_unstable";
+		this.m.ID = "special.mod_RSW_unstable";
 		this.m.Name = "Rune Sigil: Unstable";
 		this.m.Description = "Rune Sigil: Unstable";
 		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";

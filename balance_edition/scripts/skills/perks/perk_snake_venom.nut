@@ -58,7 +58,6 @@ this.perk_snake_venom <- this.inherit("scripts/skills/skill", {
 		}
 		else
 		{
-			poison.resetTime();
 			poison.setActorID(id);
 
 			if (poison.getDamage() < 20)
@@ -66,7 +65,7 @@ this.perk_snake_venom <- this.inherit("scripts/skills/skill", {
 				poison.setDamage(20);
 			}
 
-			poison.m.TurnsLeft = this.Math.min(2, poison.m.TurnsLeft);
+			poison.m.TurnsLeft = 1;
 		}
 	}
 

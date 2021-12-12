@@ -172,7 +172,7 @@ this.mod_unstoppable_charge <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		local applyEffect = this.Math.rand(1, 2);
+		local applyEffect = this.Math.rand(1, 3);
 
 		if (applyEffect == 1 && !_target.getCurrentProperties().IsImmuneToStun)
 		{
@@ -183,7 +183,7 @@ this.mod_unstoppable_charge <- this.inherit("scripts/skills/skill", {
 				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has stunned " + this.Const.UI.getColorizedEntityName(_target) + " for one turn");
 			}
 		}
-		else if (applyEffect == 2 && !_target.getCurrentProperties().IsImmuneToKnockBackAndGrab && !_target.getCurrentProperties().IsRooted)
+		else if (!_target.getCurrentProperties().IsImmuneToKnockBackAndGrab && !_target.getCurrentProperties().IsRooted)
 		{
 			_target.getSkills().add(this.new("scripts/skills/effects/staggered_effect"));
 

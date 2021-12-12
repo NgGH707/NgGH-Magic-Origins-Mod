@@ -1,10 +1,10 @@
-this.legend_RSW_corrosion <- this.inherit("scripts/skills/skill", {
+this.mod_RSW_corrosion <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false
 	},
 	function create()
 	{
-		this.m.ID = "special.legend_RSW_corrosion";
+		this.m.ID = "special.mod_RSW_corrosion";
 		this.m.Name = "Rune Sigil: Corrosion";
 		this.m.Description = "Rune Sigil: Corrosion";
 		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";

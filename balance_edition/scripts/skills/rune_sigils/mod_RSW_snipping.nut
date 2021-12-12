@@ -1,10 +1,10 @@
-this.legend_RSW_snipping <- this.inherit("scripts/skills/skill", {
+this.mod_RSW_snipping <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false
 	},
 	function create()
 	{
-		this.m.ID = "special.legend_RSW_snipping";
+		this.m.ID = "special.mod_RSW_snipping";
 		this.m.Name = "Rune Sigil: Snipping";
 		this.m.Description = "Rune Sigil: Snipping";
 		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";

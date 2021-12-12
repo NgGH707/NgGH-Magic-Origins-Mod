@@ -167,7 +167,7 @@ this.mod_stomp <- this.inherit("scripts/skills/skill", {
 		if (_skill == this)
 		{
 			_properties.DamageRegularMin += 32;
-			_properties.DamageRegularMax += 62;
+			_properties.DamageRegularMax += 58;
 			_properties.DamageArmorMult *= 0.75;
 		}
 	}

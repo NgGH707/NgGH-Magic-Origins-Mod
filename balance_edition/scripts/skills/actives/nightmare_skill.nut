@@ -163,8 +163,13 @@ this.nightmare_skill <- this.inherit("scripts/skills/skill", {
 
 		local damage = this.getDamage(target, defenderProperties);
 		local bonus_damage = this.getAdditionalDamage(properties);
-		local total_damage = this.Math.rand(damage + bonus_damage, damage + bonus_damage + 5) * properties.DamageDirectMult * (1.0 + properties.DamageDirectAdd) * properties.DamageTotalMult;
 
+		if (this.isKindOf(target, "player") && bonus_damage > 0)
+		{
+			bonus_damage = this.Math.max(1, bonus_damage - this.Math.floor(defenderProperties.getBravery() * 0.25));
+		}
+
+		local total_damage = this.Math.rand(damage + bonus_damage, damage + bonus_damage + 5) * properties.DamageDirectMult * (1.0 + properties.DamageDirectAdd) * properties.DamageTotalMult;
 		local hitInfo = clone this.Const.Tactical.HitInfo;
 		hitInfo.DamageRegular = total_damage;
 		hitInfo.DamageDirect = 1.0;

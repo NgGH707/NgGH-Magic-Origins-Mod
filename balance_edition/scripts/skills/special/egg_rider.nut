@@ -93,42 +93,12 @@ this.egg_rider <- this.inherit("scripts/skills/skill", {
 
 		if (this.m.IsInBattle)
 		{
-			local manager = this.m.Manager;
-
-			ret.extend([
-				{
-					id = 3,
-					type = "text",
-					text = "[u][size=14]Health State[/size][/u]"
-				},
-				{
-					id = 4,
-					type = "progressbar",
-					icon = "ui/icons/armor_head.png",
-					value = manager.getArmor(this.Const.BodyPart.Head),
-					valueMax = manager.getArmorMax(this.Const.BodyPart.Head),
-					text = "" + manager.getArmor(this.Const.BodyPart.Head) + " / " + manager.getArmorMax(this.Const.BodyPart.Head) + "",
-					style = "armor-head-slim"
-				},
-				{
-					id = 5,
-					type = "progressbar",
-					icon = "ui/icons/armor_body.png",
-					value = manager.getArmor(this.Const.BodyPart.Body),
-					valueMax = manager.getArmorMax(this.Const.BodyPart.Body),
-					text = "" + manager.getArmor(this.Const.BodyPart.Body) + " / " + manager.getArmorMax(this.Const.BodyPart.Body) + "",
-					style = "armor-body-slim"
-				},
-				{
-					id = 6,
-					type = "progressbar",
-					icon = "ui/icons/health.png",
-					value = manager.getHitpoints(),
-					valueMax = manager.getHitpointsMax(),
-					text = "" + manager.getHitpoints() + " / " + manager.getHitpointsMax() + "",
-					style = "hitpoints-slim"
-				}
-			]);
+			ret.push({
+				id = 3,
+				type = "text",
+				text = "[u][size=14]Health State[/size][/u]"
+			});
+			ret.extend(this.m.Manager.getMountTooltip());
 		}
 
 		if (this.m.QuirksName.len() != 0)

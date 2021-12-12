@@ -224,6 +224,7 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		b.MeleeDefense += 15;
 		b.RangedDefense += 15;
 		b.Vision = 5;
+		b.TargetAttractionMult = 0.75;
 		b.IsImmuneToBleeding = true;
 		b.IsImmuneToPoison = true;
 		b.IsImmuneToKnockBackAndGrab = true;

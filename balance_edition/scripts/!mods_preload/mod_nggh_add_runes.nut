@@ -82,31 +82,35 @@ this.getroottable().Nggh_MagicConcept.hookAddRunes <- function ()
 			switch(this.m.RuneVariant)
 			{
 			case 100:
-				this.addSkill(this.new("scripts/skills/rune_sigils/legend_RSH_shielding"));
+				this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSH_shielding"));
 				break;
 
 			case 101:
-				this.addSkill(this.new("scripts/skills/rune_sigils/legend_RSW_unstable"));
+				this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSW_unstable"));
 				break;
 
 			case 102:
-				this.addSkill(this.new("scripts/skills/rune_sigils/legend_RSA_thorns"));
+				this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSA_thorns"));
 				break;
 
 			case 103:
-				this.addSkill(this.new("scripts/skills/rune_sigils/legend_RSA_repulsion"));
+				this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSA_repulsion"));
 				break;
 
 			case 104:
-				this.addSkill(this.new("scripts/skills/rune_sigils/legend_RSW_corrosion"));
+				this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSW_corrosion"));
 				break;
 
 			case 105:
-				this.addSkill(this.new("scripts/skills/rune_sigils/legend_RSW_lucky"));
+				this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSW_lucky"));
 				break;
 
 			case 106:
-				this.addSkill(this.new("scripts/skills/rune_sigils/legend_RSW_brimstone"));
+				this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSW_brimstone"));
+				break;
+
+			case 107:
+				this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSH_night_vision"));
 				break;
 
 			default:
@@ -139,6 +143,9 @@ this.getroottable().Nggh_MagicConcept.hookAddRunes <- function ()
 			
 			case 106:
 				return "This item has the power of the rune sigil of Brimstone:\n[color=" + this.Const.UI.Color.PositiveValue + "]Immune[/color] to fire, gain [color=" + this.Const.UI.Color.NegativeValue + "]+10[/color] Fatigue recovery per turn and a slight damage reduction while standing on fire.";
+
+			case 107:
+				return "This item has the power of the rune sigil of Night Vision:\nNot affected by [color=" + this.Const.UI.Color.PositiveValue + "]Nighttime[/color] effect";
 			}
 
 			return getRuneSigilTooltip();
@@ -228,6 +235,13 @@ this.getroottable().Nggh_MagicConcept.hookAddRunes <- function ()
 				this.m.Description = "An inscribed rock that can be attached to a character\'s shield.";
 				this.m.Icon = "rune_sigils/rune_stone_4.png";
 				this.m.IconLarge = "rune_sigils/rune_stone_4.png";
+				break;
+
+			case 107:
+				this.m.Name = "Helmet Rune Sigil: Night Vision";
+				this.m.Description = "An inscribed rock that can be attached to a character\'s helmet.";
+				this.m.Icon = "rune_sigils/rune_stone_2.png";
+				this.m.IconLarge = "rune_sigils/rune_stone_2.png";
 				break;
 			}
 		};

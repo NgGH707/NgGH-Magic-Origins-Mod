@@ -17,17 +17,14 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			onInit();
 			local chance = 10;
 
+			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 200)
+			{
+				chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 200));
+			}
+
 			if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
 			{
 				chance = 100;
-			}
-
-			if (!this.Tactical.State.isScenarioMode())
-			{
-				if (this.World.getTime().Days >= 200)
-				{
-					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 200));
-				}
 			}
 
 			randomlyRollPerk(this, [
@@ -45,6 +42,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				return false;
 			}
 
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_lindwurm_body"));
 			this.m.XP *= 1.5;
 			return true;
 		}
@@ -56,17 +54,17 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			onInit();
 			local chance = 25;
 
-			if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
-			{
-				chance = 75;
-			}
-
 			if (!this.Tactical.State.isScenarioMode())
 			{
 				if (this.World.getTime().Days >= 170)
 				{
 					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 170));
 				}
+			}
+
+			if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
+			{
+				chance = 75;
 			}
 
 			randomlyRollPerk(this, [
@@ -83,6 +81,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			}
 
 			this.m.XP *= 1.5;
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_lindwurm_body"));
 			return true;
 		}
 	});
@@ -100,18 +99,14 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				onInit();
 				local chance = 25;
 
+				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 100)
+				{
+					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 100));
+				}
+
 				if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
 				{
 					chance = 100;
-				}
-
-				if (!this.Tactical.State.isScenarioMode())
-				{
-					if (this.World.getTime().Days >= 100)
-					{
-						chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 100));
-					}
-					
 				}
 
 				randomlyRollPerk(this, [
@@ -128,7 +123,11 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					return false;
 				}
 
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_enrage_wolf"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_hyena_bite"));
 				this.m.XP *= 1.5;
+				local b = this.m.BaseProperties;
+				b.MeleeSkill += 10;
 				return true;
 			}
 		});
@@ -148,17 +147,17 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				onInit();
 				local chance = 25;
 
-				if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
-				{
-					chance = 100;
-				}
-
 				if (!this.Tactical.State.isScenarioMode())
 				{
 					if (this.World.getTime().Days >= 100)
 					{
 						chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 100));
 					}
+				}
+
+				if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
+				{
+					chance = 100;
 				}
 
 				randomlyRollPerk(this, [
@@ -175,7 +174,11 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					return false;
 				}
 
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_wolf_bite"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_enrage_wolf"));
 				this.m.XP *= 1.5;
+				local b = this.m.BaseProperties;
+				b.MeleeSkill += 10;
 				return true;
 			}
 		});
@@ -198,23 +201,20 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				onInit();
 				local chance = 15;
 
+				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 150)
+				{
+					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 150));
+				}
+
 				if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
 				{
-					chance = 100;
+					chance = 110;
 				}
 				else 
 				{
 				    randomlyRollPerk(this, [
 						"perks/perk_spider_web"
 					], chance - 10);
-				}
-
-				if (!this.Tactical.State.isScenarioMode())
-				{
-					if (this.World.getTime().Days >= 150)
-					{
-						chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 150));
-					}
 				}
 
 				randomlyRollPerk(this, [
@@ -230,6 +230,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					}
 
 					this.m.XP *= 1.5;
+					this.m.Skills.add(this.new("scripts/skills/perks/perk_spider_bite"));
 					return true;
 				}
 			}
@@ -277,6 +278,8 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				}
 
 				this.m.XP *= 1.5;
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_spider_bite"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_spider_web"));
 				return true;
 			}
 		});
@@ -291,7 +294,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 
 			if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
 			{
-				chance = 100;
+				chance = 115;
 			}
 
 			if (!this.Tactical.State.isScenarioMode())
@@ -320,6 +323,10 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			}
 
 			this.m.XP *= 1.5;
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_serpent_bite"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_serpent_drag"));
+			local b = this.m.BaseProperties;
+			b.MeleeSkill += 15;
 			return true;
 		}
 	});
@@ -363,6 +370,8 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					return false;
 				}
 
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_nacho"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_frenzy"));
 				this.m.XP *= 1.5;
 				return true;
 			}
@@ -376,23 +385,26 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			onInit();
 			local chance = 15;
 
-			if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
-			{
-				chance = 100;
-			}
-
 			if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 120)
 			{
 				chance = this.Math.min(100, chance + this.Math.max(1, this.World.getTime().Days - 120));
 			}
+
+			if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
+			{
+				chance = 110;
+			}
+
+			randomlyRollPerk(this, [
+				"perks/perk_mastery_sleep",
+				"perks/perk_mastery_nightmare",
+			], chance - 10);
 
 			randomlyRollPerk(this, [
 				"perks/perk_afterimage",
 			], chance - 5);
 			
 			randomlyRollPerk(this, [
-				"perks/perk_mastery_nightmare",
-				"perks/perk_mastery_sleep",
 				"perks/perk_after_wake",
 			], chance);
 		}
@@ -405,6 +417,8 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			}
 
 			this.m.XP *= 1.5;
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_mastery_nightmare"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_mastery_sleep"));
 			return true;
 		}
 	});
@@ -422,14 +436,14 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				onInit();
 				local chance = 25;
 
-				if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
-				{
-					chance = 100;
-				}
-
 				if (!this.Tactical.State.isScenarioMode() && this.World.getTime().Days >= 150)
 				{
 					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 150));
+				}
+
+				if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
+				{
+					chance = 100;
 				}
 
 				randomlyRollPerk(this, [
@@ -446,6 +460,8 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					return false;
 				}
 
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_grow_shield"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_uproot_aoe"));
 				this.m.XP *= 1.5;
 				return true;
 			}

@@ -144,6 +144,11 @@ this.minion <- this.inherit("scripts/entity/tactical/actor", {
 		this.getFlags().set("PotionLastUsed", 0.0);
 		this.getFlags().set("PotionsUsed", 0);
 		this.m.LifetimeStats.Tags = this.new("scripts/tools/tag_collection");
+		this.m.Items.getData()[this.Const.ItemSlot.Offhand][0] = -1;
+		this.m.Items.getData()[this.Const.ItemSlot.Mainhand][0] = -1;
+		this.m.Items.getData()[this.Const.ItemSlot.Head][0] = -1;
+		this.m.Items.getData()[this.Const.ItemSlot.Body][0] = -1;
+		this.m.Items.getData()[this.Const.ItemSlot.Ammo][0] = -1;
 	}
 
 	function onInit()

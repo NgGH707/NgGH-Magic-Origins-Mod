@@ -35,9 +35,14 @@ this.mc_stored_energy_effect <- this.inherit("scripts/skills/skill", {
 		local usage = this.Math.min(this.m.MaximunPerUse, this.m.Energy);
 		return {
 			Energy = usage,
-			DamMax = usage,
-			DamMin = this.Math.floor(usage * 0.75)
+			DamMax = this.Math.floor(usage * 1.33),
+			DamMin = this.Math.floor(usage * 0.9)
 		};
+	}
+
+	function getEnergyPct()
+	{
+		return this.Math.minf(1.0, this.m.Energy / this.Math.maxf(1.0, this.m.EnergyMax));
 	}
 	
 	function create()
@@ -74,6 +79,31 @@ this.mc_stored_energy_effect <- this.inherit("scripts/skills/skill", {
 		];
 
 		ret.extend(this.getEnergyTooltips(false));
+
+		if (this.getEnergyPct() >= 0.75)
+		{
+			ret.extend([
+				{
+					id = 6,
+					type = "text",
+					icon = "ui/icons/damage_dealt.png",
+					text = "[color=" + this.Const.UI.Color.PositiveValue + "]+10%[/color] Attack Damage"
+				},
+				{
+					id = 6,
+					type = "text",
+					icon = "ui/icons/melee_defense.png",
+					text = "[color=" + this.Const.UI.Color.PositiveValue + "]+5[/color] Melee Defense"
+				},
+				{
+					id = 6,
+					type = "text",
+					icon = "ui/icons/ranged_defense.png",
+					text = "[color=" + this.Const.UI.Color.PositiveValue + "]+5[/color] Ranged Defense"
+				}
+			]);
+		}
+
 		return ret;
 	}
 
@@ -109,6 +139,16 @@ this.mc_stored_energy_effect <- this.inherit("scripts/skills/skill", {
 		}
 
 		return ret;
+	}
+
+	function onUpdate( _properties )
+	{
+		if (this.getEnergyPct() >= 0.75)
+		{
+			_properties.DamageTotalMult *= 1.1;
+			_properties.MeleeDefense += 5;
+			_properties.RangedDefense += 5;
+		}
 	}
 
 	function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )
@@ -163,7 +203,7 @@ this.mc_stored_energy_effect <- this.inherit("scripts/skills/skill", {
 		this.spawnIcon(this.m.Overlay, _targetEntity.getTile());
 		local hitInfo = clone this.Const.Tactical.HitInfo;
 		local data = this.useEnergy();
-		hitInfo.DamageRegular = this.Math.rand(this.Math.floor(data.DamMax * 0.5), data.DamMax);
+		hitInfo.DamageRegular = this.Math.rand(this.Math.floor(data.DamMax), this.Math.floor(data.DamMax * 1.25));
 		hitInfo.DamageDirect = 1.0;
 		hitInfo.BodyPart = this.Const.BodyPart.Body;
 		hitInfo.BodyDamageMult = 1.0;

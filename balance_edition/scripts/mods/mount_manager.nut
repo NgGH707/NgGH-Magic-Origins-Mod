@@ -1123,6 +1123,39 @@ this.mount_manager <- {
 		}
 	}
 
+	function getMountTooltip()
+	{
+		return [
+			{
+				id = 4,
+				type = "progressbar",
+				icon = "ui/icons/armor_head.png",
+				value = this.getArmor(this.Const.BodyPart.Head),
+				valueMax = this.getArmorMax(this.Const.BodyPart.Head),
+				text = "" + this.getArmor(this.Const.BodyPart.Head) + " / " + this.getArmorMax(this.Const.BodyPart.Head) + "",
+				style = "armor-head-slim"
+			},
+			{
+				id = 5,
+				type = "progressbar",
+				icon = "ui/icons/armor_body.png",
+				value = this.getArmor(this.Const.BodyPart.Body),
+				valueMax = this.getArmorMax(this.Const.BodyPart.Body),
+				text = "" + this.getArmor(this.Const.BodyPart.Body) + " / " + this.getArmorMax(this.Const.BodyPart.Body) + "",
+				style = "armor-body-slim"
+			},
+			{
+				id = 6,
+				type = "progressbar",
+				icon = "ui/icons/health.png",
+				value = this.getHitpoints(),
+				valueMax = this.getHitpointsMax(),
+				text = "" + this.getHitpoints() + " / " + this.getHitpointsMax() + "",
+				style = "hitpoints-slim"
+			}
+		];
+	}
+
 	function onCombatStarted()
 	{
 		this.m.IsInBattle = true;

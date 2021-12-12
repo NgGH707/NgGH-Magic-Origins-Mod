@@ -215,6 +215,7 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 			100,
 			0
 		];
+		b.TargetAttractionMult = 0.85;
 		this.m.ActionPoints = b.ActionPoints;
 		this.m.Hitpoints = b.Hitpoints;
 		this.m.CurrentProperties = clone b;

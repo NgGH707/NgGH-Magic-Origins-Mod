@@ -62,10 +62,25 @@ this.mc_concentrate <- this.inherit("scripts/skills/skill", {
 		];
 	}
 
-	//function isUsable()
-	//{
-	//	return this.skill.isUsable() && !this.getContainer().hasSkill("special.mc_focus");
-	//}
+	function isUsable()
+	{
+		if (!this.skill.isUsable())
+		{
+			return false;
+		}
+
+		local effect = this.getContainer().getSkillByID("special.mc_focus");
+
+		if (effect != null)
+		{
+			return effect.m.Count < 10;
+		}
+		else 
+		{
+			return true;    
+		}
+		
+	}
 
 	function onVerifyTarget( _originTile, _targetTile )
 	{

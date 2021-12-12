@@ -1,4 +1,4 @@
-this.legend_RSA_diehard <- this.inherit("scripts/skills/skill", {
+this.mod_RSA_diehard <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false,
 		IsSpent = false,
@@ -6,7 +6,7 @@ this.legend_RSA_diehard <- this.inherit("scripts/skills/skill", {
 	},
 	function create()
 	{
-		this.m.ID = "special.legend_RSA_diehard";
+		this.m.ID = "special.mod_RSA_diehard";
 		this.m.Name = "Rune Sigil: Die Hard";
 		this.m.Description = "Rune Sigil: Die Hard";
 		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";

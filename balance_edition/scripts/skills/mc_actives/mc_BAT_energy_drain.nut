@@ -1,6 +1,9 @@
 this.mc_BAT_energy_drain <- this.inherit("scripts/skills/mc_magic_skill", {
 	m = {
-		Efficiency = [33, 67],
+		DamageMin = 15,
+		DamageMax = 35,
+		CriticalChance = 5,
+		Efficiency = [60, 90],
 		IsUsingEnergy = false,
 	},
 	
@@ -8,7 +11,7 @@ this.mc_BAT_energy_drain <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		this.m.ID = "actives.mc_energy_drain";
 		this.m.Name = "Energy Drain";
-		this.m.Description = "Absorbing the life energy of your foes and using it for a 'greater purposes'. Accuracy based on melee skill. Damage based on resolve, deal reduced damage if you don\'t have a magic staff.";
+		this.m.Description = "Absorbing the life energy of your foes and using it for a 'greater purposes'. Accuracy based on melee skill. Efficiency based on resolve.";
 		this.m.KilledString = "Sucked all life";
 		this.m.Icon = "skills/active_mc_01.png";
 		this.m.IconDisabled = "skills/active_mc_01_sw.png";
@@ -24,61 +27,54 @@ this.mc_BAT_energy_drain <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsActive = true;
 		this.m.IsTargeted = true;
 		this.m.IsStacking = false;
-		this.m.IsAttack = true;
+		this.m.IsAttack = false;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.DirectDamageMult = 1.0;
-		this.m.ActionPointCost = 6;
-		this.m.FatigueCost = 12;
+		this.m.ActionPointCost = 4;
+		this.m.FatigueCost = 10;
 		this.m.MinRange = 1;
-		this.m.MaxRange = 1;
+		this.m.MaxRange = 2;
 	}
 	
 	function getTooltip()
 	{
-		local ret = this.getDefaultTooltip();
-		ret.push({
-			id = 7,
-			type = "text",
-			icon = "ui/icons/special.png",
-			text = "Completely ignores armor"
-		});
-
-		/*local e = this.getContainer().getSkillByID("special.mc_focus");
-
-		if (e != null)
-		{
-			ret.extend([
-				{
-					id = 6,
-					type = "text",
-					icon = "ui/icons/special.png",
-					text = "Is enhanced by [color=" + this.Const.UI.Color.PositiveValue + "]Concentrate[/color] effect"
-				},
-				{
-					id = 6,
-					type = "text",
-					icon = "ui/icons/special.png",
-					text = "[color=" + this.Const.UI.Color.PositiveValue + "]100%[/color] of damage done is turned into [color=" + this.Const.UI.Color.NegativeValue + "]Energy[/color]"
-				}
-			]);
-		}
-		else 
-		{
-		    
-		}*/
-
-		ret.push({
-			id = 6,
-			type = "text",
-			icon = "ui/icons/special.png",
-			text = "[color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.Efficiency[0] + "[/color] - [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.Efficiency[1] + "%[/color] of damage done is turned into [color=" + this.Const.UI.Color.NegativeValue + "]Energy[/color]"
-		});
+		local ret = this.getDefaultUtilityTooltip();
+		local properties = this.getContainer().getActor().getCurrentProperties()
+		local mult = this.getBonusDamageFromResolve(properties);
+		local damage_max = this.Math.floor(this.m.DamageMax * mult * properties.FatigueDealtPerHitMult);
+		local damage_min = this.Math.floor(this.m.DamageMin * mult * properties.FatigueDealtPerHitMult);
+		ret.extend([
+			{
+				id = 9,
+				type = "text",
+				icon = "ui/icons/fatigue.png",
+				text = "Inflicts [color=" + this.Const.UI.Color.DamageValue + "]" + damage_min + "[/color] - [color=" + this.Const.UI.Color.DamageValue + "]" + damage_max + "[/color] fatigue damage"
+			},
+			{
+				id = 7,
+				type = "text",
+				icon = "ui/icons/vision.png",
+				text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+			}
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.Efficiency[0] + "[/color] - [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.Efficiency[1] + "%[/color] of fatigue damage done is turned into [color=" + this.Const.UI.Color.NegativeValue + "]Energy[/color]"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Gains less energy for target that is not in melee range"
+			}
+		]);
 
 		local e = this.getContainer().getSkillByID("effects.mc_stored_energy");
 
 		if (e != null)
 		{
-			ret.extend(e.getEnergyTooltips());
+			ret.extend(e.getEnergyTooltips(false));
 		}
 
 		return ret;
@@ -86,31 +82,31 @@ this.mc_BAT_energy_drain <- this.inherit("scripts/skills/mc_magic_skill", {
 
 	function onUse( _user, _targetTile )
 	{
-		local e = this.getContainer().getSkillByID("effects.mc_stored_energy");
-
-		if (e != null)
-		{
-			e.activate();
-		}
-
-		local ret = this.attackEntity(_user, _targetTile.getEntity());
+		local target = _targetTile.getEntity();
+		local ret = this.attackEntity(_user, target);
 		this.spawnEffect(_targetTile);
-		return ret;
-	}
-	
-	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
-	{
-		if (_skill == this)
-		{
-			local actor = this.getContainer().getActor();
-			local efficiency = this.Math.rand(this.m.Efficiency[0], this.m.Efficiency[1]) * 0.01;
 
-			if (this.m.IsEnhanced)
+		if (ret)
+		{
+			local dis = _user.getTile().getDistanceTo(_targetTile);
+			local properties = _user.getCurrentProperties();
+			local mult = this.getBonusDamageFromResolve(properties);
+			local damage = this.Math.rand(this.m.DamageMin, this.m.DamageMax) * mult * properties.FatigueDealtPerHitMult;
+
+			if (this.Math.rand(1, 100) <= this.m.CriticalChance)
 			{
-				efficiency = 1.0;
+				damage *= 1.5;
 			}
 
-			local energy = this.Math.max(1, this.Math.floor(_damageInflictedHitpoints * efficiency));
+			damage = this.Math.floor(damage);
+			local efficiency = this.Math.rand(this.m.Efficiency[0], this.m.Efficiency[1]) * 0.01;
+
+			if (dis > 1)
+			{
+				efficiency *= 0.67;
+			}
+
+			local energy = this.Math.max(1, this.Math.floor(damage * efficiency));
 			local effect = this.getContainer().getSkillByID("effects.mc_stored_energy");
 
 			if (effect == null)
@@ -119,38 +115,31 @@ this.mc_BAT_energy_drain <- this.inherit("scripts/skills/mc_magic_skill", {
 				this.getContainer().add(effect);
 			}
 			
-			local ret = effect.addEnergy(energy);
+			local added = effect.addEnergy(energy);
 
-			if (!this.getContainer().getActor().isHiddenToPlayer() && ret != 0)
+			if (!_user.isHiddenToPlayer())
 			{
-				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + " absorbed [b]" + ret + "[/b] energy from " + this.Const.UI.getColorizedEntityName(_targetEntity));
+				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " dealt [b]" + damage + "[/b] fatigue damage to " + this.Const.UI.getColorizedEntityName(target));
+
+				if (added != 0)
+				{
+					this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " absorbed [b]" + added + "[/b] energy from " + this.Const.UI.getColorizedEntityName(target));
+				}
 			}
 
-			this.spawnEffect(actor.getTile());
-			this.m.IsEnhanced = false;
+			this.applyFatigueDamage(target, this.Math.floor(damage));
+			this.spawnEffect(_user.getTile());
 		}
-		
-		this.getContainer().update();
+
+		return ret;
 	}
 	
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 25;
-			_properties.DamageRegularMax += 35;
-			_properties.DamageArmorMult *= 0.0;
-			_properties.HitChance[this.Const.BodyPart.Body] += 100.0;
-			_properties.IsIgnoringArmorOnAttack = true;
-
-			if (this.getContainer().hasSkill("special.mc_focus"))
-			{
-				_properties.DamageRegularMin += 5;
-				_properties.DamageRegularMax += 5;
-			}
-
-			_properties.DamageTotalMult *= this.getBonusDamageFromResolve(_properties);
-			this.removeBonusesFromWeapon(_properties);
+			_properties.DamageTotalMult = 0.0;
+			_properties.HitChanceMult[this.Const.BodyPart.Head] = 0.0;
 		}
 	}
 	

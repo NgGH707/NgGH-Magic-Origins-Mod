@@ -163,7 +163,7 @@ this.mage_trio_scenario <- this.inherit("scripts/scenarios/world/starting_scenar
 	function onInit()
 	{
 		this.starting_scenario.onInit();
-		this.World.Assets.m.ChampionChanceAdditional += 10;
+		this.World.Assets.m.ChampionChanceAdditional += 3;
 		this.World.Assets.m.XPMult *= 1.15;
 		this.World.Assets.updateLook(9999);
 	}

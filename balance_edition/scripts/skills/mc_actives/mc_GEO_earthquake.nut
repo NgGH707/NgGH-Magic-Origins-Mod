@@ -163,7 +163,7 @@ this.mc_GEO_earthquake <- this.inherit("scripts/skills/mc_magic_skill", {
 			this.Const.EntityType.AlpShadow,
 			this.Const.EntityType.LegendBanshee,
 		];
-		local properties = _user.getCurrentProperties()
+		local properties = _user.getCurrentProperties();
 		local mult = this.getBonusDamageFromResolve(properties);
 		
 		foreach (t in tiles)

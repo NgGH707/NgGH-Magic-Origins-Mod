@@ -1,4 +1,4 @@
-this.legend_RSH_shielding <- this.inherit("scripts/skills/skill", {
+this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 	m = {
 		Hitpoints = 50,
 		HitpointsMax = 100,

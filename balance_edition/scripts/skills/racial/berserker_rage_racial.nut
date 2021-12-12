@@ -109,8 +109,8 @@ this.berserker_rage_racial <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.IsHidden = this.m.RageStacks == 0;
 		local actor = this.getContainer().getActor();
-		local HP = 1 - (actor.getHitpoints() / actor.getHitpointsMax());
-		_properties.DamageReceivedTotalMult *= this.Math.maxf(0.3, 1.0 - 0.02 * this.m.RageStacks);
+		local HP = 1.0 - actor.getHitpointsPct();
+		_properties.DamageReceivedRegularMult *= this.Math.maxf(0.3, 1.0 - 0.02 * this.m.RageStacks);
 		_properties.MoraleCheckBraveryMult[1] *= 10000.0;
 		_properties.DamageRegularMin += this.m.RageStacks;
 		_properties.DamageRegularMax += this.m.RageStacks;
