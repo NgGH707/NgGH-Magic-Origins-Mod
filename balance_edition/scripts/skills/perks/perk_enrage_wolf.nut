@@ -35,7 +35,7 @@ this.perk_enrage_wolf <- this.inherit("scripts/skills/skill", {
 		local num = overwhelm.m.Count;
 		_properties.MeleeSkill += num * 5;
 		_properties.DamageDirectAdd += num * 0.05;
-		_properties.ThreatOnHit += num;
+		_properties.DamageTotalMult += num * 0.05;
 	}
 });
 

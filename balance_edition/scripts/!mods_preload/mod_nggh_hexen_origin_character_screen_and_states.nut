@@ -154,7 +154,7 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 			{
 				local activeEntity = this.Tactical.TurnSequenceBar.getActiveEntity();
 				local result = [];
-				local extra;
+				local extra = [];
 
 				foreach( entity in entities )
 				{
@@ -162,7 +162,7 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 					{
 						if (entity.isPlayerControlled() && entity.getID() == activeEntity.getID())
 						{
-							extra = entity;
+							extra.push(entity);
 						}
 
 						continue;
@@ -171,9 +171,31 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 					result.push(this.UIDataHelper.convertEntityToUIData(entity, activeEntity));
 				}
 
-				if (result.len() <= 26 && extra != null)
+				foreach( entity in pets )
 				{
-					result.push(this.UIDataHelper.convertEntityToUIData(extra, activeEntity));
+					if (entity.isSummoned() && entity.isPlayerControlled())
+					{
+						if (entity.getID() == activeEntity.getID())
+						{
+							extra.push(entity);
+						}
+						else
+						{
+							extra.insert(0, entity);
+						}
+					}
+				}
+
+				foreach ( i, pet in extra ) 
+				{
+				    if (result.len() <= 26)
+				    {
+				    	result.push(this.UIDataHelper.convertEntityToUIData(pet, activeEntity));
+				    }
+				    else
+				    {
+				    	break;
+				    }
 				}
 
 				return result;

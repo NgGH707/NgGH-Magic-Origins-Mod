@@ -298,7 +298,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			{
 				if (this.World.getTime().Days >= 100)
 				{
-					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 200));
+					chance = this.Math.min(100, chance + this.Math.max(10, this.World.getTime().Days - 100));
 				}
 			}
 

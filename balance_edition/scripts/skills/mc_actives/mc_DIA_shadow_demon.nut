@@ -167,10 +167,11 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 		}
 
 		local stats = this.calculatingStats();
+		local faction = _user.getFaction() == this.Const.Faction.Player ? this.Const.Faction.PlayerAnimals : _user.getFaction();
 		this.Time.scheduleEvent(this.TimeUnit.Virtual, 300, function( _skill )
 		{
 			local demon = this.Tactical.spawnEntity(_skill.m.Script, _targetTile.Coords);
-			demon.setFaction(2);
+			demon.setFaction(faction);
 			demon.setMaster(_user);
 			demon.setLink(_skill);
 			demon.setNewStats(stats);

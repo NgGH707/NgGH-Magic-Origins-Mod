@@ -148,6 +148,7 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 		}
 		
 		this.Tactical.getTemporaryRoster().add(target);
+		this.Tactical.TurnSequenceBar.removeEntity(target);
 
 		if (!target.hasSprite("dirt"))
 		{

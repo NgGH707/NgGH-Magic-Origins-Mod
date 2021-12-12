@@ -59,24 +59,21 @@ this.w_charmed_captive_effect <- this.inherit("scripts/skills/skill", {
 	function onAdded()
 	{
 		local actor = this.getContainer().getActor();
-		local e = this.Tactical.TurnSequenceBar.findEntityByID(this.Tactical.TurnSequenceBar.getAllEntities(), actor.getID());
-		this.m.Container.removeByID("effects.shieldwall");
-		this.m.Container.removeByID("effects.spearwall");
-		this.m.Container.removeByID("effects.riposte");
-		this.m.Container.removeByID("effects.return_favor");
+		this.getContainer().removeByID("effects.shieldwall");
+		this.getContainer().removeByID("effects.spearwall");
+		this.getContainer().removeByID("effects.riposte");
+		this.getContainer().removeByID("effects.return_favor");
 		
 		if (!this.m.IsTheLastEnemy)
 		{
-			actor.setFaction(2);
+			actor.setFaction(this.Const.Faction.PlayerAnimals);
 			actor.getFlags().set("Charmed", true);
 			
-			if (e != null)
-			{
-				this.Tactical.TurnSequenceBar.removeEntity(e.entity);
-				e.entity.m.IsTurnDone = true;
-				e.entity.m.IsActingEachTurn = false;
-				e.entity.m.IsNonCombatant = true;
-			}
+			local entity = actor.get();
+			this.Tactical.TurnSequenceBar.removeEntity(entity);
+			entity.m.IsTurnDone = true;
+			entity.m.IsActingEachTurn = false;
+			entity.m.IsNonCombatant = true;
 			
 			if (!actor.getFlags().has("human"))
 			{

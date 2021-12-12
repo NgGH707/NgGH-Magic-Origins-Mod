@@ -69,10 +69,7 @@ this.diabolist_background <- this.inherit("scripts/skills/backgrounds/mc_mage_ba
 		this.m.Level = this.Math.rand(2, 4);
 		this.m.AlignmentMin = this.Const.LegendMod.Alignment.Dreaded;
 		this.m.AlignmentMax = this.Const.LegendMod.Alignment.Cruel;
-		this.m.Modifiers.Meds = this.Const.LegendMod.ResourceModifiers.Meds[1];
 		this.m.Modifiers.Healing = this.Const.LegendMod.ResourceModifiers.Healing[3];
-		this.m.Modifiers.Injury = this.Const.LegendMod.ResourceModifiers.Injury[1];
-		this.m.Modifiers.MedConsumption = this.Const.LegendMod.ResourceModifiers.MedConsumption[2];
 		this.m.Modifiers.Gathering = this.Const.LegendMod.ResourceModifiers.Gather[2];
 		this.m.Modifiers.Enchanting = 0.7;
 		this.m.PerkTreeDynamic = {

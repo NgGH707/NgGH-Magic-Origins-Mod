@@ -90,7 +90,6 @@ this.geomancer_background <- this.inherit("scripts/skills/backgrounds/mc_mage_ba
 		this.m.Modifiers.Healing = this.Const.LegendMod.ResourceModifiers.Healing[1];
 		this.m.Modifiers.Crafting = this.Const.LegendMod.ResourceModifiers.Crafting[3];
 		this.m.Modifiers.ToolConsumption = this.Const.LegendMod.ResourceModifiers.ToolConsumption[1];
-		this.m.Modifiers.MedConsumption = this.Const.LegendMod.ResourceModifiers.MedConsumption[2];
 		this.m.Modifiers.Enchanting = 0.5;
 		this.m.PerkTreeDynamic = {
 			Weapon = [
