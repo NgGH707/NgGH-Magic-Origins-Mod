@@ -189,7 +189,9 @@ this.mc_GEO_lower_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 	function getHitFactors( _targetTile )
 	{
 		local ret = [];
-		if (targetEntity.IsOccupiedByActor)
+		local targetEntity = _targetTile.IsOccupiedByActor ? _targetTile.getEntity() : null;
+
+		if (targetEntity != null && targetEntity.IsOccupiedByActor)
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
