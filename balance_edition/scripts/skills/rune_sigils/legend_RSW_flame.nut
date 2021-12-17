@@ -1,10 +1,10 @@
-this.mod_RSW_flame <- this.inherit("scripts/skills/skill", {
+this.legend_RSW_flame <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false
 	},
 	function create()
 	{
-		this.m.ID = "special.mod_RSW_flame";
+		this.m.ID = "special.legend_RSW_flame";
 		this.m.Name = "Rune Sigil: Flaming";
 		this.m.Description = "Rune Sigil: Flaming";
 		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";

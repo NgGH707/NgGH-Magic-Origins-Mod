@@ -1,4 +1,4 @@
-this.mod_RSW_precision <- this.inherit("scripts/skills/skill", {
+this.legend_RSW_precision <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false,
 		TurnsLefts = 1,
@@ -6,7 +6,7 @@ this.mod_RSW_precision <- this.inherit("scripts/skills/skill", {
 	},
 	function create()
 	{
-		this.m.ID = "special.mod_RSW_precision";
+		this.m.ID = "special.legend_RSW_precision";
 		this.m.Name = "Rune Sigil: Precision";
 		this.m.Description = "Rune Sigil: Precision";
 		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";

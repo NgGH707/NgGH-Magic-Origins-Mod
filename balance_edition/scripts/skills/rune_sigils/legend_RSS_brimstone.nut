@@ -1,10 +1,10 @@
-this.mod_RSS_brimstone <- this.inherit("scripts/skills/skill", {
+this.legend_RSS_brimstone <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false,
 	},
 	function create()
 	{
-		this.m.ID = "special.mod_RSS_brimstone";
+		this.m.ID = "special.legend_RSS_brimstone";
 		this.m.Name = "Rune Sigil: Brimstone";
 		this.m.Description = "Rune Sigil: Brimstone";
 		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";

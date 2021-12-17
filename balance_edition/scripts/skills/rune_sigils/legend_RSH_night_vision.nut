@@ -1,10 +1,10 @@
-this.mod_RSH_night_vision <- this.inherit("scripts/skills/skill", {
+this.legend_RSH_night_vision <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false,
 	},
 	function create()
 	{
-		this.m.ID = "special.mod_RSH_night_vision";
+		this.m.ID = "special.legend_RSH_night_vision";
 		this.m.Name = "Rune Sigil: Night Vision";
 		this.m.Description = "Rune Sigil: Night Vision";
 		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";

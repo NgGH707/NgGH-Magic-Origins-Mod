@@ -214,7 +214,7 @@ this.diabolist_background <- this.inherit("scripts/skills/backgrounds/mc_mage_ba
 				id = 13,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Can pass [color=" + this.Const.UI.Color.PositiveValue + "]50%[/color] of damage taken to summoned demon"
+				text = "Share [color=" + this.Const.UI.Color.PositiveValue + "]34%[/color] of any damage taken to summoned demon"
 			}
 		];
 
@@ -226,37 +226,23 @@ this.diabolist_background <- this.inherit("scripts/skills/backgrounds/mc_mage_ba
 	{
 		local items = this.getContainer().getActor().getItems();
 		items.equip(this.Const.World.Common.pickHelmet([
-			[
-				1,
-				"cultist_hood"
-			],
-			[
-				1,
-				"dark_cowl"
-			],
-			[
-				1,
-				"dark_cowl"
-			],
+			[1, "cultist_hood"],
+			[1, "dark_cowl"],
+			[1, "dark_cowl"],
+			[1, "hood", 63]
 		]));
 		items.equip(this.Const.World.Common.pickArmor([
-			[
-				1,
-				"thick_dark_tunic"
-			],
-			[
-				1,
-				"legend_vala_cloak"
-			],
+			[1, "ragged_dark_surcoat"],
+			[1, "thick_dark_tunic"]
 		]));
 		
 		if (this.Math.rand(1, 2) == 1)
 		{
-			items.equip(this.new("scripts/items/weapons/legend_mystic_staff"));
+			items.equip(this.new("scripts/items/weapons/greenskins/goblin_staff"));
 		}
 		else if (this.Math.rand(1, 2) == 1)
 		{
-			items.equip(this.new("scripts/items/weapons/legend_grisly_scythe"));
+			items.equip(this.new("scripts/items/weapons/legend_mystic_staff"));
 		}
 		else 
 		{
@@ -278,10 +264,11 @@ this.diabolist_background <- this.inherit("scripts/skills/backgrounds/mc_mage_ba
 			return;
 		}
 
-		_hitInfo.DamageRegular = this.Math.floor(_hitInfo.DamageRegular * 0.5);
-		_demon.applyDamage(_hitInfo.DamageRegular, _skill);
+		local pass_damage = this.Math.floor(_hitInfo.DamageRegular * 0.34)
+		_demon.applyDamage(pass_damage, _skill);
+		_hitInfo.DamageRegular = this.Math.floor(_hitInfo.DamageRegular * 0.66);
+		_hitInfo.DamageArmor = this.Math.floor(_hitInfo.DamageArmor * 0.66);
 	}
-
 
 });
 

@@ -1,11 +1,11 @@
-this.mod_RSA_thorns <- this.inherit("scripts/skills/skill", {
+this.legend_RSA_thorns <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false,
 		Efficiency = 1.0,
 	},
 	function create()
 	{
-		this.m.ID = "special.mod_RSA_thorns";
+		this.m.ID = "special.legend_RSA_thorns";
 		this.m.Name = "Rune Sigil: Thorns";
 		this.m.Description = "Rune Sigil: Thorns";
 		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";

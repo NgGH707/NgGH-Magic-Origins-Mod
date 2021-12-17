@@ -1,10 +1,10 @@
-this.mod_RSA_repulsion <- this.inherit("scripts/skills/skill", {
+this.legend_RSA_repulsion <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false
 	},
 	function create()
 	{
-		this.m.ID = "special.mod_RSA_repulsion";
+		this.m.ID = "special.legend_RSA_repulsion";
 		this.m.Name = "Rune Sigil: Repulsion";
 		this.m.Description = "Rune Sigil: Repulsion";
 		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";

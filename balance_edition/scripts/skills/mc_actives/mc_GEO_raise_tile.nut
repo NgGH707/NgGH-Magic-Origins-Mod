@@ -24,7 +24,7 @@ this.mc_GEO_raise_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
 		this.m.ActionPointCost = 5;
-		this.m.FatigueCost = 25;
+		this.m.FatigueCost = 23;
 		this.m.MinRange = 0;
 		this.m.MaxRange = 3;
 		this.m.MaxRangeBonus = 9;
@@ -98,7 +98,8 @@ this.mc_GEO_raise_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 	
 	function onUse( _user, _targetTile )
 	{
-		local toHit = this.getHitchance(_targetTile.getEntity());
+		local target = _targetTile.IsOccupiedByActor ? _targetTile.getEntity() : null;
+		local toHit = this.getHitchance(target);
 		local rolled = this.Math.rand(1, 100);
 		this.Tactical.EventLog.log_newline();
 
@@ -115,23 +116,22 @@ this.mc_GEO_raise_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 			}
 
 			this.onRaiseTiles(_user, _targetTile);
-		}
-		else
-		{
-			if (!_user.isHiddenToPlayer() && !target.isHiddenToPlayer())
-			{
-				this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(_user) + " fails to commands the earth (Chance: " + toHit + ", Rolled: " + rolled + ")");
-			}
-
-			return false;
+			return true;
 		}
 		
-		return true;
+		if (!_user.isHiddenToPlayer() && !target.isHiddenToPlayer())
+		{
+			this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(_user) + " fails to raise the earth (Chance: " + toHit + ", Rolled: " + rolled + ")");
+		}
+
+		this.spawnIcon("status_effect_111", _targetTile);
+		return false;
 	}
 
 	function onRaiseTiles( _user , _targetTile )
 	{
 		this.Sound.play(this.m.SoundOnHit[this.Math.rand(0, this.m.SoundOnHit.len() - 1)], 1.0, _user.getPos());
+		local tiles = [];
 
 		for( local i = 0; i < 6; i = ++i )
 		{
@@ -150,6 +150,10 @@ this.mc_GEO_raise_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 					}
 
 					next.removeZoneOfOccupation(next.getEntity().getFaction());
+				}
+				else if (next.IsEmpty)
+				{
+					tiles.push(next);
 				}
 			}
 		}
@@ -184,6 +188,109 @@ this.mc_GEO_raise_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 		{
 			this.Tactical.getCamera().Level += 1;
 		}
+
+		if (_targetTile.IsOccupiedByActor)
+		{
+			local check = this.getChanceToFall(_targetTile, tiles);
+
+			if (check.Tile != null && this.Math.rand(1, 100) <= check.Chance)
+			{
+				local entity = _targetTile.getEntity();
+				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(entity) + " loses balance and falls");
+				local skills = entity.getSkills();
+				skills.removeByID("effects.shieldwall");
+				skills.removeByID("effects.spearwall");
+				skills.removeByID("effects.riposte");
+				entity.setCurrentMovementType(this.Const.Tactical.MovementType.Involuntary);
+				local damage = this.Math.max(0, this.Math.abs(check.Tile.Level - _targetTile.Level) - 1) * this.Const.Combat.FallingDamage;
+
+				if (damage == 0)
+				{
+					this.Tactical.getNavigator().teleport(entity, check.Tile, null, null, true);
+				}
+				else
+				{
+					local tag = {
+						Attacker = _user,
+						Skill = this,
+						HitInfo = clone this.Const.Tactical.HitInfo
+					};
+					tag.HitInfo.DamageRegular = damage;
+					tag.HitInfo.DamageDirect = 1.0;
+					tag.HitInfo.BodyPart = this.Const.BodyPart.Body;
+					tag.HitInfo.BodyDamageMult = 1.0;
+					tag.HitInfo.FatalityChanceMult = 1.0;
+					this.Tactical.getNavigator().teleport(entity, check.Tile, this.onKnockedDown, tag, true);
+				}
+			}
+		}
+	}
+
+	function onKnockedDown( _entity, _tag )
+	{
+		if (_tag.HitInfo.DamageRegular != 0)
+		{
+			_entity.onDamageReceived(_tag.Attacker, _tag.Skill, _tag.HitInfo);
+		}
+	}
+
+	function getChanceToFall( _originTile, _tiles )
+	{
+		local ret = {
+			Tile = null,
+			Chance = 0
+		};
+
+		if (_tiles.len() == 0)
+		{
+			return ret;
+		}
+
+		local lowest = -999;
+		local valid = [];
+
+		foreach (i, t in _tiles) 
+		{
+			if (_originTile.Level > t.Level)
+			{
+				valid.push(t);
+
+				if (_originTile.Level - t.Level > lowest)
+				{
+					lowest = _originTile.Level - t.Level;
+				}
+			}
+		}
+
+		if (valid.len() == 0)
+		{
+			return ret;
+		}
+
+		switch (lowest) 
+		{
+	    case 1:
+	    	ret.Chance = 10;
+	        break;
+
+	    case 2:
+	        ret.Chance = 34;
+	        break;
+
+	    case 3:
+	        ret.Chance = 67;
+	        break;
+
+	    case 4:
+	        ret.Chance = 100;
+	        break;
+	
+	    default:
+	    	ret.Chance = 0;
+		}
+
+		ret.Tile = valid[this.Math.rand(0, valid.len() - 1)];
+		return ret;
 	}
 
 	function getHitFactors( _targetTile )
@@ -191,10 +298,10 @@ this.mc_GEO_raise_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 		local ret = [];
 		local targetEntity = _targetTile.IsOccupiedByActor ? _targetTile.getEntity() : null;
 
-		if (targetEntity != null && targetEntity.IsOccupiedByActor)
+		if (targetEntity != null)
 		{
 			ret.push({
-				icon = "ui/tooltips/positive.png",
+				icon = "ui/tooltips/negative.png",
 				text = "Is occupied by an entity"
 			});
 		}
@@ -204,7 +311,7 @@ this.mc_GEO_raise_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 	function getHitchance( _targetEntity )
 	{
 		local toHit = this.getMagicPower(this.getContainer().getActor().getCurrentProperties());
-		if (_targetEntity != null) toHit -= 15;
+		//if (_targetEntity != null) toHit -= 15;
 		return this.Math.max(5, this.Math.min(95, toHit));
 	}
 

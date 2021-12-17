@@ -82,7 +82,7 @@ this.mc_curse_effect <- this.inherit("scripts/skills/skill", {
 				return this.getContainer().getActor();
 			}
 
-			if (this.m.Actor.isPlacedOnMap())
+			if (!this.m.Actor.isPlacedOnMap())
 			{
 				return this.getContainer().getActor();
 			}
