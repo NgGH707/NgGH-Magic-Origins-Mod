@@ -55,7 +55,7 @@ this.mod_punch <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/hitchance.png",
-				text = "Gains [ [color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color] hit chance for each negative status effect on the target"
+				text = "Gains [color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color] hit chance for each negative status effect on the target"
 			},
 			{
 				id = 8,

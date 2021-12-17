@@ -180,36 +180,6 @@ this.mc_stored_energy_effect <- this.inherit("scripts/skills/skill", {
 			this.m.IsActivated = false;
 		}
 	}
-	
-	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
-	{
-		if (_targetEntity == null || !_targetEntity.isAlive() || _targetEntity.isDying())
-		{
-			return;
-		}
-
-		local staff_attacks = [
-			"actives.legend_staff_thrust",
-			"actives.legend_staff_lunge",
-			"actives.legend_staff_knock_out",
-			"actives.legend_staff_bash",
-		];
-
-		if (_skill == null || staff_attacks.find(_skill.getID()) == null)
-		{
-			return;
-		}
-
-		this.spawnIcon(this.m.Overlay, _targetEntity.getTile());
-		local hitInfo = clone this.Const.Tactical.HitInfo;
-		local data = this.useEnergy();
-		hitInfo.DamageRegular = this.Math.rand(this.Math.floor(data.DamMax), this.Math.floor(data.DamMax * 1.25));
-		hitInfo.DamageDirect = 1.0;
-		hitInfo.BodyPart = this.Const.BodyPart.Body;
-		hitInfo.BodyDamageMult = 1.0;
-		hitInfo.FatalityChanceMult = 0.0;
-		_targetEntity.onDamageReceived(this.getContainer().getActor(), this, hitInfo);
-	}
 
 	function onTurnStart()
 	{

@@ -38,7 +38,7 @@ this.mod_unstoppable_charge <- this.inherit("scripts/skills/skill", {
 		this.m.IsUsingHitchance = false;
 		this.m.InjuriesOnBody = this.Const.Injury.BluntBody;
 		this.m.InjuriesOnHead = this.Const.Injury.BluntHead;
-		this.m.DirectDamageMult = 0.35;
+		this.m.DirectDamageMult = 0.25;
 		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = 30;
 		this.m.MinRange = 1;
@@ -362,8 +362,8 @@ this.mod_unstoppable_charge <- this.inherit("scripts/skills/skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 20;
-			_properties.DamageRegularMax += 55;
+			_properties.DamageRegularMin += 15;
+			_properties.DamageRegularMax += 42;
 			_properties.DamageArmorMult *= 1.0;
 		}
 	}

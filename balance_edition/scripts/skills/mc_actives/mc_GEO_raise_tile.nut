@@ -110,7 +110,7 @@ this.mc_GEO_raise_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 
 		if (rolled <= toHit)
 		{
-			if (!_user.isHiddenToPlayer() && !target.isHiddenToPlayer())
+			if (!_user.isHiddenToPlayer())
 			{
 				this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(_user) + " commands the earth! (Chance: " + toHit + ", Rolled: " + rolled + ")");
 			}
@@ -119,7 +119,7 @@ this.mc_GEO_raise_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 			return true;
 		}
 		
-		if (!_user.isHiddenToPlayer() && !target.isHiddenToPlayer())
+		if (!_user.isHiddenToPlayer())
 		{
 			this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(_user) + " fails to raise the earth (Chance: " + toHit + ", Rolled: " + rolled + ")");
 		}

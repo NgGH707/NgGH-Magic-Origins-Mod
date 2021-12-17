@@ -200,11 +200,11 @@ this.battlemage_background <- this.inherit("scripts/skills/backgrounds/mc_mage_b
 			],
 			MeleeDefense = [
 				5,
-				5
+				10
 			],
 			RangedDefense = [
 				5,
-				5
+				7
 			],
 			Initiative = [
 				7,
@@ -277,6 +277,48 @@ this.battlemage_background <- this.inherit("scripts/skills/backgrounds/mc_mage_b
 		{
 			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + " store [b]" + ret + "[/b] energy");
 		}
+	}
+
+	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
+	{
+		if (_targetEntity == null || !_targetEntity.isAlive() || _targetEntity.isDying())
+		{
+			return;
+		}
+
+		local staff_attacks = [
+			"actives.legend_staff_thrust",
+			"actives.legend_staff_lunge",
+			"actives.legend_staff_knock_out",
+			"actives.legend_staff_bash",
+		];
+
+		if (_skill == null || staff_attacks.find(_skill.getID()) == null)
+		{
+			return;
+		}
+
+		local effect = this.getContainer().getSkillByID("effects.mc_stored_energy");
+		local damage = {
+			DamMax = 10,
+			DamMin = 5
+		}
+
+		if (effect != null)
+		{
+			local data = effect.useEnergy();
+			damage.DamMax += this.Math.floor(data.DamMax * 1.33);
+			damage.DamMin += this.Math.floor(data.DamMax);
+		}
+
+		this.spawnIcon("effect_mc_01", _targetEntity.getTile());
+		local hitInfo = clone this.Const.Tactical.HitInfo;
+		hitInfo.DamageRegular = this.Math.rand(damage.DamMin, damage.DamMax);
+		hitInfo.DamageDirect = 1.0;
+		hitInfo.BodyPart = _bodyPart;
+		hitInfo.BodyDamageMult = 1.0;
+		hitInfo.FatalityChanceMult = 0.0;
+		_targetEntity.onDamageReceived(this.getContainer().getActor(), this, hitInfo);
 	}
 	
 });

@@ -4,7 +4,7 @@ this.throw_dirt_skill <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "actives.throw_dirt";
 		this.m.Name = "Throw Dirt";
-		this.m.Description = "Play nice would not grant you victory everytime, a little dirty trick can easy boost your chance. Wild Nomad used sand-attack.";
+		this.m.Description = "Play nice would not grant you victory everytime, a little dirty trick can easily boost your win chance. Wild Nomad uses sand-attack!!!";
 		this.m.Icon = "skills/active_215.png";
 		this.m.IconDisabled = "skills/active_215_sw.png";
 		this.m.Overlay = "active_215";
@@ -31,7 +31,7 @@ this.throw_dirt_skill <- this.inherit("scripts/skills/skill", {
 
 	function onAdded()
 	{
-		this.m.FatigueCost = this.m.Container.getActor().isPlayerControlled() ? 10 : 5;
+		this.m.FatigueCost = this.m.Container.getActor().isPlayerControlled() ? 12 : 5;
 	}
 	
 	function getTooltip()

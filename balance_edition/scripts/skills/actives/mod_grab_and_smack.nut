@@ -33,6 +33,7 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 		this.m.IsAttack = true;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsUsingHitchance = true;
+		this.m.DirectDamageMult = 0.6;
 		this.m.ActionPointCost = 6;
 		this.m.FatigueCost = 20;
 		this.m.MinRange = 1;
@@ -114,6 +115,11 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 
 	function onUse( _user, _targetTile )
 	{
+		if (this.Math.rand(1, 100) <= 10)
+		{
+			++this.m.Count;
+		}
+
 		this.getContainer().setBusy(true);
 		local target = _targetTile.getEntity();
 		local tag = {
@@ -225,8 +231,9 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 		skills.removeByID("effects.spearwall");
 		skills.removeByID("effects.riposte");
 		target.setCurrentMovementType(this.Const.Tactical.MovementType.Involuntary);
-		local p = this.getContainer().getActor().getCurrentProperties();
-		local damage = this.Math.max(0, this.Math.abs(flingToTile.Level - _targetTile.Level) - 1) * this.Const.Combat.FallingDamage + (23 + this.Math.maxf(1, p.DamageRegularMin / 3)) * p.MeleeDamageMult * p.DamageTotalMult;
+		local p = this.getContainer().buildPropertiesForUse(_tag.Skill, target);
+		local damageDirect = this.Math.minf(1.0, p.DamageDirectMult * (_tag.Skill.m.DirectDamageMult + p.DamageDirectAdd));
+		local damage = this.Math.max(0, this.Math.abs(flingToTile.Level - _targetTile.Level) - 1) * this.Const.Combat.FallingDamage + p.DamageRegularMax * p.MeleeDamageMult * p.DamageTotalMult;
 
 		if (damage == 0)
 		{
@@ -241,10 +248,11 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 				TargetTile = flingToTile,
 				HitInfo = clone this.Const.Tactical.HitInfo
 			};
-			tag.HitInfo.DamageRegular = this.Math.max(20, damage);
-			tag.HitInfo.DamageArmor = damage;
-			tag.HitInfo.DamageFatigue = this.Const.Combat.FatigueReceivedPerHit;
-			tag.HitInfo.DamageDirect = 0.0;
+			tag.HitInfo.DamageRegular = this.Math.max(20, damage) * p.DamageRegularMult;
+			tag.HitInfo.DamageArmor = this.Math.max(20, damage) * p.DamageArmorMult;
+			tag.HitInfo.DamageMinimum = p.DamageMinimum;
+			tag.HitInfo.DamageFatigue = this.Const.Combat.FatigueReceivedPerHit * p.FatigueDealtPerHitMult;
+			tag.HitInfo.DamageDirect = damageDirect;
 			tag.HitInfo.BodyPart = this.Math.rand(0, 1);
 			tag.HitInfo.BodyDamageMult = 1.0;
 			tag.HitInfo.FatalityChanceMult = 1.0;
@@ -309,10 +317,10 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin = 23 + this.Math.max(1, _properties.DamageRegularMin / 3);
-			_properties.DamageRegularMax = 23 + this.Math.max(1, _properties.DamageRegularMax / 3);
-			_properties.DamageArmorMult = 1;
-			_properties.DamageMinimum = 20;
+			_properties.DamageRegularMin = 25 + this.Math.max(1, _properties.DamageRegularMin / 3);
+			_properties.DamageRegularMax = 25 + this.Math.max(1, _properties.DamageRegularMax / 3);
+			_properties.DamageArmorMult = 1.0;
+			_properties.DamageMinimum += 10;
 			_properties.MeleeSkill += 20;
 			
 			this.m.IsUsingHitchance = true;
