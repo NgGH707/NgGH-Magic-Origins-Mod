@@ -154,8 +154,8 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 			Hitpoints = 200,
 			Bravery = 100,
 			Stamina = 400,
-			MeleeSkill = this.Math.rand(50, 60),
-			RangedSkill = this.Math.rand(50, 60),
+			MeleeSkill = this.Math.rand(45, 55),
+			RangedSkill = this.Math.rand(45, 55),
 			MeleeDefense = -50,
 			RangedDefense = -50,
 			Initiative = 25,
@@ -196,6 +196,8 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 		rage.setHorizontalFlipping(true);
 		rage.Visible = false;
 		this.addDefaultStatusSprites();
+		local morale = this.addSprite("morale");
+		morale.Visible = false;
 		this.getSprite("status_rooted").Scale = 0.45;
 		this.setSpriteOffset("status_rooted", this.createVec(-4, 7));
 		this.m.Skills.add(this.new("scripts/skills/racial/sand_puppet_racial"));

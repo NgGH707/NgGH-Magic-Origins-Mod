@@ -351,6 +351,8 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.addSprite("mount_injury");
 		this.addSprite("mount_restrain");
 		this.addDefaultStatusSprites();
+		local morale = this.addSprite("morale");
+		morale.Visible = false;
 
 		local rider = this.new("scripts/skills/special/egg_rider");
 		rider.setManager(this.m.Mount);

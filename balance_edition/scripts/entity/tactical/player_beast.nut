@@ -397,7 +397,7 @@ this.player_beast <- this.inherit("scripts/entity/tactical/player", {
 		this.m.Hitpoints = this.Math.max(1, this.m.Hitpoints);
 		this.m.MaxEnemiesThisTurn = 1;
 
-		if (this.m.MoraleState != this.Const.MoraleState.Ignore)
+		if (this.m.MoraleState != this.Const.MoraleState.Ignore && !this.m.Flags.has("egg"))
 		{
 			this.setMoraleState(this.Const.MoraleState.Steady);
 		}

@@ -106,6 +106,16 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 				icon = "ui/icons/health.png",
 				text = "Give your shadow demon an extra life"
 			});
+
+			if (this.getContainer().getActor().getTile().getDistanceTo(this.getEntity().getTile()) > 6)
+			{
+				ret.push({
+					id = 10,
+					type = "text",
+					icon = "ui/tooltips/warning.png",
+					text = "Your shadow demon is outside of your range"
+				});
+			}
 		}
 
 		if (this.m.Cooldown > 0)
@@ -143,7 +153,22 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 
 	function isUsable()
 	{
-		return this.skill.isUsable() && this.m.Cooldown == 0;
+		if (!this.skill.isUsable())
+		{
+			return false;
+		}
+
+		if (this.m.Cooldown != 0)
+		{
+			return false;
+		}
+
+		if (this.getEntity() != null)
+		{
+			return this.getContainer().getActor().getTile().getDistanceTo(this.getEntity().getTile()) <= 6;
+		}
+
+		return true;
 	}
 
 	function onUse( _user, _targetTile )

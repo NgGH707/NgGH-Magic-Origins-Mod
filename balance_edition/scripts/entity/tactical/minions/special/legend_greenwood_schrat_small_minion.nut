@@ -130,6 +130,8 @@ this.legend_greenwood_schrat_small_minion <- this.inherit("scripts/entity/tactic
 		body.varyColor(0.05, 0.05, 0.05);
 		this.m.BloodColor = body.Color;
 		this.addDefaultStatusSprites();
+		local morale = this.addSprite("morale");
+		morale.Visible = false;
 		this.getSprite("status_rooted").Scale = 0.54;
 		this.setSpriteOffset("status_rooted", this.createVec(0, 0));
 		this.setSpriteOffset("status_stunned", this.createVec(-10, -10));

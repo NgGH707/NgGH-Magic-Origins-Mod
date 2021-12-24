@@ -1,8 +1,8 @@
 this.legend_RSH_shielding <- this.inherit("scripts/skills/skill", {
 	m = {
-		Hitpoints = 50,
+		Hitpoints = 25,
 		HitpointsMax = 100,
-		HitpointsThreshold = 50,
+		HitpointsThreshold = 25,
 		IsActivated = true,
 		IsRegenerate = false,
 		Cooldown = 2,
@@ -95,7 +95,7 @@ this.legend_RSH_shielding <- this.inherit("scripts/skills/skill", {
 		if (this.getContainer().getActor().getFlags().getAsInt("mc_mage") == this.Const.MC_Job.BattleMage)
 		{
 			this.m.HitpointsMax = 125;
-			this.m.HitpointsThreshold = 75;
+			this.m.HitpointsThreshold = 40;
 			this.m.Hitpoints = this.m.HitpointsThreshold;
 		}
 	}
@@ -198,7 +198,7 @@ this.legend_RSH_shielding <- this.inherit("scripts/skills/skill", {
 		
 		if (--this.m.Cooldown <= 0)
 		{
-			this.m.Cooldown = 2;
+			this.m.Cooldown = this.Math.rand(1, 3);
 			this.setHitpoints(this.getHitpoints() + HitPointsAdded);
 			
 			if (this.m.IsRegenerate)

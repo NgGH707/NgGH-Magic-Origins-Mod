@@ -141,7 +141,9 @@ this.alp_racial <- this.inherit("scripts/skills/skill", {
 
 		foreach( a in allies )
 		{
-			if (a.isAlive() && a.getHitpoints() > 0 && a.getSkills().hasSkill("actives.alp_teleport"))
+			local skill = a.getSkills().getSkillByID("actives.alp_teleport")
+
+			if (a.isAlive() && a.getHitpoints() > 0 && skill != null)
 			{
 				if (a.getFlags().get("disable_auto_teleport"))
 				{
@@ -158,6 +160,7 @@ this.alp_racial <- this.inherit("scripts/skills/skill", {
 					while (!resume strategy);
 				}
 
+				skill.setUseForFree(true);
 				local b = a.getAIAgent().getBehavior(this.Const.AI.Behavior.ID.AlpTeleport);
 				b.onEvaluate(a);
 				b.onExecute(a);

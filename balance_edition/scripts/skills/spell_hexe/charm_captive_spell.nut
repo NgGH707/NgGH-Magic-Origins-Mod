@@ -116,7 +116,7 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 				id = 10,
 				type = "text",
 				icon = "ui/tooltips/warning.png",
-				text = "Can charm [color=" + this.Const.UI.Color.NegativeValue + "]" + count + "[/color] enemies in this battle"
+				text = "Can charm [color=" + this.Const.UI.Color.NegativeValue + "]" + count + "[/color] enemie(s) in this battle"
 			});
 		}
 

@@ -43,6 +43,18 @@ this.sleep_skill <- this.inherit("scripts/skills/skill", {
 		this.m.MaxRange = 2;
 		this.m.MaxLevelDifference = 4;
 	}
+
+	function getFatigueCost()
+	{
+		local ret = this.skill.getFatigueCost();
+
+		if (!this.getContainer().getActor().isPlayerControlled())
+		{
+			return ret;
+		}
+
+		return ret * 2;
+	}
 	
 	function getTooltip()
 	{
@@ -155,7 +167,7 @@ this.sleep_skill <- this.inherit("scripts/skills/skill", {
 
 			if (_user.isPlayerControlled())
 			{
-				difficulty += 5;
+				difficulty += 25;
 			}
 
 			if (!this.isViableTarget(_user, target) || target.checkMorale(0, difficulty, this.Const.MoraleCheckType.MentalAttack))
@@ -230,7 +242,13 @@ this.sleep_skill <- this.inherit("scripts/skills/skill", {
 		local attempts = _targetEntity.getFlags().getAsInt("resist_sleep");
 		local bonus = (this.m.MaxRange + 1 - _distance) * (1.0 + 0.1 * attempts);
 		local _difficulty = 0;
-		_difficulty -= 35 * bonus + (this.getContainer().hasSkill("perk.mastery_sleep") ? this.Math.max(1, this.Math.floor(properties.getBravery() * 0.1)) : 0);
+		_difficulty += 35 * bonus + (this.getContainer().hasSkill("perk.mastery_sleep") ? this.Math.max(1, this.Math.floor(properties.getBravery() * 0.1)) : 0);
+		
+		if (_user.isPlayerControlled())
+		{
+			_difficulty -= 25;
+		}
+
 		_difficulty *= defenderProperties.MoraleEffectMult;
 
 		if (bravery > 500)
@@ -355,7 +373,7 @@ this.sleep_skill <- this.inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/icons/cancel.png",
-				text = "Can\'t resist"
+				text = "Immune to sleep"
 			});
 			
 			return ret;
@@ -373,15 +391,15 @@ this.sleep_skill <- this.inherit("scripts/skills/skill", {
 		]);
 
 		local attempts = _targetEntity.getFlags().getAsInt("resist_sleep");
-		local _difficulty = 35;
+		local _difficulty = 10;
 
 		if (_distance != this.m.MaxRange)
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = "Too close: [color=" + this.Const.UI.Color.NegativeValue + "]35%[/color]"
+				text = "Too close: [color=" + this.Const.UI.Color.NegativeValue + "]" + _difficulty + "%[/color]"
 			});
-			_difficulty -= 35;
+			_difficulty -= 10;
 		}
 
 		if (attempts != 0)

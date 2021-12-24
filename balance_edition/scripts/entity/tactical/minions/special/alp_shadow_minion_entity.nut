@@ -244,6 +244,8 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 		blur_2.Alpha = 0;
 		blur_2.fadeToAlpha(blurAlpha, 750);
 		this.addDefaultStatusSprites();
+		local morale = this.addSprite("morale");
+		morale.Visible = false;
 		this.getSprite("status_rooted").Scale = 0.55;
 		this.setSpriteOffset("status_rooted", this.createVec(-5, -5));
 		this.m.Skills.add(this.new("scripts/skills/racial/ghost_racial"));
