@@ -75,7 +75,7 @@ this.spawn_spider <- this.inherit("scripts/skills/skill", {
 			}
 		];
 
-		if (this.getContainer().hasSkill("perk.inherit"))
+		if (this.getContainer().hasSkill("perk.natural_selection"))
 		{
 			ret.push({
 				id = 9,
@@ -83,10 +83,7 @@ this.spawn_spider <- this.inherit("scripts/skills/skill", {
 				icon = "ui/icons/special.png",
 				text = "Spiderling will inherit most of Hive\'s perks"
 			});
-		}
 
-		if (this.getContainer().hasSkill("perk.natural_selection"))
-		{
 			local actor = this.getContainer().getActor();
 
 			if (actor.m.Count > 0)

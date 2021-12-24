@@ -41,7 +41,7 @@ this.add_egg <- this.inherit("scripts/skills/skill", {
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
 		this.m.ActionPointCost = 8;
-		this.m.FatigueCost = 9;
+		this.m.FatigueCost = 8;
 		this.m.MinRange = 0;
 		this.m.MaxRange = 0;
 	}
