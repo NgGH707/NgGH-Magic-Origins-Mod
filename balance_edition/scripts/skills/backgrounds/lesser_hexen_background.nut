@@ -212,6 +212,11 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 		this.m.CustomPerkTree = this.m.NewPerkTree;
 	}
 
+	function onUpdate( _properties )
+	{
+		_properties.IsImmuneToDamageReflection = true;
+	}
+
 	function getTooltip()
 	{
 		local ret = [

@@ -63,25 +63,6 @@ this.w_charmed_captive_effect <- this.inherit("scripts/skills/skill", {
 		this.getContainer().removeByID("effects.spearwall");
 		this.getContainer().removeByID("effects.riposte");
 		this.getContainer().removeByID("effects.return_favor");
-		
-		if (!this.m.IsTheLastEnemy)
-		{
-			actor.setFaction(this.Const.Faction.PlayerAnimals);
-			actor.getFlags().set("Charmed", true);
-			
-			local entity = actor.get();
-			this.Tactical.TurnSequenceBar.removeEntity(entity);
-			entity.m.IsTurnDone = true;
-			entity.m.IsActingEachTurn = false;
-			entity.m.IsNonCombatant = true;
-			
-			if (!actor.getFlags().has("human"))
-			{
-				this.onFactionChanged();
-			}
-			
-			actor.setDirty(true);
-		}
 
 		if (this.m.SoundOnUse.len() != 0)
 		{
@@ -136,7 +117,28 @@ this.w_charmed_captive_effect <- this.inherit("scripts/skills/skill", {
 		
 		this.Tactical.spawnParticleEffect(false, effect.Brushes, actor.getTile(), effect.Delay, effect.Quantity, effect.LifeTimeQuantity, effect.SpawnRate, effect.Stages, this.createVec(0, 40));
 		
-		if (this.m.IsTheLastEnemy)
+		if (!this.m.IsTheLastEnemy)
+		{
+			actor.setFaction(this.Const.Faction.PlayerAnimals);
+			actor.getFlags().set("Charmed", true);
+			actor.setIsAlive(false);
+			actor.setIsAbleToDie(false);
+			
+			local entity = actor.get();
+			this.Tactical.TurnSequenceBar.removeEntity(entity);
+			entity.m.IsActingEachTurn = false;
+			entity.m.IsNonCombatant = true;
+			
+			if (!actor.getFlags().has("human"))
+			{
+				this.onFactionChanged();
+			}
+			
+			actor.setDirty(true);
+			actor.setIsAlive(true);
+			actor.setIsAbleToDie(true);
+		}
+		else
 		{
 			this.onCombatFinished();
 		}
@@ -166,11 +168,6 @@ this.w_charmed_captive_effect <- this.inherit("scripts/skills/skill", {
 		}
 		
 		local flip = !actor.isAlliedWithPlayer();
-
-		if (this.LegendsMod.Configs().LegendArmorsEnabled())
-		{
-			flip = !flip;
-		}
 
 		foreach( a in this.Const.CharacterSprites.Helmets )
 		{
@@ -237,7 +234,7 @@ this.w_charmed_captive_effect <- this.inherit("scripts/skills/skill", {
 		}
 		
 		this.m.IsKillInRightWay = false;
-		actor.kill(this.m.Master, null, this.Const.FatalityType.Suicide, true);
+		actor.kill(this.m.Master, this, this.Const.FatalityType.Suicide, true);
 	}
 
 	function onUpdate( _properties )
@@ -285,9 +282,9 @@ this.w_charmed_captive_effect <- this.inherit("scripts/skills/skill", {
 		local actor = this.getContainer().getActor();
 		actor.setActionPoints(0);
 		
-		if (actor.getFaction() != 2)
+		if (actor.getFaction() != this.Const.Faction.PlayerAnimals)
 		{
-			actor.setFaction(2);
+			actor.setFaction(this.Const.Faction.PlayerAnimals);
 			actor.getFlags().set("Charmed", true);
 			actor.setDirty(true);
 		}

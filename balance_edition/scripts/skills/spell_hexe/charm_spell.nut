@@ -685,7 +685,7 @@ this.charm_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 
 				if (type != "integer")
 				{
-					slave.kill(this.getContainer().getActor(), null, this.Const.FatalityType.Suicide, true);
+					slave.kill(this.getContainer().getActor(), this, this.Const.FatalityType.Suicide, true);
 				}
 			}
 		}

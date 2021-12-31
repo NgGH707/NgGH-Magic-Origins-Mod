@@ -175,7 +175,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		gt.Const.PerksCharmedUnit.GoblinAmbusher <- {
 			WeightMultipliers = [
 				{Multiplier = 2.0, Tree = this.Const.Perks.FitTree},
-				{Multiplier = 0.5, Tree = this.Const.Perks.CrossbowTree},
+				{Multiplier = 10.0, Tree = this.Const.Perks.BowTree},
 				{Multiplier = 2.0, Tree = this.Const.Perks.DaggerTree}
 			],
 			Profession = [
@@ -227,11 +227,11 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 			WeightMultipliers = [
 				{ Multiplier = 0.25, Tree = this.Const.Perks.OrganisedTree },
 				{ Multiplier = 0.25, Tree = this.Const.Perks.DeviousTree },
-				{ Multiplier = 3, Tree = this.Const.Perks.SergeantClassTree },
+				{ Multiplier = 3.0, Tree = this.Const.Perks.SergeantClassTree },
 				{ Multiplier = 0.33, Tree = this.Const.Perks.LightArmorTree },
 				{ Multiplier = 0.33, Tree = this.Const.Perks.ShieldTree },
 				{ Multiplier = 0, Tree = this.Const.Perks.HeavyArmorTree },
-				{ Multiplier = 5.0, Tree = this.Const.Perks.BowTree },
+				{ Multiplier = 2.0, Tree = this.Const.Perks.BowTree },
 				{ Multiplier = 10.0, Tree = this.Const.Perks.CrossbowTree },
 				{ Multiplier = 0, Tree = this.Const.Perks.SlingsTree },
 				{ Multiplier = 0.0, Tree = this.Const.Perks.SpearTree }

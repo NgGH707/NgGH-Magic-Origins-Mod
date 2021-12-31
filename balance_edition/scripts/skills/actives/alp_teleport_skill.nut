@@ -85,7 +85,7 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 		
 		this.m.IsVisibleTileNeeded = true;
 		this.m.FatigueCost = 40;
-		this.m.setUseForFree(false);
+		this.setUseForFree(false);
 	}
 	
 	function onResumeTurn()
@@ -97,7 +97,7 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 		
 		this.m.IsVisibleTileNeeded = true;
 		this.m.FatigueCost = 40;
-		this.m.setUseForFree(false);
+		this.setUseForFree(false);
 	}
 	
 	function onTurnEnd()

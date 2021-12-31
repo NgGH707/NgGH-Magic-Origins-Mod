@@ -586,28 +586,21 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 		this.m.Skills.add(this.new("scripts/skills/actives/tail_slam_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/tail_slam_big_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/tail_slam_split_skill"));
-		this.m.Skills.add(this.new("scripts/skills/perks/perk_hold_out"));
-		this.m.Skills.add(this.new("scripts/skills/perks/perk_reach_advantage"));
-		this.m.Skills.add(this.new("scripts/skills/perks/perk_fearsome"));
 		this.m.Skills.add(this.new("scripts/skills/actives/legend_stollwurm_move_tail_skill"));
 	}
 
 	function onActorKilled( _actor, _tile, _skill )
 	{
+		this.player_beast.onActorKilled(_actor, _tile, _skill);
+		
 		if (this.m.Body != null && !this.m.Body.isNull() && this.m.Body.isAlive() && !this.m.Body.isDying())
 		{
-			this.m.Body.onActorKilled(_actor, _tile, _skill);
+			local stats = this.m.Body.getSkills().getSkillByID("special.stats_collector");
 
-			if (!this.m.IsAlive || this.m.IsDying)
+			if (stats != null)
 			{
-				return;
+				stats.onTargetKilled(_actor, _skill);
 			}
-
-			this.m.Skills.onTargetKilled(_actor, _skill);
-		}
-		else 
-		{
-			this.player_beast.onActorKilled(_actor, _tile, _skill);
 		}
 	}
 	

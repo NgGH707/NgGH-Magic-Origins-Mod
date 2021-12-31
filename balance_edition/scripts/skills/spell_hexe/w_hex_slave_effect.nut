@@ -60,7 +60,7 @@ this.w_hex_slave_effect <- this.inherit("scripts/skills/skill", {
 		return "This character has been cursed to feel the pain and receive all the wounds on behalf of someone. Be careful, as it could kill him. The effect will persist for another [color=" + this.Const.UI.Color.NegativeValue + "]1[/color] turn(s).";
 	}
 
-	function applyDamage( _hitInfo , _isEnded = false )
+	function applyDamage( _hitInfo, _attacker , _isEnded = false )
 	{	
 		if (this.m.SoundOnUse.len() != 0)
 		{
@@ -68,7 +68,7 @@ this.w_hex_slave_effect <- this.inherit("scripts/skills/skill", {
 		}
 
 		local hitInfo = clone _hitInfo;
-		this.getContainer().getActor().onDamageReceived(null, this, hitInfo);
+		this.getContainer().getActor().onDamageReceived(_attacker, this, hitInfo);
 		
 		if (_isEnded)
 		{

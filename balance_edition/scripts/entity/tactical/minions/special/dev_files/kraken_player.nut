@@ -405,7 +405,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		_tentacle.m.Skills.update();
 	}
 
-	function givePerk( _tentacle )
+	function givePerks( _tentacle )
 	{
 		local perks = this.getSkills().query(this.Const.SkillType.Perk, true);
 		local exclude = [
@@ -489,7 +489,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 			tentacle.riseFromGround(0.75);
 		}
 
-		this.givePerk(tentacle);
+		this.givePerks(tentacle);
 		this.giveStats(tentacle);
 		this.m.Tentacles.push(this.WeakTableRef(tentacle));
 		return tentacle;

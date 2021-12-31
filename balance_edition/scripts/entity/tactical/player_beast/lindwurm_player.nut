@@ -428,7 +428,17 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 				continue;
 			}
 
+			if (exclude.find(_skill.getID()) != null)
+			{
+				continue;
+			}
+
 			if (_skill.isType(this.Const.SkillType.Background))
+			{
+				continue;
+			}
+
+			if (_skill.isType(this.Const.SkillType.Active))
 			{
 				continue;
 			}

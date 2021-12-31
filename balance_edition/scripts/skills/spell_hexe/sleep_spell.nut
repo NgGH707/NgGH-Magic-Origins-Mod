@@ -1,5 +1,7 @@
 this.sleep_spell <- this.inherit("scripts/skills/mc_magic_skill", {
-	m = {},
+	m = {
+		BonusChance = 25
+	},
 	function create()
 	{
 		this.mc_magic_skill.create();
@@ -65,7 +67,7 @@ this.sleep_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 			id = 8,
 			type = "text",
 			icon = "ui/icons/hitchance.png",
-			text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]+15%[/color] chance"
+			text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]+" + this.m.BonusChance + "%[/color] chance to succeed"
 		});
 		ret.push({
 			id = 8,
@@ -234,7 +236,7 @@ this.sleep_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		}
 		
 		toHit = toHit + numAlliesAdjacent * this.Const.Morale.OpponentsAdjacentMult - numOpponentsAdjacent * this.Const.Morale.AlliesAdjacentMult;
-		toHit = toHit + threatBonus + bonus + 15;
+		toHit = toHit + threatBonus + bonus + this.m.BonusChance;
 		toHit = toHit + this.Const.HexenOrigin.Magic.CountDebuff(_targetEntity) * 2;
 
 		if (dis >= this.m.MaxRange)
@@ -370,7 +372,7 @@ this.sleep_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 			},
 			{
 				icon = "ui/tooltips/positive.png",
-				text = "Default bonus: [color=" + this.Const.UI.Color.PositiveValue + "]15%[/color]"
+				text = "Default bonus: [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.BonusChance + "%[/color]"
 			}
 		]);
 

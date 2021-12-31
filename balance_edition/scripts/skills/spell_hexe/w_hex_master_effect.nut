@@ -115,13 +115,18 @@ this.w_hex_master_effect <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (_hitInfo != null > 0)
+		if (_hitInfo != null && (_hitInfo.DamageRegular != 0 || _hitInfo.DamageArmor != 0))
 		{
-			this.m.Count -= 1;
-			this.m.Slave.applyDamage(_hitInfo, this.m.Count == 0);
+			--this.m.Count;
+			this.m.Slave.applyDamage(_hitInfo, this.getContainer().getActor(), this.m.Count == 0);
 		}
 		
-		_properties.DamageReceivedTotalMult = 0;
+		_properties.DamageReceivedTotalMult = 0.0;
+		_properties.FatigueReceivedPerHitMult = 0.0;
+		_properties.IsImmuneToStun = true;
+		_properties.IsImmuneToDisarm = true;
+		_properties.IsImmuneToBleeding = true;
+		_properties.IsImmuneToPoison = true;
 
 		if (this.m.Slave == null || this.m.Slave.isNull() || !this.m.Slave.isAlive() || this.m.Count == 0)
 		{

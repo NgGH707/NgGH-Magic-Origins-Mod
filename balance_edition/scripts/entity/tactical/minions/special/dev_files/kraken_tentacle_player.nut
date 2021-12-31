@@ -257,20 +257,16 @@ this.kraken_tentacle_player <- this.inherit("scripts/entity/tactical/player_beas
 
 	function onActorKilled( _actor, _tile, _skill )
 	{
+		this.player_beast.onActorKilled(_actor, _tile, _skill);
+		
 		if (this.m.Parent != null && !this.m.Parent.isNull() && this.m.Parent.isAlive() && !this.m.Parent.isDying())
 		{
-			this.m.Parent.onActorKilled(_actor, _tile, _skill);
+			local stats = this.m.Parent.getSkills().getSkillByID("special.stats_collector");
 
-			if (!this.m.IsAlive || this.m.IsDying)
+			if (stats != null)
 			{
-				return;
+				stats.onTargetKilled(_actor, _skill);
 			}
-
-			this.m.Skills.onTargetKilled(_actor, _skill);
-		}
-		else
-		{
-			this.player_beast.onActorKilled(_actor, _tile, _skill);
 		}
 	}
 
