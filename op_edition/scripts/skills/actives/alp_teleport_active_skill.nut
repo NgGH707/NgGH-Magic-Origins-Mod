@@ -1,9 +1,11 @@
-this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
-	m = {},
+this.alp_teleport_active_skill <- this.inherit("scripts/skills/skill", {
+	m = {
+		IsAtNight = false,
+	},
 
 	function create()
 	{
-		this.m.ID = "actives.alp_teleport";
+		this.m.ID = "actives.alp_teleport_active";
 		this.m.Name = "Fade";
 		this.m.Description = "Fading out your physical body and reappear at some other place.";
 		this.m.Icon = "skills/active_160.png";
@@ -18,10 +20,10 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 		this.m.Type = this.Const.SkillType.Active;
 		this.m.Order = this.Const.SkillOrder.UtilityTargeted + 3;
 		this.m.IsActive = true;
-		this.m.IsHidden = true;
+		this.m.IsHidden = false;
 		this.m.IsTargeted = true;
 		this.m.IsTargetingActor = false;
-		this.m.IsVisibleTileNeeded = false;
+		this.m.IsVisibleTileNeeded = true;
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
 		this.m.IsIgnoredAsAOO = true;
@@ -32,16 +34,27 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 		this.m.MaxLevelDifference = 4;
 	}
 
-	function onAdded()
+	function getTooltip()
 	{
-		local auto_button = this.new("scripts/skills/actives/auto_mode_alp_teleport");
-		this.getContainer().add(auto_button);
-		this.getContainer().add("scripts/skills/actives/alp_teleport_active_skill");
-
-		if (!this.getContainer().getActor().isPlayerControlled())
-		{
-			auto_button.onCombatStarted();
-		}
+		local ret = [
+			{
+				id = 1,
+				type = "title",
+				text = this.getName()
+			},
+			{
+				id = 2,
+				type = "description",
+				text = this.getDescription()
+			},
+			{
+				id = 3,
+				type = "text",
+				text = this.getCostString()
+			}
+		];
+		
+		return ret;
 	}
 	
 	function isUsable()

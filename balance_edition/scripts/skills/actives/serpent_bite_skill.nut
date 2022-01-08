@@ -45,7 +45,7 @@ this.serpent_bite_skill <- this.inherit("scripts/skills/skill", {
 	{
 		local ret = this.getDefaultTooltip();
 
-		if (this.getContainer().getActor().getCurrentProperties().IsSpecializedInPolearms)
+		if (this.getContainer().getActor().getCurrentProperties().IsSpecializedInShields)
 		{
 			ret.push({
 				id = 7,
@@ -120,7 +120,7 @@ this.serpent_bite_skill <- this.inherit("scripts/skills/skill", {
 
 	    	if (d > 1)
 	    	{
-	    		_properties.MeleeSkill -= 12 * (d - 1);
+	    		_properties.MeleeSkill -= 7 * (d - 1);
 	    		_properties.MeleeDamageMult *= 0.75;
 	    	}
 	    }

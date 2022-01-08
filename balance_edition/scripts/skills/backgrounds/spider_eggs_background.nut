@@ -237,18 +237,17 @@ this.spider_eggs_background <- this.inherit("scripts/skills/backgrounds/characte
 		}
 
 		local origin = this.World.Assets.getOrigin();
-		
+		local helper = this.getroottable().PerkTreeBuilder;
+		this.m.CustomPerkTree = helper.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), false, false, true);
+
 		if (origin != null)
 		{
-			this.World.Assets.getOrigin().onBuildPerkTree(this.m.CustomPerkTree);
+			this.World.Assets.getOrigin().onBuildPerkTree(this);
 		}
-		
-		local helper = this.getroottable().PerkTreeBuilder;
-		local newCustomPerk = helper.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), false, false, true);
-		local pT = this.Const.Perks.BuildCustomPerkTree(newCustomPerk);
+
+		local pT = this.Const.Perks.BuildCustomPerkTree(this.m.CustomPerkTree);
 		this.m.PerkTree = pT.Tree;
 		this.m.PerkTreeMap = pT.Map;
-		this.m.CustomPerkTree = newCustomPerk;
 		return a;
 	}
 	

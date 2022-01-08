@@ -1,7 +1,11 @@
 this.perk_tree_builder <- {
-	m = {},
+	m = {
+		NimbleChance = 33,
+		MuscularityChance = 25,
+		BattleHeartChance = 5,
+	},
 	
-	function fillWithRandomPerk( _tree , _skillsContainer , _addWeaponPerks = false , _hasAoE = false , _isSpecial = false )
+	function fillWithRandomPerk( _tree , _skillsContainer , _addWeaponPerks = false , _hasAoE = false , _isSpecial = false, _removeNimble = false )
 	{
 		local currentPerksPerkRow = [];
 		local excludedPerks = [];
@@ -164,6 +168,24 @@ this.perk_tree_builder <- {
 		    i = ++i;
 		}
 
+		if (!_removeNimble && !tools.hasPerk(this.Const.Perks.PerkDefs.Nimble , excludedPerks) && this.Math.rand(1, 100) <= this.m.NimbleChance)
+		{
+			excludedPerks.push(this.Const.Perks.PerkDefs.Nimble);
+			_tree[5].insert(0, this.Const.Perks.PerkDefs.Nimble);
+		}
+
+		if (!tools.hasPerk(this.Const.Perks.PerkDefs.LegendMuscularity , excludedPerks) && this.Math.rand(1, 100) <= this.m.MuscularityChance)
+		{
+			excludedPerks.push(this.Const.Perks.PerkDefs.LegendMuscularity);
+			_tree[6].insert(0, this.Const.Perks.PerkDefs.LegendMuscularity);
+		}
+
+		if (!tools.hasPerk(this.Const.Perks.PerkDefs.LegendBattleheart , excludedPerks) && this.Math.rand(1, 100) <= this.m.BattleHeartChance)
+		{
+			excludedPerks.push(this.Const.Perks.PerkDefs.LegendBattleheart);
+			_tree[6].insert(0, this.Const.Perks.PerkDefs.LegendBattleheart);
+		}
+
 		if (_addWeaponPerks)
 		{
 			local Map = [];
@@ -297,7 +319,6 @@ this.perk_tree_builder <- {
 			this.Const.Perks.PerkDefs.PTRHeadSmasher,
 			this.Const.Perks.PerkDefs.PTRFromAllSides,
 			this.Const.Perks.PerkDefs.PTRSurvivalInstinct,
-			this.Const.Perks.PerkDefs.PTRRisingStar,
 			this.Const.Perks.PerkDefs.PTRKnowTheirWeakness,
 			this.Const.Perks.PerkDefs.PTRFreshAndFurious,
 			this.Const.Perks.PerkDefs.PTRVigilant,
@@ -325,6 +346,7 @@ this.perk_tree_builder <- {
 		]);
 
 		_lib[2].extend([
+			this.Const.Perks.PerkDefs.PTRRisingStar,
 			this.Const.Perks.PerkDefs.PTRTheRushOfBattle,
 			this.Const.Perks.PerkDefs.PTRFruitsOfLabor,
 			this.Const.Perks.PerkDefs.PTRWearThemDown,
@@ -426,7 +448,6 @@ this.perk_tree_builder <- {
 				this.Const.Perks.PerkDefs.LegendEscapeArtist,
 				this.Const.Perks.PerkDefs.PushTheAdvantage,
 				this.Const.Perks.PerkDefs.LegendGatherer,
-				this.Const.Perks.PerkDefs.Nimble,
 				this.Const.Perks.PerkDefs.LegendTerrifyingVisage,
 				this.Const.Perks.PerkDefs.LegendAssuredConquest,
 				this.Const.Perks.PerkDefs.LegendSecondWind,
@@ -453,7 +474,6 @@ this.perk_tree_builder <- {
 				this.Const.Perks.PerkDefs.Indomitable,
 				this.Const.Perks.PerkDefs.LegendSlaughter,
 				this.Const.Perks.PerkDefs.LegendFreedomOfMovement,
-				this.Const.Perks.PerkDefs.LegendMuscularity,
 				this.Const.Perks.PerkDefs.LastStand,
 				this.Const.Perks.PerkDefs.Rebound,
 				this.Const.Perks.PerkDefs.BattleFlow,

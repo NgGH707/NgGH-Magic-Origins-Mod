@@ -270,18 +270,17 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 		local isHumaniod = this.Const.HumanoidBeast.find(this.m.Info.Type) != null;
 		local hasAoE = this.Const.BeastHasAoE.find(this.m.Info.Type) != null;
 		local origin = this.World.Assets.getOrigin();
+		local helper = this.getroottable().PerkTreeBuilder;
+		this.m.CustomPerkTree = helper.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), isHumaniod, hasAoE);
 		
 		if (origin != null)
 		{
-			this.World.Assets.getOrigin().onBuildPerkTree(this.m.CustomPerkTree);
+			this.World.Assets.getOrigin().onBuildPerkTree(this);
 		}
-		
-		local helper = this.getroottable().PerkTreeBuilder;
-		local newCustomPerk = helper.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), isHumaniod, hasAoE);
-		local pT = this.Const.Perks.BuildCustomPerkTree(newCustomPerk);
+
+		local pT = this.Const.Perks.BuildCustomPerkTree(this.m.CustomPerkTree);
 		this.m.PerkTree = pT.Tree;
 		this.m.PerkTreeMap = pT.Map;
-		this.m.CustomPerkTree = newCustomPerk;
 		return a;
 	}
 	

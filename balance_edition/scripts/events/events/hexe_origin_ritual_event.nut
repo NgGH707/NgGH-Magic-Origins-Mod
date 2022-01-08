@@ -253,14 +253,15 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 		
 		local days = this.World.getTime().Days;
 		local modifier = this.getModifier(days);
+		local randomness = this.Math.rand(7, 15) * 0.1;
 		local party_strength = this.World.State.getPlayer().getStrength();
 		this.logInfo("Current party strength? " + party_strength);
-		local Required = this.Math.max(1, this.Math.ceil(party_strength * (this.m.Mult + modifier)));
+		local Required = this.Math.max(1, this.Math.ceil(party_strength * (this.m.Mult + modifier) * randomness));
 		this.logInfo("Offerings value required? " + Required);
 
-		if (this.Math.rand(1, 100) <= 10)
+		if (this.Math.rand(1, 100) <= 5)
 		{
-			Required = this.Math.ceil(Required * 2.5);
+			Required = this.Math.ceil(Required * 5);
 			this.logInfo("Total offerings value required? " + Required + " (Very unlucky you are");
 		}
 
@@ -388,7 +389,8 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 
 		this.m.Town = best;
 		local mult = 7.5;
-		local chance = this.Math.ceil((8 - nearest) * mult);
+		local randomness = this.Math.rand(80, 120) * 0.01;
+		local chance = this.Math.ceil((8 - nearest) * mult * randomness);
 		return this.Math.max(5, this.Math.min(95, chance));
 	}
 	
@@ -418,25 +420,27 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 		
 		foreach ( _item in QualifiedItems )
 		{
+			local _v = this.determineThisItemValue(_item);
+
 			if (_item.isItemType(this.Const.Items.ItemType.TradeGood))
 			{
 				ret1.push({
 					Item = _item,
-					Value = this.determineThisItemValue(_item),
+					Value = _v,
 				});
 			}
 			else if (_item.isItemType(this.Const.Items.ItemType.Loot))
 			{
 				ret2.push({
 					Item = _item,
-					Value = this.determineThisItemValue(_item),
+					Value = _v,
 				});
 			}
 			else if (_item.isItemType(this.Const.Items.ItemType.Crafting))
 			{
 				ret3.push({
 					Item = _item,
-					Value = this.determineThisItemValue(_item),
+					Value = _v,
 				});
 			}
 		}

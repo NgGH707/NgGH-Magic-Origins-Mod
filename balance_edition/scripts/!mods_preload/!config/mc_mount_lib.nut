@@ -14,7 +14,7 @@ gt.Const.UnleashSkills <- [
 
 gt.Const.DogArmor <- [
 	{
-		Type = "scripts/items/armor/special/wardog_armor",
+		Type = "wardog_armor",
 		Condition = 55,
 		ConditionMax = 55,
 		StaminaModifier = -10,
@@ -23,7 +23,7 @@ gt.Const.DogArmor <- [
 		SpriteCorpse = "bust_dog_01_armor_01_dead",
 	},
 	{
-		Type = "scripts/items/armor/special/wardog_heavy_armor",
+		Type = "wardog_heavy_armor",
 		Condition = 85,
 		ConditionMax = 85,
 		StaminaModifier = -15,
@@ -32,7 +32,7 @@ gt.Const.DogArmor <- [
 		SpriteCorpse = "bust_dog_01_armor_02_dead",
 	},
 	{
-		Type = "scripts/items/armor/special/warwolf_armor",
+		Type = "warwolf_armor",
 		Condition = 55,
 		ConditionMax = 55,
 		StaminaModifier = -10,
@@ -41,7 +41,7 @@ gt.Const.DogArmor <- [
 		SpriteCorpse = "bust_dog_01_armor_01_dead",
 	},
 	{
-		Type = "scripts/items/armor/special/warwolf_heavy_armor",
+		Type = "warwolf_heavy_armor",
 		Condition = 85,
 		ConditionMax = 85,
 		StaminaModifier = -15,
@@ -173,30 +173,33 @@ gt.Const.GoblinRider <- {
 
 	function updateMountArmor( _item , _manager )
 	{
-		if (typeof _item == "instance")
-		{
-			_item = _item.get();
-		}
-
-		if (!("getArmorScript" in _item) || _item.getArmorScript() == null)
+		if (!("ArmorScript" in _item.m))
 		{
 			return;
 		}
 
 		local index;
-		local script = _item.getArmorScript();
+		local script = _item.m.ArmorScript;
+
+		if (typeof script != "string")
+		{
+			this.logInfo("mount doesn\'t have armor")
+			return;
+		}
 
 		foreach (i, armor in this.Const.DogArmor )
 		{
-		    if (armor.Type == script)
+		    if (script.find(armor.Type) != null)
 		    {
 		    	index = i;
+		    	this.logInfo("mount has armor")
 		    	break;
 		    }
 		}
 
 		if (index == null)
 		{
+			this.logInfo("can\'t identify mount armor")
 			return;
 		}
 

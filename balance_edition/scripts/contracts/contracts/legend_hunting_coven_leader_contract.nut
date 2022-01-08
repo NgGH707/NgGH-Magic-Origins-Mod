@@ -81,7 +81,7 @@ this.legend_hunting_coven_leader_contract <- this.inherit("scripts/contracts/con
 					{
 						this.Flags.set("IsEnchantedVillager", true);
 					}
-					else if (r <= 67)
+					else if (r <= 60)
 					{
 						this.Flags.set("IsSinisterDeal", true);
 					}
@@ -96,15 +96,15 @@ this.legend_hunting_coven_leader_contract <- this.inherit("scripts/contracts/con
 					{
 						this.Flags.set("IsSpiderQueen", true);
 					}
-					else if (r <= 40)
+					else if (r <= 20)
 					{
 						this.Flags.set("IsCurse", true);
 					}
-					else if (r <= 50)
+					else if (r <= 35)
 					{
 						this.Flags.set("IsEnchantedVillager", true);
 					}
-					else if (r <= 60)
+					else if (r <= 50)
 					{
 						this.Flags.set("IsSinisterDeal", true);
 					}

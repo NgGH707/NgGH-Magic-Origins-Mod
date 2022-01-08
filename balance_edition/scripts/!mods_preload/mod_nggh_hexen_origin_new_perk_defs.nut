@@ -754,7 +754,6 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		],
 		[
 			gt.Const.Perks.PerkDefs.Overwhelm,
-			gt.Const.Perks.PerkDefs.Nimble,
 			gt.Const.Perks.PerkDefs.Nighttime,
 			gt.Const.Perks.PerkDefs.AfterWake,
 		],
@@ -795,7 +794,6 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			gt.Const.Perks.PerkDefs.FortifiedMind,
 			gt.Const.Perks.PerkDefs.Overwhelm,
 			gt.Const.Perks.PerkDefs.AlpHellishFlame,
-			gt.Const.Perks.PerkDefs.Nimble,
 			gt.Const.Perks.PerkDefs.Nighttime,
 		],
 		[
@@ -891,7 +889,6 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			gt.Const.Perks.PerkDefs.WolfBite,
 		],
 		[
-			gt.Const.Perks.PerkDefs.Nimble,
 			gt.Const.Perks.PerkDefs.LegendGruesomeFeast,
 			gt.Const.Perks.PerkDefs.LoneWolf,
 			gt.Const.Perks.PerkDefs.LegendTrueBeliever,
@@ -904,7 +901,6 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		],
 		[
 			gt.Const.Perks.PerkDefs.KillingFrenzy,
-			gt.Const.Perks.PerkDefs.LegendBattleheart,
 			gt.Const.Perks.PerkDefs.BattleFlow,
 		],
 		[],
@@ -937,7 +933,6 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			gt.Const.Perks.PerkDefs.WolfBite,
 		],
 		[
-			gt.Const.Perks.PerkDefs.Nimble,
 			gt.Const.Perks.PerkDefs.LegendGruesomeFeast,
 			gt.Const.Perks.PerkDefs.LoneWolf,
 			gt.Const.Perks.PerkDefs.BearLineBreaker,
@@ -952,7 +947,6 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		],
 		[
 			gt.Const.Perks.PerkDefs.KillingFrenzy,
-			gt.Const.Perks.PerkDefs.LegendBattleheart,
 			gt.Const.Perks.PerkDefs.BattleFlow,
 		],
 		[],
@@ -980,15 +974,13 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		],
 		[
 			gt.Const.Perks.PerkDefs.BattleFlow,
+			gt.Const.Perks.PerkDefs.BearLineBreaker,
 			gt.Const.Perks.PerkDefs.DevastatingStrikes,
 		],
 		[
-			gt.Const.Perks.PerkDefs.Nimble,
 			gt.Const.Perks.PerkDefs.NachoEat,
 		],
-		[
-			gt.Const.Perks.PerkDefs.LegendMuscularity,
-		],
+		[],
 		[],
 		[],
 		[],
@@ -1006,14 +998,13 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		[
 			gt.Const.Perks.PerkDefs.CoupDeGrace,
 			gt.Const.Perks.PerkDefs.Backstabber,
-			gt.Const.Perks.PerkDefs.Overwhelm,
 			gt.Const.Perks.PerkDefs.Nighttime,
 		],
 		[
 			gt.Const.Perks.PerkDefs.Relentless,
-			gt.Const.Perks.PerkDefs.Fearsome,
 			gt.Const.Perks.PerkDefs.Footwork,
 			gt.Const.Perks.PerkDefs.Rotation,
+			gt.Const.Perks.PerkDefs.Overwhelm,
 		],
 		[
 			gt.Const.Perks.PerkDefs.Berserk,
@@ -1021,9 +1012,9 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			gt.Const.Perks.PerkDefs.HyenaBite,
 		],
 		[
-			gt.Const.Perks.PerkDefs.Nimble,
 			gt.Const.Perks.PerkDefs.LegendGruesomeFeast,
 			gt.Const.Perks.PerkDefs.DevastatingStrikes,
+			gt.Const.Perks.PerkDefs.Fearsome,
 		],
 		[
 			gt.Const.Perks.PerkDefs.LegendTerrifyingVisage,
@@ -1034,7 +1025,6 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		[
 			gt.Const.Perks.PerkDefs.LegendSlaughter,
 			gt.Const.Perks.PerkDefs.KillingFrenzy,
-			gt.Const.Perks.PerkDefs.LegendBattleheart,
 			gt.Const.Perks.PerkDefs.BattleFlow,
 		],
 		[],
@@ -1063,14 +1053,14 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		[
 			gt.Const.Perks.PerkDefs.LegendGruesomeFeast,
 			gt.Const.Perks.PerkDefs.LegendComposure,
-			gt.Const.Perks.PerkDefs.DevastatingStrikes
+			gt.Const.Perks.PerkDefs.DevastatingStrikes,
+			gt.Const.Perks.PerkDefs.BearLineBreaker,
 		],
 		[
 			gt.Const.Perks.PerkDefs.LindwurmAcid,
 		],
 		[
 			gt.Const.Perks.PerkDefs.KillingFrenzy,
-			gt.Const.Perks.PerkDefs.LegendMuscularity,
 		],
 		[],
 		[],
@@ -1095,6 +1085,7 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			gt.Const.Perks.PerkDefs.LegendLacerate,
 			gt.Const.Perks.PerkDefs.ShieldExpert,
 			gt.Const.Perks.PerkDefs.SchratShield,
+			gt.Const.Perks.PerkDefs.BearLineBreaker,
 		],
 		[
 			gt.Const.Perks.PerkDefs.LegendSpecialistShieldSkill,
@@ -1221,13 +1212,11 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		[
 			gt.Const.Perks.PerkDefs.SpiderBite,
 			gt.Const.Perks.PerkDefs.LegendGruesomeFeast,
-			gt.Const.Perks.PerkDefs.Overwhelm,
 			gt.Const.Perks.PerkDefs.KillingFrenzy,
 			gt.Const.Perks.PerkDefs.BattleForged,
 		],
 		[
 			gt.Const.Perks.PerkDefs.LegendFreedomOfMovement,
-			gt.Const.Perks.PerkDefs.LegendLevitate,
 		],
 		[],
 		[],
@@ -1237,7 +1226,6 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 
 	gt.Const.PerksCharmedUnit.UnholdTree <- [
 		[
-			gt.Const.Perks.PerkDefs.Pathfinder,
 			gt.Const.Perks.PerkDefs.Stalwart,
 			gt.Const.Perks.PerkDefs.SunderingStrikes,
 			gt.Const.Perks.PerkDefs.UnholdUnarmedAttack,
@@ -1255,18 +1243,17 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			gt.Const.Perks.PerkDefs.BloodyHarvest,
 			gt.Const.Perks.PerkDefs.LegendSpecFists,
 			gt.Const.Perks.PerkDefs.UnholdFling,
+			gt.Const.Perks.PerkDefs.BearLineBreaker,
 		],
 		[
 			gt.Const.Perks.PerkDefs.LegendFullForce,
 		],
 		[
 			gt.Const.Perks.PerkDefs.LegendGruesomeFeast,
-			gt.Const.Perks.PerkDefs.Berserk,
+			gt.Const.Perks.PerkDefs.ReturnFavor,
 		],
 		[
-			gt.Const.Perks.PerkDefs.LegendBattleheart,
 			gt.Const.Perks.PerkDefs.KillingFrenzy,
-			gt.Const.Perks.PerkDefs.LegendMuscularity,
 		],
 		[],
 		[],
@@ -1297,11 +1284,11 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		],
 		[
 			gt.Const.Perks.PerkDefs.LegendGruesomeFeast,
+			gt.Const.Perks.PerkDefs.ReturnFavor,
 			gt.Const.Perks.PerkDefs.Berserk,
 		],
 		[
 			gt.Const.Perks.PerkDefs.KillingFrenzy,
-			gt.Const.Perks.PerkDefs.LegendMuscularity,
 		],
 		[],
 		[],

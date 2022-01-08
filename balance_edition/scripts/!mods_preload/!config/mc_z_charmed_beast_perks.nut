@@ -165,6 +165,21 @@ gt.Const.BeastHasAoE <- [
 	gt.Const.EntityType.LegendBear,
 ];
 
+gt.Const.BeastNeverHasNimble <- [
+	gt.Const.EntityType.Unhold,
+	gt.Const.EntityType.UnholdFrost,
+	gt.Const.EntityType.UnholdBog,
+	gt.Const.EntityType.BarbarianUnhold,
+	gt.Const.EntityType.BarbarianUnholdFrost,
+	gt.Const.EntityType.LegendRockUnhold,
+	gt.Const.EntityType.Lindwurm,
+	gt.Const.EntityType.LegendStollwurm,
+	gt.Const.EntityType.Schrat,
+	gt.Const.EntityType.LegendGreenwoodSchrat,
+	gt.Const.EntityType.LegendSkinGhoul,
+	gt.Const.EntityType.TricksterGod,
+];
+
 gt.Const.PerkDefaultPerRow <- [
 	6,
 	6,

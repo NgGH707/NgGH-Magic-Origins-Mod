@@ -159,8 +159,7 @@ this.alp_racial <- this.inherit("scripts/skills/skill", {
 					}
 					while (!resume strategy);
 				}
-
-				skill.setUseForFree(true);
+				
 				local b = a.getAIAgent().getBehavior(this.Const.AI.Behavior.ID.AlpTeleport);
 				b.onEvaluate(a);
 				b.onExecute(a);

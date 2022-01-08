@@ -1,10 +1,11 @@
-this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
+this.alp_teleport_active_skill <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsAtNight = false,
 	},
+
 	function create()
 	{
-		this.m.ID = "actives.alp_teleport";
+		this.m.ID = "actives.alp_teleport_active";
 		this.m.Name = "Fade";
 		this.m.Description = "Fading out your physical body and reappear at some other place.";
 		this.m.Icon = "skills/active_160.png";
@@ -22,86 +23,25 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsHidden = false;
 		this.m.IsTargeted = true;
 		this.m.IsTargetingActor = false;
-		this.m.IsVisibleTileNeeded = false;
+		this.m.IsVisibleTileNeeded = true;
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.ActionPointCost = 0;
-		this.m.FatigueCost = 30;
-		this.m.FatigueCostMult = 0.0;
+		this.m.FatigueCost = 40;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 99;
 		this.m.MaxLevelDifference = 4;
 	}
 
-	function onAdded()
+	function onAfterUpdate( _properties )
 	{
-		local auto_button = this.new("scripts/skills/actives/auto_mode_alp_teleport");
-		this.getContainer().add(auto_button);
-
-		if (!this.getContainer().getActor().isPlayerControlled())
-		{
-			auto_button.onCombatStarted();
-		}
+		this.m.FatigueCostMult = this.m.IsAtNight ? 0.75 : 1.0;
 	}
 
 	function onCombatStarted()
 	{
 		this.m.IsAtNight = !this.World.getTime().IsDaytime;
-	}
-
-	function onCombatFinished()
-	{
-		this.m.IsAtNight = false;
-		this.m.FatigueCostMult = 1.0;
-	}
-	
-	function onTurnStart()
-	{
-		if (!this.getContainer().getActor().isPlayerControlled())
-		{
-			return;
-		}
-		
-		this.m.IsVisibleTileNeeded = true;
-		this.m.FatigueCostMult = this.m.IsAtNight ? 0.75 : 1.0;
-		this.getContainer().update();
-	}
-	
-	function onResumeTurn()
-	{
-		if (!this.getContainer().getActor().isPlayerControlled())
-		{
-			return;
-		}
-		
-		this.m.IsVisibleTileNeeded = true;
-		this.m.FatigueCostMult = this.m.IsAtNight ? 0.75 : 1.0;
-		this.getContainer().update();
-	}
-	
-	function onTurnEnd()
-	{
-		if (!this.getContainer().getActor().isPlayerControlled())
-		{
-			return;
-		}
-		
-		this.m.IsVisibleTileNeeded = false;
-		this.m.FatigueCostMult = 0.0;
-		this.getContainer().update();
-	}
-	
-	function onWaitTurn()
-	{	
-		if (!this.getContainer().getActor().isPlayerControlled())
-		{
-			return;
-		}
-		
-		this.m.IsVisibleTileNeeded = false;
-		this.m.FatigueCostMult = 0.0;
-		this.getContainer().update();
 	}
 
 	function getTooltip()
@@ -252,6 +192,7 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 			this.onTeleportStart(tag);
 		}
 
+		this.setUseForFree(false);
 		return true;
 	}
 

@@ -273,9 +273,10 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 		this.m.CustomPerkTree = clone this.m.Info.PerkTree;
 		local isHumaniod = this.Const.HumanoidBeast.find(this.m.Info.Type) != null;
 		local hasAoE = this.Const.BeastHasAoE.find(this.m.Info.Type) != null;
+		local removeNimble = this.Const.BeastNeverHasNimble.find(this.m.Info.Type) != null;
 		local origin = this.World.Assets.getOrigin();
 		local helper = this.getroottable().PerkTreeBuilder;
-		this.m.CustomPerkTree = helper.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), isHumaniod, hasAoE);
+		this.m.CustomPerkTree = helper.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), isHumaniod, hasAoE, removeNimble);
 
 		if (origin != null)
 		{

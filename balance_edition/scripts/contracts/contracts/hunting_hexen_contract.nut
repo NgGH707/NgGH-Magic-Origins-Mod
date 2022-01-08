@@ -72,7 +72,7 @@ this.hunting_hexen_contract <- this.inherit("scripts/contracts/contract", {
 					{
 						this.Flags.set("IsEnchantedVillager", true);
 					}
-					else if (r <= 67)
+					else if (r <= 60)
 					{
 						this.Flags.set("IsSinisterDeal", true);
 					}
@@ -83,19 +83,19 @@ this.hunting_hexen_contract <- this.inherit("scripts/contracts/contract", {
 				}
 				else
 				{
-					if (r <= 20)
+					if (r <= 15)
 					{
 						this.Flags.set("IsSpiderQueen", true);
 					}
-					else if (r <= 40)
+					else if (r <= 35)
 					{
 						this.Flags.set("IsCurse", true);
 					}
-					else if (r <= 50)
+					else if (r <= 45)
 					{
 						this.Flags.set("IsEnchantedVillager", true);
 					}
-					else if (r <= 60)
+					else if (r <= 55)
 					{
 						this.Flags.set("IsSinisterDeal", true);
 					}

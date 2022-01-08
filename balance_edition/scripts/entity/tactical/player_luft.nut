@@ -531,6 +531,7 @@ this.player_luft <- this.inherit("scripts/entity/tactical/player", {
 		this.m.Skills.add(this.new("scripts/skills/actives/break_ally_free_skill"));
 		this.m.Skills.add(this.new("scripts/skills/spell_hexe/charm_spell"));
 		this.m.Skills.add(this.new("scripts/skills/spell_hexe/charm_captive_spell"));
+		this.m.Skills.add(this.new("scripts/skills/effects/legend_veteran_levels_effect"));
 		
 		this.setPreventOcclusion(true);
 		this.setBlockSight(false);

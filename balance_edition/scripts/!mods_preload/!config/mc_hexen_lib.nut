@@ -874,16 +874,6 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 			});
 		}
 		
-		if (_currentProperties.IsImmuneToRotation)
-		{
-			ret.push({
-				id = 10,
-				type = "text",
-				icon = "ui/icons/special.png",
-				text = "Immune to [color=" + this.Const.UI.Color.NegativeValue + "]Rotation[/color]"
-			});
-		}
-		
 		if (_currentProperties.IsImmuneToDisarm)
 		{
 			ret.push({

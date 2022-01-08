@@ -1770,6 +1770,120 @@ gt.Const.CharmedSlave <- {
 			
 		//KoboldWolfrider = 152,
 			{},
+
+		//LegendMummyPriest = 153,
+			{},
+
+		//FreeCompanySpearman = 154,
+			{
+				StatMod = { Hitpoints = [-30, -20], Bravery = [-5, -5], Stamina = [-15, -15], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [-5, 0], RangedDefense = [0, 0], Initiative = [15, 35] },
+				Perks = ["perks/perk_legend_specialist_militia_skill", "perks/perk_legend_specialist_militia_damage"],
+				Difficulty = 5,
+				Custom = {},
+				PerkTree = "militia_background",
+				IsExperienced = true,
+			}
+
+		//FreeCompanySlayer = 155,
+			{
+				StatMod = { Hitpoints = [-30, -20], Bravery = [0, 0], Stamina = [-10, -10], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [15, 25] },
+				Perks = ["perks/perk_legend_big_game_hunter"],
+				Difficulty = 5,
+				Custom = {},
+				PerkTree = "beast_hunter_background",
+				IsExperienced = true,
+			}
+
+		//FreeCompanyFootman = 156,
+			{
+				StatMod = { Hitpoints = [-20, -15], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [-5, 0], RangedSkill = [-5, -5], MeleeDefense = [0, 0], RangedDefense = [-5, -5], Initiative = [5, 25] },
+				Perks = ["perks/perk_battle_forged"],
+				Difficulty = 5,
+				Custom = {},
+				PerkTree = "legend_shieldmaiden_background",
+				IsExperienced = true,
+			}
+
+		//FreeCompanyArcher = 157,
+			{
+				StatMod = { Hitpoints = [-10, -5], Bravery = [0, 0], Stamina = [-10, -0], MeleeSkill = [0, 0], RangedSkill = [-5, -0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-10, -5] },
+				Perks = ["perks/perk_bullseye", "perks/perk_anticipation"],
+				Difficulty = 5,
+				Custom = {},
+				PerkTree = "hunter_background",
+				IsExperienced = true,
+			}
+
+		//FreeCompanyCrossbow = 158,
+			{
+				StatMod = { Hitpoints = [-10, -5], Bravery = [0, 0], Stamina = [-10, -0], MeleeSkill = [0, 0], RangedSkill = [-5, -0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-10, -5] },
+				Perks = ["perks/perk_ballistics", "perks/perk_anticipation"],
+				Difficulty = 5,
+				Custom = {},
+				PerkTree = "legend_nightwatch_background",
+				IsExperienced = true,
+			}
+
+		//FreeCompanyLongbow = 159,
+			{
+				StatMod = { Hitpoints = [-10, -5], Bravery = [0, 0], Stamina = [-10, -0], MeleeSkill = [0, 0], RangedSkill = [-5, -0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-10, -5] },
+				Perks = ["perks/perk_head_hunter", "perks/perk_anticipation"],
+				Difficulty = 25,
+				Custom = {},
+				Requirements = ["perk.words_charm"],
+				PerkTree = "hunter_background"
+			}
+
+		//FreeCompanyBillman = 160,
+			{
+				StatMod = { Hitpoints = [-20, -15], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [-5, 0], RangedSkill = [-5, -5], MeleeDefense = [0, 0], RangedDefense = [-5, -5], Initiative = [5, 25] },
+				Perks = ["perks/perk_footwork", "perks/perk_backstabber"],
+				Difficulty = 25,
+				Custom = {},
+				PerkTree = "beast_hunter_background",
+				Requirements = ["perk.words_charm"],
+				IsExperienced = true,
+			}
+
+		//FreeCompanyPikeman = 161,
+			{
+				StatMod = { Hitpoints = [-20, -15], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [-5, 0], RangedSkill = [-5, -5], MeleeDefense = [0, 0], RangedDefense = [-5, -5], Initiative = [5, 25] },
+				Perks = ["perks/perk_backstabber"],
+				Difficulty = 13,
+				Custom = {},
+				PerkTree = "beast_hunter_background",
+				IsExperienced = true,
+			}
+
+		//FreeCompanyInfantry = 162,
+			{
+				StatMod = { Hitpoints = [-25, -25], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [-10, -10], RangedSkill = [-5, -5], MeleeDefense = [0, 0], RangedDefense = [-5, -5], Initiative = [5, 25] },
+				Perks = ["perks/perk_battle_forged", "perks/perk_steel_brow"],
+				Difficulty = 37,
+				Custom = {},
+				PerkTree = "legend_shieldmaiden_background",
+				IsExperienced = true,
+			}
+
+		//FreeCompanyLeader = 163,
+			{
+				StatMod = { Hitpoints = [-15, -15], Bravery = [-40, -40], Stamina = [-15, -5], MeleeSkill = [-10, -5], RangedSkill = [-5, -5], MeleeDefense = [-5, 0], RangedDefense = [0, 0], Initiative = [5, 15] },
+				Perks = ["perks/perk_rally_the_troops", "perks/perk_sundering_strikes", "perks/perk_footwork"],
+				Difficulty = 35,
+				Custom = {},
+				Requirements = ["perk.words_charm"],
+				PerkTree = "orc_slayer_background"
+			}
+
+		//FreeCompanyLeaderLow = 164,
+			{
+				StatMod = { Hitpoints = [-15, -15], Bravery = [-40, -40], Stamina = [-15, -5], MeleeSkill = [-10, -5], RangedSkill = [-5, -5], MeleeDefense = [-5, 0], RangedDefense = [0, 0], Initiative = [5, 15] },
+				Perks = ["perks/perk_rally_the_troops", "perks/perk_sundering_strikes"],
+				Difficulty = 25,
+				Custom = {},
+				Requirements = ["perk.words_charm"],
+				PerkTree = "orc_slayer_background"
+			}
 	],
 
 	//Database for new entries registered by ::mc_registerCharmedEntries(_array)

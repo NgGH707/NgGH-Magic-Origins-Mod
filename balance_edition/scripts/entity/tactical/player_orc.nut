@@ -150,6 +150,7 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 		this.m.Skills.add(this.new("scripts/skills/effects/realm_of_nightmares_effect"));
 		this.m.Skills.add(this.new("scripts/skills/effects/legend_demon_hound_aura_effect"));
 		this.m.Skills.add(this.new("scripts/skills/actives/hand_to_hand_orc"));
+		this.m.Skills.add(this.new("scripts/skills/effects/legend_veteran_levels_effect"));
 		this.setName("");
 		this.setPreventOcclusion(true);
 		this.setBlockSight(false);
