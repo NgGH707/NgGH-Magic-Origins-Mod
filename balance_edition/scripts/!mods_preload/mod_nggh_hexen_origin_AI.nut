@@ -10,9 +10,7 @@ this.getroottable().HexenHooks.hookAI <- function ()
 	});
 	::mods_hookExactClass("ai/tactical/behaviors/ai_darkflight", function ( o )
 	{
-		o.m.PossibleSkills.push(
-			"actives.alp_teleport",
-		);
+		o.m.PossibleSkills.push("actives.alp_teleport");
 	});
 	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_default", function ( o )
 	{
