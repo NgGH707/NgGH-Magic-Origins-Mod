@@ -49,11 +49,16 @@ this.tail_slam_zoc_skill <- this.inherit("scripts/skills/skill", {
 
 	function applyEffectToTarget( _user, _target, _targetTile )
 	{
+		if (_target.isNonCombatant())
+		{
+			return;
+		}
+
 		local applyEffect = this.Math.rand(1, 2);
 
 		if (applyEffect == 1 && !_target.getCurrentProperties().IsImmuneToStun && !_target.getCurrentProperties().IsStunned)
 		{
-			if (_target.isNonCombatant() || _target.getCurrentProperties().IsImmuneToStun || _target.getCurrentProperties().IsStunned)
+			if (_target.getCurrentProperties().IsImmuneToStun || _target.getCurrentProperties().IsStunned)
 			{
 				return;
 			}
@@ -67,11 +72,6 @@ this.tail_slam_zoc_skill <- this.inherit("scripts/skills/skill", {
 		}
 		else
 		{
-			if (_target.isNonCombatant())
-			{
-				return;
-			}
-
 			_target.getSkills().add(this.new("scripts/skills/effects/dazed_effect"));
 
 			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
@@ -91,16 +91,17 @@ this.tail_slam_zoc_skill <- this.inherit("scripts/skills/skill", {
 	function onUse( _user, _targetTile )
 	{
 		this.spawnAttackEffect(_targetTile, this.Const.Tactical.AttackEffectChop);
-		local ret = this.attackEntity(_user, _targetTile.getEntity());
+		local target = _targetTile.getEntity();
+		local ret = this.attackEntity(_user, target);
 
 		if (!_user.isAlive() || _user.isDying())
 		{
 			return ret;
 		}
 
-		if (ret && _targetTile.IsOccupiedByActor && _targetTile.getEntity().isAlive() && !_targetTile.getEntity().isDying())
+		if (ret && _targetTile.IsOccupiedByActor && target.isAlive() && !target.isDying())
 		{
-			this.applyEffectToTarget(_user, _targetTile.getEntity(), _targetTile);
+			this.applyEffectToTarget(_user, target, _targetTile);
 		}
 
 		return ret;

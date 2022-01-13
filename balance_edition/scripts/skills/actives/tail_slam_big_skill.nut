@@ -229,8 +229,9 @@ this.tail_slam_big_skill <- this.inherit("scripts/skills/skill", {
 			else
 			{
 				local tile = ownTile.getNextTile(i);
+				local canbeHit = this.canBeHit(_user, tile.getEntity());
 
-				if (tile.IsOccupiedByActor && tile.getEntity().isAttackable() && this.Math.abs(tile.Level - ownTile.Level) <= 1 && this.canBeHit(_user, tile.getEntity()))
+				if (tile.IsOccupiedByActor && tile.getEntity().isAttackable() && this.Math.abs(tile.Level - ownTile.Level) <= 1 && canbeHit)
 				{
 					if (ret && soundBackup.len() == 0)
 					{
@@ -240,7 +241,7 @@ this.tail_slam_big_skill <- this.inherit("scripts/skills/skill", {
 
 					local success = this.attackEntity(_user, tile.getEntity());
 
-					if (success && !tile.IsEmpty && tile.getEntity().isAlive() && !tile.getEntity().isDying())
+					if (success && !tile.IsEmpty && tile.getEntity().isAlive() && !tile.getEntity().isDying() && canbeHit)
 					{
 						this.applyEffectToTarget(_user, tile.getEntity(), tile);
 					}

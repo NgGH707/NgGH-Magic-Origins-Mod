@@ -132,13 +132,14 @@ this.tail_slam_split_skill <- this.inherit("scripts/skills/skill", {
 		if (_targetTile.hasNextTile(dir))
 		{
 			local forwardTile = _targetTile.getNextTile(dir);
+			local canbeHit = this.canBeHit(_user, forwardTile.getEntity());
 
-			if (forwardTile.IsOccupiedByActor && forwardTile.getEntity().isAttackable() && this.Math.abs(forwardTile.Level - ownTile.Level) <= 1 && this.canBeHit(_user, forwardTile.getEntity()))
+			if (forwardTile.IsOccupiedByActor && forwardTile.getEntity().isAttackable() && this.Math.abs(forwardTile.Level - ownTile.Level) <= 1 && canbeHit)
 			{
 				ret = this.attackEntity(_user, forwardTile.getEntity()) || ret;
 			}
 
-			if (ret && forwardTile.IsOccupiedByActor && forwardTile.getEntity().isAlive() && !forwardTile.getEntity().isDying() && this.canBeHit(_user, forwardTile.getEntity()))
+			if (ret && forwardTile.IsOccupiedByActor && forwardTile.getEntity().isAlive() && !forwardTile.getEntity().isDying() && canbeHit)
 			{
 				this.applyEffectToTarget(_user, forwardTile.getEntity(), forwardTile);
 			}

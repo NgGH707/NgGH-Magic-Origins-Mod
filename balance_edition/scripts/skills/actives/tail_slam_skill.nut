@@ -237,8 +237,9 @@ this.tail_slam_skill <- this.inherit("scripts/skills/skill", {
 		{
 			local nextTile = ownTile.getNextTile(nextDir);
 			local success = false;
+			local canBeHit = this.canBeHit(_user, nextTile.getEntity());
 
-			if (nextTile.IsOccupiedByActor && nextTile.getEntity().isAttackable() && this.Math.abs(nextTile.Level - ownTile.Level) <= 1 && this.canBeHit(_user, nextTile.getEntity()))
+			if (nextTile.IsOccupiedByActor && nextTile.getEntity().isAttackable() && this.Math.abs(nextTile.Level - ownTile.Level) <= 1 && canBeHit)
 			{
 				success = this.attackEntity(_user, nextTile.getEntity());
 			}
@@ -248,7 +249,7 @@ this.tail_slam_skill <- this.inherit("scripts/skills/skill", {
 				return success;
 			}
 
-			if (success && nextTile.IsOccupiedByActor && nextTile.getEntity().isAlive() && !nextTile.getEntity().isDying() && this.canBeHit(_user, nextTile.getEntity()))
+			if (success && nextTile.IsOccupiedByActor && nextTile.getEntity().isAlive() && !nextTile.getEntity().isDying() && canBeHit)
 			{
 				this.applyEffectToTarget(_user, nextTile.getEntity(), nextTile);
 			}
@@ -262,8 +263,9 @@ this.tail_slam_skill <- this.inherit("scripts/skills/skill", {
 		{
 			local nextTile = ownTile.getNextTile(nextDir);
 			local success = false;
+			local canBeHit = this.canBeHit(_user, nextTile.getEntity());
 
-			if (nextTile.IsOccupiedByActor && nextTile.getEntity().isAttackable() && this.Math.abs(nextTile.Level - ownTile.Level) <= 1 && this.canBeHit(_user, nextTile.getEntity()))
+			if (nextTile.IsOccupiedByActor && nextTile.getEntity().isAttackable() && this.Math.abs(nextTile.Level - ownTile.Level) <= 1 && canBeHit)
 			{
 				success = this.attackEntity(_user, nextTile.getEntity());
 			}
@@ -273,7 +275,7 @@ this.tail_slam_skill <- this.inherit("scripts/skills/skill", {
 				return success;
 			}
 
-			if (success && nextTile.IsOccupiedByActor && nextTile.getEntity().isAlive() && !nextTile.getEntity().isDying() && this.canBeHit(_user, nextTile.getEntity()))
+			if (success && nextTile.IsOccupiedByActor && nextTile.getEntity().isAlive() && !nextTile.getEntity().isDying() && canBeHit)
 			{
 				this.applyEffectToTarget(_user, nextTile.getEntity(), nextTile);
 			}
