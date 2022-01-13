@@ -36,12 +36,13 @@ this.alp_teleport_skill <- this.inherit("scripts/skills/skill", {
 	{
 		local auto_button = this.new("scripts/skills/actives/auto_mode_alp_teleport");
 		this.getContainer().add(auto_button);
-		this.getContainer().add("scripts/skills/actives/alp_teleport_active_skill");
 
 		if (!this.getContainer().getActor().isPlayerControlled())
 		{
 			auto_button.onCombatStarted();
 		}
+
+		this.getContainer().add(this.new("scripts/skills/actives/alp_teleport_active_skill"));
 	}
 	
 	function isUsable()

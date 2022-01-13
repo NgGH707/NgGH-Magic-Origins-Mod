@@ -125,9 +125,12 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_enrage_wolf"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_hyena_bite"));
+				this.m.Skills.add(this.new("scripts/skills/actives/line_breaker"));
 				this.m.XP *= 1.5;
 				local b = this.m.BaseProperties;
-				b.MeleeSkill += 10;
+				b.MeleeSkill += 15;
+				b.MeleeDefense += 10;
+				b.Bravery += 50;
 				return true;
 			}
 		});
@@ -176,9 +179,12 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_wolf_bite"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_enrage_wolf"));
+				this.m.Skills.add(this.new("scripts/skills/actives/line_breaker"));
 				this.m.XP *= 1.5;
 				local b = this.m.BaseProperties;
-				b.MeleeSkill += 10;
+				b.MeleeSkill += 15;
+				b.MeleeDefense += 10;
+				b.Bravery += 50;
 				return true;
 			}
 		});
@@ -231,6 +237,8 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 
 					this.m.XP *= 1.5;
 					this.m.Skills.add(this.new("scripts/skills/perks/perk_spider_bite"));
+					this.m.Skills.add(this.new("scripts/skills/perks/perk_dodge"));
+					this.m.Skills.add(this.new("scripts/skills/perks/perk_serpent_nimble"));
 					return true;
 				}
 			}
@@ -325,8 +333,11 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			this.m.XP *= 1.5;
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_serpent_bite"));
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_serpent_drag"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_serpent_nimble"));
 			local b = this.m.BaseProperties;
 			b.MeleeSkill += 15;
+			b.MeleeDefense += 10;
+			b.RangedDefense += 5;
 			return true;
 		}
 	});
@@ -359,7 +370,8 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				randomlyRollPerk(this, [
 					"perks/perk_frenzy",
 					"perks/perk_nacho",
-					"perks/perk_nacho_eat"
+					"perks/perk_nacho_eat",
+					"perks/perk_nacho_big_tummy"
 				], chance);
 			}
 
@@ -372,6 +384,11 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_nacho"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_frenzy"));
+				this.m.Skills.add(this.new("scripts/skills/actives/charge"));
+				local b = this.m.BaseProperties;
+				b.MeleeSkill += 10;
+				b.MeleeDefense += 10;
+				b.RangedDefense += 5;
 				this.m.XP *= 1.5;
 				return true;
 			}
@@ -419,6 +436,10 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			this.m.XP *= 1.5;
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_mastery_nightmare"));
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_mastery_sleep"));
+			this.getAIAgent().addBehavior(this.new("scripts/ai/tactical/behaviors/ai_darkflight"));
+			local b = this.m.BaseProperties;
+			b.MeleeDefense += 15;
+			b.RangedDefense += 15;
 			return true;
 		}
 	});

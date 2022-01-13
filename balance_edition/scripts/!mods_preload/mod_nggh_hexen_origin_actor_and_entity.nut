@@ -19,6 +19,92 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 		}
 	});
 
+
+	// fix issue with charmed enemy nacho eats his friend
+	::mods_hookBaseClass("entity/tactical/enemies/ghoul", function (obj)
+	{
+		obj = obj[obj.SuperName];
+		obj.onAfterDeath = function(_tile)
+		{
+			if (this.m.Size < 3)
+			{
+				return;
+			}
+
+			local skill = this.getSkills().getSkillByID("actives.swallow_whole");
+
+			if (skill.getSwallowedEntity() == null)
+			{
+				return;
+			}
+
+			if (this.Tactical.Entities.isCombatFinished())
+			{
+				return;
+			}
+
+			local e = skill.getSwallowedEntity();
+			this.Tactical.addEntityToMap(e, _tile.Coords.X, _tile.Coords.Y);
+			e.getFlags().set("Devoured", false);
+
+			if (!e.isPlayerControlled() && e.getType() != this.Const.EntityType.Serpent)
+			{
+				this.Tactical.getTemporaryRoster().remove(e);
+			}
+
+			this.Tactical.TurnSequenceBar.addEntity(e);
+
+			if (e.hasSprite("dirt"))
+			{
+				local slime = e.getSprite("dirt");
+				slime.setBrush("bust_slime");
+				slime.Visible = true;
+			}
+		}
+	});
+	::mods_hookBaseClass("entity/tactical/enemies/legend_skin_ghoul", function (obj)
+	{
+		obj = obj[obj.SuperName];
+		obj.onAfterDeath = function(_tile)
+		{
+			if (this.m.Size < 3)
+			{
+				return;
+			}
+
+			local skill = this.getSkills().getSkillByID("actives.swallow_whole");
+
+			if (skill.getSwallowedEntity() == null)
+			{
+				return;
+			}
+
+			if (this.Tactical.Entities.isCombatFinished())
+			{
+				return;
+			}
+
+			local e = skill.getSwallowedEntity();
+			this.Tactical.addEntityToMap(e, _tile.Coords.X, _tile.Coords.Y);
+			e.getFlags().set("Devoured", false);
+
+			if (!e.isPlayerControlled() && e.getType() != this.Const.EntityType.Serpent)
+			{
+				this.Tactical.getTemporaryRoster().remove(e);
+			}
+
+			this.Tactical.TurnSequenceBar.addEntity(e);
+
+			if (e.hasSprite("dirt"))
+			{
+				local slime = e.getSprite("dirt");
+				slime.setBrush("bust_slime");
+				slime.Visible = true;
+			}
+		}
+	});
+
+
 	// XD :lol_goblin:
 	::mods_hookExactClass("entity/tactical/enemies/hexe", function ( obj )
 	{

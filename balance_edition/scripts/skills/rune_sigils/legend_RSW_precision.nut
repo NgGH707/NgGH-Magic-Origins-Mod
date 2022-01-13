@@ -18,6 +18,12 @@ this.legend_RSW_precision <- this.inherit("scripts/skills/skill", {
 		this.m.IsSerialized = false;
 	}
 
+	function onAdded()
+	{
+		this.removeSelf();
+		return;
+	}
+
 	function onTurnStart()
 	{
 		if (this.m.IsForceEnabled)

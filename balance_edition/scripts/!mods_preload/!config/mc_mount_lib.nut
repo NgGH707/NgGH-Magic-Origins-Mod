@@ -171,9 +171,14 @@ gt.Const.GoblinRider <- {
 		return null;
 	}
 
-	function updateMountArmor( _item , _manager )
+	function updateMountArmor( _item , _appearance, _armor )
 	{
-		if (!("ArmorScript" in _item.m))
+		if (typeof _item == "instance")
+		{
+			_item = _item.get();
+		}
+
+		if (!this.isKindOf(_item, "accessory_dog"))
 		{
 			return;
 		}
@@ -181,7 +186,7 @@ gt.Const.GoblinRider <- {
 		local index;
 		local script = _item.m.ArmorScript;
 
-		if (typeof script != "string")
+		if (script == null || typeof script != "string" || script.len() == 0)
 		{
 			this.logInfo("mount doesn\'t have armor")
 			return;
@@ -203,8 +208,6 @@ gt.Const.GoblinRider <- {
 			return;
 		}
 
-		local _armor = _manager.getMountArmor();
-		local _appearance = _manager.getAppearance();
 		_armor.Condition = this.Const.DogArmor[index].Condition;
 		_armor.ConditionMax = this.Const.DogArmor[index].ConditionMax;
 		_armor.StaminaModifier = this.Const.DogArmor[index].StaminaModifier;

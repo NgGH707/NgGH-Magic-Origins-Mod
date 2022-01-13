@@ -12,7 +12,7 @@ this.witness_true_necromancer_event <- this.inherit("scripts/events/event", {
 	{
 		this.m.ID = "event.witness_true_necromancer";
 		this.m.Title = "At some place...";
-		this.m.Cooldown = 50.0 * this.World.getTime().SecondsPerDay;
+		this.m.Cooldown = 25.0 * this.World.getTime().SecondsPerDay;
 		this.m.Screens.push({
 			ID = "Meet",
 			Text = "[img]gfx/ui/events/event_76.png[/img]As you're traveling a cloaked man would seem to appear from out of nowhere, greeting you with a crooked grin.%SPEECH_ON%Greeting sellswords, may I have but a moment of your time. I promise it's well worth it.%SPEECH_OFF%Silence follows for what seemed like an eternity as you and your brothers stared at the stranger in apprehension and fear. His apperance was in every sense of normal for that of a noble highborn, yet for some unknown reason everyone felt an undescribable dread. Your eyes constantly drifting towards the man's hand with a skull ring, its ruby eyes glistening like fire. Finally you'd break free from the silence inducing fear before speaking freely.%SPEECH_ON%What business do you have old man? %SPEECH_OFF%The decrept noble's grin would stretch further as he spoke.%SPEECH_ON%I'm a simple relic seeker, and you good sirs have something that I'm quite interested in. %SPEECH_OFF% Confused you would stare the man down. Normally you would be excited for a bargain but this man reaked of death. His words may of been sweet but his very being smelled of rot. Your eyes would shift around scanning for threats unsure if this was a trap or simply a misunderstanding. The old man would give a playful grin before speaking again.%SPEECH_ON%No need to be on guard good sirs, I do not seek conflict merely trade%SPEECH_OFF%You and your men would watch as the noble pulled several large items out of a small sack tied at his hip that physically had no possible way to dwell within.%SPEECH_ON%What trickery is this!%SPEECH_OFF%The old man wouldn't say a word but the smug grin on his face spoke a thousand. The items produced were nothing but masterpieces whose craftsmenship seemed unrivaled. As you and your men would stare in envy one of your own would whisper in your ear. %SPEECH_ON%Those look mighty expensive sir, should be butcher the noble and take it for ourselves? %SPEECH_OFF%The thought is appealing but still, the smell of death eminating from the supposed noble would suggestion perhaps caution is the best route.",
@@ -235,7 +235,9 @@ this.witness_true_necromancer_event <- this.inherit("scripts/events/event", {
 						properties.Music = this.Const.Music.UndeadTracks;
 						properties.PlayerDeploymentType = this.Const.Tactical.DeploymentType.Line;
 						properties.EnemyDeploymentType = this.Const.Tactical.DeploymentType.Line;
-						properties.Loot = _event.m.NamedLoots;
+						properties.Loot = [];
+						properties.Loot.extend(_event.m.NamedLoots);
+						properties.Loot.extend(_event.onPrepareRewards());
 						properties.Entities = [];
 						properties.Entities.push(clone _event.m.SpawnList.Necromancer);
 						properties.Entities.push(clone _event.m.SpawnList.SwordSaint);
@@ -348,7 +350,7 @@ this.witness_true_necromancer_event <- this.inherit("scripts/events/event", {
 			this.m.NamedLoots.push(script);
 		}
 		
-		for ( local i = 0; i < 3; i = ++i )
+		for ( local i = 0; i < 4; i = ++i )
 		{
 			this.m.NamedLoots.push(scriptFiles[this.Math.rand(0, scriptFiles.len() - 1)]);
 		}
@@ -387,7 +389,7 @@ this.witness_true_necromancer_event <- this.inherit("scripts/events/event", {
 			SwordSaint = {
 				ID = this.Const.EntityType.ZombieBetrayer,
 				Variant = 0,
-				Strength = 100000,
+				Strength = 50000,
 				Cost = 10,
 				Row = 0,
 				Script = "scripts/entity/tactical/enemies/zombie_swordsaint",
@@ -395,12 +397,50 @@ this.witness_true_necromancer_event <- this.inherit("scripts/events/event", {
 			Wraith = {
 				ID = this.Const.EntityType.Ghost,
 				Variant = 0,
-				Strength = 100000,
+				Strength = 10000,
 				Cost = 10,
 				Row = 2,
 				Script = "scripts/entity/tactical/enemies/wraith",
 			},
 		};
+	}
+
+	function onPrepareRewards()
+	{
+		local ret = [];
+		local num = this.Math.rand(2, 7);
+
+		for (local i = 0; i < num; i++) 
+		{
+		    ret.push("scripts/items/misc/legend_ancient_scroll_item");
+		}
+
+		local potions = [
+			"cat_potion_item",
+			"cat_potion_item",
+			"iron_will_potion_item",
+			"iron_will_potion_item",
+			"recovery_potion_item",
+			"recovery_potion_item",
+			"lionheart_potion_item",
+			"lionheart_potion_item",
+			"night_vision_elixir_item",
+			"night_vision_elixir_item",
+			"legend_heartwood_sap_flask_item",
+			"legend_hexen_ichor_potion_item",
+			"legend_skin_ghoul_blood_flask_item",
+			"legend_stollwurm_blood_flask_item",
+		];
+
+		for (local i = 0; i < 3; i++) 
+		{
+		    ret.push("scripts/items/accessory/" + potions[this.Math.rand(0, potions.len() - 1)]);
+		}
+
+		ret.push("scripts/items/loot/ornate_tome_item");
+		ret.push("scripts/items/special/fountain_of_youth_item");
+		ret.push("scripts/items/special/trade_jug_01_item");
+		return ret;
 	}
 	
 	function onDetermineStartScreen()

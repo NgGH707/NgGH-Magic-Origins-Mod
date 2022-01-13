@@ -17,6 +17,12 @@ this.legend_RSA_thorns <- this.inherit("scripts/skills/skill", {
 		this.m.IsSerialized = false;
 	}
 
+	function onAdded()
+	{
+		this.removeSelf();
+		return;
+	}
+
 	function onUpdate( _properties )
 	{
 		if (this.m.IsForceEnabled)

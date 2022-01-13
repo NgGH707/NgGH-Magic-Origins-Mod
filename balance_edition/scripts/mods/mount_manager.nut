@@ -251,7 +251,7 @@ this.mount_manager <- {
 			}
 			else
 			{
-				_s.setFatigueCost(this.Math.floor(_s.getFatigueCostRaw() * 0.75));
+				_s.setFatigueCost(this.Math.floor(_s.getFatigueCostRaw() * 0.5));
 			}
 
 			if (!_s.isType(this.Const.SkillType.Active)) quirkNames.push(_s.getName());
@@ -309,7 +309,7 @@ this.mount_manager <- {
 	function addSpritesAndArmor( _item )
 	{
 		this.Const.GoblinRider.updateMountSprites(_item, this.m.Appearance);
-		this.Const.GoblinRider.updateMountArmor(_item, this);
+		this.Const.GoblinRider.updateMountArmor(_item, this.m.Appearance, this.m.Armor);
 	}
 
 	function updateInjuryLayer()

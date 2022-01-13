@@ -16,6 +16,12 @@ this.legend_RSW_snipping <- this.inherit("scripts/skills/skill", {
 		this.m.IsSerialized = false;
 	}
 
+	function onAdded()
+	{
+		this.removeSelf();
+		return;
+	}
+
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
 		if (this.m.IsForceEnabled)

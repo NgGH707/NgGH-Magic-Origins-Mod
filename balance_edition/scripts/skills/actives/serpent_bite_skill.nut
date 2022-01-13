@@ -72,8 +72,8 @@ this.serpent_bite_skill <- this.inherit("scripts/skills/skill", {
 		
 		if (_properties.IsSpecializedInPolearms)
 		{
-			_properties.DamageRegularMin += 20;
-			_properties.DamageRegularMax += 20;
+			_properties.DamageRegularMin += 10;
+			_properties.DamageRegularMax += 18;
 			_properties.DamageArmorMult += 0.10;
 		}
 	}

@@ -666,6 +666,26 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			IconDisabled = "ui/perks/perk_mind_break_sw.png",
 			Const = "AlpMindBreak"
 		},
+
+		//Nacho
+		{
+			ID = "perk.nacho_big_tummy",
+			Script = "scripts/skills/perks/perk_nacho_big_tummy",
+			Name = this.Const.Strings.PerkName.NachoBigTummy,
+			Tooltip = this.Const.Strings.PerkDescription.NachoBigTummy,
+			Icon = "ui/perks/perk_nacho_big_tummy.png",
+			IconDisabled = "ui/perks/perk_nacho_big_tummy_sw.png",
+			Const = "NachoBigTummy"
+		},
+		{
+			ID = "perk.nacho_vomiting",
+			Script = "scripts/skills/perks/perk_nacho_vomiting",
+			Name = this.Const.Strings.PerkName.NachoVomiting,
+			Tooltip = this.Const.Strings.PerkDescription.NachoVomiting,
+			Icon = "ui/perks/perk_nacho_vomiting.png",
+			IconDisabled = "ui/perks/perk_nacho_vomiting_sw.png",
+			Const = "NachoVomiting"
+		},
 	]);
 
 	gt.Const.Perks.PerkDefs.clear();
@@ -973,14 +993,17 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			gt.Const.Perks.PerkDefs.Nighttime,
 		],
 		[
-			gt.Const.Perks.PerkDefs.BattleFlow,
+			gt.Const.Perks.PerkDefs.NachoEat,
 			gt.Const.Perks.PerkDefs.BearLineBreaker,
 			gt.Const.Perks.PerkDefs.DevastatingStrikes,
 		],
 		[
-			gt.Const.Perks.PerkDefs.NachoEat,
+			gt.Const.Perks.PerkDefs.NachoBigTummy,
 		],
-		[],
+		[
+			gt.Const.Perks.PerkDefs.BattleFlow,
+			//gt.Const.Perks.PerkDefs.NachoVomiting,
+		],
 		[],
 		[],
 		[],

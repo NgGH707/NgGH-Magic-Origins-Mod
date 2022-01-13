@@ -16,6 +16,12 @@ this.legend_RSW_lucky <- this.inherit("scripts/skills/skill", {
 		this.m.IsSerialized = false;
 	}
 
+	function onAdded()
+	{
+		this.removeSelf();
+		return;
+	}
+
 	function onTargetKilled( _targetEntity, _skill )
 	{
 		if (this.m.IsForceEnabled)

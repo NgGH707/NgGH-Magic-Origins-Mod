@@ -119,13 +119,12 @@ this.legend_redback_spider_racial <- this.inherit("scripts/skills/skill", {
 
 	function onUpdate( _properties )
 	{
-		if (!this.getContainer().getActor().isPlacedOnMap())
+		if (!this.Tactical.isActive() || !this.getContainer().getActor().isPlacedOnMap())
 		{
 			return;
 		}
 		
 		local num = this.Tactical.Entities.getInstancesOfFaction(this.getContainer().getActor().getFaction()).len();
-		
 		_properties.Bravery += (num - 1) * 3;
 	}
 

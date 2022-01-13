@@ -1,5 +1,6 @@
 this.hexen_scenario <- this.inherit("scripts/scenarios/world/starting_scenario", {
 	m = {
+		Look = 9997,
 		IsLuftAdventure = false,
 	},
 	function create()
@@ -580,8 +581,13 @@ this.hexen_scenario <- this.inherit("scripts/scenarios/world/starting_scenario",
 	{
 		this.starting_scenario.onInit();
 		this.World.Assets.m.FootprintVision *= 1.5;
-		local looks = this.World.Flags.getAsInt("looks") == 0 ? 9997 : this.World.Flags.getAsInt("looks");
-		this.World.Assets.updateLook(this.World.Flags.has("isExposed") ? 9994 : looks);
+	}
+
+	function updateLook()
+	{
+		local looks = this.World.Flags.getAsInt("looks") == 0 ? this.m.Look : this.World.Flags.getAsInt("looks");
+		looks = this.World.Flags.has("isExposed") ? 9994 : looks;
+		this.World.State.getPlayer().getSprite("body").setBrush("figure_player_" + looks);
 	}
 	
 	function onHiredByScenario( bro )

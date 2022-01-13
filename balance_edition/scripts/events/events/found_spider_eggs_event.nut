@@ -103,11 +103,6 @@ this.found_spider_eggs_event <- this.inherit("scripts/events/event", {
 
 	function onUpdateScore()
 	{
-		if (::mods_getRegisteredMod("mod_mage_trio_origins") == null)
-		{
-			return;
-		}
-		
 		if (this.World.getTime().Days < 10)
 		{
 			return;

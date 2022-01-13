@@ -339,8 +339,7 @@ this.perk_tree_builder <- {
 			this.Const.Perks.PerkDefs.PTRStrengthInNumbers,
 			this.Const.Perks.PerkDefs.PTRWearsItWell,
 			this.Const.Perks.PerkDefs.PTRBully,
-			this.Const.Perks.PerkDefs.PTREnGarde,
-			this.Const.Perks.PerkDefs.PTRPaintASmile
+			this.Const.Perks.PerkDefs.PTRPaintASmile,
 			this.Const.Perks.PerkDefs.PTRDiscoveredTalent,
 			this.Const.Perks.PerkDefs.PTRManOfSteel,
 		]);

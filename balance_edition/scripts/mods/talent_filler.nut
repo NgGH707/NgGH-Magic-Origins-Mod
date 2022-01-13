@@ -9,19 +9,19 @@ this.talent_filler <- {
 		StarsMax = 9,
 		StarsMin = 0,
 		UntalentedChance = 10,
-		Chance = [55, 35, 10],
+		Chance = [45, 35, 20],
 	},
 
 	function clear()
 	{
 		this.m.ExcludedTalents = [];
-		this.m.OtherTalentChances = [60, 30];
+		this.m.OtherTalentChances = [55, 35];
 		this.m.PrimaryTalents = [];
 		this.m.SecondaryTalents = [];
 		this.m.StarsTotal = 0;
 		this.m.StarsMax = 9;
 		this.m.StarsMin = 0;
-		this.m.Chance = [55, 35, 10];
+		this.m.Chance = [45, 35, 20];
 	}
 	
 	function setExcludedTalents( _array )
@@ -127,8 +127,8 @@ this.talent_filler <- {
 			return;
 		}
 		
-		local penalty = this.Math.rand(-1, 0);
-		local numStarsToAdd = this.Math.max(0, this.Math.rand(this.m.StarsMin, this.m.StarsMax) + penalty);
+		local penalty = this.Math.rand(0, 2);
+		local numStarsToAdd = this.Math.max(0, this.Math.rand(this.m.StarsMin, this.m.StarsMax) - penalty);
 		
 		if (_stars != 0)
 		{
@@ -139,7 +139,7 @@ this.talent_filler <- {
 		local noOtherTalents = this.m.PrimaryTalents.len() + this.m.SecondaryTalents.len() == this.Const.Attributes.COUNT - this.m.ExcludedTalents.len();
 		local tries = 0;
 
-		while (this.m.StarsTotal > 0 && tries < 40)
+		while (this.m.StarsTotal > 0 && tries < 50)
 		{
 			local r = this.Math.rand(1, 100);
 			

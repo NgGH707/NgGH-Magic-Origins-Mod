@@ -382,7 +382,7 @@ this.ghoul_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	{
 		if (this.m.Size < 3)
 		{
-			return;
+			return null;
 		}
 
 		local skill = this.getSkills().getSkillByID("actives.swallow_whole");
@@ -393,25 +393,26 @@ this.ghoul_player <- this.inherit("scripts/entity/tactical/player_beast", {
 			
 			if (skill == null)
 			{
-				return;
+				return null;
 			}
 		}
 		
 		if (skill.getSwallowedEntity() == null)
 		{
-			return;
+			return null;
 		}
 
 		local e = skill.getSwallowedEntity();
 		e.setIsAlive(true);
 		this.Tactical.addEntityToMap(e, _tile.Coords.X, _tile.Coords.Y);
+		e.getFlags().set("Devoured", false);
 		
 		if (!e.isPlayerControlled() && e.getType() != this.Const.EntityType.Serpent)
 		{
 			this.Tactical.getTemporaryRoster().remove(e);
 		}
-		
-		e.getFlags().set("Devoured", false);
+
+		this.Tactical.TurnSequenceBar.addEntity(e);
 		
 		if (e.hasSprite("dirt"))
 		{
@@ -420,13 +421,8 @@ this.ghoul_player <- this.inherit("scripts/entity/tactical/player_beast", {
 			slime.setHorizontalFlipping(!e.isAlliedWithPlayer());
 			slime.Visible = true;
 		}
-		else
-		{
-			local slime = e.addSprite("dirt");
-			slime.setBrush("bust_slime");
-			slime.setHorizontalFlipping(!e.isAlliedWithPlayer());
-			slime.Visible = true;
-		}
+
+		return e;
 	}
 	
 	function onFactionChanged()
@@ -524,6 +520,7 @@ this.ghoul_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.onFactionChanged();
 		this.m.Skills.add(this.new("scripts/skills/actives/gruesome_feast"));
 		this.m.Skills.add(this.new("scripts/skills/effects/gruesome_feast_effect"));
+		this.m.Skills.add(this.new("scripts/skills/actives/mod_nacho_vomiting_skill"));
 		this.m.Skills.update();
 	}
 	
@@ -931,8 +928,15 @@ this.ghoul_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		}
 		
 		this.m.IsLuft = _in.readBool();
-		
 		this.m.IsLoadingSaveData = false;
+
+		local background = this.getBackground();
+
+		if (background != null)
+		{
+			background.addPerk(this.Const.Perks.PerkDefs.NachoBigTummy, 5);
+			//background.addPerk(this.Const.Perks.PerkDefs.NachoVomiting, 6);
+		}
 	}
 
 });

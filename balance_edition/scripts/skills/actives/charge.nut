@@ -40,6 +40,17 @@ this.charge <- this.inherit("scripts/skills/skill", {
 	function onAdded()
 	{
 		this.m.FatigueCost = this.m.Container.getActor().isPlayerControlled() ? 30 : 25;
+
+		if (!this.getContainer().getActor().isPlayerControlled())
+		{
+			return;
+		}
+
+		local AI = this.getContainer().getActor().getAIAgent();
+		AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_charge"));
+		AI.m.Properties.EngageRangeMin = 1;
+		AI.m.Properties.EngageRangeMax = 2;
+		AI.m.Properties.EngageRangeIdeal = 2;
 	}
 
 	function getTooltip()

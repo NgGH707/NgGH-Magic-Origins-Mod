@@ -1,12 +1,5 @@
 this.spider_bite_skill <- this.inherit("scripts/skills/skill", {
-	m = {
-		IsRestrained = false,
-		IsSpent = false
-	},
-	function setRestrained( _f )
-	{
-		this.m.IsRestrained = _f;
-	}
+	m = {},
 
 	function create()
 	{
@@ -68,24 +61,9 @@ this.spider_bite_skill <- this.inherit("scripts/skills/skill", {
 		return this.getDefaultTooltip();
 	}
 
-	function isUsable()
-	{
-		return this.skill.isUsable() && !this.m.IsSpent;
-	}
-
 	function onUse( _user, _targetTile )
 	{
-		if (this.m.IsRestrained)
-		{
-			this.m.IsSpent = true;
-		}
-
 		return this.attackEntity(_user, _targetTile.getEntity());
-	}
-
-	function onTurnStart()
-	{
-		this.m.IsSpent = false;
 	}
 	
 	function onUpdate( _properties )

@@ -16,6 +16,12 @@ this.legend_RSW_steadfast <- this.inherit("scripts/skills/skill", {
 		this.m.IsSerialized = false;
 	}
 
+	function onAdded()
+	{
+		this.removeSelf();
+		return;
+	}
+
 	function onTargetMissed( _skill, _targetEntity )
 	{
 		if (this.m.IsForceEnabled)

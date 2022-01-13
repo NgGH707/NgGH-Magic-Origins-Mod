@@ -70,6 +70,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 				this.Const.Perks.PerkDefs.Inspire,
 				this.Const.Perks.PerkDefs.FortifiedMind,
 				this.Const.Perks.PerkDefs.LegendMindOverBody,
+				this.Const.Perks.PerkDefs.NachoEat,
 				this.Const.Perks.PerkDefs.PattingSpec,
 				this.Const.Perks.PerkDefs.InnocentLook,
 				this.Const.Perks.PerkDefs.CharmEnemyGhoul,
@@ -80,7 +81,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 				this.Const.Perks.PerkDefs.Steadfast,
 				this.Const.Perks.PerkDefs.Rebound,
 				this.Const.Perks.PerkDefs.LoneWolf,
-				this.Const.Perks.PerkDefs.NachoEat,
+				this.Const.Perks.PerkDefs.Nacho,
 				this.Const.Perks.PerkDefs.CharmEnemyGoblin,
 				this.Const.Perks.PerkDefs.CharmEnemyOrk,
 			],
@@ -91,7 +92,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 				this.Const.Perks.PerkDefs.Berserk,
 				this.Const.Perks.PerkDefs.LastStand,
 				this.Const.Perks.PerkDefs.Nimble,
-				this.Const.Perks.PerkDefs.Nacho,
+				this.Const.Perks.PerkDefs.NachoBigTummy,
 				this.Const.Perks.PerkDefs.CharmEnemyUnhold,
 				this.Const.Perks.PerkDefs.CharmEnemySchrat,
 			],
@@ -101,6 +102,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 				this.Const.Perks.PerkDefs.PerfectFocus,
 				this.Const.Perks.PerkDefs.BattleFlow,
 				this.Const.Perks.PerkDefs.Indomitable,
+				//this.Const.Perks.PerkDefs.NachoVomiting,
 				this.Const.Perks.PerkDefs.CharmSpec,
 				this.Const.Perks.PerkDefs.GhoulBeauty,
 				this.Const.Perks.PerkDefs.CharmEnemyLindwurm,
@@ -327,7 +329,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 		if (wrongTitle)
 		{
 			this.getContainer().getActor().setTitle("The Rat Enjoyer");
-			this.getContainer().getActor().worsenMood(0.5, "I like rat. Please don\'t change it");
+			this.getContainer().getActor().worsenMood(0.5, "I love rat. Please don\'t change me title");
 		}
 
 		local actor = this.getContainer().getActor();
@@ -347,7 +349,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 			actor.setSize(newSize);
 			actor.getFlags().set("hunger", 3);
 			this.World.Flags.set("looks",  9990 + newSize);
-			this.World.Assets.updateLook( 9990 + newSize);
+			this.World.Assets.updateLook();
 			return;
 		}
 
@@ -362,7 +364,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 		if (looks != size)
 		{
 			this.World.Flags.set("looks", size);
-			this.World.Assets.updateLook(size);
+			this.World.Assets.updateLook();
 		}
 	}
 
@@ -381,6 +383,8 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 	{
 		this.character_background.onDeserialize(_in);
 		this.m.DayCount = _in.readU8();
+		this.addPerk(this.Const.Perks.PerkDefs.NachoBigTummy, 5);
+		//this.addPerk(this.Const.Perks.PerkDefs.NachoVomiting, 6);
 	}
 
 });

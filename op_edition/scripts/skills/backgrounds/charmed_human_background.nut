@@ -386,19 +386,19 @@ this.charmed_human_background <- this.inherit("scripts/skills/backgrounds/charac
 		_out.writeF32(this.m.Modifiers.Training);
 		_out.writeF32(this.m.Modifiers.Enchanting);
 
-
 		local p = [
-			"Untalented",
-			"OffendedByViolence",
 			"Combat",
+			"ConvertedCultist",
 			"Educated",
 			"Noble",
 			"Lowborn",
-			"Ranger",
-			"Druid",
-			"Crusader",
-			"Performing",
+			"OffendedByViolence",
 			"Outlaw",
+			"Performing",
+			"Scenario",
+			"Ranger",
+			"Untalented",
+			"Cultist",
 		];
 
 		for( local i = 0; i != p.len(); i = i )
@@ -407,19 +407,6 @@ this.charmed_human_background <- this.inherit("scripts/skills/backgrounds/charac
 			_out.writeBool(a);
 			i = ++i;
 		}
-
-		//_out.writeBool(this.m.IsUntalented);
-		//_out.writeBool(this.m.IsOffendedByViolence);
-		//_out.writeBool(this.m.IsCombatBackground);
-		//_out.writeBool(this.m.IsEducatedBackground);
-		//_out.writeBool(this.m.IsNoble);
-		//_out.writeBool(this.m.IsLowborn);
-		//_out.writeBool(this.m.IsRangerRecruitBackground);
-		//_out.writeBool(this.m.IsDruidRecruitBackground);
-		//_out.writeBool(this.m.IsCrusaderRecruitBackground);
-		//_out.writeBool(this.m.IsPerformingBackground);
-		//_out.writeBool(this.m.IsOutlawBackground);
-
 
 		_out.writeU8(this.m.Skills.len());
 		for( local i = 0; i != this.m.Skills.len(); i = i )
@@ -460,19 +447,19 @@ this.charmed_human_background <- this.inherit("scripts/skills/backgrounds/charac
 		this.m.Modifiers.Training = _in.readF32();
 		this.m.Modifiers.Enchanting = _in.readF32();
 
-
 		local p = [
-			"Untalented",
-			"OffendedByViolence",
 			"Combat",
+			"ConvertedCultist",
 			"Educated",
 			"Noble",
 			"Lowborn",
-			"Ranger",
-			"Druid",
-			"Crusader",
-			"Performing",
+			"OffendedByViolence",
 			"Outlaw",
+			"Performing",
+			"Scenario",
+			"Ranger",
+			"Untalented",
+			"Cultist",
 		];
 
 		for( local i = 0; i != p.len(); i = i )
@@ -484,19 +471,6 @@ this.charmed_human_background <- this.inherit("scripts/skills/backgrounds/charac
 
 			i = ++i;
 		}
-	
-		//this.m.IsUntalented = _in.readBool();
-		//this.m.IsOffendedByViolence = _in.readBool();
-		//this.m.IsCombatBackground = _in.readBool();
-		//this.m.IsEducatedBackground = _in.readBool();
-		//this.m.IsNoble = _in.readBool();
-		//this.m.IsLowborn = _in.readBool();
-		//this.m.IsRangerRecruitBackground = _in.readBool();
-		//this.m.IsDruidRecruitBackground = _in.readBool();
-		//this.m.IsCrusaderRecruitBackground = _in.readBool();
-		//this.m.IsPerformingBackground = _in.readBool();
-		//this.m.IsOutlawBackground = _in.readBool();
-		
 		
 		local numSkills = _in.readU8();
 		this.m.Skills = [];

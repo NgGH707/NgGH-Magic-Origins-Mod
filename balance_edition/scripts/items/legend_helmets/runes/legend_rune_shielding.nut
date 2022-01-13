@@ -46,7 +46,7 @@ this.legend_rune_shielding <- this.inherit("scripts/items/legend_helmets/legend_
 	function onEquip()
 	{
 		this.legend_helmet_upgrade.onEquip();
-		this.addSkill(this.new("scripts/skills/rune_sigils/legend_RSH_shielding"));
+		this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSH_shielding"));
 	}
 
 });

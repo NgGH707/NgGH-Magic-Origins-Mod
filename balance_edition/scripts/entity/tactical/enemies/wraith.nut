@@ -37,6 +37,7 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		this.getFlags().add("undead");
 		this.m.AIAgent = this.new("scripts/ai/tactical/agents/wraith_agent");
 		this.m.AIAgent.setActor(this);
+		this.m.XP = 10000;
 	}
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )
@@ -151,7 +152,7 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		b.MeleeSkill = 100;
 		b.MeleeDefense = 50;
 		b.RangedDefense = 999;
-		b.Initiative = 100;
+		b.Initiative = 0;
 		b.InitiativeForTurnOrderAdditional = -190;
 		b.Vision = 99;
 		b.Threat = 9999999;
@@ -320,7 +321,7 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 	function activateCheatPunish()
 	{
 		local b = this.m.BaseProperties;
-		b.ActionPoints = 18;
+		b.ActionPoints = 12;
 		b.HitChance = [
 			0,
 			100

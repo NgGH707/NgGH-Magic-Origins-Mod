@@ -168,7 +168,61 @@ this.getroottable().HexenHooks.hookItem <- function ()
 	//show blocked equipment slot
 	::mods_hookNewObject("ui/global/data_helper", function ( obj )
 	{
-		local oldFunction = obj.addCharacterToUIData;
+		local ws_convertEntityToUIData = obj.convertEntityToUIData;
+		obj.convertEntityToUIData = function( _entity, _activeEntity )
+		{
+			if (_entity.isSummoned() || !("getBackground" in _entity))
+			{
+				local result = {
+					id = _entity.getID(),
+					flags = {},
+					character = {},
+					stats = {},
+					activeSkills = {},
+					passiveSkills = {},
+					statusEffects = {},
+					injuries = [],
+					perks = [],
+					perkTree = [],
+					equipment = {},
+					bag = [],
+					ground = []
+				};
+				this.addFlagsToUIData(_entity, _activeEntity, result.flags);
+				this.addCharacterToUIData(_entity, result.character);
+				this.addStatsToUIData(_entity, result.stats);
+				local skills = _entity.getSkills();
+				this.addSkillsToUIData(skills.querySortedByItems(this.Const.SkillType.Active), result.activeSkills);
+				this.addSkillsToUIData(skills.querySortedByItems(this.Const.SkillType.Trait | this.Const.SkillType.PermanentInjury), result.passiveSkills);
+				local injuries = skills.query(this.Const.SkillType.TemporaryInjury | this.Const.SkillType.SemiInjury);
+
+				foreach( i in injuries )
+				{
+					result.injuries.push({
+						id = i.getID(),
+						imagePath = i.getIconColored()
+					});
+				}
+
+				this.addSkillsToUIData(skills.querySortedByItems(this.Const.SkillType.StatusEffect, this.Const.SkillType.Trait), result.passiveSkills);
+				this.addPerksToUIData(_entity, skills.query(this.Const.SkillType.Perk, true), result.perks);
+				local items = _entity.getItems();
+				this.convertPaperdollEquipmentToUIData(items, result.equipment);
+				this.convertBagItemsToUIData(items, result.bag);
+
+				if (this.Tactical.isActive() && _entity.getTile() != null)
+				{
+					this.convertItemsToUIData(_entity.getTile().Items, result.ground);
+					result.ground.push(null);
+				}
+
+				return result;
+			}
+
+			return ws_convertEntityToUIData(_entity, _activeEntity);
+		}
+
+		local ws_addCharacterToUIData = obj.addCharacterToUIData;
 		obj.addCharacterToUIData = function( _entity, _target )
 		{
 			if (_entity.isSummoned())
@@ -197,7 +251,7 @@ this.getroottable().HexenHooks.hookItem <- function ()
 				return;
 			}
 
-			oldFunction(_entity, _target);
+			ws_addCharacterToUIData(_entity, _target);
 		}
 		
 		obj.convertBlockedSlotsToUIData <- function( _items, _target )
@@ -215,10 +269,10 @@ this.getroottable().HexenHooks.hookItem <- function ()
 			_target.ammo <- _items.isThisSlotBlocked(this.Const.ItemSlot.Ammo);
 		}
 
-		local oldFunction = obj.convertEntityToUIData;
+		local ws_convertEntityToUIData = obj.convertEntityToUIData;
 		obj.convertEntityToUIData = function( _entity, _activeEntity )
 		{
-			local result = oldFunction(_entity, _activeEntity);
+			local result = ws_convertEntityToUIData(_entity, _activeEntity);
 			local items = _entity.getItems();
 
 			if (items != null && this.isKindOf(items, "nggh707_item_container"))

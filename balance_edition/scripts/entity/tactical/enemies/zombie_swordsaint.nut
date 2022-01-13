@@ -25,7 +25,7 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 		b.Stamina = 200;
 		b.MeleeSkill = 999;
 		b.MeleeSkillMult = 999;
-		b.RangedSkill = 0;
+		b.RangedSkill = -25;
 		b.MeleeDefense = 999;
 		b.MeleeDefenseMult = 999;
 		b.RangedDefense = 0;
@@ -46,19 +46,18 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 		b.IsRiposting = true;
 		b.DamageMinimum = 10;
 		b.DamageDirectMult = 1.25;
-		b.DamageReceivedMeleeMult = 0.25;
-		b.DamageReceivedRangedMult = 0.67;
 		b.ThresholdToInflictInjuryMult = 0.1;
 		b.TargetAttractionMult = 5.0;
 		b.FatalityChanceMult = 10000.0;
+		//b.DamageReceivedRegularMult *= 0.9;
 		b.MoraleCheckBraveryMult[this.Const.MoraleCheckType.MentalAttack] = 10000.0;
 		b.DamageAgainstMult = [
 			1.0,
 			1000.0
 		];
 		b.HitChance = [
-			67,
-			33
+			90,
+			10
 		];
 		
 		this.m.ActionPoints = b.ActionPoints;
@@ -66,12 +65,10 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 		this.m.CurrentProperties = clone b;
 		this.m.ActionPointCosts = this.Const.SameMovementAPCost;
 		this.m.FatigueCosts = this.Const.DefaultMovementFatigueCost;
-		this.m.MaxTraversibleLevels = 4;
+		this.m.MaxTraversibleLevels = 2;
 		
 		if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
 		{
-			b.ActionPoints += 9;
-			this.m.Hitpoints = b.Hitpoints * 2;
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_return_favor"));
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_berserk"));
 		}
@@ -79,12 +76,10 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_crippling_strikes"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_coup_de_grace"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_anticipation"));
-		this.m.Skills.add(this.new("scripts/skills/perks/perk_fast_adaption"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_battle_flow"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_duelist"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_steel_brow"));
-		this.m.Skills.add(this.new("scripts/skills/perks/perk_full_force"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_feint"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_pathfinder"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_head_hunter"));
@@ -109,7 +104,9 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 		if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Body) == null)
 		{
 			local a = this.new("scripts/items/armor/noble_mail_armor");
+			a.m.IsDroppedAsLoot = false;
 			local upgrade = this.new("scripts/items/armor_upgrades/lindwurm_scales_upgrade");
+			upgrade.m.IsDroppedAsLoot = false;
 			this.m.Items.equip(a);
 			a.setUpgrade(upgrade);
 		}
@@ -117,6 +114,7 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 		if (this.m.Items.getItemAtSlot(this.Const.ItemSlot.Head) == null)
 		{
 			local h = this.new("scripts/items/helmets/greatsword_faction_helm");
+			h.m.IsDroppedAsLoot = false;
 			this.m.Items.equip(h);
 		}
 	}
@@ -146,7 +144,6 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 		}
 		
 		this.getSprite("miniboss").setBrush("bust_miniboss"); 
-		this.m.Skills.add(this.new("scripts/skills/perks/perk_hold_out"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_nine_lives"));
 		return true;
 	}

@@ -16,6 +16,12 @@ this.legend_RSS_brimstone <- this.inherit("scripts/skills/skill", {
 		this.m.IsSerialized = false;
 	}
 
+	function onAdded()
+	{
+		this.removeSelf();
+		return;
+	}
+
 	function onAfterUpdate( _properties )
 	{
 		if (this.m.IsForceEnabled)

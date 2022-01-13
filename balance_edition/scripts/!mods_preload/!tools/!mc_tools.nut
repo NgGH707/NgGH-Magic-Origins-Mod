@@ -174,7 +174,7 @@ local inOverwriteCustomList = [];
             }
             else
             {
-                this.logError("Please add 'PerkTree' with a perk tree, check config/zz_hexen_defs_perk.nut for reference");
+                this.logError("Please add 'PerkTree' with a perk tree, check !mods_preload/mod_nggh_hexen_origin_new_perk_defs for reference");
             }
         }
 
@@ -267,7 +267,7 @@ local inOverwriteCustomList = [];
             continue;
         }
 
-        if (table.rawget("Type") <= gt.Const.CharmedSlave.Data.len())
+        if (table.rawget("Type") <= gt.Const.CharmedSlave.Data.len() - 1)
         {
             b.push(table);
             continue;
@@ -286,7 +286,7 @@ local inOverwriteCustomList = [];
         a.push(table);
     }
 
-    if (a.len() == 0 && b.len() && c.len())
+    if (a.len() == 0 && b.len() == 0 && c.len() == 0)
     {
         return this.logError("All entries are invalid");
     }

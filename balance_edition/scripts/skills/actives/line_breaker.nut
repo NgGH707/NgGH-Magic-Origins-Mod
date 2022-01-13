@@ -33,6 +33,17 @@ this.line_breaker <- this.inherit("scripts/skills/skill", {
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
 	}
+
+	function onAdded()
+	{
+		if (!this.getContainer().getActor().isPlayerControlled())
+		{
+			return;
+		}
+
+		local AI = this.getContainer().getActor().getAIAgent();
+		AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_line_breaker"));
+	}
 	
 	function getTooltip()
 	{

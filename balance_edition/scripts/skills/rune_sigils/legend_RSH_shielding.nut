@@ -92,6 +92,9 @@ this.legend_RSH_shielding <- this.inherit("scripts/skills/skill", {
 
 	function onAdded()
 	{
+		this.removeSelf();
+		return;
+
 		if (this.getContainer().getActor().getFlags().getAsInt("mc_mage") == this.Const.MC_Job.BattleMage)
 		{
 			this.m.HitpointsMax = 125;

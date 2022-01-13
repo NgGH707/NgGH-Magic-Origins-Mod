@@ -223,27 +223,6 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 	//Hook to help non-human have more suitable health recovery
 	::mods_hookNewObjectOnce("states/world/asset_manager", function ( obj )
 	{	
-		local updateLook = obj.updateLook;
-		obj.updateLook = function( _updateTo = -1 )
-		{
-			if (_updateTo >= 9000 || this.m.Look >= 9000)
-			{
-				if (_updateTo != -1)
-				{
-					this.m.Look = _updateTo;
-				}
-
-				if (this.World.State.getPlayer() != null)
-				{
-					this.World.State.getPlayer().getSprite("body").setBrush("figure_player_" + this.m.Look);
-				}
-				
-				return;
-			}
-
-			updateLook(_updateTo);
-		}
-		
 		local update = obj.update;
 		obj.update = function( _worldState )
 		{

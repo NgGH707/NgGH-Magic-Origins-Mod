@@ -16,6 +16,12 @@ this.legend_RSW_unstable <- this.inherit("scripts/skills/skill", {
 		this.m.IsSerialized = false;
 	}
 
+	function onAdded()
+	{
+		this.removeSelf();
+		return;
+	}
+
 	function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )
 	{
 		if (_targetEntity == null || _skill == null)

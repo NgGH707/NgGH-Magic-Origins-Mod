@@ -16,6 +16,12 @@ this.legend_RSH_night_vision <- this.inherit("scripts/skills/skill", {
 		this.m.IsSerialized = false;
 	}
 
+	function onAdded()
+	{
+		this.removeSelf();
+		return;
+	}
+
 	function onUpdate( _properties )
 	{
 		if (this.m.IsForceEnabled)

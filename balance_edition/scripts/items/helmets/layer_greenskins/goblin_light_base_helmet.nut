@@ -32,13 +32,6 @@ this.goblin_light_base_helmet <- this.inherit("scripts/items/legend_helmets/lege
 
 	function getLootLayers()
 	{
-		if (this.Math.rand(1, 10) <= 3 && ("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getOrigin() != null && this.World.Assets.getOrigin().getID() == "scenario.hexen")
-		{
-			return [
-				this
-			];
-		}
-		
 		local L = [
 			this.new("scripts/items/legend_helmets/hood/legend_helmet_cloth_cap")
 		];

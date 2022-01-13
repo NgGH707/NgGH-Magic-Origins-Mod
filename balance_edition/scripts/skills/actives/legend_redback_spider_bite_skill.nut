@@ -59,8 +59,8 @@ this.legend_redback_spider_bite_skill <- this.inherit("scripts/skills/skill", {
 		
 		if (this.m.Container.getActor().isPlayerControlled())
 		{
-			_properties.DamageRegularMin += 10;
-			_properties.DamageRegularMax += 15;
+			_properties.DamageRegularMin += 5;
+			_properties.DamageRegularMax += 10;
 		}
 	}
 	

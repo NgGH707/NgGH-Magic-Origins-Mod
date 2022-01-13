@@ -56,7 +56,7 @@ this.web_skill <- this.inherit("scripts/skills/skill", {
 					id = 6,
 					type = "text",
 					icon = "ui/tooltips/warning.png",
-					text = "[color=" + this.Const.UI.Color.PositiveValue + "]Can not be used in " + this.m.Cooldown + " turn(s)[/color]"
+					text = "[color=" + this.Const.UI.Color.NegativeValue + "]Can not be used in " + this.m.Cooldown + " turn(s)[/color]"
 				}
 			]);
 		}

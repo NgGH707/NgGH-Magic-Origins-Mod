@@ -20,6 +20,9 @@ this.legend_RSA_diehard <- this.inherit("scripts/skills/skill", {
 
 	function onAdded()
 	{
+		this.removeSelf();
+		return;
+
 		if (this.m.IsForceEnabled)
 		{
 		}

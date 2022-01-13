@@ -106,7 +106,7 @@ this.getroottable().Nggh_MagicConcept.hookAddRunes <- function ()
 				break;
 
 			case 106:
-				this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSW_brimstone"));
+				this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSS_brimstone"));
 				break;
 
 			case 107:

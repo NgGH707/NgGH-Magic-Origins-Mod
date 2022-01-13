@@ -1,5 +1,7 @@
 this.geomancer_trio_scenario <- this.inherit("scripts/scenarios/world/starting_scenario", {
-	m = {},
+	m = {
+		Look = 9998,
+	},
 	function create()
 	{
 		this.m.ID = "scenario.geomancer_trio";
@@ -142,8 +144,12 @@ this.geomancer_trio_scenario <- this.inherit("scripts/scenarios/world/starting_s
 		this.starting_scenario.onInit();
 		this.World.Assets.m.ExtraLootChance += 33;
 		this.World.Assets.m.RosterSizeAdditionalMin = 3,
-		this.World.Assets.m.RosterSizeAdditionalMax = 5,
-		this.World.Assets.updateLook(9998);
+		this.World.Assets.m.RosterSizeAdditionalMax = 5;
+	}
+
+	function updateLook()
+	{
+		this.World.State.getPlayer().getSprite("body").setBrush("figure_player_" + this.m.Look);
 	}
 
 	function onHiredByScenario( bro )

@@ -242,11 +242,11 @@ this.sleep_skill <- this.inherit("scripts/skills/skill", {
 		local attempts = _targetEntity.getFlags().getAsInt("resist_sleep");
 		local bonus = (this.m.MaxRange + 1 - _distance) * (1.0 + 0.1 * attempts);
 		local _difficulty = 0;
-		_difficulty += 35 * bonus + (this.getContainer().hasSkill("perk.mastery_sleep") ? this.Math.max(1, this.Math.floor(properties.getBravery() * 0.1)) : 0);
+		_difficulty -= 35 * bonus + (this.getContainer().hasSkill("perk.mastery_sleep") ? this.Math.max(1, this.Math.floor(properties.getBravery() * 0.1)) : 0);
 		
 		if (_user.isPlayerControlled())
 		{
-			_difficulty -= 25;
+			_difficulty += 25;
 		}
 
 		_difficulty *= defenderProperties.MoraleEffectMult;
@@ -287,7 +287,7 @@ this.sleep_skill <- this.inherit("scripts/skills/skill", {
 		local chance = bravery + _difficulty;
 		chance -= threatBonus + numAlliesAdjacent * this.Const.Morale.AlliesAdjacentMult;
 		chance += numOpponentsAdjacent * this.Const.Morale.OpponentsAdjacentMult;
-		chance = this.Math.minf(95, this.Math.floor(chance));
+		chance = this.Math.min(95, this.Math.floor(chance));
 
 		if (chance <= 0)
 		{

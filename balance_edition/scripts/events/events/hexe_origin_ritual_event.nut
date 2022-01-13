@@ -89,7 +89,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 					cursed.removeSelf();
 					this.World.Flags.remove("isExposed");
 					this.World.Flags.set("looks", this.Math.rand(9995, 9997));
-					this.World.Assets.updateLook(this.World.Flags.getAsInt("looks"));
+					this.World.Assets.updateLook();
 					return;
 				}
 				else
@@ -115,7 +115,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 						cursed.removeSelf();
 						this.World.Flags.remove("isExposed");
 						this.World.Flags.set("looks", this.Math.rand(9995, 9997));
-						this.World.Assets.updateLook(this.World.Flags.getAsInt("looks"));
+						this.World.Assets.updateLook();
 						return;
 					}
 				}
@@ -197,7 +197,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 				FM.makeNoblesUnfriendlyToPlayer();
 				FM.makeSettlementsUnfriendlyToPlayer();
 				this.World.Flags.add("isExposed", true);
-				this.World.Assets.updateLook(9994);
+				this.World.Assets.updateLook();
 			}
 
 		});

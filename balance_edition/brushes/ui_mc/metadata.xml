@@ -95,6 +95,7 @@
   <sprite id="active_mc_10" ic="FF2E326F" img="skills\active_mc_10.png" />
   <sprite id="active_mc_11" ic="FF2E326F" img="skills\active_mc_11.png" />
   
+  <sprite id="active_nacho_vomit" ic="FF2E326F" img="skills\active_nacho_vomit.png" />
   <sprite id="active_alp_hellfire" ic="FF2E326F" img="skills\active_alp_hellfire.png" />
   <sprite id="active_mind_break" ic="FF2E326F" img="skills\active_mind_break.png" />
   <sprite id="active_spawn_spider" ic="FF2E326F" img="skills\active_spawn_spider.png" />

@@ -17,7 +17,7 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "actives.serpent_hook";
 		this.m.Name = "Drag";
-		this.m.Description = "Constrict a target and drag them closer to you. Will break any defensive stance if that target had before being dragged.";
+		this.m.Description = "Constrict a target and drag them closer to you. Will break any defensive stance that target had before being dragged.";
 		this.m.Icon = "skills/active_192.png";
 		this.m.IconDisabled = "skills/active_192_sw.png";
 		this.m.Overlay = "active_192";
@@ -396,7 +396,7 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 		if (_data.User.getCurrentProperties().IsSpecializedInShields && !_data.Target.isAlliedWith(_data.User))
 		{
 			local target = _data.Target;
-			local chance = this.Math.max(10, this.Math.floor(_data.User.getCurrentProperties().getMeleeSkill() * 0.5));
+			local chance = this.Math.max(10, this.Math.floor(_data.User.getCurrentProperties().getMeleeSkill() * 0.45));
 			
 			if (!target.getCurrentProperties().IsStunned && !target.getCurrentProperties().IsImmuneToDisarm && this.Math.rand(1, 100) <= chance)
 			{
@@ -417,6 +417,9 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 			this.Tactical.getHighlighter().addOverlayIcon("mortar_target_02", pulledTo, pulledTo.Pos.X, pulledTo.Pos.Y);
 		}
 	}
+
+///////////////////////////////////////////////////////////
+// start of smart drag code
 
 	function smartFilter( _userTile, _targetTile , _tilesArray ) 
 	{
@@ -476,6 +479,10 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 								{
 									score += this.scoreTheEntity(entity);
 								}
+								else 
+								{
+									score -= 4;
+								}
 								
 								score += 2
 							}
@@ -501,7 +508,7 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 
 		    	if (t.IsHidingEntity)
 		    	{
-		    		score += 5;
+		    		score += 3;
 		    	}
 
 				for( local i = 0; i != 6; i = ++i )
@@ -531,7 +538,7 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 							{
 								if (entity.getCurrentProperties().IsStunned)
 								{
-									score -= 4;
+									score += 1;
 									continue;
 								}
 
@@ -566,26 +573,61 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 	function scoreTheEntity( _entity ) 
 	{
 	    local score = 0;
-	    local mult = _entity.isAlliedWith(this.getContainer().getActor()) ? _entity.getHitpointsPct() : 1;
+	    local isAllied = _entity.isAlliedWith(this.getContainer().getActor());
+	    local mult = 1.0;
+
+	    if (isAllied)
+	    {
+	    	mult = _entity.getHitpointsPct();
+
+	    	if (_entity.getHitpointsMax() < 250)
+	    	{
+	    		if (mult <= 0.5)
+	    		{
+	    			mult *= 0.67;
+	    		}
+	    	}
+	    	else
+	    	{
+	    		if (mult > 0.5)
+	    		{
+	    			mult *= 1.25;
+	    		}
+	    	}
+	    }
+
 	    local meleeSkill =  _entity.getCurrentProperties().getMeleeSkill();
 	    local meleeDefense = _entity.getCurrentProperties().getMeleeDefense();
-	    
-	    score = score + meleeSkill * 0.01;
-		score = score + meleeDefense * 0.01;
 
 		if (!_entity.isTurnDone() && _entity.getActionPoints() >= 5)
 		{
 			score += 2;
 		}
 
-		if (meleeSkill > 85)
+		if (meleeSkill >= 85)
 		{
 			score += 1;
 		}
+		else if (meleeSkill >= 50)
+	    {
+			score = score + meleeDefense * 0.02;
+		}
+		else
+		{
+			score = score - meleeDefense * 0.02;
+		}
 
-		if (meleeDefense > 40)
+		if (meleeDefense >= 50)
 		{
 			score += 1;
+		}
+		else if (meleeDefense >= 30)
+	    {
+			score = score + meleeDefense * 0.02;
+		}
+		else
+		{
+			score = score - meleeDefense * 0.02;
 		}
 
 		score = _entity.getMoraleState() == 0 ? 0 : score + _entity.getMoraleState() * 0.1;
@@ -593,16 +635,16 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 
 		if (_entity.isArmedWithRangedWeapon())
 		{
-			score = score + (_entity.isAlliedWith(this.getContainer().getActor()) ? -5 : 5);
+			score = score + (isAllied ? -10 : 5);
 		}
 
-		if (_entity.isAlliedWith(this.getContainer().getActor()) && _entity.getCurrentProperties().TargetAttractionMult > 1.0)
+		if (isAllied && _entity.getCurrentProperties().TargetAttractionMult > 1.0)
 		{
-			score = score - _entity.getCurrentProperties().TargetAttractionMult * 1.15; 
+			score = score - _entity.getCurrentProperties().TargetAttractionMult * 1.25; 
 		}
 
 		local injuries = _entity.getSkills().query(this.Const.SkillType.Injury);
-		score = score - (_entity.isAlliedWith(this.getContainer().getActor()) ? 0.75 * injuries.len() : 0);
+		score = score - (isAllied ? 1.35 * injuries.len() : 0);
 
 		return score;
 	}
@@ -653,6 +695,9 @@ this.serpent_hook_skill <- this.inherit("scripts/skills/skill", {
 
 		return 0;
 	}
+
+// end of smart drag code
+///////////////////////////////////////////////////////////
 
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{

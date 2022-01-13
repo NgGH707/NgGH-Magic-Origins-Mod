@@ -6,7 +6,7 @@ this.true_possessed_undead_effect <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "effects.possessed_undead";
-		this.m.Name = "Possessed";
+		this.m.Name = "Masterfully Possessed";
 		this.m.Icon = "skills/status_effect_69.png";
 		this.m.IconMini = "status_effect_69_mini";
 		this.m.Overlay = "status_effect_69";
@@ -32,7 +32,6 @@ this.true_possessed_undead_effect <- this.inherit("scripts/skills/skill", {
 		_properties.RangedDefense += 15;
 		_properties.DamageReceivedTotalMult *= 0.85;
 		_properties.IsImmuneToRoot = true;
-		_properties.IsImmuneToDisarm = true;
 		_properties.IsImmuneToSurrounding = true;
 	}
 

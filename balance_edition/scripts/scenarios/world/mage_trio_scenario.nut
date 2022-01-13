@@ -1,5 +1,7 @@
 this.mage_trio_scenario <- this.inherit("scripts/scenarios/world/starting_scenario", {
-	m = {},
+	m = {
+		Look = 9999,
+	},
 	function create()
 	{
 		this.m.ID = "scenario.mage_trio";
@@ -165,7 +167,11 @@ this.mage_trio_scenario <- this.inherit("scripts/scenarios/world/starting_scenar
 		this.starting_scenario.onInit();
 		this.World.Assets.m.ChampionChanceAdditional += 3;
 		this.World.Assets.m.XPMult *= 1.15;
-		this.World.Assets.updateLook(9999);
+	}
+
+	function updateLook()
+	{
+		this.World.State.getPlayer().getSprite("body").setBrush("figure_player_" + this.m.Look);
 	}
 
 	function onUpdateHiringRoster( _roster )

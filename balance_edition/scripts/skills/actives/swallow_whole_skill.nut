@@ -2,11 +2,21 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 	m = {
 		SwallowedEntity = null,
 		IsArena = false,
+		Cooldown = 0
 	},
-	
+	function setCooldown()
+	{
+		this.m.Cooldown = 3;
+	}
+
 	function getSwallowedEntity()
 	{
 		return this.m.SwallowedEntity;
+	}
+
+	function isFull()
+	{
+		return this.m.SwallowedEntity != null;
 	}
 
 	function create()
@@ -44,8 +54,7 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 	
 	function getTooltip()
 	{
-		local p = this.getContainer().getActor().getCurrentProperties();
-		return [
+		local ret = [
 			{
 				id = 1,
 				type = "title",
@@ -74,16 +83,41 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Can not swallow something bigger than you[/color]"
 			}
 		];
+
+		if (this.m.Cooldown != 0)
+		{
+			ret.extend([
+				{
+					id = 6,
+					type = "text",
+					icon = "ui/tooltips/warning.png",
+					text = "[color=" + this.Const.UI.Color.NegativeValue + "]Can not be used in " + this.m.Cooldown + " turn(s)[/color]"
+				}
+			]);
+		}
+
+		return ret;
 	}
 
 	function isUsable()
 	{
-		return this.skill.isUsable() && this.m.SwallowedEntity == null;
+		return this.skill.isUsable() && !this.isFull() && this.m.Cooldown == 0;
 	}
 	
 	function isHidden()
 	{
 		return this.getContainer().getActor().getSize() != 3 || this.skill.isHidden();
+	}
+
+	function onTurnStart()
+	{
+		if (this.m.SwallowedEntity != null)
+		{
+			local hp = this.Math.maxf(0.05, this.m.SwallowedEntity.getHitpointsPct() - 0.05);
+			this.m.SwallowedEntity.setHitpointsPct(hp);
+		}
+
+		this.m.Cooldown = this.Math.max(0, this.m.Cooldown - 1);
 	}
 
 	function onVerifyTarget( _originTile, _targetTile )
@@ -120,19 +154,16 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 		return true;
 	}
 
-	function onTurnStart()
-	{
-		if (this.m.SwallowedEntity != null)
-		{
-			this.m.SwallowedEntity.setHitpoints(this.Math.maxf(5, this.m.SwallowedEntity.getHitpoints() - 10));
-		}
-	}
-
 	function onUse( _user, _targetTile )
 	{
 		local target = _targetTile.getEntity();
 
-		if (!_user.isHiddenToPlayer() && (_targetTile.IsVisibleForPlayer || this.knockToTile.IsVisibleForPlayer))
+		if (typeof target == "instance")
+		{
+			target = target.get();
+		}
+
+		if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
 		{
 			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " devours " + this.Const.UI.getColorizedEntityName(target));
 		}
@@ -149,16 +180,14 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 		
 		this.Tactical.getTemporaryRoster().add(target);
 		this.Tactical.TurnSequenceBar.removeEntity(target);
-
-		if (!target.hasSprite("dirt"))
-		{
-			local slime = target.addSprite("dirt");
-			slime.setHorizontalFlipping(!target.isAlliedWithPlayer());
-			slime.Visible = false;
-		}
-		
 		this.m.SwallowedEntity = target;
 		this.m.SwallowedEntity.getFlags().set("Devoured", true);
+
+		if (!this.Tactical.State.isAutoRetreat() && !target.isPlayerControlled())
+		{
+			this.Tactical.Entities.setLastCombatResult(this.Const.Tactical.CombatResult.EnemyDestroyed);
+		}
+
 		target.removeFromMap();
 		_user.getSprite("body").setBrush("bust_ghoul_body_04");
 		_user.getSprite("injury").setBrush("bust_ghoul_04_injured");
@@ -166,6 +195,7 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 		_user.m.Sound[this.Const.Sound.ActorEvent.Death] = _user.m.Sound[this.Const.Sound.ActorEvent.Other2];
 		local effect = this.new("scripts/skills/effects/swallowed_whole_effect");
 		effect.setName(target.getName());
+		effect.setLink(this);
 		_user.getSkills().add(effect);
 
 		if (this.m.SoundOnHit.len() != 0)
@@ -173,13 +203,19 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 			this.Sound.play(this.m.SoundOnHit[this.Math.rand(0, this.m.SoundOnHit.len() - 1)], this.Const.Sound.Volume.Skill, _user.getPos());
 		}
 
+		local skill = this.getSkills().getSkillByID("actives.nacho_vomiting");
+
+		if (skill != null)
+		{
+			skill.setCooldown();
+		}
+
 		return true;
 	}
 	
 	function onCombatStarted()
 	{
-		local isArena = this.Tactical.State.m.StrategicProperties != null && this.Tactical.State.m.StrategicProperties.IsArenaMode;
-		this.m.IsArena = isArena;
+		this.m.IsArena = this.Tactical.State.m.StrategicProperties != null && this.Tactical.State.m.StrategicProperties.IsArenaMode;
 	}
 	
 	function onCombatFinished()
@@ -202,6 +238,7 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 		
 		this.m.SwallowedEntity = null;
 		this.m.IsArena = false;
+		this.m.Cooldown = 0;
 	}
 	
 	function onSwallow( _user )

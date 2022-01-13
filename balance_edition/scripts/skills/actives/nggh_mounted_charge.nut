@@ -397,6 +397,16 @@ this.nggh_mounted_charge <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
+	function getHitchance( _targetEntity )
+	{
+		if (!_targetEntity.isAttackable())
+		{
+			return 0;
+		}
+
+		return 95;
+	}
+
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
 		if (this.m.IsCharging)

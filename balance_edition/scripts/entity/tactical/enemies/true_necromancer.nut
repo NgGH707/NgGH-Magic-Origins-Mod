@@ -4,9 +4,9 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 	{
 		this.m.Type = this.Const.EntityType.Necromancer;
 		this.m.BloodType = this.Const.BloodType.Red;
-		this.m.XP = 1000000;
+		this.m.XP = 250000;
 		this.human.create();
-		this.m.Name = "NgGH707";
+		this.m.Name = "NgGH the True Necromancer";
 		this.m.Faces = ["bust_head_necro_01"];
 		this.m.Hairs = [21];
 		this.m.HairColors = ["grey"];
@@ -30,21 +30,19 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		b.Hitpoints = 100;
 		b.Bravery = 989;
 		b.Stamina = 250;
-		b.MeleeSkill = 200;
+		b.MeleeSkill = 100;
 		b.RangedSkill = 999;
-		b.MeleeDefense = 50;
-		b.RangedDefense = 50;
+		b.MeleeDefense = 30;
+		b.RangedDefense = 30;
 		b.Initiative = 100;
 		b.InitiativeForTurnOrderAdditional = -999;
 		b.DamageMinimum = 25;
 		b.MoraleEffectMult = 0.0;
 		b.Vision = 99;
 		b.Threat = 50;
-		b.DamageReceivedTotalMult = 0.1;
+		b.DamageReceivedRegularMult = 0.33;
 		b.FatigueReceivedPerHitMult = 0.0;
-		b.FatigueDealtPerHitMult = 10.0;
 		b.ThresholdToReceiveInjuryMult = 1000.0;
-		b.ThresholdToInflictInjuryMult = 0.01;
 		b.TargetAttractionMult = 3.0;
 		b.FatalityChanceMult = 10000.0;
 		b.IsImmuneToKnockBackAndGrab = true;
@@ -56,7 +54,6 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		b.IsImmuneToOverwhelm = true;
 		b.IsImmuneToZoneOfControl = true;
 		b.IsImmuneToSurrounding = true;
-		b.IsImmuneToDamageReflection = true;
 		b.IsImmuneToFire = true;
 		b.IsAffectedByRain = false;
 		b.IsAffectedByNight = false;
@@ -102,21 +99,6 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		this.actor.onTurnResumed();
 	}
 	
-	function onDamageReceived( _attacker, _skill, _hitInfo )
-	{
-		local hitInfo = clone _hitInfo;
-		
-		if (_attacker != null && _attacker.isAlive() && _attacker.getHitpoints() > 0 && _attacker.getID() != this.getID())
-		{
-			this.Tactical.spawnSpriteEffect("effect_skull_02", this.createColor("#ffffff"), _attacker.getTile(), 0, 40, 1.0, 0.25, 0, 400, 300);
-			hitInfo.DamageRegular *= 0.5;
-			hitInfo.DamageMinimum = 10;
-			_attacker.onDamageReceived(this, _skill, hitInfo);
-		}
-
-		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
-	}
-
 	function onDeath( _killer, _skill, _tile, _fatalityType )
 	{
 		if (!this.Tactical.State.isScenarioMode() && _killer != null && _killer.isPlayerControlled())
@@ -137,12 +119,15 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 	function assignRandomEquipment()
 	{
 		local skull = this.new("scripts/items/weapons/nggh707_skull_of_the_dead");
+		skull.m.IsDroppedAsLoot = false;
 		this.m.Items.equip(skull);
 		
 		local helmet = this.new("scripts/items/helmets/nggh707_headgear");
+		helmet.m.IsDroppedAsLoot = false;
 		this.m.Items.equip(helmet);
 		
 		local armor = this.new("scripts/items/armor/named/named_noble_mail_armor");
+		armor.m.IsDroppedAsLoot = false;
 		armor.m.StaminaModifier = -15;
 		this.m.Items.equip(armor);
 	}
