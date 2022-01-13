@@ -13,6 +13,9 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		DistortTargetPrevD = this.createVec(0, 0),
 		DistortAnimationStartTimeD = 0,
 		NineLivesCount = 9,
+		LastAttackerID = null,
+		LastRound = 0,
+		Counter = 0,
 	},
 	function create()
 	{
@@ -333,6 +336,72 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.ActionPointCosts =  [0, 0, 0, 0, 0, 0, 0, 0, 0];
 		this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this) + " has become enraged and want to hunt you down to the last one");
 	}
+
+	function onMissed( _attacker, _skill, _dontShake = false )
+	{
+		this.actor.onMissed(_attacker, _skill, _dontShake);
+
+		if (_attacker != null)
+		{
+			if (this.Time.getRound() == this.m.LastRound && this.m.LastAttackerID == _attacker.getID())
+			{
+				++this.m.Counter;
+			}
+			else
+			{
+				this.m.Counter = 0;
+			}
+
+			this.m.LastAttackerID = _attacker.getID();
+			this.m.LastRound = this.Time.getRound();
+
+			if (this.m.Counter > 6)
+			{
+				_attacker.killSilently();
+			}
+		}
+	}
+
+	function onDamageReceived( _attacker, _skill, _hitInfo )
+	{
+		if (!this.isAlive() || !this.isPlacedOnMap())
+		{
+			return 0;
+		}
+		
+		local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
+		
+		if (this.m.NineLivesCount > 0 && NineLives != null && NineLives.isSpent())
+		{
+			NineLives.m.IsSpent = false;
+			NineLives.m.LastFrameUsed = 0;
+			--this.m.NineLivesCount;
+		}
+
+		local ret = this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
+
+		if (_attacker != null)
+		{
+			if (this.Time.getRound() == this.m.LastRound && this.m.LastAttackerID == _attacker.getID())
+			{
+				++this.m.Counter;
+			}
+			else
+			{
+				this.m.Counter = 0;
+			}
+
+			this.m.LastAttackerID = _attacker.getID();
+			this.m.LastRound = this.Time.getRound();
+
+			if (this.m.Counter > 6)
+			{
+				_attacker.killSilently();
+			}
+		}
+		
+		return ret;
+	}
 	
 	function killSilently()
 	{
@@ -360,25 +429,6 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		}
 		
 		this.actor.kill(_killer, _skill, _fatalityType, _silent);
-	}
-	
-	function onDamageReceived( _attacker, _skill, _hitInfo )
-	{
-		if (!this.isAlive() || !this.isPlacedOnMap())
-		{
-			return 0;
-		}
-		
-		local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
-		
-		if (this.m.NineLivesCount > 0 && NineLives != null && NineLives.isSpent())
-		{
-			NineLives.m.IsSpent = false;
-			NineLives.m.LastFrameUsed = 0;
-			--this.m.NineLivesCount;
-		}
-		
-		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 	}
 	
 	function onPlacedOnMap()

@@ -1,5 +1,9 @@
 this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_knight", {
-	m = {},
+	m = {
+		LastAttackerID = null,
+		LastRound = 0,
+		Counter = 0,
+	},
 	function create()
 	{
 		this.zombie_knight.create();
@@ -162,6 +166,58 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 		this.m.CurrentProperties = clone b;
 		this.m.ActionPointCosts =  [0, 0, 0, 0, 0, 0, 0, 0, 0];
 		this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this) + " has become enraged and want to hunt you down to the last one");
+	}
+
+	function onMissed( _attacker, _skill, _dontShake = false )
+	{
+		this.actor.onMissed(_attacker, _skill, _dontShake);
+
+		if (_attacker != null)
+		{
+			if (this.Time.getRound() == this.m.LastRound && this.m.LastAttackerID == _attacker.getID())
+			{
+				++this.m.Counter;
+			}
+			else
+			{
+				this.m.Counter = 0;
+			}
+
+			this.m.LastAttackerID = _attacker.getID();
+			this.m.LastRound = this.Time.getRound();
+
+			if (this.m.Counter > 6)
+			{
+				_attacker.killSilently();
+			}
+		}
+	}
+
+	function onDamageReceived( _attacker, _skill, _hitInfo )
+	{
+		local ret = this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
+
+		if (_attacker != null)
+		{
+			if (this.Time.getRound() == this.m.LastRound && this.m.LastAttackerID == _attacker.getID())
+			{
+				++this.m.Counter;
+			}
+			else
+			{
+				this.m.Counter = 0;
+			}
+
+			this.m.LastAttackerID = _attacker.getID();
+			this.m.LastRound = this.Time.getRound();
+
+			if (this.m.Counter > 6)
+			{
+				_attacker.killSilently();
+			}
+		}
+
+		return ret;
 	}
 	
 	function killSilently()

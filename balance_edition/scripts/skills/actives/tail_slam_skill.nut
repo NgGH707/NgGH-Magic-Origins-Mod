@@ -237,7 +237,7 @@ this.tail_slam_skill <- this.inherit("scripts/skills/skill", {
 		{
 			local nextTile = ownTile.getNextTile(nextDir);
 			local success = false;
-			local canBeHit = this.canBeHit(_user, nextTile.getEntity());
+			local canBeHit = nextTile.IsOccupiedByActor && this.canBeHit(_user, nextTile.getEntity());
 
 			if (nextTile.IsOccupiedByActor && nextTile.getEntity().isAttackable() && this.Math.abs(nextTile.Level - ownTile.Level) <= 1 && canBeHit)
 			{
@@ -263,7 +263,7 @@ this.tail_slam_skill <- this.inherit("scripts/skills/skill", {
 		{
 			local nextTile = ownTile.getNextTile(nextDir);
 			local success = false;
-			local canBeHit = this.canBeHit(_user, nextTile.getEntity());
+			local canBeHit = nextTile.IsOccupiedByActor && this.canBeHit(_user, nextTile.getEntity());
 
 			if (nextTile.IsOccupiedByActor && nextTile.getEntity().isAttackable() && this.Math.abs(nextTile.Level - ownTile.Level) <= 1 && canBeHit)
 			{

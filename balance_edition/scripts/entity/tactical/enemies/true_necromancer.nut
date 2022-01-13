@@ -1,5 +1,9 @@
 this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
-	m = {},
+	m = {	
+		LastAttackerID = null,
+		LastRound = 0,
+		Counter = 0,
+	},
 	function create()
 	{
 		this.m.Type = this.Const.EntityType.Necromancer;
@@ -97,6 +101,58 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 	{
 		this.Tactical.spawnSpriteEffect("necro_quote_" + this.Math.rand(1, 6), this.createColor("#ffffff"), this.getTile(), this.Const.Tactical.Settings.SkillOverlayOffsetX, 160, this.Const.Tactical.Settings.SkillOverlayScale, this.Const.Tactical.Settings.SkillOverlayScale, this.Const.Tactical.Settings.SkillOverlayStayDuration, 0, this.Const.Tactical.Settings.SkillOverlayFadeDuration);
 		this.actor.onTurnResumed();
+	}
+
+	function onMissed( _attacker, _skill, _dontShake = false )
+	{
+		this.actor.onMissed(_attacker, _skill, _dontShake);
+
+		if (_attacker != null)
+		{
+			if (this.Time.getRound() == this.m.LastRound && this.m.LastAttackerID == _attacker.getID())
+			{
+				++this.m.Counter;
+			}
+			else
+			{
+				this.m.Counter = 0;
+			}
+
+			this.m.LastAttackerID = _attacker.getID();
+			this.m.LastRound = this.Time.getRound();
+
+			if (this.m.Counter > 6)
+			{
+				_attacker.killSilently();
+			}
+		}
+	}
+
+	function onDamageReceived( _attacker, _skill, _hitInfo )
+	{
+		local ret = this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
+
+		if (_attacker != null)
+		{
+			if (this.Time.getRound() == this.m.LastRound && this.m.LastAttackerID == _attacker.getID())
+			{
+				++this.m.Counter;
+			}
+			else
+			{
+				this.m.Counter = 0;
+			}
+
+			this.m.LastAttackerID = _attacker.getID();
+			this.m.LastRound = this.Time.getRound();
+
+			if (this.m.Counter > 6)
+			{
+				_attacker.killSilently();
+			}
+		}
+
+		return ret;
 	}
 	
 	function onDeath( _killer, _skill, _tile, _fatalityType )

@@ -229,7 +229,7 @@ this.tail_slam_big_skill <- this.inherit("scripts/skills/skill", {
 			else
 			{
 				local tile = ownTile.getNextTile(i);
-				local canbeHit = this.canBeHit(_user, tile.getEntity());
+				local canbeHit = tile.IsOccupiedByActor && this.canBeHit(_user, tile.getEntity());
 
 				if (tile.IsOccupiedByActor && tile.getEntity().isAttackable() && this.Math.abs(tile.Level - ownTile.Level) <= 1 && canbeHit)
 				{
