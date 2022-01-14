@@ -25,6 +25,56 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		this.m.Flags.add("undead");
 	}
 
+	function onDeath( _killer, _skill, _tile, _fatalityType )
+	{
+		this.human.onDeath(_killer, _skill, _tile, _fatalityType);
+		local allEntities = this.Tactical.Entities.getAllInstancesAsArray();
+
+		foreach ( e in allEntities) 
+		{
+			if (!e.isAlliedWith(this))
+			{
+				e.getSkills().add(this.new("scripts/skills/effects/mummy_curse_effect"));
+				e.getSkills().add(this.new("scripts/skills/effects/mummy_curse_effect"));
+			}
+		}
+
+		local myTile = this.getTile();
+		local attempts = 0;
+		local n = 0;
+		this.Sound.play("sounds/enemies/zombie_rise_01.wav", this.Const.Sound.Volume.Skill * 2.0, myTile.Pos);
+
+		while (attempts++ < 250)
+		{
+			local x = this.Math.rand(this.Math.max(0, this.m.Info.Tile.SquareCoords.X - 5), this.Math.min(mapSize.X - 1, this.m.Info.Tile.SquareCoords.X + 5));
+			local y = this.Math.rand(this.Math.max(0, this.m.Info.Tile.SquareCoords.Y - 5), this.Math.min(mapSize.Y - 1, this.m.Info.Tile.SquareCoords.Y + 5));
+
+			if (!this.Tactical.isValidTileSquare(x, y))
+			{
+				continue;
+			}
+
+			local tile = this.Tactical.getTileSquare(x, y);
+
+			if (!tile.IsEmpty || tile.ID == myTile.ID)
+			{
+				continue;
+			}
+
+			local script = n == 4 ? "scripts/entity/tactical/enemies/zombie_swordsaint" : "scripts/entity/tactical/enemies/zombie_betrayer";
+			local e = this.Tactical.spawnEntity(script, tile.Coords);
+			e.setFaction(this.getFaction());
+			e.riseFromGround(0.75);
+			e.assignRandomEquipment();
+			++n;
+
+			if (n >= 5)
+			{
+				break;
+			}
+		}
+	}
+
 	function onInit()
 	{
 		this.human.onInit();
@@ -36,15 +86,15 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		b.Stamina = 250;
 		b.MeleeSkill = 100;
 		b.RangedSkill = 999;
-		b.MeleeDefense = 30;
-		b.RangedDefense = 30;
+		b.MeleeDefense = 25;
+		b.RangedDefense = 25;
 		b.Initiative = 100;
 		b.InitiativeForTurnOrderAdditional = -999;
 		b.DamageMinimum = 25;
 		b.MoraleEffectMult = 0.0;
 		b.Vision = 99;
 		b.Threat = 50;
-		b.DamageReceivedRegularMult = 0.33;
+		b.DamageReceivedRegularMult = 0.4;
 		b.FatigueReceivedPerHitMult = 0.0;
 		b.ThresholdToReceiveInjuryMult = 1000.0;
 		b.TargetAttractionMult = 3.0;

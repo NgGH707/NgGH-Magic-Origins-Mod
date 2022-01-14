@@ -37,6 +37,21 @@ this.charge <- this.inherit("scripts/skills/skill", {
 		this.m.MaxLevelDifference = 1;
 	}
 
+	function onAdded()
+	{
+		local AI = this.getContainer().getActor().getAIAgent();
+
+		if (AI.getID() == this.Const.AI.Agent.ID.Player)
+		{
+			return;
+		}
+
+		AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_charge"));
+		AI.m.Properties.EngageRangeMin = 1;
+		AI.m.Properties.EngageRangeMax = 2;
+		AI.m.Properties.EngageRangeIdeal = 2;
+	}
+
 	function getTooltip()
 	{
 		local p = this.getContainer().getActor().getCurrentProperties();

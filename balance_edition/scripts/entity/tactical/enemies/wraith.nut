@@ -149,7 +149,7 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Ghost);
 		b.ActionPoints = 9;
-		b.Hitpoints = 50;
+		b.Hitpoints = 10;
 		b.Bravery = 999;
 		b.Stamina = 100;
 		b.MeleeSkill = 100;
@@ -158,8 +158,8 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		b.Initiative = 0;
 		b.InitiativeForTurnOrderAdditional = -190;
 		b.Vision = 99;
-		b.Threat = 9999999;
-		b.ThreatOnHit = 9999999;
+		b.Threat = 999;
+		b.ThreatOnHit = 999;
 		b.DamageMinimum = 25;
 		b.DamageRegularMin = 25;
 		b.DamageRegularMax = 35;

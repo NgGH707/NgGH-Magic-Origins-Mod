@@ -11,7 +11,7 @@ this.mod_nacho_vomiting_skill <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "actives.nacho_vomiting";
 		this.m.Name = "Throw Up";
-		this.m.Description = "Time to look back what i ate this morning. Uwwwww Owhwhwhwh!";
+		this.m.Description = "Time to look back what i ate this morning. Uwwwww Owhwhwhwh! Looks better than i thought.";
 		this.m.Icon = "skills/active_nacho_vomit.png";
 		this.m.IconDisabled = "skills/active_nacho_vomit_sw.png";
 		this.m.Overlay = "active_nacho_vomit";
@@ -26,7 +26,7 @@ this.mod_nacho_vomiting_skill <- this.inherit("scripts/skills/skill", {
 			"sounds/enemies/swallow_whole_miss_03.wav"
 		];
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.UtilityTargeted;
+		this.m.Order = this.Const.SkillOrder.UtilityTargeted + 1;
 		this.m.IsSerialized = false;
 		this.m.IsActive = true;
 		this.m.IsTargeted = true;
@@ -122,19 +122,32 @@ this.mod_nacho_vomiting_skill <- this.inherit("scripts/skills/skill", {
 			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " throws up " + this.Const.UI.getColorizedEntityName(e) + " out of its stomache");
 		}
 
-		local skill = this.getSkills().getSkillByID("actives.swallow_whole");
+		local skill = this.getContainer().getSkillByID("actives.swallow_whole");
 
 		if (skill == null)
 		{
-			skill = this.getSkills().getSkillByID("actives.legend_skin_ghoul_swallow_whole");
+			skill = this.getContainer().getSkillByID("actives.legend_skin_ghoul_swallow_whole");
 			
 			if (skill == null)
 			{
 				return true;
 			}
+			else
+			{
+				_user.getSprite("body").setBrush("bust_ghoulskin_body_03");
+				_user.getSprite("head").setBrush("bust_ghoulskin_03_head_0" + _user.m.Head);
+				_user.getSprite("injury").setBrush("bust_ghoulskin_03_injured");
+			}
+		}
+		else
+		{
+			_user.getSprite("body").setBrush("bust_ghoul_body_03");
+			_user.getSprite("head").setBrush("bust_ghoul_03_head_0" + _user.m.Head);
+			_user.getSprite("injury").setBrush("bust_ghoul_03_injured");
 		}
 
 		skill.setCooldown();
+		_user.onUpdateInjuryLayer();
 		return true;
 	}
 

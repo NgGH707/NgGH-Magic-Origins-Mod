@@ -427,7 +427,6 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 			status_rage.setBrush("golem_rage_5_" + this.m.Variant);
 		}
 		
-		this.m.Skills.update();
 		this.setDirty(true);
 	}
 	
@@ -476,7 +475,6 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 		
 		sprite.Alpha = 0;
 		sprite.fadeIn(1500);
-		this.m.Skills.update();
 		this.setDirty(true);
 	}
 	
@@ -491,7 +489,6 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 		this.m.AIAgent.setActor(this);
 		local sprite = this.getSprite("status_rage");
 		sprite.fadeOutAndHide(1500);
-		this.m.Skills.update();
 		this.setDirty(true);
 	}
 	

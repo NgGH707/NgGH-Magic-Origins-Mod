@@ -84,6 +84,13 @@ this.swallowed_whole_effect <- this.inherit("scripts/skills/skill", {
 			]);
 		}
 
+		ret.push({
+			id = 4,
+			type = "text",
+			icon = "ui/icons/special.png",
+			text = "Sapping hitpoints and armor from devoured victim every round"
+		});
+
 		local e = this.m.Link.getSwallowedEntity();
 
 		ret.extend([

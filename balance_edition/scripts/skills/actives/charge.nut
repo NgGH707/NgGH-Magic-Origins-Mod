@@ -40,13 +40,13 @@ this.charge <- this.inherit("scripts/skills/skill", {
 	function onAdded()
 	{
 		this.m.FatigueCost = this.m.Container.getActor().isPlayerControlled() ? 30 : 25;
+		local AI = this.getContainer().getActor().getAIAgent();
 
-		if (!this.getContainer().getActor().isPlayerControlled())
+		if (AI.getID() == this.Const.AI.Agent.ID.Player)
 		{
 			return;
 		}
 
-		local AI = this.getContainer().getActor().getAIAgent();
 		AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_charge"));
 		AI.m.Properties.EngageRangeMin = 1;
 		AI.m.Properties.EngageRangeMax = 2;

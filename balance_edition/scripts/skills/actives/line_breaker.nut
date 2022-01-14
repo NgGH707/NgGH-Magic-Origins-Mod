@@ -36,12 +36,13 @@ this.line_breaker <- this.inherit("scripts/skills/skill", {
 
 	function onAdded()
 	{
-		if (!this.getContainer().getActor().isPlayerControlled())
+		local AI = this.getContainer().getActor().getAIAgent();
+
+		if (AI.getID() == this.Const.AI.Agent.ID.Player)
 		{
 			return;
 		}
 
-		local AI = this.getContainer().getActor().getAIAgent();
 		AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_line_breaker"));
 	}
 	
@@ -69,7 +70,7 @@ this.line_breaker <- this.inherit("scripts/skills/skill", {
 			id = 6,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Knock a target to the side"
+			text = "Knock a target to the side then move forward"
 		});
 
 		return ret;

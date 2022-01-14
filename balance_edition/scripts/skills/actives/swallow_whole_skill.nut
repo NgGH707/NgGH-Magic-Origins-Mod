@@ -6,6 +6,7 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 	},
 	function setCooldown()
 	{
+		this.m.SwallowedEntity = null;
 		this.m.Cooldown = 3;
 	}
 
@@ -113,8 +114,33 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 	{
 		if (this.m.SwallowedEntity != null)
 		{
+			// Hp damage per turn to your poor "hostage"
 			local hp = this.Math.maxf(0.05, this.m.SwallowedEntity.getHitpointsPct() - 0.05);
 			this.m.SwallowedEntity.setHitpointsPct(hp);
+
+			// Armor damage per turn
+			local b = this.m.SwallowedEntity.getBaseProperties();
+			local BodyParts = [
+				this.Const.BodyPart.Body,
+				this.Const.BodyPart.Head
+			];
+
+			foreach ( BodyPart in BodyParts) 
+			{
+				local armorDamage = this.Math.rand(5, 7);
+				local overflowDamage = armorDamage;
+
+				if (b.Armor[BodyPart] != 0)
+				{
+					overflowDamage = overflowDamage - b.Armor[BodyPart] * b.ArmorMult[BodyPart];
+					b.Armor[BodyPart] = this.Math.max(0, b.Armor[BodyPart] * b.ArmorMult[BodyPart] - armorDamage);
+				}
+
+				if (overflowDamage > 0)
+				{
+					this.m.SwallowedEntity.getItems().onDamageReceived(overflowDamage, this.Const.FatalityType.None, BodyPart, null);
+				}
+			}
 		}
 
 		this.m.Cooldown = this.Math.max(0, this.m.Cooldown - 1);
@@ -203,7 +229,7 @@ this.swallow_whole_skill <- this.inherit("scripts/skills/skill", {
 			this.Sound.play(this.m.SoundOnHit[this.Math.rand(0, this.m.SoundOnHit.len() - 1)], this.Const.Sound.Volume.Skill, _user.getPos());
 		}
 
-		local skill = this.getSkills().getSkillByID("actives.nacho_vomiting");
+		local skill = this.getContainer().getSkillByID("actives.nacho_vomiting");
 
 		if (skill != null)
 		{

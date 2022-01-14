@@ -17,8 +17,8 @@ this.wraith_agent <- this.inherit("scripts/ai/tactical/agent", {
 		this.m.Properties.TargetPriorityBraveryMult = 0.25;
 		this.m.Properties.OverallDefensivenessMult = 0.5;
 		this.m.Properties.OverallFormationMult = 0.5;
-		this.m.Properties.EngageWhenAlreadyEngagedMult = 0.0;
-		this.m.Properties.EngageTargetMultipleOpponentsMult = 1.0;
+		this.m.Properties.EngageWhenAlreadyEngagedMult = 0.25;
+		this.m.Properties.EngageTargetMultipleOpponentsMult = 0.5;
 		this.m.Properties.EngageOnGoodTerrainBonusMult = 1.0;
 		this.m.Properties.EngageOnBadTerrainPenaltyMult = 1.0;
 		this.m.Properties.EngageAgainstSpearwallMult = 0.25;
@@ -94,13 +94,13 @@ this.wraith_agent <- this.inherit("scripts/ai/tactical/agent", {
 
 		if (opponentNearby)
 		{
-			this.m.Properties.EngageRangeIdeal = 4;
+			this.m.Properties.EngageRangeIdeal = 3;
 			this.m.Properties.EngageRangeMax = 4;
 		}
 		else
 		{
-			this.m.Properties.EngageRangeIdeal = 2;
-			this.m.Properties.EngageRangeMax = 2;
+			this.m.Properties.EngageRangeIdeal = 4;
+			this.m.Properties.EngageRangeMax = 4;
 		}
 	}
 

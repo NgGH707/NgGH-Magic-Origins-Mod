@@ -28,11 +28,11 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 		b.Bravery = 999;
 		b.Stamina = 200;
 		b.MeleeSkill = 999;
-		b.MeleeSkillMult = 999;
+		b.MeleeSkillMult = 999.0;
 		b.RangedSkill = -25;
 		b.MeleeDefense = 999;
-		b.MeleeDefenseMult = 999;
-		b.RangedDefense = 0;
+		b.MeleeDefenseMult = 999.0;
+		b.RangedDefense = -10;
 		b.Initiative = 100;
 		b.InitiativeForTurnOrderAdditional = -300;
 		b.Threat = 25;
@@ -60,8 +60,8 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 			1000.0
 		];
 		b.HitChance = [
-			90,
-			10
+			95,
+			5
 		];
 		
 		this.m.ActionPoints = b.ActionPoints;
