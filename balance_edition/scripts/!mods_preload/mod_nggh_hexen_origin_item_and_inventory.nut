@@ -171,7 +171,7 @@ this.getroottable().HexenHooks.hookItem <- function ()
 		local ws_convertEntityToUIData = obj.convertEntityToUIData;
 		obj.convertEntityToUIData = function( _entity, _activeEntity )
 		{
-			if (_entity.isSummoned() || _entity.m.rawin("Background"))
+			if (_entity.isSummoned() || !this.isKindOf(_entity, "player"))
 			{
 				local result = {
 					id = _entity.getID(),
