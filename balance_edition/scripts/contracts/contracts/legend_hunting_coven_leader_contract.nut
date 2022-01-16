@@ -128,15 +128,24 @@ this.legend_hunting_coven_leader_contract <- this.inherit("scripts/contracts/con
 
 			function countHexe()
 			{
+				local moral = [
+					"Chivalrous",
+					"Saintly"
+				];
 				local exclude = [
 					"scenario.legends_crusader",
 					"scenario.legends_inquisition",
 					"scenario.sato_escaped_slaves",
 				];
 
+				if (moral.find(this.World.Assets.getMoralReputationAsText()) != null)
+				{
+					return 5;
+				}
+
 				if (this.World.Assets.getOrigin() != null && exclude.find(this.World.Assets.getOrigin().getID()) != null)
 				{
-					return 1;
+					return 5;
 				}
 
 				local brothers = this.World.getPlayerRoster().getAll();

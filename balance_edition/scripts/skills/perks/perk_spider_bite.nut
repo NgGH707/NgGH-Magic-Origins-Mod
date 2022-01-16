@@ -15,9 +15,9 @@ this.perk_spider_bite <- this.inherit("scripts/skills/skill", {
 	
 	function onUpdate( _properties )
 	{
-		_properties.DamageDirectAdd += 0.10;
-		_properties.DamageRegularMin += 6;
-		_properties.DamageRegularMax += 12;
+		_properties.DamageDirectAdd += 0.15;
+		_properties.DamageRegularMin += 1;
+		_properties.DamageRegularMax += 5;
 	}
 	
 	function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )

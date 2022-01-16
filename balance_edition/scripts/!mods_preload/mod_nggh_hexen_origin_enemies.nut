@@ -43,6 +43,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			}
 
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_lindwurm_body"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_rebound"));
 			this.m.XP *= 2.5;
 			return true;
 		}
@@ -81,7 +82,9 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			}
 
 			this.m.XP *= 2.5;
+			this.m.BaseProperties.ActionPoints += 1;
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_lindwurm_body"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_bloody_harvest"));
 			return true;
 		}
 	});
@@ -181,18 +184,21 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					return false;
 				}
 
-				local b = this.m.BaseProperties;
-				b.MeleeSkill += 15;
-				b.MeleeDefense += 10;
-				b.Bravery += 50;
-				b.ArmorMult = [
-					2.0,
-					2.0
-				];
+				if (this.m.Type != this.Const.EntityType.LegendWhiteDirewolf)
+				{
+					local b = this.m.BaseProperties;
+					b.MeleeSkill += 15;
+					b.MeleeDefense += 10;
+					b.Bravery += 50;
+					b.ArmorMult = [
+						2.0,
+						2.0
+					];
+				}
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_wolf_bite"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_enrage_wolf"));
 				this.m.Skills.add(this.new("scripts/skills/actives/line_breaker"));
-				this.m.XP *= 1.5;
+				this.m.XP *= 2.5;
 				return true;
 			}
 		});
@@ -253,7 +259,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					];
 					this.m.Skills.add(this.new("scripts/skills/perks/perk_spider_bite"));
 					this.m.Skills.add(this.new("scripts/skills/perks/perk_dodge"));
-					this.m.Skills.add(this.new("scripts/skills/perks/perk_serpent_nimble"));
+					this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
 					return true;
 				}
 			}
@@ -404,6 +410,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				this.m.XP = this.Math.max(500, this.m.XP * 2);
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_nacho"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_frenzy"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_devastating_strikes"));
 				this.m.Skills.add(this.new("scripts/skills/actives/charge"));
 				return true;
 			}
@@ -452,6 +459,7 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 			local b = this.m.BaseProperties;
 			b.MeleeDefense += 15;
 			b.RangedDefense += 15;
+			b.DamageReceivedRegularMult *= 0.85;
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_mastery_nightmare"));
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_mastery_sleep"));
 			this.getAIAgent().addBehavior(this.new("scripts/ai/tactical/behaviors/ai_darkflight"));

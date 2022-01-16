@@ -202,6 +202,8 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 		{
 			this.addPerk(this.Const.Perks.PerkDefs.FairGame, 2);
 		}
+
+		this.getContainer().getActor().getFlags().add("perk_finished");
 	}
 	
 	function resetPerkTree()
@@ -381,7 +383,12 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 	function buildPerkTree()
 	{
 		local a = this.character_background.buildPerkTree();
-		this.onFinishingPerkTree();
+
+		if (this.getContainer().getActor().getFlags().has("perk_finished"))
+		{
+			this.onFinishingPerkTree();
+		}
+
 		return a;
 	}
 
