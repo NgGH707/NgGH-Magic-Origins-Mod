@@ -44,7 +44,7 @@ this.spawn_spider <- this.inherit("scripts/skills/skill", {
 		this.m.IsAttack = false;
 		this.m.IsTargetingActor = false;
 		this.m.ActionPointCost = 4;
-		this.m.FatigueCost = 17;
+		this.m.FatigueCost = 18;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
 	}
@@ -103,12 +103,27 @@ this.spawn_spider <- this.inherit("scripts/skills/skill", {
 			}
 		}
 
+		if (this.Tactical.isActive() && this.m.EggsPool.countSpiderlingNum() > 5)
+		{
+			ret.push({
+				id = 9,
+				type = "text",
+				icon = "ui/tooltips/warning.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]You can\'t have more than 6 spiders at the same time[/color]"
+			});
+		}
+
 		return ret;
 	}
 
 	function isUsable()
 	{
 		if (!this.skill.isUsable())
+		{
+			return false;
+		}
+
+		if (this.m.EggsPool.countSpiderlingNum() > 5)
 		{
 			return false;
 		}
@@ -134,7 +149,6 @@ this.spawn_spider <- this.inherit("scripts/skills/skill", {
 		this.makeSpiderAct(spider);
 		this.m.EggsPool.usedOneEgg();
 		this.getContainer().update();
-		
 		return true;
 	}
 	

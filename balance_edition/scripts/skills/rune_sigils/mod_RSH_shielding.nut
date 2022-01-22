@@ -1,8 +1,8 @@
 this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 	m = {
-		Hitpoints = 50,
+		Hitpoints = 25,
 		HitpointsMax = 100,
-		HitpointsThreshold = 50,
+		HitpointsThreshold = 25,
 		IsActivated = true,
 		IsRegenerate = false,
 		Cooldown = 2,
@@ -95,7 +95,7 @@ this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 		if (this.getContainer().getActor().getFlags().getAsInt("mc_mage") == this.Const.MC_Job.BattleMage)
 		{
 			this.m.HitpointsMax = 125;
-			this.m.HitpointsThreshold = 75;
+			this.m.HitpointsThreshold = 50;
 			this.m.Hitpoints = this.m.HitpointsThreshold;
 		}
 	}
@@ -156,7 +156,7 @@ this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 			_hitInfo.DamageFatigue = 0;
 			_hitInfo.DamageDirect = 0.0;
 			this.setHitpoints(-overflow);
-			this.Tactical.EventLog.log(this.getName() + " absorbs " + damage + " damage");
+			this.Tactical.EventLog.log(this.getName() + " absorbs [b]" + damage + "[/b] damage");
 		}
 		else
 		{
@@ -165,7 +165,7 @@ this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 
 			if (this.getHitpoints() > 0)
 			{
-				this.Tactical.EventLog.log(this.getName() + " absorbs " + this.getHitpoints() + " damage");
+				this.Tactical.EventLog.log(this.getName() + " absorbs [b]" + this.getHitpoints() + "[/b] damage");
 			}
 
 			shieldBreak = true;
@@ -198,7 +198,7 @@ this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 		
 		if (--this.m.Cooldown <= 0)
 		{
-			this.m.Cooldown = 2;
+			this.m.Cooldown = this.Math.rand(1, 3);
 			this.setHitpoints(this.getHitpoints() + HitPointsAdded);
 			
 			if (this.m.IsRegenerate)

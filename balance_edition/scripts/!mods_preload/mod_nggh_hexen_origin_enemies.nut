@@ -44,7 +44,6 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_lindwurm_body"));
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_rebound"));
-			this.m.XP *= 2.5;
 			return true;
 		}
 	});
@@ -81,7 +80,6 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				return false;
 			}
 
-			this.m.XP *= 2.5;
 			this.m.BaseProperties.ActionPoints += 1;
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_lindwurm_body"));
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_bloody_harvest"));
@@ -126,15 +124,10 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					return false;
 				}
 
-				this.m.XP *= 2.5;
 				local b = this.m.BaseProperties;
 				b.MeleeSkill += 15;
 				b.MeleeDefense += 10;
 				b.Bravery += 50;
-				b.ArmorMult = [
-					2.0,
-					2.0
-				];
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_enrage_wolf"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_hyena_bite"));
 				this.m.Skills.add(this.new("scripts/skills/actives/line_breaker"));
@@ -190,15 +183,10 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					b.MeleeSkill += 15;
 					b.MeleeDefense += 10;
 					b.Bravery += 50;
-					b.ArmorMult = [
-						2.0,
-						2.0
-					];
 				}
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_wolf_bite"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_enrage_wolf"));
 				this.m.Skills.add(this.new("scripts/skills/actives/line_breaker"));
-				this.m.XP *= 2.5;
 				return true;
 			}
 		});
@@ -249,14 +237,9 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 						return false;
 					}
 
-					this.m.XP = 500;
 					local b = this.m.BaseProperties;
 					b.MeleeSkill += 5;
 					b.MeleeDefense += 5;
-					b.ArmorMult = [
-						5.0,
-						5.0
-					];
 					this.m.Skills.add(this.new("scripts/skills/perks/perk_spider_bite"));
 					this.m.Skills.add(this.new("scripts/skills/perks/perk_dodge"));
 					this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
@@ -306,7 +289,6 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 					return false;
 				}
 
-				this.m.XP *= 2.5;
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_spider_bite"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_spider_web"));
 				return true;
@@ -351,14 +333,13 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				return false;
 			}
 
-			this.m.XP = 500;
 			local b = this.m.BaseProperties;
 			b.MeleeSkill += 15;
 			b.MeleeDefense += 10;
 			b.RangedDefense += 5;
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_serpent_bite"));
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_serpent_drag"));
-			this.m.Skills.add(this.new("scripts/skills/perks/perk_serpent_nimble"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
 			return true;
 		}
 	});
@@ -407,7 +388,6 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				b.MeleeSkill += 10;
 				b.MeleeDefense += 10;
 				b.RangedDefense += 5;
-				this.m.XP = this.Math.max(500, this.m.XP * 2);
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_nacho"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_frenzy"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_devastating_strikes"));
@@ -455,7 +435,6 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 				return false;
 			}
 
-			this.m.XP *= 2.5;
 			local b = this.m.BaseProperties;
 			b.MeleeDefense += 15;
 			b.RangedDefense += 15;
@@ -506,7 +485,6 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_grow_shield"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_uproot_aoe"));
-				this.m.XP *= 2.5;
 				return true;
 			}
 		});

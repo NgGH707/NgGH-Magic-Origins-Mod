@@ -76,7 +76,7 @@ this.getroottable().HexenHooks.hookPTR <- function ()
 	::mods_hookExactClass("skills/effects/ptr_swordmaster_scenario_recruit_effect", function ( obj )
 	{
 		local ws_evolve = obj.evolve;
-		obj.evolve <- function()
+		obj.evolve = function()
 		{
 			local actor = this.getContainer().getActor();
 
@@ -91,14 +91,14 @@ this.getroottable().HexenHooks.hookPTR <- function ()
 				};
 
 				actor.getBaseProperties().MeleeSkill += attributes.MeleeSkill;
-				actor.getBaseProperties().MeleeDefense += attributes.MeleeDefense;	
-				actor.getBaseProperties().Stamina += attributes.Stamina;		
+				actor.getBaseProperties().MeleeDefense += attributes.MeleeDefense;
+				actor.getBaseProperties().Stamina += attributes.Stamina;
 				actor.getBaseProperties().Bravery += attributes.Bravery;
 				actor.getBaseProperties().Initiative += attributes.Initiative;
-				return;
+				return attributes;
 			}
 
-			ws_evolve();
+			return ws_evolve();
 		};
 	});
 

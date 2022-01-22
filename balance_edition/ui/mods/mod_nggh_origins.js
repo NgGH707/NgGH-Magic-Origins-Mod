@@ -13,20 +13,6 @@ NewCampaignMenuModule.prototype.setStartingScenarios = function(_data)
 
 
 // show a huge red X on the slot if the slot can't be used
-var ws_onBrotherSelected = CharacterScreenPaperdollModule.prototype.onBrotherSelected
-CharacterScreenPaperdollModule.prototype.onBrotherSelected = function (
-  _dataSource,
-  _brother
-) {
-  	ws_onBrotherSelected.call(this, _dataSource, _brother);
-  	if (_brother !== null && CharacterScreenIdentifier.Entity.Id in _brother) {
-  			if ('restriction' in _brother && _brother['restriction'] !== undefined && _brother['restriction'] !== null) {
-		       this.assignBlockSlots(
-		        _brother['restriction']
-		      );
-		    }
-  	}
-  };
 
 CharacterScreenPaperdollModule.prototype.blockThisSlot = function (_slot) {
   _slot.Container.assignPaperdollItemImage(_slot.BlockedImage, false, false);
@@ -66,5 +52,21 @@ CharacterScreenPaperdollModule.prototype.assignBlockSlots = function (
 	{
 		this.blockThisSlot(this.mRightEquipmentSlots.Ammo);
 	}
+};
+
+var ws_onBrotherSelected = CharacterScreenPaperdollModule.prototype.onBrotherSelected
+CharacterScreenPaperdollModule.prototype.onBrotherSelected = function (
+  _dataSource,
+  _brother
+) {
+	if (_brother !== null && CharacterScreenIdentifier.Entity.Id in _brother) {
+			if ('restriction' in _brother && _brother['restriction'] !== undefined && _brother['restriction'] !== null) {
+	       this.assignBlockSlots(
+	        _brother['restriction']
+	      );
+	    }
+	}
+
+	ws_onBrotherSelected.call(this, _dataSource, _brother);
 };
 

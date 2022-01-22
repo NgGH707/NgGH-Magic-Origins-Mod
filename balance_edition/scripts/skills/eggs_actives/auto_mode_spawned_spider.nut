@@ -1,10 +1,20 @@
 this.auto_mode_spawned_spider <- this.inherit("scripts/skills/skill", {
-	m = {
-		AutoMode = false
-	},
+	m = {},
 	function getMode()
 	{
-		return this.m.AutoMode;
+		return this.getContainer().getActor().getFlags().get("autopilot_spiderling");
+	}
+
+	function setMode( _boolean )
+	{
+		if (typeof _boolean == "bool")
+		{
+			this.getContainer().getActor().getFlags().set("autopilot_spiderling", _boolean);
+		}
+		else
+		{
+			this.getContainer().getActor().getFlags().set("autopilot_spiderling", false);
+		}
 	}
 	
 	function create()
@@ -84,41 +94,78 @@ this.auto_mode_spawned_spider <- this.inherit("scripts/skills/skill", {
 
 	function onUse( _user, _targetTile )
 	{
-		this.switchMode();
-		return true;
+		return this.switchMode();
 	}
 
 	function switchMode( _reset = false )
 	{
 		local _user = this.getContainer().getActor();
 		local actors = this.Tactical.Entities.getAllInstancesAsArray();
-		this.m.AutoMode = !this.m.AutoMode;
-
+		local currentMode = this.getMode();
+		
 		if (_reset)
 		{
-			this.m.AutoMode = false;
+			this.setMode(false);
+		}
+		else
+		{
+			this.setMode(!currentMode);
 		}
 
 		foreach (i, a in actors)
 		{
+			if (a.getSkills().hasSkill("effects.charmed"))
+			{
+				continue;
+			}
+			
 		    if (!a.getFlags().has("creator") || a.getFlags().get("creator") != _user.getID())
 		    {
 		    	continue;
 		    }
 
-	    	if (a.getSkills().hasSkill("special.egg_attachment"))
+			this.onChangeAI(a);
+		}
+
+		return true;
+	}
+
+	function onChangeAI( _actor )
+	{
+		_actor.m.IsControlledByPlayer = !this.getMode();
+
+		if (this.Tactical.isActive() && this.Tactical.State.m.IsAutoRetreat)
+		{
+			_actor.m.IsControlledByPlayer = false;
+			_actor.setAIAgent(this.new("scripts/ai/tactical/agents/spider_bodyguard_agent"));
+			_actor.getAIAgent().setActor(_actor);
+			_actor.getAIAgent().removeBehavior(this.Const.AI.Behavior.ID.Protect);
+
+	    	local protect = this.new("scripts/ai/tactical/behaviors/ai_protect_person");
+	    	_actor.getAIAgent().addBehavior(protect);
+
+	    	if (_actor.m.Master != null && !_actor.m.Master.isNull() && _actor.m.Master.isAlive() && !_actor.m.Master.isDying())
 			{
-				continue;
+	    		protect.setVIP(_actor.m.Master.get());
+	    	}
+		}
+		else
+		{
+			if (!_actor.isPlayerControlled())
+			{
+		    	_actor.setAIAgent(this.new("scripts/ai/tactical/agents/spider_agent"));
+			}
+			else
+			{
+			    _actor.m.AIAgent = this.new("scripts/ai/tactical/player_agent");
 			}
 
-			a.m.IsControlledByPlayer = !this.m.AutoMode;
-			a.onFactionChanged();
+			_actor.getAIAgent().setActor(_actor);
 		}
 	}
 
 	function onCombatStarted()
 	{
-		this.m.AutoMode = false;
 		this.m.IsHidden = false;
 	}
 

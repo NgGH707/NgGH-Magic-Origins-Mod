@@ -270,7 +270,7 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		this.setSpriteOffset("status_rooted", this.createVec(-5, -5));
 		this.m.Skills.add(this.new("scripts/skills/racial/ghost_racial"));
 		this.m.Skills.add(this.new("scripts/skills/actives/nightmare_skill"));
-		this.m.Skills.add(this.new("scripts/skills/actives/alp_shadow_teleport_skill"));
+		this.m.Skills.add(this.new("scripts/skills/actives/mod_alp_shadow_teleport_skill"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_anticipation"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_underdog"));
 		local touch = this.new("scripts/skills/actives/ghastly_touch");

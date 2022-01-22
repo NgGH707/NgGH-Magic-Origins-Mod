@@ -27,7 +27,7 @@ this.sleep_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		];
 		this.m.IsUsingActorPitch = true;
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.UtilityTargeted + 2;
+		this.m.Order = this.Const.SkillOrder.UtilityTargeted + 4;
 		this.m.IsSerialized = false;
 		this.m.Delay = 600;
 		this.m.IsActive = true;

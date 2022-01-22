@@ -1,6 +1,7 @@
 this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/character_background", {
 	m = {
 		NewPerkTree = null,
+		IsDeserializing = false
 	},
 	function create()
 	{
@@ -202,8 +203,18 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 		{
 			this.addPerk(this.Const.Perks.PerkDefs.FairGame, 2);
 		}
+	}
 
-		this.getContainer().getActor().getFlags().add("perk_finished");
+	function buildPerkTree()
+	{
+		local a = this.character_background.buildPerkTree();
+
+		if (!this.m.IsDeserializing)
+		{
+			this.onFinishingPerkTree();
+		}
+
+		return a;
 	}
 	
 	function resetPerkTree()
@@ -380,18 +391,6 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 		this.onSetAppearance();
 	}
 
-	function buildPerkTree()
-	{
-		local a = this.character_background.buildPerkTree();
-
-		if (this.getContainer().getActor().getFlags().has("perk_finished"))
-		{
-			this.onFinishingPerkTree();
-		}
-
-		return a;
-	}
-
 	function onCombatStarted()
 	{
 		local actor = this.getContainer().getActor();
@@ -474,6 +473,19 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 		actor.m.SoundVolume[this.Const.Sound.ActorEvent.Idle] = 5.0;
 		actor.m.SoundVolume[this.Const.Sound.ActorEvent.Fatigue] = 5.0;
 		actor.m.SoundVolume[this.Const.Sound.ActorEvent.Other1] = 2.5;
+	}
+
+	function onSerialize( _out )
+	{
+		this.character_background.onSerialize(_out);
+		
+	}
+
+	function onDeserialize( _in )
+	{
+		this.m.IsDeserializing = true;
+		this.character_background.onDeserialize(_in);
+		this.m.IsDeserializing = false;
 	}
 
 });

@@ -2,6 +2,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 	m = {
 		Mount = null,
 		ExcludedMount = [],
+		Mode = null,
 		Head = 0,
 		Count = 0,
 		Size = 1.0,
@@ -14,6 +15,27 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		HelmetOffset = [0, 0],
 		BodyOffset = [0, 0]
 	},
+	function setMode( _m )
+	{
+		if (_m == null)
+		{
+			this.m.Mode = null;
+		}
+		else if (typeof _m == "instance")
+		{
+			this.m.Mode = _m;
+		}
+		else 
+		{
+			this.m.Mode = this.WeakTableRef(_m);			    
+		}
+	}
+
+	function getMode()
+	{
+		return this.m.Mode;
+	}
+
 	function getExcludedMount()
 	{
 		return this.m.ExcludedMount;
@@ -283,26 +305,6 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 
 		this.player_beast.onDeath(_killer, _skill, _tile, _fatalityType);
 	}
-	
-	function onFactionChanged()
-	{
-		this.actor.onFactionChanged();
-		local flip = !this.isAlliedWithPlayer();
-		this.m.IsFlipping = !flip;
-		this.getSprite("body").setHorizontalFlipping(!flip);
-		this.getSprite("accessory").setHorizontalFlipping(flip);
-		this.getSprite("accessory_special").setHorizontalFlipping(flip);
-
-		foreach( a in this.Const.CharacterSprites.Helmets )
-		{
-			if (!this.hasSprite(a))
-			{
-				continue;
-			}
-
-			this.getSprite(a).setHorizontalFlipping(flip);
-		}
-	}
 
 	function onInit()
 	{
@@ -359,11 +361,14 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.m.Mount.setRiderSkill(rider);
 		this.m.Skills.add(rider);
 
+		local mode = this.new("scripts/skills/eggs_actives/auto_mode_spawned_spider");
+		this.setMode(mode);
+		this.m.Skills.add(mode);
+
 		this.m.Skills.add(this.new("scripts/skills/racial/skeleton_racial"));
 		this.m.Skills.add(this.new("scripts/skills/eggs_actives/add_egg"));
 		this.m.Skills.add(this.new("scripts/skills/eggs_actives/spawn_more_spider"));
 		this.m.Skills.add(this.new("scripts/skills/eggs_actives/spawn_spider"));
-		this.m.Skills.add(this.new("scripts/skills/eggs_actives/auto_mode_spawned_spider"));
 	}
 	
 	function setScenarioValues( _isElite = false, _Dub_two = false , _Dub_three = false, _Dub_four = false )
@@ -412,6 +417,26 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		this.player.fillTalentValues(_num, _force);
 	}
 
+	function onFactionChanged()
+	{
+		this.actor.onFactionChanged();
+		local flip = !this.isAlliedWithPlayer();
+		this.m.IsFlipping = !flip;
+		this.getSprite("body").setHorizontalFlipping(!flip);
+		this.getSprite("accessory").setHorizontalFlipping(flip);
+		this.getSprite("accessory_special").setHorizontalFlipping(flip);
+
+		foreach( a in this.Const.CharacterSprites.Helmets )
+		{
+			if (!this.hasSprite(a))
+			{
+				continue;
+			}
+
+			this.getSprite(a).setHorizontalFlipping(flip);
+		}
+	}
+
 	function onRetreating()
 	{
 		if (!this.isPlacedOnMap())
@@ -419,8 +444,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 			return;
 		}
 
-		local autoMode = this.getSkills().getSkillByID("actives.auto_mode_spawned_spider");
-		autoMode.switchMode(true);
+		this.getMode().switchMode(true);
 	}
 
 	function onSpawn( _tile )
@@ -455,11 +479,9 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 
 		if (_tile != null)
 		{
-			local autoMode = this.getSkills().getSkillByID("actives.auto_mode_spawned_spider");
 			local spawn = this.Tactical.spawnEntity("scripts/entity/tactical/minions/special/spider_minion", _tile.Coords);
 			spawn.setSize(this.Math.rand(60, 75) * 0.01);
 			spawn.setMaster(this);
-			spawn.m.IsControlledByPlayer = !autoMode.getMode();
 			spawn.setFaction(this.Const.Faction.PlayerAnimals);
 			spawn.getFlags().set("creator", this.getID());
 			spawn.m.XP = spawn.m.XP / 2;
@@ -474,6 +496,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 				}
 			}
 
+			this.getMode().onChangeAI(spawn);
 			this.improveStats(spawn, this.getSkills().hasSkill("perk.natural_selection"));
 			
 			if (this.getSkills().hasSkill("perk.inherit"))

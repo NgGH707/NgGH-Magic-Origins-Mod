@@ -2,7 +2,7 @@ this.charmed_pet_effect <- this.inherit("scripts/skills/skill", {
 	m = {
 		LootScript = null,
 		Master = null,
-		TurnsLeft = 10,
+		TurnsLeft = 5,
 	},
 	function create()
 	{

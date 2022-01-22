@@ -32,7 +32,7 @@ this.eggs_special <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "special.egg_special";
 		this.m.Name = "Webknecht Eggs";
-		this.m.Description = "Show you how many eggs are left in this hive.";
+		this.m.Description = "Show you how many ready-to-hatch eggs are left in this hive.";
 		this.m.Icon = "skills/status_effect_eggs.png";
 		this.m.IconMini = "status_effect_eggs_mini";
 		this.m.Order = this.Const.SkillOrder.Trait - 1;
@@ -57,14 +57,42 @@ this.eggs_special <- this.inherit("scripts/skills/skill", {
 				text = this.getDescription()
 			},
 			{
-				id = 5,
-				type = "text",
+				id = 7,
+				type = "progressbar",
 				icon = "ui/icons/special.png",
-				text = "Currently has [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.Eggs + "[/color]/[color=" + this.Const.UI.Color.NegativeValue + "]3[/color] egg(s)"
-			}
+				value = this.getEggs(),
+				valueMax = 3,
+				text = "" + this.getEggs() + " / 3",
+				style = "armor-body-slim"
+			},
+			{
+				id = 9,
+				type = "text",
+				icon = "ui/icons/relations.png",
+				text = "Currently has [color=" + this.Const.UI.Color.PositiveValue + "]" + this.countSpiderlingNum() + "[/color] spiderling(s)"
+			},
 		];
 		
 		return ret;
+	}
+
+	function countSpiderlingNum()
+	{
+		local actor = this.getContainer().getActor();
+		local actors = this.Tactical.Entities.getAllInstancesAsArray();
+		local num = 0;
+
+		foreach (i, a in actors)
+		{
+		    if (!a.getFlags().has("creator") || a.getFlags().get("creator") != actor.getID())
+		    {
+		    	continue;
+		    }
+
+			++num;
+		}
+
+		return num;
 	}
 
 	function onTurnStart()

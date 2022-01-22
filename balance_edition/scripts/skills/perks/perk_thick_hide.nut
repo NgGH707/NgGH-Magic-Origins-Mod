@@ -13,11 +13,23 @@ this.perk_thick_hide <- this.inherit("scripts/skills/skill", {
 		this.m.IsHidden = false;
 	}
 
+	function onAdded()
+	{
+		local b = this.getContainer().getActor().getBaseProperties();
+		b.ArmorMult[0] *= 1.67;
+		b.ArmorMult[1] *= 1.67;
+	}
+
+	function onRemoved()
+	{
+		local b = this.getContainer().getActor().getBaseProperties();
+		b.ArmorMult[0] /= 1.67;
+		b.ArmorMult[1] /= 1.67;
+	}
+
 	function onAfterUpdate( _properties )
 	{
 		_properties.DamageReceivedArmorMult *= 0.8;
-		_properties.ArmorMult[0] *= 1.67;
-		_properties.ArmorMult[1] *= 1.67;
 	}
 
 });

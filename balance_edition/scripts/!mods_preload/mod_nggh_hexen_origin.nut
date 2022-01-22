@@ -20,18 +20,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	gt.HexenHooks.hookEnemies();
 	gt.HexenHooks.hookAI();
 
-	//Create Champion Beast
-	/*foreach(i, troop in gt.Const.World.Spawn.Troops)
-	{
-		switch (troop.ID) 
-		{
-	    case this.Const.EntityType.Direwolf:
-	       	NameList = gt.Const.Strings.WolfNames,
-			TitleList = null
-	        break;
-		}
-	}*/
-
 	// wolf
 	gt.Const.World.Spawn.Troops.Direwolf.NameList <- gt.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.Direwolf.TitleList <- null;
@@ -60,15 +48,15 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 
 	gt.Const.World.Spawn.Troops.GhoulHIGH.NameList <- gt.Const.Strings.NachoNames;
 	gt.Const.World.Spawn.Troops.GhoulHIGH.TitleList <- null;
-	gt.Const.World.Spawn.Troops.GhoulHIGH.Variant = 3;
+	gt.Const.World.Spawn.Troops.GhoulHIGH.Variant = 5;
 
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.NameList <- gt.Const.Strings.NachoNames;
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.TitleList <- null;
-	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.Variant = 3;
+	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.Variant = 1;
 
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.NameList <- gt.Const.Strings.NachoNames;
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.TitleList <- null;
-	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.Variant = 5;
+	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.Variant = 1;
 
 	// snake
 	gt.Const.World.Spawn.Troops.Lindwurm.NameList <- gt.Const.Strings.LindwurmNames;
@@ -128,16 +116,16 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 
 	gt.Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.NameList <- gt.Const.Strings.SpiderNames;
 	gt.Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.TitleList <- null;
-	gt.Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.Variant = 5;
+	gt.Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.Variant = 3;
 
 	// alp
 	gt.Const.World.Spawn.Troops.Alp.NameList <- gt.Const.Strings.GoblinNames;
 	gt.Const.World.Spawn.Troops.Alp.TitleList <- null;
-	gt.Const.World.Spawn.Troops.Alp.Variant = 1;
+	gt.Const.World.Spawn.Troops.Alp.Variant = 3;
 
 	gt.Const.World.Spawn.Troops.LegendDemonAlp.NameList <- gt.Const.Strings.GoblinNames;
 	gt.Const.World.Spawn.Troops.LegendDemonAlp.TitleList <- null;
-	gt.Const.World.Spawn.Troops.LegendDemonAlp.Variant = 5;
+	gt.Const.World.Spawn.Troops.LegendDemonAlp.Variant = 1;
 
 	// schrat
 	gt.Const.World.Spawn.Troops.Schrat.NameList <- gt.Const.Strings.SchratNames;
@@ -157,7 +145,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 
 	gt.Const.World.Spawn.Troops.HyenaHIGH.NameList <- gt.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.HyenaHIGH.TitleList <- null;
-	gt.Const.World.Spawn.Troops.HyenaHIGH.Variant = 2;
+	gt.Const.World.Spawn.Troops.HyenaHIGH.Variant = 3;
 
 
 

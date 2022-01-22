@@ -166,10 +166,12 @@ this.found_spider_eggs_event <- this.inherit("scripts/events/event", {
 		}
 		
 		this.m.Spider = candidates[this.Math.rand(0, candidates.len() - 1)];
+
 		this.m.Egg = roster.create("scripts/entity/tactical/player_beast/spider_eggs_player");
-		this.m.Egg.m.HireTime = this.Time.getVirtualTimeF();
 		this.m.Egg.improveMood(1.0, "..........");
 		this.m.Egg.setScenarioValues();
+		this.m.Egg.onHired();
+
 		this.m.SpiderRecruit = roster.create("scripts/entity/tactical/player_beast/spider_player");
 		this.m.SpiderRecruit.improveMood(1.0, "Found a new queen");
 		this.m.SpiderRecruit.setScenarioValues();

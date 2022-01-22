@@ -361,11 +361,23 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 			}
 		};
 
-		local oldFunction = obj.initMap;
+		local ws_initMap = obj.initMap;
 		obj.initMap = function()
 		{
+			if (this.m.StrategicProperties != null && !this.m.StrategicProperties.IsPlayerInitiated && !this.m.StrategicProperties.InCombatAlready)
+			{
+				foreach ( p in this.m.StrategicProperties.Parties ) 
+				{
+					if (p.getFlags().has("WitchHunters"))
+					{
+						this.m.StrategicProperties.PlayerDeploymentType = this.Const.Tactical.DeploymentType.Center;
+						this.m.StrategicProperties.EnemyDeploymentType = this.Const.Tactical.DeploymentType.Circle;
+					}
+				}
+			}
+
 			this.addSeigeWeaponInBattle(this.m.StrategicProperties);
-			oldFunction();
+			ws_initMap();
 		};
 
 		obj.tactical_flee_screen_onFleePressed = function()
@@ -396,8 +408,6 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 				{
 					if (bro.isAlive())
 					{
-						bro.onFactionChanged();
-
 						if (this.isKindOf(bro, "player"))
 						{
 							if (bro.getFlags().has("egg"))
@@ -424,12 +434,6 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 
 							this.Tactical.TurnSequenceBar.updateEntity(bro.getID());
 						}
-						else if (bro.getFaction() == this.Const.Faction.PlayerAnimals)
-						{
-							bro.getAIAgent().setUseHeat(true);
-							bro.getAIAgent().getProperties().BehaviorMult[this.Const.AI.Behavior.ID.Retreat] = 1.0;
-							this.Tactical.TurnSequenceBar.updateEntity(bro.getID());
-						}
 						else if (bro.getSkills().hasSkill("effects.charmed"))
 						{
 							bro.killSilently();
@@ -439,13 +443,16 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 
 				local activeEntity = this.Tactical.TurnSequenceBar.getActiveEntity();
 
-				if (activeEntity != null && activeEntity.getFaction() == this.Const.Faction.PlayerAnimals)
+				if (activeEntity != null)
 				{
-					this.Tactical.TurnSequenceBar.initNextTurn();
-				}
-				else if (activeEntity != null && activeEntity.isPlayerControlled())
-				{
-					activeEntity.getAIAgent().setFinished(false);
+					if (activeEntity.getFaction() == this.Const.Faction.PlayerAnimals)
+					{
+						this.Tactical.TurnSequenceBar.initNextTurn();
+					}
+					else if (activeEntity.isPlayerControlled()) 
+					{
+					    activeEntity.getAIAgent().setFinished(false);
+					}
 				}
 
 				this.updateCurrentEntity();

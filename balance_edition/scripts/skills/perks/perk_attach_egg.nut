@@ -17,12 +17,12 @@ this.perk_attach_egg <- this.inherit("scripts/skills/skill", {
 	{
 		if (!this.m.Container.hasSkill("actives.attach_egg"))
 		{
-			this.m.Container.add(this.new("scripts/skills/actives/attach_egg"));
+			this.m.Container.add(this.new("scripts/skills/eggs_actives/attach_egg"));
 		}
 
 		if (!this.m.Container.hasSkill("actives.unleash_tempo_spider"))
 		{
-			this.m.Container.add(this.new("scripts/skills/actives/unleash_tempo_spider"));
+			this.m.Container.add(this.new("scripts/skills/eggs_actives/unleash_tempo_spider"));
 		}
 
 		local actor = this.getContainer().getActor();

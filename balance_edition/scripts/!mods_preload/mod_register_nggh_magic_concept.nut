@@ -30,7 +30,12 @@
 
 ::mods_queue("mod_nggh_skills", "<mod_MSU", function()
 {
-	this.HexenHooks.hookSkills();
+	this.Nggh_MagicConcept.hookSkills();
+	this.Nggh_MagicConcept.hookActives();
+	this.Nggh_MagicConcept.hookEffects();
+	this.Nggh_MagicConcept.hookRacial();
+	this.Nggh_MagicConcept.hookTraits();
+	this.Nggh_MagicConcept.hookPerks();
 });
 
 

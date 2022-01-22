@@ -44,7 +44,7 @@ this.spawn_more_spider <- this.inherit("scripts/skills/skill", {
 		this.m.IsAttack = false;
 		this.m.IsTargetingActor = false;
 		this.m.ActionPointCost = 8;
-		this.m.FatigueCost = 40;
+		this.m.FatigueCost = 43;
 		this.m.MinRange = 0;
 		this.m.MaxRange = 0;
 	}
@@ -74,12 +74,28 @@ this.spawn_more_spider <- this.inherit("scripts/skills/skill", {
 				text = "Use all available eggs to spawn spiderlings around you"
 			},
 		];
+
+		if (this.Tactical.isActive() && this.m.EggsPool.countSpiderlingNum() > 5)
+		{
+			ret.push({
+				id = 9,
+				type = "text",
+				icon = "ui/tooltips/warning.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]You can\'t have more than 6 spiders at the same time[/color]"
+			});
+		}
+
 		return ret;
 	}
 
 	function isUsable()
 	{
 		if (!this.skill.isUsable())
+		{
+			return false;
+		}
+
+		if (this.m.EggsPool.countSpiderlingNum() > 5)
 		{
 			return false;
 		}
@@ -115,6 +131,7 @@ this.spawn_more_spider <- this.inherit("scripts/skills/skill", {
 	function onUse( _user, _targetTile )
 	{
 		local availableTiles = [];
+		local num = 6 - this.m.EggsPool.countSpiderlingNum();
 		
 		for( local i = 0; i < 6; i = ++i )
 		{
@@ -131,7 +148,7 @@ this.spawn_more_spider <- this.inherit("scripts/skills/skill", {
 		{
 			for( local i = 0; i < 3; i = ++i )
 			{
-				if (!this.m.EggsPool.hasEggs())
+				if (!this.m.EggsPool.hasEggs() || num == 0)
 				{
 					return false;
 				}
@@ -144,13 +161,14 @@ this.spawn_more_spider <- this.inherit("scripts/skills/skill", {
 				}
 				
 				this.m.EggsPool.usedOneEgg();
+				--num;
 			}
 		}
 		else
 		{
 			foreach ( t in availableTiles )
 			{
-				if (!this.m.EggsPool.hasEggs())
+				if (!this.m.EggsPool.hasEggs() || num == 0)
 				{
 					return false;
 				}
@@ -163,11 +181,11 @@ this.spawn_more_spider <- this.inherit("scripts/skills/skill", {
 				}
 				
 				this.m.EggsPool.usedOneEgg();
+				--num;
 			}
 		}
 		
 		this.getContainer().update();
-		
 		return true;
 	}
 	

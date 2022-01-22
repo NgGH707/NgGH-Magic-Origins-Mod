@@ -269,7 +269,6 @@ this.trickster_god_player <- this.inherit("scripts/entity/tactical/player_beast"
 		this.m.Skills.add(this.new("scripts/skills/racial/trickster_god_racial"));
 		this.m.Skills.add(this.new("scripts/skills/actives/teleport_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/gore_skill"));
-		this.m.Skills.add(this.new("scripts/skills/actives/gore_skill_zoc"));
 		this.m.Skills.update();
 	}
 

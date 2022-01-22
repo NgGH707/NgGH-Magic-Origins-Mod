@@ -598,6 +598,11 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 			this.getSkills().add(this.new("scripts/skills/racial/champion_racial"));
 			this.m.Skills.add(this.new("scripts/skills/traits/fearless_trait"));
 			this.getFlags().add("isElite");
+
+			if (type == this.Const.EntityType.Lindwurm)
+			{
+				b.ActionPoints += 1;
+			}
 		}
 		
 		local background = this.new("scripts/skills/backgrounds/charmed_beast_background");
@@ -684,7 +689,7 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 
 	function setAttributeLevelUpValues( _v )
 	{
-		local value = this.Math.rand(4, 8) * 2;
+		local value = this.Math.rand(4, 8);
 		local b = this.getBaseProperties();
 		b.Hitpoints += _v.hitpointsIncrease;
 		this.m.Hitpoints += _v.hitpointsIncrease;

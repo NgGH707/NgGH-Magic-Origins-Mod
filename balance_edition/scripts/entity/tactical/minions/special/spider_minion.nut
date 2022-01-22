@@ -237,42 +237,6 @@ this.spider_minion <- this.inherit("scripts/entity/tactical/minion", {
 
 		this.actor.onDeath(_killer, _skill, _tile, _fatalityType);
 	}
-
-	function onTurnStart()
-	{
-		if (this.getSkills().hasSkill("special.egg_attachment") && this.Tactical.State.m.IsAutoRetreat)
-		{
-			this.getFlags().add("attack_mode");
-			this.getAIAgent().setUseHeat(true);
-			this.getAIAgent().getProperties().BehaviorMult[this.Const.AI.Behavior.ID.Retreat] = 1.0;
-		}
-
-		this.actor.onTurnStart();
-	}
-
-	function retreat()
-	{
-		local accessory = this.getItems().getItemAtSlot(this.Const.ItemSlot.Accessory);
-
-		if (accessory != null && accessory.getID() == "accessory.carried_egg")
-		{
-			local e = accessory.getEntity();
-			e.m.IsTurnDone = true;
-			e.m.IsAbleToDie = false;
-
-			if (!this.isHiddenToPlayer())
-			{
-				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(e) + " has retreated from battle");
-			}
-
-			this.Tactical.getRetreatRoster().add(e);
-			this.Tactical.Entities.setLastCombatResult(this.Const.Tactical.CombatResult.PlayerRetreated);
-			accessory.m.Entity = null;
-			accessory.onDone();
-		}
-
-		this.actor.retreat();
-	}
 	
 	function onFactionChanged()
 	{
@@ -285,32 +249,6 @@ this.spider_minion <- this.inherit("scripts/entity/tactical/minion", {
 		this.getSprite("legs_front").setHorizontalFlipping(!flip);
 		this.getSprite("head").setHorizontalFlipping(!flip);
 		this.getSprite("injury").setHorizontalFlipping(!flip);
-
-		if (this.Tactical.isActive() && this.Tactical.State.m.IsAutoRetreat)
-		{
-			this.m.IsControlledByPlayer = true;
-			this.setAIAgent(this.new("scripts/ai/tactical/agents/spider_bodyguard_agent"));
-			this.getAIAgent().setActor(this);
-			this.getAIAgent().removeBehavior(this.Const.AI.Behavior.ID.Protect);
-
-	    	local protect = this.new("scripts/ai/tactical/behaviors/ai_protect_person");
-	    	this.getAIAgent().addBehavior(protect);
-
-	    	if (this.m.Master != null && !this.m.Master.isNull() && this.m.Master.isAlive() && !this.m.Master.isDying())
-			{
-	    		protect.setVIP(this.m.Master.get());
-	    	}
-		}
-		else if (!this.isPlayerControlled())
-		{
-	    	this.setAIAgent(this.new("scripts/ai/tactical/agents/spider_agent"));
-			this.getAIAgent().setActor(this);
-		}
-		else
-		{
-		    this.m.AIAgent = this.new("scripts/ai/tactical/player_agent");
-			this.m.AIAgent.setActor(this);
-		}
 	}
 
 	function onInit()

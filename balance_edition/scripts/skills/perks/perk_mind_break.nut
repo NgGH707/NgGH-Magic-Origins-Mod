@@ -17,7 +17,7 @@ this.perk_mind_break <- this.inherit("scripts/skills/skill", {
 	{
 		if (!this.m.Container.hasSkill("actives.mind_break"))
 		{
-			this.m.Container.add(this.new("scripts/skills/actives/mind_break_skill"));
+			this.m.Container.add(this.new("scripts/skills/actives/mod_mind_break_skill"));
 		}
 	}
 

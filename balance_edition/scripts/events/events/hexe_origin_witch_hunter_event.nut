@@ -15,7 +15,7 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 
 		this.m.Screens.push({
 			ID = "Encounter",
-			Text = "[img]gfx/ui/events/event_07.png[/img]A man steps out onto the road. More start to materialize behind him. Well-armed with eyes focus on you. %SPEECH_ON%Foul witch! Your tricks can\'t fool us who serve as the Lord Hammer. Good men from %townname% have spoken about your devious deeds. Gossip or truth, everything is cleared now.%SPEECH_OFF%Dogs of the Church, such flith are corrupted no differ than myself dare to challenge me. The man speaks more.%SPEECH_ON%In the name of the Lord, we shall smite you heretics. Prepare to receive your jugdment.%SPEECH_OFF%",
+			Text = "[img]gfx/ui/events/event_07.png[/img]A man steps out onto the road. More start to materialize behind him. Well-armed with eyes focus on you. %SPEECH_ON%Foul witch! Your tricks can\'t fool us who serve as the Lord Hammer. Good men from %townname% have spoken about your devious deeds. Gossip or truth, everything is cleared now.%SPEECH_OFF%Dogs of the Church, such flith are corrupted no differ than myself dare to challenge me. The man speaks more.%SPEECH_ON%In the name of the Lord, we shall smite you heretics. Prepare to receive your divine jugdment.%SPEECH_OFF%",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -24,16 +24,38 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 					Text = "You will regret for crossing my path.",
 					function getResult( _event )
 					{
-						this.World.FactionManager.getFaction(_event.m.Town.getFaction()).addPlayerRelation(this.Const.World.Assets.RelationAttacked, "You evaded purge");
-						local properties = this.World.State.getLocalCombatProperties(this.World.State.getPlayer().getPos());
-						properties.CombatID = "Event";
-						properties.Music = this.Const.Music.CivilianTracks;
-						properties.IsAutoAssigningBases = false;
-						properties.Entities = [];
-						properties.PlayerDeploymentType = this.Const.Tactical.DeploymentType.Auto;
-						properties.EnemyDeploymentType = this.Const.Tactical.DeploymentType.Auto;
-						this.Const.World.Common.addUnitsToCombat(properties.Entities, this.Const.World.Spawn.MC_WitchHunter, (100 + _event.m.ResourceBoost) * _event.m.DifficultyMult * _event.m.DifficultyMultScale, this.World.FactionManager.getFactionOfType(this.Const.FactionType.Arena).getID(), _event.m.ChampionChance);
-						this.World.State.startScriptedCombat(properties, false, false, true);
+						local playerTile = this.World.State.getPlayer().getTile();
+						local spawnTile;
+						local tries = 0;
+
+						while (tries++ < 100)
+						{
+							local x = this.Math.rand(playerTile.SquareCoords.X - 3, playerTile.SquareCoords.X + 3);
+							local y = this.Math.rand(playerTile.SquareCoords.Y - 3, playerTile.SquareCoords.Y + 3);
+
+							if (!this.World.isValidTileSquare(x, y))
+							{
+								continue;
+							}
+
+							local tile = this.World.getTileSquare(x, y);
+
+							if (tile.Type == this.Const.World.TerrainType.Impassable || tile.Type == this.Const.World.TerrainType.Ocean)
+							{
+								continue;
+							}
+
+							spawnTile = tile; 
+							break;
+						}
+
+						if (spawnTile == null)
+						{
+							spawnTile = playerTile;
+						}
+						
+						this.World.State.setPause(true);
+						_event.spawnWitchHunterParty(spawnTile);
 						return 0;
 					}
 
@@ -55,16 +77,7 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 					Text = "To arms!",
 					function getResult( _event )
 					{
-						this.World.FactionManager.getFaction(_event.m.Town.getFaction()).addPlayerRelation(this.Const.World.Assets.RelationAttacked, "You evaded purge");
-						local properties = this.World.State.getLocalCombatProperties(this.World.State.getPlayer().getPos());
-						properties.CombatID = "Event";
-						properties.Music = this.Const.Music.CivilianTracks;
-						properties.IsAutoAssigningBases = false;
-						properties.Entities = [];
-						properties.PlayerDeploymentType = this.Const.Tactical.DeploymentType.Center;
-						properties.EnemyDeploymentType = this.Const.Tactical.DeploymentType.Circle;
-						this.Const.World.Common.addUnitsToCombat(properties.Entities, this.Const.World.Spawn.MC_WitchHunter, (100 + _event.m.ResourceBoost) * _event.m.DifficultyMult * _event.m.DifficultyMultScale, this.World.FactionManager.getFactionOfType(this.Const.FactionType.Arena).getID(), _event.m.ChampionChance);
-						this.World.State.startScriptedCombat(properties, false, false, true);
+						_event.spawnWitchHunterParty(this.World.State.getPlayer().getTile());
 						return 0;
 					}
 
@@ -82,7 +95,7 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 						icon = injury.getIcon(),
 						text = _event.m.Hexe.getName() + " is hit by arrow, suffers " + injury.getNameOnly()
 					});
-					_event.m.Hexe.worsenMood(1.0, "Injured by ambush");
+					_event.m.Hexe.worsenMood(1.0, "Injured by an ambush");
 					this.Characters.push(_event.m.Hexe.getImagePath());
 				}
 				
@@ -104,7 +117,7 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 						icon = injury.getIcon(),
 						text = bro.getName() + " is hit by arrow, suffers " + injury.getNameOnly()
 					});
-					bro.worsenMood(1.0, "Injured by ambush");
+					bro.worsenMood(1.0, "Injured by an ambush");
 				}
 			}
 
@@ -113,8 +126,6 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 
 	function onUpdateScore()
 	{
-		//return;
-
 		if (this.World.getTime().Days < 30)
 		{
 			return;
@@ -142,14 +153,21 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 
 		foreach( t in towns )
 		{
-			if (t.isMilitary())
+			if (t.isMilitary() || this.isKindOf(t, "city_state"))
 			{
 				continue;
 			}
 
 			local faction = t.getFactionOfType(this.Const.FactionType.Settlement);
 
-			if (faction != null && faction.isAlliedWithPlayer())
+			if (faction != null)
+			{
+				if (faction.getPlayerRelation() >= 90.0)
+				{
+					continue;
+				}
+			}
+			else
 			{
 				continue;
 			}
@@ -168,7 +186,7 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 			return;
 		}
 
-		this.m.Score = 15 * (Hexe + 1);
+		this.m.Score = 18 * (Hexe + 1);
 	}
 
 	function onDetermineStartScreen()
@@ -207,21 +225,28 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 
 		foreach( t in towns )
 		{
-			if (t.isMilitary())
+			if (t.isMilitary() || this.isKindOf(t, "city_state"))
 			{
 				continue;
 			}
 
 			local faction = t.getFactionOfType(this.Const.FactionType.Settlement);
 
-			if (faction != null && faction.isAlliedWithPlayer())
+			if (faction != null)
+			{
+				if (faction.getPlayerRelation() >= 90.0)
+				{
+					continue;
+				}
+			}
+			else
 			{
 				continue;
 			}
 
 			local d = playerTile.getDistanceTo(t.getTile());
 
-			if (d <= nearest)
+			if (d < nearest)
 			{
 				nearest = d;
 				town = t;
@@ -229,12 +254,11 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 		}
 
 		this.m.Town = town;
-
 		local brothers = this.World.getPlayerRoster().getAll();
 
 		foreach (b in brothers)
 		{
-			if (!b.getFlags().has("isBonus") && (b.getBackground().getID() == "background.hexen_commander" || b.getFlags().has("Hexe")))
+			if (b.getFlags().has("Hexe"))
 			{
 				this.m.Hexe = b;
 				break;
@@ -256,6 +280,54 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 		this.m.DifficultyMultScale = 0.0;
 		this.m.ResourceBoost = 0;
 		this.m.Town = null;
+	}
+
+	function spawnWitchHunterParty( _tile )
+	{
+		local faction = this.World.FactionManager.getFaction(this.m.Town.getFaction());
+		local party = faction.spawnEntity(_tile, "Witch Hunters", false, null, 0);
+		local resources = this.getResources();
+		local template = this.Const.World.Common.buildDynamicTroopList(this.Const.World.Spawn.MC_WitchHunter, resources);
+		local troopMbMap = {};
+		party.getSprite("banner").setBrush(this.m.Town.getBanner());
+		party.getSprite("body").setBrush(template.Body);
+		party.setMovementSpeed(this.Const.World.MovementSettings.Speed * template.MovementSpeedMult * 5.0);
+		party.setVisibilityMult(template.VisibilityMult);
+		party.setVisionRadius(this.Const.World.Settings.Vision * template.VisionMult * 5.0);
+		party.setDescription("Brave men sent from [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.Town.getName() + "[/color] to vanquish heretics.");
+		party.setFootprintType(this.Const.World.FootprintsType.Militia);
+		party.setAttackableByAI(false);
+		party.setAlwaysAttackPlayer(true);
+		party.getFlags().add("WitchHunters", true);
+		party.getLoot().Money = this.Math.rand(100, 200);
+		party.getLoot().ArmorParts = this.Math.rand(0, 25);
+		party.getLoot().Medicine = this.Math.rand(0, 5);
+		party.getLoot().Ammo = this.Math.rand(0, 30);
+
+		foreach( troop in template.Troops )
+		{
+			local key = "Enemy" + troop.Type.ID;
+			if (!(key in troopMbMap))
+			{
+				troopMbMap[key] <- this.Const.LegendMod.GetFavEnemyBossChance(troop.Type.ID);
+			}
+
+			local mb = troopMbMap[key];
+
+			for( local i = 0; i != troop.Num; i = ++i )
+			{
+				this.Const.World.Common.addTroop(party, troop, false, this.m.ChampionChance + mb);
+			}
+		}
+
+		faction.addPlayerRelation(-faction.getPlayerRelation() + 10, "Heretics");
+		party.updatePlayerRelation();
+		party.updateStrength();
+		local c = party.getController();
+		c.getBehavior(this.Const.World.AI.Behavior.ID.Flee).setEnabled(false);
+		local attack = this.new("scripts/ai/world/orders/intercept_order");
+		attack.setTarget(this.World.State.getPlayer());
+		c.addOrder(attack);
 	}
 
 	function calcDifficultyMult()
@@ -287,11 +359,11 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 		}
 		else
 		{
-			this.m.ChampionChance = 1;
+			this.m.ChampionChance = 3;
 			this.m.DifficultyMult = this.Math.rand(115, 135) * 0.01;
 		}
 
-		this.m.ChampionChance += this.getAdditionalChampionChance() + this.World.Assets.m.ChampionChanceAdditional;
+		this.m.ChampionChance += this.getAdditionalChampionChance();
 	}
 
 	function getAdditionalChampionChance()
@@ -315,6 +387,11 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 		local s = this.Math.maxf(0.75, 0.9 * this.Math.pow(0.01 * this.World.State.getPlayer().getStrength(), 0.85));
 		local d = this.Math.minf(5.0, s);
 		return d * this.Const.Difficulty.EnemyMult[this.World.Assets.getCombatDifficulty()];
+	}
+
+	function getResources()
+	{
+		return (100 + this.m.ResourceBoost) * this.m.DifficultyMult * this.m.DifficultyMultScale;
 	}
 
 	function calcResourceBoost()

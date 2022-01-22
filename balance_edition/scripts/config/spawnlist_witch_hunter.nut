@@ -13,9 +13,9 @@ if (!("Spawn" in gt.Const.World))
 gt.Const.World.Spawn.MC_WitchHunter <- {
 	Name = "MC_WitchHunter",
 	IsDynamic = true,
-	MovementSpeedMult = 1.0,
+	MovementSpeedMult = 5.0,
 	VisibilityMult = 1.0,
-	VisionMult = 1.0,
+	VisionMult = 99.0,
 	Body = "figure_noble_02",
 	MinR = 75,
 	MaxR = 555,

@@ -26,7 +26,7 @@ this.hex_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 			"sounds/enemies/dlc2/hexe_hex_damage_04.wav"
 		];
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.UtilityTargeted;
+		this.m.Order = this.Const.SkillOrder.UtilityTargeted + 2;
 		this.m.IsSerialized = false;
 		this.m.Delay = 500;
 		this.m.IsActive = true;

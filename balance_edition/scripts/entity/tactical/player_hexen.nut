@@ -255,6 +255,10 @@ this.player_hexen <- this.inherit("scripts/entity/tactical/player", {
 		this.addDefaultStatusSprites();
 		this.getSprite("status_rooted").Scale = 0.55;
 		this.setSpriteOffset("status_rooted", this.createVec(0, 5));
+
+		local mind_break = this.new("scripts/skills/actives/mod_mind_break_skill");
+		mind_break.m.Order = this.Const.SkillOrder.UtilityTargeted + 1;
+		this.m.Skills.add(mind_break);
 		this.m.Skills.add(this.new("scripts/skills/spell_hexe/sleep_spell"));
 		this.m.Skills.add(this.new("scripts/skills/spell_hexe/hex_spell"));
 		this.m.Skills.add(this.new("scripts/skills/spell_hexe/charm_spell"));
@@ -326,8 +330,7 @@ this.player_hexen <- this.inherit("scripts/entity/tactical/player", {
 
 	function checkMorale( _change, _difficulty, _type = this.Const.MoraleCheckType.Default, _showIconBeforeMoraleIcon = "", _noNewLine = false )
 	{	
-		_difficulty = _difficulty + 5;
-
+		_difficulty = _difficulty + 10;
 		return this.player.checkMorale(_change, _difficulty, _type, _showIconBeforeMoraleIcon, _noNewLine);
 	}
 

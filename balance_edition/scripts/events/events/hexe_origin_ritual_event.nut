@@ -213,16 +213,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 					Text = "To arms!",
 					function getResult( _event )
 					{
-						this.World.FactionManager.getFaction(_event.m.Town.getFaction()).addPlayerRelation(this.Const.World.Assets.RelationMinorOffense, "Do heretic act");
-						local properties = this.World.State.getLocalCombatProperties(this.World.State.getPlayer().getPos());
-						properties.CombatID = "Event";
-						properties.Music = this.Const.Music.CivilianTracks;
-						properties.IsAutoAssigningBases = false;
-						properties.Entities = [];
-						properties.PlayerDeploymentType = this.Const.Tactical.DeploymentType.Center;
-						properties.EnemyDeploymentType = this.Const.Tactical.DeploymentType.Circle;
-						this.Const.World.Common.addUnitsToCombat(properties.Entities, this.Const.World.Spawn.MC_WitchHunter, (100 + _event.m.ResourceBoost) * _event.m.DifficultyMult * _event.m.DifficultyMultScale, this.World.FactionManager.getFactionOfType(this.Const.FactionType.Arena).getID(), _event.m.ChampionChance);
-						this.World.State.startScriptedCombat(properties, false, false, true);
+						_event.spawnWitchHunterParty(this.World.State.getPlayer().getTile());
 						return 0;
 					}
 
@@ -352,25 +343,28 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 
 		foreach( t in towns )
 		{
-			local faction;
-
-			if (t.isMilitary())
+			if (t.isMilitary() || this.isKindOf(t, "city_state"))
 			{
-				faction = t.getOwner();
-			}
-			else 
-			{
-			    faction = t.getFactionOfType(this.Const.FactionType.Settlement);
+				continue;
 			}
 
-			if (faction != null && faction.isAlliedWithPlayer())
+			local faction = t.getFactionOfType(this.Const.FactionType.Settlement);
+
+			if (faction != null)
+			{
+				if (faction.getPlayerRelation() >= 90.0)
+				{
+					continue;
+				}
+			}
+			else
 			{
 				continue;
 			}
 
 			local d = playerTile.getDistanceTo(t.getTile());
 
-			if (d >= 6)
+			if (d >= 7)
 			{
 				continue;
 			}
@@ -563,6 +557,59 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 		this.m.ResourceBoost = 0;
 	}
 
+	function spawnWitchHunterParty( _tile )
+	{
+		local faction = this.World.FactionManager.getFaction(this.m.Town.getFaction());
+		local party = faction.spawnEntity(_tile, "Witch Hunters", false, null, 0);
+		local resources = this.getResources();
+		local template = this.Const.World.Common.buildDynamicTroopList(this.Const.World.Spawn.MC_WitchHunter, resources);
+		local troopMbMap = {};
+		party.getSprite("banner").setBrush(this.m.Town.getBanner());
+		party.getSprite("body").setBrush(template.Body);
+		party.setMovementSpeed(this.Const.World.MovementSettings.Speed * template.MovementSpeedMult * 5.0);
+		party.setVisibilityMult(template.VisibilityMult);
+		party.setVisionRadius(this.Const.World.Settings.Vision * template.VisionMult * 5.0);
+		party.setDescription("Brave men sent from [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.Town.getName() + "[/color] to vanquish heretics.");
+		party.setFootprintType(this.Const.World.FootprintsType.Militia);
+		party.setAttackableByAI(false);
+		party.setAlwaysAttackPlayer(true);
+		party.getFlags().add("WitchHunters", true);
+		party.getLoot().Money = this.Math.rand(100, 200);
+		party.getLoot().ArmorParts = this.Math.rand(0, 25);
+		party.getLoot().Medicine = this.Math.rand(0, 5);
+		party.getLoot().Ammo = this.Math.rand(0, 30);
+		
+		foreach( troop in template.Troops )
+		{
+			local key = "Enemy" + troop.Type.ID;
+			if (!(key in troopMbMap))
+			{
+				troopMbMap[key] <- this.Const.LegendMod.GetFavEnemyBossChance(troop.Type.ID);
+			}
+
+			local mb = troopMbMap[key];
+
+			for( local i = 0; i != troop.Num; i = ++i )
+			{
+				this.Const.World.Common.addTroop(party, troop, false, this.m.ChampionChance + mb);
+			}
+		}
+
+		faction.addPlayerRelation(-faction.getPlayerRelation() + 10, "Heretics");
+		party.updatePlayerRelation();
+		party.updateStrength();
+		local c = party.getController();
+		c.getBehavior(this.Const.World.AI.Behavior.ID.Flee).setEnabled(false);
+		local attack = this.new("scripts/ai/world/orders/intercept_order");
+		attack.setTarget(this.World.State.getPlayer());
+		c.addOrder(attack);
+	}
+
+	function getResources()
+	{
+		return (100 + this.m.ResourceBoost) * this.m.DifficultyMult * this.m.DifficultyMultScale;
+	}
+
 	function calcDifficultyMult()
 	{
 		local r;
@@ -592,11 +639,11 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 		}
 		else
 		{
-			this.m.ChampionChance = 1;
+			this.m.ChampionChance = 3;
 			this.m.DifficultyMult = this.Math.rand(115, 135) * 0.01;
 		}
 
-		this.m.ChampionChance += this.getAdditionalChampionChance() + this.World.Assets.m.ChampionChanceAdditional;
+		this.m.ChampionChance += this.getAdditionalChampionChance();
 	}
 
 	function getAdditionalChampionChance()

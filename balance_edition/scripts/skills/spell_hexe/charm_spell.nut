@@ -63,7 +63,7 @@ this.charm_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 			"sounds/enemies/dlc2/hexe_charm_chimes_04.wav"
 		];
 		this.m.Type = this.Const.SkillType.Active;
-		this.m.Order = this.Const.SkillOrder.UtilityTargeted + 1;
+		this.m.Order = this.Const.SkillOrder.UtilityTargeted + 3;
 		this.m.IsSerialized = false;
 		this.m.Delay = 250;
 		this.m.IsActive = true;
