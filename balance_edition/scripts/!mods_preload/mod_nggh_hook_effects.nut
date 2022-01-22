@@ -157,7 +157,7 @@ this.getroottable().Nggh_MagicConcept.hookEffects <- function ()
 			}
 		};
 
-		local ws_onRemoved = obj.onRemoved();
+		local ws_onRemoved = obj.onRemoved;
 		obj.onRemoved = function()
 		{
 			if (this.m.IsSuicide)

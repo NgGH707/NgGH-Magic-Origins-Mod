@@ -683,7 +683,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_line_breaker"));
 		};
-		obj.getTooltip = function()
+		obj.getTooltip <- function()
 		{
 			return [
 				{
@@ -4066,7 +4066,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 	// ijirok
 	::mods_hookExactClass("skills/actives/gore_skill", function ( obj )
 	{
-		obj.m.IsPlayer = false;
+		obj.m.IsPlayer <- false;
 
 		local ws_create = obj.create;
 		obj.create = function()
@@ -4923,7 +4923,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			this.m.IconDisabled = "skills/active_149_sw.png";
 			this.m.Overlay = "active_149";
 		};
-		obj.onAdded = function()
+		obj.onAdded <- function()
 		{
 			this.m.IsVisibleTileNeeded = this.getContainer().getActor().isPlayerControlled();
 		};
@@ -5159,7 +5159,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			ws_create();
 			this.m.IsHidden = true;
 		};
-		obj.isUsable = function()
+		obj.isUsable <- function()
 		{
 			return this.m.IsUsable && this.getContainer().getActor().getCurrentProperties().IsAbleToUseSkills;
 		};
@@ -5175,7 +5175,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			ws_create();
 			this.m.IsHidden = true;
 		};
-		obj.isUsable = function()
+		obj.isUsable <- function()
 		{
 			return this.m.IsUsable && this.getContainer().getActor().getCurrentProperties().IsAbleToUseSkills;
 		};
