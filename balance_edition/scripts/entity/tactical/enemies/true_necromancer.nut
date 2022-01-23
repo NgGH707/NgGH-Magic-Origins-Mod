@@ -40,6 +40,7 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		}
 
 		local myTile = this.getTile();
+		local mapSize = this.Tactical.getMapSize();
 		local attempts = 0;
 		local n = 0;
 		this.Sound.play("sounds/enemies/zombie_rise_01.wav", this.Const.Sound.Volume.Skill * 2.0, myTile.Pos);
@@ -68,7 +69,7 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 			e.assignRandomEquipment();
 			++n;
 
-			if (n >= 5)
+			if (n >= 6)
 			{
 				break;
 			}
@@ -96,6 +97,7 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		b.Threat = 50;
 		b.FatigueReceivedPerHitMult = 0.0;
 		b.ThresholdToReceiveInjuryMult = 1000.0;
+		b.DamageReceivedRangedMult = 0.85;
 		b.TargetAttractionMult = 3.0;
 		b.FatalityChanceMult = 10000.0;
 		b.IsImmuneToKnockBackAndGrab = true;
