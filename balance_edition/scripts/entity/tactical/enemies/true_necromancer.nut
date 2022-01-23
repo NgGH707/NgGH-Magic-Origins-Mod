@@ -46,8 +46,8 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 
 		while (attempts++ < 250)
 		{
-			local x = this.Math.rand(this.Math.max(0, this.m.Info.Tile.SquareCoords.X - 5), this.Math.min(mapSize.X - 1, this.m.Info.Tile.SquareCoords.X + 5));
-			local y = this.Math.rand(this.Math.max(0, this.m.Info.Tile.SquareCoords.Y - 5), this.Math.min(mapSize.Y - 1, this.m.Info.Tile.SquareCoords.Y + 5));
+			local x = this.Math.rand(this.Math.max(0, myTile.SquareCoords.X - 5), this.Math.min(mapSize.X - 1, myTile.SquareCoords.X + 5));
+			local y = this.Math.rand(this.Math.max(0, myTile.SquareCoords.Y - 5), this.Math.min(mapSize.Y - 1, myTile.SquareCoords.Y + 5));
 
 			if (!this.Tactical.isValidTileSquare(x, y))
 			{
@@ -94,7 +94,6 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		b.MoraleEffectMult = 0.0;
 		b.Vision = 99;
 		b.Threat = 50;
-		b.DamageReceivedRegularMult = 0.4;
 		b.FatigueReceivedPerHitMult = 0.0;
 		b.ThresholdToReceiveInjuryMult = 1000.0;
 		b.TargetAttractionMult = 3.0;
@@ -131,6 +130,7 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		this.m.Skills.add(this.new("scripts/skills/spells/death_spell"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_anticipation"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_steel_brow"));
+		this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
 		this.m.Skills.add(this.new("scripts/skills/traits/fearless_trait"));
 		this.m.Skills.add(this.new("scripts/skills/traits/iron_jaw_trait"));
 		this.makeMiniboss();
@@ -153,7 +153,7 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		this.actor.onTurnResumed();
 	}
 
-	function onMissed( _attacker, _skill, _dontShake = false )
+	/*function onMissed( _attacker, _skill, _dontShake = false )
 	{
 		this.actor.onMissed(_attacker, _skill, _dontShake);
 
@@ -203,7 +203,7 @@ this.true_necromancer <- this.inherit("scripts/entity/tactical/human", {
 		}
 
 		return ret;
-	}
+	}*/
 	
 	function onDeath( _killer, _skill, _tile, _fatalityType )
 	{

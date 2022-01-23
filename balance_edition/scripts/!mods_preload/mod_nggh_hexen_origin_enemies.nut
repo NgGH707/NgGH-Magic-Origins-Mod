@@ -647,6 +647,8 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 		"knight",
 		"officer",
 		"barbarian_chosen",
+		"free_company_leader_low",
+		"free_company_leader",
 	];
 	foreach ( name in strong )
 	{

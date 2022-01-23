@@ -4223,7 +4223,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 				}
 			}
 		};
-		obj.onTargetSelected = function( _targetTile )
+		obj.onTargetSelected <- function( _targetTile )
 		{
 			local ownTile = _targetTile;
 
@@ -6165,6 +6165,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 				}
 			}
 		};
+		obj.onUpdate = function( _properties ) {};
 	});
 
 
@@ -6620,6 +6621,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 				}
 			}
 		};
+		obj.onUpdate = function( _properties ) {};
 	});
 
 	delete this.Nggh_MagicConcept.hookActives;

@@ -190,6 +190,12 @@ this.getroottable().Nggh_MagicConcept.hookEffects <- function ()
 	//
 	::mods_hookExactClass("skills/effects/fake_charmed_effect", function(obj) 
 	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.IsRemovedAfterBattle = false;
+		}
 		obj.getName <- function()
 		{
 			return "Simp";

@@ -426,6 +426,46 @@ this.hexen_background <- this.inherit("scripts/skills/backgrounds/character_back
 	
 	function onNewDay()
 	{
+		local brothers = this.World.getPlayerRoster().getAll();
+		local ids = [
+			"effects.fake_charmed_broken",
+			"effects.fake_charmed_0",
+			"effects.fake_charmed",
+			"effects.fake_1_charmed",
+			"effects.fake_2_charmed",
+			"effects.fake_3_charmed",
+		];
+
+		if (!this.World.Flags.has("has_checked_simp"))
+		{
+			foreach (bro in brothers)
+			{
+				if (bro.getFlags().has("Hexe"))
+				{
+					continue;
+				}
+
+				local isSimp = false;
+
+				foreach ( id in  ids )
+				{
+					if (bro.getSkills().hasSkill(id))
+					{
+						isSimp = true;
+						break;
+					}
+				}
+
+				if (!isSimp)
+				{
+					this.World.Assets.getOrigin().onHiredByScenario(bro);
+				}
+			}
+
+			this.World.Flags.add("has_checked_simp");
+		}
+
+		///
 		local stash = this.World.Assets.getStash();
 
 		if (stash.getNumberOfEmptySlots() > 0 && this.Math.rand(1, 100) <= 15)

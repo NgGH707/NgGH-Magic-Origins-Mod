@@ -142,7 +142,7 @@ this.champion_loot <- this.inherit("scripts/skills/skill", {
 			_actor.m.XP = this.Const.LevelXP[this.Const.LevelXP.len() - 1];
 			return;
 		}
-		else if (!isScenarioMode && this.World.Assets.getOrigin().getID() == "scenario.manhunters" && _actor.m.XP + _xp * this.m.CurrentProperties.XPGainMult >= this.Const.LevelXP[6] && _actor.getBackground().getID() == "background.slave")
+		else if (!isScenarioMode && this.World.Assets.getOrigin().getID() == "scenario.manhunters" && _actor.m.XP + _xp * _actor.m.CurrentProperties.XPGainMult >= this.Const.LevelXP[6] && _actor.getBackground().getID() == "background.slave")
 		{
 			_actor.m.CombatStats.XPGained += this.Const.LevelXP[6] - _actor.m.XP;
 			_actor.m.XP = this.Const.LevelXP[6];
