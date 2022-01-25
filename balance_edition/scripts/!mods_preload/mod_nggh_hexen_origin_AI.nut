@@ -10,7 +10,10 @@ this.getroottable().HexenHooks.hookAI <- function ()
 	});
 	::mods_hookExactClass("ai/tactical/behaviors/ai_darkflight", function ( o )
 	{
-		o.m.PossibleSkills.push("actives.alp_teleport");
+		o.m.PossibleSkills.extend([
+			"actives.alp_teleport",
+			"actives.legend_darkflight"
+		]);
 	});
 	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_default", function ( o )
 	{
@@ -21,10 +24,121 @@ this.getroottable().HexenHooks.hookAI <- function ()
 			"actives.death",
 		]);
 	});
+	::mods_hookExactClass("ai/tactical/behaviors/ai_engage_ranged", function(o) 
+	{
+		o.m.PossibleSkills.extend([
+			"actives.legend_magic_missile",
+			"actives.legend_chain_lightning",
+		]);
+	});
+	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_bow", function(o) 
+	{
+		o.m.PossibleSkills.extend([
+			"actives.legend_magic_missile",
+			"actives.legend_chain_lightning",
+		]);
+	});
+	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_throw_net", function(o) 
+	{
+		o.m.PossibleSkills.extend([
+			"actives.mage_legend_magic_web_bolt",
+		]);
+	});
+	::mods_hookExactClass("ai/tactical/behaviors/ai_miasma", function(o) 
+	{
+		o.m.PossibleSkills.push("actives.legend_miasma");
+	});
+	::mods_hookExactClass("ai/tactical/behaviors/ai_wither", function(o) 
+	{
+		o.m.PossibleSkills.push("actives.legend_wither");
+	});
+	::mods_hookExactClass("ai/tactical/behaviors/ai_raise_undead", function(o) 
+	{
+		o.m.PossibleSkills.push("actives.legend_raise_undead");
+	});
 	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_thresh", function ( o )
 	{
 		o.m.PossibleSkills.push("actives.uproot_aoe");
 	});
+
+
+	// fix lightning storm can only be used by lich
+	::mods_hookExactClass("ai/tactical/behaviors/ai_lightning_storm", function ( o )
+	{
+		obj.selectBestTarget = function( _entity, _targets )
+		{
+			local size = this.Tactical.getMapSize();
+			local scores = [];
+			scores.resize(size.X);
+
+			for( local i = 0; i < scores.len(); i = ++i )
+			{
+				scores[i] = {
+					Score = 0.0,
+					X = i
+				};
+			}
+
+			local entities = this.Tactical.Entities.getInstancesOfFaction(_entity.getFaction());
+
+			foreach( e in entities )
+			{
+				local skill = e.getSkills().getSkillByID("actives.lightning_storm");
+
+				if (skill != null && skill.getTiles().len() != 0)
+				{
+					scores[skill.getTiles()[0].SquareCoords.X].Score = -999999.0;
+				}
+			}
+
+			foreach( target in _targets )
+			{
+				if (target.Actor.getType() == this.Const.EntityType.Wardog || target.Actor.getType() == this.Const.EntityType.ArmoredWardog || target.Actor.getType() == this.Const.EntityType.Warhound)
+				{
+					continue;
+				}
+
+				local x = target.Actor.getTile().SquareCoords.X;
+				local score = this.queryTargetValue(_entity, target.Actor, this.m.Skill);
+
+				if (target.Actor.getCurrentProperties().IsStunned || target.Actor.getCurrentProperties().IsRooted)
+				{
+					score = score * this.Const.AI.Behavior.LightningStormStunnedTargetMult;
+				}
+
+				if (target.Actor.getTile().hasZoneOfControlOtherThan(target.Actor.getAlliedFactions()))
+				{
+					score = score * this.Const.AI.Behavior.LightningStormTargetInZOCMult;
+				}
+
+				scores[x].Score += score;
+			}
+
+			scores.sort(function ( _a, _b )
+			{
+				if (_a.Score > _b.Score)
+				{
+					return -1;
+				}
+				else if (_a.Score < _b.Score)
+				{
+					return 1;
+				}
+
+				return 0;
+			});
+
+			if (scores[0].Score > 0)
+			{
+				return this.Tactical.getTileSquare(scores[0].X, 15);
+			}
+			else
+			{
+				return null;
+			}
+		}
+	});
+
 
 	//fix strange behavior of enemy nacho with the modded skill
 	::mods_hookNewObject("ai/tactical/behaviors/ai_attack_swallow_whole", function ( o )

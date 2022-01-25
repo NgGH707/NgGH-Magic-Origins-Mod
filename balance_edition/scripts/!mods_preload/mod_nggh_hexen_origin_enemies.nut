@@ -492,46 +492,46 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 
 	local runes_melee = [
 		[
-			"legend_RSH_shielding"
+			"mod_RSH_shielding"
 		],
 		[
-			"legend_RSA_diehard",
-			"legend_RSA_repulsion",
-			"legend_RSA_thorns"
+			"mod_RSA_diehard",
+			"mod_RSA_repulsion",
+			"mod_RSA_thorns"
 		],
 		[
-			"legend_RSW_corrosion",
-			"legend_RSW_flame",
-			"legend_RSW_precision",
-			"legend_RSW_steadfast",
+			"mod_RSW_corrosion",
+			"mod_RSW_flame",
+			"mod_RSW_precision",
+			"mod_RSW_steadfast",
 		],
 	];
 	local runes_ranged = [
 		[
-			"legend_RSH_shielding"
+			"mod_RSH_shielding"
 		],
 		[
-			"legend_RSA_diehard",
-			"legend_RSA_repulsion",
+			"mod_RSA_diehard",
+			"mod_RSA_repulsion",
 		],
 		[
-			"legend_RSW_corrosion",
-			"legend_RSW_flame",
-			"legend_RSW_precision",
-			"legend_RSW_steadfast",
-			"legend_RSW_snipping"
+			"mod_RSW_corrosion",
+			"mod_RSW_flame",
+			"mod_RSW_precision",
+			"mod_RSW_steadfast",
+			"mod_RSW_snipping"
 		],
 	];
 	local rune_weak = [
 		[
-			"legend_RSH_shielding"
+			"mod_RSH_shielding"
 		],
 		[
-			"legend_RSA_repulsion",
+			"mod_RSA_repulsion",
 		],
 		[
-			"legend_RSW_corrosion",
-			"legend_RSW_precision",
+			"mod_RSW_corrosion",
+			"mod_RSW_precision",
 		],
 	];
 	local getRandomeWeakRune = function( _items )
@@ -647,8 +647,6 @@ this.getroottable().HexenHooks.hookEnemies <- function ()
 		"knight",
 		"officer",
 		"barbarian_chosen",
-		"free_company_leader_low",
-		"free_company_leader",
 	];
 	foreach ( name in strong )
 	{

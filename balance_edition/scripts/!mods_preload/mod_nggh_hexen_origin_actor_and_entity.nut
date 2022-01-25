@@ -290,6 +290,52 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			};
 			this.Tactical.spawnParticleEffect(false, effect.Brushes, this.getTile(), effect.Delay, effect.Quantity, effect.LifeTimeQuantity, effect.SpawnRate, effect.Stages, this.createVec(0, 40));
 		});
+		obj.makeMiniboss <- function()
+		{
+			if (!this.actor.makeMiniboss())
+			{
+				return false;
+			}
+
+			local b = this.m.BaseProperties;
+
+			if (b.getMeleeSkill() <= 40)
+			{
+				b.MeleeSkill = 40;
+			}
+
+			if (b.getRangedSkill() <= 50)
+			{
+				b.RangedSkill = 65;
+			}
+
+			this.m.Items.unequip(this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand));
+			this.m.Items.equip(this.new("scripts/items/weapons/named/mod_named_staff"));
+			this.m.Items.equip(this.new(this.Math.rand(1, 10) <= 2 ? "scripts/items/accessory/legend_warbear_item" : "scripts/items/accessory/wolf_item"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
+			local rune = this.new("scripts/skills/rune_sigils/mod_RSH_shielding");
+			rune.m.IsForceEnabled = true;
+			rune.m.HitpointsThreshold = 100;
+			this.m.Skills.add(rune);
+			rune.m.Hitpoints = 100;
+			rune.m.HitpointsMax = 150;
+			local AI = this.getAIAgent();
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_darkflight"));
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_bow"));
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_throw_net"));
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_miasma"));
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_raise_undead"));
+
+			if (this.Math.rand(1, 100) <= 25 + this.Math.rand(0, 5))
+			{
+				local lightning = this.new("scripts/skills/actives/lightning_storm_skill");
+				lightning.m.ActionPointCost = 1;
+				this.m.Skills.add(lightning);
+				AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_lightning_storm"));
+			}
+
+			return true;
+		};
 	});
 
 	::mods_hookExactClass("entity/tactical/enemies/legend_hexe_leader", function ( obj )
@@ -476,6 +522,57 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			};
 			this.Tactical.spawnParticleEffect(false, effect.Brushes, this.getTile(), effect.Delay, effect.Quantity, effect.LifeTimeQuantity, effect.SpawnRate, effect.Stages, this.createVec(0, 40));
 		});
+		obj.makeMiniboss <- function()
+		{
+			if (!this.actor.makeMiniboss())
+			{
+				return false;
+			}
+
+			local b = this.m.BaseProperties;
+
+			if (b.getMeleeSkill() <= 60)
+			{
+				b.MeleeSkill = 60;
+			}
+
+			if (b.getRangedSkill() <= 60)
+			{
+				b.RangedSkill = 75;
+			}
+
+			this.m.Items.unequip(this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand));
+			this.m.Items.equip(this.new("scripts/items/weapons/named/mod_named_staff"));
+			this.m.Items.equip(this.new("scripts/items/accessory/legend_white_wolf_item"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_dodge"));
+			this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
+			this.m.Skills.add(this.new("scripts/skills/actives/wither_skill"));
+
+			local rune = this.new("scripts/skills/rune_sigils/mod_RSH_shielding");
+			rune.m.IsForceEnabled = true;
+			rune.m.HitpointsThreshold = 100;
+			this.m.Skills.add(rune);
+			rune.m.Hitpoints = 100;
+			rune.m.HitpointsMax = 150;
+
+			local AI = this.getAIAgent();
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_darkflight"));
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_bow"));
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_throw_net"));
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_miasma"));
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_raise_undead"));
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_wither"));
+
+			if (this.Math.rand(1, 100) <= 50 + this.Math.rand(0, 5))
+			{
+				local lightning = this.new("scripts/skills/actives/lightning_storm_skill");
+				lightning.m.ActionPointCost = 1;
+				this.m.Skills.add(lightning);
+				AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_lightning_storm"));
+			}
+
+			return true;
+		};
 	});
 
 	if (!this.IsAccessoryCompanionsExist)

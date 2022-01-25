@@ -290,7 +290,7 @@ this.hexe_origin_ritual_event <- this.inherit("scripts/events/event", {
 		{
 			local tries = 0;
 
-			while (QualifiedItems.Second.len() > 0 && tries < 40)
+			while (QualifiedItems.Second.len() > 0 && tries < 100)
 			{
 				local index = this.Math.rand(0, QualifiedItems.Second.len() - 1);
 				local find = QualifiedItems.Second.remove(index);

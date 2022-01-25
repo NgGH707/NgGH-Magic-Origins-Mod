@@ -5,6 +5,9 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	gt.TalentFiller <- this.new("scripts/mods/talent_filler");
 	gt.HexeVersion <- 17;
 	gt.IsAccessoryCompanionsExist <- ::mods_getRegisteredMod("mod_AC") != null;
+	gt.Const.Items.NamedMeleeWeapons.push("weapons/named/mod_named_staff");
+	gt.Const.Items.NamedWeapons = clone this.Const.Items.NamedMeleeWeapons;
+	gt.Const.Items.NamedWeapons.extend(this.Const.Items.NamedRangedWeapons);
 
 	if (!("HexenOrigin" in gt.Const))
 	{
@@ -20,115 +23,124 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	gt.HexenHooks.hookEnemies();
 	gt.HexenHooks.hookAI();
 
+	// hexe
+	gt.Const.World.Spawn.Troops.Hexe.NameList <- this.Const.Strings.HexeNames;
+	gt.Const.World.Spawn.Troops.Hexe.TitleList <- null;
+	gt.Const.World.Spawn.Troops.Hexe.Variant = 3;
+
+	gt.Const.World.Spawn.Troops.LegendHexeLeader.NameList <- this.Const.Strings.HexeNames;
+	gt.Const.World.Spawn.Troops.LegendHexeLeader.TitleList <- null;
+	gt.Const.World.Spawn.Troops.LegendHexeLeader.Variant = 7;
+
 	// wolf
-	gt.Const.World.Spawn.Troops.Direwolf.NameList <- gt.Const.Strings.WolfNames;
+	gt.Const.World.Spawn.Troops.Direwolf.NameList <- this.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.Direwolf.TitleList <- null;
 	gt.Const.World.Spawn.Troops.Direwolf.Variant = 1;
 
-	gt.Const.World.Spawn.Troops.DirewolfHIGH.NameList <- gt.Const.Strings.WolfNames;
+	gt.Const.World.Spawn.Troops.DirewolfHIGH.NameList <- this.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.DirewolfHIGH.TitleList <- null;
 	gt.Const.World.Spawn.Troops.DirewolfHIGH.Variant = 2;
 
-	gt.Const.World.Spawn.Troops.DirewolfBodyguard.NameList <- gt.Const.Strings.WolfNames;
+	/*gt.Const.World.Spawn.Troops.DirewolfBodyguard.NameList <- gt.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.DirewolfBodyguard.TitleList <- null;
-	gt.Const.World.Spawn.Troops.DirewolfBodyguard.Variant = 1;
+	gt.Const.World.Spawn.Troops.DirewolfBodyguard.Variant = 1;*/
 
-	gt.Const.World.Spawn.Troops.LegendWhiteDirewolf.NameList <- gt.Const.Strings.WolfNames;
+	gt.Const.World.Spawn.Troops.LegendWhiteDirewolf.NameList <- this.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.LegendWhiteDirewolf.TitleList <- null;
 	gt.Const.World.Spawn.Troops.LegendWhiteDirewolf.Variant = 5;
 
-	gt.Const.World.Spawn.Troops.LegendWhiteDirewolfBodyguard.NameList <- gt.Const.Strings.WolfNames;
+	/*gt.Const.World.Spawn.Troops.LegendWhiteDirewolfBodyguard.NameList <- gt.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.LegendWhiteDirewolfBodyguard.TitleList <- null;
-	gt.Const.World.Spawn.Troops.LegendWhiteDirewolfBodyguard.Variant = 3;
+	gt.Const.World.Spawn.Troops.LegendWhiteDirewolfBodyguard.Variant = 3;*/
 
 	// nacho
-	gt.Const.World.Spawn.Troops.Ghoul.NameList <- gt.Const.Strings.NachoNames;
+	gt.Const.World.Spawn.Troops.Ghoul.NameList <- this.Const.Strings.NachoNames;
 	gt.Const.World.Spawn.Troops.Ghoul.TitleList <- null;
 	gt.Const.World.Spawn.Troops.Ghoul.Variant = 1;
 
-	gt.Const.World.Spawn.Troops.GhoulHIGH.NameList <- gt.Const.Strings.NachoNames;
+	gt.Const.World.Spawn.Troops.GhoulHIGH.NameList <- this.Const.Strings.NachoNames;
 	gt.Const.World.Spawn.Troops.GhoulHIGH.TitleList <- null;
 	gt.Const.World.Spawn.Troops.GhoulHIGH.Variant = 5;
 
-	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.NameList <- gt.Const.Strings.NachoNames;
+	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.NameList <- this.Const.Strings.NachoNames;
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.TitleList <- null;
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.Variant = 1;
 
-	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.NameList <- gt.Const.Strings.NachoNames;
+	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.NameList <- this.Const.Strings.NachoNames;
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.TitleList <- null;
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.Variant = 1;
 
 	// snake
-	gt.Const.World.Spawn.Troops.Lindwurm.NameList <- gt.Const.Strings.LindwurmNames;
+	gt.Const.World.Spawn.Troops.Lindwurm.NameList <- this.Const.Strings.LindwurmNames;
 	gt.Const.World.Spawn.Troops.Lindwurm.TitleList <- null;
 	gt.Const.World.Spawn.Troops.Lindwurm.Variant = 3;
 
-	gt.Const.World.Spawn.Troops.LegendStollwurm.NameList <- gt.Const.Strings.LindwurmNames;
+	gt.Const.World.Spawn.Troops.LegendStollwurm.NameList <- this.Const.Strings.LindwurmNames;
 	gt.Const.World.Spawn.Troops.LegendStollwurm.TitleList <- null;
 	gt.Const.World.Spawn.Troops.LegendStollwurm.Variant = 5;
 
-	gt.Const.World.Spawn.Troops.Serpent.NameList <- gt.Const.Strings.SerpentNames;
+	gt.Const.World.Spawn.Troops.Serpent.NameList <- this.Const.Strings.SerpentNames;
 	gt.Const.World.Spawn.Troops.Serpent.TitleList <- null;
 	gt.Const.World.Spawn.Troops.Serpent.Variant = 3;
 
 	// bear
-	gt.Const.World.Spawn.Troops.LegendBear.NameList <- gt.Const.Strings.OrcNames;
+	gt.Const.World.Spawn.Troops.LegendBear.NameList <- this.Const.Strings.OrcNames;
 	gt.Const.World.Spawn.Troops.LegendBear.TitleList <- null;
 	gt.Const.World.Spawn.Troops.LegendBear.Variant = 5;
 
 	// unhold
-	gt.Const.World.Spawn.Troops.Unhold.NameList <- gt.Const.Strings.UnholdNames;
+	gt.Const.World.Spawn.Troops.Unhold.NameList <- this.Const.Strings.UnholdNames;
 	gt.Const.World.Spawn.Troops.Unhold.TitleList <- null;
 	gt.Const.World.Spawn.Troops.Unhold.Variant = 2;
 
-	gt.Const.World.Spawn.Troops.UnholdFrost.NameList <- gt.Const.Strings.UnholdNames;
+	gt.Const.World.Spawn.Troops.UnholdFrost.NameList <- this.Const.Strings.UnholdNames;
 	gt.Const.World.Spawn.Troops.UnholdFrost.TitleList <- null;
 	gt.Const.World.Spawn.Troops.UnholdFrost.Variant = 3;
 
-	gt.Const.World.Spawn.Troops.UnholdBog.NameList <- gt.Const.Strings.UnholdNames;
+	gt.Const.World.Spawn.Troops.UnholdBog.NameList <- this.Const.Strings.UnholdNames;
 	gt.Const.World.Spawn.Troops.UnholdBog.TitleList <- null;
 	gt.Const.World.Spawn.Troops.UnholdBog.Variant = 2;
 
-	gt.Const.World.Spawn.Troops.BarbarianUnhold.NameList <- gt.Const.Strings.UnholdNames;
+	gt.Const.World.Spawn.Troops.BarbarianUnhold.NameList <- this.Const.Strings.UnholdNames;
 	gt.Const.World.Spawn.Troops.BarbarianUnhold.TitleList <- null;
 	gt.Const.World.Spawn.Troops.BarbarianUnhold.Variant = 2;
 
-	gt.Const.World.Spawn.Troops.BarbarianUnholdFrost.NameList <- gt.Const.Strings.UnholdNames;
+	gt.Const.World.Spawn.Troops.BarbarianUnholdFrost.NameList <- this.Const.Strings.UnholdNames;
 	gt.Const.World.Spawn.Troops.BarbarianUnholdFrost.TitleList <- null;
 	gt.Const.World.Spawn.Troops.BarbarianUnholdFrost.Variant = 2;
 
-	gt.Const.World.Spawn.Troops.LegendRockUnhold.NameList <- gt.Const.Strings.UnholdNames;
+	gt.Const.World.Spawn.Troops.LegendRockUnhold.NameList <- this.Const.Strings.UnholdNames;
 	gt.Const.World.Spawn.Troops.LegendRockUnhold.TitleList <- ["the Mountain"];
 	gt.Const.World.Spawn.Troops.LegendRockUnhold.Variant = 5;
 
 	// spider
-	gt.Const.World.Spawn.Troops.Spider.NameList <- gt.Const.Strings.SpiderNames;
+	gt.Const.World.Spawn.Troops.Spider.NameList <- this.Const.Strings.SpiderNames;
 	gt.Const.World.Spawn.Troops.Spider.TitleList <- null;
 	gt.Const.World.Spawn.Troops.Spider.Variant = 1;
 
-	gt.Const.World.Spawn.Troops.SpiderBodyguard.NameList <- gt.Const.Strings.SpiderNames;
+	/*gt.Const.World.Spawn.Troops.SpiderBodyguard.NameList <- gt.Const.Strings.SpiderNames;
 	gt.Const.World.Spawn.Troops.SpiderBodyguard.TitleList <- null;
-	gt.Const.World.Spawn.Troops.SpiderBodyguard.Variant = 1;
+	gt.Const.World.Spawn.Troops.SpiderBodyguard.Variant = 1;*/
 
-	gt.Const.World.Spawn.Troops.LegendRedbackSpider.NameList <- gt.Const.Strings.SpiderNames;
+	gt.Const.World.Spawn.Troops.LegendRedbackSpider.NameList <- this.Const.Strings.SpiderNames;
 	gt.Const.World.Spawn.Troops.LegendRedbackSpider.TitleList <- null;
 	gt.Const.World.Spawn.Troops.LegendRedbackSpider.Variant = 5;
 
-	gt.Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.NameList <- gt.Const.Strings.SpiderNames;
+	/*gt.Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.NameList <- gt.Const.Strings.SpiderNames;
 	gt.Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.TitleList <- null;
-	gt.Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.Variant = 3;
+	gt.Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.Variant = 3;*/
 
 	// alp
-	gt.Const.World.Spawn.Troops.Alp.NameList <- gt.Const.Strings.GoblinNames;
+	gt.Const.World.Spawn.Troops.Alp.NameList <- this.Const.Strings.GoblinNames;
 	gt.Const.World.Spawn.Troops.Alp.TitleList <- null;
 	gt.Const.World.Spawn.Troops.Alp.Variant = 3;
 
-	gt.Const.World.Spawn.Troops.LegendDemonAlp.NameList <- gt.Const.Strings.GoblinNames;
+	gt.Const.World.Spawn.Troops.LegendDemonAlp.NameList <- this.Const.Strings.GoblinNames;
 	gt.Const.World.Spawn.Troops.LegendDemonAlp.TitleList <- null;
 	gt.Const.World.Spawn.Troops.LegendDemonAlp.Variant = 1;
 
 	// schrat
-	gt.Const.World.Spawn.Troops.Schrat.NameList <- gt.Const.Strings.SchratNames;
+	gt.Const.World.Spawn.Troops.Schrat.NameList <- this.Const.Strings.SchratNames;
 	gt.Const.World.Spawn.Troops.Schrat.TitleList <- null;
 
 	// kraken
@@ -139,11 +151,11 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	gt.Const.World.Spawn.Troops.LegendRockUnhold.TitleList <- ["the Trickster"];
 
 	// hyena
-	gt.Const.World.Spawn.Troops.Hyena.NameList <- gt.Const.Strings.WolfNames;
+	gt.Const.World.Spawn.Troops.Hyena.NameList <- this.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.Hyena.TitleList <- null;
 	gt.Const.World.Spawn.Troops.Hyena.Variant = 1;
 
-	gt.Const.World.Spawn.Troops.HyenaHIGH.NameList <- gt.Const.Strings.WolfNames;
+	gt.Const.World.Spawn.Troops.HyenaHIGH.NameList <- this.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.HyenaHIGH.TitleList <- null;
 	gt.Const.World.Spawn.Troops.HyenaHIGH.Variant = 3;
 

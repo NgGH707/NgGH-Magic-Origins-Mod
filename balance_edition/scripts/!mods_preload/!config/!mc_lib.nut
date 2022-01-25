@@ -74,6 +74,72 @@ gt.Const.MC_MagicTier <- {
 	COUNT = 4,
 };
 
+gt.Const.MC_NamedStaff_MagicSkills <- [
+	{
+		Name = "Chain Lightning",
+		Script = "actives/legend_chain_lightning",
+		Fatigue = 0,
+		AP = 0,
+		Count = 0
+	},
+	{
+		Name = "Call Lightning",
+		Script = "actives/legend_call_lightning",
+		Fatigue = 0,
+		AP = 0,
+		Count = 0
+	},
+	{
+		Name = "Levitate Person",
+		Script = "actives/legend_levitate_person",
+		Fatigue = 0,
+		AP = 0,
+		Count = 0
+	},
+	{
+		Name = "Magic Missile",
+		Script = "actives/legend_magic_missile",
+		Fatigue = 2,
+		AP = 0,
+		Count = 0
+	},
+	{
+		Name = "Holy Flame",
+		Script = "actives/legend_holyflame_skill",
+		Fatigue = 2,
+		AP = 0,
+		Count = 0
+	},
+	{
+		Name = "Web Bolt",
+		Script = "actives/mage_legend_magic_web_bolt",
+		Fatigue = 5,
+		AP = 0,
+		Count = 0
+	},
+	{
+		Name = "Darkflight",
+		Script = "actives/legend_darkflight",
+		Fatigue = 5,
+		AP = 0,
+		Count = 0
+	},
+	{
+		Name = "Miasma",
+		Script = "actives/legend_miasma_skill",
+		Fatigue = 3,
+		AP = 1,
+		Count = 0
+	},
+	{
+		Name = "Conduct Seance",
+		Script = "actives/legend_raise_undead",
+		Fatigue = 5,
+		AP = 0,
+		Count = 0
+	},
+];
+
 gt.Const.MC_Magic <- [
 	//None = 0
 	[

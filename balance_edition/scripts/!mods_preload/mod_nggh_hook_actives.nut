@@ -6107,7 +6107,6 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			{
 				_properties.DamageRegularMin = 0;
 				_properties.DamageRegularMax = 0;
-				_properties.DamageArmorMult /= 0.75;
 
 				if (this.isUpgradeDrag())
 				{

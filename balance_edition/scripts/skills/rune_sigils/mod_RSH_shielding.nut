@@ -102,6 +102,11 @@ this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 
 	function isHidden()
 	{
+		if (this.m.IsForceEnabled)
+		{
+			return false;
+		}
+
 		if (this.getContainer().getActor().getArmor(this.Const.BodyPart.Head) <= 0)
 		{
 			return true;
