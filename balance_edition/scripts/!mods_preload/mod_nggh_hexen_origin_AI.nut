@@ -65,7 +65,7 @@ this.getroottable().HexenHooks.hookAI <- function ()
 	// fix lightning storm can only be used by lich
 	::mods_hookExactClass("ai/tactical/behaviors/ai_lightning_storm", function ( o )
 	{
-		obj.selectBestTarget = function( _entity, _targets )
+		o.selectBestTarget = function( _entity, _targets )
 		{
 			local size = this.Tactical.getMapSize();
 			local scores = [];
@@ -136,7 +136,7 @@ this.getroottable().HexenHooks.hookAI <- function ()
 			{
 				return null;
 			}
-		}
+		};
 	});
 
 

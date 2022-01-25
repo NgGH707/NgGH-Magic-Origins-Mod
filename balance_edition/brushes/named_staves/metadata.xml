@@ -1,0 +1,8 @@
+<brush name="gfx/named_staves.png" version="17">
+  <sprite id="Stuff1" offsetY="35" ic="FF3B404A" width="73" height="167" img="icons\Stuff1.png" left="-60" right="13" top="-67" bottom="100" />
+  <sprite id="Stuff1_bloodied" offsetY="35" ic="FF3B404A" width="73" height="167" img="icons\Stuff1_bloodied.png" left="-60" right="13" top="-67" bottom="100" />
+  <sprite id="Stuff2" offsetY="35" ic="FF3B404A" width="76" height="168" img="icons\Stuff2.png" left="-60" right="16" top="-68" bottom="100" />
+  <sprite id="Stuff2_bloodied" offsetY="35" ic="FF3B404A" width="76" height="168" img="icons\Stuff2_bloodied.png" left="-60" right="16" top="-68" bottom="100" />
+  <sprite id="Stuff3" offsetY="35" ic="FF3B404A" width="77" height="170" img="icons\Stuff3.png" left="-60" right="17" top="-70" bottom="100" />
+  <sprite id="Stuff3_bloodied" offsetY="35" ic="FF3B404A" width="80" height="197" img="icons\Stuff3_bloodied.png" left="-60" right="17" top="-70" bottom="100" />
+</brush>
