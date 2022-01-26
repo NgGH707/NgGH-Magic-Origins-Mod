@@ -1,6 +1,6 @@
 this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 	m = {
-		TurnsLeft = 2,
+		TurnsLeft = 1,
 		OriginalFaction = 0,
 		OriginalAgent = null,
 		OriginalSocket = null,
@@ -26,7 +26,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		this.m.Name = "Possessed";
 		this.m.Icon = "skills/status_effect_69.png";
 		this.m.IconMini = "status_effect_69_mini";
-		this.m.Overlay = "status_effect_69";
+		this.m.Overlay = "";
 		this.m.Type = this.Const.SkillType.StatusEffect;
 		this.m.IsActive = false;
 		this.m.IsRemovedAfterBattle = true;
@@ -52,6 +52,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		local actor = this.getContainer().getActor();
 		this.m.OriginalFaction = actor.getFaction();
 		this.m.OriginalSocket = actor.getSprite("socket").getBrush().Name;
+		this.m.Overlay = "status_effect_69";
 		actor.getFlags().set("Charmed", true);
 	}
 
@@ -97,6 +98,8 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 
 	function onPossess()
 	{
+		local actor = this.getContainer().getActor();
+
 		if (actor.isPlayerControlled())
 		{
 			this.m.OriginalAgent = actor.getAIAgent();
@@ -124,7 +127,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		local AI = actor.getAIAgent();
 		AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_ghost_possess"));
 		AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_terror"));
-		local touch = this.new("scripts/skills/actives/ghastly_touch")
+		local touch = this.new("scripts/skills/actives/ghastly_touch");
 		this.getContainer().add(touch);
 		this.m.GhostSkills.push(touch);
 		local scream = this.m.Possessor.getType() == this.Const.EntityType.LegendBanshee ? this.new("scripts/skills/actives/legend_banshee_scream") : this.new("scripts/skills/actives/horrific_scream");
@@ -144,6 +147,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 			{
 				this.m.IsActivated = true;
 				this.m.TurnsLeft = 2;
+				this.spawnIcon(this.m.Overlay, actor.getTile());
 				this.onPossess();
 			}
 			else
