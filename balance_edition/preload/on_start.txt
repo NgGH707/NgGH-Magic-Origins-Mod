@@ -3,6 +3,7 @@ gfx/world_weather.png
 gfx/ui.png
 gfx/ui_mc.png
 gfx/entity_mc.png
+gfx/named_staves.png
 gfx/quotes.png
 gfx/fonts/cinzel_bold_20.fnt
 gfx/fonts/cinzel_bold_100.fnt

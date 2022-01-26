@@ -4169,7 +4169,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 
 			this.getContainer().add(this.new("scripts/skills/actives/gore_skill_zoc"));
 		};
-		function getTooltip()
+		obj.getTooltip <- function()
 		{
 			return [
 				{

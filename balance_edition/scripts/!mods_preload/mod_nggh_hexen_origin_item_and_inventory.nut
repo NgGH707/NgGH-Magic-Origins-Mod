@@ -1,17 +1,52 @@
 this.getroottable().HexenHooks.hookItem <- function ()
 {
-	//Change this goblin balls sprite so it doesn't look too weird when your goblin is on a mount
+	// change this goblin balls sprite so it doesn't look too weird when your goblin is on a mount
 	::mods_hookExactClass("items/weapons/greenskins/goblin_spiked_balls", function(obj) 
 	{
-		local oldFunction = obj.create;
+		local ws_create = obj.create;
 		obj.create = function()
 		{
-			oldFunction();
+			ws_create();
 			this.m.ArmamentIcon = "icon_goblin_balls";
 		}
 	});
 
-	::mods_hookExactClass("items/item_container", function ( o )
+
+	// allow enemy to spawn dog on death
+	::mods_hookBaseClass("items/accessory/accessory_dog", function(obj) 
+	{
+	    obj = obj[obj.SuperName];
+		obj.onActorDied = function( _onTile )
+		{
+			if (!this.isUnleashed() && _onTile != null)
+			{
+				local faction = this.getContainer().getActor().getFaction();
+				local entity = this.Tactical.spawnEntity(this.getScript(), _onTile.Coords.X, _onTile.Coords.Y);
+				entity.setItem(this);
+				entity.setName(this.getName());
+				entity.setVariant(this.getVariant());
+				if (this.getContainer().getActor().getSkills().hasSkill("perk.legend_dogwhisperer"))
+				{
+					entity.getSkills().add(this.new("scripts/skills/perks/perk_fortified_mind"));
+					entity.getSkills().add(this.new("scripts/skills/perks/perk_colossus"));
+					entity.getSkills().add(this.new("scripts/skills/perks/perk_underdog"));
+				}
+
+				this.setEntity(entity);
+				entity.setFaction(faction == this.Const.Faction.Player ? this.Const.Faction.PlayerAnimals : faction);
+
+				if (this.m.ArmorScript != null)
+				{
+					local item = this.new(this.m.ArmorScript);
+					entity.getItems().equip(item);
+				}
+
+				this.Sound.play(this.m.UnleashSounds[this.Math.rand(0, this.m.UnleashSounds.len() - 1)], this.Const.Sound.Volume.Skill, _onTile.Pos);
+			}
+		}
+	});
+
+	/*::mods_hookExactClass("items/item_container", function ( o )
 	{
 		o.drop <- function ( item )
 		{
@@ -163,7 +198,7 @@ this.getroottable().HexenHooks.hookItem <- function ()
 				i = ++i;
 			}
 		};
-	});
+	});*/
 
 	//show blocked equipment slot
 	::mods_hookNewObject("ui/global/data_helper", function ( obj )

@@ -320,7 +320,6 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			rune.m.Hitpoints = 100;
 			rune.m.HitpointsMax = 150;
 			local AI = this.getAIAgent();
-			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_darkflight"));
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_bow"));
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_throw_net"));
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_miasma"));
@@ -546,7 +545,7 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			this.m.Items.equip(this.new("scripts/items/accessory/legend_white_wolf_item"));
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_dodge"));
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
-			this.m.Skills.add(this.new("scripts/skills/actives/wither_skill"));
+			this.m.Skills.add(this.new("scripts/skills/actives/insects_skill"));
 
 			local rune = this.new("scripts/skills/rune_sigils/mod_RSH_shielding");
 			rune.m.IsForceEnabled = true;
@@ -556,12 +555,13 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			rune.m.HitpointsMax = 150;
 
 			local AI = this.getAIAgent();
-			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_darkflight"));
+			
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_bow"));
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_throw_net"));
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_miasma"));
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_raise_undead"));
-			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_wither"));
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_swarm_of_insects"));
+			AI.removeBehavior(this.Const.AI.Behavior.ID.Darkflight);
 
 			if (this.Math.rand(1, 100) <= 50 + this.Math.rand(0, 5))
 			{

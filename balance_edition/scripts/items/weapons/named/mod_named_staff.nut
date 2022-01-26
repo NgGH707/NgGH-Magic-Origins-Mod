@@ -6,7 +6,7 @@ this.mod_named_staff <- this.inherit("scripts/items/weapons/named/named_weapon",
 	function create()
 	{
 		this.named_weapon.create();
-		this.m.Variants = [1,2,3];
+		this.m.Variants = [1,2,3,4];
 		this.m.Variant = this.m.Variants[this.Math.rand(0, this.m.Variants.len() -1)];
 		this.m.ID = "weapon.named_staff";
 		this.m.NameList = ["Staff"];
@@ -59,27 +59,23 @@ this.mod_named_staff <- this.inherit("scripts/items/weapons/named/named_weapon",
 
 	function pickMagicSkill()
 	{
-		switch (this.m.Variant)
-		{
-		case 1:
-			this.m.Magic = this.Math.rand(0, 2);
-			break;
-	
-		case 2:
-			this.m.Magic = this.Math.rand(3, 5);
-			break;
+		local a = this.Math.ceil(this.Const.MC_NamedStaff_MagicSkills.len() / this.m.Variants.len());
+		local lowerNum = (this.m.Variant - 1) * a;
+		local upperNum =  this.m.Variant * a - 1;
 
-		case 3:
-			this.m.Magic = this.Math.rand(6, this.Const.MC_NamedStaff_MagicSkills.len() - 1);
-			break;
+		if (this.m.Variant == this.m.Variants.len())
+		{
+			upperNum = this.Const.MC_NamedStaff_MagicSkills.len() - 1;
 		}
+
+		this.m.Magic = this.Math.rand(lowerNum, upperNum);
 	}
 
 	function updateVariant()
 	{
-		this.m.IconLarge = "weapons/melee/Stuff" + this.m.Variant + "_70x140.png";
-		this.m.Icon = "weapons/melee/Stuff" + this.m.Variant + "_70x70.png";
-		this.m.ArmamentIcon = "Stuff" + this.m.Variant;
+		this.m.IconLarge = "weapons/melee/mod_staff_named_0" + this.m.Variant + "_70x140.png";
+		this.m.Icon = "weapons/melee/mod_staff_named_0" + this.m.Variant + "_70x70.png";
+		this.m.ArmamentIcon = "icon_mod_staff_named_0" + this.m.Variant;
 	}
 
 	function onEquip()

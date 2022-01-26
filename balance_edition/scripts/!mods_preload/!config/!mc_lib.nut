@@ -138,6 +138,27 @@ gt.Const.MC_NamedStaff_MagicSkills <- [
 		AP = 0,
 		Count = 0
 	},
+	{
+		Name = "Grant Night Vision",
+		Script = "actives/grant_night_vision_skill",
+		Fatigue = 0,
+		AP = 4,
+		Count = 0
+	},
+	{
+		Name = " Summon Wolf",
+		Script = "actives/legend_unleash_wolf",
+		Fatigue = 3,
+		AP = -2,
+		Count = 0
+	},
+	{
+		Name = "Life Siphon",
+		Script = "actives/legend_siphon_skill",
+		Fatigue = 3,
+		AP = 0,
+		Count = 0
+	},
 ];
 
 gt.Const.MC_Magic <- [
