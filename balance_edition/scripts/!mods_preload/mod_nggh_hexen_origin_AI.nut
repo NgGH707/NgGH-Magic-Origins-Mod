@@ -1,6 +1,42 @@
 this.getroottable().HexenHooks.hookAI <- function ()
 {
-	//Allow ai to use my new skills
+	local gt = this.getroottable();
+	gt.Const.AI.Behavior.ID.GhostPossess <- this.Const.AI.Behavior.ID.COUNT;
+	gt.Const.AI.Behavior.ID.COUNT = this.Const.AI.Behavior.ID.COUNT + 1;
+	gt.Const.AI.Behavior.Name.push("GhostPossess");
+	gt.Const.AI.Behavior.Order.GhostPossess <- 39;
+	gt.Const.AI.Behavior.Score.GhostPossess <- 200;
+	gt.Const.AI.Behavior.GhostPossessNoTurnTarget <- 1.1;
+	gt.Const.AI.Behavior.GhostPossessRangedTarget <- 0.33;
+	gt.Const.AI.Behavior.GhostPossessSpearwallMult <- 2.0;
+	gt.Const.AI.Behavior.GhostPossessShieldwallMult <- 1.5;
+	gt.Const.AI.Behavior.GhostPossessRiposteMult <- 1.5;
+	gt.Const.AI.Behavior.GhostPossessMeleeBonus <- 1.25;
+	gt.Const.AI.Behavior.GhostPossessZoCMult <- 1.2;
+	gt.Const.AI.Behavior.GhostPossessInMeleeWithMe <- 2.0;
+	gt.Const.AI.Behavior.GhostPossessCanReachMe <- 1.5;
+
+
+	// new skill for ghosts
+	local ghosts = [
+		"ghost_agent",
+		"mirror_image_agent",
+	];
+	foreach ( g in ghosts )
+	{
+		::mods_hookExactClass("ai/tactical/agents/" + g, function ( o )
+		{
+			local ws_onAddBehaviors = o.onAddBehaviors;
+			o.onAddBehaviors = function()
+			{
+				ws_onAddBehaviors();
+				this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_ghost_possess"));
+			}
+		});
+	}
+
+
+	// allow ai to use my new skills
 	::mods_hookExactClass("ai/tactical/behaviors/ai_warcry", function ( o )
 	{
 		o.m.PossibleSkills.extend([

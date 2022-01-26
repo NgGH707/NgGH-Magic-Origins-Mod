@@ -27,6 +27,455 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 	}
 
 
+	//
+	::mods_hookExactClass("skills/actives/legend_call_lightning", function(obj) 
+	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.Overlay = "lightning_square";
+			this.m.InjuriesOnBody = this.Const.Injury.BurningBody;
+			this.m.InjuriesOnHead = this.Const.Injury.BurningHead;
+			this.m.MaxRange = 4;
+			this.m.FatigueCost = 26;
+		}
+		
+		local ws_isHidden = obj.isHidden;
+		obj.isHidden = function()
+	    {
+	    	if (this.getContainer().getActor().isArmedWithMagicStaff())
+			{
+				return false;
+			}
+
+	        return ws_isHidden();
+    	};
+    	obj.getTooltip = function()
+    	{
+    		local ret = [
+				{
+					id = 1,
+					type = "title",
+					text = this.getName()
+				},
+				{
+					id = 2,
+					type = "description",
+					text = this.getDescription()
+				},
+				{
+					id = 3,
+					type = "text",
+					text = this.getCostString()
+				},
+				{
+					id = 4,
+					type = "text",
+					icon = "ui/icons/regular_damage.png",
+					text = "Inflicts [color=" + this.Const.UI.Color.DamageValue + "]25[/color] - [color=" + this.Const.UI.Color.DamageValue + "]50[/color] damage that ignores armor"
+				},
+				{
+					id = 6,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text =  "[color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] chance to call lightning on each unit within [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+				}
+			];
+
+			return ret;
+    	};
+    	obj.onUse = function( _user, _targetTile )
+		{
+			local myTile = _user.getTile();
+			local actors = this.Tactical.Entities.getAllInstancesAsArray();
+			local count = 0;
+
+			foreach (a in actors)
+			{
+				if (a.getFaction() == _user.getFaction())
+				{
+					continue;
+				}
+
+				local t = a.getTile();
+
+				if (t.getDistanceTo(myTile) > this.getMaxRange())
+				{
+					continue;
+				}
+
+				if (this.Math.rand(1, 100) > 10)
+				{
+					continue;
+				}
+
+				this.Time.scheduleEvent(this.TimeUnit.Real, count * 30, function ( _data )
+				{
+					local tile = _data.Tile;
+
+					for( local i = 0; i < this.Const.Tactical.LightningParticles.len(); i = ++i )
+					{
+						this.Tactical.spawnParticleEffect(true, this.Const.Tactical.LightningParticles[i].Brushes, tile, this.Const.Tactical.LightningParticles[i].Delay, this.Const.Tactical.LightningParticles[i].Quantity, this.Const.Tactical.LightningParticles[i].LifeTimeQuantity, this.Const.Tactical.LightningParticles[i].SpawnRate, this.Const.Tactical.LightningParticles[i].Stages);
+					}
+
+					if ((tile.IsEmpty || tile.IsOccupiedByActor) && tile.Type != this.Const.Tactical.TerrainType.ShallowWater && tile.Type != this.Const.Tactical.TerrainType.DeepWater)
+					{
+						tile.clear(this.Const.Tactical.DetailFlag.Scorchmark);
+						tile.spawnDetail("impact_decal", this.Const.Tactical.DetailFlag.Scorchmark, false, true);
+					}
+					
+					local target = tile.getEntity();
+					local hitInfo = clone this.Const.Tactical.HitInfo;
+					hitInfo.DamageRegular = this.Math.rand(25, 50);
+					hitInfo.DamageArmor = 0;
+					hitInfo.DamageDirect = 1.0;
+					hitInfo.BodyPart = 0;
+					hitInfo.FatalityChanceMult = 0.0;
+					hitInfo.Injuries = this.Const.Injury.BurningBody;
+					target.onDamageReceived(_data.User, _data.Skill, hitInfo);
+				}, {
+					Tile = t,
+					Skill = this,
+					User = _user
+				});
+
+				++count;
+			}
+		};
+	});
+
+
+	//
+	::mods_hookExactClass("skills/actives/lightning_storm_skill", function(obj) 
+	{
+		obj.getAffectedTiles = function( _targetTile )
+		{
+			local ret = [];
+			local size = this.Tactical.getMapSize();
+			local styles = [1, 2, 3, 4];
+			local last_attack_style = this.Tactical.Entities.getFlags().getAsInt("LightningStrikesStyle");
+
+			if (last_attack_style != 0)
+			{
+				styles.remove(styles.find(last_attack_style));
+			}
+
+			local choose = styles[this.Math.rand(0, styles.len() - 1)];
+			this.Tactical.Entities.getFlags().set("LightningStrikesStyle", choose);
+			switch (choose)
+			{
+			case 1:
+				// vertical
+				for( local y = 0; y < size.Y; y = ++y )
+				{
+					local tile = this.Tactical.getTileSquare(_targetTile.SquareCoords.X, y);
+
+					if (!tile.IsEmpty && !tile.IsOccupiedByActor)
+					{
+					}
+					else
+					{
+						ret.push(tile);
+					}
+				}
+				break;
+
+			case 2:
+				// horizonal
+				for( local x = 0; x < size.X; x = ++x )
+				{
+					local tile = this.Tactical.getTileSquare(x, _targetTile.SquareCoords.Y);
+
+					if (!tile.IsEmpty && !tile.IsOccupiedByActor)
+					{
+					}
+					else
+					{
+						ret.push(tile);
+					}
+				}
+				break;
+
+			case 3:
+				// diagonal up
+				local NE_tile = _targetTile.hasNextTile(this.Const.Direction.NE) ? _targetTile.getNextTile(this.Const.Direction.NE) : null;
+				local SW_tile = _targetTile.hasNextTile(this.Const.Direction.SW) ? _targetTile.getNextTile(this.Const.Direction.SW) : null;
+
+				if (NE_tile != null)
+				{
+					local next = _targetTile.SquareCoords.Y != NE_tile.SquareCoords.Y;
+					local y = NE_tile.SquareCoords.Y;
+
+					for( local x = NE_tile.SquareCoords.X; x >= 0; x = --x )
+					{
+						local tile = this.Tactical.getTileSquare(x, y);
+
+						if (!tile.IsEmpty && !tile.IsOccupiedByActor)
+						{
+						}
+						else
+						{
+							ret.push(tile);
+						}
+
+						if (next)
+						{
+							--y;
+						}
+	
+						next = !next;
+					}
+				}
+
+				if (_targetTile.IsEmpty || _targetTile.IsOccupiedByActor)
+				{
+					ret.push(_targetTile);
+				}
+
+				if (SW_tile != null)
+				{
+					local next = _targetTile.SquareCoords.Y != SW_tile.SquareCoords.Y;
+					local y = SW_tile.SquareCoords.Y;
+
+					for( local x = SW_tile.SquareCoords.X; x < size.X; x = ++x )
+					{
+						local tile = this.Tactical.getTileSquare(x, y);
+
+						if (!tile.IsEmpty && !tile.IsOccupiedByActor)
+						{
+						}
+						else
+						{
+							ret.push(tile);
+						}
+
+						if (next)
+						{
+							++y;
+						}
+	
+						next = !next;
+					}
+				}
+				break;
+
+			case 4:
+				// diagonal down
+				local NW_tile = _targetTile.hasNextTile(this.Const.Direction.NW) ? _targetTile.getNextTile(this.Const.Direction.NW) : null;
+				local SE_tile = _targetTile.hasNextTile(this.Const.Direction.SE) ? _targetTile.getNextTile(this.Const.Direction.SE) : null;
+
+				if (NW_tile != null)
+				{
+					local next = _targetTile.SquareCoords.Y != NW_tile.SquareCoords.Y;
+					local y = NW_tile.SquareCoords.Y;
+
+					for( local x = NW_tile.SquareCoords.X; x >= 0; x = --x )
+					{
+						local tile = this.Tactical.getTileSquare(x, y);
+
+						if (!tile.IsEmpty && !tile.IsOccupiedByActor)
+						{
+						}
+						else
+						{
+							ret.push(tile);
+						}
+
+						if (!next)
+						{
+							++y;
+						}
+
+						next = !next;
+					}
+				}
+
+				if (_targetTile.IsEmpty || _targetTile.IsOccupiedByActor)
+				{
+					ret.push(_targetTile);
+				}
+
+				if (SE_tile != null)
+				{
+					local next = _targetTile.SquareCoords.Y != SE_tile.SquareCoords.Y;
+					local y = SE_tile.SquareCoords.Y;
+
+					for( local x = SE_tile.SquareCoords.X; x < size.X; x = ++x )
+					{
+						local tile = this.Tactical.getTileSquare(x, y);
+
+						if (!tile.IsEmpty && !tile.IsOccupiedByActor)
+						{
+						}
+						else
+						{
+							ret.push(tile);
+						}
+
+						if (!next)
+						{
+							--y;
+						}
+
+						next = !next;
+					}
+				}
+				break;	
+			}
+
+			return ret;
+		};
+		obj.onImpact = function( _tag )
+		{
+			this.Tactical.EventLog.log("Lightning strikes the battlefield");
+			this.Tactical.getCamera().quake(this.createVec(0, -1.0), 6.0, 0.16, 0.35);
+			local actor = this.getContainer().getActor();
+
+			foreach( i, t in _tag.m.AffectedTiles )
+			{
+				this.Time.scheduleEvent(this.TimeUnit.Real, i * 30, function ( _data )
+				{
+					local tile = _data.Tile;
+
+					for( local i = 0; i < this.Const.Tactical.LightningParticles.len(); i = ++i )
+					{
+						this.Tactical.spawnParticleEffect(true, this.Const.Tactical.LightningParticles[i].Brushes, tile, this.Const.Tactical.LightningParticles[i].Delay, this.Const.Tactical.LightningParticles[i].Quantity, this.Const.Tactical.LightningParticles[i].LifeTimeQuantity, this.Const.Tactical.LightningParticles[i].SpawnRate, this.Const.Tactical.LightningParticles[i].Stages);
+					}
+
+					tile.clear(this.Const.Tactical.DetailFlag.SpecialOverlay);
+					tile.Properties.IsMarkedForImpact = false;
+
+					if ((tile.IsEmpty || tile.IsOccupiedByActor) && tile.Type != this.Const.Tactical.TerrainType.ShallowWater && tile.Type != this.Const.Tactical.TerrainType.DeepWater)
+					{
+						tile.clear(this.Const.Tactical.DetailFlag.Scorchmark);
+						tile.spawnDetail("impact_decal", this.Const.Tactical.DetailFlag.Scorchmark, false, true);
+					}
+
+					if (tile.IsOccupiedByActor)
+					{
+						local target = tile.getEntity();
+						local isLich = _data.User.getType() == this.Const.EntityType.SkeletonLichMirrorImage || _data.User.getType() == this.Const.EntityType.SkeletonLich;
+						local isTagertHexe = target.getType() == this.Const.EntityType.Hexe || target.getType() == this.Const.EntityType.LegendHexeLeader;
+						local isHexe = _data.User.getType() == this.Const.EntityType.Hexe || _data.User.getType() == this.Const.EntityType.LegendHexeLeader;
+						local isAllied = _data.User.isAlliedWith(target);
+
+						if ((_data.User.getID() == target.getID()) || (isLich && isAllied) || (isAllied && isHexe && isTagertHexe))
+						{
+						}
+						else
+						{
+							local mult = isAllied ? 0.5 : 1.0;
+							local hitInfo = clone this.Const.Tactical.HitInfo;
+							hitInfo.DamageRegular = this.Math.rand(25, 50) * mult;
+							hitInfo.DamageArmor = hitInfo.DamageRegular * 1.0;
+							hitInfo.DamageDirect = 0.75;
+							hitInfo.BodyPart = 0;
+							hitInfo.FatalityChanceMult = 0.0;
+							hitInfo.Injuries = this.Const.Injury.BurningBody;
+							target.onDamageReceived(_data.User, _data.Skill, hitInfo);
+						}
+					}
+				}, {
+					Tile = t,
+					Skill = this,
+					User = actor
+				});
+			}
+
+			_tag.m.AffectedTiles = [];
+
+			if (_tag.m.HasCooldownAfterImpact)
+			{
+				_tag.m.Cooldown = 1;
+			}
+
+			this.Tactical.Entities.getFlags().set("LightningStrikesActive", this.Math.max(0, this.Tactical.Entities.getFlags().getAsInt("LightningStrikesActive") - 1));
+		};
+		obj.onAnySkillUsed = function( _skill, _targetEntity, _properties )
+		{
+			if (_skill == this)
+			{
+				_properties.DamageRegularMin = 25;
+				_properties.DamageRegularMax = 50;
+				_properties.DamageArmorMult = 1.0;
+			}
+		}
+	});
+
+
+	//
+	::mods_hookExactClass("skills/actives/miasma_skill", function(obj) 
+	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.Description = "Release a cloud of noxious gasses that effects living beings";
+			this.m.Icon = "skills/active_101.png";
+			this.m.IconDisabled = "skills/active_101_sw.png";
+			this.m.Order = this.Const.SkillOrder.UtilityTargeted + 3;
+			this.m.FatigueCost = 20;
+		};
+		obj.onAdded <- function()
+		{
+			if (this.getContainer().getActor().isPlayerControlled())
+			{
+				this.m.ActionPointCost = 8;
+				this.m.FatigueCost = 30;
+				this.m.MinRange = 1;
+				this.m.MaxRange = 6;
+			}
+		};
+		obj.getTooltip <- function()
+		{
+			return [
+				{
+					id = 1,
+					type = "title",
+					text = this.getName()
+				},
+				{
+					id = 2,
+					type = "description",
+					text = this.getDescription()
+				},
+				{
+					id = 3,
+					type = "text",
+					text = this.getCostString()
+				},
+				{
+					id = 10,
+					type = "text",
+					icon = "ui/icons/damage_received.png",
+					text = "Deals 5-10 damage per turn over four turns"
+				}
+			];
+		};
+		obj.onTargetSelected <- function( _targetTile )
+		{
+			local ownTile = _targetTile;
+
+			for( local i = 0; i != 6; i = ++i )
+			{
+				if (!ownTile.hasNextTile(i))
+				{
+				}
+				else
+				{
+					local tile = ownTile.getNextTile(i);
+
+					if (this.Math.abs(tile.Level - ownTile.Level) <= 1)
+					{
+						this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, tile, tile.Pos.X, tile.Pos.Y);
+					}
+				}
+			}
+		};
+	});
+
+
 	// make fallen sword saint op with this sword
 	::mods_hookExactClass("skills/actives/slash_lightning", function(obj) 
 	{
@@ -193,7 +642,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.onAdded <- function()
 		{
-			this.m.FatigueCost = this.m.Container.getActor().isPlayerControlled() ? 10 : 5;
+			this.m.FatigueCost = this.getContainer().getActor().isPlayerControlled() ? 10 : 5;
 		};
 		obj.getTooltip <- function()
 		{
@@ -583,7 +1032,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.onAdded <- function()
 		{
-			this.m.FatigueCost = this.m.Container.getActor().isPlayerControlled() ? 30 : 25;
+			this.m.FatigueCost = this.getContainer().getActor().isPlayerControlled() ? 30 : 25;
 			local AI = this.getContainer().getActor().getAIAgent();
 
 			if (AI.getID() == this.Const.AI.Agent.ID.Player)
@@ -871,7 +1320,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.onAdded <- function()
 		{
-			this.m.FatigueCost = this.m.Container.getActor().isPlayerControlled() ? 12 : 5;
+			this.m.FatigueCost = this.getContainer().getActor().isPlayerControlled() ? 12 : 5;
 		};
 		obj.getTooltip <- function()
 		{
@@ -929,7 +1378,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.onAdded <- function()
 		{
-			this.m.FatigueCost = this.m.Container.getActor().isPlayerControlled() ? 15 : this.m.FatigueCost;
+			this.m.FatigueCost = this.getContainer().getActor().isPlayerControlled() ? 15 : this.m.FatigueCost;
 		};
 		obj.getTooltip <- function()
 		{
@@ -1989,7 +2438,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 
 			local _targetTile = _targetEntity.getTile();
 			local _distance = _user.getTile().getDistanceTo(_targetTile);
-			local properties = this.m.Container.buildPropertiesForUse(this, _targetEntity);
+			local properties = this.getContainer().buildPropertiesForUse(this, _targetEntity);
 			local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
 
 			local bravery = (defenderProperties.getBravery() + defenderProperties.MoraleCheckBravery[this.Const.MoraleCheckType.MentalAttack]) * defenderProperties.MoraleCheckBraveryMult[this.Const.MoraleCheckType.MentalAttack];
@@ -2053,7 +2502,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		obj.getHitFactors <- function( _targetTile )
 		{
 			local ret = [];
-			local user = this.m.Container.getActor();
+			local user = this.getContainer().getActor();
 			local myTile = user.getTile();
 			local targetEntity = _targetTile.IsOccupiedByActor ? _targetTile.getEntity() : null;
 			
@@ -2068,7 +2517,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			local isSpecialized = this.getContainer().hasSkill("perk.mastery_sleep");
 			local _distance = myTile.getDistanceTo(_targetTile);
 
-			local properties = this.m.Container.buildPropertiesForUse(this, _targetEntity);
+			local properties = this.getContainer().buildPropertiesForUse(this, _targetEntity);
 			local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
 			local bravery = (defenderProperties.getBravery() + defenderProperties.MoraleCheckBravery[this.Const.MoraleCheckType.MentalAttack]) * defenderProperties.MoraleCheckBraveryMult[this.Const.MoraleCheckType.MentalAttack];
 
@@ -2392,7 +2841,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		obj.getHitFactors <- function( _targetTile )
 		{
 			local ret = [];
-			local user = this.m.Container.getActor();
+			local user = this.getContainer().getActor();
 			local myTile = user.getTile();
 			local targetEntity = _targetTile.IsOccupiedByActor ? _targetTile.getEntity() : null;
 			
@@ -2403,7 +2852,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 
 			local _targetEntity = targetEntity;
 			local _user = this.getContainer().getActor();
-			local properties = this.m.Container.buildPropertiesForUse(this, _targetEntity);
+			local properties = this.getContainer().buildPropertiesForUse(this, _targetEntity);
 			local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
 			local damMod = properties.DamageDirectMult * (1.0 + properties.DamageDirectAdd) * properties.DamageTotalMult;
 			local defMod = defenderProperties.DamageReceivedTotalMult * defenderProperties.DamageReceivedDirectMult;
@@ -3120,7 +3569,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.onTargetSelected <- function( _targetTile )
 		{
-			local ownTile = this.m.Container.getActor().getTile();
+			local ownTile = this.getContainer().getActor().getTile();
 			local dir = ownTile.getDirectionTo(_targetTile);
 			this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);
 			local nextDir = dir - 1 >= 0 ? dir - 1 : this.Const.Direction.COUNT - 1;
@@ -3214,7 +3663,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.isUsable <- function()
 		{
-			return this.m.IsUsable && this.m.Container.getActor().getCurrentProperties().IsAbleToUseSkills;
+			return this.m.IsUsable && this.getContainer().getActor().getCurrentProperties().IsAbleToUseSkills;
 		};
 		obj.getMods <- function()
 		{
@@ -3467,7 +3916,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.isHidden <- function()
 		{
-			return this.m.Container.getActor().getMainhandItem() != null && !this.getContainer().hasSkill("effects.disarmed") || this.skill.isHidden();
+			return this.getContainer().getActor().getMainhandItem() != null && !this.getContainer().hasSkill("effects.disarmed") || this.skill.isHidden();
 		};
 		obj.onAdded <- function()
 		{
@@ -4171,22 +4620,9 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.getTooltip <- function()
 		{
-			return [
-				{
-					id = 1,
-					type = "title",
-					text = this.getName()
-				},
-				{
-					id = 2,
-					type = "description",
-					text = this.getDescription()
-				},
-				{
-					id = 3,
-					type = "text",
-					text = this.getCostString()
-				},
+			local ret = this.skill.getDefaultTooltip();
+
+			ret.extend([
 				{
 					id = 7,
 					type = "text",
@@ -4203,13 +4639,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 					id = 8,
 					type = "text",
 					icon = "ui/icons/special.png",
-					text = "Can [color=" + this.Const.UI.Color.PositiveValue + "]Stagger[/color] on a hit"
-				},
-				{
-					id = 9,
-					type = "text",
-					icon = "ui/icons/special.png",
-					text = "Can [color=" + this.Const.UI.Color.PositiveValue + "]Knock Back[/color] on a hit"
+					text = "Can [color=" + this.Const.UI.Color.PositiveValue + "]Stagger[/color] and [color=" + this.Const.UI.Color.PositiveValue + "]Knock Back[/color] on a hit"
 				},
 				{
 					id = 6,
@@ -4217,7 +4647,9 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 					icon = "ui/icons/special.png",
 					text = "Can hit up to 5 targets"
 				},
-			];
+			]);
+
+			return ret;
 		};
 		obj.onUpdate = function( _properties )
 		{
@@ -4335,7 +4767,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.onAdded <- function()
 		{
-			if (this.m.Container.getActor().isPlayerControlled())
+			if (this.getContainer().getActor().isPlayerControlled())
 			{
 				this.m.IsVisibleTileNeeded = true;
 				this.m.ActionPointCost = 4;
@@ -4612,7 +5044,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.onTargetSelected <- function( _targetTile )
 		{
-			local ownTile = this.m.Container.getActor().getTile();
+			local ownTile = this.getContainer().getActor().getTile();
 			local dir = ownTile.getDirectionTo(_targetTile);
 			this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);
 			local nextDir = dir - 1 >= 0 ? dir - 1 : this.Const.Direction.COUNT - 1;
@@ -4712,7 +5144,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		obj.onUse = function( _user, _targetTile )
 		{
 			local ret = false;
-			local ownTile = this.m.Container.getActor().getTile();
+			local ownTile = this.getContainer().getActor().getTile();
 			local soundBackup = [];
 			this.m.TilesUsed = [];
 			this.spawnAttackEffect(ownTile, this.Const.Tactical.AttackEffectThresh);
@@ -4780,7 +5212,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.onTargetSelected <- function( _targetTile )
 		{
-			local ownTile = this.m.Container.getActor().getTile();
+			local ownTile = this.getContainer().getActor().getTile();
 
 			for( local i = 0; i != 6; i = ++i )
 			{
@@ -4883,7 +5315,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		obj.onTargetSelected <- function( _targetTile )
 		{
 			this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);
-			local ownTile = this.m.Container.getActor().getTile();
+			local ownTile = this.getContainer().getActor().getTile();
 			local dir = ownTile.getDirectionTo(_targetTile);
 
 			if (_targetTile.hasNextTile(dir))
@@ -5173,7 +5605,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		};
 		obj.onTargetSelected <- function( _targetTile )
 		{
-			local ownTile = this.m.Container.getActor().getTile();
+			local ownTile = this.getContainer().getActor().getTile();
 			local dir = ownTile.getDirectionTo(_targetTile);
 			
 			this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);
@@ -6230,7 +6662,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		{
 			if (_skill == this)
 			{
-				local items = this.m.Container.getActor().getItems();
+				local items = this.getContainer().getActor().getItems();
 				local mhand = items.getItemAtSlot(this.Const.ItemSlot.Mainhand);
 
 				if (mhand != null)
@@ -6345,7 +6777,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 				_properties.DamageRegularMax += 75;
 				_properties.DamageArmorMult += 0.8;
 
-				local items = this.m.Container.getActor().getItems();
+				local items = this.getContainer().getActor().getItems();
 				local mhand = items.getItemAtSlot(this.Const.ItemSlot.Mainhand);
 
 				if (mhand != null)
@@ -6427,7 +6859,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		{
 			if (_skill == this)
 			{
-				local items = this.m.Container.getActor().getItems();
+				local items = this.getContainer().getActor().getItems();
 				local mhand = items.getItemAtSlot(this.Const.ItemSlot.Mainhand);
 
 				if (mhand != null)
@@ -6521,7 +6953,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		{
 			if (_skill == this)
 			{
-				local items = this.m.Container.getActor().getItems();
+				local items = this.getContainer().getActor().getItems();
 				local mhand = items.getItemAtSlot(this.Const.ItemSlot.Mainhand);
 
 				if (mhand != null)
@@ -6593,7 +7025,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		{
 			if (_skill == this)
 			{
-				local items = this.m.Container.getActor().getItems();
+				local items = this.getContainer().getActor().getItems();
 				local mhand = items.getItemAtSlot(this.Const.ItemSlot.Mainhand);
 
 				if (mhand != null)
@@ -6686,7 +7118,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		{
 			if (_skill == this)
 			{
-				local items = this.m.Container.getActor().getItems();
+				local items = this.getContainer().getActor().getItems();
 				local mhand = items.getItemAtSlot(this.Const.ItemSlot.Mainhand);
 
 				if (mhand != null)

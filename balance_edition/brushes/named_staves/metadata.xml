@@ -1,8 +1,10 @@
 <brush name="gfx/named_staves.png" version="17">
-  <sprite id="Stuff1" offsetY="35" ic="FF3B404A" width="73" height="167" img="icons\Stuff1.png" left="-60" right="13" top="-67" bottom="100" />
-  <sprite id="Stuff1_bloodied" offsetY="35" ic="FF3B404A" width="73" height="167" img="icons\Stuff1_bloodied.png" left="-60" right="13" top="-67" bottom="100" />
-  <sprite id="Stuff2" offsetY="35" ic="FF3B404A" width="76" height="168" img="icons\Stuff2.png" left="-60" right="16" top="-68" bottom="100" />
-  <sprite id="Stuff2_bloodied" offsetY="35" ic="FF3B404A" width="76" height="168" img="icons\Stuff2_bloodied.png" left="-60" right="16" top="-68" bottom="100" />
-  <sprite id="Stuff3" offsetY="35" ic="FF3B404A" width="77" height="170" img="icons\Stuff3.png" left="-60" right="17" top="-70" bottom="100" />
-  <sprite id="Stuff3_bloodied" offsetY="35" ic="FF3B404A" width="80" height="197" img="icons\Stuff3_bloodied.png" left="-60" right="17" top="-70" bottom="100" />
+  <sprite id="icon_mod_staff_named_01" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_01.png" left="-47" right="13" top="-59" bottom="70" />
+  <sprite id="icon_mod_staff_named_01_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_01_bloodied.png" left="-47" right="13" top="-59" bottom="70" />
+  <sprite id="icon_mod_staff_named_02" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_02.png" left="-47" right="13" top="-59" bottom="70" />
+  <sprite id="icon_mod_staff_named_02_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_02_bloodied.png" left="-47" right="13" top="-59" bottom="70" />
+  <sprite id="icon_mod_staff_named_03" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_03.png" left="-47" right="13" top="-59" bottom="70" />
+  <sprite id="icon_mod_staff_named_03_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_03_bloodied.png" left="-47" right="13" top="-59" bottom="70" />
+  <sprite id="icon_mod_staff_named_04" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_04.png" left="-47" right="13" top="-59" bottom="70" />
+  <sprite id="icon_mod_staff_named_04_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_04_bloodied.png" left="-47" right="13" top="-59" bottom="70" />
 </brush>

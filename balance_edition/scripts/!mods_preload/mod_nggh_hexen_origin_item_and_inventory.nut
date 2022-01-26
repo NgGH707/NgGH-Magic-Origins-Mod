@@ -260,7 +260,7 @@ this.getroottable().HexenHooks.hookItem <- function ()
 		local ws_addCharacterToUIData = obj.addCharacterToUIData;
 		obj.addCharacterToUIData = function( _entity, _target )
 		{
-			if (_entity.isSummoned())
+			if (_entity.isSummoned() || !this.isKindOf(_entity, "player"))
 			{
 				_target.name <- _entity.getNameOnly();
 				_target.title <- _entity.getTitle();

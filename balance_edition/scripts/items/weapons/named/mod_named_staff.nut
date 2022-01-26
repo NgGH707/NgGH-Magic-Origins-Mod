@@ -20,15 +20,15 @@ this.mod_named_staff <- this.inherit("scripts/items/weapons/named/named_weapon",
 		this.m.ShowArmamentIcon = true;
 		this.m.Value = 5700;
 		this.m.ShieldDamage = 0;
-		this.m.Condition = 120.0;
-		this.m.ConditionMax = 120.0;
+		this.m.Condition = 100.0;
+		this.m.ConditionMax = 100.0;
 		this.m.StaminaModifier = -6;
 		this.m.RangeMin = 1;
 		this.m.RangeMax = 2;
 		this.m.RangeIdeal = 2;
-		this.m.RegularDamage = 60;
-		this.m.RegularDamageMax = 80;
-		this.m.ArmorDamageMult = 0.35;
+		this.m.RegularDamage = 50;
+		this.m.RegularDamageMax = 75;
+		this.m.ArmorDamageMult = 0.5;
 		this.m.DirectDamageMult = 0.35;
 		this.pickMagicSkill();
 		this.randomizeValues();
@@ -38,21 +38,14 @@ this.mod_named_staff <- this.inherit("scripts/items/weapons/named/named_weapon",
 	function getTooltip()
 	{
 		local ret = this.weapon.getTooltip();
-		local magic = {
+		local index = this.isRuned() ? ret.len() - 2 : ret.len() - 1;
+
+		ret.insert(index, {
 			id = 64,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Let wearer use [color=#0b0084]" + this.m.MagicList[this.m.Magic].Name + "[/color] skill"
-		};
-
-		if (this.isRuned())
-		{
-			ret.insert(ret.len() - 1, magic);
-		}
-		else
-		{
-			ret.push(magic);
-		}
+			text = this.m.MagicList[this.m.Magic].Text
+		});
 
 		return ret
 	}
@@ -98,6 +91,7 @@ this.mod_named_staff <- this.inherit("scripts/items/weapons/named/named_weapon",
 
 		local data = this.m.MagicList[this.m.Magic];
 		local magic = this.new("scripts/skills/" + data.Script);
+		magic.m.IsSerialized = false;
 		magic.m.ActionPointCost += data.AP;
 		magic.setFatigueCost(magic.getFatigueCostRaw() + data.Fatigue);
 		this.addSkill(magic);

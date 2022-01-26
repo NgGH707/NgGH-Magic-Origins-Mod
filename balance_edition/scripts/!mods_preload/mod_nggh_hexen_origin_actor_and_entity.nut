@@ -20,6 +20,26 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 	});
 
 
+	// new skill for ghosts
+	local ghosts = [
+		"ghost",
+		"legend_banshee",
+		"skeleton_lich_mirror_image"
+	];
+	foreach (g in ghosts)
+	{
+		::mods_hookExactClass("entity/tactical/enemies/" + g, function ( obj )
+		{
+			local ws_onInit = obj.onInit;
+			obj.onInit = function()
+			{
+				ws_onInit();
+				this.m.Skills.add(this.new("scripts/skills/actives/mod_ghost_possessed_effect"));
+			}
+		});
+	}
+
+
 	// fix issue with charmed enemy nacho eats his friend
 	::mods_hookBaseClass("entity/tactical/enemies/ghoul", function (obj)
 	{
@@ -311,8 +331,9 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 
 			this.m.Items.unequip(this.m.Items.getItemAtSlot(this.Const.ItemSlot.Mainhand));
 			this.m.Items.equip(this.new("scripts/items/weapons/named/mod_named_staff"));
-			this.m.Items.equip(this.new(this.Math.rand(1, 10) <= 2 ? "scripts/items/accessory/legend_warbear_item" : "scripts/items/accessory/wolf_item"));
+			this.m.Items.equip(this.new("scripts/items/accessory/wolf_item"));
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
+			this.m.Skills.add(this.new("scripts/skills/actives/legend_magic_missile"));
 			local rune = this.new("scripts/skills/rune_sigils/mod_RSH_shielding");
 			rune.m.IsForceEnabled = true;
 			rune.m.HitpointsThreshold = 100;
@@ -320,19 +341,17 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			rune.m.Hitpoints = 100;
 			rune.m.HitpointsMax = 150;
 			local AI = this.getAIAgent();
+
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_bow"));
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_throw_net"));
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_miasma"));
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_raise_undead"));
 
-			if (this.Math.rand(1, 100) <= 25 + this.Math.rand(0, 5))
-			{
-				local lightning = this.new("scripts/skills/actives/lightning_storm_skill");
-				lightning.m.ActionPointCost = 1;
-				this.m.Skills.add(lightning);
-				AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_lightning_storm"));
-			}
-
+			local lightning = this.new("scripts/skills/actives/lightning_storm_skill");
+			lightning.m.ActionPointCost = 1;
+			lightning.m.Cooldown = 0;
+			this.m.Skills.add(lightning);
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_lightning_storm"));
 			return true;
 		};
 	});
@@ -544,7 +563,6 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			this.m.Items.equip(this.new("scripts/items/weapons/named/mod_named_staff"));
 			this.m.Items.equip(this.new("scripts/items/accessory/legend_white_wolf_item"));
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_dodge"));
-			this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
 			this.m.Skills.add(this.new("scripts/skills/actives/insects_skill"));
 
 			local rune = this.new("scripts/skills/rune_sigils/mod_RSH_shielding");
@@ -553,6 +571,16 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			this.m.Skills.add(rune);
 			rune.m.Hitpoints = 100;
 			rune.m.HitpointsMax = 150;
+
+			if("Assets" in this.World && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
+			{
+				rune.m.Hitpoints = 150;
+				rune.m.HitpointsMax = 250;
+			}
+			else
+			{
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_nimble"));
+			}
 
 			local AI = this.getAIAgent();
 			
@@ -563,14 +591,11 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_swarm_of_insects"));
 			AI.removeBehavior(this.Const.AI.Behavior.ID.Darkflight);
 
-			if (this.Math.rand(1, 100) <= 50 + this.Math.rand(0, 5))
-			{
-				local lightning = this.new("scripts/skills/actives/lightning_storm_skill");
-				lightning.m.ActionPointCost = 1;
-				this.m.Skills.add(lightning);
-				AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_lightning_storm"));
-			}
-
+			local lightning = this.new("scripts/skills/actives/lightning_storm_skill");
+			lightning.m.ActionPointCost = 1;
+			lightning.m.Cooldown = 0;
+			this.m.Skills.add(lightning);
+			AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_lightning_storm"));
 			return true;
 		};
 	});
