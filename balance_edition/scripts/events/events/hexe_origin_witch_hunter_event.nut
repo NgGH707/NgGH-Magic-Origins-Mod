@@ -293,11 +293,12 @@ this.hexe_origin_witch_hunter_event <- this.inherit("scripts/events/event", {
 		party.getSprite("body").setBrush(template.Body);
 		party.setMovementSpeed(this.Const.World.MovementSettings.Speed * template.MovementSpeedMult * 5.0);
 		party.setVisibilityMult(template.VisibilityMult);
-		party.setVisionRadius(this.Const.World.Settings.Vision * template.VisionMult * 5.0);
+		party.setVisionRadius(this.Const.World.Settings.Vision * template.VisionMult);
 		party.setDescription("Brave men sent from [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.Town.getName() + "[/color] to vanquish heretics.");
 		party.setFootprintType(this.Const.World.FootprintsType.Militia);
 		party.setAttackableByAI(false);
 		party.setAlwaysAttackPlayer(true);
+		party.setUsingGlobalVision(true);
 		party.getFlags().add("WitchHunters", true);
 		party.getLoot().Money = this.Math.rand(100, 200);
 		party.getLoot().ArmorParts = this.Math.rand(0, 25);
