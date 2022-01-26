@@ -35,7 +35,6 @@ this.getroottable().HexenHooks.hookAI <- function ()
 		});
 	}
 
-
 	// allow ai to use my new skills
 	::mods_hookExactClass("ai/tactical/behaviors/ai_warcry", function ( o )
 	{

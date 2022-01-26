@@ -7,7 +7,8 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		PossessorFaction = 0,
 		Possessor = null,
 		IsActivated = false,
-		IsBattleEnd = false
+		IsBattleEnd = false,
+		GhostSkills = [],
 	},
 	function setPossessorFaction( _f )
 	{
@@ -74,6 +75,11 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 			}
 		}
 
+		foreach ( skill in this.m.GhostSkills )
+		{
+			skill.removeSelf();
+		}
+
 		local actor = this.getContainer().getActor();
 		actor.getSprite("status_hex").Visible = false;
 
@@ -115,6 +121,16 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 			sprite.fadeIn(1500);
 		}
 
+		local AI = actor.getAIAgent();
+		AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_ghost_possess"));
+		AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_terror"));
+		local touch = this.new("scripts/skills/actives/ghastly_touch")
+		this.getContainer().add(touch);
+		this.m.GhostSkills.push(touch);
+		local scream = this.m.Possessor.getType() == this.Const.EntityType.LegendBanshee ? this.new("scripts/skills/actives/legend_banshee_scream") : this.new("scripts/skills/actives/horrific_scream");
+		this.getContainer().add(scream);
+		this.m.GhostSkills.push(scream);
+		actor.checkMorale(10, 9000);
 		actor.setDirty(true);
 	}
 
@@ -189,6 +205,14 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		}
 
 		this.skill.onCombatFinished();
+	}
+
+	function onDamageReceived( _attacker, _damageHitpoints, _damageArmor )
+	{
+		if (_damageHitpoints >= this.Const.Combat.InjuryMinDamage && this.Math.rand(1, 100) <= 25)
+		{
+			this.removeSelf();
+		}
 	}
 
 	function onUpdate( _properties )

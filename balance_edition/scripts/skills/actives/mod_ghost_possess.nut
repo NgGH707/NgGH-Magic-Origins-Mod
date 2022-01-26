@@ -144,7 +144,7 @@ this.mod_ghost_possess <- this.inherit("scripts/skills/skill", {
 		this.Time.scheduleEvent(this.TimeUnit.Virtual, time, function ( _e )
 		{
 			target.getSkills().add(possessed);
-			target.setMoraleState(this.Const.MoraleState.Wavering);
+			target.checkMorale(1, 9000);
 			_user.getSkills().setBusy(false);
 			_user.removeFromMap();
 		}.bindenv(this), this);
