@@ -30,11 +30,17 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 	//
 	::mods_hookExactClass("skills/actives/throw_holy_water", function(obj) 
 	{
+		obj.m.AttackerID <- null;
+
 		local ws_create = obj.create;
 		obj.create = function()
 		{
 			ws_create();
 			this.m.IsAttack = false;
+		};
+		obj.onAdded <- function()
+		{
+			this.m.AttackerID = this.getContainer().getActor().getID();
 		};
 		local ws_onVerifyTarget = obj.onVerifyTarget;
 		obj.onVerifyTarget = function( _originTile, _targetTile )
@@ -60,9 +66,10 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 
 			if (possess != null)
 			{
-				possess.m.AttackerID = this.getContainer().getActor().getID();
+				possess.m.AttackerID = this.m.AttackerID;
 				possess.setExorcised(true);
 				possess.removeSelf();
+				_target.getSkills().update();
 			}
 
 			ws_applyEffect(_target);

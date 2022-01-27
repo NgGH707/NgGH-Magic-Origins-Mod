@@ -688,12 +688,7 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		},
 	]);
 
-	gt.Const.Perks.PerkDefs.clear();
-
-	foreach( i, v in gt.Const.Perks.PerkDefObjects )
-	{
-		gt.Const.Perks.PerkDefs[v.Const] <- i;
-	}
+	gt.Const.Perks.updatePerkGroupTooltips();
 
 	gt.Const.Perks.SpiderHive <- {
 		ID = "SpiderHive",
