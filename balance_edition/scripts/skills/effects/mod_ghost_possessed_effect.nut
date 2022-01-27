@@ -184,7 +184,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		if (this.m.IsActivated && this.getContainer().getActor().getCurrentProperties().IsStunned)
 		{
 			this.removeSelf();
-			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been repelled out of " + this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s body");
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been expelled out of " + this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s body");
 		}
 	}
 
@@ -243,7 +243,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		if (this.m.IsActivated && _damageHitpoints >= this.Const.Combat.InjuryMinDamage && this.Math.rand(1, 100) <= 25)
 		{
 			this.removeSelf();
-			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been repelled out of " + this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s body");
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been expelled out of " + this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s body");
 		}
 	}
 
@@ -263,7 +263,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		}
 		else
 		{
-			_properties.TargetAttractionMult *= 0.5;
+			_properties.TargetAttractionMult *= 0.25;
 			_properties.MoraleCheckBravery[this.Const.MoraleCheckType.MentalAttack] += 150;
 
 			if (this.getContainer().getActor().getMoraleState() < this.Const.MoraleState.Steady)

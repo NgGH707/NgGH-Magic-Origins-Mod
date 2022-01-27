@@ -30,32 +30,11 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 	{
 		::mods_hookExactClass("entity/tactical/enemies/" + g, function ( obj )
 		{
-			obj.m.NineLivesCount <- 0;
-
 			local ws_onInit = obj.onInit;
 			obj.onInit = function()
 			{
 				ws_onInit();
 				this.m.Skills.add(this.new("scripts/skills/actives/mod_ghost_possess"));
-			};
-			obj.onDamageReceived <- function( _attacker, _skill, _hitInfo )
-			{
-				if (!this.isAlive() || !this.isPlacedOnMap())
-				{
-					return 0;
-				}
-				
-				local ret = this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
-				local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
-				
-				if (this.m.NineLivesCount > 0 && NineLives != null && NineLives.isSpent())
-				{
-					NineLives.m.IsSpent = false;
-					NineLives.m.LastFrameUsed = 0;
-					--this.m.NineLivesCount;
-				}
-
-				return ret;
 			};
 			obj.makeMiniboss <- function()
 			{
@@ -76,8 +55,16 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_fortified_mind"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_legend_terrifying_visage"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_underdog"));
-				this.m.Skills.add(this.new("scripts/skills/perks/perk_nine_lives"));
-				this.m.NineLivesCount = 8;
+
+				local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
+				
+				if (NineLives == null) 
+				{
+					NineLives = this.new("scripts/skills/perks/perk_nine_lives");
+					this.m.Skills.add(NineLives);
+				}
+
+				NineLives.addNineLivesCount(9);
 
 				if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 				{
@@ -111,12 +98,12 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 					if (type <= 40)
 					{
 						local weapons = clone this.Const.Items.NamedWeapons;
-						loot = this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+						loot = this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]);
 					}
 					else if (type <= 60)
 					{
 						local shields = clone this.Const.Items.NamedShields;
-						loot = this.new("scripts/items/" + shields[this.Math.rand(0, shields.len() - 1)]));
+						loot = this.new("scripts/items/" + shields[this.Math.rand(0, shields.len() - 1)]);
 					}
 					else if (type <= 80)
 					{
@@ -129,7 +116,7 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 						}
 						else
 						{
-							loot = this.new("scripts/items/" + helmets[this.Math.rand(0, helmets.len() - 1)]));
+							loot = this.new("scripts/items/" + helmets[this.Math.rand(0, helmets.len() - 1)]);
 						}
 					}
 					else if (type <= 100)
@@ -139,11 +126,11 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 						if (this.LegendsMod.Configs().LegendArmorsEnabled())
 						{
 							local weightName = this.Const.World.Common.convNameToList(armor);
-							loot = this.Const.World.Common.pickArmor(weightName));
+							loot = this.Const.World.Common.pickArmor(weightName);
 						}
 						else
 						{
-							loot = this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
+							loot = this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]);
 						}
 					}
 

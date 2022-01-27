@@ -3,23 +3,25 @@ this.getroottable().Nggh_MagicConcept.hookPerks <- function ()
 	//
 	::mods_hookExactClass("skills/perks/perk_nine_lives", function(obj) 
 	{
-		obj.m.ShowTotalLives <- false;
+		obJ.m.NineLivesCount <- 1;
+
+		obj.addNineLivesCount <- function( _n = 1 )
+		{
+			this.m.IsSpent = false;
+			this.m.LastFrameUsed = 0;
+			this.m.NineLivesCount = this.Math.min(9, this.m.NineLivesCount + _n);
+		};
 		obj.onAdded <- function()
 		{
-			local actor = this.getContainer().getActor();
-
-			if ("NineLivesCount" in actor.m)
-			{
-				this.setUpAsStatusEffect();
-			}
+			this.m.Type = this.Const.SkillType.Perk | this.Const.SkillType.StatusEffect;
 		};
 		obj.getName <- function()
 		{
 			local ret = this.skill.getName();
 
-			if (this.m.ShowTotalLives)
+			if (this.m.NineLivesCount > 1)
 			{
-				return ret + " (" + (this.getContainer().getActor().m.NineLivesCount + 1) + ")"
+				return ret + " (" + (this.m.NineLivesCount) + ")"
 			}
 
 			return ret;
@@ -29,30 +31,29 @@ this.getroottable().Nggh_MagicConcept.hookPerks <- function ()
 		{
 			ws_setSpent(_f);
 
-			if (_f)
+			if (this.m.IsSpent)
 			{
-				local rune = this.getContainer().getSkillByID("special.legend_RSA_diehard");
-				if (rune != null) rune.activate();
+				--this.m.NineLivesCount;
+
+				if (this.m.NineLivesCount <= 0)
+				{
+					local rune = this.getContainer().getSkillByID("special.legend_RSA_diehard");
+					if (rune != null) rune.activate();
+				}
+				else
+				{
+					this.m.IsSpent = false;
+					this.m.LastFrameUsed = 0;
+					this.getContainer().removeByType(this.Const.SkillType.DamageOverTime);
+				}
 			}
-		}
-		obj.setUpAsStatusEffect <- function()
-		{
-			this.m.Type = this.Const.SkillType.Perk | this.Const.SkillType.StatusEffect;
-			this.m.ShowTotalLives = true;
 		}
 		obj.isHidden <- function()
 		{
-			return this.isSpent();
+			return this.isSpent() || this.m.NineLivesCount <= 1;
 		};
 		obj.getTooltip <- function()
 		{
-			if (!this.m.ShowTotalLives)
-			{
-				return [];
-			}
-
-			local actor = this.getContainer().getActor();
-
 			return [
 				{
 					id = 1,
@@ -68,9 +69,21 @@ this.getroottable().Nggh_MagicConcept.hookPerks <- function ()
 					id = 6,
 					type = "text",
 					icon = "ui/icons/health.png",
-					text = "Extra life left: [color=" + this.Const.UI.Color.PositiveValue + "]" + (actor.m.NineLivesCount) + "[/color]"
+					text = "Extra life left: [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.NineLivesCount + "[/color]"
 				}
 			];
+		};
+		local ws_onCombatStarted = obj.onCombatStarted;
+		obj.onCombatStarted <- function()
+		{
+			ws_onCombatStarted();
+			this.m.NineLivesCount = 1;
+		};
+		local ws_onCombatFinished = obj.onCombatFinished;
+		obj.onCombatFinished <- function()
+		{
+			ws_onCombatFinished();
+			this.m.NineLivesCount = 1;
 		};
 	});
 

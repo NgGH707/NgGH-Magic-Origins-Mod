@@ -12,7 +12,6 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		DistortTargetD = null,
 		DistortTargetPrevD = this.createVec(0, 0),
 		DistortAnimationStartTimeD = 0,
-		NineLivesCount = 8,
 		LastAttackerID = null,
 		LastRound = 0,
 		Counter = 0,
@@ -249,6 +248,10 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_fast_adaption"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_killing_frenzy"));
 
+		local NineLives = this.new("scripts/skills/perks/perk_nine_lives");
+		NineLives.addNineLivesCount(9);
+		this.m.Skills.add(NineLives);
+
 		if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
 		{
 			b.Initiative += 100;
@@ -326,7 +329,6 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		
 		this.getSprite("miniboss").setBrush("bust_miniboss"); 
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_hold_out"));
-		this.m.Skills.add(this.new("scripts/skills/perks/perk_nine_lives"));
 		return true;
 	}
 	
@@ -373,20 +375,6 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 
 	function onDamageReceived( _attacker, _skill, _hitInfo )
 	{
-		if (!this.isAlive() || !this.isPlacedOnMap())
-		{
-			return 0;
-		}
-		
-		local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
-		
-		if (this.m.NineLivesCount > 0 && NineLives != null && NineLives.isSpent())
-		{
-			NineLives.m.IsSpent = false;
-			NineLives.m.LastFrameUsed = 0;
-			--this.m.NineLivesCount;
-		}
-
 		local ret = this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 
 		if (_attacker != null)

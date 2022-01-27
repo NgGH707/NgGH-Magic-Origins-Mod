@@ -1,7 +1,6 @@
 this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", {
 	m = {
 		Link = null,
-		NineLivesCount = 1,
 		Bust = "bust_alp_shadow_01",
 		DistortTargetA = null,
 		DistortTargetPrevA = this.createVec(0, 0),
@@ -20,14 +19,9 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 	{
 		local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
 		
-		if (this.m.NineLivesCount == 0 && NineLives != null && NineLives.isSpent())
+		if (NineLives != null)
 		{
-			NineLives.m.IsSpent = false;
-			NineLives.m.LastFrameUsed = 0;
-		}
-		else
-		{
-		    this.m.NineLivesCount = this.Math.min(8, this.m.NineLivesCount + 1);
+			NineLives.addNineLivesCount();
 		}
 	}
 
@@ -348,28 +342,6 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 			this.m.DistortTargetPrevD = this.m.DistortTargetD;
 			this.m.DistortTargetD = this.createVec(this.Math.rand(0, 10) - 5, this.Math.rand(0, 10) - 5);
 		}
-	}
-
-	function onDamageReceived( _attacker, _skill, _hitInfo )
-	{
-		if (!this.isAlive() || !this.isPlacedOnMap())
-		{
-			return 0;
-		}
-		
-		local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
-		
-		if (NineLives != null)
-		{
-			if (NineLives.isSpent() && this.m.NineLivesCount > 0)
-			{
-				NineLives.m.IsSpent = false;
-				NineLives.m.LastFrameUsed = 0;
-				this.m.NineLivesCount -= 1;
-			}
-		}
-		
-		return this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 	}
 	
 	function onPlacedOnMap()
