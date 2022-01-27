@@ -44,6 +44,7 @@ This file is part of the NgGH-Magic-Expansion Project.
 AUTHORS: NgGH707.
 
 CREDITS:
+* Wuxiang - For many great feedback and new ideas
 * Leon - Grammar correction.
 * Misha - Artworks for background icons, entity sprites.
 * Neon - Edit and write event text.
