@@ -8,6 +8,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		Possessor = null,
 		IsActivated = false,
 		IsBattleEnd = false,
+		IsEnhanced = false,
 		GhostSkills = [],
 	},
 	function setPossessorFaction( _f )
@@ -18,6 +19,11 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 	function setPossessor( _f )
 	{
 		this.m.Possessor = _f;
+	}
+
+	function setEffect( _f )
+	{
+		this.m.IsEnhanced = _f;
 	}
 
 	function create()
@@ -146,7 +152,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 			if (!this.m.IsActivated)
 			{
 				this.m.IsActivated = true;
-				this.m.TurnsLeft = 2;
+				this.m.TurnsLeft = this.m.IsEnhanced ? 4 : 2;
 				this.spawnIcon(this.m.Overlay, actor.getTile());
 				this.onPossess();
 			}

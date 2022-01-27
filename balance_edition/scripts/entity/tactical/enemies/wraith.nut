@@ -215,22 +215,31 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		this.setSpriteOffset("status_rage", this.createVec(-15, 0));
 		this.getSprite("status_rooted").Scale = 0.55;
 		this.setSpriteOffset("status_rooted", this.createVec(-5, -5));
+
 		local skill = this.new("scripts/skills/actives/horror_skill");
 		skill.m.MaxRange = 3;
 		skill.m.ActionPointCost = 5;
 		this.m.Skills.add(skill);
+
 		skill = this.new("scripts/skills/actives/miasma_skill");
 		skill.m.MaxRange = 4;
 		skill.m.ActionPointCost = 5;
 		this.m.Skills.add(skill);
+
 		skill = this.new("scripts/skills/actives/horrific_scream");
 		skill.m.MaxRange = 4;
 		skill.m.ActionPointCost = 3;
 		this.m.Skills.add(skill);
+
 		skill = this.new("scripts/skills/actives/ghastly_touch");
 		skill.m.MaxRange = 2;
 		skill.m.ActionPointCost = 3;
 		this.m.Skills.add(skill);
+
+		skill = this.new("scripts/skills/actives/mod_ghost_possess");
+		skill.m.IsEnhanced = true;
+		this.m.Skills.add(skill);
+
 		this.m.Skills.add(this.new("scripts/skills/racial/ghost_racial"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_fearsome"));
 		this.m.Skills.add(this.new("scripts/skills/perks/perk_footwork"));

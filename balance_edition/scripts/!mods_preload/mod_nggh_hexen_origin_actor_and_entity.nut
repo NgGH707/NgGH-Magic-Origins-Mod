@@ -34,7 +34,7 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			obj.onInit = function()
 			{
 				ws_onInit();
-				this.m.Skills.add(this.new("scripts/skills/actives/mod_ghost_possessed_effect"));
+				this.m.Skills.add(this.new("scripts/skills/actives/mod_ghost_possess"));
 			}
 		});
 	}

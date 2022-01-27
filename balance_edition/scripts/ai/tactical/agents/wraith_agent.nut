@@ -42,6 +42,7 @@ this.wraith_agent <- this.inherit("scripts/ai/tactical/agent", {
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_miasma"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_defend"));
 		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_defend_rotation"));
+		this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_ghost_possess"));
 	}
 
 	function onUpdate()

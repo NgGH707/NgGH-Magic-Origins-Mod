@@ -1,5 +1,7 @@
 this.mod_ghost_possess <- this.inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		IsEnhanced = false
+	},
 	function create()
 	{
 		this.m.ID = "actives.ghost_possess";
@@ -132,6 +134,7 @@ this.mod_ghost_possess <- this.inherit("scripts/skills/skill", {
 		local possessed = this.new("scripts/skills/effects/mod_ghost_possessed_effect");
 		possessed.setPossessorFaction(_user.getFaction());
 		possessed.setPossessor(_user);
+		possessed.setEffect(this.m.IsEnhanced);
 		this.Tactical.getTemporaryRoster().add(_user);
 
 		if (!_user.isHiddenToPlayer())
