@@ -10,6 +10,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		IsBattleEnd = false,
 		IsEnhanced = false,
 		GhostSkills = [],
+		LastTile = null
 	},
 	function setPossessorFaction( _f )
 	{
@@ -24,6 +25,16 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 	function setEffect( _f )
 	{
 		this.m.IsEnhanced = _f;
+	}
+
+	function getName()
+	{
+		if (this.m.Possessor != null)
+		{
+			return this.m.Name + " by " + this.Const.UI.getColorizedEntityName(this.m.Possessor);
+		}
+
+		return this.skill.getName();
 	}
 
 	function create()
@@ -67,6 +78,11 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		if (!this.m.IsBattleEnd)
 		{
 			local tile = this.findTileToSpawnGhost();
+
+			if (tile == null)
+			{
+				tile = this.findTileToSpawnGhost(this.m.LastTile);
+			}
 
 			if (tile != null && !this.Tactical.Entities.isCombatFinished())
 			{
@@ -163,29 +179,29 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onDeath()
-	{
-		this.onRemoved();
-	}
-
 	function onTurnStart()
 	{
 		if (this.m.IsActivated && this.getContainer().getActor().getCurrentProperties().IsStunned)
 		{
 			this.removeSelf();
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been repelled out of " + this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s body");
 		}
 	}
 
-	function findTileToSpawnGhost()
+	function findTileToSpawnGhost( _tile = null )
 	{
-		local myTile = this.getContainer().getActor().getTile();
-		this.Sound.play("sounds/enemies/horrific_scream_01.wav", this.Const.Sound.Volume.Skill * 1.2, myTile.Pos);
+		if (_tile == null)
+		{
+			_tile = this.getContainer().getActor().getTile();
+		}
+
+		this.Sound.play("sounds/enemies/horrific_scream_01.wav", this.Const.Sound.Volume.Skill * 1.2, _tile.Pos);
 
 		local result = {
-			TargetTile = this.getTile(),
+			TargetTile = _tile,
 			Destinations = []
 		};
-		this.Tactical.queryTilesInRange(myTile, 2, 6, false, [], this.onQueryTiles, result);
+		this.Tactical.queryTilesInRange(_tile, 2, 6, false, [], this.onQueryTiles, result);
 
 		if (result.Destinations.len() == 0)
 		{
@@ -217,11 +233,17 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		this.skill.onCombatFinished();
 	}
 
+	function onMovementCompleted( _tile )
+	{
+		this.m.LastTile = _tile;
+	}
+
 	function onDamageReceived( _attacker, _damageHitpoints, _damageArmor )
 	{
-		if (_damageHitpoints >= this.Const.Combat.InjuryMinDamage && this.Math.rand(1, 100) <= 25)
+		if (this.m.IsActivated && _damageHitpoints >= this.Const.Combat.InjuryMinDamage && this.Math.rand(1, 100) <= 25)
 		{
 			this.removeSelf();
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been repelled out of " + this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s body");
 		}
 	}
 
@@ -234,10 +256,29 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		{
 			_properties.Initiative += 25;
 			_properties.MeleeSkill += 10;
+			_properties.RangedSkill += 10;
 			_properties.MeleeDefense += 10;
 			_properties.RangedDefense += 10;
 			_properties.DamageReceivedTotalMult *= 0.75;
 		}
+		else
+		{
+			_properties.TargetAttractionMult *= 0.5;
+			_properties.MoraleCheckBravery[this.Const.MoraleCheckType.MentalAttack] += 150;
+
+			if (this.getContainer().getActor().getMoraleState() < this.Const.MoraleState.Steady)
+			{
+				_properties.MeleeSkill -= 35;
+				_properties.RangedSkill -= 35;
+				_properties.MeleeDefense += 35;
+				_properties.RangedDefense += 35;
+			}
+		}
+	}
+
+	function onDeath()
+	{
+		this.onRemoved();
 	}
 
 	function spawnGhostEffect( _tile )

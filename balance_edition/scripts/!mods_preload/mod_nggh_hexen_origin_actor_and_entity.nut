@@ -30,12 +30,129 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 	{
 		::mods_hookExactClass("entity/tactical/enemies/" + g, function ( obj )
 		{
+			obj.m.NineLivesCount <- 0;
+
 			local ws_onInit = obj.onInit;
 			obj.onInit = function()
 			{
 				ws_onInit();
 				this.m.Skills.add(this.new("scripts/skills/actives/mod_ghost_possess"));
-			}
+			};
+			obj.onDamageReceived <- function( _attacker, _skill, _hitInfo )
+			{
+				if (!this.isAlive() || !this.isPlacedOnMap())
+				{
+					return 0;
+				}
+				
+				local ret = this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
+				local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
+				
+				if (this.m.NineLivesCount > 0 && NineLives != null && NineLives.isSpent())
+				{
+					NineLives.m.IsSpent = false;
+					NineLives.m.LastFrameUsed = 0;
+					--this.m.NineLivesCount;
+				}
+
+				return ret;
+			};
+			obj.makeMiniboss <- function()
+			{
+				if (!this.actor.makeMiniboss())
+				{
+					return false;
+				}
+
+				if (this.m.Type = this.Const.EntityType.LegendBanshee)
+				{
+					this.m.BaseProperties.MeleeSkill -= 10;
+				}
+				
+				this.getSprite("miniboss").setBrush("bust_miniboss"); 
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_footwork"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_rotation"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_fearsome"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_fortified_mind"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_legend_terrifying_visage"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_underdog"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_nine_lives"));
+				this.m.NineLivesCount = 8;
+
+				if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+				{
+					if (this.Math.rand(1, 100) <= 50)
+					{
+						this.m.Skills.add(this.new("scripts/skills/perks/perk_ptr_menacing"));
+					}
+					else
+					{
+						this.m.Skills.add(this.new("scripts/skills/perks/perk_ptr_bully"));
+					}
+				}
+
+				local scream = this.m.Skills.getSkillByID("actives.horrific_scream");
+				if (scream != null) scream.m.MaxRange = 4;
+				local possess = this.m.Skills.getSkillByID("actives.ghost_possess");
+				if (possess != null) scream.m.MaxRange = 4;
+				return true;
+			};
+
+			local ws_onDeath = obj.onDeath;
+			obj.onDeath = function( _killer, _skill, _tile, _fatalityType )
+			{
+				ws_onDeath(_killer, _skill, _tile, _fatalityType);
+
+				if (_tile != null && this.m.IsMiniboss)
+				{
+					local type = this.Math.rand(20, 100);
+					local loot;
+
+					if (type <= 40)
+					{
+						local weapons = clone this.Const.Items.NamedWeapons;
+						loot = this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+					}
+					else if (type <= 60)
+					{
+						local shields = clone this.Const.Items.NamedShields;
+						loot = this.new("scripts/items/" + shields[this.Math.rand(0, shields.len() - 1)]));
+					}
+					else if (type <= 80)
+					{
+						local helmets = clone this.Const.Items.NamedHelmets;
+
+						if (this.LegendsMod.Configs().LegendArmorsEnabled())
+						{
+							local weightName = this.Const.World.Common.convNameToList(helmets);
+							loot = this.Const.World.Common.pickHelmet(weightName);
+						}
+						else
+						{
+							loot = this.new("scripts/items/" + helmets[this.Math.rand(0, helmets.len() - 1)]));
+						}
+					}
+					else if (type <= 100)
+					{
+						local armor = clone this.Const.Items.NamedArmors;
+						
+						if (this.LegendsMod.Configs().LegendArmorsEnabled())
+						{
+							local weightName = this.Const.World.Common.convNameToList(armor);
+							loot = this.Const.World.Common.pickArmor(weightName));
+						}
+						else
+						{
+							loot = this.new("scripts/items/" + armor[this.Math.rand(0, armor.len() - 1)]));
+						}
+					}
+
+					if (loot != null)
+					{
+						loot.drop(_tile);
+					}
+				}
+			};
 		});
 	}
 

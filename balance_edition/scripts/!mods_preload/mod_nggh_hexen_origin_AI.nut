@@ -31,6 +31,7 @@ this.getroottable().HexenHooks.hookAI <- function ()
 			{
 				ws_onAddBehaviors();
 				this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_ghost_possess"));
+				this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_defend_rotation"));
 			}
 		});
 	}

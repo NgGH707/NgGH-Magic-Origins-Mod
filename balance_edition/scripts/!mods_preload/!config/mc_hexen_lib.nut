@@ -1203,6 +1203,178 @@ gt.Const.HexenOrigin.AffectedSprites <- [
 	"bandage_1",
 ];
 
+gt.Const.Strings.GhostNames <- [
+	"Deth"
+	"Aeren"
+	"Blythe"
+	"Phan"
+	"Aberra"
+	"Undine"
+	"Auris"
+	"Devo"
+	"Angel"
+	"Ethae"
+	"Kindel"
+	"Shayde"
+	"Myst"
+	"Ethe"
+	"Charis"
+	"Stray"
+	"Eaven"
+	"Spec"
+	"Flo"
+	"Devi"
+	"Lloial"
+	"Lite"
+	"Gallo"
+	"Aide"
+	"Remane"
+	"Aener"
+	"Perris"
+	"Guya"
+	"Spryte"
+	"Celeste"
+	"Ellis"
+	"Ora"
+	"Faith"
+	"Elyse"
+];
+
+gt.Const.Strings.GhostTitles <- [
+	"the Welcome Eyes",
+	"the Grim Templar",
+	"the Sobbing Kid",
+	"the Forest Sentinel",
+	"the Invited Necromancer",
+	"the Beach Woman",
+	"the Wandering Wraith",
+	"the Malevolent Squire",
+	"the Cheerful Shopkeeper",
+	"the Laughing Wraith",
+	"the Roaming Kid",
+	"the Accepted Dancer",
+	"the Bloody Appearance",
+	"the White Phantom",
+	"the Marching Templar",
+	"the Hostile Teacher",
+	"the Sleeping Reaper",
+	"the Midnight Soul",
+	"the Violent Doctor",
+	"the Thin Cook",
+	"the Wild Protector",
+	"the Stalking Guest",
+	"the Grim Force",
+	"the Shy Doctor",
+	"the Jolly Guardian",
+	"the Shy Ghost",
+	"the Headless Patrol",
+	"the Forest Man",
+	"the Helpful Prisoner",
+	"the Forest Gentleman",
+	"the Howling Shade",
+	"the Beach Phantom",
+	"the Running Nightwatch",
+	"the Abandoned Artist",
+	"the Sleeping Knight",
+	"the Wicked Servant",
+	"the Weeping Musician",
+	"the Shrieking Witch",
+];
+
+gt.Const.Strings.BansheeNames <- [
+	"Angy",
+	"Damia",
+	"Mindy",
+	"Temprence",
+	"Azure",
+	"Misty",
+	"Guardia",
+	"Natura",
+	"Kendel",
+	"Damya",
+	"Essence",
+	"Celeste",
+	"Carisma",
+	"Mortia",
+	"Vissi",
+	"Mallory",
+	"Aurabelle",
+	"Karmay",
+	"Vexa",
+	"Dove",
+	"Blesse",
+	"Dwelle",
+	"Exme",
+	"Auriel",
+	"Zoe",
+	"Chasity",
+	"Eterna",
+	"Aure",
+	"Angelica",
+	"Via",
+	"Erie",
+	"Mortitia",
+	"Shay",
+	"Ondine",
+	"Lucy",
+	"Auralee",
+	"Topia",
+];
+
+gt.Const.Strings.BansheeTitles <- [
+	"the Ignored Widow",
+	"the Whining Maid",
+	"the Dark Apparition",
+	"the Sniveling Priestess",
+	"the Humming Banshee",
+	"the Wandering Matron",
+	"the Grim Daughter",
+	"the Waving Lover",
+	"the Whimpering Bridesmaid",
+	"the Sorrowing Angel",
+	"the Torment Soul",
+	"the Agony Dame",
+	"the Sinister Specter",
+	"the Yelling Spirit",
+	"the Blaring Girl",
+	"the Vexed Damsel",
+	"the Warped Priestess",
+	"the Lamenting Lover",
+	"the Ivory Angel",
+	"the Tortured Aunt",
+	"the Abandoned Banshee",
+	"the Roaming Dame",
+	"the Enraged Woman",
+	"the Grievous Mother",
+	"the Heartrending Matriarch",
+	"the Lone Fiancee",
+	"the Frail Bride",
+	"the Lamenting Matron",
+	"the Broken Aunt",
+	"the Humming Spirit",
+	"the Bawling Lover",
+	"the Vexed Woman",
+	"the Wicked Mother",
+	"the Dire Spirit",
+	"the Mewling Child",
+	"the Haunted Maid",
+	"the Tormented Nurse",
+	"the Faded Matriarch",
+	"the Fading Apparition",
+	"the Grievous Maiden",
+	"the Screeching Youth",
+	"the Mournful Apparition",
+	"the Slivery Maiden",
+	"the Mourning Gal",
+	"the Tortured Aunt",
+	"the Seeking Youth",
+	"the Waving Lady",
+	"the Mad Bride",
+	"the Yelping Nurse",
+	"the Skeletal Angel",
+	"the Wandering Dame",
+];
+
 gt.Const.Strings.HexeNames <- [
 	"Marie Shadowwalker",
 	"Regina Vexx",

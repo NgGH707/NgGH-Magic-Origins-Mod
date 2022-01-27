@@ -12,7 +12,7 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		DistortTargetD = null,
 		DistortTargetPrevD = this.createVec(0, 0),
 		DistortAnimationStartTimeD = 0,
-		NineLivesCount = 9,
+		NineLivesCount = 8,
 		LastAttackerID = null,
 		LastRound = 0,
 		Counter = 0,
@@ -40,7 +40,7 @@ this.wraith <- this.inherit("scripts/entity/tactical/actor", {
 		this.getFlags().add("undead");
 		this.m.AIAgent = this.new("scripts/ai/tactical/agents/wraith_agent");
 		this.m.AIAgent.setActor(this);
-		this.m.XP = 10000;
+		this.m.XP = 50000;
 	}
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )

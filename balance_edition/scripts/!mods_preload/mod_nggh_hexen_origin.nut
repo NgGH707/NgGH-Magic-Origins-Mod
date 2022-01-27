@@ -23,6 +23,15 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	gt.HexenHooks.hookEnemies();
 	gt.HexenHooks.hookAI();
 
+	// ghost
+	gt.Const.World.Spawn.Troops.Ghost.NameList <- this.Const.Strings.GhostNames;
+	gt.Const.World.Spawn.Troops.Ghost.TitleList <- this.Const.Strings.GhostTitles;
+	gt.Const.World.Spawn.Troops.Ghost.Variant = 3;
+
+	gt.Const.World.Spawn.Troops.LegendBanshee.NameList <- this.Const.Strings.BansheeNames;
+	gt.Const.World.Spawn.Troops.LegendBanshee.TitleList <- this.Const.Strings.BansheeTitles;
+	gt.Const.World.Spawn.Troops.LegendBanshee.Variant = 5;
+
 	// hexe
 	gt.Const.World.Spawn.Troops.Hexe.NameList <- this.Const.Strings.HexeNames;
 	gt.Const.World.Spawn.Troops.Hexe.TitleList <- null;

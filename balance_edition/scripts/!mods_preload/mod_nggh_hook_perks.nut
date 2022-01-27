@@ -13,6 +13,17 @@ this.getroottable().Nggh_MagicConcept.hookPerks <- function ()
 				this.setUpAsStatusEffect();
 			}
 		};
+		obj.getName <- function()
+		{
+			local ret = this.skill.getName();
+
+			if (this.m.ShowTotalLives)
+			{
+				return ret + " (" + (this.getContainer().getActor().m.NineLivesCount + 1) + ")"
+			}
+
+			return ret;
+		};
 		local ws_setSpent = obj.setSpent;
 		obj.setSpent = function(_f)
 		{
@@ -57,7 +68,7 @@ this.getroottable().Nggh_MagicConcept.hookPerks <- function ()
 					id = 6,
 					type = "text",
 					icon = "ui/icons/health.png",
-					text = "Lives left: [color=" + this.Const.UI.Color.PositiveValue + "]" + (actor.m.NineLivesCount + 1) + "[/color]"
+					text = "Extra life left: [color=" + this.Const.UI.Color.PositiveValue + "]" + (actor.m.NineLivesCount) + "[/color]"
 				}
 			];
 		};

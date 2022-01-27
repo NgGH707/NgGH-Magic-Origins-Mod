@@ -18,15 +18,17 @@ this.champion_loot <- this.inherit("scripts/skills/skill", {
 	function onAdded()
 	{
 		local actor = this.getContainer().getActor();
-		local orcs = [
+		local excluded = [
 			this.Const.EntityType.LegendOrcBehemoth,
 			this.Const.EntityType.LegendOrcElite,
 			this.Const.EntityType.OrcBerserker,
 			this.Const.EntityType.OrcWarlord,
-			this.Const.EntityType.OrcWarrior
+			this.Const.EntityType.OrcWarrior,
+			this.Const.EntityType.Hexe,
+			this.Const.EntityType.LegendHexeLeader
 		];
 
-		if (actor.getFlags().has("human") || actor.getFlags().has("undead") || actor.getFlags().has("goblin") || orcs.find(actor.getType()) != null)
+		if (actor.getFlags().has("human") || actor.getFlags().has("undead") || actor.getFlags().has("goblin") || excluded.find(actor.getType()) != null)
 		{
 			this.removeSelf();
 		}

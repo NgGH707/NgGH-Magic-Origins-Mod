@@ -7,9 +7,9 @@ this.mod_ghost_possess <- this.inherit("scripts/skills/skill", {
 		this.m.ID = "actives.ghost_possess";
 		this.m.Name = "Possess";
 		this.m.Description = "Take control of a living creature.";
-		this.m.Icon = "skills/active_120.png";
-		this.m.IconDisabled = "skills/active_120_sw.png";
-		this.m.Overlay = "active_120";
+		this.m.Icon = "skills/active_41.png";
+		this.m.IconDisabled = "skills/active_41_sw.png";
+		this.m.Overlay = "active_41";
 		this.m.SoundOnUse = [
 			"sounds/enemies/horrific_scream_01.wav"
 		];
@@ -135,6 +135,7 @@ this.mod_ghost_possess <- this.inherit("scripts/skills/skill", {
 		possessed.setPossessorFaction(_user.getFaction());
 		possessed.setPossessor(_user);
 		possessed.setEffect(this.m.IsEnhanced);
+		possessed.m.LastTile = myTile;
 		this.Tactical.getTemporaryRoster().add(_user);
 
 		if (!_user.isHiddenToPlayer())
@@ -143,11 +144,12 @@ this.mod_ghost_possess <- this.inherit("scripts/skills/skill", {
 		}
 
 		this.spawnGhostEffect(myTile);
-		local time = this.Tactical.spawnProjectileEffect(_tag.Sprite, _tag.OriginTile, _targetTile, 0.65, 1.0, false, flip);
+		local time = this.Tactical.spawnProjectileEffect(_tag.Sprite, _tag.OriginTile, _targetTile, 1.0, 1.0, false, flip);
 		this.Time.scheduleEvent(this.TimeUnit.Virtual, time, function ( _e )
 		{
 			target.getSkills().add(possessed);
-			target.checkMorale(1, 9000);
+			target.setMoraleState(this.Const.MoraleState.Wavering);
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(target) + " has rallied");
 			_user.getSkills().setBusy(false);
 			_user.removeFromMap();
 		}.bindenv(this), this);
