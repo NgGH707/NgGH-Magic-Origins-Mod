@@ -47,6 +47,8 @@ CREDITS:
 * Leon - Grammar correction.
 * Misha - Artworks for background icons, entity sprites.
 * Neon - Edit and write event text.
+* GRIBABAS - Artworks for named staves
+* Enke - Artworks for the new upcoming necromancer faction
 
 COPYRIGHT: Reprint or usage of materials/scripts from this repository is permitted only with the consent of the owner. Many sprites and images used in this mod aren't mine, i don't own them. All rights reserved to their rightful owner and their licensors.
 
