@@ -9,12 +9,19 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		IsActivated = false,
 		IsBattleEnd = false,
 		IsEnhanced = false,
+		IsExorcised = false,
+		AttackerID = null,
 		GhostSkills = [],
 		LastTile = null
 	},
 	function setPossessorFaction( _f )
 	{
 		this.m.PossessorFaction = _f;
+	}
+
+	function setExorcised( _f )
+	{
+		this.m.IsExorcised = _f;
 	}
 
 	function setPossessor( _f )
@@ -136,6 +143,26 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		}
 
 		this.Tactical.TurnSequenceBar.addEntity(_skill.m.Possessor);
+
+		if (_skill.m.IsExorcised)
+		{
+			local attacker = _skill.m.Possessor;
+
+			if (_skill.m.AttackerID != null)
+			{
+				local e = this.Tactical.getEntityByID(_skill.m.AttackerID);
+
+				if (e != null)
+				{
+					attacker = e;
+				}
+			}
+
+			this.Time.scheduleEvent(this.TimeUnit.Virtual, 100, function ( _e )
+			{
+				_skill.m.Possessor.kill(attacker, _skill);
+			}.bindenv(_skill), _skill);
+		}
 	}
 
 	function onPossess()
@@ -203,10 +230,26 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 
 	function onTurnStart()
 	{
-		if (this.m.IsActivated && this.getContainer().getActor().getCurrentProperties().IsStunned)
+		local actor = this.getContainer().getActor();
+		local myTile = actor.getTile();
+
+		if (myTile.Properties.Effect != null && myTile.Properties.Effect.Type == "legend_holyflame")
+		{
+			this.setExorcised(true);
+			this.removeSelf();
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been expelled out of " + this.Const.UI.getColorizedEntityName(actor) + "\'s body");
+			return;
+		}
+		else if (this.m.IsActivated && actor.getCurrentProperties().IsStunned)
 		{
 			this.removeSelf();
-			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been expelled out of " + this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s body");
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been expelled out of " + this.Const.UI.getColorizedEntityName(actor) + "\'s body");
+			return;
+		}
+
+		if (!this.m.IsActivated && actor.getMoraleState() == this.Const.MoraleState.Fleeing)
+		{
+			actor.setActionPoints(0);
 		}
 	}
 
@@ -258,6 +301,15 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 	function onMovementCompleted( _tile )
 	{
 		this.m.LastTile = _tile;
+
+		local actor = this.getContainer().getActor();
+
+		if (_tile.Properties.Effect != null && _tile.Properties.Effect.Type == "legend_holyflame")
+		{
+			this.setExorcised(true);
+			this.removeSelf();
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been expelled out of " + this.Const.UI.getColorizedEntityName(actor) + "\'s body");
+		}
 	}
 
 	function onDamageReceived( _attacker, _damageHitpoints, _damageArmor )

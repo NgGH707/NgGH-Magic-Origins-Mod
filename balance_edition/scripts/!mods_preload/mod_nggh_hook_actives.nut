@@ -28,6 +28,49 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 
 
 	//
+	::mods_hookExactClass("skills/actives/throw_holy_water", function(obj) 
+	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.IsAttack = false;
+		};
+		local ws_onVerifyTarget = obj.onVerifyTarget;
+		obj.onVerifyTarget = function( _originTile, _targetTile )
+		{
+			if (!ws_onVerifyTarget(_originTile, _targetTile))
+			{
+				return false;
+			}
+
+			local target = _targetTile.getEntity();
+
+			if (target.isAlliedWith(this.getContainer().getActor()) && !target.getSkills().hasSkill("effects.ghost_possessed"))
+			{
+				return false;
+			}
+
+			return true;
+		};
+		local ws_applyEffect = obj.applyEffect;
+		obj.applyEffect = function( _target )
+		{
+			local possess = _target.getSkills().getSkillByID("effects.ghost_possessed");
+
+			if (possess != null)
+			{
+				possess.m.AttackerID = this.getContainer().getActor().getID();
+				possess.setExorcised(true);
+				possess.removeSelf();
+			}
+
+			ws_applyEffect(_target);
+		};
+	});
+
+
+	//
 	::mods_hookExactClass("skills/actives/legend_call_lightning", function(obj) 
 	{
 		local ws_create = obj.create;
