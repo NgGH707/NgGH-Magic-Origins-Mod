@@ -86,15 +86,16 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 
 			if (tile != null && !this.Tactical.Entities.isCombatFinished())
 			{
-				this.spawnGhostEffect(tile);
-				this.Tactical.addEntityToMap(this.m.Possessor, tile.Coords.X, tile.Coords.Y);
-
-				if (!this.m.Possessor.isPlayerControlled() && this.m.Possessor.getType() != this.Const.EntityType.Serpent)
+				if (tile.IsVisibleForPlayer)
 				{
-					this.Tactical.getTemporaryRoster().remove(this.m.Possessor);
+					this.Tactical.CameraDirector.pushMoveToTileEvent(0, tile, -1, this.onSpawnGhost.bindenv(this), tile, 200, this.Const.Tactical.Settings.CameraNextEventDelay);
+					this.Tactical.CameraDirector.addDelay(0.2);
 				}
-
-				this.Tactical.TurnSequenceBar.addEntity(this.m.Possessor);
+				else
+				{
+					this.Tactical.CameraDirector.pushIdleEvent(0, this.onSpawnGhost.bindenv(this), tile, 200, this.Const.Tactical.Settings.CameraNextEventDelay);
+					this.Tactical.CameraDirector.addDelay(0.2);
+				}
 			}
 		}
 
@@ -116,6 +117,19 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		actor.getSprite("socket").setBrush(this.m.OriginalSocket);
 		actor.getFlags().set("Charmed", false);
 		actor.setDirty(true);
+	}
+
+	function onSpawnGhost( _tile )
+	{
+		this.spawnGhostEffect(tile);
+		this.Tactical.addEntityToMap(this.m.Possessor, tile.Coords.X, tile.Coords.Y);
+
+		if (!this.m.Possessor.isPlayerControlled() && this.m.Possessor.getType() != this.Const.EntityType.Serpent)
+		{
+			this.Tactical.getTemporaryRoster().remove(this.m.Possessor);
+		}
+
+		this.Tactical.TurnSequenceBar.addEntity(this.m.Possessor);
 	}
 
 	function onPossess()
@@ -264,15 +278,11 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		else
 		{
 			_properties.TargetAttractionMult *= 0.25;
-			_properties.MoraleCheckBravery[this.Const.MoraleCheckType.MentalAttack] += 150;
-
-			if (this.getContainer().getActor().getMoraleState() < this.Const.MoraleState.Steady)
-			{
-				_properties.MeleeSkill -= 35;
-				_properties.RangedSkill -= 35;
-				_properties.MeleeDefense += 35;
-				_properties.RangedDefense += 35;
-			}
+			_properties.MoraleCheckBravery[this.Const.MoraleCheckType.MentalAttack] += 25;
+			_properties.MeleeSkill -= 10;
+			_properties.RangedSkill -= 10;
+			_properties.MeleeDefense += 10;
+			_properties.RangedDefense += 10;
 		}
 	}
 

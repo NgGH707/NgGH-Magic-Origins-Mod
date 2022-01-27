@@ -3,7 +3,7 @@ this.getroottable().Nggh_MagicConcept.hookPerks <- function ()
 	//
 	::mods_hookExactClass("skills/perks/perk_nine_lives", function(obj) 
 	{
-		obJ.m.NineLivesCount <- 1;
+		obj.m.NineLivesCount <- 1;
 
 		obj.addNineLivesCount <- function( _n = 1 )
 		{
