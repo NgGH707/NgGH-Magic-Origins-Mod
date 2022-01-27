@@ -86,15 +86,19 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 
 			if (tile != null && !this.Tactical.Entities.isCombatFinished())
 			{
+				local info = {
+					Tile = tile,
+					Self = this
+				};
+
 				if (tile.IsVisibleForPlayer)
 				{
-					this.Tactical.CameraDirector.pushMoveToTileEvent(0, tile, -1, this.onSpawnGhost.bindenv(this), tile, 200, this.Const.Tactical.Settings.CameraNextEventDelay);
+					this.Tactical.CameraDirector.pushMoveToTileEvent(0, tile, -1, this.onSpawnGhost.bindenv(this), info, 200, this.Const.Tactical.Settings.CameraNextEventDelay);
 					this.Tactical.CameraDirector.addDelay(0.2);
 				}
 				else
 				{
-					this.Tactical.CameraDirector.pushIdleEvent(0, this.onSpawnGhost.bindenv(this), tile, 200, this.Const.Tactical.Settings.CameraNextEventDelay);
-					this.Tactical.CameraDirector.addDelay(0.2);
+					this.onSpawnGhost(info);
 				}
 			}
 		}
@@ -119,17 +123,19 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		actor.setDirty(true);
 	}
 
-	function onSpawnGhost( _tile )
+	function onSpawnGhost( _info )
 	{
-		this.spawnGhostEffect(tile);
-		this.Tactical.addEntityToMap(this.m.Possessor, tile.Coords.X, tile.Coords.Y);
+		local _tile = _info.Tile;
+		local _skill = _info.Self;
+		_skill.spawnGhostEffect(_tile);
+		this.Tactical.addEntityToMap(this.m.Possessor, _tile.Coords.X, _tile.Coords.Y);
 
-		if (!this.m.Possessor.isPlayerControlled() && this.m.Possessor.getType() != this.Const.EntityType.Serpent)
+		if (!_skill.m.Possessor.isPlayerControlled() && _skill.m.Possessor.getType() != this.Const.EntityType.Serpent)
 		{
-			this.Tactical.getTemporaryRoster().remove(this.m.Possessor);
+			this.Tactical.getTemporaryRoster().remove(_skill.m.Possessor);
 		}
 
-		this.Tactical.TurnSequenceBar.addEntity(this.m.Possessor);
+		this.Tactical.TurnSequenceBar.addEntity(_skill.m.Possessor);
 	}
 
 	function onPossess()
@@ -164,9 +170,11 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_ghost_possess"));
 		AI.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_attack_terror"));
 		local touch = this.new("scripts/skills/actives/ghastly_touch");
+		touch.m.IsRemovedAfterBattle = true;
 		this.getContainer().add(touch);
 		this.m.GhostSkills.push(touch);
 		local scream = this.m.Possessor.getType() == this.Const.EntityType.LegendBanshee ? this.new("scripts/skills/actives/legend_banshee_scream") : this.new("scripts/skills/actives/horrific_scream");
+		scream.m.IsRemovedAfterBattle = true;
 		this.getContainer().add(scream);
 		this.m.GhostSkills.push(scream);
 		actor.checkMorale(10, 9000);
@@ -215,7 +223,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 			TargetTile = _tile,
 			Destinations = []
 		};
-		this.Tactical.queryTilesInRange(_tile, 2, 6, false, [], this.onQueryTiles, result);
+		this.Tactical.queryTilesInRange(_tile, 2, 5, false, [], this.onQueryTiles, result);
 
 		if (result.Destinations.len() == 0)
 		{
@@ -269,6 +277,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		if (this.m.IsActivated)
 		{
 			_properties.Initiative += 25;
+			_properties.Bravery += 50;
 			_properties.MeleeSkill += 10;
 			_properties.RangedSkill += 10;
 			_properties.MeleeDefense += 10;

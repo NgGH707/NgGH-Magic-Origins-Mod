@@ -38,7 +38,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			this.m.InjuriesOnBody = this.Const.Injury.BurningBody;
 			this.m.InjuriesOnHead = this.Const.Injury.BurningHead;
 			this.m.MaxRange = 4;
-			this.m.FatigueCost = 26;
+			this.m.FatigueCost = 30;
 		}
 		
 		local ws_isHidden = obj.isHidden;
@@ -79,7 +79,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 					id = 6,
 					type = "text",
 					icon = "ui/icons/special.png",
-					text =  "[color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] chance to call lightning on each unit within [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+					text =  "[color=" + this.Const.UI.Color.PositiveValue + "]20%[/color] chance to call lightning on each unit within [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
 				}
 			];
 
@@ -105,7 +105,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 					continue;
 				}
 
-				if (this.Math.rand(1, 100) > 10)
+				if (this.Math.rand(1, 100) > 20)
 				{
 					continue;
 				}

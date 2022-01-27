@@ -81,7 +81,7 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				local scream = this.m.Skills.getSkillByID("actives.horrific_scream");
 				if (scream != null) scream.m.MaxRange = 4;
 				local possess = this.m.Skills.getSkillByID("actives.ghost_possess");
-				if (possess != null) scream.m.MaxRange = 4;
+				if (possess != null) possess.m.MaxRange = 4;
 				return true;
 			};
 

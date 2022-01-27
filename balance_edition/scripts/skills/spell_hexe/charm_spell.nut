@@ -186,6 +186,11 @@ this.charm_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 			return false;
 		}
 
+		if (_target.getSkills().hasSkill("effects.ghost_possessed"))
+		{
+			return false;
+		}
+
 		return true;
 	}
 	
@@ -482,6 +487,16 @@ this.charm_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 			ret.push({
 				icon = "ui/icons/cancel.png",
 				text = "Mindless"
+			});
+			
+			return ret;
+		}
+
+		if (_targetEntity.getSkills().hasSkill("effects.ghost_possessed"))
+		{
+			ret.push({
+				icon = "ui/icons/cancel.png",
+				text = "Possessed"
 			});
 			
 			return ret;

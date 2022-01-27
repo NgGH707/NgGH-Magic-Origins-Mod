@@ -121,7 +121,7 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		
 		local _target = _targetTile.getEntity();
 
-		if (_target.getSkills().hasSkill("fake_charmed_broken"))
+		if (_target.getSkills().hasSkill("effects.fake_charmed_broken"))
 		{
 			return false;
 		}
@@ -159,6 +159,11 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		}
 		
 		if (_target.isNonCombatant())
+		{
+			return false;
+		}
+
+		if (_target.getSkills().hasSkill("effects.ghost_possessed"))
 		{
 			return false;
 		}
@@ -435,6 +440,16 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 			ret.push({
 				icon = "ui/icons/cancel.png",
 				text = "Immune to charm"
+			});
+			
+			return ret;
+		}
+
+		if (targetEntity.getSkills().hasSkill("effects.ghost_possessed"))
+		{
+			ret.push({
+				icon = "ui/icons/cancel.png",
+				text = "Possessed"
 			});
 			
 			return ret;

@@ -79,7 +79,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 					id = 6,
 					type = "text",
 					icon = "ui/icons/special.png",
-					text =  "[color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] chance to call lightning on each unit within [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+					text =  "[color=" + this.Const.UI.Color.PositiveValue + "]15%[/color] chance to call lightning on each unit within [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
 				}
 			];
 
@@ -105,7 +105,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 					continue;
 				}
 
-				if (this.Math.rand(1, 100) > 10)
+				if (this.Math.rand(1, 100) > 15)
 				{
 					continue;
 				}

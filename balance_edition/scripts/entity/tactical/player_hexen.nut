@@ -331,6 +331,12 @@ this.player_hexen <- this.inherit("scripts/entity/tactical/player", {
 	function checkMorale( _change, _difficulty, _type = this.Const.MoraleCheckType.Default, _showIconBeforeMoraleIcon = "", _noNewLine = false )
 	{	
 		_difficulty = _difficulty + 10;
+
+		if (_type = this.Const.MoraleCheckType.MentalAttack)
+		{
+			_difficulty = _difficulty + 50;
+		}
+
 		return this.player.checkMorale(_change, _difficulty, _type, _showIconBeforeMoraleIcon, _noNewLine);
 	}
 
