@@ -169,7 +169,7 @@ this.mod_punch <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (_target.getCurrentProperties().IsImmuneToKnockBackAndGrab && !_target.getCurrentProperties().IsRooted)
+		if (!_target.getCurrentProperties().IsImmuneToKnockBackAndGrab && !_target.getCurrentProperties().IsRooted)
 		{
 			local knockToTile = this.findTileToKnockBackTo(_user.getTile(), _targetTile);
 

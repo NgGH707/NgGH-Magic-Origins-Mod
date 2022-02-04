@@ -29,17 +29,19 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 			{
 				if (data.sourceItem.onUse(data.inventory.getActor()))
 				{
-					data.stash.removeByIndex(data.sourceIndex);
 					data.inventory.getActor().getSkills().update();
-					
-					local item = data.sourceItem.onUseIndestructibleItem();
+					local result = this.UIDataHelper.convertStashAndEntityToUIData(data.entity, null, false, this.m.InventoryFilter);
 
-					if (item != null)
+					if (!("forceUpdate" in result.stash))
 					{
-						this.World.Assets.getStash().insert(item, data.sourceIndex);
+						result.stash.forceUpdate <- data.sourceIndex;
+					}
+					else
+					{
+						result.stash.forceUpdate = data.sourceIndex;
 					}
 					
-					return this.UIDataHelper.convertStashAndEntityToUIData(data.entity, null, false, this.m.InventoryFilter);
+					return result;
 				}
 				else
 				{

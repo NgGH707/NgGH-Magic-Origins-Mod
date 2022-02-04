@@ -9,13 +9,20 @@ this.getroottable().Nggh_MagicConcept.hookAccessoryDog <- function ()
 			{
 				if (this.m.Type != null && !this.isUnleashed() && _onTile != null && this.getScript() != null && this.Const.Companions.Library[this.m.Type].Unleash.onActorDied)
 				{
-					local faction = this.getContainer().getActor().getFaction();
+					local actor = this.getContainer().getActor();
+					local faction = actor.getFaction();
+					local isPlayer = faction == this.Const.Faction.Player;
 					local entity = this.Tactical.spawnEntity(this.getScript(), _onTile.Coords.X, _onTile.Coords.Y);
 					entity.setItem(this);
 					entity.setName(this.getName());
 					entity.setVariant(this.getVariant());
-					entity.setFaction(faction == this.Const.Faction.Player ? this.Const.Faction.PlayerAnimals : faction);
-					entity.getSprite("socket").setBrush(this.getContainer().getActor().getSprite("socket").getBrush().Name);
+					entity.setFaction(isPlayer ? this.Const.Faction.PlayerAnimals : faction);
+
+					if (!isPlayer && actor.hasSprite("socket"))
+					{
+						entity.getSprite("socket").setBrush(actor.getSprite("socket").getBrush().Name);
+					}
+
 					entity.applyCompanionScaling();
 					this.setEntity(entity);
 
@@ -43,7 +50,9 @@ this.getroottable().Nggh_MagicConcept.hookAccessoryDog <- function ()
 			{
 				if (!this.isUnleashed() && _onTile != null)
 				{
-					local faction = this.getContainer().getActor().getFaction();
+					local actor = this.getContainer().getActor();
+					local faction = actor.getFaction();
+					local isPlayer = faction == this.Const.Faction.Player;
 					local entity = this.Tactical.spawnEntity(this.getScript(), _onTile.Coords.X, _onTile.Coords.Y);
 					entity.setItem(this);
 					entity.setName(this.getName());
@@ -56,8 +65,12 @@ this.getroottable().Nggh_MagicConcept.hookAccessoryDog <- function ()
 					}
 
 					this.setEntity(entity);
-					entity.setFaction(faction == this.Const.Faction.Player ? this.Const.Faction.PlayerAnimals : faction);
-					entity.getSprite("socket").setBrush(this.getContainer().getActor().getSprite("socket").getBrush().Name);
+					entity.setFaction(isPlayer? this.Const.Faction.PlayerAnimals : faction);
+
+					if (!isPlayer && actor.hasSprite("socket"))
+					{
+						entity.getSprite("socket").setBrush(actor.getSprite("socket").getBrush().Name);
+					}
 
 					if (this.m.ArmorScript != null)
 					{

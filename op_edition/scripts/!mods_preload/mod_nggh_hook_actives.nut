@@ -1342,6 +1342,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			this.m.Description = "Whip your goblin troops to remind them know who is the boss here. Stand your ground!";
 			this.m.Icon = "skills/active_72.png";
 			this.m.IconDisabled = "skills/active_72_sw.png";
+			this.m.Order = this.Const.SkillOrder.UtilityTargeted + 3;
 			this.m.IsWeaponSkill = false;
 		};
 		obj.getTooltip <- function()
@@ -3358,6 +3359,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			this.m.Icon = "skills/active_111.png";
 			this.m.IconDisabled = "skills/active_111_sw.png";
 			this.m.Delay = 250;
+			this.m.IsAttack = false;
 			this.m.IsIgnoringRiposte = true;
 			this.m.IsSpearwallRelevant = false;
 		};
@@ -5866,6 +5868,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			this.m.Delay = 500;
 			this.m.Order = this.Const.SkillOrder.UtilityTargeted - 1;
 			this.m.IsWeaponSkill = false;
+			this.m.IsAttack = false;
 			this.m.DirectDamageMult = 0.2;
 		};
 		obj.isImprovedDrag <- function() 

@@ -67,6 +67,6 @@ CharacterScreenPaperdollModule.prototype.onBrotherSelected = function (
 	    }
 	}
 
-	ws_onBrotherSelected.call(this, _dataSource, _brother);
+	ws_onBrotherSelected.call(this, [_dataSource, _brother]);
 };
 

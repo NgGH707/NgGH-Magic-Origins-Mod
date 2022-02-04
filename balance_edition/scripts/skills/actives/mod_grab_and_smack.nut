@@ -42,20 +42,19 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 	
 	function getTooltip()
 	{
-		local p = this.getContainer().getActor().getCurrentProperties();
 		local ret = this.getDefaultTooltip();
 		ret.extend([
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/hitchance.png",
-				text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]+20%[/color] chance to hit. "
+				text = "Has [color=" + this.Const.UI.Color.PositiveValue + "]+15%[/color] chance to hit. "
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/hitchance.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Stunned[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Dazed[/color], [color=" + this.Const.UI.Color.NegativeValue + "]Staggered[/color] or [color=" + this.Const.UI.Color.NegativeValue + "]Distracted[/color] target can never escape your grab"
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Stunned[/color] target can never escape your grab"
 			},
 			{
 				id = 6,
@@ -120,6 +119,13 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 			++this.m.Count;
 		}
 
+		if (_targetTile.getEntity().getCurrentProperties().IsImmuneToKnockBackAndGrab)
+		{
+			this.spawnAttackEffect(_targetTile, this.Const.Tactical.AttackEffectSwing);
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " can\'t grab " + this.Const.UI.getColorizedEntityName(target));
+			return false;
+		}
+
 		this.getContainer().setBusy(true);
 		local target = _targetTile.getEntity();
 		local tag = {
@@ -127,7 +133,7 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 			User = _user,
 			TargetTile = _targetTile
 		};
-		
+
 		local roll = this.Math.rand(1, 100);
 		local hitChance = this.getHitchance(_targetTile.getEntity());
 		
@@ -169,34 +175,34 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		local applyEffect = this.Math.rand(1, 10);
-
-		if (applyEffect == 3)
+		switch (this.Math.rand(1, 10))
 		{
+		case 1:
 			_target.getSkills().add(this.new("scripts/skills/effects/stunned_effect"));
 
 			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
 			{
 				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has stunned " + this.Const.UI.getColorizedEntityName(_target) + " for one turn");
 			}
-		}
-		else if (applyEffect < 2)
-		{
+			break;
+
+		case 2:
 			_target.getSkills().add(this.new("scripts/skills/effects/dazed_effect"));
 
 			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
 			{
 				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has staggered " + this.Const.UI.getColorizedEntityName(_target) + " for one turn");
 			}
-		}
-		else (applyEffect == 2)
-		{
+			break;
+
+		case 3:
 			_target.getSkills().add(this.new("scripts/skills/effects/debilitated_effect"));
 
 			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
 			{
 				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has debilitated " + this.Const.UI.getColorizedEntityName(_target) + " for one turn");
 			}
+			break;
 		}
 	}
 
@@ -215,11 +221,6 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 		}
 
 		this.applyFatigueDamage(target, 10);
-
-		if (target.getCurrentProperties().IsImmuneToKnockBackAndGrab)
-		{
-			return false;
-		}
 
 		if (!_user.isHiddenToPlayer() && (_targetTile.IsVisibleForPlayer || flingToTile.IsVisibleForPlayer))
 		{
@@ -257,7 +258,7 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 			tag.HitInfo.BodyDamageMult = 1.0;
 			tag.HitInfo.FatalityChanceMult = 1.0;
 			tag.HitInfo.Injuries = tag.HitInfo.BodyPart == 0 ? this.Const.Injury.BluntBody : this.Const.Injury.BluntHead;
-			tag.HitInfo.InjuryThresholdMult = 0.66;
+			tag.HitInfo.InjuryThresholdMult = 0.7;
 	
 			this.Tactical.getNavigator().teleport(target, flingToTile, this.onKnockedDown, tag, true);
 		}
@@ -300,7 +301,7 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 
 			if (this.Math.abs(_entity.getTile().Level - _tag.User.getTile().Level) <= 1)
 			{
-				this.Time.scheduleEvent(this.TimeUnit.Virtual, 100, _tag.Skill.onFollowUp, _tag);
+				this.Time.scheduleEvent(this.TimeUnit.Virtual, 115, _tag.Skill.onFollowUp, _tag);
 			}
 		}
 	}
@@ -308,8 +309,8 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 	function getExpectedDamage( _target )
 	{
 		local ret = this.skill.getExpectedDamage(_target);
-		ret.HitpointDamage = this.Math.max(20, ret.HitpointDamage);
-		ret.TotalDamage = this.Math.max(20, ret.TotalDamage);
+		ret.HitpointDamage = this.Math.max(10, ret.HitpointDamage);
+		ret.TotalDamage = this.Math.max(10, ret.TotalDamage);
 		return ret;
 	}
 	
@@ -321,7 +322,7 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 			_properties.DamageRegularMax = 25 + this.Math.max(1, _properties.DamageRegularMax / 3);
 			_properties.DamageArmorMult = 1.0;
 			_properties.DamageMinimum += 10;
-			_properties.MeleeSkill += 20;
+			_properties.MeleeSkill += 15;
 			
 			this.m.IsUsingHitchance = true;
 			
@@ -339,16 +340,16 @@ this.mod_grab_and_smack <- this.inherit("scripts/skills/skill", {
 				"effects.horrified",
 				"effects.legend_dazed",
 			];
-			
-			this.m.IsUsingHitchance = !_targetEntity.getCurrentProperties().IsStunned;
-			
+
 			foreach (idx, id in effects) 
 			{
 			    if (targetStatus.hasSkill(id))
 				{
-					this.m.IsUsingHitchance = false;
+					_properties.MeleeSkill += 10;
 				}
 			}
+			
+			this.m.IsUsingHitchance = !_targetEntity.getCurrentProperties().IsStunned;
 		}
 	}
 

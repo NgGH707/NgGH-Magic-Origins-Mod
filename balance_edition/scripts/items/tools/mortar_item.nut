@@ -123,14 +123,9 @@ this.mortar_item <- this.inherit("scripts/items/item", {
 
 	function onUse( _actor, _item = null )
 	{
+		this.m.BringInBattle = !this.m.BringInBattle;
+		this.updateIcon();
 		return true;
-	}
-
-	function onUseIndestructibleItem()
-	{
-		local item = this.new("scripts/items/tools/mortar_item");
-		item.m.BringInBattle = !this.m.BringInBattle;
-		return item;
 	}
 
 	function onAddedToStash( _stashID )

@@ -157,6 +157,11 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 
 			local skill = this.getSkills().getSkillByID("actives.swallow_whole");
 
+			if (skill == null)
+			{
+				return;
+			}
+
 			if (skill.getSwallowedEntity() == null)
 			{
 				return;
@@ -196,7 +201,12 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				return;
 			}
 
-			local skill = this.getSkills().getSkillByID("actives.swallow_whole");
+			local skill = this.getSkills().getSkillByID("actives.legend_skin_ghoul_swallow_whole");
+
+			if (skill == null)
+			{
+				return;
+			}
 
 			if (skill.getSwallowedEntity() == null)
 			{

@@ -98,7 +98,7 @@ this.unhold_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	
 	function getHealthRecoverMult()
 	{
-		return 15.0;
+		return 20.0;
 	}
 	
 	function restoreArmor()

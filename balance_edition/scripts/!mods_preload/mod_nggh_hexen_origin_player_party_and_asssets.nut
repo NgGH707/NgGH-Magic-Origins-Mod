@@ -244,13 +244,13 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 						bro.restoreArmor();
 					}
 				}
-			}
 
-			if (this.World.getTime().Hours % 4 == 0)
-			{
-				if (this.getOrigin().getID() == "scenario.hexen")
+				if (this.World.getTime().Hours % 4 == 0)
 				{
-					this.checkSuicide();
+					if (this.getOrigin().getID() == "scenario.hexen")
+					{
+						this.checkSuicide();
+					}
 				}
 			}
 

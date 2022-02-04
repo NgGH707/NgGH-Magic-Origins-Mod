@@ -60,6 +60,10 @@ this.sand_puppet_racial <- this.inherit("scripts/skills/skill", {
 		{
 		    _properties.DamageReceivedRegularMult *= 0.67;
 		}
+		else if (_skill.hasDamageType(this.Const.Damage.DamageType.Blunt))
+		{
+			_properties.DamageReceivedRegularMult *= 1.1;
+		}
 	}
 
 });

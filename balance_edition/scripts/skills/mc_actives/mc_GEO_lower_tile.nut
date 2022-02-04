@@ -186,6 +186,13 @@ this.mc_GEO_lower_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 
 		if (_targetTile.IsOccupiedByActor)
 		{
+			if (_targetTile.getEntity().getCurrentProperties().IsRooted)
+			{
+				return;
+			}
+
+			this.Tactical.EventLog.log("The sudden drop hurts " + this.Const.UI.getColorizedEntityName(entity));
+
 			local entity = _targetTile.getEntity();
 			local skills = entity.getSkills();
 			skills.removeByID("effects.shieldwall");

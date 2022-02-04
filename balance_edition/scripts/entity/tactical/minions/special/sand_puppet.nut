@@ -226,17 +226,17 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 		b.ArmorMult[0] *= _mult;
 		b.ArmorMult[1] *= _mult;
 
-		if (_mult > 1.25)
+		if (_mult >= 1.25)
 		{
 			b.DamageTotalMult *= 1.2;
 		}
 
-		if (_mult > 1.35)
+		if (_mult >= 1.35)
 		{
 			b.HitpointsMult *= 1.2;
 		}
 
-		if (_mult > 1.5)
+		if (_mult >= 1.5)
 		{
 			this.m.Skills.add(this.new("scripts/skills/perks/perk_battle_forged"));
 		}

@@ -191,6 +191,11 @@ this.mc_GEO_raise_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 
 		if (_targetTile.IsOccupiedByActor)
 		{
+			if (_targetTile.getEntity().getCurrentProperties().IsRooted)
+			{
+				return;
+			}
+
 			local check = this.getChanceToFall(_targetTile, tiles);
 
 			if (check.Tile != null && this.Math.rand(1, 100) <= check.Chance)
@@ -274,15 +279,15 @@ this.mc_GEO_raise_tile <- this.inherit("scripts/skills/mc_magic_skill", {
 	        break;
 
 	    case 2:
-	        ret.Chance = 34;
+	        ret.Chance = 33;
 	        break;
 
 	    case 3:
-	        ret.Chance = 67;
+	        ret.Chance = 66;
 	        break;
 
 	    case 4:
-	        ret.Chance = 100;
+	        ret.Chance = 95;
 	        break;
 	
 	    default:
