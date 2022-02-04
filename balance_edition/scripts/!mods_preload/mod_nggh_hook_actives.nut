@@ -6215,30 +6215,22 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 				return false;
 			}
 
-			if (_targetTile.getEntity().getCurrentProperties().IsRooted)
+			local target = _targetTile.getEntity();
+
+			if (target.getCurrentProperties().IsRooted)
 			{
 				return false;
 			}
 			
-			if (_targetTile.getEntity().getCurrentProperties().IsImmuneToKnockBackAndGrab && (!_targetTile.getEntity().getFlags().has("egg") || _targetTile.getEntity().getType() != this.Const.EntityType.SpiderEggs))
+			if (target.getCurrentProperties().IsImmuneToKnockBackAndGrab && !target.isAlliedWith(this.getContainer().getActor()))
 			{
-				if (this.isImprovedDrag() && this.isViableTarget(_originTile.getEntity(), _targetTile.getEntity()))
+				if (!this.isImprovedDrag() || !this.isViableTarget(_originTile.getEntity(), _targetTile.getEntity()))
 				{
-				}
-				else 
-				{
-				    return false;
+					return false;
 				}
 			}
 
-			local pulledTo = this.getPulledToTile(_originTile, _targetTile);
-
-			if (pulledTo == null)
-			{
-				return false;
-			}
-
-			return true;
+			return this.getPulledToTile(_originTile, _targetTile) != null;
 		};
 		obj.isViableTarget <- function( _user, _target )
 		{
@@ -6288,14 +6280,11 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 				pullToTile = this.getPulledToTile(_user.getTile(), _targetTile);
 			}
 
-			if (target.getCurrentProperties().IsImmuneToKnockBackAndGrab)
+			if (target.getCurrentProperties().IsImmuneToKnockBackAndGrab && !target.isAlliedWith(_user))
 			{
 				local r = this.Math.rand(1, 100);
 
-				if (target.getFlags().has("egg"))
-				{
-				}
-				else if (!this.isImprovedDrag())
+				if (!this.isImprovedDrag())
 				{
 					this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " fails to drag in " + this.Const.UI.getColorizedEntityName(_targetTile.getEntity()));
 					return false;
