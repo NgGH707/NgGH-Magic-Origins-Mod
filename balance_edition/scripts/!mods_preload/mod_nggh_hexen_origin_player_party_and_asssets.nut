@@ -252,10 +252,30 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 						this.checkSuicide();
 					}
 				}
+
+				if (this.World.getTime().Hours % 6 == 0)
+				{
+					local stash = this.World.Assets.getStash();
+
+					foreach (index, item in stash.getItems())
+					{
+						if (item == null)
+						{
+							continue;
+						}
+
+						if (item.isItemType(this.Const.Items.ItemType.Corpse))
+						{
+							item.onLoseCondition();
+						}
+					}
+
+					stash.collectGarbage();
+				}
 			}
 
 			update(_worldState);
-		}
+		};
 		
 		obj.checkSuicide <- function()
 		{
@@ -328,6 +348,56 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 		}
 		
 	});
+
+
+	::mods_hookNewObject("states/world/camp_manager", function(obj)
+	{
+		local tent = this.new("scripts/entity/world/camp/buildings/butcher_building");
+		tent.setCamp(obj);
+		obj.m.Tents.insert(obj.m.Tents.len() - 2, tent);
+	
+		local ws_onDeserialize = obj.onDeserialize;
+		obj.onDeserialize = function( _in )
+		{
+			ws_onDeserialize(_in);
+
+			if (this.getBuildingByID(this.Const.World.CampBuildings.Butcher) == null)
+			{
+				local tent = this.new("scripts/entity/world/camp/buildings/butcher_building");
+				tent.setCamp(this);
+				this.m.Tents.insert(this.m.Tents.len() - 2, tent);
+			}
+		};
+	});
+
+	local attached_locations = [
+		"trapper_location",
+		"leather_tanner_location",
+		"hunters_cabin_location",
+		"goat_herd_location",
+		"goat_herd_oriental_location",
+	];
+
+	foreach (name in attached_locations)
+	{
+		::mods_hookExactClass("entity/world/attached_location", function(obj)
+		{
+			local ws_onUpdateShopList = obj.onUpdateShopList;
+			obj.onUpdateShopList = function( _id, _list )
+			{
+				if (_id == "building.marketplace")
+				{
+					_list.push({
+						R = 80,
+						P = 1.0,
+						S = "tents/tent_butcher"
+					});
+				}
+
+				ws_onUpdateShopList(_id, _list);
+			}
+		});
+	}
 
 	delete this.HexenHooks.hookPlayerPartyAndAssets;
 }

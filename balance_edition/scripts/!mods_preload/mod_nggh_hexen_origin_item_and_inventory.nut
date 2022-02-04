@@ -200,6 +200,50 @@ this.getroottable().HexenHooks.hookItem <- function ()
 		};
 	});*/
 
+	::mods_hookNewObject("items/stash_container", function(obj)
+	{
+		obj.m.IsUpdating <- false;
+
+		local ws_makeEmptySlots = obj.makeEmptySlots;
+		obj.makeEmptySlots = function( _n )
+		{
+			ws_makeEmptySlots(_n);
+			this.collectGarbage();
+		};
+
+		local ws_add = obj.add;
+		obj.add = function( _item )
+		{
+			local adding = ws_add(_item);
+			this.collectGarbage();
+			return adding;
+		};
+
+		local ws_insert = obj.insert;
+		obj.insert = function( _item, _index )
+		{
+			local inserting = ws_insert(_item, _index);
+			this.collectGarbage();
+			return inserting;
+		};
+
+		local ws_remove = obj.remove;
+		obj.remove = function( _item )
+		{
+			local removing = ws_remove(_item);
+			this.collectGarbage();
+			return removing;
+		};
+
+		local ws_removeByID = obj.removeByID;
+		obj.removeByID = function( _id )
+		{
+			local removing = ws_removeByID(_id);
+			this.collectGarbage();
+			return removing;
+		};
+	});
+
 	//show blocked equipment slot
 	::mods_hookNewObject("ui/global/data_helper", function ( obj )
 	{
@@ -313,6 +357,8 @@ this.getroottable().HexenHooks.hookItem <- function ()
 			if (items != null && this.isKindOf(items, "nggh707_item_container"))
 			{
 				result.restriction <- {};
+				result.restriction.Icon <- "missing_component_70x70.png";
+				result.restriction.IconLarge <- "missing_component_140x70.png";
 				this.convertBlockedSlotsToUIData(items, result.restriction);
 			}
 

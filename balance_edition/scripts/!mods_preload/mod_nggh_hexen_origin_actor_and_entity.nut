@@ -16,7 +16,32 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 			}
 
 			ws_retreat();
-		}
+		};
+		local ws_onDeath = obj.onDeath;
+		obj.onDeath = function( _killer, _skill, _tile, _fatalityType )
+		{
+			ws_onDeath(_killer, _skill, _tile, _fatalityType);
+
+			if (_tile == null || !_tile.IsCorpseSpawned || _tile.Properties.get("Corpse").IsPlayer)
+			{
+				return;
+			}
+
+			if (this.getType() == this.Const.EntityType.Player)
+			{
+				return;
+			}
+
+			if (_tile.Properties.get("Corpse").CorpseAsItem == null)
+			{
+				local self = this;
+				local isTail = this.isKindOf(self, "lindwurm_tail") || this.isKindOf(self, "legend_stollwurm_tail");
+				local corpse = this.new("scripts/items/corpses/corpse_item");
+				corpse.setUpAsLootInBattle(this, this.m.Type, _tile.Properties.get("Corpse"), _fatalityType);
+				corpse.m.IsTail = isTail;
+				_tile.Properties.get("Corpse").CorpseAsItem = corpse;
+			}
+		};
 	});
 
 

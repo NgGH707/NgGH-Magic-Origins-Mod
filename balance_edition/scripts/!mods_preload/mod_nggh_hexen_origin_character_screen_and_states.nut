@@ -3,6 +3,64 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 	//help siege weapon toggle "bring in batte" or "put in reserve" and make charmed simp does not cost any crowns to kick them out of party
 	::mods_hookNewObject("ui/screens/character/character_screen", function ( obj )
 	{
+		local ws_onToggleInventoryItem = obj.onToggleInventoryItem;
+		obj.onToggleInventoryItem = function( _data )
+		{
+			local result = {
+				repair = false,
+				salvage = false
+			};
+
+			local itemId = _data[0];
+			local entityId = _data[1];
+
+			if (this.Tactical.isActive())
+			{
+				return result;
+			}
+
+			local obj = null;
+			local item = null;
+			local index = 0;
+			if (entityId != null)
+			{
+				obj = this.Tactical.getEntityByID(entityId).getItems().getItemByInstanceID(itemId);
+				if (obj != null)
+				{
+					item = obj;
+				}
+			}
+			else
+			{
+				obj = this.Stash.getItemByInstanceID(itemId);
+				if (obj != null)
+				{
+					item = obj.item;
+					index = obj.index;
+				}
+			}
+
+			if (item != null && item.isItemType(this.Const.Items.ItemType.Corpse))
+			{
+				if (item.m.MedicinePerDay == 0)
+				{
+					return {
+						repair = false,
+						salvage = false
+					};
+				}
+
+				item.setToBeMaintain(!item.isMaintained());
+
+				return {
+					repair = item.isMaintained(),
+					salvage = 0
+				};
+			}
+			
+			return ws_onToggleInventoryItem(_data);
+		};
+
 		local ws_general_onEquipStashItem = obj.general_onEquipStashItem;
 		obj.general_onEquipStashItem = function( _data )
 		{
@@ -29,19 +87,16 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 			{
 				if (data.sourceItem.onUse(data.inventory.getActor()))
 				{
+					data.stash.removeByIndex(data.sourceIndex);
 					data.inventory.getActor().getSkills().update();
-					local result = this.UIDataHelper.convertStashAndEntityToUIData(data.entity, null, false, this.m.InventoryFilter);
+					local item = data.sourceItem.onUseIndestructibleItem();
 
-					if (!("forceUpdate" in result.stash))
+					if (item != null)
 					{
-						result.stash.forceUpdate <- data.sourceIndex;
+						this.World.Assets.getStash().insert(item, data.sourceIndex);
 					}
-					else
-					{
-						result.stash.forceUpdate = data.sourceIndex;
-					}
-					
-					return result;
+
+					return this.UIDataHelper.convertStashAndEntityToUIData(data.entity, null, false, this.m.InventoryFilter);
 				}
 				else
 				{
@@ -459,7 +514,708 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 
 				this.updateCurrentEntity();
 			}
+		};
+
+		obj.gatherLoot = function()
+		{
+			local playerKills = 0;
+
+			foreach( bro in this.m.CombatResultRoster )
+			{
+				playerKills = playerKills + bro.getCombatStats().Kills;
+			}
+
+			if (!this.isScenarioMode())
+			{
+				this.World.Statistics.getFlags().set("LastCombatKills", playerKills);
+			}
+
+			local isArena = !this.isScenarioMode() && this.m.StrategicProperties != null && this.m.StrategicProperties.IsArenaMode;
+
+			if (!isArena && !this.isScenarioMode() && this.m.StrategicProperties != null && this.m.StrategicProperties.IsLootingProhibited)
+			{
+				return;
+			}
+
+			local loot = [];
+			local size = this.Tactical.getMapSize();
+
+			for( local x = 0; x < size.X; x = ++x )
+			{
+				for( local y = 0; y < size.Y; y = ++y )
+				{
+					local tile = this.Tactical.getTileSquare(x, y);
+
+					if (tile.IsContainingItems)
+					{
+						foreach( item in tile.Items )
+						{
+							if (isArena && item.getLastEquippedByFaction() != 1)
+							{
+								continue;
+							}
+
+							item.onCombatFinished();
+							loot.push(item);
+						}
+					}
+
+					if (tile.Properties.has("Corpse") && !tile.Properties.has("IsSummoned"))
+					{
+						if (tile.Properties.get("Corpse").Items != null)
+						{
+							local items = tile.Properties.get("Corpse").Items.getAllItems();
+
+							foreach( item in items )
+							{
+
+								if (isArena && item.getLastEquippedByFaction() != 1)
+								{
+									continue;
+								}
+
+								item.onCombatFinished();
+								if (!item.isChangeableInBattle(null) && item.isDroppedAsLoot())
+								{
+									if (item.getCondition() > 1 && item.getConditionMax() > 1 && item.getCondition() > item.getConditionMax() * 0.66 && this.Math.rand(1, 100) <= 66)
+									{
+										local c = this.Math.minf(item.getCondition(), this.Math.rand(this.Math.maxf(10, item.getConditionMax() * 0.35), item.getConditionMax()));
+										item.setCondition(c);
+									}
+
+									item.removeFromContainer();
+									foreach (i in item.getLootLayers())
+									{
+										loot.push(i);
+									}
+
+								}
+							}
+						}
+
+						if (tile.Properties.get("Corpse").CorpseAsItem != null && !tile.Properties.get("Corpse").CorpseAsItem.isGarbage() && this.Math.rand(1, 100) <= 50)
+						{
+							loot.push(tile.Properties.get("Corpse").CorpseAsItem);
+						}
+					}
+				}
+			}
+
+			if (!isArena && this.m.StrategicProperties != null)
+			{
+				local player = this.World.State.getPlayer();
+
+				foreach( party in this.m.StrategicProperties.Parties )
+				{
+					if (party.getTroops().len() == 0 && party.isAlive() && !party.isAlliedWithPlayer() && party.isDroppingLoot() && (playerKills > 0 || this.m.IsDeveloperModeEnabled))
+					{
+						party.onDropLootForPlayer(loot);
+					}
+				}
+
+				foreach( item in this.m.StrategicProperties.Loot )
+				{
+					loot.push(this.new(item));
+				}
+
+				foreach ( item in this.m.StrategicProperties.LootWithoutScript )
+				{
+					loot.push(item);
+				}
+			}
+
+			if (!isArena && !this.isScenarioMode())
+			{
+				if (this.Tactical.Entities.getAmmoSpent() > 0 && this.World.Assets.m.IsRecoveringAmmo)
+				{
+					local amount = this.Math.max(1, this.Tactical.Entities.getAmmoSpent() * 0.2);
+					amount = this.Math.rand(amount / 2, amount);
+
+					if (amount > 0)
+					{
+						local ammo = this.new("scripts/items/supplies/ammo_item");
+						ammo.setAmount(amount);
+						loot.push(ammo);
+					}
+				}
+
+				if (this.Tactical.Entities.getArmorParts() > 0 && this.World.Assets.m.IsRecoveringArmor)
+				{
+					local amount = this.Math.min(60, this.Math.max(1, this.Tactical.Entities.getArmorParts() * this.Const.World.Assets.ArmorPartsPerArmor * 0.15));
+					amount = this.Math.rand(amount / 2, amount);
+
+					if (amount > 0)
+					{
+						local parts = this.new("scripts/items/supplies/armor_parts_item");
+						parts.setAmount(amount);
+						loot.push(parts);
+					}
+				}
+			}
+
+			this.m.CombatResultLoot.assign(loot);
+			this.m.CombatResultLoot.sort();
+		};
+	});
+
+	::mods_hookNewObject("ui/screens/tactical/tactical_combat_result_screen", function(obj)
+	{
+		obj.onLootAllItemsButtonPressed = function()
+		{
+			if (this.Tactical.CombatResultLoot.isEmpty())
+			{
+				return this.Const.UI.convertErrorToUIData(this.Const.UI.Error.FoundLootListIsEmpty);
+			}
+
+			if (!this.Stash.hasEmptySlot())
+			{
+				return this.Const.UI.convertErrorToUIData(this.Const.UI.Error.NotEnoughStashSpace);
+			}
+
+			local isAutoLoot = this.Settings.getGameplaySettings().AutoLoot;
+			local foundLootItems = this.Tactical.CombatResultLoot.getItems();
+			local stashItems = this.Stash.getItems();
+			local lastStashIdx = 0;
+			local soundPlayed = false;
+			local freeSlotFound = false;
+			local foundLootLen = foundLootItems.len();
+
+			for( local i = 0; i < foundLootItems.len(); i = ++i )
+			{
+				if (foundLootItems[i] != null)
+				{
+					if (isAutoLoot && foundLootItems[i].isItemType(this.Const.Items.ItemType.Corpse))
+					{
+						continue;
+					}
+
+					for( local j = lastStashIdx; j < stashItems.len(); j = ++j )
+					{
+						if (stashItems[j] == null)
+						{
+							freeSlotFound = true;
+							stashItems[j] = foundLootItems[i];
+							foundLootItems[i] = null;
+							lastStashIdx = j + 1;
+							stashItems[j].onAddedToStash(this.Stash.getID());
+
+							if (!soundPlayed)
+							{
+								soundPlayed = true;
+								stashItems[j].playInventorySound(this.Const.Items.InventoryEventType.PlacedInBag);
+							}
+
+							break;
+						}
+					}
+				}
+			}
+
+			this.Tactical.CombatResultLoot.shrink();
+
+			if (freeSlotFound == false)
+			{
+				return this.Const.UI.convertErrorToUIData(this.Const.UI.Error.NotEnoughStashSpace);
+			}
+			else
+			{
+				return {
+					stash = this.UIDataHelper.convertStashToUIData(true),
+					foundLoot = this.UIDataHelper.convertCombatResultLootToUIData()
+				};
+			}
 		}
+	});
+
+	::mods_hookNewObject("ui/screens/world/camp_screen", function(obj)
+	{
+		obj.m.ButcherDialogModule <- null;
+		obj.m.ButcherDialogModule = this.new("scripts/ui/screens/world/modules/camp_screen/camp_butcher_dialog_module");
+		obj.m.ButcherDialogModule.setParent(obj);
+		obj.m.ButcherDialogModule.connectUI(obj.m.JSHandle);
+
+		obj.getButcherDialogModule <- function()
+		{
+			return this.m.ButcherDialogModule;
+		};
+
+		local ws_destroy = obj.destroy;
+		obj.destroy = function()
+		{
+			this.m.ButcherDialogModule.destroy();
+			this.m.ButcherDialogModule = null;
+			ws_destroy();
+		};
+
+		local ws_clear = obj.clear;
+		obj.clear = function()
+		{
+			ws_clear();
+			this.m.ButcherDialogModule.clear();
+		};
+
+		local ws_showLastActiveDialog = obj.showLastActiveDialog;
+		obj.showLastActiveDialog = function()
+		{
+			if (this.m.LastActiveModule == this.m.ButcherDialogModule)
+			{
+				this.showButcherDialog();
+			}
+			else
+			{
+				ws_showLastActiveDialog();
+			}
+		};
+
+		local ws_showTentBuildingDialog = obj.showTentBuildingDialog;
+		obj.showTentBuildingDialog = function(_id)
+		{
+			if (_id == this.Const.World.CampBuildings.Butcher)
+			{
+				this.showButcherDialog();
+			}
+			else
+			{
+				ws_showTentBuildingDialog();
+			}
+		};
+
+		obj.showButcherDialog <- function()
+		{
+			if (this.m.JSHandle != null && this.isVisible())
+			{
+				this.m.LastActiveModule = this.m.ButcherDialogModule;
+				this.Tooltip.hide();
+				this.m.JSHandle.asyncCall("showButcherDialog", this.m.ButcherDialogModule.onShow());
+			}
+		};
+	});
+
+	::mods_hookNewObjectOnce("ui/screens/tooltip/tooltip_events", function( obj ) 
+	{
+		local ws_strategic_queryUIItemTooltipData = obj.strategic_queryUIItemTooltipData;
+		obj.strategic_queryUIItemTooltipData = function( _entityId, _itemId, _itemOwner )
+		{
+			local tooltip = ws_strategic_queryUIItemTooltipData(_entityId, _itemId, _itemOwner);
+			if(tooltip != null) return tooltip;
+
+			if (_itemOwner == "butcher_database")
+			{
+				local database = this.World.Camp.getBuildingByID(this.Const.World.CampBuildings.Butcher).m.Database;
+				local item = database.getItemByID(_itemId);
+				return item != null ? item.getTooltip() : null;
+			}
+
+			return null;
+		}
+
+	 	local ws_general_queryUIElementTooltipData = obj.general_queryUIElementTooltipData;
+	 	obj.general_queryUIElementTooltipData = function(_entityId, _elementId, _elementOwner)
+	 	{
+	 		local tooltip = ws_general_queryUIElementTooltipData(_entityId, _elementId, _elementOwner);
+			if(tooltip != null) return tooltip;
+
+			switch (_elementId)
+			{
+			case "butcher.Bros":
+				local tent = this.World.Camp.getBuildingByID(this.Const.World.CampBuildings.Butcher);
+				local butcher = tent.getModifiers();
+				local ret = [
+					{
+						id = 1,
+						type = "title",
+						text = "Assigned Brothers"
+					},
+					{
+						id = 2,
+						type = "description",
+						text = "Number of people assigned to butcher duty. The more assigned, the quicker the process."
+					},
+					{
+						id = 3,
+						type = "text",
+						icon = "ui/icons/repair_item.png",
+						text = "Total butcher modifier is [color=" + this.Const.UI.Color.PositiveValue + "]" + butcher.Craft + " units per hour[/color]"
+					}
+				];
+				foreach(i, bro in butcher.Modifiers )
+				{
+					ret.push({
+						id = i + 4,
+						type = "text",
+						icon = "ui/icons/special.png",
+						text = "[color=" + this.Const.UI.Color.PositiveValue + "]" + bro[0] + " units/hour [/color] " + bro[1] + " (" + bro[2] + ")"
+					});
+				}
+				return ret;
+
+			case "butcher.Time":
+				return [
+					{
+						id = 1,
+						type = "title",
+						text = "Time Required"
+					},
+					{
+						id = 2,
+						type = "description",
+						text = "Total number of hours required to buthcer all the queued items. Assign more people to this task to decrease the amout of time required. Some backgrounds are quicker than others!"
+					}
+				];
+
+			case "camp-screen.butcher.assignall.button":
+				return [
+					{
+						id = 1,
+						type = "title",
+						text = "Assign All"
+					},
+					{
+						id = 2,
+						type = "description",
+						text = "Add all items to the butcher queue."
+					}
+				];
+
+			case "camp-screen.butcher.removeall.button":
+				return [
+					{
+						id = 1,
+						type = "title",
+						text = "Remove all"
+					},
+					{
+						id = 2,
+						type = "description",
+						text = "Remove all items from the butcher queue."
+					}
+				];
+
+			case this.Const.World.CampBuildings.Butcher:
+				return this.World.Camp.getBuildingByID(_elementId).getTooltip();
+		
+			default:
+				return null;
+			}
+
+			return null;
+	 	};
+
+	 	local ws_tactical_helper_addHintsToTooltip = obj.tactical_helper_addHintsToTooltip;
+		obj.tactical_helper_addHintsToTooltip = function( _activeEntity, _entity, _item, _itemOwner, _ignoreStashLocked = false )
+		{
+			if (!_item.isItemType(this.Const.Items.ItemType.Corpse))
+			{
+				return ws_tactical_helper_addHintsToTooltip(_activeEntity, _entity, _item, _itemOwner, _ignoreStashLocked);
+			}
+
+			local stashLocked = true;
+
+			if (this.Stash != null)
+			{
+				stashLocked = this.Stash.isLocked();
+			}
+
+			local tooltip = _item.getTooltip();
+
+			if (stashLocked == true && _ignoreStashLocked == false)
+			{
+				if (_item.isChangeableInBattle(_entity) == false)
+				{
+					tooltip.push({
+						id = 1,
+						type = "hint",
+						icon = "ui/icons/icon_locked.png",
+						text = this.Const.Strings.Tooltip.Tactical.Hint_CannotChangeItemInCombat
+					});
+					return tooltip;
+				}
+
+				if (_activeEntity == null || _entity != null && _activeEntity != null && _entity.getID() != _activeEntity.getID())
+				{
+					tooltip.push({
+						id = 1,
+						type = "hint",
+						icon = "ui/icons/icon_locked.png",
+						text = this.Const.Strings.Tooltip.Tactical.Hint_OnlyActiveCharacterCanChangeItemsInCombat
+					});
+					return tooltip;
+				}
+
+				if (_activeEntity != null && _activeEntity.getItems().isActionAffordable([
+					_item
+				]) == false)
+				{
+					tooltip.push({
+						id = 1,
+						type = "hint",
+						icon = "ui/tooltips/warning.png",
+						text = "Not enough Action Points to change items ([b][color=" + this.Const.UI.Color.NegativeValue + "]" + _activeEntity.getItems().getActionCost([
+							_item
+						]) + "[/color][/b] required)"
+					});
+					return tooltip;
+				}
+			}
+
+			switch(_itemOwner)
+			{
+			case "entity":
+				if (_item.getCurrentSlotType() == this.Const.ItemSlot.Bag && _item.getSlotType() != this.Const.ItemSlot.None)
+				{
+					if (stashLocked == true)
+					{
+						if (_item.getSlotType() != this.Const.ItemSlot.Bag && (_entity.getItems().getItemAtSlot(_item.getSlotType()) == null || _entity.getItems().getItemAtSlot(_item.getSlotType()) == "-1" || _entity.getItems().getItemAtSlot(_item.getSlotType()).isAllowedInBag(_entity)))
+						{
+							tooltip.push({
+								id = 1,
+								type = "hint",
+								icon = "ui/icons/mouse_right_button.png",
+								text = "Equip item ([b][color=" + this.Const.UI.Color.PositiveValue + "]" + _activeEntity.getItems().getActionCost([
+									_item,
+									_entity.getItems().getItemAtSlot(_item.getSlotType()),
+									_entity.getItems().getItemAtSlot(_item.getBlockedSlotType())
+								]) + "[/color][/b] AP)"
+							});
+						}
+
+						tooltip.push({
+							id = 2,
+							type = "hint",
+							icon = "ui/icons/mouse_right_button_ctrl.png",
+							text = "Drop item on ground ([b][color=" + this.Const.UI.Color.PositiveValue + "]" + _activeEntity.getItems().getActionCost([
+								_item
+							]) + "[/color][/b] AP)"
+						});
+					}
+					else
+					{
+						if (_item.getSlotType() != this.Const.ItemSlot.Bag && (_entity.getItems().getItemAtSlot(_item.getSlotType()) == null || _entity.getItems().getItemAtSlot(_item.getSlotType()) == "-1" || _entity.getItems().getItemAtSlot(_item.getSlotType()).isAllowedInBag(_entity)))
+						{
+							tooltip.push({
+								id = 1,
+								type = "hint",
+								icon = "ui/icons/mouse_right_button.png",
+								text = "Equip item"
+							});
+						}
+
+						tooltip.push({
+							id = 2,
+							type = "hint",
+							icon = "ui/icons/mouse_right_button_ctrl.png",
+							text = "Place item in stash"
+						});
+					}
+				}
+				else if (stashLocked == true)
+				{
+					if (_item.isChangeableInBattle(_entity) && _item.isAllowedInBag(_entity) && _entity.getItems().hasEmptySlot(this.Const.ItemSlot.Bag))
+					{
+						tooltip.push({
+							id = 1,
+							type = "hint",
+							icon = "ui/icons/mouse_right_button.png",
+							text = "Place item in bag ([b][color=" + this.Const.UI.Color.PositiveValue + "]" + _activeEntity.getItems().getActionCost([
+								_item
+							]) + "[/color][/b] AP)"
+						});
+					}
+
+					tooltip.push({
+						id = 2,
+						type = "hint",
+						icon = "ui/icons/mouse_right_button_ctrl.png",
+						text = "Drop item on ground ([b][color=" + this.Const.UI.Color.PositiveValue + "]" + _activeEntity.getItems().getActionCost([
+							_item
+						]) + "[/color][/b] AP)"
+					});
+				}
+				else
+				{
+					if (_item.isChangeableInBattle(_activeEntity) && _item.isAllowedInBag(_activeEntity))
+					{
+						tooltip.push({
+							id = 1,
+							type = "hint",
+							icon = "ui/icons/mouse_right_button.png",
+							text = "Place item in bag"
+						});
+					}
+
+					tooltip.push({
+						id = 2,
+						type = "hint",
+						icon = "ui/icons/mouse_right_button_ctrl.png",
+						text = "Place item in stash"
+					});
+				}
+
+				break;
+
+			case "ground":
+			case "character-screen-inventory-list-module.ground":
+				if (_item.isChangeableInBattle(_entity))
+				{
+					if (_item.getSlotType() != this.Const.ItemSlot.None)
+					{
+						tooltip.push({
+							id = 1,
+							type = "hint",
+							icon = "ui/icons/mouse_right_button.png",
+							text = "Equip item ([b][color=" + this.Const.UI.Color.PositiveValue + "]" + _activeEntity.getItems().getActionCost([
+								_item,
+								_entity.getItems().getItemAtSlot(_item.getSlotType()),
+								_entity.getItems().getItemAtSlot(_item.getBlockedSlotType())
+							]) + "[/color][/b] AP)"
+						});
+					}
+
+					if (_item.isAllowedInBag(_entity))
+					{
+						tooltip.push({
+							id = 2,
+							type = "hint",
+							icon = "ui/icons/mouse_right_button_ctrl.png",
+							text = "Place item in bag ([b][color=" + this.Const.UI.Color.PositiveValue + "]" + _activeEntity.getItems().getActionCost([
+								_item
+							]) + "[/color][/b] AP)"
+						});
+					}
+				}
+
+				break;
+
+			case "stash":
+			case "character-screen-inventory-list-module.stash":
+				if (_item.isChangeableInBattle(_entity) == true && _item.isAllowedInBag(_entity))
+				{
+					tooltip.push({
+						id = 2,
+						type = "hint",
+						icon = "ui/icons/mouse_right_button_ctrl.png",
+						text = "Place item in bag"
+					});
+				}
+				if (_item.m.MedicinePerDay != 0)
+				{
+					if (_item.isMaintained())
+					{
+						tooltip.push({
+							id = 1,
+							type = "hint",
+							icon = "ui/icons/mouse_right_button_alt.png",
+							text = "Set item to be preserved"
+						});
+					}
+					else
+					{
+						tooltip.push({
+							id = 1,
+							type = "hint",
+							icon = "ui/icons/mouse_right_button_alt.png",
+							text = "Set item to out of preserved mode"
+						});
+					}
+				}
+				break;
+
+			case "tactical-combat-result-screen.stash":
+				tooltip.push({
+					id = 1,
+					type = "hint",
+					icon = "ui/icons/mouse_right_button.png",
+					text = "Drop item on the ground"
+				});
+				break;
+
+			case "tactical-combat-result-screen.found-loot":
+				if (this.Stash.hasEmptySlot())
+				{
+					tooltip.push({
+						id = 1,
+						type = "hint",
+						icon = "ui/icons/mouse_right_button.png",
+						text = "Put item into stash"
+					});
+				}
+				else
+				{
+					tooltip.push({
+						id = 1,
+						type = "hint",
+						icon = "ui/tooltips/warning.png",
+						text = "Stash is full"
+					});
+				}
+
+				break;
+
+			case "camp-screen-repair-dialog-module.stash":
+			case "camp-screen-workshop-dialog-module.stash":
+			case "world-town-screen-shop-dialog-module.stash":
+				tooltip.push({
+					id = 1,
+					type = "hint",
+					icon = "ui/icons/mouse_right_button.png",
+					text = "Sell item for [img]gfx/ui/tooltips/money.png[/img]" + _item.getSellPrice()
+				});
+
+				if (this.World.State.getCurrentTown() != null && this.World.State.getCurrentTown().getCurrentBuilding() != null && this.World.State.getCurrentTown().getCurrentBuilding().isRepairOffered() && _item.getRepairMax() > 1 && _item.getRepair() < _item.getRepairMax())
+				{
+					local price = (_item.getRepairMax() - _item.getRepair()) * this.Const.World.Assets.CostToRepairPerPoint;
+					local value = _item.m.Value * (1.0 - _item.getRepair() / _item.getRepairMax()) * 0.2 * this.World.State.getCurrentTown().getPriceMult() * this.Const.Difficulty.SellPriceMult[this.World.Assets.getEconomicDifficulty()];
+					price = this.Math.max(price, value);
+
+					if (this.World.Assets.getMoney() >= price)
+					{
+						tooltip.push({
+							id = 3,
+							type = "hint",
+							icon = "ui/icons/mouse_right_button_alt.png",
+							text = "Pay [img]gfx/ui/tooltips/money.png[/img]" + price + " to have it repaired"
+						});
+					}
+					else
+					{
+						tooltip.push({
+							id = 3,
+							type = "hint",
+							icon = "ui/tooltips/warning.png",
+							text = "Not enough crowns to pay for repairs!"
+						});
+					}
+				}
+
+				break;
+
+			case "camp-screen-repair-dialog-module.shop":
+			case "camp-screen-workshop-dialog-module.shop":
+			case "world-town-screen-shop-dialog-module.shop":
+				if (this.Stash.hasEmptySlot())
+				{
+					tooltip.push({
+						id = 1,
+						type = "hint",
+						icon = "ui/icons/mouse_right_button.png",
+						text = "Buy item for [img]gfx/ui/tooltips/money.png[/img]" + _item.getBuyPrice()
+					});
+				}
+				else
+				{
+					tooltip.push({
+						id = 1,
+						type = "hint",
+						icon = "ui/tooltips/warning.png",
+						text = "Stash is full"
+					});
+				}
+
+				break;
+			}
+
+			return tooltip;
+		};
 	});
 
 	delete this.HexenHooks.hookCharacterScreenAndStates;

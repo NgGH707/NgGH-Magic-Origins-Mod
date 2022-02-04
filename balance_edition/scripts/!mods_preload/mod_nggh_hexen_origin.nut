@@ -8,6 +8,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	gt.Const.Items.NamedMeleeWeapons.push("weapons/named/mod_named_staff");
 	gt.Const.Items.NamedWeapons = clone this.Const.Items.NamedMeleeWeapons;
 	gt.Const.Items.NamedWeapons.extend(this.Const.Items.NamedRangedWeapons);
+	gt.Const.Items.addNewItemType("Corpse");
 
 	if (!("HexenOrigin" in gt.Const))
 	{

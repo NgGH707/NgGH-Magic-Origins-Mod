@@ -16,7 +16,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 			"trait.superstitious",
 		];
 		this.m.Names = ["Luft"];
-		this.m.Titles = ["The Rat Enjoyer"];
+		this.m.Titles = ["Possum Appreciator"];
 
 		this.addBackgroundType(this.Const.BackgroundType.Educated);
 		this.addBackgroundType(this.Const.BackgroundType.Noble);
@@ -318,18 +318,18 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 		local name = this.getContainer().getActor().getNameOnly();
 		local wrongName = name.find("Luft") == null;
 		local title = this.getContainer().getActor().m.Title;
-		local wrongTitle = title.len() == 0 || title.find("Rat Enjoyer") == null;
+		local wrongTitle = title.len() == 0 || title.find("Possum Appreciator") == null;
 		
 		if (wrongName)
 		{
 			this.getContainer().getActor().setName("Luft");
-			this.getContainer().getActor().worsenMood(0.5, "My name is Luft. Quit changing it");
+			this.getContainer().getActor().worsenMood(0.2, "My name is Luft. Quit changing it");
 		}
 		
 		if (wrongTitle)
 		{
-			this.getContainer().getActor().setTitle("The Rat Enjoyer");
-			this.getContainer().getActor().worsenMood(0.5, "I love rat. Please don\'t change me title");
+			this.getContainer().getActor().setTitle("Possum Appreciator");
+			this.getContainer().getActor().worsenMood(0.2, "I love rat. Please don\'t change me title");
 		}
 
 		local actor = this.getContainer().getActor();

@@ -1866,6 +1866,86 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 	// non-human players don't feel disgusting at people eating corpse
 	::mods_hookExactClass("skills/actives/legend_gruesome_feast", function ( obj )
 	{
+		obj.hasCorpseNearby <- function()
+		{
+			return this.getContainer().getActor().getTile().IsCorpseSpawned && this.getContainer().getActor().getTile().Properties.get("Corpse").IsConsumable;
+		};
+		obj.getCorpseInBag <- function()
+		{
+			local actor = this.getContainer().getActor();
+			local allItems = actor.getItems().getAllItems();
+			local ret = [];
+
+			foreach (item in allItems)
+			{
+				if (item.isItemType(this.Const.Items.ItemType.Corpse) && item.m.IsEdible)
+				{
+					ret.push(item);
+				}
+			}
+
+			return ret;
+		}
+		obj.getTooltip = function()
+		{
+			local ret = [
+				{
+					id = 1,
+					type = "title",
+					text = this.getName()
+				},
+				{
+					id = 2,
+					type = "description",
+					text = this.getDescription()
+				},
+				{
+					id = 3,
+					type = "text",
+					text = this.getCostString()
+				},
+				{
+					id = 4,
+					type = "text",
+					icon = "ui/icons/days_wounded.png",
+					text = "Restores [color=" + this.Const.UI.Color.PositiveValue + "]50[/color] health points"
+				},
+				{
+					id = 5,
+					type = "text",
+					icon = "ui/icons/days_wounded.png",
+					text = "Instantly heal all [color=" + this.Const.UI.Color.PositiveValue + "]Injuries[/color]"
+				}
+			];
+
+			local corpses = this.getCorpseInBag();
+
+			if (corpses.len() > 0)
+			{
+				ret.push({
+					id = 4,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "You have [color=" + this.Const.UI.Color.PositiveValue + "]" + corpses.len() + "[/color] corpse(s) in your bag"
+				});
+			}
+			
+			return ret;
+		};
+		obj.onVerifyTarget = function( _originTile, _targetTile )
+		{	
+			if (_targetTile.IsEmpty)
+			{
+				return false;
+			}
+
+			if (_targetTile.IsCorpseSpawned && _targetTile.Properties.get("Corpse").IsConsumable)
+			{
+				return true;
+			}
+
+			return this.getCorpseInBag().len() > 0;
+		}
 		obj.onUse = function( _user, _targetTile )
 		{
 			_targetTile = _user.getTile();
@@ -1887,13 +1967,20 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 				}
 			}
 
-			if (!_user.isHiddenToPlayer())
+			if (this.hasCorpseNearby())
 			{
-				this.Time.scheduleEvent(this.TimeUnit.Virtual, 500, this.onRemoveCorpse, _targetTile);
+				if (!_user.isHiddenToPlayer())
+				{
+					this.Time.scheduleEvent(this.TimeUnit.Virtual, 500, this.onRemoveCorpse, _targetTile);
+				}
+				else
+				{
+					this.onRemoveCorpse(_targetTile);
+				}
 			}
 			else
 			{
-				this.onRemoveCorpse(_targetTile);
+				this.getCorpseInBag()[0].removeSelf();
 			}
 
 			this.spawnBloodbath(_targetTile);
@@ -3769,17 +3856,50 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 					id = 4,
 					type = "text",
 					icon = "ui/icons/days_wounded.png",
-					text = "Restores [color=" + this.Const.UI.Color.PositiveValue + "]100[/color] health points"
+					text = "Restores [color=" + this.Const.UI.Color.PositiveValue + "]200[/color] health points"
 				},
 				{
 					id = 5,
 					type = "text",
 					icon = "ui/icons/days_wounded.png",
-					text = "Instantly heal a random [color=" + this.Const.UI.Color.PositiveValue + "]Injury[/color]"
+					text = "Instantly heal all [color=" + this.Const.UI.Color.PositiveValue + "]Injuries[/color]"
 				}
 			];
+
+			local corpses = this.getCorpseInBag();
+
+			if (corpses.len() > 0)
+			{
+				ret.push({
+					id = 4,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "You have [color=" + this.Const.UI.Color.PositiveValue + "]" + corpses.len() + "[/color] corpse(s) in your bag"
+				});
+			}
+			
 			return ret;
 		};
+		obj.hasCorpseNearby <- function()
+		{
+			return this.getContainer().getActor().getTile().IsCorpseSpawned && this.getContainer().getActor().getTile().Properties.get("Corpse").IsConsumable;
+		};
+		obj.getCorpseInBag <- function()
+		{
+			local actor = this.getContainer().getActor();
+			local allItems = actor.getItems().getAllItems();
+			local ret = [];
+
+			foreach (item in allItems)
+			{
+				if (item.isItemType(this.Const.Items.ItemType.Corpse) && item.m.IsEdible)
+				{
+					ret.push(item);
+				}
+			}
+
+			return ret;
+		}
 		obj.isUsable <- function()
 		{
 			if (!this.skill.isUsable())
@@ -3791,8 +3911,13 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			{
 				return true;
 			}
+
+			if (this.hasCorpseNearby())
+			{
+				return true;
+			}
 			
-			return this.getContainer().getActor().getTile().IsCorpseSpawned && this.getContainer().getActor().getTile().Properties.get("Corpse").IsConsumable;
+			return this.getCorpseInBag().len() > 0;
 		};
 		obj.onAfterUpdate <- function( _properties )
 		{
@@ -3801,7 +3926,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		local ws_onFeasted = obj.onFeasted;
 		obj.onFeasted = function( _effect )
 		{
-			ws_onFeasted(_effect);   
+			ws_onFeasted(_effect);
 
 			if (_effect.getContainer().hasSkill("perk.nacho_eat"))
 			{
@@ -3838,17 +3963,23 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 				}
 			}
 
-			if (!_user.isHiddenToPlayer())
+			if (this.hasCorpseNearby())
 			{
-				this.Time.scheduleEvent(this.TimeUnit.Virtual, 500, this.onRemoveCorpse, _targetTile);
+				if (!_user.isHiddenToPlayer())
+				{
+					this.Time.scheduleEvent(this.TimeUnit.Virtual, 500, this.onRemoveCorpse, _targetTile);
+				}
+				else
+				{
+					this.onRemoveCorpse(_targetTile);
+				}
 			}
 			else
 			{
-				this.onRemoveCorpse(_targetTile);
+				this.getCorpseInBag()[0].removeSelf();
 			}
 
 			this.spawnBloodbath(_targetTile);
-			
 			local effect = _user.getSkills().getSkillByID("effects.gruesome_feast");
 			
 			if (effect == null)
