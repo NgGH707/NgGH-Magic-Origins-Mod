@@ -6,7 +6,6 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		"legend_unleash_white_wolf",
 		"legend_unleash_warbear"
 	];
-
 	foreach ( active in dismount_skills )
 	{
 		::mods_hookExactClass("skills/actives/" + active, function(obj) 
@@ -22,6 +21,226 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 				}
 
 				return ret;
+			}
+		});
+	}
+
+
+	local spawn_zombie = [
+		"legend_spawn_zombie_low_skill",
+		"legend_spawn_zombie_med_skill",
+		"legend_spawn_zombie_high_skill",
+		"legend_spawn_zombie_low_skill",
+		"legend_spawn_zombie_med_xbow_skill",
+		"legend_spawn_zombie_high_xbow_skill",
+	];
+	local spawn_skelly = [
+		"legend_spawn_skeleton_low_skill",
+		"legend_spawn_skeleton_med_skill",
+		"legend_spawn_skeleton_high_skill",
+		"legend_spawn_skeleton_low_archer_skill",
+		"legend_spawn_skeleton_med_archer_skill",
+		"legend_spawn_skeleton_high_archer_skill",
+	];
+	foreach ( active in spawn_zombie )
+	{
+		::mods_hookExactClass("skills/actives/" + active, function(obj) 
+		{
+			local ws_create = obj.create;
+			obj.create = function()
+			{
+				ws_create();
+				this.m.SpawnItem =  "items.necro.corpse";
+			};
+			obj.getNumberOfSpawnsAvailable <- function()
+			{
+				local num = 0;
+				local items = this.World.Assets.getStash().getItems();
+				foreach( item in items )
+				{
+					if (item == null)
+					{
+						continue;
+					}
+
+					if (item.getID() != this.m.SpawnItem)
+					{
+						continue;
+					}
+
+					if (!item.m.IsHuman)
+					{
+						continue;
+					}
+
+					if (item.isUnleashed())
+					{
+						continue;
+					}
+
+					++num;
+				}
+				return num;
+			};
+			obj.onUse <- function( _user, _targetTile )
+			{
+				local spawnItem = null;
+				local items = this.World.Assets.getStash().getItems();
+				foreach( item in items )
+				{
+					if (item == null)
+					{
+						continue;
+					}
+
+					if (item.getID() != this.m.SpawnItem)
+					{
+						continue;
+					}
+
+					if (!item.m.IsHuman)
+					{
+						continue;
+					}
+
+					if (item.isUnleashed())
+					{
+						continue;
+					}
+
+					spawnItem = item;
+					this.World.Assets.getStash().remove(item);
+					break;
+				}
+
+				if (spawnItem == null)
+				{
+					return false
+				}
+
+				local entity = this.Tactical.spawnEntity(this.getScript(), _targetTile.Coords.X, _targetTile.Coords.Y);
+				if (this.m.IsControlledByPlayer)
+				{
+					entity.setFaction(this.Const.Faction.Player);
+				} else {
+					entity.setFaction(this.Const.Faction.PlayerAnimals);
+				}
+				entity.setItem(spawnItem);
+				entity.setName(spawnItem.getName());
+				entity.assignRandomEquipment();
+				entity.riseFromGround();
+				entity.getFlags().add("IsSummoned", true);
+				entity.getFlags().add("Summoner", _user);
+				entity.setActionPoints(this.Math.round(this.m.APStartMult * entity.getActionPoints()));
+				spawnItem.setEntity(entity);
+				this.m.Items.push(spawnItem);
+
+				this.spawnIcon("status_effect_01", this.getContainer().getActor().getTile());
+				local actor = this.getContainer().getActor();
+				actor.setHitpoints(this.Math.max(actor.getHitpoints() - this.m.HPCost, 1));
+
+				return true;
+			}
+		});
+	}
+	foreach ( active in spawn_skelly )
+	{
+		::mods_hookExactClass("skills/actives/" + active, function(obj) 
+		{
+			local ws_create = obj.create;
+			obj.create = function()
+			{
+				ws_create();
+				this.m.SpawnItem =  "items.necro.corpse";
+			};
+			obj.getNumberOfSpawnsAvailable <- function()
+			{
+				local num = 0;
+				local items = this.World.Assets.getStash().getItems();
+				foreach( item in items )
+				{
+					if (item == null)
+					{
+						continue;
+					}
+
+					if (item.getID() != this.m.SpawnItem)
+					{
+						continue;
+					}
+
+					if (!item.m.IsBone)
+					{
+						continue;
+					}
+
+					if (item.isUnleashed())
+					{
+						continue;
+					}
+
+					++num;
+				}
+				return num;
+			};
+			obj.onUse <- function( _user, _targetTile )
+			{
+				local spawnItem = null;
+				local items = this.World.Assets.getStash().getItems();
+				foreach( item in items )
+				{
+					if (item == null)
+					{
+						continue;
+					}
+
+					if (item.getID() != this.m.SpawnItem)
+					{
+						continue;
+					}
+
+					if (!item.m.IsBone)
+					{
+						continue;
+					}
+
+					if (item.isUnleashed())
+					{
+						continue;
+					}
+
+					spawnItem = item;
+					this.World.Assets.getStash().remove(item);
+					break;
+				}
+
+				if (spawnItem == null)
+				{
+					return false
+				}
+
+				local entity = this.Tactical.spawnEntity(this.getScript(), _targetTile.Coords.X, _targetTile.Coords.Y);
+				if (this.m.IsControlledByPlayer)
+				{
+					entity.setFaction(this.Const.Faction.Player);
+				} else {
+					entity.setFaction(this.Const.Faction.PlayerAnimals);
+				}
+				entity.setItem(spawnItem);
+				entity.setName(spawnItem.getName());
+				entity.assignRandomEquipment();
+				entity.riseFromGround();
+				entity.getFlags().add("IsSummoned", true);
+				entity.getFlags().add("Summoner", _user);
+				entity.setActionPoints(this.Math.round(this.m.APStartMult * entity.getActionPoints()));
+				spawnItem.setEntity(entity);
+				this.m.Items.push(spawnItem);
+
+				this.spawnIcon("status_effect_01", this.getContainer().getActor().getTile());
+				local actor = this.getContainer().getActor();
+				actor.setHitpoints(this.Math.max(actor.getHitpoints() - this.m.HPCost, 1));
+
+				return true;
 			}
 		});
 	}

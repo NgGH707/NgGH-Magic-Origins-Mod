@@ -223,8 +223,8 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 		b.HitpointsMult *= _mult * (1.0 + this.Math.rand(0, 15) * 0.01);
 		b.MeleeSkillMult *= _mult;
 		b.RangedSkillMult *= _mult;
-		b.ArmorMult[0] *= _mult;
-		b.ArmorMult[1] *= _mult;
+		b.Armor[0] = this.Math.floor(b.Armor[0] * _mult);
+		b.Armor[1] = this.Math.floor(b.Armor[1] * _mult);
 
 		if (_mult >= 1.25)
 		{
@@ -520,120 +520,6 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 			rage.addRage(-r);
 			_actor.registerRageEvent();
 		}, this.getID());
-	}
-	
-	function modTacticalTooltip( _targetedWithSkill = null )
-	{
-		if (!this.isPlacedOnMap() || !this.isAlive() || this.isDying())
-		{
-			return [];
-		}
-
-		local turnsToGo = this.Tactical.TurnSequenceBar.getTurnsUntilActive(this.getID());
-		local tooltip = [
-			{
-				id = 1,
-				type = "title",
-				text = this.getName(),
-				icon = "ui/tooltips/height_" + this.getTile().Level + ".png"
-			}
-		];
-
-		if (!this.isPlayerControlled() && _targetedWithSkill != null && this.isKindOf(_targetedWithSkill, "skill"))
-		{
-			local tile = this.getTile();
-
-			if (tile.IsVisibleForEntity && _targetedWithSkill.isUsableOn(this.getTile()))
-			{
-				tooltip.push({
-					id = 3,
-					type = "headerText",
-					icon = "ui/icons/hitchance.png",
-					text = "[color=" + this.Const.UI.Color.PositiveValue + "]" + _targetedWithSkill.getHitchance(this) + "%[/color] chance to hit",
-					children = _targetedWithSkill.getHitFactors(tile)
-				});
-			}
-		}
-
-		tooltip.extend([
-			{
-				id = 2,
-				type = "text",
-				icon = "ui/icons/initiative.png",
-				text = this.Tactical.TurnSequenceBar.getActiveEntity() == this ? "Acting right now!" : this.m.IsTurnDone || turnsToGo == null ? "Turn done" : "Acts in " + turnsToGo + (turnsToGo > 1 ? " turns" : " turn")
-			},
-			{
-				id = 3,
-				type = "progressbar",
-				icon = "ui/icons/armor_head.png",
-				value = this.getArmor(this.Const.BodyPart.Head),
-				valueMax = this.getArmorMax(this.Const.BodyPart.Head),
-				text = "" + this.getArmor(this.Const.BodyPart.Head) + " / " + this.getArmorMax(this.Const.BodyPart.Head) + "",
-				style = "armor-head-slim"
-			},
-			{
-				id = 4,
-				type = "progressbar",
-				icon = "ui/icons/armor_body.png",
-				value = this.getArmor(this.Const.BodyPart.Body),
-				valueMax = this.getArmorMax(this.Const.BodyPart.Body),
-				text = "" + this.getArmor(this.Const.BodyPart.Body) + " / " + this.getArmorMax(this.Const.BodyPart.Body) + "",
-				style = "armor-body-slim"
-			},
-			{
-				id = 5,
-				type = "progressbar",
-				icon = "ui/icons/health.png",
-				value = this.getHitpoints(),
-				valueMax = this.getHitpointsMax(),
-				text = "" + this.getHitpoints() + " / " + this.getHitpointsMax() + "",
-				style = "hitpoints-slim"
-			}
-		]);
-
-		tooltip.push({
-			id = 8,
-			type = "progressbar",
-			icon = "ui/icons/morale.png",
-			value = this.getMoraleState(),
-			valueMax = this.Const.MoraleState.COUNT - 1,
-			text = this.Const.MoraleStateName[this.getMoraleState()],
-			style = "morale-slim"
-		});
-		
-		local battery = this.m.Skills.getSkillByID("effects.mc_powering");
-		local current_power = 0;
-		local max_power = 5;
-
-		if (battery != null)
-		{
-			current_power = battery.m.TurnLefts;
-		}
-
-		tooltip.push({
-			id = 8,
-			type = "progressbar",
-			icon = "ui/icons/asset_business_reputation.png",
-			value = current_power,
-			valueMax = max_power,
-			text = "" + current_power + " / " + max_power + "",
-			style = "fatigue-slim"
-		});
-
-		local result = [];
-		local statusEffects = this.getSkills().query(this.Const.SkillType.StatusEffect | this.Const.SkillType.TemporaryInjury, false, true);
-
-		foreach( i, statusEffect in statusEffects )
-		{
-			tooltip.push({
-				id = 100 + i,
-				type = "text",
-				icon = statusEffect.getIcon(),
-				text = statusEffect.getName()
-			});
-		}
-
-		return tooltip;
 	}
 
 });

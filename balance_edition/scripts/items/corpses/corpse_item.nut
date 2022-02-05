@@ -14,6 +14,11 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 		IsBone = false,
 		IsEdible = true,
 		IsBoss = false,
+		AddGenericSkill = true,
+		ShowOnCharacter = false,
+		Sprite = null,
+		SpriteCorpse = null,
+		Entity = null,
 		Loots = [],
 	},
 	function create()
@@ -22,7 +27,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 		this.m.SlotType = this.Const.ItemSlot.Bag;
 		this.m.ItemType = this.Const.Items.ItemType.Corpse | this.Const.Items.ItemType.Misc;
 		this.m.IsAllowedInBag = true;
-		this.m.IsDroppedAsLoot = true;
+		this.m.IsDroppedAsLoot = false;
 		this.m.IconLarge = "";
 		this.m.Condition = 1.0;
 		this.m.ConditionMax = 0.0;
@@ -316,7 +321,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 			{
 				local supply = this.new("scripts/items/" + this.MSU.Array.getRandom(entry.Scripts));
 				supply.setAmount(this.Math.maxf(1.0, this.Math.rand(entry.Min, entry.Max)));
-				supply.m.BestBefore = (this.Time.getVirtualTimeF() + supply.m.GoodForDays) * this.World.getTime().SecondsPerDay;
+				supply.randomizeBestBefore();
 				ret.push(supply);
 			}
 			else
@@ -514,6 +519,33 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 	function onUpdateProperties( _properties )
 	{
 		_properties.Stamina += this.getStaminaModifier();
+	}
+
+	function isUnleashed()
+	{
+		return this.m.Entity != null;
+	}
+
+	function setEntity( _e )
+	{
+		this.m.Entity = _e;
+	}
+
+	function onCombatFinished()
+	{
+		if (this.m.Entity == null)
+		{
+			return
+		}
+
+		if (this.m.Entity.m.IsAlive)
+		{
+			this.setEntity(null);
+			this.World.Assets.getStash().add(this);
+			return;
+		}
+
+		this.setEntity(null);
 	}
 
 	function onSerialize( _out )
