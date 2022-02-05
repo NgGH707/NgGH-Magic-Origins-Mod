@@ -48,6 +48,11 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 		return this.m.IsMaintained;
 	}
 
+	function isToBeSalvaged()
+	{
+		return this.isToBeButchered() ? 1 : 0;
+	}
+
 	function canBeSalvaged()
 	{
 		return false;
@@ -249,11 +254,6 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 
 	function setProcessedCondition( _c )
 	{
-		if (_c >= this.getCondition())
-		{
-			_c = this.getCondition();
-		}
-
 		this.m.ConditionHasBeenProcessed = _c;
 	}
 
@@ -296,14 +296,25 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 			foreach (script in entry.Scripts)
 			{
 				local item = this.new("scripts/items/" + script);
-
-				ret.push({
+				local result = {
 					Item = item,
 					InstanceID = item.getID(),
 					ImagePath = item.getIcon(),
-					Min = entry.Max,
-					Max = entry.Min,
-				});
+				};
+
+				if ("IsSupplies" in entry)
+				{
+					local conversionRate = ("Conversion" in entry) ? entry.Conversion : 10.0;
+					result.Max <- this.Math.max(1, this.m.ConditionMax / conversionRate);
+					result.Min <- this.Math.max(1, this.getConditionHasBeenProcessed() / conversionRate);
+				}
+				else
+				{
+					result.Max <- entry.Max;
+					result.Min <- entry.Min;
+				}
+
+				ret.push(result);
 			}
 		}
 
@@ -319,10 +330,11 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 		{
 			if ("IsSupplies" in entry)
 			{
+				local conversionRate = ("Conversion" in entry) ? entry.Conversion : 10.0;
 				local supply = this.new("scripts/items/" + this.MSU.Array.getRandom(entry.Scripts));
-				supply.setAmount(this.Math.maxf(1.0, this.Math.rand(entry.Min, entry.Max)));
-				supply.randomizeBestBefore();
-				ret.push(supply);
+				supply.setAmount(this.Math.maxf(1.0, this.getConditionHasBeenProcessed() / conversionRate));
+				supply.m.GoodForDays = supply.m.GoodForDays <= 2 ? this.Math.rand(2, 3) : this.Math.rand(2, supply.m.GoodForDays);
+				supply.m.BoughtAtPrice = this.Math.rand(1, 3) * supply.m.Amount;
 			}
 			else
 			{
@@ -413,23 +425,21 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 			{
 				this.m[key] = value;
 			}
-
-			if (this.m.IsHuman)
-			{
-				this.m.MedicinePerDay = 2;
-				this.m.Value = 0;
-				this.m.Icon = "icon_corpse_human_70x70";
-				this.m.Loots.push({
-					IsSupplies = true,
-					Scripts = ["supplies/legend_human_parts"],
-					Max = 15,
-					Min = 10
-				});
-			}
 		}
 		else
 		{
-			this.m.IsGarbage = true;
+			this.m.IsGarbage = !this.m.IsHuman;
+		}
+
+		if (this.m.IsHuman)
+		{
+			this.m.MedicinePerDay = 2;
+			this.m.Value = 0;
+			this.m.Icon = "icon_corpse_human_70x70";
+			this.m.Loots.push({
+				IsSupplies = true,
+				Scripts = ["supplies/strange_meat_item"],
+			});
 		}
 	}
 
@@ -437,7 +447,8 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 	{
 		this.m.Variant = _type;
 		this.m.Name = _entity.getNameOnly();
-		this.m.ConditionMax = _entity.getHitpointsMax() >= 400 ? _entity.getHitpointsMax() * 0.75 : _entity.getHitpointsMax();
+		this.m.IsTail = this.isKindOf(_entity, "lindwurm_tail") || this.isKindOf(_entity, "legend_stollwurm_tail");
+		this.m.ConditionMax = this.m.IsTail ? _entity.getHitpointsMax() * 0.5 : _entity.getHitpointsMax();
 		this.m.StaminaModifier = -1 * this.Math.max(1, this.m.ConditionMax / 12.5);
 		this.m.IsHeadLess = !_corpse.IsHeadAttached;
 		this.m.IsHuman = _entity.getFlags().has("human");
@@ -561,6 +572,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 		_out.writeBool(this.m.IsMaintained);
 		_out.writeBool(this.m.IsToBeButchered);
 		_out.writeU16(this.m.IsToBeButcheredQueue);
+		//_out.writeU16(this.m.FoodDone);
 		_out.writeI8(this.m.StaminaModifier);
 		_out.writeF32(this.m.ConditionMax);
 		_out.writeF32(this.m.CorpseValue);
@@ -580,6 +592,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 		this.m.IsMaintained = _in.readBool();
 		this.m.IsToBeButchered = _in.readBool();
 		this.m.IsToBeButcheredQueue = _in.readU16();
+		//this.m.FoodDone = _in.readU16(); // new, will cause save corruption
 		this.m.StaminaModifier = _in.readI8();
 		this.m.ConditionMax = _in.readF32();
 		this.m.CorpseValue = _in.readF32();

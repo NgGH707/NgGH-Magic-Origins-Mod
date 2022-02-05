@@ -34,11 +34,8 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 
 			if (_tile.Properties.get("Corpse").CorpseAsItem == null)
 			{
-				local self = this;
-				local isTail = this.isKindOf(self, "lindwurm_tail") || this.isKindOf(self, "legend_stollwurm_tail");
 				local corpse = this.new("scripts/items/corpses/corpse_item");
 				corpse.setUpAsLootInBattle(this, this.m.Type, _tile.Properties.get("Corpse"), _fatalityType);
-				corpse.m.IsTail = isTail;
 				_tile.Properties.get("Corpse").CorpseAsItem = corpse;
 			}
 		};

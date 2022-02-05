@@ -15,7 +15,7 @@ this.butcher_building <- this.inherit("scripts/entity/world/camp/camp_building",
     {
         this.camp_building.create();
         this.m.ID = this.Const.World.CampBuildings.Butcher;
-        this.m.BaseCraft = 17.0;
+        this.m.BaseCraft = 21.0;
         this.m.ModName = "Butcher";
         this.m.Escorting = true;
         this.m.Slot = "butcher";
@@ -214,7 +214,7 @@ this.butcher_building <- this.inherit("scripts/entity/world/camp/camp_building",
                 continue;
             }
 
-            local mod = this.m.BaseCraft;
+            local mod = this.m.BaseCraft; 500
 
             if (isButcher.find(bro.getBackground().getID()) != null)
             {
@@ -233,14 +233,17 @@ this.butcher_building <- this.inherit("scripts/entity/world/camp/camp_building",
         for (local i = 0; i < ret.Modifiers.len(); i = ++i)
         {
             ret.Modifiers[i][0] = ret.Modifiers[i][0] * this.Math.pow(i + 1, -0.5);
-            if (this.getUpgraded())
-            {
-                ret.Modifiers[i][0] *= 1.25;
-            }
             ret.Craft += ret.Modifiers[i][0];
         }
 
         ret.Craft += this.m.BaseCraft;
+        ret.Craft *= this.World.Assets.m.HitpointsPerHourMult;
+
+        if (this.getUpgraded())
+        {
+            ret.Craft *= 1.25;
+        }
+
         return ret;
     }
 
@@ -320,6 +323,7 @@ this.butcher_building <- this.inherit("scripts/entity/world/camp/camp_building",
 
         local modifiers = this.getModifiers();
 		modifiers.Craft = this.Math.round(modifiers.Craft);
+        local butcher_products = [];
 		
         foreach (i, r in this.m.Butcher)
         {
@@ -328,42 +332,41 @@ this.butcher_building <- this.inherit("scripts/entity/world/camp/camp_building",
                 continue;
             }
 
+            local mod = r.Item.getConditionMax() >= 500 ? 1.5 : 1.0;
             local needed = this.Math.floor(r.Item.getCondition() - r.Item.getConditionHasBeenProcessed());
             if (modifiers.Craft < needed)
             {
                 needed = modifiers.Craft;
             }
 
-            r.Item.setProcessedCondition(r.Item.getConditionHasBeenProcessed() + needed);
+            r.Item.setProcessedCondition(r.Item.getConditionHasBeenProcessed() + needed * mod);
             this.m.PointsButchered += needed;
             modifiers.Craft -= needed;
 
             if (r.Item.getConditionHasBeenProcessed() >= r.Item.getCondition())
             {
                 local products =  r.Item.onButchered();
-                local myItem = stash.getItemByInstanceID(r.Item.getInstanceID()).item;
-                stash.remove(r.Item);
+                r.Item.setGarbage();
                 this.m.Butcher[i] = null;
                 this.m.ItemsButchered += 1;
-
-                foreach (p in products)
-                {
-                    if (stash.hasEmptySlot())
-                    {
-                        stash.add(p);
-                        this.m.Items.push(p);
-                    }            
-                }
+                if (products.len() > 0) butcher_products.extend(products);
             }
-
-            if (!stash.hasEmptySlot())
-            {
-                break;
-            } 
 
             if (modifiers.Craft <= 0)
             {
                 break;
+            }
+        }
+
+        stash.collectGarbage();
+        local emptySlots = stash.getNumberOfEmptySlots();
+
+        foreach (p in butcher_products)
+        {
+            if (--emptySlots >= 0)
+            {
+                stash.add(p);
+                this.m.Items.push(p);
             }
         }
 

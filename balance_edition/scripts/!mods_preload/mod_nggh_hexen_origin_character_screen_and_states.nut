@@ -50,11 +50,24 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 					};
 				}
 
-				item.setToBeMaintain(!item.isMaintained());
+				if (!item.isMaintained() && !item.isToBeButchered())
+				{
+					item.setToBeMaintain(true);
+				}
+				else if (item.isMaintained())
+				{
+					item.setToBeMaintain(false);
+					item.setToBeButchered(true, index);
+				}
+				else
+				{
+					item.setToBeMaintain(false);
+					item.setToBeButchered(false, 0);
+				}
 
 				return {
 					repair = item.isMaintained(),
-					salvage = 0
+					salvage = item.isToBeSalvaged(),
 				};
 			}
 			
@@ -593,9 +606,10 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 							}
 						}
 
-						if (tile.Properties.get("Corpse").CorpseAsItem != null && !tile.Properties.get("Corpse").CorpseAsItem.isGarbage() && this.Math.rand(1, 100) <= 50)
+						if (tile.Properties.get("Corpse").CorpseAsItem != null && !tile.Properties.get("Corpse").CorpseAsItem.isGarbage())
 						{
-							loot.push(tile.Properties.get("Corpse").CorpseAsItem);
+							local corpse = tile.Properties.get("Corpse").CorpseAsItem;
+							if (this.Math.rand(1, 100) <= 50 || corpse.m.IsBoss) loot.push(corpse);
 						}
 					}
 				}
@@ -1114,7 +1128,7 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 							id = 1,
 							type = "hint",
 							icon = "ui/icons/mouse_right_button_alt.png",
-							text = "Set item to out of preserved mode"
+							text = "Set item to be butchered"
 						});
 					}
 				}

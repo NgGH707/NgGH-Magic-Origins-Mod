@@ -229,6 +229,14 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 			if (this.World.getTime().Hours != this.m.LastHourUpdated && this.m.IsConsumingAssets)
 			{
 				local roster = this.World.getPlayerRoster().getAll();
+				local hasButcher = false;
+				local butchers = [
+					"background.female_butcher",
+		            "background.butcher",
+		            "background.hunter",
+		            "background.legend_cannibal",
+		            "background.legend_preserver",
+				];
 
 				foreach( bro in roster )
 				{
@@ -243,6 +251,11 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 					{
 						bro.restoreArmor();
 					}
+
+					if (!hasButcher && butchers.find(bro.getBackground().getID()) != null)
+					{
+						hasButcher = true;
+					}
 				}
 
 				if (this.World.getTime().Hours % 4 == 0)
@@ -253,25 +266,53 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 					}
 				}
 
-				if (this.World.getTime().Hours % 6 == 0)
+				local checkDecay = this.World.getTime().Hours % 6 == 0;
+				local stashmaxbutcheringpotential = this.Math.ceil(roster.len() * this.Const.Difficulty.ButcherMult[this.World.Assets.getEconomicDifficulty()] * this.m.HitpointsPerHourMult * 4 * (hasButcher ? 1.25 : 1.0));
+				local stash = this.getStash();
+				local butcher_products = [];
+
+				foreach (index, item in stash.getItems())
 				{
-					local stash = this.World.Assets.getStash();
-
-					foreach (index, item in stash.getItems())
+					if (item == null)
 					{
-						if (item == null)
-						{
-							continue;
-						}
-
-						if (item.isItemType(this.Const.Items.ItemType.Corpse))
-						{
-							item.onLoseCondition();
-						}
+						continue;
 					}
 
-					stash.collectGarbage();
+					if (!item.isItemType(this.Const.Items.ItemType.Corpse))
+					{
+						continue;
+					}
+
+					if (!this.isCamping() && item.isToBeButchered() && stashmaxbutcheringpotential > 0)
+					{
+						local needed =  item.getCondition() - item.getConditionHasBeenProcessed();
+						local d = this.Math.ceil(this.Math.minf(stashmaxbutcheringpotential, needed));
+
+						if (d > 0)
+						{
+							local mod = item.getConditionMax() >= 500 ? 1.5 : 1.0;
+							item.setProcessedCondition(item.getConditionHasBeenProcessed() + d * mod);
+							stashmaxbutcheringpotential = stashmaxbutcheringpotential - d;
+						}
+
+						if (d <= 0 || item.getConditionHasBeenProcessed() >= item.getCondition())
+			            {
+			                local products =  item.onButchered();
+			                if (products.len() > 0) butcher_products.extend(products);
+			                item.setGarbage();
+			            }
+					}
+					
+					if (!item.isGarbage()) item.onLoseCondition();
 				}
+
+				stash.collectGarbage();
+				local emptySlots = stash.getNumberOfEmptySlots();
+
+				foreach (p in butcher_products)
+                {
+                    if (--emptySlots >= 0) stash.add(p);
+                }
 			}
 
 			update(_worldState);

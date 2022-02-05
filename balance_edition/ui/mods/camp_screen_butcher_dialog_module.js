@@ -1198,9 +1198,15 @@ $.fn.setRepairImageVisible = function(_isVisible, _isSalvage)
     {
         if (imageLayer.length > 0)
         {
-            iconLayer.attr('src', Path.GFX + 'ui/icons/cursor_bandages.png');
-
-            if(_isVisible)
+            if (_isSalvage === 1)
+            {
+                iconLayer.attr('src', Path.GFX + 'ui/icons/salvage_item.png');
+            }
+            else
+            {
+                iconLayer.attr('src', Path.GFX + 'ui/icons/cursor_bandages.png');
+            }
+            if(_isVisible || _isSalvage === 1)
             {
                 imageLayer.removeClass('display-none');
                 imageLayer.addClass('display-block');
