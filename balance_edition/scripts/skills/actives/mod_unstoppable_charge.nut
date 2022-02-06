@@ -363,7 +363,7 @@ this.mod_unstoppable_charge <- this.inherit("scripts/skills/skill", {
 				_tag.Skill.applyEffectToTarget(_entity, victim, victim.getTile());
 			}
 		}
-	}
+	} 
 	
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{

@@ -134,6 +134,7 @@ this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 	{
 		if (!this.isActivated() || (_hitInfo.DamageRegular == 0 && _hitInfo.DamageArmor == 0))
 		{
+			if (this.m.IsRegenerate) this.m.Cooldown = 3;
 			return;
 		}
 		

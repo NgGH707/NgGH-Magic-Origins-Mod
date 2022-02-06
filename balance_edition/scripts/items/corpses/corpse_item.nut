@@ -306,7 +306,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 				{
 					local conversionRate = ("Conversion" in entry) ? entry.Conversion : 10.0;
 					result.Max <- this.Math.max(1, this.m.ConditionMax / conversionRate);
-					result.Min <- this.Math.max(1, this.getConditionHasBeenProcessed() / conversionRate);
+					result.Min <- this.Math.max(1, result.Max * 0.33);
 				}
 				else
 				{
@@ -333,7 +333,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 				local conversionRate = ("Conversion" in entry) ? entry.Conversion : 10.0;
 				local supply = this.new("scripts/items/" + this.MSU.Array.getRandom(entry.Scripts));
 				supply.setAmount(this.Math.maxf(1.0, this.getConditionHasBeenProcessed() / conversionRate));
-				supply.m.GoodForDays = supply.m.GoodForDays <= 2 ? this.Math.rand(2, 3) : this.Math.rand(2, supply.m.GoodForDays);
+				supply.m.GoodForDays = supply.m.GoodForDays <= 2 ? this.Math.rand(2, 3) : this.Math.rand(4, supply.m.GoodForDays);
 				supply.m.BoughtAtPrice = this.Math.rand(1, 3) * supply.m.Amount;
 			}
 			else

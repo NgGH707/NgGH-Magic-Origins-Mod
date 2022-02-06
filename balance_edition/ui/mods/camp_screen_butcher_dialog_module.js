@@ -992,7 +992,7 @@ CampScreenButcherDialogModule.prototype.updateProductList = function( _data )
         iconContainer.append(amountLayer);
         var amountLabel = $('<div class="label text-font-very-small font-shadow-outline font-size-15 font-color-assets-positive-value"/>');
         amountLayer.append(amountLabel);
-        amountLabel.text(_data[i].Max + "-" + _data[i].Min);
+        amountLabel.text(_data[i].Min + "-" + _data[i].Max);
         amountLabel.css({'color' : "#ffffff"});
         iconContainer.append(icon);
     }

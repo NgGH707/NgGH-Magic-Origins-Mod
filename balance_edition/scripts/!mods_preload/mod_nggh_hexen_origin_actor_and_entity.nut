@@ -736,6 +736,32 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 		};
 	});
 
+	
+	local pets = [
+		"warwolf",
+		"legend_warbear",
+		"legend_white_warwolf",
+	];
+	foreach ( name in pets )
+	{
+		::mods_hookExactClass("entity/tactical/" + name, function ( obj )
+		{
+			local ws_onDeath = obj.onDeath;
+			obj.onDeath = function( _killer, _skill, _tile, _fatalityType )
+			{
+				if (this.m.Item != null && !this.m.Item.isNull())
+				{
+					if (this.m.Item.getContainer() == null || this.m.Item.getContainer().isNull())
+					{
+						this.m.Item = null;
+					}
+				}
+
+				ws_onDeath(_killer, _skill, _tile, _fatalityType);
+			}
+		});
+	}
+
 	if (!this.IsAccessoryCompanionsExist)
 	{
 		//Add variant of warwolf to wolf_item
