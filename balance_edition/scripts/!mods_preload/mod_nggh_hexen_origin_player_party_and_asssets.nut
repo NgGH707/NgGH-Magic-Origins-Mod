@@ -290,9 +290,9 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 
 						if (d > 0)
 						{
-							local mod = item.getConditionMax() >= 500 ? 1.5 : 1.0;
-							item.setProcessedCondition(item.getConditionHasBeenProcessed() + d * mod);
-							stashmaxbutcheringpotential = stashmaxbutcheringpotential - d;
+							local mod = item.getConditionMax() >= 500 ? 0.67 : 1.0;
+							item.setProcessedCondition(item.getConditionHasBeenProcessed() + d);
+							stashmaxbutcheringpotential = stashmaxbutcheringpotential - this.Math.floor(d * mod);
 						}
 
 						if (d <= 0 || item.getConditionHasBeenProcessed() >= item.getCondition())
@@ -303,7 +303,7 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 			            }
 					}
 					
-					if (!item.isGarbage()) item.onLoseCondition();
+					if (!item.isGarbage() && checkDecay) item.onLoseCondition();
 				}
 
 				stash.collectGarbage();

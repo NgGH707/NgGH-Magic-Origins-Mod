@@ -9,7 +9,7 @@ gt.Const.Difficulty.ButcherMult <- [
 	0.7
 ];
 gt.Const.Necro <- {
-	ConditionLossPerSixHour = 0.06,
+	ConditionLossPerSixHour = 0.05,
 	NoMaintainedMult = 1.0,
 	HasMaintainedMult = 0.1,
 	BossTypeEnemies = [

@@ -5,8 +5,8 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "actives.spit_acid";
-		this.m.Name = "Spit Acid Blood";
-		this.m.Description = "Use your own acidic blood as a ranged attack by spitting it at your target. Be careful it can easily splash to others";
+		this.m.Name = "Spit Acidic Blood";
+		this.m.Description = "Use your own acidic blood as a ranged attack by spitting it at your target. Be careful it can easily splash to others nearby.";
 		this.m.Icon = "ui/perks/active_lindwurm_acid.png";
 		this.m.IconDisabled = "ui/perks/active_lindwurm_acid_sw.png";
 		this.m.Overlay = "active_lindwurm_acid";
@@ -29,7 +29,7 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsAttack = true;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsAOE = true;
-		this.m.IsShowingProjectile = true;
+		this.m.IsShowingProjectile = false;
 		this.m.IsDoingForwardMove = true;
 		this.m.IsUsingActorPitch = true;
 		this.m.InjuriesOnBody = [
@@ -75,7 +75,7 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/vision.png",
-				text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.MaxRange + "[/color] tiles"
+				text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
 			},
 			{
 				id = 6,
@@ -91,13 +91,13 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 			}
 		]);
 
-		if (this.getContainer().getActor().getHitpoints() < this.m.HpCost + 25)
+		if (this.getContainer().getActor().getHitpoints() < this.m.HpCost * 3)
 		{
 			ret.push({
 				id = 6,
 				type = "text",
 				icon = "ui/tooltips/wanring.png",
-				text = "[color=" + this.Const.UI.Color.DamageValue + "]You are at low health[/color]."
+				text = "[color=" + this.Const.UI.Color.DamageValue + "]You are at low health level[/color]."
 			});
 		}
 
@@ -111,19 +111,14 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if ((_target.getFlags().has("body_immune_to_acid") || _target.getArmor(this.Const.BodyPart.Body) <= 0) && (_target.getFlags().has("head_immune_to_acid") || _target.getArmor(this.Const.BodyPart.Head) <= 0))
-		{
-			return;
-		}
-
 		local ret = this.attackEntity(_user, _target);
 
-		if (!ret)
+		if (!_target.isAlive() || _target.isDying())
 		{
 			return;
 		}
 
-		if (!_target.isAlive() || _target.isDying())
+		if ((_target.getFlags().has("body_immune_to_acid") && _target.getArmor(this.Const.BodyPart.Body) > 0) && (_target.getFlags().has("head_immune_to_acid") && _target.getArmor(this.Const.BodyPart.Head) > 0))
 		{
 			return;
 		}
@@ -144,7 +139,7 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 
 	function isUsable()
 	{
-		return this.skill.isUsable() && this.getContainer().getActor().getHitpoints() >= this.m.HpCost + 25;
+		return this.skill.isUsable() && this.getContainer().getActor().getHitpoints() >= this.m.HpCost * 3;
 	}
 
 	function onUse( _user, _targetTile )
@@ -241,13 +236,39 @@ this.spit_acid_skill <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
+	function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )
+	{
+		if (_targetEntity == null || _skill != this)
+		{
+			return;
+		}
+
+		if (_hitInfo.BodyPart == this.Const.BodyPart.Body && _targetEntity.getFlags().has("body_immune_to_acid") && _targetEntity.getArmor(this.Const.BodyPart.Body) > 0)
+		{
+			_hitInfo.DamageRegular *= 0.25;
+			_hitInfo.DamageArmor = 0;
+		}
+
+		if (_hitInfo.BodyPart == this.Const.BodyPart.Head && _targetEntity.getFlags().has("head_immune_to_acid") && _targetEntity.getArmor(this.Const.BodyPart.Head) > 0)
+		{
+			_hitInfo.DamageRegular *= 0.25;
+			_hitInfo.DamageArmor = 0;
+		}
+	}
+
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 20;
-			_properties.DamageTotalMult *= 0.5;
+			_properties.DamageRegularMin += 50;
+			_properties.DamageRegularMax += 70;
 			_properties.DamageArmorMult *= 0.5;
+			_properties.MeleeSkill -= 5;
+
+			if (_targetEntity != null && _targetEntity.getFlags().has("lindwurm"))
+			{
+				_properties.DamageTotalMult = 0.0; 
+			}
 		}
 	}
 

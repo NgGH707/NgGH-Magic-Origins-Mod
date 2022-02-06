@@ -46,22 +46,10 @@ this.getroottable().HexenHooks.hookItem <- function ()
 		}
 	});
 
-	/*::mods_hookExactClass("items/item_container", function ( o )
+	::mods_hookNewObject("items/item_container", function ( obj )
 	{
-		o.drop <- function ( item )
-		{
-			if (!this.m.Actor.isPlacedOnMap())
-			{
-				return;
-			}
-
-			local _tile = this.m.Actor.getTile();
-			item.m.IsDroppedAsLoot = true;
-			item.drop(_tile);
-			_tile.IsContainingItemsFlipped = true;
-		};
-		local equipfn = o.equip;
-		o.equip = function ( _item )
+		local ws_equip = obj.equip;
+		obj.equip = function ( _item )
 		{
 			if (_item == null)
 			{
@@ -124,81 +112,105 @@ this.getroottable().HexenHooks.hookItem <- function ()
 				}
 			}
 
-			return equipfn(_item);
+			return ws_equip(_item);
 		};
-		o.unequipNoUpdate <- function ( _item )
+
+		if (!("drop" in obj))
 		{
-			if (_item == null || _item == -1)
+			obj.drop <- function ( item )
 			{
-				return;
-			}
-
-			if (_item.getCurrentSlotType() == this.Const.ItemSlot.None || _item.getCurrentSlotType() == this.Const.ItemSlot.Bag)
-			{
-				this.logWarning("Attempted to unequip item " + _item.getName() + ", but is not equipped");
-				return false;
-			}
-
-			for( local i = 0; i < this.m.Items[_item.getSlotType()].len(); i = i )
-			{
-				if (this.m.Items[_item.getSlotType()][i] == _item)
+				if (!this.m.Actor.isPlacedOnMap())
 				{
-					this.m.Items[_item.getSlotType()][i] = null;
-
-					if (_item.getBlockedSlotType() != null)
-					{
-						for( local i = 0; i < this.m.Items[_item.getBlockedSlotType()].len(); i = i )
-						{
-							if (this.m.Items[_item.getBlockedSlotType()][i] == -1)
-							{
-								this.m.Items[_item.getBlockedSlotType()][i] = null;
-								break;
-							}
-
-							i = ++i;
-						}
-					}
-
-					return true;
+					return;
 				}
 
-				i = ++i;
-			}
+				local _tile = this.m.Actor.getTile();
+				item.m.IsDroppedAsLoot = true;
+				item.drop(_tile);
+				_tile.IsContainingItemsFlipped = true;
+			};
+		}
 
-			return false;
-		};
-		o.transferToList <- function ( _stash )
+		if (!("unequipNoUpdate" in obj))
 		{
-			for( local i = 0; i < this.Const.ItemSlot.COUNT; i = i )
+			obj.unequipNoUpdate <- function ( _item )
 			{
-				for( local j = 0; j < this.m.Items[i].len(); j = j )
+				if (_item == null || _item == -1)
 				{
-					if (this.m.Items[i][j] == null || this.m.Items[i][j] == -1)
-					{
-					}
-					else
-					{
-						local item = this.m.Items[i][j];
+					return;
+				}
 
-						if (item.isEquipped())
+				if (_item.getCurrentSlotType() == this.Const.ItemSlot.None || _item.getCurrentSlotType() == this.Const.ItemSlot.Bag)
+				{
+					this.logWarning("Attempted to unequip item " + _item.getName() + ", but is not equipped");
+					return false;
+				}
+
+				for( local i = 0; i < this.m.Items[_item.getSlotType()].len(); i = i )
+				{
+					if (this.m.Items[_item.getSlotType()][i] == _item)
+					{
+						this.m.Items[_item.getSlotType()][i] = null;
+
+						if (_item.getBlockedSlotType() != null)
 						{
-							this.unequip(item);
+							for( local i = 0; i < this.m.Items[_item.getBlockedSlotType()].len(); i = i )
+							{
+								if (this.m.Items[_item.getBlockedSlotType()][i] == -1)
+								{
+									this.m.Items[_item.getBlockedSlotType()][i] = null;
+									break;
+								}
+
+								i = ++i;
+							}
+						}
+
+						return true;
+					}
+
+					i = ++i;
+				}
+
+				return false;
+			};
+		}
+
+		if (!("transferToList" in obj))
+		{
+			obj.transferToList <- function ( _stash )
+			{
+				for( local i = 0; i < this.Const.ItemSlot.COUNT; i = i )
+				{
+					for( local j = 0; j < this.m.Items[i].len(); j = j )
+					{
+						if (this.m.Items[i][j] == null || this.m.Items[i][j] == -1)
+						{
 						}
 						else
 						{
-							this.removeFromBag(item);
+							local item = this.m.Items[i][j];
+
+							if (item.isEquipped())
+							{
+								this.unequip(item);
+							}
+							else
+							{
+								this.removeFromBag(item);
+							}
+
+							_stash.push(item);
 						}
 
-						_stash.push(item);
+						j = ++j;
 					}
 
-					j = ++j;
+					i = ++i;
 				}
-
-				i = ++i;
-			}
-		};
-	});*/
+			};
+		}
+	});
 
 	::mods_hookNewObject("items/stash_container", function(obj)
 	{
@@ -219,7 +231,7 @@ this.getroottable().HexenHooks.hookItem <- function ()
 			return adding;
 		};
 
-		local ws_insert = obj.insert;
+		/*local ws_insert = obj.insert;
 		obj.insert = function( _item, _index )
 		{
 			local inserting = ws_insert(_item, _index);
@@ -241,7 +253,7 @@ this.getroottable().HexenHooks.hookItem <- function ()
 			local removing = ws_removeByID(_id);
 			this.collectGarbage();
 			return removing;
-		};
+		};*/
 	});
 
 	//show blocked equipment slot

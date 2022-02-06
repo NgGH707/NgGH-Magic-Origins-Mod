@@ -3,6 +3,7 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 		Size = 1,
 		Variant = 1,
 		ScaleStartTime = 0,
+		LastRoundStayActive = 0,
 		IsAcitve = false,
 		IsShrinking = false
 	},
@@ -401,6 +402,12 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 
 		return this.minion.onMovementStep(_tile, _levelDifference);
 	}
+
+	function onTurnEnd()
+	{
+		this.m.LastRoundStayActive = this.Time.getRound();
+		this.actor.onTurnEnd();
+	}
 	
 	function updatePowerLevelVisuals( _powerLevel )
 	{
@@ -484,6 +491,7 @@ this.sand_puppet <- this.inherit("scripts/entity/tactical/minion", {
 		this.Tactical.TurnSequenceBar.removeEntity(this);
 		this.m.IsTurnDone = true;
 		this.m.IsActingEachTurn = false;
+		this.m.LastRoundStayActive = this.Time.getRound();
 		this.setMaster(null);
 		this.m.AIAgent = this.new("scripts/ai/tactical/agents/donkey_agent");
 		this.m.AIAgent.setActor(this);

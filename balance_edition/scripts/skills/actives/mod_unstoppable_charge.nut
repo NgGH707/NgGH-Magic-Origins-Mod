@@ -199,6 +199,13 @@ this.mod_unstoppable_charge <- this.inherit("scripts/skills/skill", {
 				return;
 			}
 
+			local furtherKnockToTile = this.findTileToKnockBackTo(_targetTile, knockToTile);
+
+			if (furtherKnockToTile != null)
+			{
+				knockToTile = furtherKnockToTile;
+			}
+
 			this.m.TilesUsed.push(knockToTile.ID);
 
 			if (!_user.isHiddenToPlayer() && (_targetTile.IsVisibleForPlayer || knockToTile.IsVisibleForPlayer))
@@ -362,8 +369,8 @@ this.mod_unstoppable_charge <- this.inherit("scripts/skills/skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 15;
-			_properties.DamageRegularMax += 42;
+			_properties.DamageRegularMin += 10;
+			_properties.DamageRegularMax += 38;
 			_properties.DamageArmorMult *= 1.0;
 		}
 	}

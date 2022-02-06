@@ -281,8 +281,8 @@ this.mod_punch <- this.inherit("scripts/skills/skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 105;
-			_properties.DamageRegularMax += 135;
+			_properties.DamageRegularMin += 100;
+			_properties.DamageRegularMax += 128;
 			_properties.DamageArmorMult *= 0.75;
 			
 			if (_targetEntity == null)

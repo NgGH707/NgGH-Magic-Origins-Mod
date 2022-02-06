@@ -338,7 +338,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 			}
 			else
 			{
-				local chance = this.Math.ceil(67 * this.getConditionPct()) + (isUpgraded ? 10 : 0);
+				local chance = this.Math.ceil(67 * this.Math.minf(1.0, this.getConditionHasBeenProcessed() / this.Math.maxf(1.0, this.getConditionMax()))) + (isUpgraded ? 10 : 0);
 				local num = entry.Max;
 				local guarantee = entry.Min;
 

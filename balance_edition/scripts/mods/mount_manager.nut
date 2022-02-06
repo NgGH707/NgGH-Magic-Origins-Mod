@@ -243,7 +243,7 @@ this.mount_manager <- {
 		    _s.m.IsSerialized = false;
 		    _s.setItem(this.m.Mount);
 
-		    if (_s.rawin("setRestrained"))
+		    if (_s.rawin("setRestrained") && !this.getActor().getFlags().has("egg"))
 			{
 				_s.setRestrained(true);
 				_s.m.ActionPointCost = 0;

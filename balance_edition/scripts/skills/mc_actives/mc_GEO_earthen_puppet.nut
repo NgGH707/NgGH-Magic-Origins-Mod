@@ -220,7 +220,7 @@ this.mc_GEO_earthen_puppet <- this.inherit("scripts/skills/mc_magic_skill", {
 	{
 		local effect = _puppet.getSkills().getSkillByID("effects.mc_powering");
 		
-		if (effect != null)
+		if (effect != null && _puppet.m.LastRoundStayActive != this.Time.getRound())
 		{
 			this.Tactical.TurnSequenceBar.removeEntity(_puppet);
 			_puppet.m.IsActingImmediately = true;

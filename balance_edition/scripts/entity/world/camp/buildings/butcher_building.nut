@@ -214,7 +214,7 @@ this.butcher_building <- this.inherit("scripts/entity/world/camp/camp_building",
                 continue;
             }
 
-            local mod = this.m.BaseCraft; 500
+            local mod = this.m.BaseCraft;
 
             if (isButcher.find(bro.getBackground().getID()) != null)
             {
@@ -332,16 +332,16 @@ this.butcher_building <- this.inherit("scripts/entity/world/camp/camp_building",
                 continue;
             }
 
-            local mod = r.Item.getConditionMax() >= 500 ? 1.5 : 1.0;
+            local mod = r.Item.getConditionMax() >= 500 ? 0.67 : 1.0;
             local needed = this.Math.floor(r.Item.getCondition() - r.Item.getConditionHasBeenProcessed());
             if (modifiers.Craft < needed)
             {
                 needed = modifiers.Craft;
             }
 
-            r.Item.setProcessedCondition(r.Item.getConditionHasBeenProcessed() + needed * mod);
+            r.Item.setProcessedCondition(r.Item.getConditionHasBeenProcessed() + needed);
             this.m.PointsButchered += needed;
-            modifiers.Craft -= needed;
+            modifiers.Craft -= this.Math.floor(needed * mod);
 
             if (r.Item.getConditionHasBeenProcessed() >= r.Item.getCondition())
             {

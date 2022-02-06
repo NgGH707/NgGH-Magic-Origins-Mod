@@ -154,8 +154,8 @@ this.mc_GEO_earthquake <- this.inherit("scripts/skills/mc_magic_skill", {
 		local tiles = this.getAffectedTiles(_targetTile);
 		tiles.push(_targetTile);
 		this.getContainer().setBusy(true);
-		this.Tactical.CameraDirector.addMoveSlowlyToTileEvent(100, _targetTile);
-		this.Tactical.CameraDirector.addDelay(1.5);
+		//this.Tactical.CameraDirector.addMoveSlowlyToTileEvent(100, _targetTile);
+		//this.Tactical.CameraDirector.addDelay(1.5);
 		local flying_enemies = [
 			this.Const.EntityType.FlyingSkull,
 			this.Const.EntityType.SkeletonLichMirrorImage,

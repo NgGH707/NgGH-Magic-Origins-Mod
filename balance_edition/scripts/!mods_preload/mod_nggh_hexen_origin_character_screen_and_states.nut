@@ -44,9 +44,18 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 			{
 				if (item.m.MedicinePerDay == 0)
 				{
+					if (!item.isToBeButchered())
+					{
+						item.setToBeButchered(true, index);
+					}
+					else
+					{
+						item.setToBeButchered(false, 0);
+					}
+
 					return {
 						repair = false,
-						salvage = false
+						salvage = item.isToBeSalvaged()
 					};
 				}
 
@@ -790,7 +799,7 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 			}
 			else
 			{
-				ws_showTentBuildingDialog();
+				ws_showTentBuildingDialog(_id);
 			}
 		};
 
@@ -1123,6 +1132,18 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 						});
 					}
 					else
+					{
+						tooltip.push({
+							id = 1,
+							type = "hint",
+							icon = "ui/icons/mouse_right_button_alt.png",
+							text = "Set item to be butchered"
+						});
+					}
+				}
+				else
+				{
+					if (!_item.isToBeButchered())
 					{
 						tooltip.push({
 							id = 1,

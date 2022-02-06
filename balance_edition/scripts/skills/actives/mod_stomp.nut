@@ -29,8 +29,8 @@ this.mod_stomp <- this.inherit("scripts/skills/skill", {
 		this.m.IsIgnoredAsAOO = true;
 		this.m.InjuriesOnBody = this.Const.Injury.BluntBody;
 		this.m.InjuriesOnHead = this.Const.Injury.BluntHead;
-		this.m.DirectDamageMult = 0.25;
-		this.m.ActionPointCost = 5;
+		this.m.DirectDamageMult = 0.15;
+		this.m.ActionPointCost = 6;
 		this.m.FatigueCost = 20;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
@@ -166,7 +166,7 @@ this.mod_stomp <- this.inherit("scripts/skills/skill", {
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin += 32;
+			_properties.DamageRegularMin += 25;
 			_properties.DamageRegularMax += 58;
 			_properties.DamageArmorMult *= 0.75;
 		}
