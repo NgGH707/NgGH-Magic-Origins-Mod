@@ -56,7 +56,7 @@ this.perk_rabies <- this.inherit("scripts/skills/skill", {
 		_properties.Hitpoints += 20;
 		_properties.Bravery += 20;
 		_properties.MeleeSkill += 5;
-		_properties.DamageTotalMult += 1.25;
+		_properties.DamageTotalMult *= 1.25;
 	}
 	
 	function onRemoved()

@@ -70,7 +70,7 @@ this.unhold_hand_to_hand <- this.inherit("scripts/skills/skill", {
 			id = 6,
 			type = "text",
 			icon = "ui/icons/hitchance.png",
-			text = "Can cause [color=" + this.Const.UI.Color.NegativeValue + "]Stagger[/color] on hit"
+			text = "Has [color=" + this.Const.UI.Color.NegativeValue + "]50%[/color] to knock back target"
 		});
 
 		return ret;
@@ -109,17 +109,123 @@ this.unhold_hand_to_hand <- this.inherit("scripts/skills/skill", {
 			return success;
 		}
 
-		if (this.Math.rand(1, 100) <= 25 && success && _targetTile.IsOccupiedByActor && !target.isNonCombatant() && target.isAlive() && !target.isDying())
+		if (success && _targetTile.IsOccupiedByActor && target.isAlive() && !target.isDying())
 		{
-			target.getSkills().add(this.new("scripts/skills/effects/staggered_effect"));
-
-			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
-			{
-				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has staggered " + this.Const.UI.getColorizedEntityName(target) + " for one turn");
-			}
+			this.applyEffectToTarget(_user, target);
 		}
 
 		return success;
+	}
+
+	function applyEffectToTarget( _user, _target )
+	{
+		if (_target.isNonCombatant())
+		{
+			return;
+		}
+
+		local _targetTile = _target.getTile();
+		local roll = this.Math.rand(1, 4);
+
+		if (roll <= 2 && !_target.getCurrentProperties().IsImmuneToKnockBackAndGrab && !_target.getCurrentProperties().IsRooted)
+		{
+			local knockToTile = this.findTileToKnockBackTo(_user.getTile(), _targetTile);
+
+			if (knockToTile == null)
+			{
+				return;
+			}
+
+			if (!_user.isHiddenToPlayer() && (_targetTile.IsVisibleForPlayer || knockToTile.IsVisibleForPlayer))
+			{
+				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has knocked back " + this.Const.UI.getColorizedEntityName(_target));
+			}
+
+			local skills = _target.getSkills();
+			skills.removeByID("effects.shieldwall");
+			skills.removeByID("effects.spearwall");
+			skills.removeByID("effects.riposte");
+			_target.setCurrentMovementType(this.Const.Tactical.MovementType.Involuntary);
+			local damage = this.Math.max(0, this.Math.abs(knockToTile.Level - _targetTile.Level) - 1) * this.Const.Combat.FallingDamage;
+
+			if (damage == 0)
+			{
+				this.Tactical.getNavigator().teleport(_target, knockToTile, null, null, true);
+			}
+			else
+			{
+				local p = this.getContainer().getActor().getCurrentProperties();
+				local tag = {
+					Attacker = _user,
+					Skill = this,
+					HitInfo = clone this.Const.Tactical.HitInfo
+				};
+				tag.HitInfo.DamageRegular = damage;
+				tag.HitInfo.DamageDirect = 1.0;
+				tag.HitInfo.BodyPart = this.Const.BodyPart.Body;
+				tag.HitInfo.BodyDamageMult = 1.0;
+				tag.HitInfo.FatalityChanceMult = 1.0;
+				this.Tactical.getNavigator().teleport(_target, knockToTile, this.onKnockedDown, tag, true);
+			}
+		}
+		else if (roll == 1)
+		{
+			_target.getSkills().add(this.new("scripts/skills/effects/staggered_effect"));
+
+			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
+			{
+				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " has staggered " + this.Const.UI.getColorizedEntityName(_target) + " for one turn");
+			}
+		}
+	}
+
+	function onKnockedDown( _entity, _tag )
+	{
+		if (_tag.HitInfo.DamageRegular != 0)
+		{
+			_entity.onDamageReceived(_tag.Attacker, _tag.Skill, _tag.HitInfo);
+		}
+	}
+
+	function findTileToKnockBackTo( _userTile, _targetTile )
+	{
+		local dir = _userTile.getDirectionTo(_targetTile);
+
+		if (_targetTile.hasNextTile(dir))
+		{
+			local knockToTile = _targetTile.getNextTile(dir);
+
+			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1)
+			{
+				return knockToTile;
+			}
+		}
+
+		local altdir = dir - 1 >= 0 ? dir - 1 : 5;
+
+		if (_targetTile.hasNextTile(altdir))
+		{
+			local knockToTile = _targetTile.getNextTile(altdir);
+
+			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1)
+			{
+				return knockToTile;
+			}
+		}
+
+		altdir = dir + 1 <= 5 ? dir + 1 : 0;
+
+		if (_targetTile.hasNextTile(altdir))
+		{
+			local knockToTile = _targetTile.getNextTile(altdir);
+
+			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1)
+			{
+				return knockToTile;
+			}
+		}
+
+		return null;
 	}
 
 });

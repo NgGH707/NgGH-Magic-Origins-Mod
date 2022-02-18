@@ -62,6 +62,7 @@ this.trickster_god_player <- this.inherit("scripts/entity/tactical/player_beast"
 		this.m.Items.blockAllSlots();
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = false;
+		this.m.SignaturePerks = ["Stalwart", "LegendComposure", "LegendPoisonImmunity", "SteelBrow", "HoldOut"];
 		this.getFlags().add("boss");
 	}
 
@@ -257,19 +258,9 @@ this.trickster_god_player <- this.inherit("scripts/entity/tactical/player_beast"
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
-		local perks = ["perk_legend_poison_immunity", "perk_steel_brow", "perk_stalwart", "perk_battering_ram", "perk_hold_out"];
-		
-		foreach ( script in perks )
-		{
-			local s = this.new("scripts/skills/perks/" + script);
-			s.m.IsSerialized = false;
-			this.m.Skills.add(s);
-		}
-		
 		this.m.Skills.add(this.new("scripts/skills/racial/trickster_god_racial"));
 		this.m.Skills.add(this.new("scripts/skills/actives/teleport_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/gore_skill"));
-		this.m.Skills.update();
 	}
 
 	function setScenarioValues( _isElite = false , _dub = false , _dub_two = false , _dub_three = false )

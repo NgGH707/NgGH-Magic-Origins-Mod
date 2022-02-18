@@ -8,7 +8,12 @@ this.player_beast <- this.inherit("scripts/entity/tactical/player", {
 		rangeSkillMax = 150,
 		meleeDefenseMax = 125,
 		rangeDefenseMax = 125,
+		SignaturePerks = [],
 	},
+	function getSignaturePerks()
+	{
+		return this.m.SignaturePerks;
+	}
 	
 	function getType( _trueType = false )
 	{

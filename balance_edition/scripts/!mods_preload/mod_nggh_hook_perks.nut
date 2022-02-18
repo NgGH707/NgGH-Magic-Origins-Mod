@@ -5,52 +5,57 @@ this.getroottable().Nggh_MagicConcept.hookPerks <- function ()
 	{
 		obj.m.NineLivesCount <- 1;
 
+		obj.isSpent = function()
+		{
+			return this.m.NineLivesCount <= 0;
+		};
+		obj.restoreLife <- function()
+		{
+			if (this.getMaxLives() > this.m.NineLivesCount) this.addNineLivesCount();
+		};
 		obj.addNineLivesCount <- function( _n = 1 )
 		{
-			this.m.IsSpent = false;
 			this.m.LastFrameUsed = 0;
-			this.m.NineLivesCount = this.Math.min(9, this.m.NineLivesCount + _n);
+			this.m.NineLivesCount = this.Math.min(8, this.m.NineLivesCount + _n);
 		};
-		obj.onAdded <- function()
+		obj.getMaxLives <- function()
 		{
-			this.m.Type = this.Const.SkillType.Perk | this.Const.SkillType.StatusEffect;
-		};
+			return this.getContainer().getActor().getFlags().getAsInt("max_lives");
+		}
 		obj.getName <- function()
 		{
 			local ret = this.skill.getName();
 
-			if (this.m.NineLivesCount > 1)
+			if (this.m.NineLivesCount == 1)
 			{
-				return ret + " (" + (this.m.NineLivesCount) + ")"
+				return ret + " (" + (this.m.NineLivesCount) + " life left)"
+			}
+			else if (this.m.NineLivesCount > 1)
+			{
+				return ret + " (" + (this.m.NineLivesCount) + " lives left)"
 			}
 
 			return ret;
 		};
-		local ws_setSpent = obj.setSpent;
 		obj.setSpent = function(_f)
 		{
-			ws_setSpent(_f);
-
-			if (this.m.IsSpent)
+			if (_f && !this.isSpent())
 			{
-				--this.m.NineLivesCount;
+				this.getContainer().add(this.new("scripts/skills/effects/nine_lives_effect"));
 
-				if (this.m.NineLivesCount <= 0)
+				if (--this.m.NineLivesCount == 0)
 				{
 					local rune = this.getContainer().getSkillByID("special.legend_RSA_diehard");
 					if (rune != null) rune.activate();
+					this.m.LastFrameUsed = this.Time.getFrame();
 				}
-				else
-				{
-					this.m.IsSpent = false;
-					this.m.LastFrameUsed = 0;
-					this.getContainer().removeByType(this.Const.SkillType.DamageOverTime);
-				}
+
+				this.getContainer().removeByType(this.Const.SkillType.DamageOverTime);
 			}
 		}
 		obj.isHidden <- function()
 		{
-			return this.isSpent() || this.m.NineLivesCount <= 1;
+			return this.isSpent();
 		};
 		obj.getTooltip <- function()
 		{
@@ -73,18 +78,78 @@ this.getroottable().Nggh_MagicConcept.hookPerks <- function ()
 				}
 			];
 		};
-		local ws_onCombatStarted = obj.onCombatStarted;
-		obj.onCombatStarted <- function()
+		local ws_create = obj.create;
+		obj.create <- function()
 		{
-			ws_onCombatStarted();
-			this.m.NineLivesCount = 1;
+			ws_create();
+			this.m.Type = this.Const.SkillType.Perk | this.Const.SkillType.StatusEffect;
+			this.m.IconMini = "perk_07_mini";
+			this.m.Overlay = "perk_07";
 		};
-		local ws_onCombatFinished = obj.onCombatFinished;
-		obj.onCombatFinished <- function()
+		obj.onUpdate = function( _properties )
 		{
-			ws_onCombatFinished();
-			this.m.NineLivesCount = 1;
+			if (this.isSpent() && this.m.LastFrameUsed == this.Time.getFrame())
+			{
+				this.getContainer().removeByType(this.Const.SkillType.DamageOverTime);
+			}
+
+			_properties.SurviveWithInjuryChanceMult *= 1.11;
 		};
+		obj.onCombatFinished = function()
+		{
+			this.m.NineLivesCount = this.Math.max(1, this.m.NineLivesCount);
+			this.m.LastFrameUsed = 0;
+			this.skill.onCombatFinished();
+		};
+		obj.onSerialize <- function( _out )
+		{
+			this.skill.onSerialize(_out);
+			_out.writeI8(this.m.NineLivesCount);
+		};
+		obj.onDeserialize <- function( _in )
+		{
+			this.skill.onDeserialize(_in);
+			this.m.NineLivesCount = _in.readI8();
+		};
+	});
+
+
+	//
+	::mods_hookExactClass("skills/perks/perk_overwhelm", function(obj) 
+	{
+		local ws_onTargetHit = obj.onTargetHit;
+		obj.onTargetHit = function( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
+		{
+			if (_targetEntity != null && _targetEntity.getCurrentProperties().IsImmuneToOverwhelm)
+			{
+				return;
+			}
+
+			ws_onTargetHit(_skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor);
+		};
+	});
+
+
+	//
+	::mods_hookExactClass("skills/perks/perk_pathfinder", function(obj) 
+	{
+		obj.m.IsGhost <- false;
+		obj.onAdded <- function()
+		{
+			this.m.IsGhost = this.isKindOf(this.getContainer().getActor().get(), "ghost_player");
+		};
+		obj.onUpdate = function( _properties )
+		{
+			local actor = this.getContainer().getActor();
+
+			if (!this.m.IsGhost)
+			{
+				actor.m.ActionPointCosts = this.Const.PathfinderMovementAPCost;
+			}
+			
+			actor.m.FatigueCosts = clone this.Const.PathfinderMovementFatigueCost;
+			actor.m.LevelActionPointCost = 0;
+		}
 	});
 
 

@@ -729,30 +729,37 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		local _user = this.getContainer().getActor();
 		local isHuman = _targetEntity.getFlags().has("human");
 		local requirements = this.Const.HexenOrigin.CharmedSlave[isHuman ? "TypeToInfoHuman" : "TypeToInfoNonHuman"](_targetEntity, true);
-		local failToMeet = [];
 		
 		if (requirements == null || typeof requirements != "array")
 		{
 			return _isForToolTips ? ["Can\'t be charmed"] : false;
 		}
 		
-		if (_targetEntity.getSkills().hasSkill("racial.champion") && requirements.find("perk.mastery_charm") == null)
+		if (_targetEntity.getSkills().hasSkill("racial.champion") && requirements.find("CharmSpec") == null)
 		{
-			requirements.push("perk.mastery_charm");
+			requirements.push("CharmSpec");
 		}
 		
 		if (requirements.len() == 0)
 		{
 			return _isForToolTips ? [] : true;
 		}
-		
+
+		local perkDefs = [];
+		local failToMeet = [];
+
 		foreach ( r in requirements )
 		{
-			if (!this.getContainer().hasSkill(r))
+			perkDefs.push(this.Const.Perks.PerkDefObjects[this.Const.Perks.PerkDefs[r]]);
+		}
+		
+		foreach ( perkDef in perkDefs )
+		{
+			if (!this.getContainer().hasSkill(perkDef.ID))
 			{
 				if (_isForToolTips)
 				{
-					failToMeet.push(r);
+					failToMeet.push(perkDef.Name);
 				}
 				else
 				{
@@ -761,22 +768,7 @@ this.charm_captive_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 			}
 		}
 		
-		local names = [];
-		
-		if (_isForToolTips)
-		{
-			foreach ( f in failToMeet )
-			{
-				local p = _user.getBackground().getPerk(f);
-				
-				if (p != null)
-				{
-					names.push(p.Name);
-				}
-			}
-		}
-		
-		return _isForToolTips ? names : true;
+		return _isForToolTips ? failToMeet : true;
 	}
 	
 	function onCombatStarted()

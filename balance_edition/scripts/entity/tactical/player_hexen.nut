@@ -538,12 +538,19 @@ this.player_hexen <- this.inherit("scripts/entity/tactical/player", {
 				continue;
 			}
 
-			this.getSprite(a).Visible = !_isHidden;
-			
 			if (this.getSprite(a).HasBrush)
 			{
-				this.getSprite(a)[_isHidden ? "fadeOutAndHide" : "fadeIn"](300);
+				if (_isHidden)
+				{
+					this.getSprite(a).fadeOutAndHide(300);
+				}
+				else
+				{
+					this.getSprite(a).fadeIn(300);
+				}
 			}
+
+			this.getSprite(a).Visible = !_isHidden;
 		}
 		
 		if (!_isHidden)

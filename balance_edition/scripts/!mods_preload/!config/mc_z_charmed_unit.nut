@@ -9,12 +9,13 @@ gt.Const.CharmedSlave <- {
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
 				Perks = [],
+				Skills = [],
 				Difficulty = 33,
 				Custom = {
 					ID = "background.legend_necromancer",
 					AdditionalPerkGroup = [1 ,"NecroTree"],
 				},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "legend_necromancer_background",
 			},
 			
@@ -54,7 +55,7 @@ gt.Const.CharmedSlave <- {
 		//Ghoul = 12,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [-10, -5], Stamina = [0, 0], MeleeSkill = [-5, -5], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-25, -25] },
-				Perks = ["actives/ghoul_claws", "actives/swallow_whole_skill"],
+				Skills = ["actives/ghoul_claws", "actives/swallow_whole_skill"],
 				Difficulty = 15,
 				Custom =  {
 					BgModifiers = {
@@ -73,13 +74,13 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "NachoTree",
 				Script = "player_beast/ghoul_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_ghoul"],
+				Requirements = ["CharmEnemyGhoul"],
 			},
 			
 		//OrcYoung = 13,
 			{
 				StatMod = { Hitpoints = [-25, -15], Bravery = [-5, -5], Stamina = [-10, -10], MeleeSkill = [-2, -2], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-10, -10] },
-				Perks = ["actives/charge"],
+				Skills = ["actives/charge"],
 				Difficulty = 10,
 				Custom =  {
 					BgModifiers = {
@@ -105,7 +106,7 @@ gt.Const.CharmedSlave <- {
 		//OrcBerserker = 14,
 			{
 				StatMod = { Hitpoints = [-70, -50], Bravery = [-30, -25], Stamina = [-20, -20], MeleeSkill = [-10, -10], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-25, -15] },
-				Perks = ["effects/berserker_rage_effect", "actives/charge"],
+				Skills = ["effects/berserker_rage_effect", "actives/charge"],
 				Difficulty = 35,
 				Custom =  {
 					BgModifiers = {
@@ -124,13 +125,14 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "OrcBerserker",
 				Script = "player_orc/player_orc_berserker",
 				Background = "charmed_orc_background",
-				Requirements = ["perk.charm_enemy_ork"],
+				Requirements = ["CharmEnemyOrk"],
 			},
 			
 		//OrcWarrior = 15,
 			{
 				StatMod = { Hitpoints = [-40, -40], Bravery = [-15, -10], Stamina = [-60, -60], MeleeSkill = [-10, -10], RangedSkill = [0, 0], MeleeDefense = [-3, -3], RangedDefense = [-5, -5], Initiative = [-10, -10] },
-				Perks = ["actives/line_breaker", "perks/perk_battering_ram", "perks/perk_stalwart", "perks/perk_shield_bash"],
+				Perks = ["LegendComposure", "Stalwart", "ShieldBash"],
+				Skills = ["actives/line_breaker"],
 				Difficulty = 30,
 				Custom =  {
 					BgModifiers = {
@@ -149,13 +151,14 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "OrcWarrior",
 				Script = "player_orc/player_orc_warrior",
 				Background = "charmed_orc_background",
-				Requirements = ["perk.charm_enemy_ork"],
+				Requirements = ["CharmEnemyOrk"],
 			},
 			
 		//OrcWarlord = 16,
 			{
 				StatMod = { Hitpoints = [-80, -60], Bravery = [-25, -15], Stamina = [-90, -90], MeleeSkill = [-10, -10], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_captain", "actives/warcry", "actives/line_breaker", "perks/perk_battering_ram", "perks/perk_stalwart", "perks/perk_shield_bash"],
+				Perks = ["LegendComposure", "Stalwart", "ShieldBash"],
+				Skills = ["actives/warcry", "actives/line_breaker", "perks/perk_captain"],
 				Difficulty = 90,
 				Custom =  {
 					BgModifiers = {
@@ -173,7 +176,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "OrcWarlord",
 				Script = "player_orc/player_orc_warlord",
 				Background = "charmed_orc_background",
-				Requirements = ["perk.charm_enemy_ork", "perk.mastery_charm"],
+				Requirements = ["CharmEnemyOrk", "CharmEnemyOrk"],
 			},
 			
 		//Militia = 17,
@@ -197,7 +200,7 @@ gt.Const.CharmedSlave <- {
 		//MilitiaVeteran = 19,
 			{
 				StatMod = { Hitpoints = [-2, 2], Bravery = [-2, 2], Stamina = [-2, 2], MeleeSkill = [-2, 2], RangedSkill = [-2, 2], MeleeDefense = [-2, 2], RangedDefense = [-2, 2], Initiative = [-2, 2] },
-				Perks = ["perks/perk_legend_specialist_militia_skill"],
+				Perks = ["LegendSpecialistMilitiaSkill"],
 				Difficulty = 0,
 				Custom = {},
 				PerkTree = "retired_soldier_background",
@@ -207,7 +210,8 @@ gt.Const.CharmedSlave <- {
 		//MilitiaCaptain = 20,
 			{
 				StatMod = { Hitpoints = [-2, 2], Bravery = [-2, 2], Stamina = [-2, 2], MeleeSkill = [-2, 2], RangedSkill = [-2, 2], MeleeDefense = [-2, 2], RangedDefense = [-2, 2], Initiative = [-2, 2] },
-				Perks = ["perks/perk_captain", "perks/perk_legend_specialist_militia_skill"],
+				Perks = ["LegendSpecialistMilitiaSkill"],
+				Skills = ["perks/perk_captain"],
 				Difficulty = 10,
 				Custom = {},
 				PerkTree = "retired_soldier_background",
@@ -217,10 +221,10 @@ gt.Const.CharmedSlave <- {
 		//BountyHunter = 21,
 			{
 				StatMod = { Hitpoints = [-25, -10], Bravery = [-20, -15], Stamina = [-5, -5], MeleeSkill = [-12, -8], RangedSkill = [-5, 0], MeleeDefense = [-8, -5], RangedDefense = [-5, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_rotation", "perks/perk_footwork"],
+				Perks = ["Rotation", "Footwork"],
 				Difficulty = 15,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "sellsword_background",
 			},
 			
@@ -249,7 +253,7 @@ gt.Const.CharmedSlave <- {
 		//CaravanGuard = 24,
 			{
 				StatMod = { Hitpoints = [-12, -10], Bravery = [-15, -12], Stamina = [-25, -20], MeleeSkill = [-10, -8], RangedSkill = [0, 0], MeleeDefense = [-2, 0], RangedDefense = [-2, 0], Initiative = [-10, 0] },
-				Perks = ["actives/recover_skill"],
+				Perks = ["Recover"],
 				Difficulty = 12,
 				Custom = {
 					ID = "background.caravan_hand",
@@ -264,7 +268,7 @@ gt.Const.CharmedSlave <- {
 		//Footman = 26,
 			{
 				StatMod = { Hitpoints = [-7, -15], Bravery = [-10, -10], Stamina = [-10, -10], MeleeSkill = [-8, -8], RangedSkill = [-5, -5], MeleeDefense = [0, -5], RangedDefense = [0, -3], Initiative = [-10, -10] },
-				Perks = ["perks/perk_rotation"],
+				Perks = ["Rotation"],
 				Difficulty = 10,
 				Custom = {},
 				PerkTree = "deserter_background",
@@ -274,17 +278,17 @@ gt.Const.CharmedSlave <- {
 		//Greatsword = 27,
 			{
 				StatMod = { Hitpoints = [-25, -25], Bravery = [-15, -10], Stamina = [-15, -10], MeleeSkill = [-8, -8], RangedSkill = [0, 0], MeleeDefense = [-10, -5], RangedDefense = [0, 0], Initiative = [-5, 0] },
-				Perks = ["perks/perk_rotation", "perks/perk_lone_wolf"],
+				Perks = ["Rotation", "LoneWolf"],
 				Difficulty = 33,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "legend_noble_2h",
 			},
 			
 		//Billman = 28,
 			{
 				StatMod = { Hitpoints = [-15, -15], Bravery = [-10, -10], Stamina = [-10, -10], MeleeSkill = [-8, -8], RangedSkill = [-5, -5], MeleeDefense = [0, -5], RangedDefense = [0, -3], Initiative = [-2, 0] },
-				Perks = ["perks/perk_rotation", "perks/perk_backstabber"],
+				Perks = ["Rotation", "Backstabber"],
 				Difficulty = 10,
 				Custom = {},
 				PerkTree = "beast_hunter_background",
@@ -294,7 +298,7 @@ gt.Const.CharmedSlave <- {
 		//Arbalester = 29,
 			{
 				StatMod = { Hitpoints = [-12, -7], Bravery = [-10, -10], Stamina = [-10, -10], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [-2, -1], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_rotation"],
+				Perks = ["Rotation"],
 				Difficulty = 10,
 				Custom = {},
 				PerkTree = "legend_noble_ranged",
@@ -304,30 +308,32 @@ gt.Const.CharmedSlave <- {
 		//StandardBearer = 30,
 			{
 				StatMod = { Hitpoints = [-20, -15], Bravery = [-12, -10], Stamina = [-30, -15], MeleeSkill = [-5, -5], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-5, -5] },
-				Perks = ["perks/perk_rotation", "perks/perk_captain", "perks/perk_inspiring_presence"],
+				Perks = ["Rotation", "InspiringPresence"],
+				Skills = ["perks/perk_captain"],
 				Difficulty = 50,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "legend_noble_event_background",
 			},
 
 		//Sergeant = 31,
 			{
 				StatMod = { Hitpoints = [-30, -30], Bravery = [-20, -10], Stamina = [-15, -10], MeleeSkill = [-15, -10], RangedSkill = [0, 0], MeleeDefense = [-10, -7], RangedDefense = [0, 0], Initiative = [-15, -10] },
-				Perks = ["perks/perk_rotation", "perks/perk_duelist"],
+				Perks = ["Rotation", "Duelist"],
 				Difficulty = 50,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "legend_noble_background",
 			},
 			
 		//Knight = 32,
 			{
 				StatMod = { Hitpoints = [-35, -35], Bravery = [-25, -15], Stamina = [-20, -15], MeleeSkill = [-20, -20], RangedSkill = [0, 0], MeleeDefense = [-10, -7], RangedDefense = [0, 5], Initiative = [0, 5] },
-				Perks = ["perks/perk_rotation", "perks/perk_captain", "perks/perk_brawny"],
+				Perks = ["Rotation", "Brawny"],
+				Skills = ["perks/perk_captain"],
 				Difficulty = 75,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "hedge_knight_background",
 			},
 			
@@ -377,19 +383,21 @@ gt.Const.CharmedSlave <- {
 		//BanditLeader = 38,
 			{
 				StatMod = { Hitpoints = [-30, -30], Bravery = [-30, -30], Stamina = [-30, -25], MeleeSkill = [-13, -10], RangedSkill = [-10, -8], MeleeDefense = [-15, -8], RangedDefense = [-8, -5], Initiative = [-20, -15] },
-				Perks = ["perks/perk_captain", "perks/perk_nine_lives"],
+				Perks = ["NineLives"],
+				Skills = ["perks/perk_captain"]
 				Difficulty = 35,
 				Custom = {
 					ID = "background.raider",
 				},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "orc_slayer_background",
 			},
 			
 		//GoblinAmbusher = 39,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [-10, -10], Stamina = [-10, 0], MeleeSkill = [-5, -5], RangedSkill = [-10, -10], MeleeDefense = [-5, -3], RangedDefense = [-10, -5], Initiative = [-30, -30] },
-				Perks = ["racial/goblin_ambusher_racial"],
+				Perks = ["Bullseye"],
+				Skills = ["racial/goblin_ambusher_racial"],
 				Difficulty = 10,
 				Custom =  {
 					BgModifiers = {
@@ -439,7 +447,7 @@ gt.Const.CharmedSlave <- {
 		//GoblinLeader = 41,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [-20, -20], MeleeSkill = [-15, -15], RangedSkill = [-13, -15], MeleeDefense = [-5, -5], RangedDefense = [-10, -10], Initiative = [-25, -25] },
-				Perks = ["perks/perk_captain", "actives/goblin_whip"],
+				Skills = ["perks/perk_captain", "actives/goblin_whip"],
 				Difficulty = 65,
 				Custom =  {
 					BgModifiers = {
@@ -458,7 +466,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "GoblinLeader",
 				Script = "player_goblin",
 				Background = "charmed_goblin_background",
-				Requirements = ["perk.charm_enemy_goblin"],
+				Requirements = ["CharmEnemyGoblin"],
 			},
 			
 		//GoblinShaman = 42,
@@ -483,7 +491,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "GoblinShaman",
 				Script = "player_goblin",
 				Background = "charmed_goblin_background",
-				Requirements = ["perk.charm_enemy_goblin"],
+				Requirements = ["CharmEnemyGoblin"],
 			},
 			
 		//GoblinWolfrider = 43,
@@ -523,51 +531,51 @@ gt.Const.CharmedSlave <- {
 			
 		//Mercenary = 47,
 			{
-				StatMod = { Hitpoints = [-30, -26], Bravery = [-35, -20], Stamina = [-25, -25], MeleeSkill = [-13, -8], RangedSkill = [-5, -5], MeleeDefense = [-10, -7], RangedDefense = [-2, 0], Initiative = [-15, -10] },
-				Perks = ["perks/perk_overwhelm"],
+				StatMod = { Hitpoints = [-25, -20], Bravery = [-30, -20], Stamina = [-25, -20], MeleeSkill = [-11, 0], RangedSkill = [-5, -5], MeleeDefense = [-8, -5], RangedDefense = [-2, 0], Initiative = [-10, -10] },
+				Perks = ["Overwhelm"],
 				Difficulty = 15,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "sellsword_background",
 			},
 			
 		//MercenaryRanged = 48,
 			{
-				StatMod = { Hitpoints = [-20, -15], Bravery = [-35, -20], Stamina = [-20, -20], MeleeSkill = [-5, -5], RangedSkill = [-10, -7], MeleeDefense = [-2, 0], RangedDefense = [-3, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_overwhelm", "perks/perk_footwork"],
+				StatMod = { Hitpoints = [-20, -15], Bravery = [-30, -20], Stamina = [-20, -20], MeleeSkill = [-5, -5], RangedSkill = [-10, 0], MeleeDefense = [-2, 0], RangedDefense = [-3, 0], Initiative = [0, 0] },
+				Perks = ["Overwhelm", "Footwork"],
 				Difficulty = 15,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "sellsword_background",
 			},
 			
 		//Swordmaster = 49,
 			{
-				StatMod = { Hitpoints = [-30, -30], Bravery = [-30, -20], Stamina = [-15, -15], MeleeSkill = [-25, -25], RangedSkill = [-10, -10], MeleeDefense = [-35, -30], RangedDefense = [-15, -10], Initiative = [-5, -5] },
-				Perks = ["perks/perk_duelist", "perks/perk_mastery_sword", "perks/perk_mastery_greatsword"],
+				StatMod = { Hitpoints = [-30, -20], Bravery = [-30, -20], Stamina = [-15, -15], MeleeSkill = [-25, -15], RangedSkill = [-10, -10], MeleeDefense = [-35, -30], RangedDefense = [-15, -10], Initiative = [-5, -5] },
+				Perks = ["Duelist", "SpecSword", "LegendSpecGreatSword"],
 				Difficulty = 110,
 				Custom = {},
-				Requirements = ["perk.appearance_charm"],
+				Requirements = ["CharmAppearance"],
 				PerkTree = "swordmaster_background"
 			},
 			
 		//HedgeKnight = 50,
 			{
-				StatMod = { Hitpoints = [-50, -50], Bravery = [-30, -20], Stamina = [-15, -15], MeleeSkill = [-25, -25], RangedSkill = [0, 0], MeleeDefense = [-15, -10], RangedDefense = [-12, -8], Initiative = [-15, -5] },
-				Perks = ["perks/perk_devastating_strikes", "perks/perk_steel_brow", "perks/perk_brawny"],
+				StatMod = { Hitpoints = [-50, -30], Bravery = [-30, -20], Stamina = [-15, -15], MeleeSkill = [-25, -25], RangedSkill = [0, 0], MeleeDefense = [-15, -10], RangedDefense = [-12, -8], Initiative = [-15, -5] },
+				Perks = ["DevastatingStrikes", "SteelBrow", "Brawny"],
 				Difficulty = 90,
 				Custom = {},
-				Requirements = ["perk.appearance_charm"],
+				Requirements = ["CharmAppearance"],
 				PerkTree = "hedge_knight_background"
 			},
 			
 		//MasterArcher = 51,
 			{
-				StatMod = { Hitpoints = [-20, -20], Bravery = [-10, 0], Stamina = [-15, -15], MeleeSkill = [-5, -5], RangedSkill = [-15, -10], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-25, -10] },
-				Perks = ["perks/perk_bullseye", "perks/perk_quick_hands", "perks/perk_mastery_crossbow", "perks/perk_mastery_crossbow"],
+				StatMod = { Hitpoints = [-20, -15], Bravery = [-10, 0], Stamina = [-15, -15], MeleeSkill = [-5, -5], RangedSkill = [-15, -5], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-25, -10] },
+				Perks = ["Bullseye", "QuickHands", "SpecCrossbow", "SpecBow"],
 				Difficulty = 90,
 				Custom = {},
-				Requirements = ["perk.appearance_charm"],
+				Requirements = ["CharmAppearance"],
 				PerkTree = "legend_master_archer_background",
 			},
 			
@@ -577,7 +585,7 @@ gt.Const.CharmedSlave <- {
 		//Cultist = 53,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_nimble", "perks/perk_backstabber"],
+				Perks = ["Nimble", "Backstabber"],
 				Difficulty = 33,
 				Custom = {},
 				PerkTree = "cultist_background",
@@ -606,7 +614,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "WolfTree",
 				Script = "player_beast/direwolf_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_direwolf"],
+				Requirements = ["CharmEnemyDirewolf"],
 			},
 			
 		//Lindwurm = 55,
@@ -631,13 +639,13 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "LindwurmTree",
 				Script = "player_beast/lindwurm_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_lindwurm"],
+				Requirements = ["CharmEnemyLindwurm"],
 			},
 			
 		//Unhold = 56,
 			{
 				StatMod = { Hitpoints = [-100, -100], Bravery = [-50, -50], Stamina = [-200, -200], MeleeSkill = [-8, -5], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
-				Perks = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
+				Skills = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
 				Difficulty = 40,
 				Custom =  {
 					BgModifiers = {
@@ -656,13 +664,13 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "UnholdTree",
 				Script = "player_beast/unhold_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_unhold"],
+				Requirements = ["CharmEnemyUnhold"],
 			},
 			
 		//UnholdFrost = 57,
 			{
 				StatMod = { Hitpoints = [-150, -150], Bravery = [-50, -50], Stamina = [-200, -200], MeleeSkill = [-8, -5], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
-				Perks = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
+				Skills = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
 				Difficulty = 60,
 				Custom =  {
 					BgModifiers = {
@@ -681,13 +689,13 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "UnholdTree",
 				Script = "player_beast/unhold_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_unhold"],
+				Requirements = ["CharmEnemyUnhold"],
 			},
 			
 		//UnholdBog = 58,
 			{
 				StatMod = { Hitpoints = [-100, -100], Bravery = [-50, -50], Stamina = [-200, -200], MeleeSkill = [-8, -5], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
-				Perks = ["racial/legend_bog_unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
+				Skills = ["racial/legend_bog_unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
 				Difficulty = 40,
 				Custom =  {
 					BgModifiers = {
@@ -706,13 +714,13 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "UnholdTree",
 				Script = "player_beast/unhold_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_unhold"],
+				Requirements = ["CharmEnemyUnhold"],
 			},
 			
 		//Spider = 59,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-20, -10] },
-				Perks = ["actives/spider_bite_skill", "racial/spider_racial"],
+				Skills = ["actives/spider_bite_skill", "racial/spider_racial"],
 				Difficulty = 0,
 				Custom =  {
 					BgModifiers = {
@@ -731,7 +739,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "SpiderTree",
 				Script = "player_beast/spider_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_spider"],
+				Requirements = ["CharmEnemySpider"],
 			},
 			
 		//SpiderEggs = 60,
@@ -740,7 +748,8 @@ gt.Const.CharmedSlave <- {
 		//Alp = 61,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [-25, -15], Stamina = [0, 0], MeleeSkill = [48, 58], RangedSkill = [48, 58], MeleeDefense = [-2, 0], RangedDefense = [-2, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_underdog", "actives/sleep_skill", "actives/nightmare_skill", "actives/alp_teleport_skill"],
+				Perks = ["Underdog"],
+				Skills = ["actives/sleep_skill", "actives/nightmare_skill", "actives/alp_teleport_skill"],
 				Difficulty = 35,
 				Custom =  {
 					BgModifiers = {
@@ -759,7 +768,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "AlpTree",
 				Script = "player_beast/alp_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_alps"],
+				Requirements = ["CharmEnemyAlps"],
 			},
 			
 		//Hexe = 62,
@@ -768,7 +777,7 @@ gt.Const.CharmedSlave <- {
 		//Schrat = 63,
 			{
 				StatMod = { Hitpoints = [-200, -200], Bravery = [0, 0], Stamina = [-100, -100], MeleeSkill = [-10, -5], RangedSkill = [5, -5], MeleeDefense = [-3, -3], RangedDefense = [-3, -3], Initiative = [-5, 0] },
-				Perks = ["racial/schrat_racial", "actives/grow_shield_skill"],
+				Skills = ["racial/schrat_racial", "actives/grow_shield_skill"],
 				Difficulty = 75,
 				Custom =  {
 					BgModifiers = {
@@ -787,7 +796,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "SchratTree",
 				Script = "player_beast/schrat_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_schrat"],
+				Requirements = ["CharmEnemySchrat"],
 			},
 		
 		//SchratSmall = 64,
@@ -846,7 +855,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "KrakenTree",
 				Script = "minions/special/dev_files/kraken_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.mastery_charm"],
+				Requirements = ["CharmSpec"],
 			},
 			
 		//KrakenTentacle = 67,
@@ -861,7 +870,7 @@ gt.Const.CharmedSlave <- {
 		//BarbarianThrall = 70,
 			{
 				StatMod = { Hitpoints = [-10, -5], Bravery = [-2, 2], Stamina = [-2, 2], MeleeSkill = [-2, 2], RangedSkill = [-2, 2], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-2, 2] },
-				Perks = ["actives/barbarian_fury_skill"],
+				Skills = ["actives/barbarian_fury_skill"],
 				Difficulty = 5,
 				Custom = {},
 				PerkTree = "barbarian_background"
@@ -870,7 +879,7 @@ gt.Const.CharmedSlave <- {
 		//BarbarianMarauder = 71,
 			{
 				StatMod = { Hitpoints = [-40, -40], Bravery = [-20, -15], Stamina = [-10, -10], MeleeSkill = [-5, -5], RangedSkill = [-7, -5], MeleeDefense = [-5, -5], RangedDefense = [-3, -3], Initiative = [-15, -5] },
-				Perks = ["actives/barbarian_fury_skill"],
+				Skills = ["actives/barbarian_fury_skill"],
 				Difficulty = 25,
 				Custom = {},
 				PerkTree = "barbarian_background"
@@ -880,17 +889,18 @@ gt.Const.CharmedSlave <- {
 		//BarbarianChampion = 72,
 			{
 				StatMod = { Hitpoints = [-50, -50], Bravery = [-20, -20], Stamina = [-25, -25], MeleeSkill = [-15, -10], RangedSkill = [-8, -8], MeleeDefense = [-10, -5], RangedDefense = [0, 0], Initiative = [-15, -5] },
-				Perks = ["actives/barbarian_fury_skill", "perks/perk_brawny"],
+				Perks = ["Brawny"],
+				Skills = ["actives/barbarian_fury_skill"],
 				Difficulty = 67,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "barbarian_background"
 			},
 			
 		//BarbarianDrummer = 73,
 			{
 				StatMod = { Hitpoints = [-20, -20], Bravery = [-30, -20], Stamina = [-20, -10], MeleeSkill = [-5, -5], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-5, -5] },
-				Perks = ["actives/barbarian_fury_skill"],
+				Skills = ["actives/barbarian_fury_skill"],
 				Difficulty = 15,
 				Custom = {},
 				PerkTree = "minstrel_background",
@@ -900,19 +910,19 @@ gt.Const.CharmedSlave <- {
 		//BarbarianBeastmaster = 74,
 			{
 				StatMod = { Hitpoints = [-20, -20], Bravery = [-30, -20], Stamina = [-20, -10], MeleeSkill = [-5, -5], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-5, -5] },
-				Perks = ["actives/barbarian_fury_skill"],
+				Skills = ["actives/barbarian_fury_skill"],
 				Difficulty = 33,
 				Custom = {
 					ID = "background.houndmaster",
 				},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "converted_cultist_background",
 			},
 			
 		//BarbarianUnhold = 75,
 			{
 				StatMod = { Hitpoints = [-100, -100], Bravery = [-50, -50], Stamina = [-200, -200], MeleeSkill = [-8, -5], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
-				Perks = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
+				Skills = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
 				Difficulty = 40,
 				Custom =  {
 					BgModifiers = {
@@ -931,13 +941,13 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "UnholdTree",
 				Script = "player_beast/unhold_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_unhold"],
+				Requirements = ["CharmEnemyUnhold"],
 			},
 			
 		//BarbarianUnholdFrost = 76,
 			{
 				StatMod = { Hitpoints = [-150, -150], Bravery = [-50, -50], Stamina = [-200, -200], MeleeSkill = [-8, -5], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
-				Perks = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
+				Skills = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
 				Difficulty = 60,
 				Custom =  {
 					BgModifiers = {
@@ -956,18 +966,19 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "UnholdTree",
 				Script = "player_beast/unhold_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_unhold"],
+				Requirements = ["CharmEnemyUnhold"],
 			},
 			
 		//BarbarianChosen = 77,
 			{
-				StatMod = { Hitpoints = [-50, -50], Bravery = [-20, -15], Stamina = [-25, -25], MeleeSkill = [-10, -10], RangedSkill = [-8, -8], MeleeDefense = [-10, -5], RangedDefense = [0, 0], Initiative = [-15, -5] },
-				Perks = ["actives/barbarian_fury_skill", "perks/perk_brawny", "perks/perk_devastating_strikes"],
+				StatMod = { Hitpoints = [-50, -50], Bravery = [-20, -15], Stamina = [-25, -25], MeleeSkill = [-10, -10], RangedSkill = [-8, -8], MeleeDefense = [-10, 0], RangedDefense = [0, 0], Initiative = [-15, -5] },
+				Perks = ["DevastatingStrikes", "Brawny"],
+				Skills = ["actives/barbarian_fury_skill"],
 				Difficulty = 90,
 				Custom = {
 					ID = "background.barbarian",
 				},
-				Requirements = ["perk.appearance_charm"],
+				Requirements = ["CharmAppearance"],
 				PerkTree = "orc_slayer_background",
 			},
 			
@@ -995,7 +1006,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "UnholdTree",
 				Script = "player_beast/trickster_god_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.mastery_charm"],
+				Requirements = ["CharmSpec"],
 			},
 			
 		//BarbarianMadman = 80,
@@ -1051,13 +1062,13 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "HyenaTree",
 				Script = "player_beast/hyena_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_direwolf"],
+				Requirements = ["CharmEnemyDirewolf"],
 			},
 
 		//Conscript = 84,
 			{
 				StatMod = { Hitpoints = [-7, -10], Bravery = [-10, -10], Stamina = [-10, -10], MeleeSkill = [-8, -8], RangedSkill = [-5, -5], MeleeDefense = [0, -5], RangedDefense = [0, -3], Initiative = [-10, -10] },
-				Perks = ["perks/perk_rotation"],
+				Perks = ["Rotation"],
 				Difficulty = 10,
 				Custom = {},
 				PerkTree = "legend_noble_shield",
@@ -1067,7 +1078,7 @@ gt.Const.CharmedSlave <- {
 		//Gunner = 85,
 			{
 				StatMod = { Hitpoints = [-10, -10], Bravery = [-15, -10], Stamina = [-10, -10], MeleeSkill = [-5, -5], RangedSkill = [-8, -5], MeleeDefense = [-2, -1], RangedDefense = [-2, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_rotation"],
+				Perks = ["Rotation", "SpecCrossbow"],
 				Difficulty = 15,
 				Custom = {},
 				PerkTree = "legend_noble_ranged",
@@ -1077,17 +1088,18 @@ gt.Const.CharmedSlave <- {
 		//Officer = 86,
 			{
 				StatMod = { Hitpoints = [-35, -30], Bravery = [-20, -10], Stamina = [-17, -12], MeleeSkill = [-17, -12], RangedSkill = [0, 0], MeleeDefense = [-10, -7], RangedDefense = [0, 0], Initiative = [-15, -10] },
-				Perks = ["perks/perk_quick_hands", "perks/perk_captain", "perks/perk_rotation", "perks/perk_duelist"],
+				Perks = ["QuickHands", "Rotation", "Duelist"],
+				Skills = ["perks/perk_captain"]
 				Difficulty = 55,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "legend_noble_background",
 			},
 
 		//Engineer = 87,
 			{
 				StatMod = { Hitpoints = [-30, -30], Bravery = [-30, -25], Stamina = [-20, -10], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_rotation"],
+				Perks = ["Rotation"],
 				Difficulty = 25,
 				Custom = {
 					ID = "background.legend_inventor"
@@ -1098,13 +1110,13 @@ gt.Const.CharmedSlave <- {
 			
 		//Assassin = 88,
 			{
-				StatMod = { Hitpoints = [-25, -25], Bravery = [-25, -15], Stamina = [-30, -15], MeleeSkill = [-12, -10], RangedSkill = [-5, -5], MeleeDefense = [-10, -5], RangedDefense = [0, 0], Initiative = [-15, -15] },
-				Perks = ["perks/perk_quick_hands", "perks/perk_backstabber"],
-				Difficulty = 40,
+				StatMod = { Hitpoints = [-25, -15], Bravery = [-20, -10], Stamina = [-30, -10], MeleeSkill = [-11, -5], RangedSkill = [5, 5], MeleeDefense = [-8, 0], RangedDefense = [0, 0], Initiative = [-15, -10] },
+				Perks = ["QuickHands", "Backstabber", "SpecDagger"],
+				Difficulty = 60,
 				Custom = {
 					ID = "background.assassin_southern"
 				},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "legend_assassin_background",
 			},
 			
@@ -1120,10 +1132,10 @@ gt.Const.CharmedSlave <- {
 		//Gladiator = 90,
 			{
 				StatMod = { Hitpoints = [-40, -28], Bravery = [-30, -30], Stamina = [-15, -10], MeleeSkill = [-8, -8], RangedSkill = [-3, -3], MeleeDefense = [-10, -8], RangedDefense = [0, 0], Initiative = [-15, -15] },
-				Perks = ["perks/perk_footwork", "perks/perk_underdog"],
+				Perks = ["Footwork", "Underdog"],
 				Difficulty = 35,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "gladiator_background",
 			},
 			
@@ -1133,7 +1145,7 @@ gt.Const.CharmedSlave <- {
 		//NomadCutthroat = 92,
 			{
 				StatMod = { Hitpoints = [-2, 2], Bravery = [-2, 2], Stamina = [-2, 2], MeleeSkill = [-2, 2], RangedSkill = [-2, 2], MeleeDefense = [-2, 2], RangedDefense = [-2, 2], Initiative = [-2, 2] },
-				Perks = ["actives/throw_dirt_skill"],
+				Skills = ["actives/throw_dirt_skill"],
 				Difficulty = 0,
 				Custom = {},
 				PerkTree = "nomad_background"
@@ -1142,7 +1154,7 @@ gt.Const.CharmedSlave <- {
 		//NomadOutlaw = 93,
 			{
 				StatMod = { Hitpoints = [-15, -15], Bravery = [-20, -15], Stamina = [-25, -15], MeleeSkill = [-8, -5], RangedSkill = [-5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-15, -5] },
-				Perks = ["actives/throw_dirt_skill"],
+				Skills = ["actives/throw_dirt_skill"],
 				Difficulty = 10,
 				Custom = {},
 				PerkTree = "nomad_background",
@@ -1151,7 +1163,7 @@ gt.Const.CharmedSlave <- {
 		//NomadSlinger = 94,
 			{
 				StatMod = { Hitpoints = [-5, -5], Bravery = [-5, -5], Stamina = [-5, 0], MeleeSkill = [-5, 2], RangedSkill = [-10, -8], MeleeDefense = [0, 0], RangedDefense = [-2, 2], Initiative = [0, 0] },
-				Perks = ["actives/throw_dirt_skill"],
+				Skills = ["actives/throw_dirt_skill"],
 				Difficulty = 5,
 				Custom = {},
 				PerkTree = "nomad_ranged_background",
@@ -1160,7 +1172,7 @@ gt.Const.CharmedSlave <- {
 		//NomadArcher = 95,
 			{
 				StatMod = { Hitpoints = [-5, -5], Bravery = [-5, -5], Stamina = [-5, 0], MeleeSkill = [-5, 2], RangedSkill = [-10, -8], MeleeDefense = [0, 0], RangedDefense = [-2, 2], Initiative = [0, 0] },
-				Perks = ["actives/throw_dirt_skill"],
+				Skills = ["actives/throw_dirt_skill"],
 				Difficulty = 10,
 				Custom = {},
 				PerkTree = "nomad_ranged_background",
@@ -1169,42 +1181,46 @@ gt.Const.CharmedSlave <- {
 		//NomadLeader = 96,
 			{
 				StatMod = { Hitpoints = [-30, -20], Bravery = [-20, -20], Stamina = [-25, -15], MeleeSkill = [-13, -8], RangedSkill = [-8, -8], MeleeDefense = [-13, -8], RangedDefense = [-8, -5], Initiative = [-20, -15] },
-				Perks = ["actives/throw_dirt_skill", "perks/perk_captain", "perks/perk_nine_lives"],
+				Perks = ["NineLives"],
+				Skills = ["actives/throw_dirt_skill", "perks/perk_captain"],
 				Difficulty = 35,
 				Custom = {
 					ID = "background.nomad",
 				},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "orc_slayer_background",
 			},
 			
 		//DesertStalker = 97,
 			{
 				StatMod = { Hitpoints = [-20, -15], Bravery = [-10, 0], Stamina = [-15, -15], MeleeSkill = [-5, -5], RangedSkill = [-15, -10], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-25, -10] },
-				Perks = ["actives/throw_dirt_skill", "perks/perk_bullseye", "perks/perk_quick_hands", "perks/perk_mastery_crossbow", "perks/perk_mastery_crossbow"],
+				Perks = ["Bullseye", "QuickHands", "SpecCrossbow", "SpecBow"],
+				Skills = ["actives/throw_dirt_skill"],
 				Difficulty = 90,
 				Custom = {},
-				Requirements = ["perk.appearance_charm"],
+				Requirements = ["CharmAppearance"],
 				PerkTree = "legend_master_archer_background",
 			},
 			
 		//Executioner = 98,
 			{
-				StatMod = { Hitpoints = [-50, -50], Bravery = [-30, -20], Stamina = [-10, -10], MeleeSkill = [-25, -25], RangedSkill = [0, 0], MeleeDefense = [-15, -10], RangedDefense = [-12, -8], Initiative = [-15, -5] },
-				Perks = ["actives/throw_dirt_skill", "perks/perk_devastating_strikes", "perks/perk_steel_brow", "perks/perk_brawny"],
+				StatMod = { Hitpoints = [-50, -25], Bravery = [-20, -15], Stamina = [-10, -10], MeleeSkill = [-15, -5], RangedSkill = [0, 0], MeleeDefense = [-5, 0], RangedDefense = [-12, -8], Initiative = [-15, -5] },
+				Perks = ["DevastatingStrikes", "SteelBrow", "Brawny"],
+				Skills = ["actives/throw_dirt_skill"],
 				Difficulty = 90,
 				Custom = {},
-				Requirements = ["perk.appearance_charm"],
+				Requirements = ["CharmAppearance"],
 				PerkTree = "hedge_knight_background"
 			},
 			
 		//DesertDevil = 99,
 			{
-				StatMod = { Hitpoints = [-30, -20], Bravery = [-30, -20], Stamina = [-15, -15], MeleeSkill = [-25, -25], RangedSkill = [-10, -10], MeleeDefense = [-30, -30], RangedDefense = [-10, -10], Initiative = [-5, -5] },
-				Perks = ["actives/throw_dirt_skill", "perks/perk_duelist", "perks/perk_mastery_sword", "perks/perk_mastery_greatsword"],
+				StatMod = { Hitpoints = [-20, -20], Bravery = [-20, -15], Stamina = [-15, -15], MeleeSkill = [-25, -25], RangedSkill = [-10, -10], MeleeDefense = [-15, -10], RangedDefense = [-10, -10], Initiative = [-5, -5] },
+				Perks = ["Duelist", "SpecSword", "LegendSpecGreatSword"],
+				Perks = ["actives/throw_dirt_skill"],
 				Difficulty = 90,
 				Custom = {},
-				Requirements = ["perk.appearance_charm"],
+				Requirements = ["CharmAppearance"],
 				PerkTree = "swordmaster_background"
 			},
 			
@@ -1247,7 +1263,8 @@ gt.Const.CharmedSlave <- {
 		//LegendOrcElite = 108,
 			{
 				StatMod = { Hitpoints = [-80, -60], Bravery = [-30, -25], Stamina = [-100, -100], MeleeSkill = [-15, -10], RangedSkill = [-5, -2], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-20, -20] },
-				Perks = ["actives/line_breaker", "perks/perk_battering_ram", "perks/perk_stalwart", "perks/perk_shield_bash"],
+				Perks = ["LegendComposure", "Stalwart", "ShieldBash"],
+				Skills = ["actives/line_breaker"],
 				Difficulty = 67,
 				Custom =  {
 					BgModifiers = {
@@ -1266,13 +1283,14 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "LegendOrcElite",
 				Script = "player_orc/player_orc_elite",
 				Background = "charmed_orc_background",
-				Requirements = ["perk.charm_enemy_ork"]
+				Requirements = ["CharmEnemyOrk"]
 			},
 			
 		//LegendOrcBehemoth = 109,
 			{
 				StatMod = { Hitpoints = [-400, -400], Bravery = [-15, -15], Stamina = [-200, -200], MeleeSkill = [-10, -10], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-5, 0] },
-				Perks = ["actives/line_breaker", "perks/perk_stalwart", "perks/perk_legend_taste_the_pain"],
+				Perks = ["Stalwart"]
+				Skills = ["actives/line_breaker", "perks/perk_legend_taste_the_pain"],
 				Difficulty = 200,
 				Custom =  {
 					BgModifiers = {
@@ -1291,13 +1309,14 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "LegendOrcBehemoth",
 				Script = "player_orc/player_orc_behemoth",
 				Background = "charmed_orc_background",
-				Requirements = ["perk.charm_enemy_ork", "perk.mastery_charm"]
+				Requirements = ["CharmEnemyOrk", "CharmSpec"]
 			},
 			
 		//LegendWhiteDirewolf = 110,
 			{
 				StatMod = { Hitpoints = [-200, -150], Bravery = [-40, -25], Stamina = [-80, -40], MeleeSkill = [-15, -15], RangedSkill = [0, 0], MeleeDefense = [-8, -8], RangedDefense = [-8, -8], Initiative = [-45, -35] },
-				Perks = ["racial/werewolf_racial", "actives/legend_white_wolf_bite", "actives/legend_white_wolf_howl", "perks/perk_footwork", "perks/perk_rotation"],
+				Perks = ["Footwork", "Rotation"],
+				Skills = ["racial/werewolf_racial", "actives/legend_white_wolf_bite", "actives/legend_white_wolf_howl"],
 				Difficulty = 150,
 				Custom =  {
 					BgModifiers = {
@@ -1316,13 +1335,13 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "WhiteWolfTree",
 				Script = "player_beast/direwolf_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_direwolf", "perk.mastery_charm"],
+				Requirements = ["CharmEnemyDirewolf", "CharmSpec"],
 			},
 			
 		//LegendSkinGhoul = 111,
 			{
 				StatMod = { Hitpoints = [-80, -60], Bravery = [-30, -15], Stamina = [-10, -10], MeleeSkill = [-20, -15], RangedSkill = [0, 0], MeleeDefense = [-12, -10], RangedDefense = [-7, -7], Initiative = [-25, -25] },
-				Perks = ["actives/legend_skin_ghoul_claws", "actives/legend_skin_ghoul_swallow_whole_skill", "traits/fearless_trait"],
+				Skills = ["actives/legend_skin_ghoul_claws", "actives/legend_skin_ghoul_swallow_whole_skill", "traits/fearless_trait"],
 				Difficulty = 120,
 				Custom =  {
 					BgModifiers = {
@@ -1341,13 +1360,14 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "NachoTree",
 				Script = "player_beast/ghoul_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_ghoul", "perk.mastery_charm"],
+				Requirements = ["CharmEnemyGhoul", "CharmSpec"],
 			},
 			
 		//LegendStollwurm = 112,
 			{
 				StatMod = { Hitpoints = [-750, -550], Bravery = [-80, -50], Stamina = [-225, -200], MeleeSkill = [-10, -10], RangedSkill = [0, 0], MeleeDefense = [-10, -10], RangedDefense = [-5, -5], Initiative = [0, 0] },
-				Perks = ["actives/legend_stollwurm_move_skill", "perks/perk_legend_muscularity"],
+				Perks = ["LegendMuscularity"],
+				Skills = ["actives/legend_stollwurm_move_skill"],
 				Difficulty = 270,
 				Custom =  {
 					BgModifiers = {
@@ -1366,13 +1386,13 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "LindwurmTree",
 				Script = "player_beast/lindwurm_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_lindwurm", "perk.mastery_charm"],
+				Requirements = ["CharmEnemyLindwurm", "CharmSpec"],
 			},
 			
 		//LegendRockUnhold = 113,
 			{
 				StatMod = { Hitpoints = [-500, -500], Bravery = [-100, -100], Stamina = [-200, -200], MeleeSkill = [-10, -10], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-5, -5] },
-				Perks = ["racial/unhold_racial", "racial/legend_rock_unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
+				Skills = ["racial/unhold_racial", "racial/legend_rock_unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
 				Difficulty = 175,
 				Custom =  {
 					BgModifiers = {
@@ -1391,13 +1411,14 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "UnholdTree",
 				Script = "player_beast/unhold_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_unhold", "perk.mastery_charm"],
+				Requirements = ["CharmEnemyUnhold", "CharmSpec"],
 			},
 			
 		//LegendRedbackSpider = 114,
 			{
 				StatMod = { Hitpoints = [-50, -50], Bravery = [-20, -20], Stamina = [-30, -20], MeleeSkill = [-20, -10], RangedSkill = [0, 0], MeleeDefense = [-10, -10], RangedDefense = [-10, -10], Initiative = [-45, -35] },
-				Perks = ["actives/legend_redback_spider_bite_skill", "racial/legend_redback_spider_racial", "perks/perk_battle_forged"],
+				Perks = ["BattleForged"],
+				Skills = ["actives/legend_redback_spider_bite_skill", "racial/legend_redback_spider_racial"],
 				Difficulty = 100,
 				Custom =  {
 					BgModifiers = {
@@ -1416,13 +1437,14 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "SpiderTree",
 				Script = "player_beast/spider_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_spider", "perk.mastery_charm"],
+				Requirements = ["CharmEnemySpider", "CharmSpec"],
 			},
 			
 		//LegendDemonAlp = 115,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [-50, -50], Stamina = [-50, -25], MeleeSkill = [48, 58], RangedSkill = [48, 58], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-899, -860] },
-				Perks = ["actives/legend_demon_shadows_skill", "actives/horrific_scream", "perks/perk_footwork", "actives/gruesome_feast", "effects/gruesome_feast_effect"],
+				Perks = ["Footwork"],
+				Skills = ["actives/legend_demon_shadows_skill", "actives/horrific_scream", "actives/gruesome_feast", "effects/gruesome_feast_effect"],
 				Difficulty = 50,
 				Custom =  {
 					BgModifiers = {
@@ -1441,7 +1463,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "DemonAlpTree",
 				Script = "player_beast/alp_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_alps", "perk.mastery_charm"],
+				Requirements = ["CharmEnemyAlps", "CharmSpec"],
 			},
 			
 		//LegendHexeLeader = 116,
@@ -1450,7 +1472,8 @@ gt.Const.CharmedSlave <- {
 		//LegendGreenwoodSchrat = 117,
 			{
 				StatMod = { Hitpoints = [-300, -300], Bravery = [0, 0], Stamina = [-200, -150], MeleeSkill = [-15, -15], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-10, 0] },
-				Perks = ["perks/perk_steel_brow", "racial/legend_greenwood_schrat_racial", "actives/legend_grow_greenwood_shield_skill"],
+				Perks = ["SteelBrow"],
+				Skills = ["racial/legend_greenwood_schrat_racial", "actives/legend_grow_greenwood_shield_skill"],
 				Difficulty = 150,
 				Custom =  {
 					BgModifiers = {
@@ -1469,13 +1492,13 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "SchratTree",
 				Script = "player_beast/schrat_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_schrat", "perk.mastery_charm"],
+				Requirements = ["CharmEnemySchrat", "CharmSpec"],
 			},
 			
 		//LegendGreenwoodSchratSmall = 118,
 			{
 				StatMod = { Hitpoints = [-25, -25], Bravery = [-25, -25], Stamina = [-100, -100], MeleeSkill = [-10, -10], RangedSkill = [70, 70], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-5, 5] },
-				Perks = ["racial/schrat_racial"],
+				Skills = ["racial/schrat_racial"],
 				Difficulty = 30,
 				Custom =  {
 					BgModifiers = {
@@ -1504,6 +1527,7 @@ gt.Const.CharmedSlave <- {
 				Perks = [],
 				Difficulty = 20,
 				Custom = null,
+				Requirements = null,
 			},
 			
 		//LegendBanshee = 120,
@@ -1518,10 +1542,10 @@ gt.Const.CharmedSlave <- {
 		//BanditVeteran = 123,
 			{
 				StatMod = { Hitpoints = [-28, -20], Bravery = [-15, -10], Stamina = [-18, -10], MeleeSkill = [-8, -8], RangedSkill = [-5, -5], MeleeDefense = [-10, -5], RangedDefense = [-5, -5], Initiative = [-15, -15] },
-				Perks = ["perks/perk_brawny"],
+				Perks = ["Brawny", "Relentless"],
 				Difficulty = 55,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "raider_background",
 				IsExperienced = true,
 			},
@@ -1529,19 +1553,19 @@ gt.Const.CharmedSlave <- {
 		//BanditWarlord = 124,
 			{
 				StatMod = { Hitpoints = [-60, -60], Bravery = [-70, -60], Stamina = [-50, -50], MeleeSkill = [-30, -30], RangedSkill = [-25, -15], MeleeDefense = [-18, -15], RangedDefense = [-25, -20], Initiative = [-50, -30] },
-				Perks = ["perks/perk_nine_lives", "perks/perk_sundering_strikes"],
+				Perks = ["NineLives", "SunderingStrikes"],
 				Difficulty = 88,
 				Custom = {
 					ID = "background.raider",
 				},
-				Requirements = ["perk.appearance_charm"],
+				Requirements = ["CharmAppearance"],
 				PerkTree = "orc_slayer_background",
 			},
 			
 		//LegendPeasantButcher = 125,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_legend_specialist_butcher_skill"],
+				Perks = ["LegendSpecialistButcherSkill"],
 				Difficulty = 0,
 				Custom = {},
 				PerkTree = "butcher_background",
@@ -1551,7 +1575,7 @@ gt.Const.CharmedSlave <- {
 		//LegendPeasantBlacksmith = 126,
 			{
 				StatMod = { Hitpoints = [-20, -10], Bravery = [-5, 0], Stamina = [-40, -25], MeleeSkill = [-20, -10], RangedSkill = [10, 10], MeleeDefense = [-10, -10], RangedDefense = [-10, -5], Initiative = [-5, 0] },
-				Perks = ["perks/perk_legend_specialist_hammer_skill"],
+				Perks = ["LegendSpecialistHammerSkill"],
 				Difficulty = 0,
 				Custom = {},
 				PerkTree = "legend_blacksmith_background",
@@ -1561,7 +1585,7 @@ gt.Const.CharmedSlave <- {
 		//LegendPeasantMonk = 127,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_legend_mastery_bandage"],
+				Perks = ["LegendSpecBandage"],
 				Difficulty = 25,
 				Custom = {},
 				PerkTree = "monk_background",
@@ -1571,7 +1595,7 @@ gt.Const.CharmedSlave <- {
 		//LegendPeasantFarmhand = 128,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_legend_specialist_pitchfork_skill"],
+				Perks = ["LegendSpecialistPitchforkSkill"],
 				Difficulty = 0,
 				Custom = {},
 				PerkTree = "farmhand_background",
@@ -1581,7 +1605,7 @@ gt.Const.CharmedSlave <- {
 		//LegendPeasantMinstrel = 129,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_legend_cheer_on", "perks/perk_legend_specialist_lute_skill"],
+				Perks = ["LegendCheerOn", "LegendSpecialistLuteSkill"],
 				Difficulty = 25,
 				Custom = {},
 				PerkTree = "minstrel_background",
@@ -1591,7 +1615,7 @@ gt.Const.CharmedSlave <- {
 		//LegendPeasantPoacher = 130,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_legend_specialist_shortbow_skill"],
+				Perks = ["LegendSpecialistShortbowSkill"],
 				Difficulty = 0,
 				Custom = {},
 				PerkTree = "poacher_background",
@@ -1600,7 +1624,7 @@ gt.Const.CharmedSlave <- {
 		//LegendPeasantWoodsman = 131,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_legend_specialist_woodaxe_skill"],
+				Perks = ["LegendSpecialistWoodaxeSkill"],
 				Difficulty = 0,
 				Custom = {},
 				PerkTree = "lumberjack_background",
@@ -1610,7 +1634,7 @@ gt.Const.CharmedSlave <- {
 		//LegendPeasantMiner = 132,
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_legend_specialist_pickaxe_skill"],
+				Perks = ["LegendSpecialistPickaxeSkill"],
 				Difficulty = 0,
 				Custom = {},
 				PerkTree = "miner_background",
@@ -1619,38 +1643,38 @@ gt.Const.CharmedSlave <- {
 
 		//LegendPeasantSquire = 133,
 			{
-				StatMod = { Hitpoints = [-30, -30], Bravery = [-35, -25], Stamina = [0, 0], MeleeSkill = [-20, -15], RangedSkill = [0, 0], MeleeDefense = [-15, -10], RangedDefense = [-10, -5], Initiative = [-20, -20] },
-				Perks = ["perks/perk_back_to_basics"],
+				StatMod = { Hitpoints = [-30, -10], Bravery = [-25, -15], Stamina = [0, 0], MeleeSkill = [-20, -15], RangedSkill = [0, 0], MeleeDefense = [-15, -10], RangedDefense = [-10, -5], Initiative = [-20, -20] },
+				Skills = ["perks/perk_back_to_basics"],
 				Difficulty = 25,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "squire_background",
 			},
 			
 		//LegendPeasantWitchHunter = 134,
 			{
-				StatMod = { Hitpoints = [-30, -25], Bravery = [-15, -10], Stamina = [-5, -5], MeleeSkill = [-2, 0], RangedSkill = [-20, -12], MeleeDefense = [-10, -10], RangedDefense = [-10, -10], Initiative = [-10, -10] },
-				Perks = ["perks/perk_ballistics"],
+				StatMod = { Hitpoints = [-25, -10], Bravery = [-15, -10], Stamina = [-5, -5], MeleeSkill = [-2, 0], RangedSkill = [-20, -12], MeleeDefense = [-10, -10], RangedDefense = [-10, -10], Initiative = [-10, -10] },
+				Perks = ["Ballistics"],
 				Difficulty = 25,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "witchhunter_background",
 			},
 			
 		//LegendHalberdier = 135,
 			{
 				StatMod = { Hitpoints = [-23, -20], Bravery = [-25, -18], Stamina = [-10, -10], MeleeSkill = [-20, -15], RangedSkill = [0, 0], MeleeDefense = [-10, -10], RangedDefense = [-5, -5], Initiative = [-10, 0] },
-				Perks = ["perks/perk_rotation", "perks/perk_backstabber"],
+				Perks = ["Rotation", "Backstabber"],
 				Difficulty = 42,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "legend_noble_2h",
 			},
 			
 		//LegendSlinger = 136,
 			{
 				StatMod = { Hitpoints = [-12, -12], Bravery = [-5, 0], Stamina = [-20, -15], MeleeSkill = [0, 0], RangedSkill = [-3, 1], MeleeDefense = [-2, -1], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_rotation", "perks/perk_legend_mastery_slings"],
+				Perks = ["Rotation", "LegendMasterySlings"],
 				Difficulty = 10,
 				Custom = {
 					ID = "background.legend_noble_ranged",
@@ -1660,11 +1684,11 @@ gt.Const.CharmedSlave <- {
 			
 		//LegendFencer = 137,
 			{
-				StatMod = { Hitpoints = [-40, -35], Bravery = [-25, -20], Stamina = [-15, -15], MeleeSkill = [-20, -18], RangedSkill = [0, 0], MeleeDefense = [-20, -15], RangedDefense = [-8, -5], Initiative = [-25, -20] },
-				Perks = ["perks/perk_rotation", "perks/perk_feint"],
+				StatMod = { Hitpoints = [-35, -25], Bravery = [-25, -15], Stamina = [-15, -15], MeleeSkill = [-15, -10], RangedSkill = [0, 0], MeleeDefense = [-20, -15], RangedDefense = [-8, -5], Initiative = [-25, -20] },
+				Perks = ["Rotation", "Feint", "Duelist"],
 				Difficulty = 75,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "adventurous_noble_background",
 			},
 			
@@ -1681,7 +1705,8 @@ gt.Const.CharmedSlave <- {
 		//LegendBear = 139,
 			{
 				StatMod = { Hitpoints = [-125, -125], Bravery = [0, 0], Stamina = [-150, -150], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
-				Perks = ["perks/perk_stalwart", "perks/perk_battering_ram", "actives/legend_grapple", "actives/legend_bear_bite", "actives/legend_bear_claws", "actives/unstoppable_charge_skill"],
+				Perks = ["Stalwart", "LegendComposure", "LegendGrapple"],
+				Skills = ["actives/legend_bear_bite", "actives/legend_bear_claws", "actives/unstoppable_charge_skill"],
 				Difficulty = 50,
 				Custom =  {
 					BgModifiers = {
@@ -1700,7 +1725,7 @@ gt.Const.CharmedSlave <- {
 				PerkTree = "BearTree",
 				Script = "player_beast/unhold_player",
 				Background = "charmed_beast_background",
-				Requirements = ["perk.charm_enemy_direwolf"],
+				Requirements = ["CharmEnemyDirewolf"],
 			},
 			
 		//LegendCatapult = 140,
@@ -1776,8 +1801,8 @@ gt.Const.CharmedSlave <- {
 
 		//FreeCompanySpearman = 154,
 			{
-				StatMod = { Hitpoints = [-30, -20], Bravery = [-5, -5], Stamina = [-15, -15], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [-5, 0], RangedDefense = [0, 0], Initiative = [15, 35] },
-				Perks = ["perks/perk_legend_specialist_militia_skill", "perks/perk_legend_specialist_militia_damage"],
+				StatMod = { Hitpoints = [-20, -8], Bravery = [-5, -5], Stamina = [-15, -15], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [-5, 0], RangedDefense = [0, 0], Initiative = [15, 35] },
+				Perks = ["LegendSpecialistMilitiaSkill", "LegendSpecialistMilitiaDamage"],
 				Difficulty = 5,
 				Custom = {},
 				PerkTree = "militia_background",
@@ -1786,8 +1811,8 @@ gt.Const.CharmedSlave <- {
 
 		//FreeCompanySlayer = 155,
 			{
-				StatMod = { Hitpoints = [-30, -20], Bravery = [0, 0], Stamina = [-10, -10], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [15, 25] },
-				Perks = ["perks/perk_legend_big_game_hunter"],
+				StatMod = { Hitpoints = [-15, -10], Bravery = [0, 0], Stamina = [-10, -10], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [15, 25] },
+				Perks = ["LegendBigGameHunter"],
 				Difficulty = 5,
 				Custom = {},
 				PerkTree = "beast_hunter_background",
@@ -1796,8 +1821,8 @@ gt.Const.CharmedSlave <- {
 
 		//FreeCompanyFootman = 156,
 			{
-				StatMod = { Hitpoints = [-20, -15], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [-5, 0], RangedSkill = [-5, -5], MeleeDefense = [0, 0], RangedDefense = [-5, -5], Initiative = [5, 25] },
-				Perks = ["perks/perk_battle_forged"],
+				StatMod = { Hitpoints = [-12, -10], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [-5, 0], RangedSkill = [-5, -5], MeleeDefense = [0, 0], RangedDefense = [-5, -5], Initiative = [5, 25] },
+				Perks = ["BattleForged"],
 				Difficulty = 5,
 				Custom = {},
 				PerkTree = "legend_shieldmaiden_background",
@@ -1807,7 +1832,7 @@ gt.Const.CharmedSlave <- {
 		//FreeCompanyArcher = 157,
 			{
 				StatMod = { Hitpoints = [-10, -5], Bravery = [0, 0], Stamina = [-10, -0], MeleeSkill = [0, 0], RangedSkill = [-5, -0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-10, -5] },
-				Perks = ["perks/perk_bullseye", "perks/perk_anticipation"],
+				Perks = ["Bullseye", "Anticipation"],
 				Difficulty = 5,
 				Custom = {},
 				PerkTree = "hunter_background",
@@ -1817,7 +1842,7 @@ gt.Const.CharmedSlave <- {
 		//FreeCompanyCrossbow = 158,
 			{
 				StatMod = { Hitpoints = [-10, -5], Bravery = [0, 0], Stamina = [-10, -0], MeleeSkill = [0, 0], RangedSkill = [-5, -0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-10, -5] },
-				Perks = ["perks/perk_ballistics", "perks/perk_anticipation"],
+				Perks = ["Ballistics", "Anticipation"],
 				Difficulty = 5,
 				Custom = {},
 				PerkTree = "legend_nightwatch_background",
@@ -1827,28 +1852,28 @@ gt.Const.CharmedSlave <- {
 		//FreeCompanyLongbow = 159,
 			{
 				StatMod = { Hitpoints = [-10, -5], Bravery = [0, 0], Stamina = [-10, -0], MeleeSkill = [0, 0], RangedSkill = [-5, -0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-10, -5] },
-				Perks = ["perks/perk_head_hunter", "perks/perk_anticipation"],
+				Perks = ["HeadHunter", "Anticipation"],
 				Difficulty = 25,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "hunter_background"
 			}
 
 		//FreeCompanyBillman = 160,
 			{
 				StatMod = { Hitpoints = [-20, -15], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [-5, 0], RangedSkill = [-5, -5], MeleeDefense = [0, 0], RangedDefense = [-5, -5], Initiative = [5, 25] },
-				Perks = ["perks/perk_footwork", "perks/perk_backstabber"],
+				Perks = ["Footwork", "Backstabber"],
 				Difficulty = 25,
 				Custom = {},
 				PerkTree = "beast_hunter_background",
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				IsExperienced = true,
 			}
 
 		//FreeCompanyPikeman = 161,
 			{
 				StatMod = { Hitpoints = [-20, -15], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [-5, 0], RangedSkill = [-5, -5], MeleeDefense = [0, 0], RangedDefense = [-5, -5], Initiative = [5, 25] },
-				Perks = ["perks/perk_backstabber"],
+				Perks = ["Backstabber"],
 				Difficulty = 13,
 				Custom = {},
 				PerkTree = "beast_hunter_background",
@@ -1858,7 +1883,7 @@ gt.Const.CharmedSlave <- {
 		//FreeCompanyInfantry = 162,
 			{
 				StatMod = { Hitpoints = [-25, -25], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [-10, -10], RangedSkill = [-5, -5], MeleeDefense = [0, 0], RangedDefense = [-5, -5], Initiative = [5, 25] },
-				Perks = ["perks/perk_battle_forged", "perks/perk_steel_brow"],
+				Perks = ["BattleForged", "SteelBrow"],
 				Difficulty = 37,
 				Custom = {},
 				PerkTree = "legend_shieldmaiden_background",
@@ -1868,20 +1893,20 @@ gt.Const.CharmedSlave <- {
 		//FreeCompanyLeader = 163,
 			{
 				StatMod = { Hitpoints = [-15, -15], Bravery = [-40, -40], Stamina = [-15, -5], MeleeSkill = [-10, -5], RangedSkill = [-5, -5], MeleeDefense = [-5, 0], RangedDefense = [0, 0], Initiative = [5, 15] },
-				Perks = ["perks/perk_rally_the_troops", "perks/perk_sundering_strikes", "perks/perk_footwork"],
+				Perks = ["RallyTheTroops", "SunderingStrikes", "Footwork"],
 				Difficulty = 35,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "orc_slayer_background"
 			}
 
 		//FreeCompanyLeaderLow = 164,
 			{
 				StatMod = { Hitpoints = [-15, -15], Bravery = [-40, -40], Stamina = [-15, -5], MeleeSkill = [-10, -5], RangedSkill = [-5, -5], MeleeDefense = [-5, 0], RangedDefense = [0, 0], Initiative = [5, 15] },
-				Perks = ["perks/perk_rally_the_troops", "perks/perk_sundering_strikes"],
+				Perks = ["RallyTheTroops", "SunderingStrikes"],
 				Difficulty = 25,
 				Custom = {},
-				Requirements = ["perk.words_charm"],
+				Requirements = ["CharmWord"],
 				PerkTree = "orc_slayer_background"
 			}
 	],
@@ -2087,6 +2112,18 @@ gt.Const.CharmedSlave <- {
 		}
 
 		return ::mc_deepCopy(database.Perks);
+	}
+
+	function getSpecialSkills( _type )
+	{
+		local database = this.getData(_type);
+
+		if (database == null || !("Skills" in database) || database.Skills == null)
+		{
+			return [];
+		}
+
+		return ::mc_deepCopy(database.Skills);
 	}
 	
 	function getDifficulty( _type )

@@ -261,6 +261,7 @@ this.ghoul_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Items.blockAllSlots();
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = false;
+		this.m.SignaturePerks = ["Pathfinder"];
 		this.getFlags().add("ghoul");
 		this.getFlags().add("undead");
 	}
@@ -770,28 +771,28 @@ this.ghoul_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	{
 		local AttributesLevelUp = [
 			{
+				Min = 2,
+				Max = 4
+			},
+			{
+				Min = 2,
+				Max = 3
+			},
+			{
+				Min = 3,
+				Max = 4
+			},
+			{
+				Min = 3,
+				Max = 4
+			},
+			{
+				Min = 2,
+				Max = 3
+			},
+			{
 				Min = 1,
 				Max = 2
-			},
-			{
-				Min = 2,
-				Max = 3
-			},
-			{
-				Min = 3,
-				Max = 4
-			},
-			{
-				Min = 3,
-				Max = 4
-			},
-			{
-				Min = 2,
-				Max = 3
-			},
-			{
-				Min = 1,
-				Max = 1
 			},
 			{
 				Min = 1,
@@ -929,14 +930,6 @@ this.ghoul_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		
 		this.m.IsLuft = _in.readBool();
 		this.m.IsLoadingSaveData = false;
-
-		local background = this.getBackground();
-
-		if (background != null)
-		{
-			background.addPerk(this.Const.Perks.PerkDefs.NachoBigTummy, 5);
-			//background.addPerk(this.Const.Perks.PerkDefs.NachoVomiting, 6);
-		}
 	}
 
 });

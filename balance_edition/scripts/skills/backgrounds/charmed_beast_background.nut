@@ -4,6 +4,7 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 		Info = null,
 		AttMods = null,
 		Skills = null,
+		Perks = null,
 		AdditionalPerks = null,
 		IsUnhold = false,
 	},
@@ -46,7 +47,8 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 		this.m.Entity = _beast;
 		this.m.Info = this.Const.CharmedSlave.addMissingData(_info, this.m.Entity);
 		this.m.AttMods = this.Const.CharmedSlave.getStatsModifiers(type);
-		this.m.Skills = this.Const.CharmedSlave.getSpecialPerks(type);
+		this.m.Perks = this.Const.CharmedSlave.getSpecialPerks(type);
+		this.m.Skills = this.Const.CharmedSlave.getSpecialSkills(type);
 		this.m.Name = "Charmed " + this.Const.Strings.EntityName[type];
 		this.m.Icon = "ui/backgrounds/" + this.Const.CharmedSlave.getIconName(type);
 		this.m.IsUnhold = this.isKindOf(_beast, "unhold");
@@ -59,7 +61,7 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 		{
 			foreach ( script in this.m.Skills )
 			{
-				if (script == "")
+				if (script == "" || script.find("perks/") != null)
 				{
 					continue;
 				}
@@ -115,6 +117,23 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 		{
 			this.addPerk(this.Const.Perks.PerkDefs.FairGame, 2);
 		}
+
+		this.onAfterSetUp();
+	}
+
+	function onAfterSetUp()
+	{
+		if (this.m.Perks == null)
+		{
+			return;
+		}
+
+		this.m.Perks.extend(this.getContainer().getActor().getSignaturePerks());
+
+		foreach (i, Const in this.m.Perks )
+		{
+			this.World.Assets.getOrigin().addScenarioPerk(this, this.Const.Perks.PerkDefs[Const], i);
+		}
 	}
 	
 	function onBuildDescription()
@@ -169,6 +188,7 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 		local actor = this.getContainer().getActor();
 		local info = this.m.Info;
 		local entity = this.m.Entity;
+		local b = actor.m.BaseProperties;
 
 		if (entity != null && info != null && ("Appearance" in info) && info.Appearance != null && typeof info.Appearance == "array")
 		{
@@ -180,6 +200,14 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 			if (info.Type == this.Const.EntityType.Spider || info.Type == this.Const.EntityType.LegendRedbackSpider)
 			{
 				actor.setSize(entity.m.Size);
+
+				if (info.Type == this.Const.EntityType.LegendRedbackSpider)
+				{
+					b.ArmorMax[0] = 160;
+					b.ArmorMax[1] = 160;
+					b.Armor[0] = this.Math.floor(b.Armor[0] / 3 * 2);
+					b.Armor[1] = this.Math.floor(b.Armor[1] / 3 * 2);
+				}
 			}
 	
 			if (this.m.IsUnhold)
@@ -296,7 +324,8 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 		info.IsExperienced <- true;
 		this.m.Info = this.Const.CharmedSlave.addMissingData(info);
 		this.m.AttMods = this.Const.CharmedSlave.getStatsModifiers(_type);
-		this.m.Skills = this.Const.CharmedSlave.getSpecialPerks(_type)
+		this.m.Perks = this.Const.CharmedSlave.getSpecialPerks(_type);
+		this.m.Skills = this.Const.CharmedSlave.getSpecialSkills(_type);
 		this.m.Name = "Charmed " + this.Const.Strings.EntityName[_type];
 		this.m.Icon = "ui/backgrounds/" + this.Const.CharmedSlave.getIconName(_type);
 		this.Const.HexenOrigin.CharmedSlave.processingCharmedBackground(this.m.Info, this);

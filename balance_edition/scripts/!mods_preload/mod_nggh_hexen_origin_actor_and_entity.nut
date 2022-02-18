@@ -27,6 +27,11 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				return;
 			}
 
+			if (this.isSummoned())
+			{
+				return;
+			}
+
 			if (this.getType() == this.Const.EntityType.Player)
 			{
 				return;

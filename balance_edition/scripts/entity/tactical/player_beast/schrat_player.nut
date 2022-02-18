@@ -3,7 +3,7 @@ this.schrat_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	
 	function getStrength()
 	{
-		return this.getType(true) == this.Const.EntityType.LegendGreenwoodSchrat ? 5.0 : 2.5;
+		return this.getType(true) == this.Const.EntityType.LegendGreenwoodSchrat ? 5.0 : 2.1;
 	}
 	
 	function create()
@@ -104,6 +104,7 @@ this.schrat_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Offhand] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = false;
+		this.m.SignaturePerks = ["Pathfinder"];
 		this.getFlags().add("isSchrat");
 	}
 	
@@ -266,12 +267,8 @@ this.schrat_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
-		local p = this.new("scripts/skills/perks/perk_pathfinder");
-		p.m.IsSerialized = false;
-		this.m.Skills.add(p);
 		this.m.Skills.add(this.new("scripts/skills/actives/uproot_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/uproot_zoc_skill"));
-		this.m.Skills.update();
 	}
 
 	function onAppearanceChanged( _appearance, _setDirty = true )

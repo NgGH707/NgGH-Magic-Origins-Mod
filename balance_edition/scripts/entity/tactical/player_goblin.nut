@@ -2,10 +2,16 @@ this.player_goblin <- this.inherit("scripts/entity/tactical/player", {
 	m = {
 		Mount = null,
 		ExcludedMount = [],
+		SignaturePerks = ["QuickHands", "Pathfinder"],
 		IsWearingGoblinArmor = false,
 		IsWearingGoblinHelmet = false,
 		IsWearingSmallShield = false,
 	},
+	function getSignaturePerks()
+	{
+		return this.m.SignaturePerks;
+	}
+
 	function getExcludedMount()
 	{
 		return this.m.ExcludedMount;
@@ -410,14 +416,12 @@ this.player_goblin <- this.inherit("scripts/entity/tactical/player", {
 		this.getSprite("status_rooted_back").Scale = this.getSprite("status_rooted").Scale;
 		this.setFaction(this.Const.Faction.Player);
 		this.setDiscovered(true);
-		
-		local perks = ["perk_pathfinder", "perk_quick_hands"];
-		
-		foreach ( script in perks )
+
+		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 		{
-			local s = this.new("scripts/skills/perks/" + script);
-			s.m.IsSerialized = false;
-			this.m.Skills.add(s);
+			local racial = this.new("scripts/skills/racial/ptr_goblin_racial");
+			racial.m.IsSerialized = false;
+			this.getSkills().add(racial);
 		}
 	}
 

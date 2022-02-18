@@ -9,7 +9,12 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 		OrcType = 0, //0- Young, 1- Berserker, 2- Warrior, 3-Elite, 4-Warlord, 5-Behemoth
 		IsWarLord = false,
 		IsBehemoth = false,
+		SignaturePerks = [],
 	},
+	function getSignaturePerks()
+	{
+		return this.m.SignaturePerks;
+	}
 
 	function getHealthRecoverMult()
 	{
@@ -576,6 +581,7 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 		this.setAlwaysApplySpriteOffset(true);
 		this.setFaction(this.Const.Faction.Player);
 		this.setDiscovered(true);
+		this.getSkills().add(this.new("scripts/skills/traits/iron_jaw_trait"));
 	}
 	
 	function updateRageVisuals( _rage )

@@ -93,6 +93,7 @@ this.unhold_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Mainhand] = true;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Offhand] = true;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Ammo] = true;
+		this.m.SignaturePerks = ["Stalwart", "LegendComposure"];
 		this.getFlags().add("isUnhold");
 	}
 	
@@ -340,16 +341,6 @@ this.unhold_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
-		local s = this.new("scripts/skills/perks/perk_battering_ram");
-		s.m.Order = this.Const.SkillOrder.PermanentInjury - this.Math.rand(1, 200);
-		s.m.Type = this.Const.SkillType.Racial | this.Const.SkillType.Trait;
-		s.m.IsSerialized = false;
-		this.m.Skills.add(s);
-		
-		s = this.new("scripts/skills/perks/perk_stalwart");
-		s.m.IsSerialized = false;
-		this.m.Skills.add(s);
-		
 		this.m.Skills.add(this.new("scripts/skills/actives/unstoppable_charge_skill"));
 		this.m.Skills.update();
 	}
@@ -390,26 +381,31 @@ this.unhold_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	        break;
 		
 		default:
+			body.setBrush("bust_unhold_body_0" + this.m.Variant);
+			head.setBrush("bust_unhold_head_0" + this.m.Variant);
+
 		    switch (this.m.Variant)
 			{
 			case 1:
 				type = this.Const.EntityType.UnholdFrost;
 				b.setValues(this.Const.Tactical.Actor.UnholdFrost);
 				b.DamageTotalMult += 0.15;
+				if (this.Math.rand(1, 100) <= 5) body.setBrush("bust_unhold_body_04");
+				if (this.Math.rand(1, 100) <= 5) head.setBrush("bust_unhold_head_04");
 				break;
 				
 			case 2:
 				type = this.Const.EntityType.Unhold;
 				b.setValues(this.Const.Tactical.Actor.Unhold);
+				if (this.Math.rand(1, 100) <= 5) head.setBrush("bust_unhold_head_06");
 				break;
 				
 			case 3:
 				type = this.Const.EntityType.UnholdBog;
 				b.setValues(this.Const.Tactical.Actor.UnholdBog);
+				if (this.Math.rand(1, 100) <= 5) head.setBrush("bust_unhold_head_05");
 				break;
 			}
-			body.setBrush("bust_unhold_body_0" + this.m.Variant);
-			head.setBrush("bust_unhold_head_0" + this.m.Variant);
 			injury_body.Visible = false;
 			injury_body.setBrush("bust_unhold_0" + this.m.Variant + "_injured");
 		}
@@ -654,6 +650,7 @@ this.unhold_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	        	"bust_unhold_body_01",
 	        	"bust_unhold_body_02",
 	        	"bust_unhold_body_03",
+	        	"bust_unhold_body_04",
 	        	"bust_unhold_rock_body_02",
 	        	"bear_01",
 	        ];
@@ -664,6 +661,9 @@ this.unhold_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	        	"bust_unhold_head_01",
 	        	"bust_unhold_head_02",
 	        	"bust_unhold_head_03",
+	        	"bust_unhold_head_04",
+	        	"bust_unhold_head_05",
+	        	"bust_unhold_head_06",
 	        	"bust_unhold_rock_head_02",
 	        	"bear_head_01",
 	        ];

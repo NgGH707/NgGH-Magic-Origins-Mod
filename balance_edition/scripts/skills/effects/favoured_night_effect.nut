@@ -4,7 +4,7 @@ this.favoured_night_effect <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "effect.favoured_night";
 		this.m.Name = "Nocturnal";
-		this.m.Description = "This character is comfortable in the dark. Have better movement and combat capability in the night.";
+		this.m.Description = "This character is comfortable in the dark. Has better combat capability in the night.";
 		this.m.Icon = "skills/status_effect_35.png";
 		this.m.IconMini = "status_effect_35_mini";
 		this.m.Type = this.Const.SkillType.StatusEffect | this.Const.SkillType.Special;
@@ -33,12 +33,6 @@ this.favoured_night_effect <- this.inherit("scripts/skills/skill", {
 				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+5%[/color] Attack Damage"
 			},
 			{
-				id = 11,
-				type = "text",
-				icon = "ui/icons/bravery.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+15%[/color] Resolve"
-			},
-			{
 				id = 13,
 				type = "text",
 				icon = "ui/icons/melee_defense.png",
@@ -58,7 +52,6 @@ this.favoured_night_effect <- this.inherit("scripts/skills/skill", {
 	function onUpdate( _properties )
 	{
 		_properties.DamageTotalMult *= 1.05; 
-		_properties.BraveryMult *= 1.15;
 		_properties.MeleeDefenseMult *= 1.1;
 		_properties.RangedDefenseMult *= 1.1;
 	}

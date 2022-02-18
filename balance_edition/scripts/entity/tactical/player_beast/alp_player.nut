@@ -377,14 +377,12 @@ this.alp_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Skills.add(this.new("scripts/skills/special/bag_fatigue"));
 		this.m.Skills.add(this.new("scripts/skills/special/no_ammo_warning"));
 		this.m.Skills.add(this.new("scripts/skills/special/double_grip"));
-		this.m.Skills.update();
 	}
 	
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
 		this.m.Skills.add(this.new("scripts/skills/racial/alp_racial"));
-		this.m.Skills.update();
 	}
 	
 	function onAppearanceChanged( _appearance, _setDirty = true )

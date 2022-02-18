@@ -168,7 +168,7 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 		this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this) + " has become enraged and want to hunt you down to the last one");
 	}
 
-	function onMissed( _attacker, _skill, _dontShake = false )
+	/*function onMissed( _attacker, _skill, _dontShake = false )
 	{
 		this.actor.onMissed(_attacker, _skill, _dontShake);
 
@@ -191,9 +191,9 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 				_attacker.killSilently();
 			}
 		}
-	}
+	}*/
 
-	function onDamageReceived( _attacker, _skill, _hitInfo )
+	/*function onDamageReceived( _attacker, _skill, _hitInfo )
 	{
 		local ret = this.actor.onDamageReceived(_attacker, _skill, _hitInfo);
 
@@ -218,7 +218,7 @@ this.zombie_swordsaint <- this.inherit("scripts/entity/tactical/enemies/zombie_k
 		}
 
 		return ret;
-	}
+	}*/
 	
 	function killSilently()
 	{

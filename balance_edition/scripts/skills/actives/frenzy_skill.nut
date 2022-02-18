@@ -21,7 +21,7 @@ this.frenzy_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
 		this.m.ActionPointCost = 3;
-		this.m.FatigueCost = 25;
+		this.m.FatigueCost = 20;
 		this.m.MinRange = 0;
 		this.m.MaxRange = 0;
 	}
@@ -53,7 +53,13 @@ this.frenzy_skill <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/regular_damage.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+40%[/color] Attack Damage"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+25%[/color] Attack Damage"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/melee_skill.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+25%[/color] Melee Skill"
 			},
 			{
 				id = 6,
@@ -65,13 +71,7 @@ this.frenzy_skill <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/melee_defense.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-25%[/color] Melee Defense"
-			},
-			{
-				id = 6,
-				type = "text",
-				icon = "ui/icons/shield_damage.png",
-				text = "Receives [color=" + this.Const.UI.Color.NegativeValue + "]15%[/color] more of any damage"
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-50%[/color] Melee Defense"
 			},
 			{
 				id = 6,
@@ -79,6 +79,18 @@ this.frenzy_skill <- this.inherit("scripts/skills/skill", {
 				icon = "ui/icons/special.png",
 				text = "All skills cost [color=" + this.Const.UI.Color.PositiveValue + "]1[/color] less AP"
 			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Become immune to being stunned"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Become immune to being knocked back or grabbed"
+			}
 			{
 				id = 6,
 				type = "text",

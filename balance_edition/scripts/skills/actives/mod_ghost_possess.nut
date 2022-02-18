@@ -7,11 +7,22 @@ this.mod_ghost_possess <- this.inherit("scripts/skills/skill", {
 		this.m.ID = "actives.ghost_possess";
 		this.m.Name = "Possess";
 		this.m.Description = "Take control of a living creature.";
-		this.m.Icon = "skills/active_41.png";
-		this.m.IconDisabled = "skills/active_41_sw.png";
-		this.m.Overlay = "active_41";
+		this.m.Icon = "skills/active_ghost_possess.png";
+		this.m.IconDisabled = "skills/active_ghost_possess_sw.png";
+		this.m.Overlay = "active_ghost_possess";
 		this.m.SoundOnUse = [
-			"sounds/enemies/horrific_scream_01.wav"
+			"sounds/enemies/geist_idle_01.wav",
+			"sounds/enemies/geist_idle_02.wav",
+			"sounds/enemies/geist_idle_03.wav",
+			"sounds/enemies/geist_idle_04.wav",
+			"sounds/enemies/geist_idle_05.wav",
+			"sounds/enemies/geist_idle_06.wav",
+			"sounds/enemies/geist_idle_07.wav",
+			"sounds/enemies/geist_idle_08.wav",
+			"sounds/enemies/geist_idle_09.wav",
+			"sounds/enemies/geist_idle_10.wav",
+			"sounds/enemies/geist_idle_11.wav",
+			"sounds/enemies/geist_idle_12.wav",
 		];
 		this.m.Type = this.Const.SkillType.Active;
 		this.m.Order = this.Const.SkillOrder.UtilityTargeted;

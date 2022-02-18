@@ -749,7 +749,7 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 
 	function setAttributeLevelUpValues( _v )
 	{
-		local value = this.getLevel() > 11 ? 5 : 10;
+		local value = this.getLevel() <= 11 ? 10 : this.Math.rand(1, 3);
 		local b = this.getBaseProperties();
 		b.Hitpoints += _v.hitpointsIncrease;
 		this.m.Hitpoints += _v.hitpointsIncrease;
@@ -908,6 +908,21 @@ this.spider_eggs_player <- this.inherit("scripts/entity/tactical/player_beast", 
 		}
 
 		return tooltip;
+	}
+
+	function resetRenderEffects()
+	{
+		this.m.IsRaising = false;
+		this.m.IsSinking = false;
+		this.m.IsRaisingShield = false;
+		this.m.IsLoweringShield = false;
+		this.m.IsRaisingWeapon = false;
+		this.m.IsLoweringWeapon = false;
+		this.setSpriteOffset("shield_icon", this.createVec(0, 0));
+		this.setSpriteOffset("arms_icon", this.createVec(0, 0));
+		this.getSprite("arms_icon").Rotation = 0;
+		this.getSprite("status_rooted").Visible = false;
+		this.getSprite("status_rooted_back").Visible = false;
 	}
 	
 	function onDeserialize( _in )

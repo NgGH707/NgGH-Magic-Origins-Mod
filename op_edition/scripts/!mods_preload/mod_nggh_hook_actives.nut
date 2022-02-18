@@ -27,6 +27,104 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 	}
 
 
+	// demon hound
+	::mods_hookExactClass("skills/actives/legend_demon_hound_bite", function(obj) 
+	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.Description = "Tear an enemy assunder with your cursed teeth. A bite can drain the stamina of your victim for 3 turns.";
+			this.m.IconDisabled = "skills/demon_hound_bite_sw.png";
+			this.m.SoundOnHitHitpoints = [
+				"sounds/enemies/werewolf_claw_hit_01.wav",
+				"sounds/enemies/werewolf_claw_hit_02.wav",
+				"sounds/enemies/werewolf_claw_hit_03.wav"
+			];
+			this.m.InjuriesOnBody = this.Const.Injury.CuttingAndPiercingBody;
+			this.m.InjuriesOnHead = this.Const.Injury.CuttingAndPiercingHead;
+			this.m.ChanceDisembowel = 33;
+		};
+		obj.getTooltip <- function()
+		{
+			return this.getDefaultTooltip();
+		};
+	});
+
+
+	// zombie 
+	::mods_hookExactClass("skills/actives/zombie_bite", function(obj) 
+	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.Description = "A vicious bite with a 15% increased chance to hit the head.";
+		};
+		local ws_onTargetKilled = obj.onTargetKilled;
+		obj.onTargetKilled = function( _targetEntity, _skill )
+		{
+			if (this.getContainer().getActor().isPlayerControlled())
+			{
+				return;
+			}
+
+			ws_onTargetKilled(_targetEntity, _skill);
+		};
+		local ws_getTooltip = obj.getTooltip;
+		obj.getTooltip = function()
+		{
+			local ret = ws_getTooltip();
+
+			if (this.getContainer().hasSkill("perk.zombie_infectious_bite"))
+			{
+				ret.push({
+					id = 7,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "Can poison on hit"
+				});
+			}
+
+			return ret;
+		}
+		obj.onAfterUpdate <- function( _properties )
+		{
+			if (this.getContainer().hasSkill("perk.zombie_feasting_bite")) this.m.ActionPointCost -= 1;
+		};
+		obj.onUse = function( _user, _targetTile )
+		{
+			local target = _targetTile.getEntity();
+			local hp = target.getHitpoints();
+			local success = this.attackEntity(_user, _targetTile.getEntity());
+			local isPlayer = _user.isPlayerControlled();
+			local isEnemy = !isPlayer && ("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary;
+			local isSpecialized = this.getContainer().hasSkill("perk.zombie_infectious_bite");
+
+			if (success)
+			{
+				if (target.getCurrentProperties().IsImmuneToPoison)
+				{
+					return;
+				}
+
+				if (hp - target.getHitpoints() < this.Const.Combat.PoisonEffectMinDamage)
+				{
+					return;
+				}
+
+				if ((isPlayer && isSpecialized) || isEnemy)
+				{
+					local effect = this.new("scripts/skills/effects/zombie_poison_effect");
+					target.getSkills().add(effect);
+				}
+
+				return success;
+			}
+		}
+	});
+
+
 	local spawn_zombie = [
 		"legend_spawn_zombie_low_skill",
 		"legend_spawn_zombie_med_skill",
@@ -2044,6 +2142,43 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			});
 			return ret;
 		};
+		obj.onUpdate = function( _properties )
+		{
+		};
+		obj.onAfterUpdate <- function( _properties )
+		{
+			if (this.getContainer().hasSkill("perk.ghost_ghastly_touch")) this.m.ActionPointCost -= 1;
+		};
+		obj.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
+		{
+			if (_skill == this)
+			{
+				_properties.DamageRegularMin += 15;
+				_properties.DamageRegularMax += 25;
+				_properties.IsIgnoringArmorOnAttack = true;
+
+				local mhand = this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Mainhand);
+
+				if (mhand != null)
+				{
+					_properties.DamageRegularMin -= mhand.m.RegularDamage;
+					_properties.DamageRegularMax -= mhand.m.RegularDamageMax;
+					_properties.DamageArmorMult /= mhand.m.ArmorDamageMult;
+					_properties.DamageDirectAdd -= mhand.m.DirectDamageAdd;
+				}
+
+				if (this.canDoubleGrip())
+				{
+					_properties.DamageTotalMult /= 1.25;
+				}
+			}
+		}
+		obj.canDoubleGrip <- function()
+		{
+			local main = this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Mainhand);
+			local off = this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Offhand);
+			return main != null && off == null && main.isDoubleGrippable();
+		}
 	});
 
 
@@ -2068,6 +2203,19 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 				icon = "ui/icons/vision.png",
 				text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
 			});
+			return ret;
+		};
+		local ws_onUse = obj.onUse;
+		obj.onUse = function( _user, _targetTile )
+		{
+			local ret = ws_onUse(_user, _targetTile);
+
+			if (_user.m.IsMiniboss)
+			{
+				_targetTile.getEntity().checkMorale(-1, -25, this.Const.MoraleCheckType.MentalAttack);
+				_targetTile.getEntity().checkMorale(-1, -35, this.Const.MoraleCheckType.MentalAttack);
+			}
+			
 			return ret;
 		}
 	});
@@ -4021,7 +4169,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 
 
 	// ghoul
-	::mods_hookExactClass("skills/actives/", function ( obj )
+	::mods_hookExactClass("skills/actives/ghoul_claws", function ( obj )
 	{
 		obj.getTooltip = function()
 		{

@@ -2,6 +2,7 @@ this.mod_RSA_thorns <- this.inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false,
 		Efficiency = 1.0,
+		LastHitToBodyPart = this.Const.BodyPart.Body
 	},
 	function create()
 	{
@@ -30,9 +31,19 @@ this.mod_RSA_thorns <- this.inherit("scripts/skills/skill", {
 		_properties.DamageReceivedArmorMult *= 1.25;
 	}
 
+	function onBeforeDamageReceived( _attacker, _skill, _hitInfo, _properties )
+	{
+		this.m.LastHitToBodyPart = _hitInfo.BodyPart;
+	}
+
 	function onDamageReceived( _attacker, _damageHitpoints, _damageArmor )
 	{
-		if (_attacker == null)
+		if (_attacker == null || _damageArmor <= 0)
+		{
+			return;
+		}
+
+		if (this.m.LastHitToBodyPart != this.Const.BodyPart.Body)
 		{
 			return;
 		}
@@ -60,20 +71,17 @@ this.mod_RSA_thorns <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (_damageArmor > 0)
-		{
-			local mult = this.Math.rand(35, 65) * 0.01 * this.m.Efficiency;
-			local hitInfo = clone this.Const.Tactical.HitInfo;
-			hitInfo.DamageRegular = _damageArmor * mult;
-			hitInfo.DamageArmor = hitInfo.DamageRegular;
-			hitInfo.DamageFatigue = 0;
-			hitInfo.DamageDirect = this.Math.rand(25, 55) * 0.01 * this.m.Efficiency;
-			hitInfo.BodyPart = this.Const.BodyPart.Body;
-			hitInfo.BodyDamageMult = 1.0;
-			hitInfo.FatalityChanceMult = 0.0;
-			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s [b]rune sigil of Thorns[/b] returns its favor back to " + this.Const.UI.getColorizedEntityName(_attacker));
-			_attacker.onDamageReceived(this.getContainer().getActor(), this, hitInfo);
-		}
+		local mult = this.Math.rand(35, 65) * 0.01 * this.m.Efficiency;
+		local hitInfo = clone this.Const.Tactical.HitInfo;
+		hitInfo.DamageRegular = _damageArmor * mult;
+		hitInfo.DamageArmor = hitInfo.DamageRegular;
+		hitInfo.DamageFatigue = 0;
+		hitInfo.DamageDirect = this.Math.rand(25, 55) * 0.01 * this.m.Efficiency;
+		hitInfo.BodyPart = this.Const.BodyPart.Body;
+		hitInfo.BodyDamageMult = 1.0;
+		hitInfo.FatalityChanceMult = 0.0;
+		this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s [b]rune sigil of Thorns[/b] returns its favor back to " + this.Const.UI.getColorizedEntityName(_attacker));
+		_attacker.onDamageReceived(this.getContainer().getActor(), this, hitInfo);
 	}
 
 });

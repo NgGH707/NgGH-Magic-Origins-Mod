@@ -1,7 +1,6 @@
 this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	m = {
 		Tail = null,
-		Mode = 0,
 	},
 	
 	function getStrength()
@@ -14,30 +13,9 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		return this.getType(true) == this.Const.EntityType.LegendStollwurm ? 0 : 20;
 	}
 	
-	function getMode()
-	{
-		return this.m.Mode;
-	}
-	
 	function getHealthRecoverMult()
 	{
 		return 5;
-	}
-
-	function setMode( _m )
-	{
-		this.m.Mode = _m;
-
-		if (this.isPlacedOnMap())
-		{
-			if (this.m.Mode == 0 && _m == 1)
-			{
-				this.m.IsUsingZoneOfControl = true;
-				this.getTile().addZoneOfControl(this.getFaction());
-			}
-
-			this.onUpdateInjuryLayer();
-		}
 	}
 	
 	function getIdealRange()
@@ -111,6 +89,7 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Items.blockAllSlots();
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = false;
+		this.m.SignaturePerks = ["Fearsome"];
 		this.getFlags().add("body_immune_to_acid");
 		this.getFlags().add("head_immune_to_acid");
 		this.getFlags().add("lindwurm");
@@ -209,9 +188,6 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 					loot.drop(_tile);
 				}
 			}
-
-			local loot = this.new("scripts/items/loot/lindwurm_hoard_item");
-			loot.drop(_tile);
 		}
 
 		this.actor.onDeath(_killer, _skill, _tile, _fatalityType);
@@ -292,6 +268,21 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		
 		this.player_beast.onCombatFinished();
 	}
+
+	function onTurnStart()
+	{
+		this.player_beast.onTurnStart();
+
+		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive())
+		{
+			local tail = this.m.Tail;
+
+			this.Time.scheduleEvent(this.TimeUnit.Virtual, 100, function ( _e )
+			{
+				this.Tactical.TurnSequenceBar.moveEntityToFront(tail.getID());
+			}.bindenv(this), this);
+		}
+	}
 	
 	function onMovementFinish( _tile )
 	{
@@ -321,14 +312,19 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 			if (spawnTile != null)
 			{
 				local type = this.getType(true) == this.Const.EntityType.LegendStollwurm ? "stollwurm_tail_player" : "lindwurm_tail_player";	
-				local body = this.getSprite("body");				
-				this.m.Tail = this.WeakTableRef(this.Tactical.spawnEntity("scripts/entity/tactical/player_beast/" + type, spawnTile.Coords.X, spawnTile.Coords.Y, this.getID()));
-				this.m.Tail.m.Body = this.WeakTableRef(this);
-				this.m.Tail.setName(this.getName() + "\'s Tail");
-				this.m.Tail.setFaction(this.getFaction());
-				this.m.Tail.getSprite("body").Color = body.Color;
-				this.m.Tail.getSprite("body").Saturation = body.Saturation;
-				this.addPerksAndTraits(this.m.Tail);
+				local body = this.getSprite("body");	
+				local tail = this.Tactical.spawnEntity("scripts/entity/tactical/player_beast/" + type, spawnTile.Coords.X, spawnTile.Coords.Y, this.getID());		
+				
+				if (tail != null)
+				{
+					this.m.Tail = this.WeakTableRef(tail);
+					this.m.Tail.setBody(this);
+					this.m.Tail.setName(this.getName() + "\'s Tail");
+					this.m.Tail.setFaction(this.getFaction());
+					this.m.Tail.getSprite("body").Color = body.Color;
+					this.m.Tail.getSprite("body").Saturation = body.Saturation;
+					this.addPerksAndTraits(this.m.Tail);
+				}
 			}
 		}
 	}
@@ -391,14 +387,19 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 			if (spawnTile != null)
 			{
 				local type = this.getType(true) == this.Const.EntityType.LegendStollwurm ? "stollwurm_tail_player" : "lindwurm_tail_player";	
-				local body = this.getSprite("body");				
-				this.m.Tail = this.WeakTableRef(this.Tactical.spawnEntity("scripts/entity/tactical/player_beast/" + type, spawnTile.Coords.X, spawnTile.Coords.Y, this.getID()));
-				this.m.Tail.m.Body = this.WeakTableRef(this);
-				this.m.Tail.setName(this.getName() + "\'s Tail");
-				this.m.Tail.setFaction(this.getFaction());
-				this.m.Tail.getSprite("body").Color = body.Color;
-				this.m.Tail.getSprite("body").Saturation = body.Saturation;
-				this.addPerksAndTraits(this.m.Tail);
+				local body = this.getSprite("body");	
+				local tail = this.Tactical.spawnEntity("scripts/entity/tactical/player_beast/" + type, spawnTile.Coords.X, spawnTile.Coords.Y, this.getID());		
+				
+				if (tail != null)
+				{
+					this.m.Tail = this.WeakTableRef(tail);
+					this.m.Tail.setBody(this);
+					this.m.Tail.setName(this.getName() + "\'s Tail");
+					this.m.Tail.setFaction(this.getFaction());
+					this.m.Tail.getSprite("body").Color = body.Color;
+					this.m.Tail.getSprite("body").Saturation = body.Saturation;
+					this.addPerksAndTraits(this.m.Tail);
+				}
 			}
 		}
 	}
@@ -475,9 +476,10 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.player_beast.onInit();
 		local b = this.m.BaseProperties;
 		b.IsAffectedByNight = false;
+		b.IsAffectedByRain = false;
+		b.IsMovable = false;
 		b.IsImmuneToKnockBackAndGrab = true;
 		b.IsImmuneToStun = true;
-		b.IsMovable = false;
 		b.IsImmuneToDisarm = true;
 		b.DailyFood = 12;
 
@@ -512,12 +514,8 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
-		local p = this.new("scripts/skills/perks/perk_fearsome");
-		p.m.IsSerialized = false;
-		this.m.Skills.add(p);
 		this.m.Skills.add(this.new("scripts/skills/actives/gorge_skill"));
 		this.m.Skills.add(this.new("scripts/skills/racial/lindwurm_racial"));
-		this.m.Skills.update();
 	}
 
 	function onAppearanceChanged( _appearance, _setDirty = true )
@@ -689,7 +687,7 @@ this.lindwurm_player <- this.inherit("scripts/entity/tactical/player_beast", {
 
 	function setAttributeLevelUpValues( _v )
 	{
-		local value = this.Math.rand(4, 8);
+		local value = this.getLevel() <= 11 ? this.Math.rand(4, 8) : this.Math.rand(1, 2);
 		local b = this.getBaseProperties();
 		b.Hitpoints += _v.hitpointsIncrease;
 		this.m.Hitpoints += _v.hitpointsIncrease;

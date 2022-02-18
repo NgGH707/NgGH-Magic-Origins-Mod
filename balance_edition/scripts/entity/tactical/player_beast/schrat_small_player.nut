@@ -91,6 +91,7 @@ this.schrat_small_player <- this.inherit("scripts/entity/tactical/player_beast",
 		this.m.SoundPitch = this.Math.rand(101, 110) * 0.01;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = true;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Body] = true;
+		this.m.SignaturePerks = ["Pathfinder", "SteelBrow", "CripplingStrikes"];
 		this.getFlags().add("isSmallSchrat");
 	}
 
@@ -175,18 +176,8 @@ this.schrat_small_player <- this.inherit("scripts/entity/tactical/player_beast",
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
-		local perks = ["perk_crippling_strikes", "perk_steel_brow", "perk_pathfinder"];
-		
-		foreach ( script in perks )
-		{
-			local s = this.new("scripts/skills/perks/" + script);
-			s.m.IsSerialized = false;
-			this.m.Skills.add(s);
-		}
-		
 		this.m.Skills.add(this.new("scripts/skills/actives/uproot_small_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/uproot_small_zoc_skill"));
-		this.m.Skills.update();
 	}
 	
 	function onAppearanceChanged( _appearance, _setDirty = true )

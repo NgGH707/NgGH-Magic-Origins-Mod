@@ -673,7 +673,7 @@ gt.Const.GoblinRiderMounts <- [
 	//8 - Bear
 	{
 		Attributes = "LegendBear",
-		Skills = ["actives/wolf_bite", "actives/line_breaker", "perks/perk_battering_ram", "perks/perk_stalwart"],
+		Skills = ["actives/werewolf_bite", "actives/line_breaker", "perks/perk_battering_ram", "perks/perk_stalwart"],
 		Flags = ["ride_bear"],
 		Sprite = [
 			[-12, 15], //For rider

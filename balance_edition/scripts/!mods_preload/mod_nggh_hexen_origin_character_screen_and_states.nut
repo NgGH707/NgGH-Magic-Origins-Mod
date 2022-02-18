@@ -63,9 +63,8 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 				{
 					item.setToBeMaintain(true);
 				}
-				else if (item.isMaintained())
+				else if (!item.isToBeButchered())
 				{
-					item.setToBeMaintain(false);
 					item.setToBeButchered(true, index);
 				}
 				else
@@ -615,7 +614,7 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 							}
 						}
 
-						if (tile.Properties.get("Corpse").CorpseAsItem != null && !tile.Properties.get("Corpse").CorpseAsItem.isGarbage())
+						if (!isArena && tile.Properties.get("Corpse").CorpseAsItem != null && !tile.Properties.get("Corpse").CorpseAsItem.isGarbage())
 						{
 							local corpse = tile.Properties.get("Corpse").CorpseAsItem;
 							if (this.Math.rand(1, 100) <= 50 || corpse.m.IsBoss) loot.push(corpse);
@@ -695,7 +694,7 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 				return this.Const.UI.convertErrorToUIData(this.Const.UI.Error.NotEnoughStashSpace);
 			}
 
-			local isAutoLoot = this.Settings.getGameplaySettings().AutoLoot;
+			//local isAutoLoot = this.Settings.getGameplaySettings().AutoLoot;
 			local foundLootItems = this.Tactical.CombatResultLoot.getItems();
 			local stashItems = this.Stash.getItems();
 			local lastStashIdx = 0;
@@ -707,7 +706,7 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 			{
 				if (foundLootItems[i] != null)
 				{
-					if (isAutoLoot && foundLootItems[i].isItemType(this.Const.Items.ItemType.Corpse))
+					if (foundLootItems[i].isItemType(this.Const.Items.ItemType.Corpse))
 					{
 						continue;
 					}

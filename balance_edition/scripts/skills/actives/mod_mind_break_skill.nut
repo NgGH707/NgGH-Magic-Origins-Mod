@@ -95,6 +95,13 @@ this.mod_mind_break_skill <- this.inherit("scripts/skills/skill", {
 	{
 		local _user = _tag.User;
 		local _targetEntity = _tag.TargetTile.getEntity();
+
+		if (_targetEntity.getCurrentProperties().MoraleCheckBraveryMult[this.Const.MoraleCheckType.MentalAttack] >= 1000.0)
+		{
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_targetEntity) + " doesn\'t feel anything");
+			return;
+		}
+
 		local ret = _tag.Skill.attackEntity(_user, _targetEntity);
 
 		if (!_user.isAlive() || _user.isDying())

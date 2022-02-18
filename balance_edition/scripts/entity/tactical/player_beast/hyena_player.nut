@@ -116,6 +116,7 @@ this.hyena_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Items.blockAllSlots();
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = false;
+		this.m.SignaturePerks = ["Pathfinder"];
 	}
 
 	function playAttackSound()
@@ -260,11 +261,7 @@ this.hyena_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
-		local p = this.new("scripts/skills/perks/perk_pathfinder");
-		p.m.IsSerialized = false;
-		this.m.Skills.add(p);
 		this.m.Skills.add(this.new("scripts/skills/actives/hyena_bite_skill"));
-		this.m.Skills.update();
 	}
 
 	function onAppearanceChanged( _appearance, _setDirty = true )
@@ -455,50 +452,9 @@ this.hyena_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		}
 	}
 	
-	function getAttributeLevelUpValues()
-	{
-		local b = this.getBaseProperties();
-
-		if (this.m.Attributes[0].len() == 0)
-		{
-			for( local i = 0; i != this.Const.Attributes.COUNT; i = ++i )
-			{
-				this.m.Attributes[i].push(1);
-			}
-		}
-
-		local ret = {
-			hitpoints = b.Hitpoints,
-			hitpointsMax = 350,
-			hitpointsIncrease = this.m.Attributes[this.Const.Attributes.Hitpoints][0],
-			bravery = b.Bravery,
-			braveryMax = 200,
-			braveryIncrease = this.m.Attributes[this.Const.Attributes.Bravery][0],
-			fatigue = b.Stamina,
-			fatigueMax = 300,
-			fatigueIncrease = this.m.Attributes[this.Const.Attributes.Fatigue][0],
-			initiative = b.Initiative,
-			initiativeMax = 350,
-			initiativeIncrease = this.m.Attributes[this.Const.Attributes.Initiative][0],
-			meleeSkill = b.MeleeSkill,
-			meleeSkillMax = 135,
-			meleeSkillIncrease = this.m.Attributes[this.Const.Attributes.MeleeSkill][0],
-			rangeSkill = b.RangedSkill,
-			rangeSkillMax = 135,
-			rangeSkillIncrease = this.m.Attributes[this.Const.Attributes.RangedSkill][0],
-			meleeDefense = b.MeleeDefense,
-			meleeDefenseMax = 125,
-			meleeDefenseIncrease = this.m.Attributes[this.Const.Attributes.MeleeDefense][0],
-			rangeDefense = b.RangedDefense,
-			rangeDefenseMax = 125,
-			rangeDefenseIncrease = this.m.Attributes[this.Const.Attributes.RangedDefense][0]
-		};
-		return ret;
-	}
-	
 	function setAttributeLevelUpValues( _v )
 	{
-		local value = this.Math.rand(3, 5) * 2;
+		local value = this.getLevel() <= 11 ? this.Math.rand(2, 4) * 2 : this.Math.rand(1, 2);
 		local b = this.getBaseProperties();
 		b.Hitpoints += _v.hitpointsIncrease;
 		this.m.Hitpoints += _v.hitpointsIncrease;

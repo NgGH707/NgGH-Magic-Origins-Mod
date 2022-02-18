@@ -9,9 +9,113 @@ gt.Const.Difficulty.ButcherMult <- [
 	0.7
 ];
 gt.Const.Necro <- {
-	ConditionLossPerSixHour = 0.05,
+	ConditionLossPerSixHour = 0.125,
 	NoMaintainedMult = 1.0,
 	HasMaintainedMult = 0.1,
+	UndeadType = {
+		Zombie = 0,
+		Skeleton = 1,
+		Vampire = 2,
+		Mummy = 3,
+		Ghost = 4,
+		Banshee = 5,
+		DemonHound = 6,
+		COUNT =	6
+	},
+	CommonUndeadBackgrounds = [
+		"nggh_zombie_background",
+		"nggh_skeleton_background",
+		"nggh_vampire_background",
+		"nggh_mummy_background",
+		"nggh_ghost_background",
+		"nggh_banshee_background",
+		"nggh_demon_hound_background",
+	],
+	InjuryPermanent = [
+		[
+			{
+				ID = "injury.missing_nose",
+				Script = "injury_permanent/missing_nose_injury"
+			},
+			{
+				ID = "injury.missing_eye",
+				Script = "injury_permanent/missing_eye_injury"
+			},
+			{
+				ID = "injury.missing_ear",
+				Script = "injury_permanent/missing_ear_injury"
+			},
+			{
+				ID = "injury.missing_finger",
+				Script = "injury_permanent/missing_finger_injury"
+			},
+			{
+				ID = "injury.maimed_foot",
+				Script = "injury_permanent/maimed_foot_injury"
+			},
+			{
+				ID = "injury.broken_elbow_joint",
+				Script = "injury_permanent/broken_elbow_joint_injury"
+			},
+			{
+				ID = "injury.missing_hand",
+				Script = "injury_permanent/missing_hand_injury"
+			},
+		],
+		[
+			{
+				ID = "injury.missing_finger",
+				Script = "injury_permanent/missing_finger_injury"
+			},
+			{
+				ID = "injury.maimed_foot",
+				Script = "injury_permanent/maimed_foot_injury"
+			},
+			{
+				ID = "injury.broken_elbow_joint",
+				Script = "injury_permanent/broken_elbow_joint_injury"
+			},
+			{
+				ID = "injury.missing_hand",
+				Script = "injury_permanent/missing_hand_injury"
+			},
+		],
+		[], // vampire
+		[
+			{
+				ID = "injury.missing_ear",
+				Script = "injury_permanent/missing_ear_injury"
+			},
+			{
+				ID = "injury.missing_finger",
+				Script = "injury_permanent/missing_finger_injury"
+			},
+			{
+				ID = "injury.maimed_foot",
+				Script = "injury_permanent/maimed_foot_injury"
+			},
+			{
+				ID = "injury.broken_elbow_joint",
+				Script = "injury_permanent/broken_elbow_joint_injury"
+			},
+			{
+				ID = "injury.missing_hand",
+				Script = "injury_permanent/missing_hand_injury"
+			},
+		],
+		[], // ghost
+		[], // banshee
+		[
+			{
+				ID = "injury.maimed_foot",
+				Script = "injury_permanent/maimed_foot_injury"
+			},
+			{
+				ID = "injury.broken_elbow_joint",
+				Script = "injury_permanent/broken_elbow_joint_injury"
+			},
+		],
+	],
 	BossTypeEnemies = [
 		this.Const.EntityType.ZombieBoss,
 		this.Const.EntityType.SkeletonBoss,

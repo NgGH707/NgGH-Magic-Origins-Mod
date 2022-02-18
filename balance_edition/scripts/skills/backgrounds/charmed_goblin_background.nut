@@ -4,6 +4,7 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 		Info = null,
 		AttMods = null,
 		Skills = null,
+		Perks = null,
 		IsWolfrider = false,
 		AdditionalPerks = null,
 	},
@@ -56,7 +57,8 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 		this.m.Entity = _goblin;
 		this.m.Info = this.Const.CharmedSlave.addMissingData(_info, this.m.Entity);
 		this.m.AttMods = this.Const.CharmedSlave.getStatsModifiers(type);
-		this.m.Skills = this.Const.CharmedSlave.getSpecialPerks(type);
+		this.m.Perks = this.Const.CharmedSlave.getSpecialPerks(type);
+		this.m.Skills = this.Const.CharmedSlave.getSpecialSkills(type);
 		this.m.Name = "Charmed " + this.Const.Strings.EntityName[type];
 		this.m.Icon = "ui/backgrounds/" + this.Const.CharmedSlave.getIconName(type);
 		this.m.IsWolfrider = this.isKindOf(_goblin, "goblin_wolfrider");
@@ -149,6 +151,22 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 		b.Initiative += this.Math.rand(attributes.Initiative[0], attributes.Initiative[1]);
 
 		this.getContainer().getActor().m.CurrentProperties = clone b;
+		this.onAfterSetUp();
+	}
+
+	function onAfterSetUp()
+	{
+		if (this.m.Perks == null)
+		{
+			return;
+		}
+
+		this.m.Perks.extend(this.getContainer().getActor().getSignaturePerks());
+
+		foreach (i, Const in this.m.Perks )
+		{
+			this.World.Assets.getOrigin().addScenarioPerk(this, this.Const.Perks.PerkDefs[Const], i);
+		}
 	}
 	
 	function onUpdate( _properties )
@@ -232,7 +250,8 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 		info.IsExperienced <- true;
 		this.m.Info = this.Const.CharmedSlave.addMissingData(info);
 		this.m.AttMods = this.Const.CharmedSlave.getStatsModifiers(_type);
-		this.m.Skills = this.Const.CharmedSlave.getSpecialPerks(_type);
+		this.m.Perks = this.Const.CharmedSlave.getSpecialPerks(_type);
+		this.m.Skills = this.Const.CharmedSlave.getSpecialSkills(_type);
 		this.m.Name = "Charmed " + this.Const.Strings.EntityName[_type];
 		this.m.Icon = "ui/backgrounds/" + this.Const.CharmedSlave.getIconName(_type);
 		this.Const.HexenOrigin.CharmedSlave.processingCharmedBackground(this.m.Info, this);
@@ -360,13 +379,24 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 				type = "description",
 				text = this.getDescription()
 			},
-			{
-				id = 10,
-				type = "text",
-				icon = "ui/icons/warning.png",
-				text = "Receive [color=" + this.Const.UI.Color.NegativeValue + "]penalties[/color] if the total penalty to Maximum Fatigue from body and head armor above 20"
-			}
 		];
+
+		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+		{
+			ret.push({
+				id = 9,
+				type = "text",
+				icon = "ui/icons/special",
+				text = "Reduce AP cost of all melee attack skills by [color=" + this.Const.UI.Color.PositiveValue + "]1[/color] "
+			})
+		}
+
+		ret.push({
+			id = 10,
+			type = "text",
+			icon = "ui/icons/warning.png",
+			text = "Receive [color=" + this.Const.UI.Color.NegativeValue + "]penalties[/color] if the total penalty to Maximum Fatigue from body and head armor above 20"
+		});
 		
 		if (this.getContainer() == null || this.getContainer().getActor() == null)
 		{

@@ -49,38 +49,6 @@ this.getroottable().Nggh_MagicConcept.hookRacial <- function ()
 			this.m.IsStacking = false;
 			this.m.IsHidden = false;
 		};
-		obj.onBeforeDamageReceived = function( _attacker, _skill, _hitInfo, _properties )
-		{
-			if (_skill == null)
-			{
-				return;
-			}
-
-			if (_skill.getID() == "actives.aimed_shot" || _skill.getID() == "actives.quick_shot")
-			{
-				_properties.DamageReceivedRegularMult *= 0.1;
-			}
-			else if (_skill.getID() == "actives.shoot_bolt" || _skill.getID() == "actives.shoot_stake" || _skill.getID() == "actives.sling_stone")
-			{
-				_properties.DamageReceivedRegularMult *= 0.33;
-			}
-			else if (_skill.getID() == "actives.throw_javelin")
-			{
-				_properties.DamageReceivedRegularMult *= 0.25;
-			}
-			else if (_skill.getID() == "actives.puncture" || _skill.getID() == "actives.thrust" || _skill.getID() == "actives.stab" || _skill.getID() == "actives.impale" || _skill.getID() == "actives.prong" || _skill.getID() == "actives.rupture" || _skill.getID() == "actives.lunge" || _skill.getID() == "actives.fire_handgonne" || _skill.getID() == "actives.throw_spear")
-			{
-				_properties.DamageReceivedRegularMult *= 0.5;
-			}
-			else if (_skill.getID() == "actives.wardog_bite" || _skill.getID() == "actives.wolf_bite" || _skill.getID() == "actives.warhound_bite")
-			{
-				_properties.DamageReceivedRegularMult *= 0.33;
-			}
-			else if (_skill.hasDamageType(this.Const.Damage.DamageType.Piercing))
-			{
-				_properties.DamageReceivedRegularMult *= 0.33;
-			}
-		};
 		obj.onDamageReceived = function( _attacker, _damageHitpoints, _damageArmor )
 		{
 			local actor = this.getContainer().getActor();
@@ -508,22 +476,6 @@ this.getroottable().Nggh_MagicConcept.hookRacial <- function ()
 			if (actor.isArmedWithShield())
 			{
 				_properties.DamageReceivedTotalMult *= this.m.DamRec;
-			}
-		};
-		obj.onBeforeDamageReceived = function( _attacker, _skill, _hitInfo, _properties )
-		{
-			if (_skill == null)
-			{
-				return;
-			}
-
-			if (_skill.getID() == "actives.ignite_firelance")
-			{
-				_properties.DamageReceivedRegularMult *= 1.33;
-			}
-			else if (_skill.isRanged() && _skill.hasDamageType(this.Const.Damage.DamageType.Piercing))
-			{
-				_properties.DamageReceivedRegularMult *= 0.33;
 			}
 		};
 		obj.onDamageReceived = function( _attacker, _damageHitpoints, _damageArmor )
@@ -1313,18 +1265,6 @@ this.getroottable().Nggh_MagicConcept.hookRacial <- function ()
 				ws_onUpdate(_properties);
 			}
 		};
-		obj.onBeforeDamageReceived = function( _attacker, _skill, _hitInfo, _properties )
-		{
-			if (_skill == null)
-			{
-				return;
-			}
-
-			if (_skill.getID() == "actives.fire_handgonne" || _skill.getID() == "actives.ignite_firelance" || _skill.hasDamageType(this.Const.Damage.DamageType.Burning))
-			{
-				_properties.DamageReceivedRegularMult *= 0.66;
-			}
-		};
 	});
 
 
@@ -1367,39 +1307,6 @@ this.getroottable().Nggh_MagicConcept.hookRacial <- function ()
 					text = this.getDescription()
 				}
 			];
-		};
-		obj.onBeforeDamageReceived = function( _attacker, _skill, _hitInfo, _properties )
-		{
-			if (_skill == null)
-			{
-				return;
-			}
-
-			if (_skill.getID() == "actives.aimed_shot" || _skill.getID() == "actives.quick_shot"  || _skill.getID() == "actives.legend_cascade"  || _skill.getID() == "actives.legend_siphon_skill")
-			{
-				_properties.DamageReceivedRegularMult *= 0.1;
-			}
-			else if (_skill.getID() == "actives.shoot_bolt" || _skill.getID() == "actives.shoot_stake" || _skill.getID() == "actives.sling_stone" || _skill.getID() == "actives.legend_piercing_shot" || _skill.getID() == "actives.fire_handgonne")
-			{
-				_properties.DamageReceivedRegularMult *= 0.33;
-			}
-			else if (_skill.getID() == "actives.throw_javelin" || _skill.getID() == "actives.legend_magic_missile" || _skill.getID() == "actives.ignite_firelance")
-			{
-				_properties.DamageReceivedRegularMult *= 0.25;
-			}
-			else if (_skill.getID() == "actives.puncture" || _skill.getID() == "actives.thrust" || _skill.getID() == "actives.stab" || _skill.getID() == "actives.deathblow" || _skill.getID() == "actives.impale" || _skill.getID() == "actives.rupture" || _skill.getID() == "actives.prong" || _skill.getID() == "actives.lunge" || _skill.getID() == "actives.throw_spear")
-			{
-				_properties.DamageReceivedRegularMult *= 0.5;
-			}
-			else if (_skill.hasDamageType(this.Const.Damage.DamageType.Piercing))
-			{
-			    _properties.DamageReceivedRegularMult *= 0.4;
-			}
-
-			if("Assets" in this.World && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
-			{
-				_properties.DamageReceivedRegularMult *= 0.75;
-			}
 		};
 	});
 
@@ -1695,6 +1602,27 @@ this.getroottable().Nggh_MagicConcept.hookRacial <- function ()
 	// Add the general properties a ghost should have
 	::mods_hookExactClass("skills/racial/ghost_racial", function(obj) 
 	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.Description = "This character doesn\'t have an actual body or a definite form. Making it extremely hard to land on a hit.";
+			this.m.Icon = "skills/racial_ghost.png";
+			this.m.IconMini = "racial_ghost_mini"
+		};
+	    obj.onAdded <- function()
+		{
+			if (!this.getContainer().getActor().isPlayerControlled())
+			{
+				return;
+			}
+			
+			this.m.Type = this.Const.SkillType.Racial | this.Const.SkillType.StatusEffect;
+			this.m.Order = this.Const.SkillOrder.First + 1;
+			this.m.IsActive = false;
+			this.m.IsStacking = false;
+			this.m.IsHidden = false;
+		};
 	    obj.onUpdate <- function( _properties )
 	    {
 	    	_properties.IsImmuneToBleeding = true;
@@ -1703,13 +1631,61 @@ this.getroottable().Nggh_MagicConcept.hookRacial <- function ()
 			_properties.IsImmuneToStun = true;
 			_properties.IsImmuneToRoot = true;
 			_properties.IsImmuneToDisarm = true;
-			_properties.IsIgnoringArmorOnAttack = true;
 			_properties.IsAffectedByRain = false;
 			_properties.IsAffectedByNight = false;
 			_properties.IsAffectedByInjuries = false;
 			_properties.IsMovable = false;
 			_properties.MoraleCheckBraveryMult[this.Const.MoraleCheckType.MentalAttack] *= 1000.0;
 	    }
+	});
+
+
+	//
+	::mods_hookExactClass("skills/racial/mummy_racial", function(obj) 
+	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.Name = "Resistant to Ranged Attacks";
+			this.m.Description = "Ranged, Slashing and Piercing attacks are not very effective against this character.";
+			this.m.Icon = "ui/perks/perk_32.png";
+			this.m.IconMini = "perk_32_mini";
+		};
+		obj.onAdded <- function()
+		{
+			if (!this.getContainer().getActor().isPlayerControlled())
+			{
+				return;
+			}
+			
+			this.m.Type = this.Const.SkillType.Racial | this.Const.SkillType.StatusEffect;
+			this.m.Order = this.Const.SkillOrder.First + 1;
+			this.m.IsActive = false;
+			this.m.IsStacking = false;
+			this.m.IsHidden = false;
+		};
+		obj.getTooltip <- function()
+		{
+			return [
+				{
+					id = 1,
+					type = "title",
+					text = this.getName()
+				},
+				{
+					id = 2,
+					type = "description",
+					text = this.getDescription()
+				},
+				{
+					id = 3
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "Curse the attack on death"
+				}
+			];
+		};
 	});
 
 	delete this.Nggh_MagicConcept.hookRacial;

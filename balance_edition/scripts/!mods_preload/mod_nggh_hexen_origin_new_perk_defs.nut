@@ -349,7 +349,7 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			IconDisabled = "ui/perks/perk_after_wake_sw.png",
 			Const = "AfterWake",
 		},
-			{
+		{
 			ID = "perk.afterimage",
 			Script = "scripts/skills/perks/perk_afterimage",
 			Name = this.Const.Strings.PerkName.Afterimage,
@@ -357,6 +357,24 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			Icon = "ui/perks/perk_afterimage.png",
 			IconDisabled = "ui/perks/perk_afterimage_sw.png",
 			Const = "Afterimage"
+		},
+		{
+			ID = "perk.alp_living_nightmare",
+			Script = "scripts/skills/perks/perk_alp_living_nightmare",
+			Name = this.Const.Strings.PerkName.AlpLivingNightmare,
+			Tooltip = this.Const.Strings.PerkDescription.AlpLivingNightmare,
+			Icon = "ui/perks/perk_alp_living_nightmare.png",
+			IconDisabled = "ui/perks/perk_alp_living_nightmare_sw.png",
+			Const = "AlpLivingNightmare"
+		},
+		{
+			ID = "perk.mind_break",
+			Script = "scripts/skills/perks/perk_mind_break",
+			Name = this.Const.Strings.PerkName.AlpMindBreak,
+			Tooltip = this.Const.Strings.PerkDescription.AlpMindBreak,
+			Icon = "ui/perks/perk_mind_break.png",
+			IconDisabled = "ui/perks/perk_mind_break_sw.png",
+			Const = "AlpMindBreak"
 		},
 
 	//Demon alp
@@ -424,6 +442,24 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			Icon = "ui/perks/perk_madden.png",
 			IconDisabled = "ui/perks/perk_madden_sw.png",
 			Const = "NachoFrenzy"
+		},
+		{
+			ID = "perk.nacho_big_tummy",
+			Script = "scripts/skills/perks/perk_nacho_big_tummy",
+			Name = this.Const.Strings.PerkName.NachoBigTummy,
+			Tooltip = this.Const.Strings.PerkDescription.NachoBigTummy,
+			Icon = "ui/perks/perk_nacho_big_tummy.png",
+			IconDisabled = "ui/perks/perk_nacho_big_tummy_sw.png",
+			Const = "NachoBigTummy"
+		},
+		{
+			ID = "perk.nacho_vomiting",
+			Script = "scripts/skills/perks/perk_nacho_vomiting",
+			Name = this.Const.Strings.PerkName.NachoVomiting,
+			Tooltip = this.Const.Strings.PerkDescription.NachoVomiting,
+			Icon = "ui/perks/perk_nacho_vomiting.png",
+			IconDisabled = "ui/perks/perk_nacho_vomiting_sw.png",
+			Const = "NachoVomiting"
 		},
 
 	//Unhold
@@ -647,49 +683,190 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			Const = "KrakenTentacle"
 		},
 
-		//alp
+		// zombie
 		{
-			ID = "perk.alp_living_nightmare",
-			Script = "scripts/skills/perks/perk_alp_living_nightmare",
-			Name = this.Const.Strings.PerkName.AlpLivingNightmare,
-			Tooltip = this.Const.Strings.PerkDescription.AlpLivingNightmare,
-			Icon = "ui/perks/perk_alp_living_nightmare.png",
-			IconDisabled = "ui/perks/perk_alp_living_nightmare_sw.png",
-			Const = "AlpLivingNightmare"
+			ID = "perk.zombie_undying",
+			Script = "scripts/skills/perks/perk_zombie_undying",
+			Name = this.Const.Strings.PerkName.ZombieUndying,
+			Tooltip = this.Const.Strings.PerkDescription.ZombieUndying,
+			Icon = "ui/perks/perk_zombie_undying.png",
+			IconDisabled = "ui/perks/perk_zombie_undying_sw.png",
+			Const = "ZombieUndying"
 		},
 		{
-			ID = "perk.mind_break",
-			Script = "scripts/skills/perks/perk_mind_break",
-			Name = this.Const.Strings.PerkName.AlpMindBreak,
-			Tooltip = this.Const.Strings.PerkDescription.AlpMindBreak,
-			Icon = "ui/perks/perk_mind_break.png",
-			IconDisabled = "ui/perks/perk_mind_break_sw.png",
-			Const = "AlpMindBreak"
+			ID = "perk.zombie_feasting_bite",
+			Script = "scripts/skills/perks/perk_zombie_feasting_bite",
+			Name = this.Const.Strings.PerkName.ZombieFeasting,
+			Tooltip = this.Const.Strings.PerkDescription.ZombieFeasting,
+			Icon = "ui/perks/perk_zombie_feasting_bite.png",
+			IconDisabled = "ui/perks/perk_zombie_feasting_bite_sw.png",
+			Const = "ZombieFeasting"
+		},
+		{
+			ID = "perk.zombie_infectious_bite",
+			Script = "scripts/skills/perks/perk_zombie_infectious_bite",
+			Name = this.Const.Strings.PerkName.ZombieInfectious,
+			Tooltip = this.Const.Strings.PerkDescription.ZombieInfectious,
+			Icon = "ui/perks/violent_decomposition_circle.png",
+			IconDisabled = "ui/perks/violent_decomposition_circle_bw.png",
+			Const = "ZombieInfectious"
+		},
+		{
+			ID = "perk.zombie_puppet",
+			Script = "scripts/skills/perks/perk_zombie_puppet",
+			Name = this.Const.Strings.PerkName.ZombiePuppet,
+			Tooltip = this.Const.Strings.PerkDescription.ZombiePuppet,
+			Icon = "ui/perks/possession_circle_56.png",
+			IconDisabled = "ui/perks/possession_circle_56_bw.png",
+			Const = "ZombiePuppet"
+		},
+		{
+			ID = "perk.zombie_fallen_hero",
+			Script = "scripts/skills/perks/perk_zombie_puppet",
+			Name = this.Const.Strings.PerkName.ZombieFallenHero,
+			Tooltip = this.Const.Strings.PerkDescription.ZombieFallenHero,
+			Icon = "ui/perks/perk_zombie_fallen_hero.png",
+			IconDisabled = "ui/perks/perk_zombie_fallen_hero_sw.png",
+			Const = "ZombieFallenHero"
 		},
 
-		//Nacho
+		// skeleton
 		{
-			ID = "perk.nacho_big_tummy",
-			Script = "scripts/skills/perks/perk_nacho_big_tummy",
-			Name = this.Const.Strings.PerkName.NachoBigTummy,
-			Tooltip = this.Const.Strings.PerkDescription.NachoBigTummy,
-			Icon = "ui/perks/perk_nacho_big_tummy.png",
-			IconDisabled = "ui/perks/perk_nacho_big_tummy_sw.png",
-			Const = "NachoBigTummy"
+			ID = "perk.skeleton_reconstruction",
+			Script = "scripts/skills/perks/perk_skeleton_reconstruction",
+			Name = this.Const.Strings.PerkName.SkeletonReconstruction,
+			Tooltip = this.Const.Strings.PerkDescription.SkeletonReconstruction,
+			Icon = "ui/perks/perk_skeleton_reconstruction.png",
+			IconDisabled = "ui/perks/perk_skeleton_reconstruction_sw.png",
+			Const = "SkeletonReconstruction"
 		},
 		{
-			ID = "perk.nacho_vomiting",
-			Script = "scripts/skills/perks/perk_nacho_vomiting",
-			Name = this.Const.Strings.PerkName.NachoVomiting,
-			Tooltip = this.Const.Strings.PerkDescription.NachoVomiting,
-			Icon = "ui/perks/perk_nacho_vomiting.png",
-			IconDisabled = "ui/perks/perk_nacho_vomiting_sw.png",
-			Const = "NachoVomiting"
+			ID = "perk.skeleton_harden_bone",
+			Script = "scripts/skills/perks/perk_skeleton_harden_bone",
+			Name = this.Const.Strings.PerkName.SkeletonHarden,
+			Tooltip = this.Const.Strings.PerkDescription.SkeletonHarden,
+			Icon = "ui/perks/perk_skeleton_harden_bone.png",
+			IconDisabled = "ui/perks/perk_skeleton_harden_bone_sw.png",
+			Const = "SkeletonHarden"
+		},
+
+		// mummy
+		{
+			ID = "perk.mummy_cursed_body",
+			Script = "scripts/skills/perks/perk_mummy_cursed_body",
+			Name = this.Const.Strings.PerkName.MummyCursedBody,
+			Tooltip = this.Const.Strings.PerkDescription.MummyCursedBody,
+			Icon = "ui/perks/perk_mummy_cursed_body.png",
+			IconDisabled = "ui/perks/perk_mummy_cursed_body_sw.png",
+			Const = "MummyCursedBody"
+		},
+		{
+			ID = "perk.mummy_ancient_knowledge",
+			Script = "scripts/skills/perks/perk_mummy_ancient_knowledge",
+			Name = this.Const.Strings.PerkName.MummyAncientKnowledge,
+			Tooltip = this.Const.Strings.PerkDescription.MummyAncientKnowledge,
+			Icon = "ui/perks/perk_inherit.png",
+			IconDisabled = "ui/perks/perk_inherit_sw.png",
+			Const = "MummyAncientKnowledge"
+		},
+		{
+			ID = "perk.mummy_insect_breath",
+			Script = "scripts/skills/perks/perk_mummy_insect_breath",
+			Name = this.Const.Strings.PerkName.MummyInsectBreath,
+			Tooltip = this.Const.Strings.PerkDescription.MummyInsectBreath,
+			Icon = "ui/perks/insects_circle.png",
+			IconDisabled = "ui/perks/insects_circle_bw.png",
+			Const = "MummyInsectBreath"
+		},
+
+		// vampire
+		{
+			ID = "perk.vampire_long_fangs",
+			Script = "scripts/skills/perks/perk_mummy_cursed_body",
+			Name = this.Const.Strings.PerkName.VampireLongFangs,
+			Tooltip = this.Const.Strings.PerkDescription.VampireLongFangs,
+			Icon = "ui/perks/perk_mummy_cursed_body.png",
+			IconDisabled = "ui/perks/perk_mummy_cursed_body_sw.png",
+			Const = "VampireLongFangs"
+		},
+		{
+			ID = "perk.vampire_blood_frenzy",
+			Script = "scripts/skills/perks/perk_mummy_ancient_knowledge",
+			Name = this.Const.Strings.PerkName.VampireBloodFrenzy,
+			Tooltip = this.Const.Strings.PerkDescription.VampireBloodFrenzy,
+			Icon = "ui/perks/perk_inherit.png",
+			IconDisabled = "ui/perks/perk_inherit_sw.png",
+			Const = "VampireBloodFrenzy"
+		},
+		{
+			ID = "perk.dub",
+			Script = "scripts/skills/perks/perk_mummy_insect_breath",
+			Name = this.Const.Strings.PerkName.VampireDub,
+			Tooltip = this.Const.Strings.PerkDescription.VampireDub,
+			Icon = "ui/perks/insects_circle.png",
+			IconDisabled = "ui/perks/insects_circle_bw.png",
+			Const = "VampireDub"
+		},
+		{
+			ID = "perk.dub",
+			Script = "scripts/skills/perks/perk_mummy_insect_breath",
+			Name = this.Const.Strings.PerkName.VampireDub2,
+			Tooltip = this.Const.Strings.PerkDescription.VampireDub,
+			Icon = "ui/perks/insects_circle.png",
+			IconDisabled = "ui/perks/insects_circle_bw.png",
+			Const = "VampireDub2"
+		},
+
+		// ghost
+		{
+			ID = "perk.ghost_ghastly_touch",
+			Script = "scripts/skills/perks/perk_ghost_ghastly_touch",
+			Name = this.Const.Strings.PerkName.GhostGhastlyTouch,
+			Tooltip = this.Const.Strings.PerkDescription.GhostGhastlyTouch,
+			Icon = "ui/perks/perk_ghost_ghastly_touch.png",
+			IconDisabled = "ui/perks/perk_ghost_ghastly_touch_sw.png",
+			Const = "GhostGhastlyTouch"
+		},
+		{
+			ID = "perk.ghost_spectral_body",
+			Script = "scripts/skills/perks/perk_ghost_spectral_body",
+			Name = this.Const.Strings.PerkName.GhostSpectralBody,
+			Tooltip = this.Const.Strings.PerkDescription.GhostSpectralBody,
+			Icon = "ui/perks/legend_vala_warden.png",
+			IconDisabled = "ui/perks/legend_vala_warden_sw.png",
+			Const = "GhostSpectralBody"
+		},
+		{
+			ID = "perk.ghost_vanish",
+			Script = "scripts/skills/perks/perk_ghost_vanish",
+			Name = this.Const.Strings.PerkName.GhostVanish,
+			Tooltip = this.Const.Strings.PerkDescription.GhostVanish,
+			Icon = "ui/perks/perk_ghost_vanish.png",
+			IconDisabled = "ui/perks/perk_ghost_vanish_sw.png",
+			Const = "GhostVanish"
+		},
+		{
+			ID = "perk.ghost_phase",
+			Script = "scripts/skills/perks/perk_ghost_phase",
+			Name = this.Const.Strings.PerkName.GhostPhase,
+			Tooltip = this.Const.Strings.PerkDescription.GhostPhase,
+			Icon = "ui/perks/perk_ghost_phase.png",
+			IconDisabled = "ui/perks/PiercingBoltPerk_bw.png",
+			Const = "GhostPhase"
+		},
+		{
+			ID = "perk.ghost_soul_eater",
+			Script = "scripts/skills/perks/perk_ghost_soul_eater",
+			Name = this.Const.Strings.PerkName.GhostSoulEater,
+			Tooltip = this.Const.Strings.PerkDescription.GhostSoulEater,
+			Icon = "ui/perks/siphon_circle.png",
+			IconDisabled = "ui/perks/siphon_circle_bw.png",
+			Const = "GhostSoulEater"
 		},
 	]);
-
 	gt.Const.Perks.updatePerkGroupTooltips();
 
+//---------------------------------------------------------------
 	gt.Const.Perks.SpiderHive <- {
 		ID = "SpiderHive",
 		Name = "SpiderHive",
@@ -741,6 +918,97 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 				gt.Const.Perks.PerkDefs.KrakenTentacle,
 			]
 		]			
+	};
+
+	gt.Const.Perks.ZombieClassTree <- {
+		ID = "Zombie",
+		Name = "Zombie",
+		Descriptions = ["Zombie abilities"],
+		Tree = [
+			[
+				gt.Const.Perks.PerkDefs.ZombieUndying,
+			],
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.ZombieFeasting,
+				gt.Const.Perks.PerkDefs.ZombiePuppet,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.ZombieInfectious
+			],
+			[
+				gt.Const.Perks.PerkDefs.ZombieFallenHero,
+			]
+		]
+	};
+	gt.Const.Perks.SkeletonClassTree <- {
+		ID = "Skeleton",
+		Name = "Skeleton",
+		Descriptions = ["Skeleton abilities"],
+		Tree = [
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.Rotation,
+			],
+			[
+				gt.Const.Perks.PerkDefs.SkeletonHarden,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.SkeletonReconstruction,
+			],
+			[
+				gt.Const.Perks.PerkDefs.Indomitable,
+			]
+		]
+	};
+	gt.Const.Perks.MummyClassTree <- {
+		ID = "Mummy",
+		Name = "Mummy",
+		Descriptions = ["Mummy abilities"],
+		Tree = [
+			[],
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.MummyAncientKnowledge,
+			],
+			[
+				gt.Const.Perks.PerkDefs.MummyCursedBody,
+			],
+			[
+				gt.Const.Perks.PerkDefs.MummyInsectBreath,
+			],
+			[
+				gt.Const.Perks.PerkDefs.Indomitable,
+			]
+		]
+	};
+	gt.Const.Perks.GhostClassTree <- {
+		ID = "Ghost",
+		Name = "Ghost",
+		Descriptions = ["ghastly abilities"],
+		Tree = [
+			[],
+			[
+				gt.Const.Perks.PerkDefs.GhostSpectralBody,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.GhostPhase,
+				gt.Const.Perks.PerkDefs.GhostGhastlyTouch,
+			],
+			[
+				gt.Const.Perks.PerkDefs.GhostVanish
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.GhostSoulEater,
+			]
+		]
 	};
 
 	if (!("PerksCharmedUnit" in gt.Const))
@@ -1313,6 +1581,53 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		[],
 		[]
 	];
+
+
+	gt.Const.PerksCharmedUnit.DemonHound <- [
+		[
+			gt.Const.Perks.PerkDefs.FastAdaption,
+			gt.Const.Perks.PerkDefs.Pathfinder,
+			gt.Const.Perks.PerkDefs.CoupDeGrace,
+		],
+		[
+			gt.Const.Perks.PerkDefs.Backstabber,
+			gt.Const.Perks.PerkDefs.Nighttime,
+		],
+		[
+			gt.Const.Perks.PerkDefs.Relentless,
+			gt.Const.Perks.PerkDefs.Footwork,
+			gt.Const.Perks.PerkDefs.Rotation,
+		],
+		[
+			gt.Const.Perks.PerkDefs.SkeletonHarden,
+			gt.Const.Perks.PerkDefs.Berserk,
+			gt.Const.Perks.PerkDefs.BattleForged,
+			gt.Const.Perks.PerkDefs.Overwhelm,
+		],
+		[
+			gt.Const.Perks.PerkDefs.LegendGruesomeFeast,
+			gt.Const.Perks.PerkDefs.LoneWolf,
+			gt.Const.Perks.PerkDefs.BearLineBreaker,
+			gt.Const.Perks.PerkDefs.DevastatingStrikes
+		],
+		[
+			gt.Const.Perks.PerkDefs.LegendTerrifyingVisage,
+			gt.Const.Perks.PerkDefs.LegendSecondWind,
+			gt.Const.Perks.PerkDefs.LastStand,
+			gt.Const.Perks.PerkDefs.InspiringPresence,
+			gt.Const.Perks.PerkDefs.EnrageWolf,
+			gt.Const.Perks.PerkDefs.Fearsome,
+		],
+		[
+			gt.Const.Perks.PerkDefs.KillingFrenzy,
+			gt.Const.Perks.PerkDefs.BattleFlow,
+		],
+		[],
+		[],
+		[],
+		[]
+	];
+
 
 	gt.Const.PerksCharmedUnit.NecroTree <- [
 		gt.Const.Perks.WarlockMagicTree.Tree,

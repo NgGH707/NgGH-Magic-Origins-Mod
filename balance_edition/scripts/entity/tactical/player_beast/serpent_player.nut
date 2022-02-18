@@ -5,7 +5,7 @@ this.serpent_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	
 	function getStrength()
 	{
-		return this.getLevel() >= 5 ? 1.35 : 1.1;
+		return this.getLevel() >= 5 ? 1.23 : 1.0;
 	}
 	
 	function setVariants( _v )
@@ -98,6 +98,7 @@ this.serpent_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Items.blockAllSlots();
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = false;
+		this.m.SignaturePerks = ["Pathfinder"];
 	}
 
 	function playSound( _type, _volume, _pitch = 1.0 )
@@ -421,19 +422,9 @@ this.serpent_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
-		local perks = ["perk_pathfinder"];
-		
-		foreach ( script in perks )
-		{
-			local s = this.new("scripts/skills/perks/" + script);
-			s.m.IsSerialized = false;
-			this.m.Skills.add(s);
-		}
-		
 		this.m.Skills.add(this.new("scripts/skills/racial/serpent_racial"));
 		this.m.Skills.add(this.new("scripts/skills/actives/serpent_hook_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/serpent_bite_skill"));
-		this.m.Skills.update();
 	}
 
 	function onAppearanceChanged( _appearance, _setDirty = true )
@@ -619,7 +610,7 @@ this.serpent_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	
 	function setAttributeLevelUpValues( _v )
 	{
-		local value = this.Math.rand(3, 5) * 2;
+		local value = this.getLevel() <= 11 ? this.Math.rand(2, 4) * 2 : this.Math.rand(1, 2);
 		local b = this.getBaseProperties();
 		b.Hitpoints += _v.hitpointsIncrease;
 		this.m.Hitpoints += _v.hitpointsIncrease;
@@ -697,7 +688,6 @@ this.serpent_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	{
 		this.player_beast.onDeserialize(_in);
 		this.m.Variant = _in.readF32();
-		this.getBackground().addPerk(this.Const.Perks.PerkDefs.SerpentGiant, 6);
 	}
 
 });

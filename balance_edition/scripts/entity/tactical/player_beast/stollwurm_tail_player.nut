@@ -1,64 +1,61 @@
 this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	m = {
 		Body = null,
-		Racial = null,
-		Mode = 0
+		Racial = null
 	},
+
+	function setBody( _b )
+	{
+		if (_b == null)
+		{
+			this.m.Body = null;
+		}
+		else
+		{
+			if (typeof _b == "instance")
+			{
+				this.m.Body = _b;
+			}
+			else
+			{
+				this.m.Body = this.WeakTableRef(_b);
+			}
+		}
+	}
+
+	function getBody()
+	{
+		return this.m.Body;
+	}
 	
 	function isSummoned()
 	{
 		return true;
 	}
 	
-	function getImageOffsetY()
-	{
-		return 20;
-	}
-	
-	function getMode()
-	{
-		return this.m.Mode;
-	}
-	
 	function getBackground()
 	{
 		return this.m.Body != null ? this.m.Body.getBackground() : null;
 	}
-
-	function getTalents()
-	{
-		return this.m.Body != null ? this.m.Body.getTalents() : [0, 0, 0, 0, 0, 0, 0, 0];
-	}
-
-	function setMode( _m )
-	{
-		this.m.Mode = _m;
-
-		if (this.isPlacedOnMap())
-		{
-			if (this.m.Mode == 0 && _m == 1)
-			{
-				this.m.IsUsingZoneOfControl = true;
-				this.getTile().addZoneOfControl(this.getFaction());
-			}
-
-			this.onUpdateInjuryLayer();
-		}
-	}
 	
 	function getBaseProperties()
 	{
-		return this.m.Body.m.BaseProperties;
+		return this.m.Body.getBaseProperties();
 	}
 
 	function getCurrentProperties()
 	{
-		return this.m.Body.m.CurrentProperties;
+		return this.m.Body.getCurrentProperties();
 	}
 
 	function setCurrentProperties( _c )
 	{
 		this.m.Body.setCurrentProperties(_c);
+	}
+
+	function getTalents()
+	{
+		return this.m.Body != null ? this.m.Body.getTalents() : [0, 0, 0, 0, 0, 0, 0, 0];
 	}
 
 	function getItems()
@@ -161,9 +158,14 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 		return this.m.Body != null ? this.m.Body.getWorldTroop() : null;
 	}
 
-	function getBody()
+	function getCombatStats()
 	{
-		return this.m.Body;
+		return this.m.Body != null ? this.m.Body.getCombatStats() : this.player_beast.getCombatStats();
+	}
+
+	function getLifetimeStats()
+	{
+		return this.m.Body != null ? this.m.Body.getLifetimeStats() : this.player_beast.getLifetimeStats();
 	}
 
 	function getIdealRange()
@@ -187,7 +189,6 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 		this.m.BloodSplatterOffset = this.createVec(0, 0);
 		this.m.DecapitateSplatterOffset = this.createVec(-10, -25);
 		this.m.DecapitateBloodAmount = 1.0;
-		this.m.IsUsingZoneOfControl = false;
 		this.m.Sound[this.Const.Sound.ActorEvent.NoDamageReceived] = [
 			"sounds/enemies/lindwurm_fleeing_01.wav",
 			"sounds/enemies/lindwurm_fleeing_02.wav",
@@ -220,21 +221,17 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 			"sounds/enemies/lindwurm_death_04.wav"
 		];
 		this.m.Sound[this.Const.Sound.ActorEvent.Idle] = [
-			"sounds/enemies/lindwurm_idle_06.wav",
-			"sounds/enemies/lindwurm_idle_07.wav",
-			"sounds/enemies/lindwurm_idle_08.wav",
-			"sounds/enemies/lindwurm_idle_09.wav",
-			"sounds/enemies/lindwurm_idle_10.wav",
-			"sounds/enemies/lindwurm_idle_11.wav"
+			"sounds/enemies/dlc2/krake_idle_13.wav",
+			"sounds/enemies/dlc2/krake_idle_14.wav"
 		];
 		this.m.Sound[this.Const.Sound.ActorEvent.Attack] = this.m.Sound[this.Const.Sound.ActorEvent.Idle];
 		this.m.SoundVolume[this.Const.Sound.ActorEvent.DamageReceived] = 1.5;
 		this.m.SoundVolume[this.Const.Sound.ActorEvent.Idle] = 2.0;
 		this.m.SoundVolume[this.Const.Sound.ActorEvent.Attack] = 2.0;
 		this.m.SoundPitch = this.Math.rand(95, 105) * 0.01;
+		this.getFlags().add("lindwurm");
 		this.getFlags().add("body_immune_to_acid");
 		this.getFlags().add("head_immune_to_acid");
-		this.getFlags().add("lindwurm");
 		this.getFlags().add("isLindwurmTail");
 		this.getAIAgent().addBehavior(this.new("scripts/ai/tactical/behaviors/ai_move_tail_player"));
 	}
@@ -246,7 +243,7 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 
 	function onDamageReceived( _attacker, _skill, _hitInfo )
 	{
-		if (!this.isAlive())
+		if (!this.isAlive() || !this.isPlacedOnMap())
 		{
 			return 0;
 		}
@@ -256,17 +253,32 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 			return 0;
 		}
 
+		if (typeof _attacker == "instance")
+		{
+			_attacker = _attacker.get();
+		}
+
 		_hitInfo.BodyPart = this.Const.BodyPart.Body;
 
-		if (_attacker != null && _attacker.isPlayerControlled() && !this.isPlayerControlled())
+		if (_attacker != null && _attacker.isAlive() && _attacker.isPlayerControlled() && !this.isPlayerControlled())
 		{
 			this.setDiscovered(true);
 			this.getTile().addVisibilityForFaction(this.Const.Faction.Player);
+			this.getTile().addVisibilityForCurrentEntity();
 		}
 
-		local p = this.m.Body.m.Skills.buildPropertiesForBeingHit(_attacker, _skill, _hitInfo.BodyPart);
-		_hitInfo.DamageRegular *= p.DamageReceivedRegularMult * p.DamageReceivedTotalMult;
-		_hitInfo.DamageArmor *= p.DamageReceivedArmorMult * p.DamageReceivedTotalMult;
+		local self = this.getBody();
+		local p = self.getSkills().buildPropertiesForBeingHit(_attacker, _skill, _hitInfo);
+		this.getItems().onBeforeDamageReceived(_attacker, _skill, _hitInfo, p);
+		local dmgMult = p.DamageReceivedTotalMult;
+
+		if (_skill != null)
+		{
+			dmgMult = dmgMult * (_skill.isRanged() ? p.DamageReceivedRangedMult : p.DamageReceivedMeleeMult);
+		}
+
+		_hitInfo.DamageRegular *= p.DamageReceivedRegularMult * dmgMult;
+		_hitInfo.DamageArmor *= p.DamageReceivedArmorMult * dmgMult;
 		local armor = 0;
 		local armorDamage = 0;
 
@@ -279,24 +291,25 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 		}
 
 		_hitInfo.DamageFatigue *= p.FatigueEffectMult;
-		this.m.Body.m.Fatigue = this.Math.min(this.getFatigueMax(), this.Math.round(this.m.Body.m.Fatigue + _hitInfo.DamageFatigue * p.FatigueReceivedPerHitMult));
+		this.setFatigue(this.Math.min(this.getFatigueMax(), this.Math.round(this.getFatigue() + _hitInfo.DamageFatigue * p.FatigueReceivedPerHitMult)));
 		local damage = 0;
-		damage = damage + this.Math.maxf(0.0, _hitInfo.DamageRegular * _hitInfo.DamageDirect - armor * this.Const.Combat.ArmorDirectDamageMitigationMult);
+		damage = damage + this.Math.maxf(0.0, _hitInfo.DamageRegular * _hitInfo.DamageDirect * p.DamageReceivedDirectMult - armor * this.Const.Combat.ArmorDirectDamageMitigationMult);
 
 		if (armor <= 0 || _hitInfo.DamageDirect >= 1.0)
 		{
-			damage = damage + this.Math.max(0, _hitInfo.DamageRegular * this.Math.maxf(0.0, 1.0 - _hitInfo.DamageDirect) - armorDamage);
+			damage = damage + this.Math.max(0, _hitInfo.DamageRegular * this.Math.maxf(0.0, 1.0 - _hitInfo.DamageDirect * p.DamageReceivedDirectMult) - armorDamage);
 		}
 
 		damage = damage * _hitInfo.BodyDamageMult;
-		damage = this.Math.max(0, this.Math.max(damage, this.Math.min(_hitInfo.DamageMinimum, _hitInfo.DamageMinimum * p.DamageReceivedTotalMult)));
+		damage = this.Math.max(0, this.Math.max(this.Math.round(damage), this.Math.min(this.Math.round(_hitInfo.DamageMinimum), this.Math.round(_hitInfo.DamageMinimum * p.DamageReceivedTotalMult))));
 		_hitInfo.DamageInflictedHitpoints = damage;
-		this.m.Body.m.Skills.onDamageReceived(_attacker, _hitInfo.DamageInflictedHitpoints, _hitInfo.DamageInflictedArmor);
+		self.m.Skills.onDamageReceived(_attacker, _hitInfo.DamageInflictedHitpoints, _hitInfo.DamageInflictedArmor);
+		this.m.Skills.onDamageReceived(_attacker, _hitInfo.DamageInflictedHitpoints, _hitInfo.DamageInflictedArmor);
 		this.m.Racial.onDamageReceived(_attacker, _hitInfo.DamageInflictedHitpoints, _hitInfo.DamageInflictedArmor);
 
-		if (armorDamage > 0 && !this.isHiddenToPlayer())
+		if (armorDamage > 0 && !this.isHiddenToPlayer() && _hitInfo.IsPlayingArmorSound)
 		{
-			local armorHitSound = this.m.Items.getAppearance().ImpactSound[_hitInfo.BodyPart];
+			local armorHitSound = this.getItems().getAppearance().ImpactSound[_hitInfo.BodyPart];
 
 			if (armorHitSound.len() > 0)
 			{
@@ -305,25 +318,39 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 
 			if (damage < this.Const.Combat.PlayPainSoundMinDamage)
 			{
-				this.playSound(this.Const.Sound.ActorEvent.NoDamageReceived, this.Const.Sound.Volume.Actor * this.m.SoundVolume[this.Const.Sound.ActorEvent.NoDamageReceived]);
+				this.playSound(this.Const.Sound.ActorEvent.NoDamageReceived, this.Const.Sound.Volume.Actor * this.m.SoundVolume[this.Const.Sound.ActorEvent.NoDamageReceived] * this.m.SoundVolumeOverall);
 			}
 		}
 
 		if (damage > 0)
 		{
-			if (!this.m.IsAbleToDie && damage >= this.m.Body.m.Hitpoints)
+			if (!this.m.IsAbleToDie && damage >= this.getHitpoints())
 			{
-				this.m.Body.m.Hitpoints = 1;
+				this.setHitpoints(1);
 			}
 			else
 			{
-				this.m.Body.m.Hitpoints = this.Math.round(this.m.Body.m.Hitpoints - damage);
+				this.setHitpoints(this.Math.round(this.getHitpoints() - damage));
+			}
+		}
+
+		if (this.getHitpoints() <= 0)
+		{
+			local skill = self.m.Skills.getSkillByID("perk.nine_lives");
+
+			if (skill != null && (!skill.isSpent() || skill.getLastFrameUsed() == this.Time.getFrame()))
+			{
+				self.getSkills().removeByType(this.Const.SkillType.DamageOverTime);
+				this.getSkills().removeByType(this.Const.SkillType.DamageOverTime);
+				this.setHitpoints(this.Math.rand(5, 10));
+				skill.setSpent(true);
+				this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(self) + " has nine lives!");
 			}
 		}
 
 		local fatalityType = this.Const.FatalityType.None;
 
-		if (this.m.Body.m.Hitpoints <= 0)
+		if (this.getHitpoints() <= 0)
 		{
 			this.m.IsDying = true;
 
@@ -348,16 +375,16 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 		{
 			local overflowDamage = _hitInfo.DamageArmor;
 
-			if (this.m.Body.m.BaseProperties.Armor[_hitInfo.BodyPart] != 0)
+			if (this.getBaseProperties().Armor[_hitInfo.BodyPart] != 0)
 			{
-				overflowDamage = overflowDamage - this.m.Body.m.BaseProperties.Armor[_hitInfo.BodyPart] * this.m.Body.m.BaseProperties.ArmorMult[_hitInfo.BodyPart];
-				this.m.Body.m.BaseProperties.Armor[_hitInfo.BodyPart] = this.Math.max(0, this.m.Body.m.BaseProperties.Armor[_hitInfo.BodyPart] * this.m.Body.m.BaseProperties.ArmorMult[_hitInfo.BodyPart] - _hitInfo.DamageArmor);
-				this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(this) + "\'s natural armor is hit for [b]" + this.Math.floor(_hitInfo.DamageArmor) + "[/b] damage");
+				overflowDamage = overflowDamage - this.getBaseProperties().Armor[_hitInfo.BodyPart] * this.getBaseProperties().ArmorMult[_hitInfo.BodyPart];
+				this.getBaseProperties().Armor[_hitInfo.BodyPart] = this.Math.max(0, this.getBaseProperties().Armor[_hitInfo.BodyPart] * this.getBaseProperties().ArmorMult[_hitInfo.BodyPart] - _hitInfo.DamageArmor);
+				this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(self) + "\'s armor is hit for [b]" + this.Math.floor(_hitInfo.DamageArmor) + "[/b] damage");
 			}
 
 			if (overflowDamage > 0)
 			{
-				this.m.Items.onDamageReceived(overflowDamage, fatalityType, _hitInfo.BodyPart == this.Const.BodyPart.Body ? this.Const.ItemSlot.Body : this.Const.ItemSlot.Head, _attacker);
+				this.getItems().onDamageReceived(overflowDamage, fatalityType, _hitInfo.BodyPart == this.Const.BodyPart.Body ? this.Const.ItemSlot.Body : this.Const.ItemSlot.Head, _attacker);
 			}
 		}
 
@@ -368,19 +395,16 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 
 		if (damage <= 0 && armorDamage >= 0)
 		{
-			if (!this.isHiddenToPlayer())
+			if ((this.m.IsFlashingOnHit || this.getCurrentProperties().IsStunned || this.getCurrentProperties().IsRooted) && !this.isHiddenToPlayer() && _attacker != null && _attacker.isAlive())
 			{
 				local layers = this.m.ShakeLayers[_hitInfo.BodyPart];
 				local recoverMult = 1.0;
-
-				if (_attacker != null && _attacker.isAlive())
-				{
-					this.Tactical.getShaker().cancel(this);
-					this.Tactical.getShaker().shake(this, _attacker.getTile(), this.m.IsShakingOnHit ? 2 : 3, this.Const.Combat.ShakeEffectArmorHitColor, this.Const.Combat.ShakeEffectArmorHitHighlight, this.Const.Combat.ShakeEffectArmorHitFactor, this.Const.Combat.ShakeEffectArmorSaturation, layers, recoverMult);
-				}
+				this.Tactical.getShaker().cancel(this);
+				this.Tactical.getShaker().shake(this, _attacker.getTile(), this.m.IsShakingOnHit ? 2 : 3, this.Const.Combat.ShakeEffectArmorHitColor, this.Const.Combat.ShakeEffectArmorHitHighlight, this.Const.Combat.ShakeEffectArmorHitFactor, this.Const.Combat.ShakeEffectArmorSaturation, layers, recoverMult);
 			}
 
-			this.m.Body.m.Skills.update();
+			this.m.Skills.update();
+			self.m.Skills.update();
 			this.setDirty(true);
 			return 0;
 		}
@@ -390,7 +414,7 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 			this.spawnBloodDecals(this.getTile());
 		}
 
-		if (this.m.Body.m.Hitpoints <= 0)
+		if (this.getHitpoints() <= 0)
 		{
 			this.spawnBloodDecals(this.getTile());
 			this.kill(_attacker, _skill, fatalityType);
@@ -403,53 +427,89 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 				this.spawnBloodEffect(this.getTile(), mult);
 			}
 
-			if (this.m.Body.m.CurrentProperties.IsAffectedByInjuries && this.m.IsAbleToDie && damage >= this.Const.Combat.InjuryMinDamage && this.m.Body.m.CurrentProperties.ThresholdToReceiveInjuryMult != 0 && _hitInfo.InjuryThresholdMult != 0 && _hitInfo.Injuries != null)
+			if (this.Tactical.State.getStrategicProperties() != null && this.Tactical.State.getStrategicProperties().IsArenaMode && _attacker != null && _attacker.getID() != this.getID())
+			{
+				local mult = damage / this.getHitpointsMax();
+
+				if (mult >= 0.75)
+				{
+					this.Sound.play(this.Const.Sound.ArenaBigHit[this.Math.rand(0, this.Const.Sound.ArenaBigHit.len() - 1)], this.Const.Sound.Volume.Tactical * this.Const.Sound.Volume.Arena);
+				}
+				else if (mult >= 0.25 || this.Math.rand(1, 100) <= 20)
+				{
+					this.Sound.play(this.Const.Sound.ArenaHit[this.Math.rand(0, this.Const.Sound.ArenaHit.len() - 1)], this.Const.Sound.Volume.Tactical * this.Const.Sound.Volume.Arena);
+				}
+			}
+
+			if (this.getCurrentProperties().IsAffectedByInjuries && this.m.IsAbleToDie && damage >= this.Const.Combat.InjuryMinDamage && this.getCurrentProperties().ThresholdToReceiveInjuryMult != 0 && _hitInfo.InjuryThresholdMult != 0 && _hitInfo.Injuries != null)
 			{
 				local potentialInjuries = [];
-				local bonus = _hitInfo.BodyPart == this.Const.BodyPart.Head ? 1.25 : 1.0;
+				local bonus = 1.0;
 
 				foreach( inj in _hitInfo.Injuries )
 				{
-					if (inj.Threshold * _hitInfo.InjuryThresholdMult * this.Const.Combat.InjuryThresholdMult * this.m.Body.m.CurrentProperties.ThresholdToReceiveInjuryMult * bonus <= damage / (this.getHitpointsMax() * 1.0))
+					if (inj.Threshold * _hitInfo.InjuryThresholdMult * this.Const.Combat.InjuryThresholdMult * this.getCurrentProperties().ThresholdToReceiveInjuryMult * bonus <= damage / (this.getHitpointsMax() * 1.0))
 					{
-						if (!this.m.Body.m.Skills.hasSkill(inj.ID))
+						if (!self.getSkills().hasSkill(inj.ID) && this.m.ExcludedInjuries.find(inj.ID) == null)
 						{
 							potentialInjuries.push(inj.Script);
 						}
 					}
 				}
 
-				if (potentialInjuries.len() != 0)
+				local appliedInjury = false;
+
+				while (potentialInjuries.len() != 0)
 				{
-					local injury = this.new("scripts/skills/" + potentialInjuries[this.Math.rand(0, potentialInjuries.len() - 1)]);
-					this.m.Body.m.Skills.add(injury);
+					local r = this.Math.rand(0, potentialInjuries.len() - 1);
+					local injury = this.new("scripts/skills/" + potentialInjuries[r]);
 
-					if (this.isPlayerControlled() && this.isKindOf(this, "player"))
+					if (injury.isValid(this))
 					{
-						this.worsenMood(this.Const.MoodChange.Injury, "Suffered an injury");
+						self.getSkills().add(injury);
+
+						if (this.isPlayerControlled() && this.isKindOf(this, "player"))
+						{
+							self.worsenMood(this.Const.MoodChange.Injury, "Suffered an injury");
+						}
+
+						if (this.isPlayerControlled() || !this.isHiddenToPlayer())
+						{
+							this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(self) + "\'s " + this.Const.Strings.BodyPartName[_hitInfo.BodyPart] + " is hit for [b]" + this.Math.floor(damage) + "[/b] damage and suffers " + injury.getNameOnly() + "!");
+						}
+
+						appliedInjury = true;
+						break;
 					}
-
-					if (this.isPlayerControlled() || !this.isHiddenToPlayer())
+					else
 					{
-						this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(this) + "\'s " + this.Const.Strings.BodyPartName[_hitInfo.BodyPart] + " is hit for [b]" + this.Math.floor(damage) + "[/b] damage and suffers " + injury.getNameOnly() + "!");
+						potentialInjuries.remove(r);
 					}
 				}
-				else if (damage > 0 && !this.isHiddenToPlayer())
+
+				if (!appliedInjury)
 				{
-					this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(this) + "\'s " + this.Const.Strings.BodyPartName[_hitInfo.BodyPart] + " is hit for [b]" + this.Math.floor(damage) + "[/b] damage");
+					if (damage > 0 && !this.isHiddenToPlayer())
+					{
+						this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(self) + "\'s " + this.Const.Strings.BodyPartName[_hitInfo.BodyPart] + " is hit for [b]" + this.Math.floor(damage) + "[/b] damage");
+					}
 				}
 			}
 			else if (damage > 0 && !this.isHiddenToPlayer())
 			{
-				this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(this) + "\'s " + this.Const.Strings.BodyPartName[_hitInfo.BodyPart] + " is hit for [b]" + this.Math.floor(damage) + "[/b] damage");
+				this.Tactical.EventLog.logEx(this.Const.UI.getColorizedEntityName(self) + "\'s " + this.Const.Strings.BodyPartName[_hitInfo.BodyPart] + " is hit for [b]" + this.Math.floor(damage) + "[/b] damage");
 			}
 
-			if (this.m.Body.m.MoraleState != this.Const.MoraleState.Ignore && damage > this.Const.Morale.OnHitMinDamage && this.getCurrentProperties().IsAffectedByLosingHitpoints)
+			if (this.getMoraleState() != this.Const.MoraleState.Ignore && damage > this.Const.Morale.OnHitMinDamage && this.getCurrentProperties().IsAffectedByLosingHitpoints)
 			{
-				this.checkMorale(-1, this.Const.Morale.OnHitBaseDifficulty * (1.0 - this.getHitpoints() / this.getHitpointsMax()), this.Const.MoraleCheckType.Default, "", true);
+				if (!this.isPlayerControlled() || (!this.m.Skills.hasSkill("effects.berserker_mushrooms") && !self.getSkills().hasSkill("effects.berserker_mushrooms")))
+				{
+					this.checkMorale(-1, this.Const.Morale.OnHitBaseDifficulty * (1.0 - this.getHitpoints() / this.getHitpointsMax()) - (_attacker != null && _attacker.getID() != this.getID() ? _attacker.getCurrentProperties().ThreatOnHit : 0), this.Const.MoraleCheckType.Default, "", true);
+				}
 			}
 
-			this.m.Body.m.Skills.onAfterDamageReceived();
+			this.getSkills().onAfterDamageReceived();
+			self.getSkills().onAfterDamageReceived();
 
 			if (damage >= this.Const.Combat.PlayPainSoundMinDamage && this.m.Sound[this.Const.Sound.ActorEvent.DamageReceived].len() > 0)
 			{
@@ -460,22 +520,19 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 					volume = damage / this.Const.Combat.PlayPainVolumeMaxDamage;
 				}
 
-				this.playSound(this.Const.Sound.ActorEvent.DamageReceived, this.Const.Sound.Volume.Actor * this.m.SoundVolume[this.Const.Sound.ActorEvent.DamageReceived] * volume, this.m.SoundPitch);
+				this.playSound(this.Const.Sound.ActorEvent.DamageReceived, this.Const.Sound.Volume.Actor * this.m.SoundVolume[this.Const.Sound.ActorEvent.DamageReceived] * this.m.SoundVolumeOverall * volume, this.m.SoundPitch);
 			}
 
-			this.m.Body.m.Skills.update();
+			self.m.Skills.update();
+			this.m.Skills.update();
 			this.onUpdateInjuryLayer();
 
-			if (!this.isHiddenToPlayer())
+			if ((this.m.IsFlashingOnHit || this.getCurrentProperties().IsStunned || this.getCurrentProperties().IsRooted) && !this.isHiddenToPlayer() && _attacker != null && _attacker.isAlive())
 			{
 				local layers = this.m.ShakeLayers[_hitInfo.BodyPart];
 				local recoverMult = this.Math.minf(1.5, this.Math.maxf(1.0, damage * 2.0 / this.getHitpointsMax()));
-
-				if (_attacker != null && _attacker.isAlive())
-				{
-					this.Tactical.getShaker().cancel(this);
-					this.Tactical.getShaker().shake(this, _attacker.getTile(), this.m.IsShakingOnHit ? 2 : 3, this.Const.Combat.ShakeEffectHitpointsHitColor, this.Const.Combat.ShakeEffectHitpointsHitHighlight, this.Const.Combat.ShakeEffectHitpointsHitFactor, this.Const.Combat.ShakeEffectHitpointsSaturation, layers, recoverMult);
-				}
+				this.Tactical.getShaker().cancel(this);
+				this.Tactical.getShaker().shake(this, _attacker.getTile(), this.m.IsShakingOnHit ? 2 : 3, this.Const.Combat.ShakeEffectHitpointsHitColor, this.Const.Combat.ShakeEffectHitpointsHitHighlight, this.Const.Combat.ShakeEffectHitpointsHitFactor, this.Const.Combat.ShakeEffectHitpointsSaturation, layers, recoverMult);
 			}
 
 			this.setDirty(true);
@@ -492,7 +549,7 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 			local decal;
 			this.m.IsCorpseFlipped = flip;
 			local body = this.getSprite("body");
-			decal = _tile.spawnDetail("bust_lindwurm_tail_01_dead", this.Const.Tactical.DetailFlag.Corpse, flip);
+			decal = _tile.spawnDetail("bust_stollwurm_tail_01_dead", this.Const.Tactical.DetailFlag.Corpse, flip);
 			decal.Color = body.Color;
 			decal.Saturation = body.Saturation;
 			decal.Scale = 0.95;
@@ -538,20 +595,28 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 		{
 			this.m.Body = this.Tactical.getEntityByID(this.m.ParentID);
 			this.m.Items = this.m.Body.m.Items;
+			this.m.BaseProperties = this.m.Body.m.BaseProperties;
+		}
+		
+		this.actor.onInit();
+
+		if (this.m.Body != null)
+		{
+			this.m.BaseProperties = this.m.Body.m.BaseProperties;
+		}
+		else
+		{
+			local b = this.m.BaseProperties;
+			b.setValues(this.Const.Tactical.Actor.Lindwurm);
+			b.IsAffectedByNight = false;
+			b.IsAffectedByRain = false;
+			b.IsImmuneToKnockBackAndGrab = true;
+			b.IsImmuneToStun = true;
+			b.IsMovable = false;
+			b.IsImmuneToDisarm = true;
 		}
 
-		this.actor.onInit();
 		local b = this.m.BaseProperties;
-		b.setValues(this.Const.Tactical.Actor.LegendStollwurm);
-		b.IsAffectedByNight = false;
-		b.IsImmuneToKnockBackAndGrab = true;
-		b.IsImmuneToStun = true;
-		b.IsMovable = false;
-		b.IsImmuneToDisarm = true;
-		b.IsAffectedByRain = false;
-		b.MeleeSkill += 10;
-		b.DamageTotalMult += 0.1;
-
 		this.m.ActionPoints = b.ActionPoints;
 		this.m.Hitpoints = b.Hitpoints;
 		this.m.CurrentProperties = clone b;
@@ -586,6 +651,7 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 		this.m.Skills.add(this.new("scripts/skills/actives/tail_slam_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/tail_slam_big_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/tail_slam_split_skill"));
+		this.m.Skills.add(this.new("scripts/skills/actives/tail_slam_zoc_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/legend_stollwurm_move_tail_skill"));
 	}
 
@@ -613,4 +679,9 @@ this.stollwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast
 	}
 
 });
+
+
+
+
+
 

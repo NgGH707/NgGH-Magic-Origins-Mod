@@ -29,5 +29,18 @@ this.mod_RSH_night_vision <- this.inherit("scripts/skills/skill", {
 		_properties.IsAffectedByNight = false;
 	}
 
+	function onCombatStarted()
+	{
+		if (this.m.IsForceEnabled)
+		{
+		}
+		else if (this.getItem() == null)
+		{
+			return;
+		}
+
+		this.getContainer().removeByID("special.night");
+	}
+
 });
 

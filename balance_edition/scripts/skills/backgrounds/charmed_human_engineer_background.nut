@@ -4,6 +4,7 @@ this.charmed_human_engineer_background <- this.inherit("scripts/skills/backgroun
 		Info = null,
 		AttMods = null,
 		Skills = null,
+		Perks = null,
 		AdditionalPerks = null,
 	},
 	
@@ -83,7 +84,8 @@ this.charmed_human_engineer_background <- this.inherit("scripts/skills/backgroun
 		this.m.Entity = _human;
 		this.m.Info = this.Const.CharmedSlave.addMissingData(_info, this.m.Entity);
 		this.m.AttMods = this.Const.CharmedSlave.getStatsModifiers(type);
-		this.m.Skills = this.Const.CharmedSlave.getSpecialPerks(type);
+		this.m.Perks = this.Const.CharmedSlave.getSpecialPerks(type);
+		this.m.Skills = this.Const.CharmedSlave.getSpecialSkills(type);
 		this.m.Icon = "ui/backgrounds/background_charmed_" + this.Const.CharmedSlave.getIconName(type) + ".png";
 		this.Const.HexenOrigin.CharmedSlave.processingCharmedBackground(this.m.Info, this);
 	}
@@ -160,6 +162,18 @@ this.charmed_human_engineer_background <- this.inherit("scripts/skills/backgroun
 		b.Initiative += this.Math.rand(attributes.Initiative[0], attributes.Initiative[1]);
 
 		this.getContainer().getActor().m.CurrentProperties = clone b;
+		this.onAfterSetUp();
+	}
+
+	function onAfterSetUp()
+	{
+		if (this.m.Perks != null)
+		{
+			foreach (i, Const in this.m.Perks )
+			{
+				this.World.Assets.getOrigin().addScenarioPerk(this, this.Const.Perks.PerkDefs[Const], i);
+			}
+		}
 	}
 
 	function onBuildDescription()

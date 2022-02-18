@@ -340,7 +340,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Vampire] = {
 		Description = "",
 		Icon = "icon_corpse_vampire_70x70",
-		Value = 250,
+		Value = 0,
 		IsHeadLess = false,
 		IsEdible = false,
 		Loots = [
@@ -354,7 +354,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendVampireLord] = {
 		Description = "",
 		Icon = "icon_corpse_vampire_70x70",
-		Value = 350,
+		Value = 0,
 		IsHeadLess = false,
 		IsEdible = false,
 		Loots = [
@@ -368,7 +368,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendDemonHound] = {
 		Description = "",
 		Icon = "icon_corpse_demon_hound_70x70",
-		Value = 500,
+		Value = 0,
 		IsHeadLess = false,
 		IsEdible = false,
 		Loots = [
@@ -422,7 +422,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Ghoul] = {
 		Description = "",
 		Icon = "icon_corpse_ghoul_70x70",
-		Value = 500,
+		Value = 0,
 		MedicinePerDay = 2,
 		Loots = [
 			{
@@ -487,7 +487,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.CaravanDonkey] = {
 		Description = "",
 		Icon = "icon_corpse_donkey_70x70",
-		Value = 250,
+		Value = 0,
 		MedicinePerDay = 1,
 		Loots = [
 			{
@@ -499,7 +499,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.MilitaryDonkey] = {
 		Description = "",
 		Icon = "icon_corpse_donkey_70x70",
-		Value = 250,
+		Value = 0,
 		MedicinePerDay = 1,
 		Loots = [
 			{
@@ -571,7 +571,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Wolf] = {
 		Description = "",
 		Icon = "icon_corpse_wolf_70x70",
-		Value = 300,
+		Value = 0,
 		MedicinePerDay = 1,
 		Loots = [
 			{
@@ -583,7 +583,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Wardog] = {
 		Description = "",
 		Icon = "icon_corpse_wardog_70x70",
-		Value = 100,
+		Value = 0,
 		MedicinePerDay = 1,
 		Loots = [
 			{
@@ -595,7 +595,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.ArmoredWardog] = {
 		Description = "",
 		Icon = "icon_corpse_wardog_70x70",
-		Value = 100,
+		Value = 0,
 		MedicinePerDay = 1,
 		Loots = [
 			{
@@ -607,7 +607,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Direwolf] = {
 		Description = "",
 		Icon = "icon_corpse_direwolf_70x70",
-		Value = 500,
+		Value = 0,
 		MedicinePerDay = 1,
 		Loots = [
 			{
@@ -624,7 +624,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Lindwurm] = {
 		Description = "",
 		Icon = "icon_corpse_lindwurm_70x70",
-		Value = 1200,
+		Value = 0,
 		MedicinePerDay = 7,
 		Loots = [
 			{
@@ -641,7 +641,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Unhold] = {
 		Description = "",
 		Icon = "icon_corpse_unhold_70x70",
-		Value = 750,
+		Value = 0,
 		MedicinePerDay = 5,
 		Loots = [
 			{
@@ -658,7 +658,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.UnholdFrost] = {
 		Description = "",
 		Icon = "icon_corpse_unhold_frost_70x70",
-		Value = 900,
+		Value = 0,
 		MedicinePerDay = 5,
 		Loots = [
 			{
@@ -675,7 +675,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.UnholdBog] = {
 		Description = "",
 		Icon = "icon_corpse_unhold_bog_70x70",
-		Value = 800,
+		Value = 0,
 		MedicinePerDay = 5,
 		Loots = [
 			{
@@ -692,7 +692,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Spider] = {
 		Description = "",
 		Icon = "icon_corpse_spider_70x70",
-		Value = 300,
+		Value = 0,
 		MedicinePerDay = 1,
 		Loots = [
 			{
@@ -712,7 +712,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Alp] = {
 		Description = "",
 		Icon = "icon_corpse_alp_70x70",
-		Value = 700,
+		Value = 0,
 		MedicinePerDay = 0,
 		Loots = [
 			{
@@ -725,7 +725,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Hexe] = {
 		Description = "",
 		Icon = "icon_corpse_hexe_70x70",
-		Value = 100,
+		Value = 0,
 		MedicinePerDay = 2,
 		Loots = [
 			{
@@ -742,7 +742,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Schrat] = {
 		Description = "",
 		Icon = "icon_corpse_schrat_70x70",
-		Value = 1000,
+		Value = 0,
 		MedicinePerDay = 0,
 		IsEdible = false,
 		Loots = [
@@ -761,7 +761,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.SchratSmall] = {
 		Description = "",
 		Icon = "icon_corpse_schrat_small_70x70",
-		Value = 50,
+		Value = 0,
 		MedicinePerDay = 0,
 		IsEdible = false,
 		Loots = [
@@ -775,7 +775,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Kraken] = {
 		Description = "",
 		Icon = "icon_corpse_kraken_70x70",
-		Value = 5000,
+		Value = 9999,
 		MedicinePerDay = 15,
 		Loots = [
 			{
@@ -799,7 +799,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.BarbarianUnhold] = {
 		Description = "",
 		Icon = "icon_corpse_unhold_70x70",
-		Value = 750,
+		Value = 0,
 		MedicinePerDay = 5,
 		Loots = [
 			{
@@ -816,7 +816,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.BarbarianUnholdFrost] = {
 		Description = "",
 		Icon = "icon_corpse_unhold_frost_70x70",
-		Value = 900,
+		Value = 0,
 		MedicinePerDay = 5,
 		Loots = [
 			{
@@ -833,7 +833,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Warhound] = {
 		Description = "",
 		Icon = "icon_corpse_warhound_70x70",
-		Value = 125,
+		Value = 0,
 		MedicinePerDay = 1,
 		Loots = [
 			{
@@ -862,7 +862,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Serpent] = {
 		Description = "",
 		Icon = "icon_corpse_serpent_70x70",
-		Value = 400,
+		Value = 0,
 		MedicinePerDay = 2,
 		Loots = [
 			{
@@ -879,7 +879,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.SandGolem] = {
 		Description = "",
 		Icon = "icon_corpse_sand_golem_70x70",
-		Value = 50,
+		Value = 0,
 		MedicinePerDay = 0,
 		IsEdible = false,
 		Loots = [
@@ -898,7 +898,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.Hyena] = {
 		Description = "",
 		Icon = "icon_corpse_hyena_70x70",
-		Value = 400,
+		Value = 0,
 		MedicinePerDay = 2,
 		Loots = [
 			{
@@ -915,7 +915,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendCat] = {
 		Description = "",
 		Icon = "icon_corpse_cat_70x70",
-		Value = 5,
+		Value = 0,
 		MedicinePerDay = 1,
 		Loots = [
 			{
@@ -951,7 +951,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendWhiteDirewolf] = {
 		Description = "",
 		Icon = "icon_corpse_white_direwolf_70x70",
-		Value = 1200,
+		Value = 0,
 		MedicinePerDay = 4,
 		Loots = [
 			{
@@ -968,7 +968,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendSkinGhoul] = {
 		Description = "",
 		Icon = "icon_corpse_skin_ghoul_70x70",
-		Value = 900,
+		Value = 0,
 		MedicinePerDay = 3,
 		Loots = [
 			{
@@ -985,7 +985,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendStollwurm] = {
 		Description = "",
 		Icon = "icon_corpse_stollwurm_70x70",
-		Value = 3500,
+		Value = 0,
 		MedicinePerDay = 10,
 		Loots = [
 			{
@@ -1002,7 +1002,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendRockUnhold] = {
 		Description = "",
 		Icon = "icon_corpse_unhold_rock_70x70",
-		Value = 1800,
+		Value = 0,
 		MedicinePerDay = 9,
 		Loots = [
 			{
@@ -1019,7 +1019,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendRedbackSpider] = {
 		Description = "",
 		Icon = "icon_corpse_redback_70x70",
-		Value = 900,
+		Value = 0,
 		MedicinePerDay = 5,
 		Loots = [
 			{
@@ -1032,7 +1032,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendDemonAlp] = {
 		Description = "",
 		Icon = "icon_corpse_demon_alp_70x70",
-		Value = 1500,
+		Value = 0,
 		MedicinePerDay = 0,
 		Loots = [
 			{
@@ -1045,7 +1045,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendHexeLeader] = {
 		Description = "",
 		Icon = "icon_corpse_hexe_leader_70x70",
-		Value = 350,
+		Value = 0,
 		MedicinePerDay = 2,
 		Loots = [
 			{
@@ -1062,7 +1062,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendGreenwoodSchrat] = {
 		Description = "",
 		Icon = "icon_corpse_schrat_green_70x70",
-		Value = 2000,
+		Value = 0,
 		MedicinePerDay = 0,
 		IsEdible = false,
 		Loots = [
@@ -1081,7 +1081,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendGreenwoodSchratSmall] = {
 		Description = "",
 		Icon = "icon_corpse_schrat_green_small_70x70",
-		Value = 50,
+		Value = 0,
 		MedicinePerDay = 0,
 		IsEdible = false,
 		Loots = [
@@ -1095,7 +1095,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendWhiteWarwolf] = {
 		Description = "",
 		Icon = "icon_corpse_white_direwolf_70x70",
-		Value = 600,
+		Value = 0,
 		MedicinePerDay = 2,
 		Loots = [
 			{
@@ -1112,7 +1112,7 @@ this.getroottable().Nggh_MagicConcept.hookAddCorpseDatabase <- function ()
 	gt.Const.NecroCorpseType[this.Const.EntityType.LegendBear] = {
 		Description = "",
 		Icon = "icon_corpse_bear_70x70",
-		Value = 600,
+		Value = 0,
 		MedicinePerDay = 4,
 		Loots = [
 			{

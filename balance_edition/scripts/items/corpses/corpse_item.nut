@@ -162,16 +162,9 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 				id = 68,
 				type = "text",
 				icon = "ui/icons/fatigue.png",
-				text = "Maximum Fatigue [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.StaminaModifier + "[/color]"
+				text = "Maximum Fatigue [color=" + this.Const.UI.Color.NegativeValue + "]" + this.getStaminaModifier() + "[/color]"
 			});
 		}
-
-		result.push({
-			id = 69,
-			type = "text",
-			icon = "ui/icons/special.png",
-			text = "Can be butchered"
-		});
 
 		return result;
 	}
@@ -193,7 +186,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 
 	function getStaminaModifier()
 	{
-		return this.m.StaminaModifier;
+		return -1 * this.Math.max(1, this.getCondition() / 12.5);
 	}
 
 	function getIcon()
@@ -216,7 +209,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 
 	function getDaysToRot()
 	{
-		return this.Math.max(1, this.Math.floor(this.getConditionPct() / (this.Const.Necro.ConditionLossPerSixHour * 4)));
+		return this.Math.max(1, this.Math.floor(this.getConditionPct() / (this.Const.Necro.ConditionLossPerSixHour * 6)));
 	}
 
 	function isToBeButchered()
@@ -237,6 +230,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 			return false;
 		}
 
+		this.setToBeMaintain(true);
 		this.m.IsToBeButchered = _r;
 		this.m.IsToBeButcheredQueue = _idx;
 		return true;
@@ -259,7 +253,14 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 
 	function setToBeMaintain( _r )
 	{
-		this.m.IsMaintained = _r;
+		if (this.m.MedicinePerDay == 0)
+		{
+			this.m.IsMaintained = false;
+		}
+		else
+		{	
+			this.m.IsMaintained = _r;
+		}
 	}
 
 	function isMaintained()
@@ -335,6 +336,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 				supply.setAmount(this.Math.maxf(1.0, this.getConditionHasBeenProcessed() / conversionRate));
 				supply.m.GoodForDays = supply.m.GoodForDays <= 2 ? this.Math.rand(2, 3) : this.Math.rand(4, supply.m.GoodForDays);
 				supply.m.BoughtAtPrice = this.Math.rand(1, 3) * supply.m.Amount;
+				ret.push(supply);
 			}
 			else
 			{
@@ -383,7 +385,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 
 		if (isInMaintainState)
 		{
-			local requiredMed = this.getMedicinePerDay() / 4;
+			local requiredMed = this.getMedicinePerDay() / 6;
 			local currentMed = this.World.Assets.getMedicine();
 
 			if (currentMed >= requiredMed)
@@ -449,13 +451,12 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 		this.m.Name = _entity.getNameOnly();
 		this.m.IsTail = this.isKindOf(_entity, "lindwurm_tail") || this.isKindOf(_entity, "legend_stollwurm_tail");
 		this.m.ConditionMax = this.m.IsTail ? _entity.getHitpointsMax() * 0.5 : _entity.getHitpointsMax();
-		this.m.StaminaModifier = -1 * this.Math.max(1, this.m.ConditionMax / 12.5);
+		//this.m.StaminaModifier = -1 * this.Math.max(1, this.m.ConditionMax / 12.5);
 		this.m.IsHeadLess = !_corpse.IsHeadAttached;
 		this.m.IsHuman = _entity.getFlags().has("human");
 		this.updateVariant();
 		local isChampion = _entity.m.IsMiniboss;
 		local isLeader = this.Const.Necro.LeaderTypeEnemies.find(_type) != null;
-		//local isLeader = this.Const.Necro.LeaderTypeEnemies.find(_type) != null;
 		local injuries = _entity.getSkills().getAllSkillsOfType(this.Const.SkillType.Injury);
 		local mod = 1.0;
 

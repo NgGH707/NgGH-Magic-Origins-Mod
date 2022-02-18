@@ -4,6 +4,7 @@ this.charmed_orc_background <- this.inherit("scripts/skills/backgrounds/characte
 		Info = null,
 		AttMods = null,
 		Skills = null,
+		Perks = null,
 		AdditionalPerks = null,
 		Food = 2,
 	},
@@ -62,7 +63,8 @@ this.charmed_orc_background <- this.inherit("scripts/skills/backgrounds/characte
 		this.m.Entity = _orc;
 		this.m.Info = this.Const.CharmedSlave.addMissingData(_info, this.m.Entity);
 		this.m.AttMods = this.Const.CharmedSlave.getStatsModifiers(type);
-		this.m.Skills = this.Const.CharmedSlave.getSpecialPerks(type);
+		this.m.Perks = this.Const.CharmedSlave.getSpecialPerks(type);
+		this.m.Skills = this.Const.CharmedSlave.getSpecialSkills(type);
 		this.m.Name = "Charmed " + this.Const.Strings.EntityName[type];
 		this.m.Icon = "ui/backgrounds/" + this.Const.CharmedSlave.getIconName(type);
 		this.Const.HexenOrigin.CharmedSlave.processingCharmedBackground(this.m.Info, this);
@@ -167,6 +169,22 @@ this.charmed_orc_background <- this.inherit("scripts/skills/backgrounds/characte
 		b.Initiative += this.Math.rand(attributes.Initiative[0], attributes.Initiative[1]);
 
 		this.getContainer().getActor().m.CurrentProperties = clone b;
+		this.onAfterSetUp();
+	}
+
+	function onAfterSetUp()
+	{
+		if (this.m.Perks == null)
+		{
+			return;
+		}
+
+		this.m.Perks.extend(this.getContainer().getActor().getSignaturePerks());
+
+		foreach (i, Const in this.m.Perks )
+		{
+			this.World.Assets.getOrigin().addScenarioPerk(this, this.Const.Perks.PerkDefs[Const], i);
+		}
 	}
 
 	function onBuildDescription()
@@ -244,7 +262,8 @@ this.charmed_orc_background <- this.inherit("scripts/skills/backgrounds/characte
 		info.IsExperienced <- true;
 		this.m.Info = this.Const.CharmedSlave.addMissingData(info);
 		this.m.AttMods = this.Const.CharmedSlave.getStatsModifiers(_type);
-		this.m.Skills = this.Const.CharmedSlave.getSpecialPerks(_type);
+		this.m.Perks = this.Const.CharmedSlave.getSpecialPerks(type);
+		this.m.Skills = this.Const.CharmedSlave.getSpecialSkills(type);
 		this.m.Name = "Charmed " + this.Const.Strings.EntityName[_type];
 		this.m.Icon = "ui/backgrounds/" + this.Const.CharmedSlave.getIconName(_type);
 		this.Const.HexenOrigin.CharmedSlave.processingCharmedBackground(this.m.Info, this);

@@ -603,6 +603,7 @@ this.getroottable().Nggh_MagicConcept.hookEffects <- function ()
 	::mods_hookExactClass("skills/effects/swallowed_whole_effect", function(obj) 
 	{
 		obj.m.Link <- null;
+		obj.m.IsSpecialized <- false;
 
 		obj.getLink <- function()
 		{
@@ -642,7 +643,7 @@ this.getroottable().Nggh_MagicConcept.hookEffects <- function ()
 				}
 			];
 
-			if (this.getContainer().hasSkill("perk.nacho_big_tummy"))
+			if (this.m.IsSpecialized)
 			{
 				ret.extend([
 					{
@@ -706,18 +707,24 @@ this.getroottable().Nggh_MagicConcept.hookEffects <- function ()
 
 			return ret;
 		}
+		obj.onAdded <- function()
+		{
+			this.m.IsSpecialized = this.getContainer().hasSkill("perk.nacho_big_tummy")
+		};
 		obj.onUpdate <- function( _properties )
 		{
-			local skill = this.getContainer().getSkillByID("perk.nacho_big_tummy");
+			if (this.m.IsSpecialized) _properties.BraveryMult *= 1.25;
+		};
 
-			if (skill == null)
+		obj.onBeforeDamageReceived <- function( _attacker, _skill, _hitInfo, _properties )
+		{
+			if (_attacker != null && _attacker.getID() == this.getContainer().getActor().getID() || !this.m.IsSpecialized || _skill == null || !_skill.isAttack() || !_skill.isUsingHitchance())
 			{
 				return;
 			}
 
 			_properties.DamageReceivedRegularMult *= 0.85;
-			_properties.BraveryMult *= 1.25;
-		};
+		}
 	});
 
 

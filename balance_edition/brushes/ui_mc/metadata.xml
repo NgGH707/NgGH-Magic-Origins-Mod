@@ -4,6 +4,9 @@
   <sprite id="bust_wraith_fog_01" offsetY="35" width="104" height="142" img="effects\wraith\bust_wraith_fog_01.png" left="-52" right="48" top="-48" bottom="38" />
   <sprite id="true_mind_control" offsetY="35" ic="FFD9DAEC" width="184" height="222" img="effects\true_mind_control.png" left="-32" right="33" top="16" bottom="86" />
   <sprite id="undead_rage_eyes" offsetY="35" ic="FFFFFFFE" width="104" height="142" img="effects\undead_rage_eyes.png" left="-4" right="34" top="7" bottom="29" />
+
+  <sprite id="ghost_mind_control" offsetY="35" ic="FFD9DAEC" width="184" height="222" img="effects\ghost_mind_control.png" left="-23" right="33" top="16" bottom="86" />
+  <sprite id="ghost_possess_eyes" offsetY="35" ic="FFFFFFFE" width="104" height="142" img="effects\ghost_possess_eyes.png" left="-4" right="34" top="7" bottom="29" />
  
   <sprite id="bust_luft" offsetY="35" ic="FF5D5D5B" width="104" height="142" img="entity\bust_helmet_86.png" left="-33" right="55" top="-24" bottom="60" />
   <sprite id="cart_necro" ic="FF2C3C4C" width="135" height="105" img="entity\cart_necro.png" top="-50" bottom="51" />
@@ -35,10 +38,7 @@
   <sprite id="icon_skull_of_death" offsetY="35" ic="FF2A3D4F" width="130" height="142" img="icons\icon_skull_of_death.png" left="6" right="66" top="-60" bottom="10" />
   <sprite id="bust_captive_charm" offsetY="35" ic="FF1D21BE" width="184" height="222" img="effects\bust_charm.png" left="-21" right="25" top="31" bottom="77" />
   <sprite id="eathen_spike" ic="FF294A7A" img="effects\eathen_spike.png" left="-20" right="21" />
-  <sprite id="effect_rune_attack" ic="FF436E6F" img="effects\effect_rune_attack.png" />
-  <sprite id="effect_rune_defense" ic="FF436E6F" img="effects\effect_rune_defense.png" />
-  <sprite id="effect_rune_strenghten" ic="FF436E6F" img="effects\effect_rune_strenghten.png" />
-  
+
   <sprite id="trickster_god_effect_player" width="228" height="260" img="effects\trickster_god_effect.png" top="-60" bottom="106" />
   <sprite id="alp_effect_body_player" width="174" height="214" img="effects\alp_effect_body.png" top="-55" bottom="51" />
   <sprite id="alp_effect_body_player" width="174" height="214" img="effects\alp_effect_body.png" top="-55" bottom="51" />
@@ -94,18 +94,23 @@
   <sprite id="active_mc_09" ic="FF2E326F" img="skills\active_mc_09.png" />
   <sprite id="active_mc_10" ic="FF2E326F" img="skills\active_mc_10.png" />
   <sprite id="active_mc_11" ic="FF2E326F" img="skills\active_mc_11.png" />
-  
+
   <sprite id="active_nacho_vomit" ic="FF2E326F" img="skills\active_nacho_vomit.png" />
   <sprite id="active_alp_hellfire" ic="FF2E326F" img="skills\active_alp_hellfire.png" />
   <sprite id="active_mind_break" ic="FF2E326F" img="skills\active_mind_break.png" />
+
+  <sprite id="active_ghost_phase" ic="FF2E326F" img="skills\active_ghost_phase.png" />
+  <sprite id="active_ghost_possess" ic="FF2E326F" img="skills\active_ghost_possess.png" />
   <sprite id="active_spawn_spider" ic="FF2E326F" img="skills\active_spawn_spider.png" />
   <sprite id="active_spawn_more_spider" ic="FF2E326F" img="skills\active_spawn_more_spider.png" />
   <sprite id="active_more_egg" ic="FF2E326F" img="skills\active_more_egg.png" />
   <sprite id="active_attach_egg" ic="FF2E326F" img="skills\active_attach_egg.png" />
   <sprite id="active_place_egg" ic="FF2E326F" img="skills\active_place_egg.png" />
+
+  <sprite id="racial_ghost" ic="FF2E326F" img="skills\racial_ghost.png" />
+  <sprite id="racial_ghost_mini" offsetY="35" ic="FF2E326F" img="skills\mini\racial_ghost_mini.png" />
   <sprite id="status_effect_eggs" ic="FF2E326F" img="skills\status_effect_eggs.png" />
   <sprite id="status_effect_eggs_mini" offsetY="35" ic="FF2E326F" img="skills\mini\status_effect_eggs_mini.png" />
-  
   <sprite id="status_effect_wolf_rider" ic="FF2E326F" img="skills\status_effect_wolf_rider.png" />
   <sprite id="status_effect_wolf_rider_mini" offsetY="35" ic="FF2E326F" img="skills\mini\status_effect_wolf_rider_mini.png" />
   <sprite id="status_effect_dog_rider" ic="FF2E326F" img="skills\status_effect_dog_rider.png" />
@@ -118,12 +123,10 @@
   <sprite id="perk_madden_mini" offsetY="35" ic="FF2E326F" img="skills\mini\perk_madden_mini.png" />
   <sprite id="perk_energize_meal" ic="FF2E326F" img="skills\perk_energize_meal.png" />
   <sprite id="perk_energize_meal_mini" offsetY="35" ic="FF2E326F" img="skills\mini\perk_energize_meal_mini.png" />
-  
   <sprite id="perk_alp_living_nightmare" ic="FF2E326F" img="skills\perk_alp_living_nightmare.png" />
-
+  
   <sprite id="perk_intimidate" ic="FF2E326F" img="skills\perk_intimidate.png" />
   <sprite id="perk_intimidate_mini" offsetY="35" ic="FF2E326F" img="skills\mini\perk_intimidate_mini.png" />
-  
   <sprite id="status_effect_79_mini" offsetY="35" ic="FF2E326F" img="skills\mini\status_effect_79_mini.png" />
   
   <sprite id="impulse_perk_mini" offsetY="35" ic="FF2E326F" img="skills\mini\impulse_perk_mini.png" />

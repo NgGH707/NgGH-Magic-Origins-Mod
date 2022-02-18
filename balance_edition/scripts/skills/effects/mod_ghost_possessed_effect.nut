@@ -98,7 +98,9 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 					Self = this
 				};
 
-				if (tile.IsVisibleForPlayer)
+				this.onSpawnGhost(info);
+
+				/*if (tile.IsVisibleForPlayer)
 				{
 					this.Tactical.CameraDirector.pushMoveToTileEvent(0, tile, -1, this.onSpawnGhost.bindenv(this), info, 200, this.Const.Tactical.Settings.CameraNextEventDelay);
 					this.Tactical.CameraDirector.addDelay(0.2);
@@ -106,7 +108,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 				else
 				{
 					this.onSpawnGhost(info);
-				}
+				}*/
 			}
 		}
 
@@ -117,6 +119,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 
 		local actor = this.getContainer().getActor();
 		actor.getSprite("status_hex").Visible = false;
+		actor.getSprite("status_sweat").Visible = false;
 
 		if (this.m.OriginalAgent != null)
 		{
@@ -160,7 +163,16 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 
 			this.Time.scheduleEvent(this.TimeUnit.Virtual, 100, function ( _e )
 			{
-				_skill.m.Possessor.kill(attacker, _skill);
+				local poison = _skill.m.Possessor.getSkills().getSkillByID("effects.holy_water");
+
+				if (poison == null)
+				{
+					_skill.m.Possessor.getSkills().add(this.new("scripts/skills/effects/holy_water_effect"));
+				}
+				else
+				{
+					poison.resetTime();
+				}
 			}.bindenv(_skill), _skill);
 		}
 	}
@@ -168,6 +180,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 	function onPossess()
 	{
 		local actor = this.getContainer().getActor();
+		local isHuman = actor.getFlags().has("human");
 
 		if (actor.isPlayerControlled())
 		{
@@ -176,13 +189,13 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 			actor.getAIAgent().setActor(actor);
 		}
 
-		local sprite = actor.getSprite("status_hex");
-		sprite.setBrush("true_mind_control");
-		sprite.Visible = true;
-
 		actor.setFaction(this.m.PossessorFaction);
 		actor.getSprite("socket").setBrush(this.m.Possessor.getSprite("socket").getBrush().Name);
 
+		local sprite = actor.getSprite("status_hex");
+		sprite.setBrush("ghost_mind_control");
+		sprite.Visible = true;
+		
 		if (actor.isHiddenToPlayer())
 		{
 			sprite.Alpha = 255;
@@ -191,6 +204,23 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		{
 			sprite.Alpha = 0;
 			sprite.fadeIn(1500);
+		}
+
+		if (isHuman)
+		{
+			local sweat = actor.getSprite("status_sweat");
+			sweat.setBrush("ghost_possess_eyes");
+			sweat.Visible = true;
+
+			if (actor.isHiddenToPlayer())
+			{
+				sweat.Alpha = 255;
+			}
+			else
+			{
+				sweat.Alpha = 0;
+				sweat.fadeIn(1500);
+			}
 		}
 
 		local AI = actor.getAIAgent();
@@ -217,7 +247,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 			if (!this.m.IsActivated)
 			{
 				this.m.IsActivated = true;
-				this.m.TurnsLeft = this.m.IsEnhanced ? 4 : 2;
+				this.m.TurnsLeft = this.m.IsEnhanced ? 5 : 3;
 				this.spawnIcon(this.m.Overlay, actor.getTile());
 				this.onPossess();
 			}

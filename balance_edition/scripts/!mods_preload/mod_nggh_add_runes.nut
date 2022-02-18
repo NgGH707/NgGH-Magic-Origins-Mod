@@ -15,7 +15,7 @@ this.getroottable().Nggh_MagicConcept.hookAddRunes <- function ()
 					return false;
 				}
 			}
-			else if ((this.m.RuneVariant >= 11 && this.m.RuneVariant <= 20) || this.m.RuneVariant == 100)
+			else if ((this.m.RuneVariant >= 11 && this.m.RuneVariant <= 20) || this.m.RuneVariant == 100 || this.m.RuneVariant == 107)
 			{
 				target = _actor.getItems().getItemAtSlot(this.Const.ItemSlot.Head);
 

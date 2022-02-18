@@ -8,7 +8,7 @@ this.frenzy_effect <- this.inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "effects.frenzy";
-		this.m.Name = "Frenziness";
+		this.m.Name = "Frenzy";
 		this.m.Icon = "ui/perks/perk_madden.png";
 		this.m.IconMini = "perk_madden_mini";
 		this.m.Overlay = "perk_madden";
@@ -39,7 +39,13 @@ this.frenzy_effect <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/regular_damage.png",
-				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+40%[/color] Attack Damage"
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+25%[/color] Attack Damage"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/melee_skill.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+25%[/color] Melee Skill"
 			},
 			{
 				id = 6,
@@ -51,13 +57,7 @@ this.frenzy_effect <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/melee_defense.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-25%[/color] Melee Defense"
-			},
-			{
-				id = 6,
-				type = "text",
-				icon = "ui/icons/shield_damage.png",
-				text = "Receives [color=" + this.Const.UI.Color.NegativeValue + "]15%[/color] more of any damage"
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-50%[/color] Melee Defense"
 			},
 			{
 				id = 6,
@@ -65,6 +65,18 @@ this.frenzy_effect <- this.inherit("scripts/skills/skill", {
 				icon = "ui/icons/special.png",
 				text = "All skills cost [color=" + this.Const.UI.Color.PositiveValue + "]1[/color] less AP"
 			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Become immune to being stunned"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Become immune to being knocked back or grabbed"
+			}
 			{
 				id = 6,
 				type = "text",
@@ -77,12 +89,14 @@ this.frenzy_effect <- this.inherit("scripts/skills/skill", {
 	function onUpdate( _properties )
 	{
 		_properties.AdditionalActionPointCost -= 1;
-		_properties.MeleeDamageMult *= 1.4;
+		_properties.MeleeDamageMult *= 1.25;
+		_properties.MeleeSkillMult *= 1.25;
 		_properties.InitiativeMult *= 1.5;
-		_properties.DamageReceivedTotalMult *= 1.15;
-		_properties.MeleeDefenseMult *= 0.75;
+		_properties.MeleeDefenseMult *= 0.5;
 		_properties.TargetAttractionMult *= 1.25;
 		_properties.FatalityChanceMult *= 10000.0;
+		_properties.IsImmuneToStun = true;
+		_properties.IsImmuneToKnockBackAndGrab = true;
 	}
 
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
@@ -152,15 +166,10 @@ this.frenzy_effect <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (this.getContainer().hasSkill("effects.nacho_eat"))
+		if (!this.getContainer().hasSkill("effects.nacho_eat"))
 		{
 			this.m.Container.add(this.new("scripts/skills/effects/dazed_effect"));
 			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + " is dazed " + " for 2 turns");
-		}
-		else 
-		{
-		    this.m.Container.add(this.new("scripts/skills/effects/stunned_effect"));
-		    this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + " is stunned " + " for 1 turn");
 		}
 	}
 

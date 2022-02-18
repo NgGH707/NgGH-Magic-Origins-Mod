@@ -111,6 +111,7 @@ this.direwolf_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Items.blockAllSlots();
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = false;
+		this.m.SignaturePerks = ["Pathfinder"];
 	}
 	
 	function getHealthRecoverMult()
@@ -474,11 +475,7 @@ this.direwolf_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
-		local p = this.new("scripts/skills/perks/perk_pathfinder");
-		p.m.IsSerialized = false;
-		this.m.Skills.add(p);
 		this.m.Skills.add(this.new("scripts/skills/actives/werewolf_bite"));
-		this.m.Skills.update();
 	}
 	
 	function onAppearanceChanged( _appearance, _setDirty = true )
@@ -692,7 +689,7 @@ this.direwolf_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	
 	function setAttributeLevelUpValues( _v )
 	{
-		local value = this.Math.rand(3, 5) * 2;
+		local value = this.getLevel() <= 11 ? this.Math.rand(2, 4) * 2 : this.Math.rand(1, 2);
 		local b = this.getBaseProperties();
 		b.Hitpoints += _v.hitpointsIncrease;
 		this.m.Hitpoints += _v.hitpointsIncrease;

@@ -76,6 +76,11 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 				}
 				
 				local hexeOriginMult = 1.0;
+
+				if (bro.getSkills().hasSkill("actives.mc_earthen_puppet"))
+				{
+					hexeOriginMult *= 2.0;
+				}
 				
 				if (bro.getFlags().has("bewitched"))
 				{
@@ -241,6 +246,7 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 				foreach( bro in roster )
 				{
 					local d = bro.getHitpointsMax() - bro.getHitpoints();
+					local NineLives = bro.getSkills().getSkillByID("perk.nine_lives");
 
 					if (bro.getHitpoints() < bro.getHitpointsMax() && ("getHealthRecoverMult" in bro))
 					{
@@ -256,6 +262,11 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 					{
 						hasButcher = true;
 					}
+
+					if (NineLives != null && this.World.getTime().Hours % 12 == 0)
+					{
+						NineLives.restoreLife()
+					}
 				}
 
 				if (this.World.getTime().Hours % 4 == 0)
@@ -266,7 +277,7 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 					}
 				}
 
-				local checkDecay = this.World.getTime().Hours % 6 == 0;
+				local checkDecay = this.World.getTime().Hours % 4 == 0;
 				local stashmaxbutcheringpotential = this.Math.ceil(roster.len() * this.Const.Difficulty.ButcherMult[this.World.Assets.getEconomicDifficulty()] * this.m.HitpointsPerHourMult * 4 * (hasButcher ? 1.25 : 1.0));
 				local stash = this.getStash();
 				local butcher_products = [];
@@ -439,6 +450,234 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 			}
 		});
 	}
+
+
+	::mods_hookNewObject("entity/tactical/tactical_entity_manager", function(obj) 
+	{
+		local ws_onResurrect = obj.onResurrect;
+		obj.onResurrect = function( _info, _force = false )
+		{
+			if (!("PlayerID" in _info))
+			{
+				return ws_onResurrect(_info, _force);
+			}
+			
+			if (this.Tactical.State.m.TacticalDialogScreen.isVisible() || this.Tactical.State.m.TacticalDialogScreen.isAnimating())
+			{
+				this.Time.scheduleEvent(this.TimeUnit.Rounds, 1, this.Tactical.Entities.resurrect, _info);
+				return null;
+			}
+
+			if (this.Tactical.Entities.isCombatFinished() || !_force && this.Tactical.Entities.isEnemyRetreating())
+			{
+				return null;
+			}
+
+			local targetTile = _info.Tile;
+
+			if (!targetTile.IsEmpty)
+			{
+				local knockToTile;
+
+				for( local i = 0; i < this.Const.Direction.COUNT; i = ++i )
+				{
+					if (!targetTile.hasNextTile(i))
+					{
+					}
+					else
+					{
+						local newTile = targetTile.getNextTile(i);
+
+						if (!newTile.IsEmpty || newTile.IsCorpseSpawned)
+						{
+						}
+						else if (newTile.Level > targetTile.Level + 1)
+						{
+						}
+						else
+						{
+							knockToTile = newTile;
+							break;
+						}
+					}
+				}
+
+				if (knockToTile == null)
+				{
+					this.Time.scheduleEvent(this.TimeUnit.Rounds, 1, this.Tactical.Entities.resurrect, _info);
+					return null;
+				}
+
+				this.Tactical.getNavigator().teleport(targetTile.getEntity(), knockToTile, null, null, true);
+
+				if (_info.Tile.IsVisibleForPlayer)
+				{
+					this.Tactical.CameraDirector.pushMoveToTileEvent(0, _info.Tile, -1, this.onResurrect.bindenv(this), _info, 200, this.Const.Tactical.Settings.CameraNextEventDelay);
+					this.Tactical.CameraDirector.addDelay(0.2);
+				}
+				else if (knockToTile.IsVisibleForPlayer)
+				{
+					this.Tactical.CameraDirector.pushMoveToTileEvent(0, knockToTile, -1, this.onResurrect.bindenv(this), _info, 200, this.Const.Tactical.Settings.CameraNextEventDelay);
+					this.Tactical.CameraDirector.addDelay(0.2);
+				}
+				else
+				{
+					this.Tactical.CameraDirector.pushIdleEvent(0, this.onResurrect.bindenv(this), _info, 200, this.Const.Tactical.Settings.CameraNextEventDelay);
+					this.Tactical.CameraDirector.addDelay(0.2);
+				}
+
+				return null;
+			}
+
+			local survivor = this.Tactical.getSurvivorRoster().getAll();
+			local player;
+
+			foreach ( s in survivor )
+			{
+				if (s.getID() == _info.PlayerID)
+				{
+					player = s;
+					break;
+				}
+			}
+
+			if (player == null)
+			{
+				return null;
+			}
+
+			this.Tactical.Entities.removeCorpse(targetTile);
+			targetTile.clear(this.Const.Tactical.DetailFlag.Corpse);
+			targetTile.Properties.remove("Corpse");
+			targetTile.Properties.remove("IsSpawningFlies");
+			this.Const.Movement.AnnounceDiscoveredEntities = false;
+			this.Tactical.addEntityToMap(player, targetTile.Coords.X, targetTile.Coords.Y);
+			this.Const.Movement.AnnounceDiscoveredEntities = true;
+			player.onResurrected(_info);
+			player.riseFromGround();
+
+			if (!player.isHiddenToPlayer())
+			{
+				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(entity) + " has risen from the dead");
+			}
+
+			return player;
+		};
+
+		obj.resurrect = function( _info, _delay = 0 )
+		{
+			if (_info.Type == "" && !("PlayerID" in _info))
+			{
+				return;
+			}
+
+			if (!this.MSU.Tile.canResurrectOnTile(_info.Tile, true))
+			{
+				return;
+			}
+
+			if (_info.Tile.IsVisibleForPlayer)
+			{
+				this.Tactical.CameraDirector.addMoveToTileEvent(_delay, _info.Tile, -1, this.onResurrect.bindenv(this), _info, this.Const.Tactical.Settings.CameraWaitForEventDelay, this.Const.Tactical.Settings.CameraNextEventDelay);
+				this.Tactical.CameraDirector.addDelay(1.5);
+			}
+			else
+			{
+				this.onResurrect(_info);
+
+				if (this.Tactical.TurnSequenceBar.getActiveEntity() != null && this.Tactical.TurnSequenceBar.getActiveEntity().isPlayerControlled())
+				{
+					this.Tactical.TurnSequenceBar.getActiveEntity().setDirty(true);
+				}
+			}
+		}
+	});
+
+
+	//
+	::mods_hookNewObject("scenarios/world/legends_necro_scenario", function(obj) 
+	{
+		local ws_onSpawnAssets = obj.onSpawnAssets;
+		obj.onSpawnAssets = function()
+		{
+			ws_onSpawnAssets();
+			local roster = this.World.getPlayerRoster();
+			local bro;
+
+			foreach ( b in roster.getAll() )
+			{
+				if (b.getSkills().hasSkill("trait.legend_rotten_flesh"))
+				{
+					bro = b;
+					break;
+				}
+			}
+
+			if (bro != null)
+			{
+				roster.remove(bro);
+			}
+			
+			bro = roster.create("scripts/entity/tactical/undead_player");
+			bro.setStartValuesEx();
+			bro.getBackground().m.RawDescription = "Once a proud necromancer, %name% took three pupils under their wing to train the next generation of great necromancers. What %name% did not seeing coming is a heart attack - one that left them like a corpse like they used to command. With this macabre irony in mind, they now serve their students in unlife as little more than fodder.";
+			bro.getBackground().buildDescription(true);
+			bro.setPlaceInFormation(12);
+			bro.setVeteranPerks(2);
+
+			if (this.Math.rand(1, 100) <= 40)
+			{
+				bro = roster.create("scripts/entity/tactical/ghost_player");
+				bro.setStartValuesEx();
+				bro.getBackground().m.RawDescription = "Once a proud necromancer, %name% took three pupils under their wing to train the next generation of great necromancers. What %name% did not seeing coming is a heart attack - one that left them like a corpse like they used to command. With this macabre irony in mind, they now serve their students in unlife as little more than fodder.";
+				bro.getBackground().buildDescription(true);
+				bro.setPlaceInFormation(13);
+				bro.setVeteranPerks(2);
+				this.World.Assets.getStash().add(this.new("scripts/items/misc/petrified_scream_item"));
+			}
+		}
+
+		local ws_onUpdateDraftList = obj.onUpdateDraftList;
+		obj.onUpdateDraftList = function( _list, _gender = null )
+		{
+			ws_onUpdateDraftList(_list, _gender);
+
+			while(_list.find("legend_puppet_background") != null)
+			{
+				_list.remove(_list.find("legend_puppet_background"));
+			}
+		};
+
+		local ws_onHiredByScenario = obj.onHiredByScenario;
+		obj.onHiredByScenario = function( bro )
+		{
+			if (bro.getFlags().has("undead"))
+			{
+				bro.getSprite("socket").setBrush("bust_base_undead");
+			}
+			else
+			{
+				ws_onHiredByScenario(bro);
+			}
+		};
+
+		local ws_onUpdateHiringRoster = obj.onUpdateHiringRoster;
+		obj.onUpdateHiringRoster = function( _roster )
+		{
+			ws_onUpdateHiringRoster(_roster);
+			local chance = 20;
+
+			for (local i = 0; i < 3; ++i)
+			{
+				if (this.Math.rand(1, 100) <= chance)
+				{
+					local undead = _roster.create("scripts/entity/tactical/undead_player");
+					undead.setStartValuesEx();
+					chance -= 5;
+				}
+			}
+		};
+	});
 
 	delete this.HexenHooks.hookPlayerPartyAndAssets;
 }

@@ -24,6 +24,8 @@ this.perk_nighttime <- this.inherit("scripts/skills/skill", {
 		{
 			this.getContainer().add(this.new("scripts/skills/effects/favoured_night_effect"));
 		}
+
+		this.getContainer().removeByID("special.night");
 	}
 
 	function onRemoved()

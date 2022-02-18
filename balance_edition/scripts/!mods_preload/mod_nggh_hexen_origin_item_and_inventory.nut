@@ -1,5 +1,33 @@
 this.getroottable().HexenHooks.hookItem <- function ()
 {
+	this.Const.Items.addNewItemType("Ancient");
+	local pretext = "scripts/";
+	local ancient_weapons = this.IO.enumerateFiles(pretext + "items/weapons/ancient/");
+	ancient_weapons.extend([
+		"items/weapons/named/legend_named_gladius",
+		"items/weapons/named/named_bladed_pike",
+		"items/weapons/named/named_crypt_cleaver",
+		"items/weapons/named/named_khopesh",
+		"items/weapons/named/named_legend_great_khopesh",
+		"items/weapons/named/named_warscythe",
+	]);
+
+	foreach (directory in ancient_weapons)
+	{
+		local idx = directory.find(pretext);
+
+		if (idx != null)
+		{
+			directory = directory.slice(idx + pretext.len());
+		}
+
+		::mods_hookNewObject(directory, function(obj) 
+		{
+			obj.addItemType(this.Const.Items.ItemType.Ancient);
+		});
+	}
+
+	
 	// change this goblin balls sprite so it doesn't look too weird when your goblin is on a mount
 	::mods_hookExactClass("items/weapons/greenskins/goblin_spiked_balls", function(obj) 
 	{
@@ -9,6 +37,37 @@ this.getroottable().HexenHooks.hookItem <- function ()
 			ws_create();
 			this.m.ArmamentIcon = "icon_goblin_balls";
 		}
+	});
+
+
+	//
+	::mods_hookExactClass("items/weapons/greenskins/goblin_staff", function(obj) 
+	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.WeaponType = this.Const.Items.WeaponType.Staff | this.Const.Items.WeaponType.MagicStaff;
+			this.setupCategories();
+		};
+		obj.onEquip = function()
+		{
+			this.weapon.onEquip();
+			local s = this.new("scripts/skills/actives/legend_staff_bash");
+			s.m.FatigueCost = 12;
+			s.m.MaxRange = 1;
+			this.addSkill(s);
+
+			s = this.new("scripts/skills/actives/legend_staff_knock_out");
+			s.m.FatigueCost = 25;
+			s.m.MaxRange = 1;
+			this.addSkill(s);
+
+			if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+			{
+				this.addSkill(this.new("scripts/skills/actives/ptr_staff_sweep_skill"));
+			}
+		};
 	});
 
 
@@ -46,6 +105,8 @@ this.getroottable().HexenHooks.hookItem <- function ()
 		}
 	});
 
+
+	//
 	::mods_hookNewObject("items/item_container", function ( obj )
 	{
 		local ws_equip = obj.equip;
@@ -255,6 +316,7 @@ this.getroottable().HexenHooks.hookItem <- function ()
 			return removing;
 		};*/
 	});
+
 
 	//show blocked equipment slot
 	::mods_hookNewObject("ui/global/data_helper", function ( obj )

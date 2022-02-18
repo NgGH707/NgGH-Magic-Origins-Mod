@@ -118,6 +118,7 @@ this.spider_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Items.blockAllSlots();
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Accessory] = false;
 		this.m.Items.m.LockedSlots[this.Const.ItemSlot.Head] = false;
+		this.m.SignaturePerks = ["Pathfinder", "FastAdaption", "Footwork", "LegendPoisonImmunity"];
 		this.m.Flags.add("spider");
 	}
 	
@@ -367,17 +368,7 @@ this.spider_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
-		local perks = ["perk_pathfinder", "perk_fast_adaption"];
-		
-		foreach ( script in perks )
-		{
-			local s = this.new("scripts/skills/perks/" + script);
-			s.m.IsSerialized = false;
-			this.m.Skills.add(s);
-		}
-		
 		this.m.Skills.add(this.new("scripts/skills/actives/web_skill"));
-		this.m.Skills.update();
 	}
 
 	function onAppearanceChanged( _appearance, _setDirty = true )
@@ -584,7 +575,7 @@ this.spider_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	
 	function setAttributeLevelUpValues( _v )
 	{
-		local value = this.Math.rand(3, 4) * 2;
+		local value = this.getLevel() <= 11 ? this.Math.rand(2, 4) * 2 : this.Math.rand(1, 2);
 		local b = this.getBaseProperties();
 		b.Hitpoints += _v.hitpointsIncrease;
 		this.m.Hitpoints += _v.hitpointsIncrease;
@@ -610,6 +601,21 @@ this.spider_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		
 		this.getSkills().update();
 		this.setDirty(true);
+	}
+
+	function resetRenderEffects()
+	{
+		this.m.IsRaising = false;
+		this.m.IsSinking = false;
+		this.m.IsRaisingShield = false;
+		this.m.IsLoweringShield = false;
+		this.m.IsRaisingWeapon = false;
+		this.m.IsLoweringWeapon = false;
+		this.setSpriteOffset("shield_icon", this.createVec(0, 0));
+		this.setSpriteOffset("arms_icon", this.createVec(0, 0));
+		this.getSprite("arms_icon").Rotation = 0;
+		this.getSprite("status_rooted").Visible = false;
+		this.getSprite("status_rooted_back").Visible = false;
 	}
 	
 	function getExcludeTraits()

@@ -831,7 +831,7 @@ this.legend_hunting_coven_leader_contract <- this.inherit("scripts/contracts/con
 	{
 		foreach( bro in this.World.getPlayerRoster().getAll() )
 		{
-			if (bro.getSkills().hasSkill("perk.mastery_charm"))
+			if (bro.getSkills().hasSkill("perk.mastery_charm") && bro.getLevel() >= 20)
 			{
 				return true;
 			}
