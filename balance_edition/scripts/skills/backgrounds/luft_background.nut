@@ -31,7 +31,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 		this.m.Modifiers.Enchanting = 1.0;
 		
 		this.m.CustomPerkTree = [
-			[
+			[// 0
 				this.Const.Perks.PerkDefs.FastAdaption,
 				this.Const.Perks.PerkDefs.CoupDeGrace,
 				this.Const.Perks.PerkDefs.Backstabber,
@@ -41,7 +41,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 				this.Const.Perks.PerkDefs.LegendAlert,
 				this.Const.Perks.PerkDefs.Recover,
 			],
-			[
+			[// 1
 				this.Const.Perks.PerkDefs.Dodge,
 				this.Const.Perks.PerkDefs.SteelBrow,
 				this.Const.Perks.PerkDefs.Gifted,
@@ -52,7 +52,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 				this.Const.Perks.PerkDefs.UnholyFruits,
 				this.Const.Perks.PerkDefs.CharmEnemySpider,
 			],
-			[
+			[// 2
 				this.Const.Perks.PerkDefs.Anticipation,
 				this.Const.Perks.PerkDefs.Sprint,
 				this.Const.Perks.PerkDefs.Footwork,
@@ -62,7 +62,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 				this.Const.Perks.PerkDefs.CharmEnemyAlps,
 				this.Const.Perks.PerkDefs.CharmEnemyDirewolf,
 			],
-			[
+			[// 3
 				this.Const.Perks.PerkDefs.Adrenalin,
 				this.Const.Perks.PerkDefs.Underdog,
 				this.Const.Perks.PerkDefs.LegendLeap,
@@ -75,7 +75,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 				this.Const.Perks.PerkDefs.InnocentLook,
 				this.Const.Perks.PerkDefs.CharmEnemyGhoul,
 			],
-			[
+			[// 4
 				this.Const.Perks.PerkDefs.PushTheAdvantage,
 				this.Const.Perks.PerkDefs.LegendLithe,
 				this.Const.Perks.PerkDefs.Steadfast,
@@ -85,7 +85,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 				this.Const.Perks.PerkDefs.CharmEnemyGoblin,
 				this.Const.Perks.PerkDefs.CharmEnemyOrk,
 			],
-			[
+			[// 5
 				this.Const.Perks.PerkDefs.KillingFrenzy,
 				this.Const.Perks.PerkDefs.LegendAssuredConquest,
 				this.Const.Perks.PerkDefs.LegendTerrifyingVisage,
@@ -96,7 +96,7 @@ this.luft_background <- this.inherit("scripts/skills/backgrounds/character_backg
 				this.Const.Perks.PerkDefs.CharmEnemyUnhold,
 				this.Const.Perks.PerkDefs.CharmEnemySchrat,
 			],
-			[
+			[// 6
 				this.Const.Perks.PerkDefs.Colossus,
 				this.Const.Perks.PerkDefs.LegendMuscularity,
 				this.Const.Perks.PerkDefs.PerfectFocus,

@@ -71,6 +71,11 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 				{
 					item.setToBeMaintain(false);
 					item.setToBeButchered(false, 0);
+
+					return {
+						repair = false,
+						salvage = false,
+					};
 				}
 
 				return {

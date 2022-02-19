@@ -20,7 +20,7 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			Tooltip = this.Const.Strings.PerkDescription.CharmEnemyAlps,
 			Icon = "ui/perks/charmed_alps_01.png",
 			IconDisabled = "ui/perks/charmed_alps_01_sw.png",
-			Const = "CharmEnemyAlps"
+			Const = "CharmEnemyAlps" 
 		},
 		{
 			ID = "perk.charm_enemy_unhold",
@@ -47,7 +47,7 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			Tooltip = this.Const.Strings.PerkDescription.CharmEnemyDirewolf,
 			Icon = "ui/perks/charmed_direwolf_01.png",
 			IconDisabled = "ui/perks/charmed_direwolf_01_sw.png",
-			Const = "CharmEnemyDirewolf"
+			Const = "CharmEnemyDirewolf" 
 		},
 		{
 			ID = "perk.charm_enemy_spider",
@@ -74,7 +74,7 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			Tooltip = this.Const.Strings.PerkDescription.CharmEnemyOrk,
 			Icon = "ui/perks/charmed_ork_01.png",
 			IconDisabled = "ui/perks/charmed_ork_01_sw.png",
-			Const = "CharmEnemyOrk"
+			Const = "CharmEnemyOrk" 
 		},
 		{
 			ID = "perk.charm_enemy_goblin",
@@ -91,7 +91,7 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			Name = this.Const.Strings.PerkName.CharmBasic,
 			Tooltip = this.Const.Strings.PerkDescription.CharmBasic,
 			Icon = "ui/perks/perk_basic_charm.png",
-			IconDisabled = "ui/perks/perk_basic_charm_sw.png",
+			IconDisabled = "ui/perks/perk_basic_charm_sw.png", 
 			Const = "CharmBasic",
 		},
 		{
@@ -139,7 +139,7 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			Tooltip = this.Const.Strings.PerkDescription.PattingSpec,
 			Icon = "ui/perks/perk_patting.png",
 			IconDisabled = "ui/perks/perk_patting_sw.png",
-			Const = "PattingSpec",
+			Const = "PattingSpec", 
 		},
 		{
 			ID = "perk.boobas_charm",
@@ -866,9 +866,412 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 	]);
 	gt.Const.Perks.updatePerkGroupTooltips();
 
-//---------------------------------------------------------------
-	gt.Const.Perks.SpiderHive <- {
-		ID = "SpiderHive",
+//-----------------------------------------------------------------------------------------------------------------
+	gt.Const.Perks.HexeCharmAdvancedTree <- {
+		ID = "Charm 2",
+		Name = "Charm 2",
+		Descriptions = ["charm 2"],
+		Tree = [
+			[],
+			[],
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.CharmEnemyGhoul,
+				gt.Const.Perks.PerkDefs.CharmEnemyOrk
+			],
+			[
+				gt.Const.Perks.PerkDefs.CharmEnemyUnhold,
+				gt.Const.Perks.PerkDefs.CharmEnemySchrat
+			],
+			[
+				gt.Const.Perks.PerkDefs.CharmEnemyLindwurm
+			],
+		]
+	};
+
+	gt.Const.Perks.HexeCharmSimpleTree <- {
+		ID = "Charm 1",
+		Name = "Charm 1",
+		Descriptions = ["charm 1"],
+		Tree = [
+			[],
+			[
+				gt.Const.Perks.PerkDefs.CharmEnemySpider
+			],
+			[
+				gt.Const.Perks.PerkDefs.CharmEnemyAlps
+				gt.Const.Perks.PerkDefs.CharmEnemyDirewolf
+			],
+			[
+				gt.Const.Perks.PerkDefs.CharmEnemyGoblin
+			],
+			[],
+			[],
+			[],
+		]
+	};
+
+	gt.Const.Perks.HexeBasicTree <- {
+		ID = "Charm Basic",
+		Name = "Charm Basic",
+		Descriptions = ["hexe basic"],
+		Tree = [
+			[],
+			[
+				gt.Const.Perks.PerkDefs.CharmBasic,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.CharmWord
+			],
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.CharmAppearance,
+				gt.Const.Perks.PerkDefs.CharmSpec,
+				gt.Const.Perks.PerkDefs.CharmNudist,
+			],
+		]
+	};
+
+	gt.Const.Perks.LuftTree <- {
+		ID = "Luft Charm",
+		Name = "Luft",
+		Descriptions = ["Luft"],
+		Tree = [
+			[],
+			[
+				gt.Const.Perks.PerkDefs.UnholyFruits,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.PattingSpec,
+				gt.Const.Perks.PerkDefs.InnocentLook
+			],
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.GhoulBeauty,
+			],
+		]
+	};
+
+
+////////////////////////////////////////////////////
+	gt.Const.Perks.CharmArtTrees <- [
+		gt.Const.Perks.HexeBasicTree,
+		gt.Const.Perks.HexeCharmSimpleTree,
+		gt.Const.Perks.HexeCharmAdvancedTree,
+		gt.Const.Perks.LuftTree,
+	];
+////////////////////////////////////////////////////
+
+
+	gt.Const.Perks.MC_MiscTree <- {
+		ID = "Misc",
+		Name = "MC_Misc",
+		Descriptions = ["MC_Misc"],
+		Tree = [
+			[
+				gt.Const.Perks.PerkDefs.BoondockBlade,
+				gt.Const.Perks.PerkDefs.Daytime
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.Nighttime,
+				gt.Const.Perks.PerkDefs.FairGame
+			],
+			[],
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.HexenChampion
+			],
+		]
+	};
+
+	gt.Const.Perks.GoblinMountTree <- {     
+		ID = "Goblin Mount",
+		Name = "GoblinMount",
+		Descriptions = ["goblin mount"],
+		Tree = [
+			[],
+			[
+				gt.Const.Perks.PerkDefs.GoblinWolfRider
+			],
+			[
+				gt.Const.Perks.PerkDefs.GoblinMountedCharge
+			],
+			[
+				gt.Const.Perks.PerkDefs.LegendHorseLiberty
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.GoblinMountedArchery
+			],
+			[],
+		]
+	};
+
+	gt.Const.Perks.AlpTree <- {
+		ID = "Alp",
+		Name = "Alp",
+		Descriptions = ["alp"],
+		Tree = [
+			[
+				//gt.Const.Perks.PerkDefs.Daytime,
+			],
+			[
+				gt.Const.Perks.PerkDefs.AlpMindBreak,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.Afterimage,
+				gt.Const.Perks.PerkDefs.SleepSpec,
+			],
+			[
+				gt.Const.Perks.PerkDefs.AfterWake,
+			],
+			[
+				gt.Const.Perks.PerkDefs.NightmareSpec,
+			],
+			[
+				gt.Const.Perks.PerkDefs.AlpLivingNightmare,
+			],
+		]
+	};
+
+	gt.Const.Perks.DemonAlpTree <- {
+		ID = "Demon Alp",
+		Name = "DemonAlp",
+		Descriptions = ["demon alp"],
+		Tree = [
+			[
+				gt.Const.Perks.PerkDefs.AlpFieceFlame,
+			],
+			[
+				gt.Const.Perks.PerkDefs.AlpMindBreak,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.AlpControlFlame,
+			],
+			[
+				gt.Const.Perks.PerkDefs.AlpHellishFlame,
+			],
+			[
+				gt.Const.Perks.PerkDefs.AlpShadowCopy,
+			],
+			[],
+		]
+	};
+
+	gt.Const.Perks.WolfTree <- {
+		ID = "Wolf",
+		Name = "Wolf",
+		Descriptions = ["wolf"],
+		Tree = [
+			[],
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.WolfBite,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.ThickHide,
+				gt.Const.Perks.PerkDefs.EnrageWolf,
+			],
+			[
+				gt.Const.Perks.PerkDefs.Rabies
+			],
+		]
+	};
+
+	gt.Const.Perks.HyenaTree <- {
+		ID = "Hyena",
+		Name = "Hyena",
+		Descriptions = ["hyena"],
+		Tree = [
+			[],
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.HyenaBite,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.ThickHide,
+				gt.Const.Perks.PerkDefs.EnrageWolf,
+			],
+			[
+				gt.Const.Perks.PerkDefs.Rabies
+			],
+		]
+	};
+
+	gt.Const.Perks.NachoTree <- {
+		ID = "Nacho",
+		Name = "Nacho",
+		Descriptions = ["nacho"],
+		Tree = [
+			[],
+			[
+				gt.Const.Perks.PerkDefs.NachoFrenzy,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.Nacho,
+			],
+			[
+				gt.Const.Perks.PerkDefs.NachoEat,
+				gt.Const.Perks.PerkDefs.BearLineBreaker,
+			],
+			[
+				gt.Const.Perks.PerkDefs.NachoBigTummy,
+			],
+			[
+				//gt.Const.Perks.PerkDefs.NachoVomiting,
+			],
+		]
+	};
+
+	gt.Const.Perks.LindwurmTree <- {
+		ID = "Lindwurm",
+		Name = "Lindwurm",
+		Descriptions = ["lindwurm"],
+		Tree = [
+			[],
+			[
+				gt.Const.Perks.PerkDefs.LindwurmIntimidate
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.LindwurmBody,
+			],
+			[
+				gt.Const.Perks.PerkDefs.BearLineBreaker,
+			],
+			[
+				gt.Const.Perks.PerkDefs.LindwurmAcid,
+			],
+			[],
+		]
+	};
+
+	gt.Const.Perks.SchratTree <- {
+		ID = "Schrat",
+		Name = "Schrat",
+		Descriptions = ["schrat"],
+		Tree = [
+			[
+				gt.Const.Perks.PerkDefs.SchratUprootAoE,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.SchratShield,
+				gt.Const.Perks.PerkDefs.BearLineBreaker,
+			],
+			[
+				gt.Const.Perks.PerkDefs.SchratUproot,
+			],
+			[
+				gt.Const.Perks.PerkDefs.SchratSapling,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.LegendRoots,
+			],
+		]
+	};
+
+	gt.Const.Perks.SmallSchratTree <- {
+		ID = "SmallSchrat",
+		Name = "Sapling",
+		Descriptions = ["small schrat"],
+		Tree = [
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.LegendRoots,
+			],
+		]
+	};
+
+	gt.Const.Perks.SerpentTree <- {
+		ID = "Serpent",
+		Name = "Serpent",
+		Descriptions = ["serpent"],
+		Tree = [
+			[],
+			[
+				gt.Const.Perks.PerkDefs.LegendEntice,
+			],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.SerpentVenom,
+				gt.Const.Perks.PerkDefs.SerpentDrag,
+			],
+			[
+				gt.Const.Perks.PerkDefs.SerpentBite,
+			],
+			[],
+			[	
+				gt.Const.Perks.PerkDefs.SerpentGiant,
+			],
+		]
+	};
+
+	gt.Const.Perks.SpiderTree <- {
+		ID = "Webknecht",
+		Name = "Spider",
+		Descriptions = ["spider"],
+		Tree = [
+			[
+				gt.Const.Perks.PerkDefs.BoondockBlade,
+			],
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.SpiderVenom,	
+			],
+			[
+				gt.Const.Perks.PerkDefs.SpiderWeb,
+			],
+			[
+				gt.Const.Perks.PerkDefs.SpiderBite,
+			],
+			[],
+		]
+	};
+
+	gt.Const.Perks.UnholdTree <- {
+		ID = "Unhold",
+		Name = "Unhold",
+		Descriptions = ["unhold"],
+		Tree = [
+			[
+				gt.Const.Perks.PerkDefs.UnholdUnarmedAttack,
+			],
+			[],
+			[],
+			[
+				gt.Const.Perks.PerkDefs.UnholdFling,
+				gt.Const.Perks.PerkDefs.BearLineBreaker,
+			],
+			[],
+			[],
+			[],
+		]
+	};
+
+	gt.Const.Perks.SpiderHiveTree <- {
+		ID = "Webknecht Eggs",
 		Name = "SpiderHive",
 		Descriptions = ["spider hive"],
 		Tree = [
@@ -876,15 +1279,11 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			[],
 			[],
 			[
-				gt.Const.Perks.PerkDefs.SpiderVenom, 
 				gt.Const.Perks.PerkDefs.EggBreedingMachine, 
 				gt.Const.Perks.PerkDefs.EggAttachSpider
 			],
+			[],
 			[
-				gt.Const.Perks.PerkDefs.SpiderWeb
-			],
-			[
-				gt.Const.Perks.PerkDefs.SpiderBite, 
 				gt.Const.Perks.PerkDefs.EggInherit
 			],
 			[
@@ -893,7 +1292,7 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		]			
 	};
 
-	gt.Const.Perks.Kraken <- {
+	gt.Const.Perks.KrakenTree <- {
 		ID = "Kraken",
 		Name = "Kraken",
 		Descriptions = ["beast of beasts"],
@@ -917,8 +1316,31 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			[
 				gt.Const.Perks.PerkDefs.KrakenTentacle,
 			]
-		]			
+		]
 	};
+
+
+////////////////////////////////////////////////////
+	gt.Const.Perks.HexenBeastTrees <- [
+		gt.Const.Perks.NachoTree,
+		gt.Const.Perks.UnholdTree,
+		gt.Const.Perks.SchratTree,
+		gt.Const.Perks.SerpentTree,
+		gt.Const.Perks.LindwurmTree,
+		gt.Const.Perks.WolfTree,
+		gt.Const.Perks.HyenaTree,
+		gt.Const.Perks.AlpTree,
+		gt.Const.Perks.DemonAlpTree,
+		gt.Const.Perks.SpiderTree,
+		gt.Const.Perks.SpiderHiveTree,
+		gt.Const.Perks.GoblinMountTree,
+		gt.Const.Perks.KrakenTree,
+		gt.Const.Perks.MC_MiscTree,
+	];
+////////////////////////////////////////////////////
+
+//------------------------------
+// undead perk group
 
 	gt.Const.Perks.ZombieClassTree <- {
 		ID = "Zombie",
@@ -1010,6 +1432,16 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 			]
 		]
 	};
+
+////////////////////////////////////////////////////
+	gt.Const.Perks.NggH_UndeadTrees <- [
+		gt.Const.Perks.ZombieClassTree,
+		gt.Const.Perks.SkeletonClassTree,
+		gt.Const.Perks.MummyClassTree,
+		gt.Const.Perks.GhostClassTree,
+	];
+////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------------------------------
 
 	if (!("PerksCharmedUnit" in gt.Const))
 	{

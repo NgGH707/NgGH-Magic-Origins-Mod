@@ -96,19 +96,23 @@ this.spider_eggs_background <- this.inherit("scripts/skills/backgrounds/characte
 			[
 				this.Const.Perks.PerkDefs.Gifted,
 			],
-			[],
+			[
+				this.Const.Perks.PerkDefs.SpiderVenom,
+			],
 			[
 				this.Const.Perks.PerkDefs.NachoFrenzy,
 			],
 			[],
-			[],
+			[
+				this.Const.Perks.PerkDefs.SpiderBite, 
+			],
 			[],
 			[],
 			[],
 			[]
 		];
 
-		foreach (i, row in this.Const.Perks.SpiderHive.Tree )
+		foreach (i, row in this.Const.Perks.SpiderHiveTree.Tree )
 		{
 			foreach ( perkDef in row )
 			{

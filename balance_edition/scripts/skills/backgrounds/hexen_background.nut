@@ -90,7 +90,7 @@ this.hexen_background <- this.inherit("scripts/skills/backgrounds/character_back
 		this.m.Modifiers.Enchanting = 1.0;
 		
 		this.m.CustomPerkTree = [
-			[
+			[ // 0
 				this.Const.Perks.PerkDefs.LegendMagicMissile,
 				this.Const.Perks.PerkDefs.Bullseye,
 				this.Const.Perks.PerkDefs.Pathfinder,
@@ -103,7 +103,7 @@ this.hexen_background <- this.inherit("scripts/skills/backgrounds/character_back
 				this.Const.Perks.PerkDefs.LegendCheerOn,
 				this.Const.Perks.PerkDefs.LegendSpecialistLuteSkill,
 			],
-			[
+			[ // 1
 				this.Const.Perks.PerkDefs.Dodge,
 				this.Const.Perks.PerkDefs.Gifted,
 				this.Const.Perks.PerkDefs.LegendEntice,
@@ -115,7 +115,7 @@ this.hexen_background <- this.inherit("scripts/skills/backgrounds/character_back
 				this.Const.Perks.PerkDefs.CharmBasic,
 				this.Const.Perks.PerkDefs.CharmEnemySpider,
 			],
-			[
+			[ // 2
 				this.Const.Perks.PerkDefs.LegendBalance,
 				this.Const.Perks.PerkDefs.Anticipation,
 				this.Const.Perks.PerkDefs.LegendMasteryStaves,
@@ -127,7 +127,7 @@ this.hexen_background <- this.inherit("scripts/skills/backgrounds/character_back
 				this.Const.Perks.PerkDefs.CharmEnemyAlps,
 				this.Const.Perks.PerkDefs.CharmEnemyDirewolf,
 			],
-			[
+			[ // 3
 				this.Const.Perks.PerkDefs.MageLegendMasteryMagicMissileFocus,
 				this.Const.Perks.PerkDefs.SpecMace,
 				this.Const.Perks.PerkDefs.Nimble,
@@ -141,7 +141,7 @@ this.hexen_background <- this.inherit("scripts/skills/backgrounds/character_back
 				this.Const.Perks.PerkDefs.CharmWord,
 				this.Const.Perks.PerkDefs.CharmEnemyGoblin,
 			],
-			[
+			[ // 4
 				this.Const.Perks.PerkDefs.Inspire,
 				this.Const.Perks.PerkDefs.Footwork,
 				this.Const.Perks.PerkDefs.LegendPush,
@@ -152,7 +152,7 @@ this.hexen_background <- this.inherit("scripts/skills/backgrounds/character_back
 				this.Const.Perks.PerkDefs.CharmEnemyGhoul,
 				this.Const.Perks.PerkDefs.CharmEnemyOrk,
 			],
-			[
+			[ // 5
 				this.Const.Perks.PerkDefs.LegendValaInscriptionMastery,	
 				this.Const.Perks.PerkDefs.LegendValaInscribeHelmet,
 				this.Const.Perks.PerkDefs.LegendValaInscribeArmor,
@@ -164,7 +164,7 @@ this.hexen_background <- this.inherit("scripts/skills/backgrounds/character_back
 				this.Const.Perks.PerkDefs.CharmEnemySchrat,
 				
 			],
-			[
+			[ // 6
 				this.Const.Perks.PerkDefs.MageLegendMasteryMagicMissileMastery,
 				this.Const.Perks.PerkDefs.PerfectFocus,
 				this.Const.Perks.PerkDefs.LegendDrumsOfLife,

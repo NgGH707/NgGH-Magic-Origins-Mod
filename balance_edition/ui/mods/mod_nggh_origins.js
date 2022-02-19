@@ -54,93 +54,27 @@ CharacterScreenPaperdollModule.prototype.assignBlockSlots = function (
 	}
 };
 
-var ws_onBrotherSelected = CharacterScreenPaperdollModule.prototype.onBrotherSelected
-CharacterScreenPaperdollModule.prototype.onBrotherSelected = function (
+//var ws_onBrotherSelected = CharacterScreenPaperdollModule.prototype.onBrotherSelected
+//CharacterScreenPaperdollModule.prototype.onBrotherSelected = function (
+//  _dataSource,
+//  _brother
+//) {
+//	ws_onBrotherSelected.call(this, _dataSource, _brother);
+//};
+
+var ws_onBrotherUpdated = CharacterScreenPaperdollModule.prototype.onBrotherUpdated
+CharacterScreenPaperdollModule.prototype.onBrotherUpdated = function (
   _dataSource,
   _brother
 ) {
-	if (_brother !== null && CharacterScreenIdentifier.Entity.Id in _brother) {
-			if ('restriction' in _brother && _brother['restriction'] !== undefined && _brother['restriction'] !== null) {
-	       this.assignBlockSlots(
-	        _brother['restriction']
-	      );
-	    }
+  ws_onBrotherUpdated.call(this, _dataSource, _brother);
+
+  if (_brother !== null && CharacterScreenIdentifier.Entity.Id in _brother) {
+		if ('restriction' in _brother && _brother['restriction'] !== undefined && _brother['restriction'] !== null) {
+       this.assignBlockSlots(
+        _brother['restriction']
+      );
+    }
 	}
-
-	ws_onBrotherSelected.call(this, _dataSource, _brother);
-};
-
-
-CharacterScreenDatasource.prototype.equipInventoryItem = function(_brotherId, _sourceItemId, _sourceItemIdx)
-{
-	var brotherId = _brotherId;
-	if (brotherId === null)
-	{
-		var selectedBrother = this.getSelectedBrother();
-		if (selectedBrother === null || !(CharacterScreenIdentifier.Entity.Id in selectedBrother))
-		{
-			console.error('ERROR: Failed to equip inventory item. No entity selected.');
-			return;
-		}
-
-		brotherId = selectedBrother[CharacterScreenIdentifier.Entity.Id];
-	}
-
-	var self = this;
-	this.notifyBackendEquipInventoryItem(brotherId, _sourceItemId, _sourceItemIdx, function (data)
-	{
-	    if (data === undefined || data == null || typeof (data) !== 'object')
-	    {
-	        console.error('ERROR: Failed to equip inventory item. Invalid data result.');
-	        return;
-	    }
-
-	    // check if we have an error
-	    if (ErrorCode.Key in data)
-	    {
-	        self.notifyEventListener(ErrorCode.Key, data[ErrorCode.Key]);
-	    }
-	    else
-	    {
-	        if ('stashSpaceUsed' in data)
-	            self.mStashSpaceUsed = data.stashSpaceUsed;
-
-	        if ('stashSpaceMax' in data)
-	            self.mStashSpaceMax = data.stashSpaceMax;
-
-	        self.mInventoryModule.updateSlotsLabel();
-
-	        if (CharacterScreenIdentifier.QueryResult.Stash in data)
-	        {
-	            var stashData = data[CharacterScreenIdentifier.QueryResult.Stash];
-	            if (stashData !== null && jQuery.isArray(stashData))
-	            {
-	            		if (('isForceUpdating' in data) && data['isForceUpdating'] === true)
-	            		{
-	                	 stashData.forceUpdate = _sourceItemIdx;
-	                }
-	                
-	                self.updateStash(stashData);
-	            }
-	            else
-	            {
-	                console.error('ERROR: Failed to equip inventory item. Invalid stash data result.');
-	            }
-	        }
-
-	        if (CharacterScreenIdentifier.QueryResult.Brother in data)
-	        {
-	            var brotherData = data[CharacterScreenIdentifier.QueryResult.Brother];
-	            if (CharacterScreenIdentifier.Entity.Id in brotherData)
-	            {
-	                self.updateBrother(brotherData);
-	            }
-	            else
-	            {
-	                console.error('ERROR: Failed to equip inventory item. Invalid brother data result.');
-	            }
-	        }
-	    }
-	});
 };
 
