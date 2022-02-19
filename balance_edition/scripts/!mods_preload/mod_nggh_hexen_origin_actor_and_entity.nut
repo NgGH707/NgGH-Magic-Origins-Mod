@@ -84,7 +84,11 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_underdog"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_ghost_ghastly_touch"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_ghost_vanish"));
-				this.m.Skills.add(this.new("scripts/skills/perks/perk_ghost_soul_eater"));
+
+				if (("Assets" in this.World) && this.World.Assets != null && this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
+				{
+					this.m.Skills.add(this.new("scripts/skills/perks/perk_ghost_soul_eater"));
+				}
 
 				local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
 				
