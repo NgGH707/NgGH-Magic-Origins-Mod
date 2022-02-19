@@ -323,7 +323,7 @@ local inOverwriteCustomList = [];
 
     return false;
 };
-::mc_findThisInArray <- function( _value, _array, _key)
+::mc_findThisInArray <- function( _value, _array, _key )
 {
     foreach (i, table in _array ) 
     {

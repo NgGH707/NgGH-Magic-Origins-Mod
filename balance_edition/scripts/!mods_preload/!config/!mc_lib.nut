@@ -62,7 +62,7 @@ gt.Const.MC_Job <- {
 		if (_tier < 0 || _tier >= this.Const.MC_MagicTier.COUNT) _tier = this.Const.MC_MagicTier.Basic;
 		local available_skills = lib[_job][_tier];
 		if (available_skills.len() == 0) return null;
-		return ::mc_randArray(available_skills);
+		return this.MSU.Array.getRandom(available_skills);
 	}
 };
 

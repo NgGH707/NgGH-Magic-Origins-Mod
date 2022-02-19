@@ -1,6 +1,6 @@
 this.nggh_vampire_background <- this.inherit("scripts/skills/backgrounds/character_background", {
 	m = {
-		ClassPerks = null
+		ClassPerks = this.Const.Perks.VampireMagicTree
 	},
 	function create()
 	{
@@ -136,7 +136,7 @@ this.nggh_vampire_background <- this.inherit("scripts/skills/backgrounds/charact
 			],
 			Enemy = [],
 			Class = [],
-			Magic = [this.Const.Perks.VampireMagicTree]
+			Magic = []
 		}
 
 		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
@@ -155,9 +155,6 @@ this.nggh_vampire_background <- this.inherit("scripts/skills/backgrounds/charact
 					{Multiplier = 3, Tree = this.Const.Perks.DaggerTree},
 					{Multiplier = 2, Tree = this.Const.Perks.SwordTree},
 					{Multiplier = 0.5, Tree = this.Const.Perks.AxeTree}
-				],
-				Profession = [
-					[{Weight = 100, Tree = this.Const.Perks.VampireMagicTree}]
 				],
 				Traits = [
 					[{Weight = 100, Tree = this.Const.Perks.ViciousTree}],
@@ -201,6 +198,12 @@ this.nggh_vampire_background <- this.inherit("scripts/skills/backgrounds/charact
 				type = "text",
 				icon = "ui/icons/xp_received.png",
 				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-33%[/color] Experience Gain"
+			},
+			{
+				id = 10,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Always has [color=" + this.Const.UI.Color.NegativeValue + "]0%[/color] chance to survive no matter what"
 			}
 		];
 		

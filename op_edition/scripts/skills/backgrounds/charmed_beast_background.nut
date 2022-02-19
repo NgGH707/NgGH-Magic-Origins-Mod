@@ -309,8 +309,8 @@ this.charmed_beast_background <- this.inherit("scripts/skills/backgrounds/charac
 		info.IsExperienced <- true;
 		this.m.Info = this.Const.CharmedSlave.addMissingData(info);
 		this.m.AttMods = this.Const.CharmedSlave.getStatsModifiers(_type);
-		this.m.Perks = this.Const.CharmedSlave.getSpecialPerks(type);
-		this.m.Skills = this.Const.CharmedSlave.getSpecialSkills(type);
+		this.m.Perks = this.Const.CharmedSlave.getSpecialPerks(_type);
+		this.m.Skills = this.Const.CharmedSlave.getSpecialSkills(_type);
 		this.m.Name = "Charmed " + this.Const.Strings.EntityName[_type];
 		this.m.Icon = "ui/backgrounds/" + this.Const.CharmedSlave.getIconName(_type);
 		this.Const.HexenOrigin.CharmedSlave.processingCharmedBackground(this.m.Info, this);

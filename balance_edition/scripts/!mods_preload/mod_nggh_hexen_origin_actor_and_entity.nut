@@ -82,6 +82,9 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_fortified_mind"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_legend_terrifying_visage"));
 				this.m.Skills.add(this.new("scripts/skills/perks/perk_underdog"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_ghost_ghastly_touch"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_ghost_vanish"));
+				this.m.Skills.add(this.new("scripts/skills/perks/perk_ghost_soul_eater"));
 
 				local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
 				
@@ -91,7 +94,7 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 					this.m.Skills.add(NineLives);
 				}
 
-				NineLives.addNineLivesCount(9);
+				NineLives.addNineLivesCount(4);
 
 				if (::mods_getRegisteredMod("mod_legends_PTR") != null)
 				{

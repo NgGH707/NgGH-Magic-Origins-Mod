@@ -186,7 +186,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 		}
 
 		this.spawnReignOfShadow(targets)
-		this.spawnShadow(::mc_randArray(targets));
+		this.spawnShadow(this.MSU.Array.getRandom(targets));
 		return true;
 	}
 
@@ -280,7 +280,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 			    }
 			}
 
-			_tile = ::mc_randArray(viable);
+			_tile = this.MSU.Array.getRandom(viable);
 		}
 
 		if (_tile == null)

@@ -202,7 +202,7 @@ this.perk_ghost_vanish <- this.inherit("scripts/skills/skill", {
 	{
 		if (!_entity.isHiddenToPlayer())
 		{
-			local brush = _entity.getSprite().getBrush().Name;
+			local brush = _entity.getSprite("body").getBrush().Name;
 			local effect1 = {
 				Delay = 0,
 				Quantity = 4,

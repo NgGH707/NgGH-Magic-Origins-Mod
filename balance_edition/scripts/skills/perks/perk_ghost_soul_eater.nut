@@ -38,7 +38,7 @@ this.perk_ghost_soul_eater <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (this.Math.rand(1, 100) > 33)
+		if (actor.isPlayerControlled() && this.Math.rand(1, 100) > 33)
 		{
 			return;
 		}

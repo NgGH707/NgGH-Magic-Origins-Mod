@@ -153,6 +153,7 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 		}
 		
 		this.getContainer().removeByID("spells.sleep");
+		this.getContainer().removeByID("actives.mind_break");
 		this.character_background.onAdded();
 	}
 
@@ -187,9 +188,9 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 			"CharmEnemySchrat",
 			"CharmEnemyLindwurm",
 		];
-		this.addPerk(this.Const.Perks.PerkDefs[::mc_randArray(tier_1)], 1);
-		this.addPerk(this.Const.Perks.PerkDefs[::mc_randArray(tier_2)], 3);
-		this.addPerk(this.Const.Perks.PerkDefs[::mc_randArray(tier_3)], 5);
+		this.addPerk(this.Const.Perks.PerkDefs[this.MSU.Array.getRandom(tier_1)], 1);
+		this.addPerk(this.Const.Perks.PerkDefs[this.MSU.Array.getRandom(tier_2)], 3);
+		this.addPerk(this.Const.Perks.PerkDefs[this.MSU.Array.getRandom(tier_3)], 5);
 
 		local rune = [
 			"LegendValaInscribeShield",
@@ -197,7 +198,7 @@ this.lesser_hexen_background <- this.inherit("scripts/skills/backgrounds/charact
 			"LegendValaInscribeHelmet",
 			"LegendValaInscribeArmor",
 		];
-		this.addPerk(this.Const.Perks.PerkDefs[::mc_randArray(rune)], 2);
+		this.addPerk(this.Const.Perks.PerkDefs[this.MSU.Array.getRandom(rune)], 2);
 
 		if (this.Math.rand(1, 100) >= 95)
 		{

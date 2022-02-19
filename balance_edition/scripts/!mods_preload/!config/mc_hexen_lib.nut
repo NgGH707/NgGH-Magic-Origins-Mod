@@ -688,7 +688,7 @@ gt.Const.HexenOrigin.CharmedSlave <- {
 				}
 				else
 				{
-				    _background.m.AdditionalPerks.push(::mc_randArray(input[1]));
+				    _background.m.AdditionalPerks.push(this.MSU.Array.getRandom(input[1]));
 				}
 			}
 			

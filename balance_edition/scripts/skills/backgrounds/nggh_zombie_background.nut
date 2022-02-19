@@ -1,6 +1,6 @@
 this.nggh_zombie_background <- this.inherit("scripts/skills/backgrounds/character_background", {
 	m = {
-		ClassPerks = null,
+		ClassPerks = this.Const.Perks.ZombieClassTree,
 	},
 	function create()
 	{
@@ -134,9 +134,7 @@ this.nggh_zombie_background <- this.inherit("scripts/skills/backgrounds/characte
 				this.Const.Perks.IndestructibleTree
 			],
 			Enemy = [],
-			Class = [
-				this.Const.Perks.ZombieClassTree
-			],
+			Class = [],
 			Magic = []
 		};
 
@@ -160,7 +158,6 @@ this.nggh_zombie_background <- this.inherit("scripts/skills/backgrounds/characte
 				],
 				Profession = [
 					[
-						{Weight = 100, Tree = this.Const.Perks.ZombieClassTree},
 						{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}
 					]
 				],

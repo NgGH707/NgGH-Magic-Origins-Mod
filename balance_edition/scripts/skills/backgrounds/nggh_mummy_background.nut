@@ -1,6 +1,6 @@
 this.nggh_mummy_background <- this.inherit("scripts/skills/backgrounds/character_background", {
 	m = {
-		ClassPerks = null,
+		ClassPerks = this.Const.Perks.MummyClassTree,
 	},
 	function create()
 	{
@@ -132,11 +132,8 @@ this.nggh_mummy_background <- this.inherit("scripts/skills/backgrounds/character
 			],
 			Enemy = [
 				this.Const.Perks.BanditTree,
-				this.Const.Perks.DirewolfTree
 			],
-			Class = [
-				this.Const.Perks.MummyClassTree
-			],
+			Class = [],
 			Magic = []
 		}
 
@@ -158,7 +155,6 @@ this.nggh_mummy_background <- this.inherit("scripts/skills/backgrounds/character
 					{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
 				],
 				Profession = [
-					[{Weight = 100, Tree = this.Const.Perks.MummyClassTree}],
 					[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}]
 				],
 				Styles = [
