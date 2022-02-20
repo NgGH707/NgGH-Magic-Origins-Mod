@@ -1,6 +1,6 @@
 this.nggh_zombie_background <- this.inherit("scripts/skills/backgrounds/character_background", {
 	m = {
-		ClassPerks = this.Const.Perks.ZombieClassTree,
+		ClassPerks = this.Const.Perks.ZombieClassTree.Tree,
 	},
 	function create()
 	{

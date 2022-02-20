@@ -1209,25 +1209,18 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 			local injury_body = this.getSprite("injury_body");
 			if (p > 0.5)
 			{
-				if (injury.getBrush().Name != "zombify_0" + this.m.InjuryType)
+				if (!injury.HasBrush || injury.getBrush().Name != "zombify_0" + this.m.InjuryType)
 				{
 					injury.setBrush("zombify_0" + this.m.InjuryType);
 				}
 			}
-			else if (injury.getBrush().Name != "zombify_0" + this.m.InjuryType + "_injured")
+			else if (!injury.HasBrush || injury.getBrush().Name != "zombify_0" + this.m.InjuryType + "_injured")
 			{
 				injury.setBrush("zombify_0" + this.m.InjuryType + "_injured");
 			}
-			if (p > 0.5)
-			{
-				injury_body.setBrush("zombify_body_01");
-				injury_body.Visible = true;
-			}
-			else
-			{
-				injury_body.setBrush("zombify_body_02");
-				injury_body.Visible = true;
-			}
+			injury_body.setBrush(p > 0.5 ? "zombify_body_01" : "zombify_body_02");
+			injury_body.Visible = true;
+			injury.Visible = true;
 			this.setDirty(true);
 			break;
 		case this.Const.Necro.UndeadType.Vampire:
@@ -1283,6 +1276,11 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 	{
 		this.player.onFactionChanged();
 		this.getSprite("status_rage").setHorizontalFlipping(!this.isAlliedWithPlayer());
+
+		if (this.m.UndeadType == this.Const.Necro.UndeadType.Zombie)
+		{
+			this.getSprite("injury_body").setHorizontalFlipping(this.isAlliedWithPlayer());
+		}
 	}
 
 	function addDefaultStatusSprites()
@@ -1433,14 +1431,7 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 		case this.Const.Necro.UndeadType.Skeleton:
 			local hairColor = this.Const.HairColors.Zombie[this.Math.rand(0, this.Const.HairColors.Zombie.len() - 1)];
 			local body = this.getSprite("body");
-			if (this.Math.rand(1, 2) == 1)
-			{
-				body.setBrush("bust_skeleton_body_0" + this.Math.rand(1, 2));
-			}
-			else
-			{
-				body.setBrush("bust_skeleton_body_01");
-			}
+			body.setBrush("bust_skeleton_body_0" + this.Math.rand(1, 2));
 			body.Saturation = 0.8;
 			if (this.Math.rand(0, 100) < 75)
 			{

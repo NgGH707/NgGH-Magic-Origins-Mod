@@ -1,6 +1,6 @@
 this.nggh_skeleton_background <- this.inherit("scripts/skills/backgrounds/character_background", {
 	m = {
-		ClassPerks = this.Const.Perks.SkeletonClassTree
+		ClassPerks = this.Const.Perks.SkeletonClassTree.Tree
 	},
 	function create()
 	{

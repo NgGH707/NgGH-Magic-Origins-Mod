@@ -1,6 +1,6 @@
 this.nggh_vampire_background <- this.inherit("scripts/skills/backgrounds/character_background", {
 	m = {
-		ClassPerks = this.Const.Perks.VampireMagicTree
+		ClassPerks = this.Const.Perks.VampireMagicTree.Tree
 	},
 	function create()
 	{

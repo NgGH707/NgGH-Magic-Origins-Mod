@@ -91,6 +91,17 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		{
 			if (this.getContainer().hasSkill("perk.zombie_feasting_bite")) this.m.ActionPointCost -= 1;
 		};
+		obj.isHidden <- function()
+		{
+			local actor = this.getContainer().getActor();
+
+			if (("IsHeadless" in actor.m) && actor.m.IsHeadless)
+			{
+				return true;
+			}
+
+			return this.skill.isHidden();
+		};
 		obj.onUse = function( _user, _targetTile )
 		{
 			local target = _targetTile.getEntity();
