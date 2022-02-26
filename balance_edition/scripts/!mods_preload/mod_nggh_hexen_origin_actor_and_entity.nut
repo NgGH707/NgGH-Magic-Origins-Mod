@@ -47,6 +47,166 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 	});
 
 
+	//
+	::mods_hookExactClass("entity/tactical/enemies/flying_skull", function ( obj )
+	{
+		obj.onActorKilled <- function( _actor, _tile, _skill )
+		{
+			this.actor.onActorKilled(_actor, _tile, _skill);
+
+			if (this.getFaction() == this.Const.Faction.Player || this.getFaction() == this.Const.Faction.PlayerAnimals)
+			{
+				local XPgroup = _actor.getXPValue();
+				local brothers = this.Tactical.Entities.getInstancesOfFaction(this.Const.Faction.Player);
+
+				foreach( bro in brothers )
+				{
+					bro.addXP(this.Math.max(1, this.Math.floor(XPgroup / brothers.len())));
+				}
+			}
+		}
+		obj.addMoreHP <- function( _master )
+		{
+			this.m.BaseProperties.Hitpoints += (_master.getLevel() - 1) * 2;
+			this.m.Skills.update();
+			this.setHitpointsPct(1.0);
+		}
+		obj.onExplode <- function()
+		{
+			local myTile = this.getTile();
+			local skill = this.getSkills().getSkillByID("actives.explode");
+			local max_dam = this.Math.floor(this.getHitpointsMax() * 0.8);
+			local min_dam = this.Math.floor(max_dam * 0.5);
+
+			if (skill != null)
+			{
+				skill.m.InjuriesOnBody = this.Const.Injury.PiercingBody;
+				skill.m.InjuriesOnHead = this.Const.Injury.PiercingHead;
+				skill.m.ChanceDisembowel = 50;
+				skill.setupDamageType();
+			}
+
+			for( local i = 0; i < 6; i = ++i )
+			{
+				if (!myTile.hasNextTile(i))
+				{
+				}
+				else
+				{
+					local nextTile = myTile.getNextTile(i);
+
+					if (this.Math.abs(myTile.Level - nextTile.Level) <= 1 && nextTile.IsOccupiedByActor)
+					{
+						local target = nextTile.getEntity();
+
+						if (!target.isAlive() || target.isDying())
+						{
+						}
+						else
+						{
+							local f = this.isAlliedWith(target) ? 0.5 : 1.0;
+							local hitInfo = clone this.Const.Tactical.HitInfo;
+							hitInfo.DamageRegular = this.Math.rand(min_dam, max_dam) * f;
+							hitInfo.DamageArmor = hitInfo.DamageRegular * 0.75;
+							hitInfo.DamageDirect = 0.3;
+							hitInfo.BodyPart = this.Const.BodyPart.Body;
+							hitInfo.FatalityChanceMult = 1.0;
+							hitInfo.Injuries = this.Const.Injury.PiercingBody;
+							target.onDamageReceived(this, skill, hitInfo);
+						}
+					}
+				}
+			}
+		};
+		obj.onDeath = function( _killer, _skill, _tile, _fatalityType )
+		{
+			local myTile = this.getTile();
+
+			if (!this.m.IsExploded)
+			{
+				this.m.IsExploded = true;
+				local effect = {
+					Delay = 0,
+					Quantity = 80,
+					LifeTimeQuantity = 80,
+					SpawnRate = 400,
+					Brushes = [
+						"blood_splatter_bones_01",
+						"blood_splatter_bones_03",
+						"blood_splatter_bones_04",
+						"blood_splatter_bones_05",
+						"blood_splatter_bones_06"
+					],
+					Stages = [
+						{
+							LifeTimeMin = 1.0,
+							LifeTimeMax = 1.0,
+							ColorMin = this.createColor("ffffffff"),
+							ColorMax = this.createColor("ffffffff"),
+							ScaleMin = 1.0,
+							ScaleMax = 1.5,
+							RotationMin = 0,
+							RotationMax = 0,
+							VelocityMin = 200,
+							VelocityMax = 300,
+							DirectionMin = this.createVec(-1.0, -1.0),
+							DirectionMax = this.createVec(1.0, 1.0),
+							SpawnOffsetMin = this.createVec(0, 0),
+							SpawnOffsetMax = this.createVec(0, 0),
+							ForceMin = this.createVec(0, 0),
+							ForceMax = this.createVec(0, 0)
+						},
+						{
+							LifeTimeMin = 0.75,
+							LifeTimeMax = 1.0,
+							ColorMin = this.createColor("ffffff8f"),
+							ColorMax = this.createColor("ffffff8f"),
+							ScaleMin = 0.9,
+							ScaleMax = 0.9,
+							RotationMin = 0,
+							RotationMax = 0,
+							VelocityMin = 200,
+							VelocityMax = 300,
+							DirectionMin = this.createVec(-1.0, -1.0),
+							DirectionMax = this.createVec(1.0, 1.0),
+							ForceMin = this.createVec(0, -100),
+							ForceMax = this.createVec(0, -100)
+						},
+						{
+							LifeTimeMin = 0.1,
+							LifeTimeMax = 0.1,
+							ColorMin = this.createColor("ffffff00"),
+							ColorMax = this.createColor("ffffff00"),
+							ScaleMin = 0.1,
+							ScaleMax = 0.1,
+							RotationMin = 0,
+							RotationMax = 0,
+							VelocityMin = 200,
+							VelocityMax = 300,
+							DirectionMin = this.createVec(-1.0, -1.0),
+							DirectionMax = this.createVec(1.0, 1.0),
+							ForceMin = this.createVec(0, -100),
+							ForceMax = this.createVec(0, -100)
+						}
+					]
+				};
+				this.Tactical.spawnParticleEffect(false, effect.Brushes, myTile, effect.Delay, effect.Quantity, effect.LifeTimeQuantity, effect.SpawnRate, effect.Stages, this.createVec(0, 50));
+				this.onExplode();
+				this.Sound.play(this.m.Sound[this.Const.Sound.ActorEvent.Other1][this.Math.rand(0, this.m.Sound[this.Const.Sound.ActorEvent.Other1].len() - 1)], this.Const.Sound.Volume.Actor, this.getPos());
+				this.Sound.play(this.m.Sound[this.Const.Sound.ActorEvent.Other2][this.Math.rand(0, this.m.Sound[this.Const.Sound.ActorEvent.Other2].len() - 1)], this.Const.Sound.Volume.Actor, this.getPos());
+			}
+
+			this.actor.onDeath(_killer, _skill, _tile, _fatalityType);
+		}
+		local ws_onInit = obj.onInit;
+		obj.onInit = function()
+		{
+			ws_onInit();
+			this.m.Skills.add(this.new("scripts/skills/racial/skeleton_racial"));
+		};
+	});
+
+
 	// new skill for ghosts
 	local ghosts = [
 		"ghost",

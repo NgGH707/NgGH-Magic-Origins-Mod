@@ -306,11 +306,6 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 			onCreditsPressed();
 		}
 	});
-	::mods_hookNewObject("scenarios/scenario_manager", function ( obj )
-	{
-		local s = this.new("scripts/entity/tactical/minions/special/dev_files/nggh_dev_scenario");
-		obj.m.Scenarios.push(s);
-	});
 	::mods_hookNewObject("entity/world/locations/legendary/kraken_cult_location", function ( obj )
 	{
 		local ws_onSpawned = obj.onSpawned; 
@@ -333,45 +328,6 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 				}, null);
 			}
 		}
-	});
-
-	::mods_hookExactClass("events/events/dlc2/location/kraken_cult_enter_event", function (obj) 
-	{
-		local determineStartScreen = ::mods_getMember(obj, "onDetermineStartScreen");
-		obj.onDetermineStartScreen = function()
-		{
-			if (this.World.Flags.get("IsKrakenOrigin"))
-			{
-				return "H";
-			}
-
-			return determineStartScreen();
-		}
-
-		local screens = ::mods_getField(obj, "Screens");
-		screens.push({
-			ID = "H",
-			Text = "[img]gfx/ui/events/event_103.png[/img]{You watch as one of the helpers suddenly lifts into the air, and in the green light you see the slick tentacle drag him backward and it seems as though the earth itself opens up, and a thousand wet boughs and branches crinkle and drip, and rows upon rows of fangs bristle, clattering against one another as though shouldering for a slice, and the helper is thrown into it the maw and the gums twist and he is disrobed and defleshed and delimbed and destroyed. The woman chomps on another mushroom and then her hands caress bulbs of green, and you can see the tentacles slithering beneath each.%SPEECH_ON%Join us, sellsword! Let the Beast of Beasts have its feast!%SPEECH_OFF%}",
-			Image = "",
-			List = [],
-			Characters = [],
-			Options = [
-				{
-					Text = "Let\'s Duel!",
-					function getResult( _event )
-					{
-						this.World.State.getLastLocation().setFaction(this.World.FactionManager.getFactionOfType(this.Const.FactionType.Beasts).getID());
-						this.World.Events.showCombatDialog(false, true, true);
-						return 0;
-					}
-
-				}
-			],
-			function start( _event )
-			{
-			}
-
-		});
 	});
 
 	//add siege weapon in battle and automatically put them in formation
@@ -463,83 +419,43 @@ this.getroottable().HexenHooks.hookCharacterScreenAndStates <- function ()
 			ws_initMap();
 		};
 
+		local ws_tactical_flee_screen_onFleePressed = obj.tactical_flee_screen_onFleePressed;
 		obj.tactical_flee_screen_onFleePressed = function()
 		{
-			this.Sound.play("sounds/retreat_01.wav", 0.75);
-
-			if (this.isScenarioMode() || this.isEveryoneSafe())
+			if (!this.isScenarioMode() && !this.isEveryoneSafe() && !this.m.IsAutoRetreat)
 			{
-				this.m.IsFleeing = true;
-				this.m.MenuStack.pop();
-				this.m.TacticalDialogScreen.hide();
-				this.m.TacticalScreen.hide();
-				this.Time.clearEvents();
-				this.setPause(true);
-				this.flee();
-			}
-			else if (!this.m.IsAutoRetreat)
-			{
-				this.m.IsAutoRetreat = true;
-				this.m.MenuStack.pop();
-				this.Settings.getTempGameplaySettings().FasterPlayerMovement = true;
-				this.Settings.getTempGameplaySettings().FasterAIMovement = true;
-				this.Tactical.getCamera().zoomTo(this.Math.maxf(this.Tactical.getCamera().Zoom, 1.5), 1.0);
-				this.Time.setVirtualSpeed(1.5);
 				local alive = this.Tactical.Entities.getAllInstancesAsArray();
 
-				foreach( bro in alive )
+				foreach( a in alive )
 				{
-					if (bro.isAlive())
+					if (a.isAlive())
 					{
-						if (this.isKindOf(bro, "player"))
+						if (a.getFaction() == this.Const.Faction.Player)
 						{
-							if (bro.getFlags().has("egg"))
+							if (a.getFlags().has("egg"))
 							{
-								bro.getAIAgent().setUseHeat(true);
-								bro.getAIAgent().getProperties().BehaviorMult[this.Const.AI.Behavior.ID.Retreat] = 1.0;
-								bro.onRetreating();
+								a.onRetreating();
 							}
-							else if (bro.getFlags().has("boss") && bro.getFlags().has("kraken"))
+							else if (a.getFlags().has("boss") && a.getFlags().has("kraken"))
 							{
-								bro.killSilently();
+								a.killSilently();
 							}
-							else if (bro.getSkills().hasSkill("effects.charmed"))
-							{
-								local agent = bro.getSkills().getSkillByID("effects.charmed").m.OriginalAgent;
-								agent.setUseHeat(true);
-								agent.getProperties().BehaviorMult[this.Const.AI.Behavior.ID.Retreat] = 1.0;
-							}
-							else
-							{
-								bro.getAIAgent().setUseHeat(true);
-								bro.getAIAgent().getProperties().BehaviorMult[this.Const.AI.Behavior.ID.Retreat] = 1.0;
-							}
-
-							this.Tactical.TurnSequenceBar.updateEntity(bro.getID());
 						}
-						else if (bro.getSkills().hasSkill("effects.charmed"))
+						else if (a.getFaction() == this.Const.Faction.PlayerAnimals)
 						{
-							bro.killSilently();
+							if (a.isSummoned() && a.getAIAgent().getID() == this.Const.AI.Agent.ID.Player)
+							{
+								a.getAIAgent().setUseHeat(true);
+								a.getAIAgent().getProperties().BehaviorMult[this.Const.AI.Behavior.ID.Retreat] = 1.0;
+							}
+							
+							this.Tactical.TurnSequenceBar.updateEntity(a.getID());
 						}
 					}
 				}
-
-				local activeEntity = this.Tactical.TurnSequenceBar.getActiveEntity();
-
-				if (activeEntity != null)
-				{
-					if (activeEntity.getFaction() == this.Const.Faction.PlayerAnimals)
-					{
-						this.Tactical.TurnSequenceBar.initNextTurn();
-					}
-					else if (activeEntity.isPlayerControlled()) 
-					{
-					    activeEntity.getAIAgent().setFinished(false);
-					}
-				}
-
-				this.updateCurrentEntity();
 			}
+
+			ws_tactical_flee_screen_onFleePressed()
 		};
 
 		obj.gatherLoot = function()

@@ -10,6 +10,10 @@ this.getroottable().Nggh_MagicConcept.hookEffects <- function ()
 				this.m.RageStacks = 1;
 			}
 		};
+		obj.isHidden <- function()
+		{
+			return this.m.RageStacks == 0;
+		}
 		obj.getTooltip <- function()
 		{
 			local i = this.Math.maxf(30, (1.0 - 0.01 * this.m.RageStacks) * 100);
@@ -61,20 +65,21 @@ this.getroottable().Nggh_MagicConcept.hookEffects <- function ()
 		};
 		obj.onUpdate = function( _properties )
 		{
-			this.m.IsHidden = this.m.RageStacks == 0;
 			_properties.DamageReceivedTotalMult *= this.Math.maxf(0.3, 1.0 - 0.02 * this.m.RageStacks);
-			_properties.Bravery += 1 * this.m.RageStacks;
-			_properties.DamageRegularMin += 1 * this.m.RageStacks;
-			_properties.DamageRegularMax += 1 * this.m.RageStacks;
-			_properties.Initiative += 1 * this.m.RageStacks;
+			_properties.Bravery += this.m.RageStacks;
+			_properties.DamageRegularMin += this.m.RageStacks;
+			_properties.DamageRegularMax += this.m.RageStacks;
+			_properties.Initiative += this.m.RageStacks;
 		}
 		obj.onCombatStarted <- function()
 		{
 			this.m.RageStacks = 0;
+			this.getContainer().getActor().updateRageVisuals(this.m.RageStacks);
 		};
 		obj.onCombatFinished <- function()
 		{
 			this.m.RageStacks = 1;
+			this.getContainer().getActor().updateRageVisuals(this.m.RageStacks);
 		};
 	});
 

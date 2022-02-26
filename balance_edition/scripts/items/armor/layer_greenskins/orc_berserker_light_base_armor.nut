@@ -22,9 +22,6 @@ this.orc_berserker_light_base_armor <- this.inherit("scripts/items/legend_armor/
 		this.m.Condition = 50;
 		this.m.ConditionMax = 50;
 		this.m.StaminaModifier = -5;
-		this.blockUpgrades();
-		this.m.Blocked[this.Const.Items.ArmorUpgrades.Attachment] = false;
-		this.m.Blocked[this.Const.Items.ArmorUpgrades.Rune] = false;
 	}
 
 	function updateVariant()

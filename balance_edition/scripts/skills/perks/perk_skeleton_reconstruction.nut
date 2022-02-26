@@ -27,7 +27,7 @@ this.perk_skeleton_reconstruction <- this.inherit("scripts/skills/skill", {
 		if (this.isKindOf(actor.get(), "undead_player"))
 		{
 			this.m.IsRightActor = true;
-			actor.m.ChanceToTakeNoInjury = 100;
+			actor.m.ChanceToTakeNoInjury = 50;
 		}
 	}
 

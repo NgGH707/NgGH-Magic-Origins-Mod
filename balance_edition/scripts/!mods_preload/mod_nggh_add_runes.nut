@@ -10,7 +10,7 @@ this.getroottable().Nggh_MagicConcept.hookAddRunes <- function ()
 			{
 				target = _actor.getItems().getItemAtSlot(this.Const.ItemSlot.Mainhand);
 
-				if (target == null)
+				if (target == null || target.getID() == "weapon.nggh_ancient_lich_book")
 				{
 					return false;
 				}

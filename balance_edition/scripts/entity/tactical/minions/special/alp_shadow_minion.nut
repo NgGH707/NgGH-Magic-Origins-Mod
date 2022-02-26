@@ -78,7 +78,7 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 			_tile = this.getTile();
 		}
 
-		local brush = this.getSprite("body").getBrush().Name;
+		local brush = this.m.Bust;
 
 		if (this.isPlayerControlled())
 		{

@@ -386,7 +386,7 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 			ret.push({
 				id = 9,
 				type = "text",
-				icon = "ui/icons/special",
+				icon = "ui/icons/special.png",
 				text = "Reduce AP cost of all melee attack skills by [color=" + this.Const.UI.Color.PositiveValue + "]1[/color] "
 			})
 		}

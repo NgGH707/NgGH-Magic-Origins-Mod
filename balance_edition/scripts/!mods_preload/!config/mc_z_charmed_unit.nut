@@ -106,6 +106,7 @@ gt.Const.CharmedSlave <- {
 		//OrcBerserker = 14,
 			{
 				StatMod = { Hitpoints = [-70, -50], Bravery = [-30, -25], Stamina = [-20, -20], MeleeSkill = [-10, -10], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-25, -15] },
+				Perks = ["LegendComposure"],
 				Skills = ["effects/berserker_rage_effect", "actives/charge"],
 				Difficulty = 35,
 				Custom =  {

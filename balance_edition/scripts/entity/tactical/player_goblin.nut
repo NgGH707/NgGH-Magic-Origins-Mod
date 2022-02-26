@@ -422,6 +422,16 @@ this.player_goblin <- this.inherit("scripts/entity/tactical/player", {
 			local racial = this.new("scripts/skills/racial/ptr_goblin_racial");
 			racial.m.IsSerialized = false;
 			this.getSkills().add(racial);
+
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_formidable_approach_debuff_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_follow_up_proccer_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_bolstered_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_polearm_hitchance_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_immersive_damage_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_inspired_by_champion_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_inspiring_presence_buff_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_armor_fatigue_recovery_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_direct_damage_limiter_effect"));
 		}
 	}
 

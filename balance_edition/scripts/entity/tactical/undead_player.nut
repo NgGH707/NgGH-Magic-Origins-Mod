@@ -8,6 +8,7 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 		ResurrectionValue = 10.0,
 		ChanceToTakeNoInjury = 25,
 		CanAutoResurrect = false,
+		IsResurrectable = true,
 		IsResurrectingOnFatality = false,
 		IsHeadless = false,
 		WasInjured = false,
@@ -194,6 +195,11 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 
 	function isReallyKilled( _fatalityType )
 	{
+		if (_fatalityType == this.Const.FatalityType.Kraken || _fatalityType == this.Const.FatalityType.Devoured)
+		{
+			return true;
+		}
+
 		local isVampire = this.m.UndeadType == this.Const.Necro.UndeadType.Vampire;
 		local isMummy = this.m.UndeadType == this.Const.Necro.UndeadType.Mummy;
 		local isZombie = this.m.UndeadType == this.Const.Necro.UndeadType.Zombie;
@@ -247,14 +253,30 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 				return false;
 			}
 
-			if (this.Math.rand(1, 100) <= this.m.ChanceToTakeNoInjury)
+			if (this.Math.rand(1, 100) > this.m.ChanceToTakeNoInjury)
 			{
-				this.Tactical.getSurvivorRoster().add(this);
-				this.m.IsDying = false;
+				local resurrected = this.getSkills().getSkillByID("injury.weakened_post_resurrected");
+
+				if (resurrected == null)
+				{
+					local skill = this.new("scripts/skills/injury_permanent/weakened_post_resurrected");
+					skill.addRandomStacks(this.Math.rand(3, 6));
+					this.m.Skills.add(skill);
+				}
+				else
+				{
+					resurrected.addRandomStacks();
+					resurrected.anotherResurrectionOwO();
+				}
+
 				return false;
 			}
 
-			foreach ( inj in this.m.PotentialPermanentInjuries )
+			this.Tactical.getSurvivorRoster().add(this);
+			this.m.IsDying = false;
+			return false;
+
+			/*foreach ( inj in this.m.PotentialPermanentInjuries )
 			{
 				if (!this.getSkills().hasSkill(inj.ID))
 				{
@@ -271,7 +293,7 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 			this.m.Skills.add(skill);
 			this.Tactical.getSurvivorRoster().add(this);
 			this.m.IsDying = false;
-			return false;
+			return false;*/
 		}
 
 		return true;
@@ -774,7 +796,7 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 		local tattoo_body = this.getSprite("tattoo_body");
 		local tattoo_head = this.getSprite("tattoo_head");
 
-		if (this.m.IsReallyDead)
+		if (this.m.IsReallyDead || !this.m.IsResurrectable)
 		{
 			isResurrectable = false;
 		}
@@ -1320,19 +1342,31 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 		this.m.Skills.update();
 	}
 
-	function setStartValuesEx( _backgroundIndex = -1, _addTraits = true, _gender = -1, _addEquipment = true , _isBoss = false )
+	function setStartValuesEx( _backgroundIndex = -1, _addTraits = true, _gender = -1, _addEquipment = true )
 	{
 		local backgrounds = this.Const.Necro.CommonUndeadBackgrounds;
-		local roll = this.Math.rand(0, this.Const.Necro.UndeadType.Mummy);
+		local background;
 
-		if (_backgroundIndex >= 0 && _backgroundIndex <= this.Const.Necro.UndeadType.Mummy)
+		if (this.getFlags().has("boss"))
 		{
-			roll = _backgroundIndex;
+			local ID = this.getFlags().getAsInt("boss");
+			background = this.new("scripts/skills/backgrounds/" + this.Const.Necro.BossUndeadBackgrounds[ID].Script);
+			if ("setNewBackgroundModifiers" in background) background.setNewBackgroundModifiers();
+			this.m.UndeadType = this.Const.Necro.BossUndeadBackgrounds[ID].Type;
 		}
+		else
+		{
+			local roll = this.Math.rand(0, this.Const.Necro.UndeadType.Mummy);
 
-		local background = this.new("scripts/skills/backgrounds/" + backgrounds[roll]);
-		if ("setNewBackgroundModifiers" in background) background.setNewBackgroundModifiers();
-		this.m.UndeadType = roll;
+			if (_backgroundIndex >= 0 && _backgroundIndex <= this.Const.Necro.UndeadType.Mummy)
+			{
+				roll = _backgroundIndex;
+			}
+
+			background = this.new("scripts/skills/backgrounds/" + backgrounds[roll]);
+			if ("setNewBackgroundModifiers" in background) background.setNewBackgroundModifiers();
+			this.m.UndeadType = roll;
+		}
 
 		if (this.LegendsMod.Configs().LegendGenderLevel() == 2)
 		{
@@ -1723,7 +1757,13 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 		this.m.Sound[this.Const.Sound.ActorEvent.NoDamageReceived] = this.m.Sound[this.Const.Sound.ActorEvent.DamageReceived];
 		this.m.Sound[this.Const.Sound.ActorEvent.Flee] = this.m.Sound[this.Const.Sound.ActorEvent.Move];
 		this.m.Flags.add("skeleton");
-		this.m.Skills.add(this.new("scripts/skills/racial/skeleton_racial"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/racial/skeleton_racial"));
+
+		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+		{
+			this.m.Skills.add(this.new("scripts/skills/effects/ptr_undead_injury_receiver_effect"));
+			this.m.ExcludedInjuries.extend(this.Const.Injury.ExcludedInjuries.get(this.Const.Injury.ExcludedInjuries.PTRSkeleton));
+		}
 	}
 
 	function setVampireAttributes()
@@ -1748,7 +1788,8 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 		this.m.Sound[this.Const.Sound.ActorEvent.Flee] = this.m.Sound[this.Const.Sound.ActorEvent.Idle];
 		this.m.Sound[this.Const.Sound.ActorEvent.Move] = this.m.Sound[this.Const.Sound.ActorEvent.Idle];
 		this.m.Flags.add("vampire");
-		this.m.Skills.add(this.new("scripts/skills/racial/vampire_racial"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/racial/vampire_racial"));
+		this.m.IsResurrectable = false;
 	}
 
 	function setMummyAttributes()
@@ -1783,7 +1824,13 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 		this.m.Sound[this.Const.Sound.ActorEvent.NoDamageReceived] = this.m.Sound[this.Const.Sound.ActorEvent.DamageReceived];
 		this.m.Sound[this.Const.Sound.ActorEvent.Flee] = this.m.Sound[this.Const.Sound.ActorEvent.Idle];
 		this.m.Flags.add("skeleton");
-		this.m.Skills.add(this.new("scripts/skills/racial/mummy_racial"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/racial/mummy_racial"));
+
+		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+		{
+			this.m.Skills.add(this.new("scripts/skills/effects/ptr_undead_injury_receiver_effect"));
+			this.m.ExcludedInjuries.extend(this.Const.Injury.ExcludedInjuries.get(this.Const.Injury.ExcludedInjuries.PTRSkeleton));
+		}
 	}
 
 	function setZombieAttributes()
@@ -1836,8 +1883,85 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 		this.m.SoundVolume[this.Const.Sound.ActorEvent.Move] = 0.1;
 		this.m.SoundPitch = this.Math.rand(70, 120) * 0.01;
 		this.m.Flags.add("zombie_minion");
-		this.m.Skills.add(this.new("scripts/skills/actives/zombie_bite"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/actives/zombie_bite"));
 		this.m.Skills.removeByID("actives.hand_to_hand");
+
+		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+		{
+			this.m.Skills.add(this.new("scripts/skills/effects/ptr_undead_injury_receiver_effect"));
+			this.m.ExcludedInjuries.extend(this.Const.Injury.ExcludedInjuries.get(this.Const.Injury.ExcludedInjuries.PTRUndead));
+		}
+	}
+
+	function setStartAsBoss( _type )
+	{
+		this.getFlags().set("boss", _type);
+		this.setStartValuesEx();
+		this.setBossAppearance(_type);
+		this.setBossAttributes(_type);
+	}
+
+	function setBossAppearance( _type )
+	{
+		switch (_type)
+		{
+		case this.Const.Necro.UndeadBossType.SkeletonLich:
+		case this.Const.Necro.UndeadBossType.SkeletonBoss:
+			this.getSprite("body").setBrush("bust_skeleton_body_02");
+			this.getSprite("scar_head").setBrush("bust_skeleton_face_03");
+			this.getSprite("hair").resetBrush();
+			this.getSprite("beard").resetBrush();
+			this.getSprite("beard_top").resetBrush();
+			break;
+
+		case this.Const.Necro.UndeadBossType.ZombieBoss:
+			break;
+
+		case this.Const.Necro.UndeadBossType.MummyQueen:
+			break;
+		}
+
+		this.m.BodySpriteName = this.getSprite("body").getBrush().Name;
+		local app = this.getItems().getAppearance();
+		app.Body = this.m.BodySpriteName;
+		app.Corpse = this.m.BodySpriteName + "_dead";
+	}
+
+	function setBossAttributes( _type )
+	{
+		switch (_type)
+		{
+		case this.Const.Necro.UndeadBossType.SkeletonLich:
+			foreach ( a in ["horror_skill", "miasma_skill", "raise_undead"] )
+			{
+				local skill = this.noSerializeSkill("scripts/skills/actives/" + a);
+				skill.m.MaxRange = 12;
+				this.m.Skills.add(skill);
+			}
+			this.m.MaxTraversibleLevels = 3;
+			this.m.IsResurrectable = false;
+			this.m.BaseProperties.DamageReceivedRegularMult = 0.75;
+			break;
+	
+		case this.Const.Necro.UndeadBossType.SkeletonBoss:
+			this.m.IsResurrectable = false;
+			this.m.BaseProperties.DamageTotalMult = 1.35;
+			break;
+
+		case this.Const.Necro.UndeadBossType.ZombieBoss:
+			this.m.IsResurrectable = false;
+			this.m.BaseProperties.DamageDirectMult = 1.15;
+			this.m.BaseProperties.FatigueDealtPerHitMult = 2.0;
+			break;
+
+		case this.Const.Necro.UndeadBossType.MummyQueen:
+			this.m.Skills.add(this.noSerializeSkill("scripts/skills/racial/vampire_racial"));
+			this.m.Skills.add(this.noSerializeSkill("scripts/skills/racial/alp_racial"));
+			break;
+		}
+
+		this.m.BaseProperties.IsImmuneToDisarm = true;
+		this.m.Skills.update();
 	}
 
 	function TherianthropeInfection(_killer)
@@ -1846,6 +1970,13 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 
 	function TherianthropeInfectionRandom()
 	{
+	}
+
+	function noSerializeSkill( _script )
+	{
+		local skill = this.new(_script);
+		skill.m.IsSerialized = false;
+		return skill;
 	}
 
 	function onSerialize( _out )
@@ -1863,6 +1994,11 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 		this.m.InjuryType = _in.readU16();
 		this.m.BodySpriteName = _in.readString();
 		this.setUndeadAttributes();
+
+		if (this.getFlags().has("boss"))
+		{
+			this.setBossAttributes(this.getFlags().getAsInt("boss"));
+		}
 	}
 	
 

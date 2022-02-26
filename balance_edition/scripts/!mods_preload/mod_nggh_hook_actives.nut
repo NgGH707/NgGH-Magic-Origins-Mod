@@ -26,6 +26,200 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 	}
 
 
+	//
+	::mods_hookExactClass("skills/actives/raise_undead", function(obj) 
+	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.Description = "Raise a corpse back to life as an undead, faithfully follows your bidding.";
+			this.m.IconDisabled = "skills/active_26_sw.png";
+		};
+		obj.getTooltip <- function()
+		{
+			return this.getDefaultUtilityTooltip();
+		};
+	});
+
+
+	//
+	::mods_hookExactClass("skills/actives/horror_skill", function(obj) 
+	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.Description = "Fill selected target\'s mind with horrific images, weakening their will to fight and even making them freeze in place because of fear.";
+			this.m.Icon = "skills/active_102.png";
+			this.m.IconDisabled = "skills/active_102_sw.png";
+			this.m.Overlay = "active_102";
+		};
+		obj.onAdded <- function()
+		{
+			this.m.IsVisibleTileNeeded = this.getContainer().getActor().isPlayerControlled();
+		};
+		obj.getTooltip <- function()
+		{
+			local ret = this.getDefaultUtilityTooltip();
+			ret.extend([
+				{
+					id = 7,
+					type = "text",
+					icon = "ui/icons/vision.png",
+					text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+				},
+				{
+					id = 7,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "Scare the shit out of your target"
+				},
+				{
+					id = 7,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "Can affect up to 7 targets"
+				},
+			]);
+			return ret;
+		};
+		local ws_onUse = obj.onUse;
+		obj.onUse = function( _user, _targetTile )
+		{
+			if (_user.isPlayerControlled())
+			{
+				local targets = [];
+
+				if (_targetTile.IsOccupiedByActor)
+				{
+					local entity = _targetTile.getEntity();
+
+					if (this.isViableTarget(_user, entity))
+					{
+						targets.push(entity);
+					}
+				}
+
+				for( local i = 0; i < 6; i = ++i )
+				{
+					if (!_targetTile.hasNextTile(i))
+					{
+					}
+					else
+					{
+						local adjacent = _targetTile.getNextTile(i);
+
+						if (adjacent.IsOccupiedByActor && this.Math.rand(1, 100) <= 33)
+						{
+							local entity = adjacent.getEntity();
+
+							if (this.isViableTarget(_user, entity))
+							{
+								targets.push(entity);
+							}
+						}
+					}
+				}
+
+				foreach( target in targets )
+				{
+					local effect = this.Tactical.spawnSpriteEffect("effect_skull_03", this.createColor("#ffffff"), target.getTile(), 0, 40, 1.0, 0.25, 0, 400, 300);
+
+					if (target.getCurrentProperties().MoraleCheckBraveryMult[this.Const.MoraleCheckType.MentalAttack] >= 1000.0)
+					{
+						continue;
+					}
+
+					target.checkMorale(-1, -1 * this.Math.rand(5, 15), this.Const.MoraleCheckType.MentalAttack);
+
+					if (!target.checkMorale(0, -1 * this.Math.rand(1, 5), this.Const.MoraleCheckType.MentalAttack))
+					{
+						target.getSkills().add(this.new("scripts/skills/effects/horrified_effect"));
+
+						if (!_user.isHiddenToPlayer() && !target.isHiddenToPlayer())
+						{
+							this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(target) + " is horrified");
+						}
+					}
+				}
+			}
+			else
+			{
+				return ws_onUse(_user, _targetTile);
+			}
+
+			return true;
+		};
+		obj.onTargetSelected <- function( _targetTile )
+		{
+			local ownTile = _targetTile;
+
+			for( local i = 0; i != 6; i = ++i )
+			{
+				if (!ownTile.hasNextTile(i))
+				{
+				}
+				else
+				{
+					local tile = ownTile.getNextTile(i);
+
+					if (this.Math.abs(tile.Level - ownTile.Level) <= 1)
+					{
+						this.Tactical.getHighlighter().addOverlayIcon(this.Const.Tactical.Settings.AreaOfEffectIcon, tile, tile.Pos.X, tile.Pos.Y);
+					}
+				}
+			}
+		};
+	});
+
+
+	//
+	::mods_hookExactClass("skills/actives/wither_skill", function(obj) 
+	{
+		local ws_create = obj.create;
+		obj.create = function()
+		{
+			ws_create();
+			this.m.Description = "Wither a target for three turns, reducing their damage, fatigue and initiative by [color=" + this.Const.UI.Color.NegativeValue + "]-30%[/color]. The effect is weaken by 10% each turn";
+			this.m.IconDisabled = "skills/active_217_sw.png";
+		};
+		obj.getTooltip <- function()
+		{
+			local ret = this.getDefaultUtilityTooltip();
+			ret.extend([
+				{
+					id = 7,
+					type = "text",
+					icon = "ui/icons/vision.png",
+					text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+				},
+				{
+					id = 7,
+					type = "text",
+					icon = "ui/icons/special.png",
+					text = "Only affect living beings"
+				},
+			]);
+			return ret;
+		};
+		obj.onVerifyTarget <- function( _originTile, _targetTile )
+		{
+			if (!this.skill.onVerifyTarget(_originTile, _targetTile))
+			{
+				return false;
+			}
+
+			if (_targetTile.getEntity().getFlags().has("undead"))
+			{
+				return false;
+			}
+
+			return true;
+		}
+	});
+
+
 	// demon hound
 	::mods_hookExactClass("skills/actives/legend_demon_hound_bite", function(obj) 
 	{
@@ -801,8 +995,6 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			{
 				this.m.ActionPointCost = 8;
 				this.m.FatigueCost = 30;
-				this.m.MinRange = 1;
-				this.m.MaxRange = 6;
 			}
 		};
 		obj.getTooltip <- function()
@@ -822,6 +1014,12 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 					id = 3,
 					type = "text",
 					text = this.getCostString()
+				},
+				{
+					id = 7,
+					type = "text",
+					icon = "ui/icons/vision.png",
+					text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
 				},
 				{
 					id = 10,
@@ -2189,6 +2387,15 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			});
 			return ret;
 		};
+		obj.isHidden <- function()
+		{
+			if (!this.getContainer().hasSkill("effects.disarmed") && this.getContainer().getActor().getMainhandItem() != null && this.getContainer().getActor().getOffhandItem() != null)
+			{
+				return true;
+			}
+
+			return this.skill.isHidden();
+		}
 		obj.onUpdate = function( _properties )
 		{
 		};
@@ -2202,6 +2409,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 			{
 				_properties.DamageRegularMin += 15;
 				_properties.DamageRegularMax += 25;
+				_properties.DamageArmorMult = 0.0;
 				_properties.IsIgnoringArmorOnAttack = true;
 
 				local mhand = this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Mainhand);
@@ -2210,7 +2418,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 				{
 					_properties.DamageRegularMin -= mhand.m.RegularDamage;
 					_properties.DamageRegularMax -= mhand.m.RegularDamageMax;
-					_properties.DamageArmorMult /= mhand.m.ArmorDamageMult;
+					
 					_properties.DamageDirectAdd -= mhand.m.DirectDamageAdd;
 				}
 
@@ -2417,28 +2625,23 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 					continue;
 				}
 
-				if (this.myTile.getDistanceTo(a.getTile()) > 4)
+				if (_targetTile.getDistanceTo(a.getTile()) > 4)
 				{
 					continue;
 				}
 
-				if (a.getFaction() != _user.getFaction())
+				if (a.getFlags().has("Hexe") || !a.getFlags().has("human") || a.getMoraleState() == this.Const.MoraleState.Ignore)
 				{
 					continue;
 				}
 
-				if (!a.getFlags().has("human") || a.getMoraleState() == this.Const.MoraleState.Ignore)
-				{
-					continue;
-				}
-
-				if (a.getFlags().has("Hexe"))
+				if (!a.getCurrentProperties().IsAffectedByDyingAllies || !a.getCurrentProperties().IsAffectedByFleeingAllies || a.getCurrentProperties().getBravery() >= 100)
 				{
 					continue;
 				}
 
 				a.getSkills().add(this.new("scripts/skills/effects/legend_dazed_effect"));
-				a.worsenMood(2.0, "Witnessed someone eat a corpse");
+				a.worsenMood(1.0, "Witnessed a brother eats a corpse");
 			}
 
 			_user.onUpdateInjuryLayer();

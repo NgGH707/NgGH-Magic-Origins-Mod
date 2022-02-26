@@ -930,18 +930,31 @@ this.ghost_player <- this.inherit("scripts/entity/tactical/undead_player", {
 		this.m.Skills.add(this.new("scripts/skills/special/legend_horserider_skill"));
 		this.m.Skills.add(this.new("scripts/skills/effects/legend_veteran_levels_effect"));
 
+		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+		{
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_formidable_approach_debuff_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_follow_up_proccer_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_bolstered_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_polearm_hitchance_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_immersive_damage_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_inspired_by_champion_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_inspiring_presence_buff_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_armor_fatigue_recovery_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_direct_damage_limiter_effect"));
+		}
+
 		this.setFaction(this.Const.Faction.Player);
 		this.m.Items.setUnlockedBagSlots(2);
 		this.m.Skills.add(this.new("scripts/skills/special/bag_fatigue"));
 		this.setDiscovered(true);
 	}
 
-	function setStartValuesEx( _backgroundIndex = -1, _addTraits = true, _gender = -1, _addEquipment = true , _isBoss = false )
+	function setStartValuesEx( _backgroundIndex = -1, _addTraits = true, _gender = -1, _addEquipment = true )
 	{
 		local backgrounds = this.Const.Necro.CommonUndeadBackgrounds;
-		local roll = this.Math.rand(this.Const.Necro.UndeadType.Ghost, backgrounds.len() - 1);
+		local roll = this.Math.rand(this.Const.Necro.UndeadType.Ghost, this.Const.Necro.UndeadType.DemonHound);
 
-		if (_backgroundIndex >= this.Const.Necro.UndeadType.Ghost && _backgroundIndex <= backgrounds.len() - 1)
+		if (_backgroundIndex >= this.Const.Necro.UndeadType.Ghost && _backgroundIndex <= this.Const.Necro.UndeadType.DemonHound)
 		{
 			roll = _backgroundIndex;
 		}
@@ -1114,9 +1127,11 @@ this.ghost_player <- this.inherit("scripts/entity/tactical/undead_player", {
 		case this.Const.Necro.UndeadType.DemonHound:
 			this.setDemonHoundAttributes();
 			break;
+
 		case this.Const.Necro.UndeadType.Banshee:
 			this.setBansheeAttributes();
 			break;
+
 		default:
 			this.setGhostAttributes();
 		}
@@ -1165,8 +1180,8 @@ this.ghost_player <- this.inherit("scripts/entity/tactical/undead_player", {
 		this.m.Sound[this.Const.Sound.ActorEvent.Flee] = this.m.Sound[this.Const.Sound.ActorEvent.Move];
 		this.m.SoundPitch = this.Math.rand(90, 110) * 0.01;
 		this.m.Flags.add("skeleton");
-		this.m.Skills.add(this.new("scripts/skills/racial/skeleton_racial"));
-		this.m.Skills.add(this.new("scripts/skills/actives/legend_demon_hound_bite"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/racial/skeleton_racial"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/actives/legend_demon_hound_bite"));
 		this.m.Items.getData()[this.Const.ItemSlot.Mainhand][0] = -1;
 		this.m.Items.getData()[this.Const.ItemSlot.Offhand][0] = -1;
 		this.m.Items.getData()[this.Const.ItemSlot.Ammo][0] = -1;
@@ -1194,10 +1209,10 @@ this.ghost_player <- this.inherit("scripts/entity/tactical/undead_player", {
 		this.m.Sound[this.Const.Sound.ActorEvent.Move] = this.m.Sound[this.Const.Sound.ActorEvent.Idle];
 		this.m.SoundPitch = this.Math.rand(90, 110) * 0.01;
 		this.m.Flags.add("ghost");
-		this.m.Skills.add(this.new("scripts/skills/racial/ghost_racial"));
-		this.m.Skills.add(this.new("scripts/skills/actives/ghastly_touch"));
-		this.m.Skills.add(this.new("scripts/skills/actives/mod_banshee_scream"));
-		this.m.Skills.add(this.new("scripts/skills/actives/mod_ghost_possess_player"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/racial/ghost_racial"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/actives/ghastly_touch"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/actives/mod_banshee_scream"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/actives/mod_ghost_possess_player"));
 		this.m.MaxTraversibleLevels = 3;
 		this.m.Items.getData()[this.Const.ItemSlot.Body][0] = null;
 		this.m.Items.getData()[this.Const.ItemSlot.Head][0] = null;
@@ -1227,10 +1242,10 @@ this.ghost_player <- this.inherit("scripts/entity/tactical/undead_player", {
 		this.m.Sound[this.Const.Sound.ActorEvent.Move] = this.m.Sound[this.Const.Sound.ActorEvent.Idle];
 		this.m.SoundPitch = this.Math.rand(90, 110) * 0.01;
 		this.m.Flags.add("ghost");
-		this.m.Skills.add(this.new("scripts/skills/racial/ghost_racial"));
-		this.m.Skills.add(this.new("scripts/skills/actives/ghastly_touch"));
-		this.m.Skills.add(this.new("scripts/skills/actives/mod_horrific_scream"));
-		this.m.Skills.add(this.new("scripts/skills/actives/mod_ghost_possess_player"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/racial/ghost_racial"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/actives/ghastly_touch"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/actives/mod_horrific_scream"));
+		this.m.Skills.add(this.noSerializeSkill("scripts/skills/actives/mod_ghost_possess_player"));
 		this.m.MaxTraversibleLevels = 3;
 	}
 
@@ -1238,7 +1253,7 @@ this.ghost_player <- this.inherit("scripts/entity/tactical/undead_player", {
 	{
 		this.actor.onRender();
 
-		if (this.m.UndeadType = this.Const.Necro.UndeadType.DemonHound)
+		if (this.m.UndeadType == this.Const.Necro.UndeadType.DemonHound)
 		{
 			if (this.m.DistortTargetA == null)
 			{
@@ -1403,12 +1418,24 @@ this.ghost_player <- this.inherit("scripts/entity/tactical/undead_player", {
 
 	function onSerialize( _out )
 	{
-		this.undead_player.onSerialize(_out);
+		this.player.onSerialize(_out);
+		_out.writeU16(this.m.UndeadType);
+		_out.writeU16(this.m.InjuryType);
+		_out.writeString(this.m.BodySpriteName);
 	}
 
 	function onDeserialize( _in )
 	{
-		this.undead_player.onDeserialize(_in);
+		this.player.onDeserialize(_in);
+		this.m.UndeadType = _in.readU16();
+		this.m.InjuryType = _in.readU16();
+		this.m.BodySpriteName = _in.readString();
+		this.setUndeadAttributes();
+
+		if (this.getFlags().has("boss"))
+		{
+			this.setBossAttributes(this.getFlags().getAsInt("boss"));
+		}
 	}
 	
 

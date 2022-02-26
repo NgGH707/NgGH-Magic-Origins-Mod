@@ -22,6 +22,13 @@ gt.Const.Necro <- {
 		DemonHound = 6,
 		COUNT =	6
 	},
+	UndeadBossType = {
+		SkeletonLich = 0,
+		SkeletonBoss = 1,
+		ZombieBoss = 2,
+		MummyQueen = 3,
+		COUNT = 3
+	},
 	CommonUndeadBackgrounds = [
 		"nggh_zombie_background",
 		"nggh_skeleton_background",
@@ -30,6 +37,24 @@ gt.Const.Necro <- {
 		"nggh_ghost_background",
 		"nggh_banshee_background",
 		"nggh_demon_hound_background",
+	],
+	BossUndeadBackgrounds = [
+		{
+			Script = "nggh_skeleton_lich_background"
+			Type = 1
+		},
+		{
+			Script = "nggh_skeleton_boss_background"
+			Type = 1
+		},
+		{
+			Script = "nggh_zombie_boss_background"
+			Type = 0
+		},
+		{
+			Script = "nggh_mummy_queen_background"
+			Type = 3
+		}
 	],
 	InjuryPermanent = [
 		[
@@ -50,14 +75,6 @@ gt.Const.Necro <- {
 				Script = "injury_permanent/missing_finger_injury"
 			},
 			{
-				ID = "injury.maimed_foot",
-				Script = "injury_permanent/maimed_foot_injury"
-			},
-			{
-				ID = "injury.broken_elbow_joint",
-				Script = "injury_permanent/broken_elbow_joint_injury"
-			},
-			{
 				ID = "injury.missing_hand",
 				Script = "injury_permanent/missing_hand_injury"
 			},
@@ -66,14 +83,6 @@ gt.Const.Necro <- {
 			{
 				ID = "injury.missing_finger",
 				Script = "injury_permanent/missing_finger_injury"
-			},
-			{
-				ID = "injury.maimed_foot",
-				Script = "injury_permanent/maimed_foot_injury"
-			},
-			{
-				ID = "injury.broken_elbow_joint",
-				Script = "injury_permanent/broken_elbow_joint_injury"
 			},
 			{
 				ID = "injury.missing_hand",

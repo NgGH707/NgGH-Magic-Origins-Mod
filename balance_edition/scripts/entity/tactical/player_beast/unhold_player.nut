@@ -342,7 +342,11 @@ this.unhold_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	{
 		this.player_beast.onAfterInit();
 		this.m.Skills.add(this.new("scripts/skills/actives/unstoppable_charge_skill"));
-		this.m.Skills.update();
+
+		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+		{
+			this.m.Skills.add(this.new("scripts/skills/effects/ptr_armor_fatigue_recovery_effect"));
+		}
 	}
 	
 	function setScenarioValues( _isElite = false , _isBear = false , _isRockUnhold = false, _Dub_two = false )

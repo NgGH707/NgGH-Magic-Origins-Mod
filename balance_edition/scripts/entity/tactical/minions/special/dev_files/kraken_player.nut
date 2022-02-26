@@ -6,7 +6,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		Script = "scripts/entity/tactical/minions/special/dev_files/kraken_tentacle_player",
 	},
 	function getStrength() {return 90}
-	function getHealthRecoverMult() {return 20.0}
+	function getHealthRecoverMult() {return 25.0}
 	function getTentacles()
 	{
 		return this.m.Tentacles;
@@ -115,6 +115,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		];
 		this.m.SoundVolume[this.Const.Sound.ActorEvent.Other1] = 1.5;
 		this.m.SoundVolume[this.Const.Sound.ActorEvent.Death] = 1.5;
+		this.m.SignaturePerks = ["HoldOut", "SteelBrow", "Fearsome", "Stalwart", "LegendComposure", "LegendPoisonImmunity"];
 		this.m.Flags.add("boss");
 		this.m.Flags.add("kraken");
 		this.m.Items.blockAllSlots();
@@ -336,15 +337,6 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	function onAfterInit()
 	{
 		this.player_beast.onAfterInit();
-		local perks = ["perk_hold_out", "perk_fearsome", "perk_steel_brow", "perk_stalwart", "perk_legend_composure", "perk_legend_poison_immunity"];
-		
-		foreach ( script in perks )
-		{
-			local s = this.new("scripts/skills/perks/" + script);
-			s.m.IsSerialized = false;
-			this.m.Skills.add(s);
-		}
-		
 		this.m.Skills.add(this.new("scripts/skills/actives/mod_kraken_devour_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/mod_kraken_command_drag_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/mod_kraken_spawn_tentacle_skill"));

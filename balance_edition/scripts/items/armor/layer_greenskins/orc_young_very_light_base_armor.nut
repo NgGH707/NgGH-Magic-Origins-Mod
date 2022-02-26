@@ -18,9 +18,6 @@ this.orc_young_very_light_base_armor <- this.inherit("scripts/items/legend_armor
 		this.m.Condition = 35;
 		this.m.ConditionMax = 35;
 		this.m.StaminaModifier = 0;
-		this.blockUpgrades();
-		this.m.Blocked[this.Const.Items.ArmorUpgrades.Attachment] = false;
-		this.m.Blocked[this.Const.Items.ArmorUpgrades.Rune] = false;
 	}
 
 	function updateVariant()

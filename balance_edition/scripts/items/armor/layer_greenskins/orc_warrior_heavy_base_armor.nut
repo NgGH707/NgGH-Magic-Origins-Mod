@@ -21,6 +21,8 @@ this.orc_warrior_heavy_base_armor <- this.inherit("scripts/items/legend_armor/le
 		this.m.ConditionMax = 400;
 		this.m.StaminaModifier = -36;
 		this.blockUpgrades();
+		this.m.Blocked[this.Const.Items.ArmorUpgrades.Tabbard] = false;
+		this.m.Blocked[this.Const.Items.ArmorUpgrades.Cloak] = false;
 		this.m.Blocked[this.Const.Items.ArmorUpgrades.Attachment] = false;
 		this.m.Blocked[this.Const.Items.ArmorUpgrades.Rune] = false;
 	}

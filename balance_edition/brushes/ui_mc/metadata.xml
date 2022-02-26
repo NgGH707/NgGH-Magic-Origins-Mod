@@ -136,6 +136,7 @@
   <sprite id="patting_skill" ic="FF2E326F" img="skills\patting_skill.png" />
   <sprite id="active_24_a" ic="FF2E326F" img="skills\active_24_a.png" />
   <sprite id="active_111_a" ic="FF2E326F" img="skills\active_111_a.png" />
+  <sprite id="active_black_book" ic="FF2E326F" img="skills\active_black_book.png" />
  
   <sprite id="perk_14" ic="FF2E326F" img="skills\perk_14.png" />
   <sprite id="trait_icon_54_mini" offsetY="35" ic="FF2E326F" img="skills\mini\trait_icon_54_mini.png" />

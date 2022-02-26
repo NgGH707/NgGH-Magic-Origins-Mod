@@ -3,9 +3,7 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 	//update a new party strength calculation for hexe origin
 	::mods_hookNewObject("entity/world/player_party", function ( obj )
 	{
-		local oldFunction = ::mods_getMember(obj, "updateStrength");
-		
-		local newFunction = function()
+		obj.updateStrength = function()
 		{
 			this.m.Strength = 0.0;
 			local roster = this.World.getPlayerRoster().getAll();
@@ -14,11 +12,11 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 			{
 				roster.sort(this.onLevelCompare);
 			}
-
 			if (roster.len() < this.World.Assets.getBrothersScaleMin())
 			{
 				this.m.Strength += 10.0 * (this.World.Assets.getBrothersScaleMin() - roster.len());
 			}
+
 
 			if (this.World.Assets.getOrigin() == null)
 			{
@@ -39,7 +37,7 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 
 			foreach( i, bro in roster )
 			{
-				if (i >= 27)
+				if (i >= 25)
 				{
 					break;
 				}
@@ -90,28 +88,33 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 					}
 					else 
 					{
-						hexeOriginMult = 1.1;    
+						hexeOriginMult = 1.0;    
 					}
 				}
+
+				if ("isMounted" in bro)
+				{
+					hexeOriginMult *= bro.isMounted() ? 1.25 : 1.0;
+				}
 				
-				hexeOriginMult = hexeOriginMult * (bro.getSkills().hasSkill("racial.champion") ? 1.33 : 1.0);
+				hexeOriginMult *= bro.getSkills().hasSkill("racial.champion") ? 1.33 : 1.0;
 				local brolevel = bro.getLevel();
 
 				if (this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Easy)
 				{
-					this.m.Strength += (3 + (brolevel / 4 + (brolevel - 1)) * 1.5) * broScale * hexeOriginMult;
+					this.m.Strength += (3 + ((brolevel / 4) + (brolevel - 1)) * 1.5) * broScale * hexeOriginMult;
 				}
 				else if (this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Normal)
 				{
-					this.m.Strength += (10 + (brolevel / 2 + (brolevel - 1)) * 2) * broScale * hexeOriginMult;
+					this.m.Strength += (10 + ((brolevel / 2) + (brolevel - 1)) * 2) * broScale * hexeOriginMult;
 				}
 				else if (this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Hard)
 				{
-					this.m.Strength += (6 + count / 2 + (brolevel / 2 + this.pow(brolevel, 1.2))) * broScale * hexeOriginMult;
+					this.m.Strength += (6 + (count / 2) + ((brolevel / 2) + (pow(brolevel,1.2)))) * broScale * hexeOriginMult;
 				}
 				else if (this.World.Assets.getCombatDifficulty() == this.Const.Difficulty.Legendary)
 				{
-					this.m.Strength += (count + (brolevel + this.pow(brolevel, 1.2))) * broScale * hexeOriginMult;
+					this.m.Strength += (count + (brolevel + (pow(brolevel,1.2)))) * broScale * hexeOriginMult;
 				}
 
 				if (this.LegendsMod.Configs().LegendItemScalingEnabled())
@@ -200,10 +203,9 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 			{
 				zCount = this.Math.floor(zCount / 2.0);
 
-				for( local i = 0; i < zCount; i = i )
+				for( local i = 0; i < zCount; i = ++i )
 				{
 					this.m.Strength += 3 + (zombieSummonLevel / 2 + (zombieSummonLevel - 1)) * 2.0;
-					i = ++i;
 				}
 			}
 
@@ -211,18 +213,12 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 			{
 				sCount = this.Math.floor(sCount / 2.0);
 
-				for( local i = 0; i < sCount; i = i )
+				for( local i = 0; i < sCount; i = ++i )
 				{
 					this.m.Strength += 3 + (skeletonSummonLevel / 2 + (skeletonSummonLevel - 1)) * 2.0;
-					i = ++i;
 				}
 			}
 		};
-		
-		obj.updateStrength = function()
-		{
-			newFunction();
-		}
 	});
 
 	//Hook to help non-human have more suitable health recovery
@@ -591,92 +587,6 @@ this.getroottable().HexenHooks.hookPlayerPartyAndAssets <- function ()
 				}
 			}
 		}
-	});
-
-
-	//
-	::mods_hookNewObject("scenarios/world/legends_necro_scenario", function(obj) 
-	{
-		local ws_onSpawnAssets = obj.onSpawnAssets;
-		obj.onSpawnAssets = function()
-		{
-			ws_onSpawnAssets();
-			local roster = this.World.getPlayerRoster();
-			local bro;
-
-			foreach ( b in roster.getAll() )
-			{
-				if (b.getSkills().hasSkill("trait.legend_rotten_flesh"))
-				{
-					bro = b;
-					break;
-				}
-			}
-
-			if (bro != null)
-			{
-				roster.remove(bro);
-			}
-			
-			bro = roster.create("scripts/entity/tactical/undead_player");
-			bro.setStartValuesEx();
-			bro.getBackground().m.RawDescription = "Once a proud necromancer, %name% took three pupils under their wing to train the next generation of great necromancers. What %name% did not seeing coming is a heart attack - one that left them like a corpse like they used to command. With this macabre irony in mind, they now serve their students in unlife as little more than fodder.";
-			bro.getBackground().buildDescription(true);
-			bro.setPlaceInFormation(12);
-			bro.setVeteranPerks(2);
-
-			if (this.Math.rand(1, 100) <= 40)
-			{
-				bro = roster.create("scripts/entity/tactical/ghost_player");
-				bro.setStartValuesEx();
-				bro.getBackground().m.RawDescription = "Once a proud necromancer, %name% took three pupils under their wing to train the next generation of great necromancers. What %name% did not seeing coming is a heart attack - one that left them like a corpse like they used to command. With this macabre irony in mind, they now serve their students in unlife as little more than fodder.";
-				bro.getBackground().buildDescription(true);
-				bro.setPlaceInFormation(13);
-				bro.setVeteranPerks(2);
-				this.World.Assets.getStash().add(this.new("scripts/items/misc/petrified_scream_item"));
-			}
-		}
-
-		local ws_onUpdateDraftList = obj.onUpdateDraftList;
-		obj.onUpdateDraftList = function( _list, _gender = null )
-		{
-			ws_onUpdateDraftList(_list, _gender);
-
-			while(_list.find("legend_puppet_background") != null)
-			{
-				_list.remove(_list.find("legend_puppet_background"));
-			}
-		};
-
-		local ws_onHiredByScenario = obj.onHiredByScenario;
-		obj.onHiredByScenario = function( bro )
-		{
-			if (bro.getFlags().has("undead"))
-			{
-				bro.getSprite("socket").setBrush("bust_base_undead");
-			}
-			else
-			{
-				ws_onHiredByScenario(bro);
-			}
-		};
-
-		local ws_onUpdateHiringRoster = obj.onUpdateHiringRoster;
-		obj.onUpdateHiringRoster = function( _roster )
-		{
-			ws_onUpdateHiringRoster(_roster);
-			local chance = 20;
-
-			for (local i = 0; i < 3; ++i)
-			{
-				if (this.Math.rand(1, 100) <= chance)
-				{
-					local undead = _roster.create("scripts/entity/tactical/undead_player");
-					undead.setStartValuesEx();
-					chance -= 5;
-				}
-			}
-		};
 	});
 
 	delete this.HexenHooks.hookPlayerPartyAndAssets;

@@ -17,7 +17,7 @@ this.perk_zombie_undying <- this.inherit("scripts/skills/skill", {
 
 	function onUpdate( _properties )
 	{
-		properties.Hitpoints += 10;
+		_properties.Hitpoints += 10;
 	}
 
 	function onAdded()

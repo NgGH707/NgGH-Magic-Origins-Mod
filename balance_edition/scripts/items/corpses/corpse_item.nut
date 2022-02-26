@@ -45,12 +45,12 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 
 	function isToBeRepaired()
 	{
-		return this.m.IsMaintained;
+		return this.isInBag() ? false : this.m.IsMaintained;
 	}
 
 	function isToBeSalvaged()
 	{
-		return this.isToBeButchered() ? 1 : 0;
+		return this.isToBeButchered() && !this.isInBag() ? 1 : 0;
 	}
 
 	function canBeSalvaged()

@@ -211,7 +211,8 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				{Multiplier = 5.0, Tree = this.Const.Perks.ShieldTree},
 			],
 			Profession = [
-				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}]
+				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}],
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.LightArmorTree}]
@@ -298,7 +299,8 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				{Multiplier = 5.0, Tree = this.Const.Perks.ShieldTree},
 			],
 			Profession = [
-				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}]
+				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}],
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.LightArmorTree}]
@@ -323,7 +325,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		gt.Const.PerksCharmedUnit.OrcYoung <- {
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
-				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},
+				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
 				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
@@ -342,7 +344,8 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
 			],
 			Profession = [
-				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree},]
+				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}],
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}]
@@ -356,7 +359,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		gt.Const.PerksCharmedUnit.OrcBerserker <- {
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
-				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},
+				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
 				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
@@ -375,9 +378,8 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
 			],
 			Profession = [
-				[
-					{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree},
-				]
+				[{Weight = 100, Tree = this.Const.Perks.WildlingProfessionTree}],
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}]
@@ -397,7 +399,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		gt.Const.PerksCharmedUnit.OrcWarrior <- {
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
-				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},
+				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
 				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
@@ -416,9 +418,8 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
 			],
 			Profession = [
-				[
-					{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree},
-				]
+				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}],
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}]
@@ -438,7 +439,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		gt.Const.PerksCharmedUnit.OrcWarlord <- {
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
-				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},
+				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
 				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
@@ -458,9 +459,8 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
 			],
 			Profession = [
-				[
-					{Weight = 50, Tree = this.Const.Perks.SergeantClassTree},
-				]
+				[{Weight = 50, Tree = this.Const.Perks.SergeantClassTree}],
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}]
@@ -480,7 +480,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		gt.Const.PerksCharmedUnit.LegendOrcBehemoth <- {
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
-				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},
+				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
 				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
@@ -499,9 +499,8 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
 			],
 			Profession = [
-				[
-					{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree},
-				]
+				[{Weight = 100, Tree = this.Const.Perks.WildlingProfessionTree}],
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}]
@@ -521,7 +520,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		gt.Const.PerksCharmedUnit.LegendOrcElite <- {
 			WeightMultipliers = [
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
-				{Multiplier = 0.25, Tree = this.Const.Perks.ViciousTree},
+				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
 				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
@@ -541,9 +540,8 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
 			],
 			Profession = [
-				[
-					{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree},
-				]
+				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}],
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}]

@@ -1,6 +1,55 @@
 this.getroottable().HexenHooks.hookItem <- function ()
 {
 	this.Const.Items.addNewItemType("Ancient");
+
+
+	//
+	local gt = this.getroottable();
+	local lich_armor = { 
+	    ID = "ancient/nggh_ancient_lich_attire", // 60
+	    Script = "",
+	    Sets = [{
+	        Cloth = [
+	        	[1, "cloth/legend_gladiator_harness"]
+	        ],
+	        Chain = [
+	        ],
+	        Plate = [
+	        ],
+	        Cloak = [
+				[1, "cloak/nggh_ancient_lich_attire"]        
+	        ],
+	        Tabard = [
+	        ],
+	        Attachments =[
+	        ]
+	    }]
+	};
+	local lich_helmet = {
+	    ID = "ancient/nggh_ancient_lich_headpiece", 
+	    Script = "",
+	    Sets = [{
+	        Hoods = [
+	            [1, "hood/legend_helmet_southern_headband_coin"]
+	        ],
+	        Helms = [
+	            [1, "helm/legend_helmet_sallet"] //50, -2
+	        ],
+	        Tops = [
+	        ],
+	        Vanity = [
+	        	[1, "vanity/nggh_ancient_lich_headpiece"] //25, 0
+	        ]
+	    }]
+	}
+
+	gt.Const.LegendMod.ArmorObjs.push(lich_armor);
+	gt.Const.LegendMod.Armors[lich_armor.ID] <- lich_armor;
+	gt.Const.LegendMod.HelmObjs.push(lich_helmet);
+	gt.Const.LegendMod.Helmets[lich_helmet.ID] <- lich_helmet;
+
+
+	//
 	local pretext = "scripts/";
 	local ancient_weapons = this.IO.enumerateFiles(pretext + "items/weapons/ancient/");
 	ancient_weapons.extend([

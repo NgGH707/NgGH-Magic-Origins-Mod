@@ -126,7 +126,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 			actor.setAIAgent(this.m.OriginalAgent);
 		}
 
-		actor.setMoraleState(this.Const.MoraleState.Fleeing);
+		actor.setMoraleState(this.Math.rand(1, 100) <= 33 ? this.Const.MoraleState.Fleeing : this.Const.MoraleState.Breaking);
 		actor.setFaction(this.m.OriginalFaction);
 		actor.getSprite("socket").setBrush(this.m.OriginalSocket);
 		actor.getFlags().set("Charmed", false);
@@ -140,7 +140,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		_skill.spawnGhostEffect(_tile);
 		this.Tactical.addEntityToMap(this.m.Possessor, _tile.Coords.X, _tile.Coords.Y);
 
-		if (!_skill.m.Possessor.isPlayerControlled() && _skill.m.Possessor.getType() != this.Const.EntityType.Serpent)
+		if (!_skill.m.Possessor.getType() != this.Const.EntityType.Player && _skill.m.Possessor.getType() != this.Const.EntityType.Serpent)
 		{
 			this.Tactical.getTemporaryRoster().remove(_skill.m.Possessor);
 		}
@@ -236,6 +236,9 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		this.m.GhostSkills.push(scream);
 		actor.checkMorale(10, 9000);
 		actor.setDirty(true);
+		this.m.IsActivated = true;
+		this.m.TurnsLeft = this.m.IsEnhanced ? 5 : 3;
+		this.spawnIcon(this.m.Overlay, actor.getTile());
 	}
 
 	function onTurnEnd()
@@ -246,9 +249,6 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		{
 			if (!this.m.IsActivated)
 			{
-				this.m.IsActivated = true;
-				this.m.TurnsLeft = this.m.IsEnhanced ? 5 : 3;
-				this.spawnIcon(this.m.Overlay, actor.getTile());
 				this.onPossess();
 			}
 			else
@@ -267,13 +267,13 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		{
 			this.setExorcised(true);
 			this.removeSelf();
-			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been expelled out of " + this.Const.UI.getColorizedEntityName(actor) + "\'s body");
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been banished out of " + this.Const.UI.getColorizedEntityName(actor) + "\'s body");
 			return;
 		}
 		else if (this.m.IsActivated && actor.getCurrentProperties().IsStunned)
 		{
 			this.removeSelf();
-			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been expelled out of " + this.Const.UI.getColorizedEntityName(actor) + "\'s body");
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been banished out of " + this.Const.UI.getColorizedEntityName(actor) + "\'s body");
 			return;
 		}
 
@@ -338,7 +338,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		{
 			this.setExorcised(true);
 			this.removeSelf();
-			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been expelled out of " + this.Const.UI.getColorizedEntityName(actor) + "\'s body");
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been banished out of " + this.Const.UI.getColorizedEntityName(actor) + "\'s body");
 		}
 	}
 
@@ -347,7 +347,7 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 		if (this.m.IsActivated && _damageHitpoints >= this.Const.Combat.InjuryMinDamage && this.Math.rand(1, 100) <= 25)
 		{
 			this.removeSelf();
-			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been expelled out of " + this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s body");
+			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(this.m.Possessor) + " has been banished out of " + this.Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s body");
 		}
 	}
 
@@ -374,6 +374,21 @@ this.mod_ghost_possessed_effect <- this.inherit("scripts/skills/skill", {
 			_properties.RangedSkill -= 10;
 			_properties.MeleeDefense += 10;
 			_properties.RangedDefense += 10;
+		}
+	}
+
+	function onOtherActorDeath( _killer, _victim, _skill, _deathTile, _corpseTile, _fatalityType )
+	{
+		if (!this.m.IsActivated)
+		{
+			if (this.Tactical.Entities.getHostilesNum() <= 2)
+			{
+				this.onPossess();
+			}
+		}
+		else
+		{
+			this.m.TurnsLeft = this.Tactical.Entities.getHostilesNum() <= 1 ? 99 : this.m.TurnsLeft;
 		}
 	}
 

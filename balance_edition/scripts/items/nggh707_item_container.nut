@@ -183,7 +183,7 @@ this.nggh707_item_container <- this.inherit("scripts/items/item_container", {
 	{
 		if (_item == null || _item == -1)
 		{
-			return;
+			return false;
 		}
 
 		if (_item.getCurrentSlotType() == this.Const.ItemSlot.None || _item.getCurrentSlotType() == this.Const.ItemSlot.Bag)
@@ -192,7 +192,7 @@ this.nggh707_item_container <- this.inherit("scripts/items/item_container", {
 			return false;
 		}
 
-		if (!this.getActor().canUnequipThis(_item))
+		if (this.getActor() == null || this.getActor().isNull() || !this.getActor().canUnequipThis(_item))
 		{
 			return false;
 		}

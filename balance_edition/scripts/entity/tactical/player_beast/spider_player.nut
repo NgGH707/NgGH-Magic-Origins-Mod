@@ -369,6 +369,7 @@ this.spider_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	{
 		this.player_beast.onAfterInit();
 		this.m.Skills.add(this.new("scripts/skills/actives/web_skill"));
+		this.m.Skills.removeByID("effects.ptr_direct_damage_limiter");
 	}
 
 	function onAppearanceChanged( _appearance, _setDirty = true )

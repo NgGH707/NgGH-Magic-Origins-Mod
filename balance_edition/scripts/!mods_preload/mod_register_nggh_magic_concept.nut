@@ -17,6 +17,8 @@
 	    this.Nggh_MagicConcept.hookAddRunes();
 		this.Nggh_MagicConcept.hookAddSituation();
 		this.Nggh_MagicConcept.hookHexeOrigin();
+		this.Nggh_MagicConcept.hookEvents();
+		this.Nggh_MagicConcept.hookWorldScenarios();
 		this.Nggh_MagicConcept.hookAddCorpseDatabase();
 		this.Const.CharacterBackgroundsRandom.extend([
 			"geomancer_background",

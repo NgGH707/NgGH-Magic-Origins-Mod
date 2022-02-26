@@ -334,7 +334,7 @@ this.player_beast <- this.inherit("scripts/entity/tactical/player", {
 		this.m.Skills.add(this.new("scripts/skills/effects/legend_demon_hound_aura_effect"));
 		this.m.Skills.add(this.new("scripts/skills/actives/break_ally_free_skill"));
 		this.m.Skills.add(this.new("scripts/skills/effects/legend_veteran_levels_effect"));
-		
+
 		this.setName("");
 		this.setPreventOcclusion(true);
 		this.setBlockSight(false);
@@ -348,6 +348,18 @@ this.player_beast <- this.inherit("scripts/entity/tactical/player", {
 		this.updateOverlay();
 		this.setSpriteOffset("status_rooted_back", this.getSpriteOffset("status_rooted"));
 		this.getSprite("status_rooted_back").Scale = this.getSprite("status_rooted").Scale;
+
+		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+		{
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_formidable_approach_debuff_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_follow_up_proccer_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_bolstered_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_polearm_hitchance_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_immersive_damage_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_inspired_by_champion_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_inspiring_presence_buff_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_direct_damage_limiter_effect"));
+		}
 	}
 
 	function onAppearanceChanged( _appearance, _setDirty = true )

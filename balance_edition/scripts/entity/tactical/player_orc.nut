@@ -154,8 +154,18 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 		this.m.Skills.add(this.new("scripts/skills/actives/break_ally_free_skill"));
 		this.m.Skills.add(this.new("scripts/skills/effects/realm_of_nightmares_effect"));
 		this.m.Skills.add(this.new("scripts/skills/effects/legend_demon_hound_aura_effect"));
-		this.m.Skills.add(this.new("scripts/skills/actives/hand_to_hand_orc"));
 		this.m.Skills.add(this.new("scripts/skills/effects/legend_veteran_levels_effect"));
+		local hand_to_hand = this.new("scripts/skills/actives/hand_to_hand");
+		hand_to_hand.m.DirectDamageMult = 0.35;
+		hand_to_hand.onUpdate = function( _properties )
+		{
+			if (this.isUsable())
+			{
+				_properties.DamageRegularMin += 7;
+				_properties.DamageRegularMax += 15;
+			}
+		};
+		this.m.Skills.add(hand_to_hand);
 		this.setName("");
 		this.setPreventOcclusion(true);
 		this.setBlockSight(false);
@@ -582,6 +592,19 @@ this.player_orc <- this.inherit("scripts/entity/tactical/player", {
 		this.setFaction(this.Const.Faction.Player);
 		this.setDiscovered(true);
 		this.getSkills().add(this.new("scripts/skills/traits/iron_jaw_trait"));
+
+		if (::mods_getRegisteredMod("mod_legends_PTR") != null)
+		{
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_formidable_approach_debuff_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_follow_up_proccer_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_bolstered_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_polearm_hitchance_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_immersive_damage_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_inspired_by_champion_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_inspiring_presence_buff_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_armor_fatigue_recovery_effect"));
+			this.getSkills().add(this.new("scripts/skills/effects/ptr_direct_damage_limiter_effect"));
+		}
 	}
 	
 	function updateRageVisuals( _rage )

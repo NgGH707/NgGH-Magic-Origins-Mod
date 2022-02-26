@@ -24,10 +24,10 @@ this.getroottable().HexenHooks.hookAI <- function ()
 	];
 	foreach ( g in ghosts )
 	{
-		::mods_hookExactClass("ai/tactical/agents/" + g, function ( o )
+		::mods_hookExactClass("ai/tactical/agents/" + g, function ( obj )
 		{
-			local ws_onAddBehaviors = o.onAddBehaviors;
-			o.onAddBehaviors = function()
+			local ws_onAddBehaviors = obj.onAddBehaviors;
+			obj.onAddBehaviors = function()
 			{
 				ws_onAddBehaviors();
 				this.addBehavior(this.new("scripts/ai/tactical/behaviors/ai_ghost_possess"));
@@ -37,71 +37,71 @@ this.getroottable().HexenHooks.hookAI <- function ()
 	}
 
 	// allow ai to use my new skills
-	::mods_hookExactClass("ai/tactical/behaviors/ai_warcry", function ( o )
+	::mods_hookExactClass("ai/tactical/behaviors/ai_warcry", function ( obj )
 	{
-		o.m.PossibleSkills.extend([
+		obj.m.PossibleSkills.extend([
 			"actives.frenzy",
 			"actives.intimidate"
 		]);
 	});
-	::mods_hookExactClass("ai/tactical/behaviors/ai_darkflight", function ( o )
+	::mods_hookExactClass("ai/tactical/behaviors/ai_darkflight", function ( obj )
 	{
-		o.m.PossibleSkills.extend([
+		obj.m.PossibleSkills.extend([
 			"actives.alp_teleport",
 			"actives.legend_darkflight"
 		]);
 	});
-	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_default", function ( o )
+	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_default", function ( obj )
 	{
-		o.m.PossibleSkills.extend([
+		obj.m.PossibleSkills.extend([
 			"actives.unhold_hand_to_hand",
 			"actives.spit_acid",
 			"actives.mind_break",
 			"actives.death",
 		]);
 	});
-	::mods_hookExactClass("ai/tactical/behaviors/ai_engage_ranged", function(o) 
+	::mods_hookExactClass("ai/tactical/behaviors/ai_engage_ranged", function(obj) 
 	{
-		o.m.PossibleSkills.extend([
+		obj.m.PossibleSkills.extend([
 			"actives.legend_magic_missile",
 			"actives.legend_chain_lightning",
 		]);
 	});
-	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_bow", function(o) 
+	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_bow", function(obj) 
 	{
-		o.m.PossibleSkills.extend([
+		obj.m.PossibleSkills.extend([
 			"actives.legend_magic_missile",
 			"actives.legend_chain_lightning",
 		]);
 	});
-	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_throw_net", function(o) 
+	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_throw_net", function(obj) 
 	{
-		o.m.PossibleSkills.extend([
+		obj.m.PossibleSkills.extend([
 			"actives.mage_legend_magic_web_bolt",
 		]);
 	});
-	::mods_hookExactClass("ai/tactical/behaviors/ai_miasma", function(o) 
+	::mods_hookExactClass("ai/tactical/behaviors/ai_miasma", function(obj) 
 	{
-		o.m.PossibleSkills.push("actives.legend_miasma");
+		obj.m.PossibleSkills.push("actives.legend_miasma");
 	});
-	::mods_hookExactClass("ai/tactical/behaviors/ai_wither", function(o) 
+	::mods_hookExactClass("ai/tactical/behaviors/ai_wither", function(obj) 
 	{
-		o.m.PossibleSkills.push("actives.legend_wither");
+		obj.m.PossibleSkills.push("actives.legend_wither");
 	});
-	::mods_hookExactClass("ai/tactical/behaviors/ai_raise_undead", function(o) 
+	::mods_hookExactClass("ai/tactical/behaviors/ai_raise_undead", function(obj) 
 	{
-		o.m.PossibleSkills.push("actives.legend_raise_undead");
+		obj.m.PossibleSkills.push("actives.legend_raise_undead");
 	});
-	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_thresh", function ( o )
+	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_thresh", function ( obj )
 	{
-		o.m.PossibleSkills.push("actives.uproot_aoe");
+		obj.m.PossibleSkills.push("actives.uproot_aoe");
 	});
 
 
 	// fix lightning storm can only be used by lich
-	::mods_hookExactClass("ai/tactical/behaviors/ai_lightning_storm", function ( o )
+	::mods_hookExactClass("ai/tactical/behaviors/ai_lightning_storm", function ( obj )
 	{
-		o.selectBestTarget = function( _entity, _targets )
+		obj.selectBestTarget = function( _entity, _targets )
 		{
 			local size = this.Tactical.getMapSize();
 			local scores = [];
@@ -177,11 +177,11 @@ this.getroottable().HexenHooks.hookAI <- function ()
 
 
 	//fix strange behavior of enemy nacho with the modded skill
-	::mods_hookNewObject("ai/tactical/behaviors/ai_attack_swallow_whole", function ( o )
+	::mods_hookExactClass("ai/tactical/behaviors/ai_attack_swallow_whole", function ( obj )
 	{
-		o.m.PossibleSkills.push("actives.legend_skin_ghoul_swallow_whole");
+		obj.m.PossibleSkills.push("actives.legend_skin_ghoul_swallow_whole");
 		
-		o.onEvaluate <- function( _entity )
+		obj.onEvaluate <- function( _entity )
 		{
 			this.m.TargetTile = null;
 			this.m.Skill = null;
@@ -248,7 +248,7 @@ this.getroottable().HexenHooks.hookAI <- function ()
 			return this.Const.AI.Behavior.Score.SwallowWhole * score;
 		};
 		
-		o.getBestTarget = function( _entity, _skill, _targets )
+		obj.getBestTarget = function( _entity, _skill, _targets )
 		{
 			local bestTarget;
 			local bestScore = 0.0;
@@ -298,6 +298,128 @@ this.getroottable().HexenHooks.hookAI <- function ()
 			};
 		}
 		
+	});
+
+	::mods_hookExactClass("ai/tactical/behaviors/ai_retreat", function ( obj )
+	{
+		obj.onEvaluate = function( _entity )
+		{
+			// Function is a generator.
+			this.m.TargetTile = null;
+
+			if ((this.Const.AI.NoRetreatMode || this.Tactical.State.getStrategicProperties() != null && this.Tactical.State.getStrategicProperties().IsArenaMode) && !_entity.isPlayerControlled())
+			{
+				return this.Const.AI.Behavior.Score.Zero;
+			}
+
+			if (_entity.getActionPoints() < this.Const.Movement.AutoEndTurnBelowAP)
+			{
+				return this.Const.AI.Behavior.Score.Zero;
+			}
+
+			if (_entity.getCurrentProperties().IsRooted)
+			{
+				return this.Const.AI.Behavior.Score.Zero;
+			}
+
+			if (this.m.IsDone)
+			{
+				return this.Const.AI.Behavior.Score.Zero;
+			}
+
+			if (_entity.getTile().hasZoneOfControlOtherThan(_entity.getAlliedFactions()) && !_entity.isPlayerControlled())
+			{
+				return this.Const.AI.Behavior.Score.Zero;
+			}
+
+			if (_entity.getType() == this.Const.EntityType.Lindwurm && _entity.getTile().getDistanceTo(_entity.getTail().getTile()) > 1)
+			{
+				return this.Const.AI.Behavior.Score.Zero;
+			}
+
+			local score = this.getProperties().BehaviorMult[this.m.ID];
+
+			if (!_entity.isPlayerControlled())
+			{
+				local allyInstances = 0.0;
+				local allyInstancesMax = 0.0;
+				local hostileInstances = 0.0;
+
+				foreach( i, faction in this.Tactical.Entities.getAllInstances() )
+				{
+					if (faction.len() == 0)
+					{
+						continue;
+					}
+
+					if (i == _entity.getFaction() || _entity.isAlliedWith(i))
+					{
+						foreach( e in faction )
+						{
+							if (e.getXPValue() > 0)
+							{
+								allyInstances = allyInstances + 1.0;
+							}
+						}
+					}
+					else
+					{
+						hostileInstances = hostileInstances + faction.len() * 1.0;
+					}
+				}
+
+				foreach( i, numPerFaction in this.Tactical.Entities.getAllInstancesMax() )
+				{
+					if (i == _entity.getFaction() || _entity.isAlliedWith(i))
+					{
+						allyInstancesMax = allyInstancesMax + numPerFaction;
+					}
+				}
+
+				if (_entity.getBaseProperties().Bravery != 0 && allyInstances / allyInstancesMax >= this.Const.AI.Behavior.RetreatMinAllyRatio)
+				{
+					return this.Const.AI.Behavior.Score.Zero;
+				}
+
+				if (_entity.getBaseProperties().Bravery != 0 && allyInstances >= hostileInstances)
+				{
+					return this.Const.AI.Behavior.Score.Zero;
+				}
+
+				score = score * (1.0 + this.Const.AI.Behavior.RetreatMinAllyRatio - allyInstances / allyInstancesMax);
+			}
+
+			if (this.isAtMapBorder(_entity))
+			{
+				score = score * this.Const.AI.Behavior.RetreatAtMapBorderMult;
+			}
+			else
+			{
+				local func = this.findRetreatToPosition(_entity);
+
+				while (resume func == null)
+				{
+					yield null;
+				}
+
+				if (this.m.TargetTile == null)
+				{
+					return this.Const.AI.Behavior.Score.Zero;
+				}
+			}
+
+			if (_entity.getMoraleState() == this.Const.MoraleState.Fleeing)
+			{
+				score = score * this.Const.AI.Behavior.RetreatFleeingMult;
+			}
+
+			if (_entity.getBaseProperties().Bravery == 0)
+			{
+				score = score * 10.0;
+			}
+
+			return this.Const.AI.Behavior.Score.Retreat * score;
+		};
 	});
 
 	delete this.HexenHooks.hookAI;
