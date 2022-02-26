@@ -40,7 +40,7 @@ this.mc_wandering_mage_situation <- this.inherit("scripts/entity/world/settlemen
 
 	function onUpdateDraftList( _draftList , _gender )
 	{
-		local num = this.World.Assets.getOrigin().getID() == "scenario.mage_trio" ? this.Math.rand(2, 3);
+		local num = this.World.Assets.getOrigin().getID() == "scenario.mage_trio" ? 3 : this.Math.rand(1, 2);
 
 		for (local i = 0; i < num; ++i)
 		{
