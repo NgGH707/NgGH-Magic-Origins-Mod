@@ -6,7 +6,7 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 	},
 	function setCooldown()
 	{
-		this.m.Cooldown = 2;
+		this.m.Cooldown = 3;
 	}
 
 	function removeEntity()
@@ -191,7 +191,7 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 			this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " summons a shadow demon");
 		}
 
-		local stats = this.calculatingStats();
+		local mult = this.getBonusDamageFromResolve(this.getContainer().getActor().getCurrentProperties());
 		local faction = _user.getFaction() == this.Const.Faction.Player ? this.Const.Faction.PlayerAnimals : _user.getFaction();
 		this.Time.scheduleEvent(this.TimeUnit.Virtual, 300, function( _skill )
 		{
@@ -199,42 +199,94 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 			demon.setFaction(faction);
 			demon.setMaster(_user);
 			demon.setLink(_skill);
-			demon.setNewStats(stats);
+			demon.setStatsAndSkills(_skill.calculatingStats(demon.m.Variant, mult));
 			_skill.setEntity(demon);
 		}.bindenv(this), this);
 		
 		return true;
 	}
 
-	function calculatingStats()
+	function calculatingStats( _variant, _mult = 1.0 )
 	{
-		local mult = this.getBonusDamageFromResolve(this.getContainer().getActor().getCurrentProperties());
-		local stats = {
-			XP = 0,
-			ActionPoints = 9,
-			Hitpoints = 5,
-			Bravery = 100,
-			Stamina = 100,
-			MeleeSkill = this.Math.rand(50, 60),
-			RangedSkill = this.Math.rand(50, 60),
-			MeleeDefense = 20,
-			RangedDefense = 50,
-			Initiative = 115,
-			FatigueEffectMult = 0.0,
-			MoraleEffectMult = 0.0,
-			FatigueRecoveryRate = 15,
-			Vision = 4,
-			Armor = [
-				0,
-				0
-			]
-		};
+		local stats;
 
-		stats.DamageTotalMult <- this.Math.minf(1.5, mult);
-		stats.MeleeSkill = this.Math.floor(stats.MeleeSkill * mult);
-		stats.RangedSkill = this.Math.floor(stats.RangedSkill * mult);
-		stats.MeleeDefense = this.Math.floor(stats.MeleeDefense * mult);
-		stats.RangedDefense = this.Math.floor(stats.RangedDefense * mult);
+		switch(_variant)
+		{
+		case 2: //tank
+			stats = {
+				XP = 0,
+				ActionPoints = 9,
+				Hitpoints = this.Math.floor(100 * _mult * 1.1),
+				Bravery = 100,
+				Stamina = 100,
+				MeleeSkill = this.Math.rand(60, 70),
+				RangedSkill = this.Math.rand(60, 70),
+				MeleeDefense = 30,
+				RangedDefense = 0,
+				Initiative = 85,
+				FatigueEffectMult = 0.0,
+				MoraleEffectMult = 0.0,
+				FatigueRecoveryRate = 15,
+				Vision = 4,
+				Armor = [
+					0,
+					0
+				]
+			};
+			break;
+
+		case 3: //supporter
+			stats = {
+				XP = 0,
+				ActionPoints = 9,
+				Hitpoints = 10,
+				Bravery = 100,
+				Stamina = 100,
+				MeleeSkill = this.Math.rand(40, 50),
+				RangedSkill = this.Math.rand(40, 50),
+				MeleeDefense = 10,
+				RangedDefense = 75,
+				Initiative = 65,
+				FatigueEffectMult = 0.0,
+				MoraleEffectMult = 0.0,
+				FatigueRecoveryRate = 15,
+				Vision = 6,
+				Armor = [
+					0,
+					0
+				]
+			};
+			break;
+
+		default: //fragile
+			stats = {
+				XP = 0,
+				ActionPoints = 9,
+				Hitpoints = 5,
+				Bravery = 100,
+				Stamina = 100,
+				MeleeSkill = this.Math.rand(50, 60),
+				RangedSkill = this.Math.rand(50, 60),
+				MeleeDefense = 20,
+				RangedDefense = 50,
+				Initiative = 115,
+				FatigueEffectMult = 0.0,
+				MoraleEffectMult = 0.0,
+				FatigueRecoveryRate = 15,
+				Vision = 4,
+				Armor = [
+					0,
+					0
+				]
+			};
+		}
+
+		stats.MasterPower <- _mult;
+		stats.DamageTotalMult <- this.Math.minf(1.5, _mult);
+		stats.MeleeSkill = this.Math.floor(stats.MeleeSkill * _mult);
+		stats.RangedSkill = this.Math.floor(stats.RangedSkill * _mult);
+		stats.MeleeDefense = this.Math.floor(stats.MeleeDefense * _mult);
+		stats.RangedDefense = this.Math.floor(stats.RangedDefense * _mult);
 		return stats;
 	}
 

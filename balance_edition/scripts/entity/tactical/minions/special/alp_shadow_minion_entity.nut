@@ -2,6 +2,7 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 	m = {
 		Link = null,
 		Bust = "bust_alp_shadow_01",
+		Variant = 1,
 		DistortTargetA = null,
 		DistortTargetPrevA = this.createVec(0, 0),
 		DistortAnimationStartTimeA = 0,
@@ -35,8 +36,10 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 		this.m.Link = null;
 	}
 
-	function setNewStats( _properties )
+	function setStatsAndSkills( _properties )
 	{
+		local power = _properties.MasterPower;
+		local perkSets = this.getPerkSet();
 		local b = this.m.BaseProperties;
 		b.setValues(_properties);
 
@@ -47,6 +50,106 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 
 		this.m.CurrentProperties = clone b;
 		this.getSkills().update();
+
+		foreach ( entry in perkSets )
+		{
+			if (power >= entry[0])
+			{
+				this.getSkills().add(this.new("scripts/skill/" + entry[1]));
+			}
+		}
+
+		this.setHitpointsPct(1.0);
+	}
+
+	function getPerkSet()
+	{
+		switch (this.m.Variant)
+		{
+		case 1: // fragile
+			return [
+				[ // 0
+					1.25,
+					"perks/perk_footwork"
+				],
+				[ // 1
+					1.30,
+					"perks/perk_fast_adaption"
+				],
+				[ // 2
+					1.35,
+					"perks/perk_dodge"
+				],
+				[ // 3
+					1.40,
+					"perks/perk_legend_alert"
+				], 
+				[ // 4
+					1.45,
+					"perks/perk_legend_big_game_hunter"
+				],
+				[ // 5
+					1.50,
+					"perks/perk_legend_perfect_focus"
+				],
+			];
+
+		case 2: // tank
+			return [
+				[ // 0
+					1.25,
+					"perks/perk_taunt"
+				],
+				[ // 1
+					1.30,
+					"perks/perk_legend_muscularity"
+				],
+				[ // 2
+					1.35,
+					"perks/perk_nimble"
+				],
+				[ // 3
+					1.40,
+					"perks/perk_adrenalin"
+				], 
+				[ // 4
+					1.45,
+					"perks/perk_colossus"
+				],
+				[ // 5
+					1.50,
+					"perks/perk_last_stand"
+				],
+			];
+	
+		default: // support
+			return [
+				[ // 0
+					1.25,
+					"perks/perk_rotation"
+				],
+				[ // 1
+					1.30,
+					"perks/perk_legend_levitation"
+				],
+				[ // 2
+					1.35,
+					"perks/perk_mar_lithe"
+				],
+				[ // 3
+					1.40,
+					"perks/perk_push_the_advantage"
+				], 
+				[ // 4
+					1.45,
+					"perks/perk_legend_call_lightning"
+				],
+				[ // 5
+					1.50,
+					"perks/perk_mage_legend_magic_web_bolt"
+				],
+			];	
+		}
 	}
 
 	function create()
@@ -189,6 +292,7 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 	{
 		this.actor.onInit();
 		this.setRenderCallbackEnabled(true);
+		this.m.Variant = this.Math.rand(1, 3);
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.AlpShadow);
 		b.IsImmuneToFire = true;
@@ -216,8 +320,7 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 		this.m.ActionPointCosts = this.Const.SameMovementAPCost;
 		this.m.FatigueCosts = this.Const.DefaultMovementFatigueCost;
 		this.m.MaxTraversibleLevels = 3;
-		local variant = this.Math.rand(1, 3);
-		this.m.Bust = "bust_alp_shadow_0" + variant;
+		this.m.Bust = "bust_alp_shadow_0" + this.m.Variant;
 		local blurAlpha = 110;
 		local socket = this.addSprite("socket");
 		socket.setBrush("bust_base_shadow");
@@ -251,41 +354,72 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 		local touch = this.new("scripts/skills/actives/ghastly_touch");
 		this.m.Skills.add(touch);
 		touch.setOrder(this.Const.SkillOrder.First);
-		
-		switch (this.Math.rand(0, 5))
+
+		switch(this.m.Variant)
 		{
-	    case 1:
-	        this.m.Skills.add(this.new("scripts/skills/actives/insects_skill"));
+	    case 1: // fragile
+	    	if (this.Math.rand(1, 100) <= 50)
+	    	{
+	    		this.m.Skills.add(this.new("scripts/skills/actives/sleep_skill"));
+	    	}
+	    	else
+	    	{
+	    		this.m.Skills.add(this.new("scripts/skills/actives/legend_rust"));
+	    	}
 	        break;
 
-	    case 2:
-	        this.m.Skills.add(this.new("scripts/skills/actives/legend_wither"));
+	    case 2: // tank
+	    	if (this.Math.rand(1, 100) <= 50)
+	    	{
+	    		this.m.Skills.add(this.new("scripts/skills/actives/legend_drain"));
+	    	}
+	    	else
+	    	{
+	    		local skill = this.new("scripts/skills/actives/legend_hex_skill");
+	    		skill.m.Cooldown = 0;
+	    		skill.m.Delay = 0;
+		    	this.m.Skills.add(skill);
+	    	}
 	        break;
 
-	    case 3:
-	    	this.m.Skills.add(this.new("scripts/skills/actives/legend_darkflight"));
+	    case 3: // debuff
+	    	if (this.Math.rand(1, 100) <= 50)
+	    	{
+	    		this.m.Skills.add(this.new("scripts/skills/actives/legend_wither"));
+	    	}
+	    	else
+	    	{
+	    		this.m.Skills.add(this.new("scripts/skills/actives/insects_skill"));
+	    	}
 	        break;
-
-	    case 4:
-	    	this.m.Skills.add(this.new("scripts/skills/actives/legend_drain"));
-	        break;
-
-	    case 5:
-	        this.m.Skills.add(this.new("scripts/skills/actives/sleep_skill"));
-	        break;
-	
-	    default:
-	    	this.m.Skills.add(this.new("scripts/skills/actives/legend_rust"));
 		}
 
 		if (this.Math.rand(1, 100) <= 25)
 		{
-			local skill = this.new("scripts/skills/actives/legend_hex_skill")
-	    	skill.m.Cooldown = 0;
-	    	skill.m.Delay = 0;
-		    this.m.Skills.add(skill);
+			this.m.Skills.add(this.new("scripts/skills/actives/legend_darkflight"));
 		}
 	}
+
+	/*gt.Const.Tactical.Actor.AlpShadow <- {
+		XP = 0,
+		ActionPoints = 9,
+		Hitpoints = 5,
+		Bravery = 100,
+		Stamina = 100,
+		MeleeSkill = 50,
+		RangedSkill = 50,
+		MeleeDefense = 10,
+		RangedDefense = 20,
+		Initiative = 100,
+		FatigueEffectMult = 0.0,
+		MoraleEffectMult = 0.0,
+		FatigueRecoveryRate = 15,
+		Vision = 3,
+		Armor = [
+			0,
+			0
+		]
+	};*/
 
 	function onRender()
 	{
