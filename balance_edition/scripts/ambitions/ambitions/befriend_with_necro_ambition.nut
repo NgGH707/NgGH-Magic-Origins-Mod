@@ -1,11 +1,11 @@
 this.befriend_with_necro_ambition <- this.inherit("scripts/ambitions/ambition", {
 	m = {
-		GiftsToNecromacer = 0
+		GiftsToNecromacer = 3
 	},
 	function fail()
 	{
 		this.ambition.fail();
-		this.World.Statistics.getFlags().remove("IsDoingNecromancerAmbition", true);
+		this.World.Statistics.getFlags().remove("IsDoingNecromancerAmbition");
 	}
 
 	function create()
@@ -22,8 +22,8 @@ this.befriend_with_necro_ambition <- this.inherit("scripts/ambitions/ambition", 
 
 	function getUIText()
 	{
-		local d = 5 - (this.m.GiftsToNecromacer - this.World.Statistics.getFlags().getAsInt("GiftsToNecromacer"));
-		return this.m.UIText + " (" + this.Math.min(5, d) + "/5)";
+		local d = this.m.GiftsToNecromacer - this.World.Statistics.getFlags().getAsInt("GiftsToNecromacer");
+		return this.m.UIText + " (" + this.Math.min(3, d) + "/3)";
 	}
 
 	function onUpdateScore()
@@ -33,7 +33,6 @@ this.befriend_with_necro_ambition <- this.inherit("scripts/ambitions/ambition", 
 			return;
 		}
 
-		this.m.GiftsToNecromacer = 5;
 		this.m.Score = 1 + this.Math.rand(0, 5);
 	}
 
@@ -71,7 +70,7 @@ this.befriend_with_necro_ambition <- this.inherit("scripts/ambitions/ambition", 
 
 	function onReward()
 	{
-		this.World.Statistics.getFlags().remove("IsDoingNecromancerAmbition", true);
+		this.World.Statistics.getFlags().remove("IsDoingNecromancerAmbition");
 		this.World.Statistics.getFlags().set("FriendOfNecromancer", true);
 		local roster = this.World.getPlayerRoster();
 		local necromancer = roster.create("scripts/entity/tactical/player");
@@ -109,7 +108,7 @@ this.befriend_with_necro_ambition <- this.inherit("scripts/ambitions/ambition", 
 	function onDeserialize( _in )
 	{
 		this.ambition.onDeserialize(_in);
-		this.m.GiftsToNecromacer = _in.readU16();
+		_in.readU16();
 	}
 
 });
