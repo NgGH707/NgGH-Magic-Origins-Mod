@@ -245,6 +245,7 @@ this.getroottable().HexenHooks.hookContracts <- function ()
 								function getResult()
 								{
 									this.updateAchievement("NeverTrustAMercenary", 1, 1);
+									this.World.Statistics.getFlags().increment("GiftsToNecromacer");
 									this.Flags.set("Bribe", this.Math.floor(this.Flags.getAsInt("Bribe") * 0.5));
 									return "CounterOffer2";
 								}

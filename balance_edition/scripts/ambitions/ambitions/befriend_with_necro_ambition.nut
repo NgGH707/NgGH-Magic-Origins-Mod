@@ -22,8 +22,8 @@ this.befriend_with_necro_ambition <- this.inherit("scripts/ambitions/ambition", 
 
 	function getUIText()
 	{
-		local d = this.m.GiftsToNecromacer - this.World.Statistics.getFlags().getAsInt("GiftsToNecromacer");
-		return this.m.UIText + " (" + this.Math.min(3, d) + "/3)";
+		local d = this.World.Statistics.getFlags().getAsInt("GiftsToNecromacer");
+		return this.m.UIText + " (" + this.Math.min(3, d) + "/" + this.m.GiftsToNecromacer + ")";
 	}
 
 	function onUpdateScore()
