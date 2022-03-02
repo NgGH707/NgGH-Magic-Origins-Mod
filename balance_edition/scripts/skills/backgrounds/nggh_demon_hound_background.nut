@@ -84,6 +84,7 @@ this.nggh_demon_hound_background <- this.inherit("scripts/skills/backgrounds/cha
 		this.m.Beards = this.Const.Beards.All;
 		this.m.Bodies = this.Const.Bodies.Muscular;
 		//---
+		this.m.Names = this.Const.Strings.DemonHoundNames;
 		this.m.BackgroundType = this.Const.BackgroundType.Combat | this.Const.BackgroundType.Outlaw;
 		this.m.AlignmentMin = this.Const.LegendMod.Alignment.Dreaded;
 		this.m.AlignmentMax = this.Const.LegendMod.Alignment.Merciless;

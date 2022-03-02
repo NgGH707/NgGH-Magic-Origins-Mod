@@ -15,7 +15,7 @@ this.perk_skeleton_harden_bone <- this.inherit("scripts/skills/skill", {
 
 	function onUpdate( _properties )
 	{
-		properties.Hitpoints += 15;
+		_properties.Hitpoints += 15;
 	}
 
 	function onBeforeDamageReceived( _attacker, _skill, _hitInfo, _properties )

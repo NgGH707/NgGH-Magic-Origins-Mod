@@ -22,17 +22,19 @@ this.mod_named_hyena_fur_upgrade <- this.inherit("scripts/items/legend_armor/leg
 		this.m.SpriteCorpseFront = "upgrade_26_front_dead";
 		this.m.SpriteCorpseBack = "upgrade_26_back_dead";
 		this.m.Value = 600;
-		this.m.Condition = 20;
-		this.m.ConditionMax = 20;
-		this.m.ConditionModifier = 20;
+		this.m.Condition = 15;
+		this.m.ConditionMax = 15;
+		this.m.ConditionModifier = 15;
 		this.m.StaminaModifier = 0;
 		this.randomizeValues();
 	}
 
 	function randomizeValues()
 	{
-		this.legend_named_armor_upgrade.randomizeValues();
-		this.m.SpecialValue = this.Math.min(30, this.Math.ceil(this.m.SpecialValue * this.Math.rand(120, 150) * 0.01));
+		this.m.SpecialValue = this.Math.min(30, this.Math.floor(this.m.SpecialValue * this.Math.rand(115, 140) * 0.01));
+		this.m.StaminaModifier = this.Math.min(0, this.m.StaminaModifier + this.Math.rand(0, 2));
+		this.m.Condition = this.Math.floor(this.m.Condition * this.Math.rand(115, 133) * 0.01) * 1.0;
+		this.m.ConditionMax = this.m.Condition;
 	}
 
 	function setName( _prefix = "" )

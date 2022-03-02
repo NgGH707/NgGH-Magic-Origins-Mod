@@ -24,6 +24,12 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	gt.HexenHooks.hookEnemies();
 	gt.HexenHooks.hookAI();
 
+
+	// demon hound
+	gt.Const.World.Spawn.Troops.LegendDemonHound.NameList <- this.Const.Strings.DemonHoundNames;
+	gt.Const.World.Spawn.Troops.LegendDemonHound.TitleList <- null;
+	gt.Const.World.Spawn.Troops.LegendDemonHound.Variant = 5;
+
 	// ghost
 	gt.Const.World.Spawn.Troops.Ghost.NameList <- this.Const.Strings.GhostNames;
 	gt.Const.World.Spawn.Troops.Ghost.TitleList <- this.Const.Strings.GhostTitles;
@@ -154,7 +160,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	gt.Const.World.Spawn.Troops.Schrat.TitleList <- null;
 
 	// kraken
-	gt.Const.World.Spawn.Troops.Kraken.Variant = 1;
+	gt.Const.World.Spawn.Troops.Kraken.Variant = 44;
 
 	// trickster god
 	gt.Const.World.Spawn.Troops.TricksterGod.Variant = 1;

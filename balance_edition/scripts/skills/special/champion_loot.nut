@@ -140,14 +140,14 @@ this.champion_loot <- this.inherit("scripts/skills/skill", {
 			{
 				this.m.LootScript.extend([
 					[1, ["tools/acid_flask_item"]],
-	    			[1, ["legend_armor/armor_upgrades/mod_named_lindwurm_scales_upgrade", "named_lindwurm_shield"/*, "legend_armor/legendary/legend_lindwurm_armor"*/]]
+	    			[1, ["legend_armor/armor_upgrades/mod_named_lindwurm_scales_upgrade", "shields/named/named_lindwurm_shield"/*, "legend_armor/legendary/legend_lindwurm_armor"*/]]
 	       		]);
 			}
 			else
 			{
 				this.m.LootScript.extend([
 					[1, ["tools/acid_flask_item"]],
-	    			[1, ["armor_upgrades/named/named_lindwurm_scales_upgrade", "named_lindwurm_shield"/*, "armor/named/lindwurm_armor"*/]]
+	    			[1, ["armor_upgrades/named/named_lindwurm_scales_upgrade", "shields/named/named_lindwurm_shield"/*, "armor/named/lindwurm_armor"*/]]
 	       		]);
 			}
 	        break;
@@ -157,14 +157,14 @@ this.champion_loot <- this.inherit("scripts/skills/skill", {
 		    {
 		    	this.m.LootScript.extend([
 		    		[1, ["tools/acid_flask_item"]],
-		    		[1, ["legend_armor/armor_upgrades/mod_named_armor_stollwurm_scales_upgrade", "named_lindwurm_shield"/*, "legend_helmets/vanity/legend_helmet_lindwurm_helm"*/]]
+		    		[1, ["legend_armor/armor_upgrades/mod_named_armor_stollwurm_scales_upgrade", "shields/named/named_lindwurm_shield"/*, "legend_helmets/vanity/legend_helmet_lindwurm_helm"*/]]
 	        	]);
 		    }
 		    else
 		    {
 		    	this.m.LootScript.extend([
 		    		[1, ["tools/acid_flask_item"]],
-	        		[1, ["armor_upgrades/named/legend_named_stollwurm_scales_upgrade", "named_lindwurm_shield"/*, "helmets/legendary/legend_stollwurm_helmet"*/]]
+	        		[1, ["armor_upgrades/named/legend_named_stollwurm_scales_upgrade", "shields/named/named_lindwurm_shield"/*, "helmets/legendary/legend_stollwurm_helmet"*/]]
 	        	]);
 		    }
 	        break;
@@ -174,7 +174,7 @@ this.champion_loot <- this.inherit("scripts/skills/skill", {
 	    case this.Const.EntityType.UnholdBog:
 	        this.m.LootScript.extend([
 	        	[2, ["loot/deformed_valuables_item"]],
-	        	[2, ["misc/unhold_hide_item"]],
+	        	[1, ["misc/unhold_hide_item"]],
 	        	[1, ["accessory/iron_will_potion_item"]]
 	        ]);
 	        break;
@@ -184,14 +184,14 @@ this.champion_loot <- this.inherit("scripts/skills/skill", {
 	        if (this.LegendsMod.Configs().LegendArmorsEnabled())
 		    {
 		    	this.m.LootScript.extend([
-		    		[2, ["loot/deformed_valuables_item"]],
+		    		[1, ["loot/deformed_valuables_item"]],
 	        		[1, ["legend_armor/armor_upgrades/mod_named_unhold_fur_upgrade"]]
 	        	]);
 		    }
 		    else
 		    {
 		    	this.m.LootScript.extend([
-		    		[2, ["loot/deformed_valuables_item"]],
+		    		[1, ["loot/deformed_valuables_item"]],
 	        		[1, ["armor_upgrades/named/named_unhold_fur_upgrade"]]
 	        	]);
 		    }
@@ -213,11 +213,20 @@ this.champion_loot <- this.inherit("scripts/skills/skill", {
 	        break;
 
 	    case this.Const.EntityType.Spider:
-	        this.m.LootScript.extend([
-	        	[1, ["loot/webbed_valuables_item"]],
-	        	[1, ["misc/miracle_drug_item"]],
-	        	[1, ["misc/legend_redback_poison_gland_item"]]
-	        ]);
+	        if (this.LegendsMod.Configs().LegendArmorsEnabled())
+		    {
+		    	this.m.LootScript.extend([
+		    		[1, ["loot/webbed_valuables_item"]],
+	        		[1, ["legend_armor/armor_upgrades/mod_named_light_padding_replacement_upgrade"]]
+	        	]);
+		    }
+		    else
+		    {
+		    	this.m.LootScript.extend([
+		    		[1, ["loot/webbed_valuables_item"]],
+	        		[1, ["armor_upgrades/named/named_light_padding_replacement_upgrade"]]
+	        	]);
+		    }
 	        break;
 
 	    case this.Const.EntityType.LegendRedbackSpider:
@@ -269,10 +278,21 @@ this.champion_loot <- this.inherit("scripts/skills/skill", {
 
 	    case this.Const.EntityType.Kraken:
 	        this.m.LootScript.extend([
-	        	[2, ["misc/kraken_tentacle_item"]],
-	        	[1, ["misc/kraken_horn_plate_item"]],
+	        	[2, ["misc/kraken_tentacle_item", "misc/kraken_horn_plate_item"]],
 	        	[1, ["shields/special/craftable_kraken_shield"]]
 	        ]);
+	        if (this.LegendsMod.Configs().LegendArmorsEnabled())
+		    {
+		    	this.m.LootScript.push(
+		    		[1, ["legend_armor/armor_upgrades/mod_named_horn_plate_upgrade"]]
+		    	);
+		    }
+		    else
+		    {
+		    	this.m.LootScript.push(
+		    		[1, ["armor_upgrades/named/named_horn_plate_upgrade"]]
+		    	);
+		    }
 	        break;
 
 	    case this.Const.EntityType.TricksterGod:
@@ -339,9 +359,16 @@ this.champion_loot <- this.inherit("scripts/skills/skill", {
 					local r = this.MSU.Array.getRandom(entry[1]);
 					local item = this.new("scripts/items/" + r);
 
-					if (item.isNamed())
+					if (item.isItemType(this.Const.Items.ItemType.Named))
 					{
-						item.setName(actor.getName());
+						if (item.isItemType(this.Const.Items.ItemType.Shield))
+						{
+							item.m.Name = actor.getName() + "\'s Scale";
+						}
+						else
+						{
+							item.setName(actor.getName());
+						}
 					}
 
 					myTile.Items.push(item);

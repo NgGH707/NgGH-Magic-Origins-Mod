@@ -31,8 +31,10 @@ this.mod_named_armor_white_wolf_pelt_upgrade <- this.inherit("scripts/items/lege
 
 	function randomizeValues()
 	{
-		this.legend_named_armor_upgrade.randomizeValues();
-		this.m.SpecialValue = this.Math.min(30, this.Math.ceil(this.m.SpecialValue * this.Math.rand(120, 150) * 0.01));
+		this.m.SpecialValue = this.Math.min(30, this.Math.floor(this.m.SpecialValue * this.Math.rand(115, 140) * 0.01));
+		this.m.StaminaModifier = this.Math.min(0, this.m.StaminaModifier + this.Math.rand(0, 2));
+		this.m.Condition = this.Math.floor(this.m.Condition * this.Math.rand(115, 133) * 0.01) * 1.0;
+		this.m.ConditionMax = this.m.Condition;
 	}
 
 	function setName( _prefix = "" )

@@ -13,8 +13,8 @@ this.mod_named_unhold_fur_upgrade <- this.inherit("scripts/items/legend_armor/le
 		this.m.ArmorDescription = "A cloak of thick white fur has been attached to this armor to make it more resilient against ranged weapons.";
 		this.m.Icon = "armor_upgrades/named_upgrade_02.png";
 		this.m.IconLarge = this.m.Icon;
-		this.m.OverlayIcon = "armor_upgrades/named_icon_upgrade_02.png";
-		this.m.OverlayIconLarge = "armor_upgrades/named_inventory_upgrade_02.png";
+		this.m.OverlayIcon = "armor_upgrades/icon_named_upgrade_02.png";
+		this.m.OverlayIconLarge = "armor_upgrades/inventory_named_upgrade_02.png";
 		this.m.SpriteFront = "upgrade_02_front";
 		this.m.SpriteBack = "upgrade_02_back";
 		this.m.SpriteDamagedFront = "upgrade_02_front_damaged";
@@ -30,8 +30,10 @@ this.mod_named_unhold_fur_upgrade <- this.inherit("scripts/items/legend_armor/le
 
 	function randomizeValues()
 	{
-		this.legend_named_armor_upgrade.randomizeValues();
-		this.m.SpecialValue = this.Math.min(30, this.Math.ceil(this.m.SpecialValue * this.Math.rand(120, 150) * 0.01));
+		this.m.SpecialValue = this.Math.min(30, this.Math.floor(this.m.SpecialValue * this.Math.rand(115, 140) * 0.01));
+		this.m.StaminaModifier = this.Math.min(0, this.m.StaminaModifier + this.Math.rand(0, 2));
+		this.m.Condition = this.Math.floor(this.m.Condition * this.Math.rand(115, 133) * 0.01) * 1.0;
+		this.m.ConditionMax = this.m.Condition;
 	}
 
 	function setName( _prefix = "" )

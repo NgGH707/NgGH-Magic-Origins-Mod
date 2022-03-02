@@ -27,7 +27,7 @@ this.legend_named_white_wolf_pelt_upgrade <- this.inherit("scripts/items/armor_u
 	function randomizeValues()
 	{
 		this.named_armor_upgrade.randomizeValues();
-		this.m.SpecialValue = this.Math.min(25, this.Math.ceil(this.m.SpecialValue * this.Math.rand(120, 150) * 0.01));
+		this.m.SpecialValue = this.Math.min(25, this.Math.ceil(this.m.SpecialValue * this.Math.rand(115, 140) * 0.01));
 	}
 
 	function getTooltip()

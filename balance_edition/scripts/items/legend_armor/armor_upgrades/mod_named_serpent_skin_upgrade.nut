@@ -21,11 +21,18 @@ this.mod_named_serpent_skin_upgrade <- this.inherit("scripts/items/legend_armor/
 		this.m.SpriteCorpseFront = null;
 		this.m.SpriteCorpseBack = "upgrade_27_back_dead";
 		this.m.Value = 600;
-		this.m.ConditionModifier = 20;
+		this.m.ConditionModifier = 25;
 		this.m.Condition = 25;
 		this.m.ConditionMax = 25;
 		this.m.StaminaModifier = -1;
 		this.randomizeValues();
+	}
+
+	function randomizeValues()
+	{
+		this.m.StaminaModifier = this.Math.min(0, this.m.StaminaModifier + this.Math.rand(0, 2));
+		this.m.Condition = this.Math.floor(this.m.Condition * this.Math.rand(115, 133) * 0.01) * 1.0;
+		this.m.ConditionMax = this.m.Condition;
 	}
 
 	function setName( _prefix = "" )

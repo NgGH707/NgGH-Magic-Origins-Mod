@@ -7,7 +7,7 @@ this.encountering_capybara_event <- this.inherit("scripts/events/event", {
 	{
 		this.m.ID = "event.encountering_capybara";
 		this.m.Title = "While camping...";
-		this.m.Cooldown = 18.0 * this.World.getTime().SecondsPerDay;
+		this.m.Cooldown = 44.0 * this.World.getTime().SecondsPerDay;
 		this.m.Screens.push({
 			ID = "A",
 			Text = "%terrainImage%{While %finder% is going for a piss, a Capybara watches %finder% let down a thunderous waterfall ravaging a small bush nearby.}",
@@ -276,11 +276,11 @@ this.encountering_capybara_event <- this.inherit("scripts/events/event", {
 
 		if (this.World.Flags.get("IsLuftAdventure"))
 		{
-			this.m.Score = 75;
+			this.m.Score = this.Math.rand(15, 35);
 		}
 		else
 		{
-			this.m.Score = this.Math.rand(15, 35);
+			this.m.Score = this.Math.rand(10, 25);
 		}
 	}
 

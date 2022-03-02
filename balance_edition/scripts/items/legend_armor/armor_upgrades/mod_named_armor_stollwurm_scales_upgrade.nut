@@ -24,8 +24,15 @@ this.mod_named_armor_stollwurm_scales_upgrade <- this.inherit("scripts/items/leg
 		this.m.Condition = 45;
 		this.m.ConditionMax = 45;
 		this.m.ConditionModifier = 45;
-		this.m.StaminaModifier = -2;
+		this.m.StaminaModifier = -4;
 		this.randomizeValues();
+	}
+
+	function randomizeValues()
+	{
+		this.m.StaminaModifier = this.Math.min(0, this.m.StaminaModifier + this.Math.rand(0, 2));
+		this.m.Condition = this.Math.floor(this.m.Condition * this.Math.rand(115, 133) * 0.01) * 1.0;
+		this.m.ConditionMax = this.m.Condition;
 	}
 
 	function setName( _prefix = "" )

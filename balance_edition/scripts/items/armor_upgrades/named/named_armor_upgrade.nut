@@ -12,7 +12,6 @@ this.named_armor_upgrade <- this.inherit("scripts/items/armor_upgrades/armor_upg
 	{
 		this.armor_upgrade.create();
 		this.m.ItemType = this.m.ItemType | this.Const.Items.ItemType.Named;
-		this.m.ShowOnCharacter = true;
 		this.m.IsDroppedAsLoot = true;
 	}
 
@@ -73,8 +72,8 @@ this.named_armor_upgrade <- this.inherit("scripts/items/armor_upgrades/armor_upg
 
 	function randomizeValues()
 	{
-		this.m.StaminaModifier = this.Math.min(0, this.m.StaminaModifier + this.Math.rand(3, 9));
-		this.m.ConditionModifier = this.Math.floor(this.m.ConditionModifier * this.Math.rand(133, 150) * 0.01) * 1.0;
+		this.m.StaminaModifier = this.Math.min(0, this.m.StaminaModifier + this.Math.rand(0, 3));
+		this.m.ConditionModifier = this.Math.floor(this.m.ConditionModifier * this.Math.rand(115, 140) * 0.01) * 1.0;
 	}
 
 	function onAdded()
