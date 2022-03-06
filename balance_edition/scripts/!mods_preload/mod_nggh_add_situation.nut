@@ -19,6 +19,11 @@ this.getroottable().Nggh_MagicConcept.hookAddSituation <- function ()
 					return;
 				}
 
+				if (this.m.Settlement.hasSituation("situation.mc_wandering_mage"))
+				{
+					return;
+				}
+
 				if (this.m.Settlement.getSituations().len() >= 2)
 				{
 					return;

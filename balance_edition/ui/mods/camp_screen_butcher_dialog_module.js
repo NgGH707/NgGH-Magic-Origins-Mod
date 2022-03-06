@@ -1058,7 +1058,7 @@ CampScreenButcherDialogModule.prototype.notifyBackendSwapItem = function (_sourc
 
 
 
-registerScreen("CampScreenButcherDialogModule", new CampScreenButcherDialogModule());
+//registerScreen("CampScreenButcherDialogModule", new CampScreenButcherDialogModule());
 
 var onDisconnection = CampScreen.prototype.onDisconnection;
 CampScreen.prototype.onDisconnection = function ()
