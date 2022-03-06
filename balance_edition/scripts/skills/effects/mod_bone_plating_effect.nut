@@ -28,7 +28,7 @@ this.mod_bone_plating_effect <- this.inherit("scripts/skills/skill", {
 
 	function getDescription()
 	{
-		return "Can Completely absorbs " + (this.m.Count == 2 ? "up to 2 hits" : "1 hit") + " which doesn\'t ignore armor";
+		return "Can Completely absorbs " + (this.m.Count == 1 ? "1 hit" : "up to " + this.m.Count + " hits") + " which doesn\'t ignore armor";
 	}
 
 	function onBeforeDamageReceived(_attacker, _skill, _hitInfo, _properties)

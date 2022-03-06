@@ -28,7 +28,7 @@ this.named_bone_platings_upgrade <- this.inherit("scripts/items/armor_upgrades/n
 	{
 		this.m.StaminaModifier = this.Math.min(0, this.m.StaminaModifier + this.Math.rand(0, 1));
 		this.m.ConditionModifier = this.Math.floor(this.m.ConditionModifier * this.Math.rand(115, 140) * 0.01) * 1.0;
-		this.m.SpecialValue = this.Math.rand(1, 2);
+		this.m.SpecialValue = this.Math.rand(1, 100) <= 50 ? this.Math.rand(1, 3) : this.Math.rand(1, 2);
 	}
 
 	function getTooltip()
@@ -50,7 +50,7 @@ this.named_bone_platings_upgrade <- this.inherit("scripts/items/armor_upgrades/n
 			id = 15,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Can Completely absorbs " + (this.m.SpecialValue == 2 ? "up to [color=" + this.Const.UI.Color.NegativeValue + "]2[/color] hits" : "[color=" + this.Const.UI.Color.NegativeValue + "]1[/color] hit") + " of every combat encounter which doesn\'t ignore armor"
+			text = "Can Completely absorbs " + (this.m.SpecialValue > 1 ? "up to [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.SpecialValue + "[/color] hits" : "[color=" + this.Const.UI.Color.NegativeValue + "]1[/color] hit") + " of every combat encounter which doesn\'t ignore armor"
 		});
 		return result;
 	}
@@ -61,7 +61,7 @@ this.named_bone_platings_upgrade <- this.inherit("scripts/items/armor_upgrades/n
 			id = 15,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Can Completely absorbs " + (this.m.SpecialValue == 2 ? "up to [color=" + this.Const.UI.Color.NegativeValue + "]2[/color] hits" : "[color=" + this.Const.UI.Color.NegativeValue + "]1[/color] hit") + " of every combat encounter which doesn\'t ignore armor"
+			text = "Can Completely absorbs " + (this.m.SpecialValue > 1 ? "up to [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.SpecialValue + "[/color] hits" : "[color=" + this.Const.UI.Color.NegativeValue + "]1[/color] hit") + " of every combat encounter which doesn\'t ignore armor"
 		});
 	}
 

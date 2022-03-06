@@ -31,7 +31,7 @@ this.mod_named_bone_platings_upgrade <- this.inherit("scripts/items/legend_armor
 
 	function randomizeValues()
 	{
-		this.m.SpecialValue = this.Math.rand(1, 2);
+		this.m.SpecialValue = this.Math.rand(1, 100) <= 50 ? this.Math.rand(1, 3) : this.Math.rand(1, 2);
 		this.m.StaminaModifier = this.Math.min(0, this.m.StaminaModifier + this.Math.rand(0, 1));
 		this.m.Condition = this.Math.floor(this.m.Condition * this.Math.rand(115, 133) * 0.01) * 1.0;
 		this.m.ConditionMax = this.m.Condition;
@@ -49,7 +49,7 @@ this.mod_named_bone_platings_upgrade <- this.inherit("scripts/items/legend_armor
 			id = 15,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Can Completely absorbs " + (this.m.SpecialValue == 2 ? "up to [color=" + this.Const.UI.Color.NegativeValue + "]2[/color] hits" : "[color=" + this.Const.UI.Color.NegativeValue + "]1[/color] hit") + " of every combat encounter which doesn\'t ignore armor"
+			text = "Can Completely absorbs " + (this.m.SpecialValue > 1 ? "up to [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.SpecialValue + "[/color] hits" : "[color=" + this.Const.UI.Color.NegativeValue + "]1[/color] hit") + " of every combat encounter which doesn\'t ignore armor"
 		});
 		return result;
 	}
@@ -60,7 +60,7 @@ this.mod_named_bone_platings_upgrade <- this.inherit("scripts/items/legend_armor
 			id = 15,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Can Completely absorbs " + (this.m.SpecialValue == 2 ? "up to [color=" + this.Const.UI.Color.NegativeValue + "]2[/color] hits" : "[color=" + this.Const.UI.Color.NegativeValue + "]1[/color] hit") + " of every combat encounter which doesn\'t ignore armor"
+			text = "Can Completely absorbs " + (this.m.SpecialValue > 1 ? "up to [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.SpecialValue + "[/color] hits" : "[color=" + this.Const.UI.Color.NegativeValue + "]1[/color] hit") + " of every combat encounter which doesn\'t ignore armor"
 		});
 	}
 
