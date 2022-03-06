@@ -168,6 +168,8 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 		];
 		this.m.Sound[this.Const.Sound.ActorEvent.DamageReceived] = [];
 		this.m.SoundPitch = this.Math.rand(90, 110) * 0.01;
+		this.m.AIAgent = this.new("scripts/ai/tactical/player_agent");
+		this.m.AIAgent.setActor(this);
 		this.m.Flags.add("alp");
 		this.m.Flags.add("shadow");
 		this.setName("Shadow Demon");

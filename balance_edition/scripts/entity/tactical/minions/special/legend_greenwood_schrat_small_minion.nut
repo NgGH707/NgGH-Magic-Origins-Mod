@@ -56,8 +56,6 @@ this.legend_greenwood_schrat_small_minion <- this.inherit("scripts/entity/tactic
 		this.m.SoundVolume[this.Const.Sound.ActorEvent.Idle] = 1.5;
 		this.m.SoundVolume[this.Const.Sound.ActorEvent.Move] = 1.5;
 		this.m.SoundPitch = this.Math.rand(101, 110) * 0.01;
-		this.m.AIAgent = this.new("scripts/ai/tactical/agents/direwolf_agent");
-		this.m.AIAgent.setActor(this);
 		this.m.AIAgent = this.new("scripts/ai/tactical/player_agent");
 		this.m.AIAgent.setActor(this);
 		this.m.IsSummoned = true;
