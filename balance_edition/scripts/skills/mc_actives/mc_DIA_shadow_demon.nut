@@ -104,7 +104,7 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 				id = 10,
 				type = "text",
 				icon = "ui/icons/health.png",
-				text = "Give your shadow demon an extra life"
+				text = "Bless your shadow demon"
 			});
 
 			if (this.getContainer().getActor().getTile().getDistanceTo(this.getEntity().getTile()) > 6)
@@ -176,11 +176,11 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 		if (this.getEntity() != null)
 		{
 			this.spawnIcon("status_effect_81", this.getEntity().getTile());
-			this.getEntity().addNineLivesCount();
+			this.getEntity().bless();
 
 			if (!_user.isHiddenToPlayer())
 			{
-				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " blesses his shadow demon with vitality");
+				this.Tactical.EventLog.log(this.Const.UI.getColorizedEntityName(_user) + " blesses his shadow demon with unknown power");
 			}
 
 			return true;

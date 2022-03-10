@@ -134,21 +134,32 @@ this.getroottable().Nggh_MagicConcept.hookPerks <- function ()
 	::mods_hookExactClass("skills/perks/perk_pathfinder", function(obj) 
 	{
 		obj.m.IsGhost <- false;
+		obj.m.CanMount <- false;
 		obj.onAdded <- function()
 		{
 			this.m.IsGhost = this.isKindOf(this.getContainer().getActor().get(), "ghost_player");
+			this.m.CanMount = "isMounted" in this.getContainer().getActor().get();
 		};
 		obj.onUpdate = function( _properties )
 		{
 			local actor = this.getContainer().getActor();
 
-			if (!this.m.IsGhost)
+			if (this.m.CanMount && actor.isMounted())
 			{
-				actor.m.ActionPointCosts = this.Const.PathfinderMovementAPCost;
+				actor.m.LevelActionPointCost = 0;
+				actor.m.LevelFatigueCost = 2;
 			}
-			
-			actor.m.FatigueCosts = clone this.Const.PathfinderMovementFatigueCost;
-			actor.m.LevelActionPointCost = 0;
+			else
+			{
+				if (!this.m.IsGhost)
+				{
+					actor.m.ActionPointCosts = this.Const.PathfinderMovementAPCost;
+				}
+				
+				actor.m.FatigueCosts = clone this.Const.PathfinderMovementFatigueCost;
+				actor.m.LevelFatigueCost = this.Const.Movement.LevelDifferenceFatigueCost;
+				actor.m.LevelActionPointCost = 0;
+			}
 		}
 	});
 

@@ -4,7 +4,7 @@ this.mount_manager <- {
 		Mount = null,
 		MountType = null,
 		RiderSkill = null,
-		ShakeLayers = null,
+		ShakeLayers = this.Const.GoblinRider.ShakeLayers,
 		Skills = [],
 		Armor = {
 			Condition = 0,
@@ -52,7 +52,6 @@ this.mount_manager <- {
 	function create()
 	{
 		this.clear();
-		this.m.ShakeLayers = this.Const.GoblinRider.ShakeLayers;
 	}
 
 	function setActor( _a )
@@ -254,6 +253,12 @@ this.mount_manager <- {
 				_s.setFatigueCost(this.Math.floor(_s.getFatigueCostRaw() * 0.5));
 			}
 
+			if (_s.isType(this.Const.SkillType.Perk) && !_s.isType(this.Const.SkillType.Racial))
+			{
+				_s.m.Type -= this.Const.SkillType.Perk;
+				_s.m.Type = _s.m.Type | this.Const.SkillType.Racial;
+			} 
+
 			if (!_s.isType(this.Const.SkillType.Active)) quirkNames.push(_s.getName());
 			this.m.Actor.getSkills().add(_s);
 		    this.m.Skills.push(_s);
@@ -271,6 +276,12 @@ this.mount_manager <- {
 				local _q = this.new(quirk);
 				_q.m.IsSerialized = false;
 			    _q.setItem(this.m.Mount);
+
+			    if (_q.isType(this.Const.SkillType.Perk) && !_q.isType(this.Const.SkillType.Racial))
+				{
+					_q.m.Type -= this.Const.SkillType.Perk;
+					_q.m.Type = _q.m.Type | this.Const.SkillType.Racial;
+				}
 
 			    if (!this.m.Actor.getSkills().hasSkill(_q.getID()))
 			    {
@@ -1026,6 +1037,7 @@ this.mount_manager <- {
 		if (this.m.Actor != null && !this.m.Actor.isNull() && this.m.Actor.isAlive() && !this.m.Actor.isDying())
 		{
 			this.clearSkills();
+			this.m.Actor.getSkills().removeByID("special.nggh_mounted_charge");
 			this.m.Actor.getSkills().update();
 			this.m.Actor.getItems().updateAppearance();
 		}
@@ -1119,6 +1131,7 @@ this.mount_manager <- {
 				this.setHitpointsPct(healthPercentage);
 			}
 			
+			this.m.Actor.getSkills().add(this.new("scripts/skills/special/nggh_mounted_charge_effect"));
 			this.m.Actor.getItems().updateAppearance();
 		}
 	}
@@ -1164,6 +1177,7 @@ this.mount_manager <- {
 		{
 			this.applyingAttributes();
 			this.m.Actor.onUpdateInjuryLayer();
+			this.m.Actor.getSkills().add(this.new("scripts/skills/special/nggh_mounted_charge_effect"));
 			this.m.Actor.getItems().updateAppearance();
 		}
 	}

@@ -31,7 +31,7 @@ this.encountering_capybara_event <- this.inherit("scripts/events/event", {
 					}
 				},
 				{
-					Text = "Let it watch.",
+					Text = "Ignore it.",
 					function getResult( _event )
 					{
 						_event.m.Finder.improveMood(2.0, "Yes! i'm a pervert");
@@ -46,7 +46,7 @@ this.encountering_capybara_event <- this.inherit("scripts/events/event", {
 					}
 				},
 				{
-					Text = "Run back to camp.",
+					Text = "Run away in fear.",
 					function getResult( _event )
 					{
 						return "E";
@@ -247,13 +247,13 @@ this.encountering_capybara_event <- this.inherit("scripts/events/event", {
 
 		this.m.Screens.push({
 			ID = "E",
-			Text = "[img]gfx/ui/events/event_26.png[/img]{%finder% runs back to camp with haste. Telling everyone about what he has found, some laugh as it\'s a joke, some feel interested in it.}",
+			Text = "[img]gfx/ui/events/event_26.png[/img]{%finder% runs back to camp with great haste without looking back while screaming like a bitch.}",
 			Image = "",
 			List = [],
 			Characters = [],
 			Options = [
 				{
-					Text = "I should have petted that capybara",
+					Text = "!!!",
 					function getResult( _event )
 					{
 						return 0;
@@ -263,6 +263,24 @@ this.encountering_capybara_event <- this.inherit("scripts/events/event", {
 			function start( _event )
 			{
 				this.Characters.push(_event.m.Finder.getImagePath());
+
+				local effect = this.new("scripts/skills/effects_world/afraid_effect");
+				_event.m.Finder.getSkills().add(effect);
+				_event.m.Finder.worsenMood(1.0, "Has seen a bad omen");
+				this.List.push({
+					id = 10,
+					icon = effect.getIcon(),
+					text = _event.m.Finder.getName() + " is afraid"
+				});
+
+				if (_event.m.Finder.getMoodState() < this.Const.MoodState.Neutral)
+				{
+					this.List.push({
+						id = 10,
+						icon = this.Const.MoodStateIcon[_event.m.Finder.getMoodState()],
+						text = _event.m.Finder.getName() + this.Const.MoodStateEvent[_event.m.Finder.getMoodState()]
+					});
+				}
 			}
 		});
 	}

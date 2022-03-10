@@ -183,7 +183,7 @@ this.lindwurm_tail_player <- this.inherit("scripts/entity/tactical/player_beast"
 		this.player_beast.create();
 		this.m.IsControlledByPlayer = true;
 		this.m.Name = "Lindwurm Tail";
-		this.m.Type = this.Const.EntityType.Lindwurm;
+		this.m.Type = this.Const.EntityType.Player;
 		this.m.BloodType = this.Const.BloodType.Green;
 		this.m.XP = this.Const.Tactical.Actor.Lindwurm.XP;
 		this.m.BloodSplatterOffset = this.createVec(0, 0);

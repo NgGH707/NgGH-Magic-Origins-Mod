@@ -1,6 +1,7 @@
 this.afterimage_effect <- this.inherit("scripts/skills/skill", {
 	m = {
 		Count = 1,
+		TurnsLeft = 1,
 	},
 	function create()
 	{
@@ -73,7 +74,10 @@ this.afterimage_effect <- this.inherit("scripts/skills/skill", {
 
 	function onTurnStart()
 	{
-		this.removeSelf();
+		if (--this.m.TurnsLeft <= 0)
+		{
+			this.removeSelf();
+		}
 	}
 
 });

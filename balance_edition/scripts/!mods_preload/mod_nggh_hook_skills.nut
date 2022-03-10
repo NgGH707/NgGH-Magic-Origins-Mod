@@ -130,11 +130,13 @@ this.getroottable().Nggh_MagicConcept.hookSkills <- function ()
 		obj = obj[obj.SuperName];
 		obj.getActionPointCost <- function()
 		{
-			if (this.m.Container.getActor().getCurrentProperties().IsSkillUseFree)
+			local actor = this.getContainer().getActor();
+
+			if (actor.getCurrentProperties().IsSkillUseFree)
 			{
 				return 0;
 			}
-			else if (this.m.Container.getActor().getCurrentProperties().IsSkillUseHalfCost)
+			else if (actor.getCurrentProperties().IsSkillUseHalfCost)
 			{
 				return this.Math.max(1, this.Math.floor(this.m.ActionPointCost / 2));
 			}
@@ -144,13 +146,13 @@ this.getroottable().Nggh_MagicConcept.hookSkills <- function ()
 			}
 			else
 			{
-				return this.m.ActionPointCost + this.m.Container.getActor().getCurrentProperties().AdditionalActionPointCost;
+				return this.Math.max(0, this.m.ActionPointCost + actor.getCurrentProperties().AdditionalActionPointCost);
 			}
 		}
 		
 		obj.isAffordable <- function()
 		{
-			return this.getActionPointCost() <= this.m.Container.getActor().getActionPoints() && this.getFatigueCost() + this.m.Container.getActor().getFatigue() <= this.m.Container.getActor().getFatigueMax();
+			return this.getActionPointCost() <= this.getContainer().getActor().getActionPoints() && this.getFatigueCost() + this.m.Container.getActor().getFatigue() <= this.m.Container.getActor().getFatigueMax();
 		}
 		
 		obj.use <- function( _targetTile, _forFree = false )

@@ -36,6 +36,25 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 		this.m.Link = null;
 	}
 
+	function bless()
+	{
+		switch(this.m.Variant)
+		{
+		case 1:
+			this.addNineLivesCount();
+			break;
+
+		case 2:
+			this.m.Skills.add(this.new("scripts/skills/effects/blessed_shadow_demon_effect"));
+			break;
+
+		case 3:
+			this.m.Skills.add(this.new("scripts/skills/effects/afterimage_effect"));
+			this.m.Skills.getSkillByID("effects.afterimage").m.TurnsLeft = 2;
+			break;
+		}
+	}
+
 	function setStatsAndSkills( _properties )
 	{
 		local power = _properties.MasterPower;
@@ -56,6 +75,10 @@ this.alp_shadow_minion_entity <- this.inherit("scripts/entity/tactical/minion", 
 			if (power >= entry[0])
 			{
 				this.getSkills().add(this.new("scripts/skill/" + entry[1]));
+			}
+			else
+			{
+				break;
 			}
 		}
 

@@ -117,6 +117,8 @@
   <sprite id="status_effect_dog_rider_mini" offsetY="35" ic="FF2E326F" img="skills\mini\status_effect_dog_rider_mini.png" />
   <sprite id="status_effect_hound_rider" ic="FF2E326F" img="skills\status_effect_hound_rider.png" />
   <sprite id="status_effect_hound_rider_mini" offsetY="35" ic="FF2E326F" img="skills\mini\status_effect_hound_rider_mini.png" />
+
+  <sprite id="charge_perk_mini" offsetY="35" ic="FF2E326F" img="skills\mini\charge_perk_mini.png" />
   
   <sprite id="perk_madden_active" ic="FF2E326F" img="skills\perk_madden_active.png" />
   <sprite id="perk_madden" ic="FF2E326F" img="skills\perk_madden.png" />

@@ -60,7 +60,30 @@ gt.Const.ExcludedQuirks <- [
 	"scripts/skills/perks/perk_colossus",
 ];
 
-gt.Const.GoblinRider <- {
+gt.Const.GoblinRider <- 
+{
+	RiderMovementAPCost = [
+		0, // Impassable
+		2, // PavedGround
+		2, // FlatGround
+		3, // RoughGround
+		3, // Forest
+		4, // Rocks
+		5, // Swamp
+		3, // Sand
+		4  // ShallowWater
+	],
+	RiderMovementFatigueCost = [
+		0,  // Impassable
+		1,  // PavedGround
+		1,  // FlatGround
+		3,  // RoughGround
+		3,  // Forest
+		5,  // Rocks
+		12, // Swamp
+		10, // Sand
+		10  // ShallowWater
+	],
 	Mounts = {
 		Wardog = 0,
 		Hound = 1,
@@ -343,13 +366,13 @@ gt.Const.GoblinRiderMounts <- [
 	//0 - Wardog
 	{
 		Attributes = "Wardog",
-		Skills = ["actives/wardog_bite", "perks/perk_pathfinder"],
+		Skills = [/*"actives/wardog_bite",*/ "perks/perk_pathfinder"],
 		Flags = [],
 		Sprite = [
 			[-5, 10], //For rider
 			[10, -8], //For mount
 		],
-		MountedBonus = { ActionPoints = 4, Stamina = 15, Initiative = 20, MeleeDefense = 5, RangedDefense = 5, Threat = 0, },
+		MountedBonus = { ActionPoints = 3, Stamina = 15, Initiative = 20, MeleeDefense = 5, RangedDefense = 5, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/wardog_hurt_00.wav",
 			"sounds/enemies/wardog_hurt_01.wav",
@@ -376,7 +399,7 @@ gt.Const.GoblinRiderMounts <- [
 	//1 - Hound
 	{
 		Attributes = "Warhound",
-		Skills = ["actives/warhound_bite", "perks/perk_pathfinder"],
+		Skills = [/*"actives/warhound_bite"*/],
 		Flags = [],
 		Sprite = [
 			[-5, 15], //For rider
@@ -409,13 +432,13 @@ gt.Const.GoblinRiderMounts <- [
 	//2 - Wolf
 	{
 		Attributes = "WarWolf",
-		Skills = ["actives/wolf_bite", "perks/perk_pathfinder"],
+		Skills = [/*"actives/wolf_bite",*/ "perks/perk_pathfinder"],
 		Flags = [],
 		Sprite = [
 			[-8, 13], //For rider
 			[ 0, -18], //For mount
 		],
-		MountedBonus = { ActionPoints = 4, Stamina = 20, Initiative = 20, MeleeDefense = 7, RangedDefense = 3, Threat = 0, },
+		MountedBonus = { ActionPoints = 3, Stamina = 20, Initiative = 20, MeleeDefense = 7, RangedDefense = 3, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/wolf_hurt_00.wav",
 			"sounds/enemies/wolf_hurt_01.wav",
@@ -446,13 +469,13 @@ gt.Const.GoblinRiderMounts <- [
 	//3 - WhiteWolf
 	{
 		Attributes = "LegendWhiteWarwolf",
-		Skills = ["actives/werewolf_bite", "actives/rotation", "perks/perk_pathfinder"],
+		Skills = [/*"actives/werewolf_bite",*/ "actives/rotation", "perks/perk_pathfinder"],
 		Flags = ["frenzy"],
 		Sprite = [
 			[-8, 13], //For rider
 			[ 0, -18], //For mount
 		],
-		MountedBonus = { ActionPoints = 6, Stamina = 30, Initiative = 30, MeleeDefense = 11, RangedDefense = 5, Threat = 5, },
+		MountedBonus = { ActionPoints = 3, Stamina = 30, Initiative = 30, MeleeDefense = 11, RangedDefense = 5, Threat = 5, },
 		SoundsOther1 = [
 			"sounds/enemies/wolf_hurt_00.wav",
 			"sounds/enemies/wolf_hurt_01.wav",
@@ -483,13 +506,13 @@ gt.Const.GoblinRiderMounts <- [
 	//4 - Direwolf
 	{
 		Attributes = "Direwolf",
-		Skills = ["actives/werewolf_bite", "perks/perk_pathfinder"],
+		Skills = [/*"actives/werewolf_bite",*/ "perks/perk_pathfinder"],
 		Flags = [],
 		Sprite = [
 			[-8, 13], //For rider
 			[ 0, -18], //For mount
 		],
-		MountedBonus = { ActionPoints = 3, Stamina = 20, Initiative = 20, MeleeDefense = 8, RangedDefense = 5, Threat = 0, },
+		MountedBonus = { ActionPoints = 3, Stamina = 10, Initiative = 12, MeleeDefense = 4, RangedDefense = 4, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/werewolf_hurt_01.wav",
 			"sounds/enemies/werewolf_hurt_02.wav",
@@ -531,13 +554,13 @@ gt.Const.GoblinRiderMounts <- [
 	//5 - DirewolfFrenzied
 	{
 		Attributes = "FrenziedDirewolf",
-		Skills = ["actives/werewolf_bite", "perks/perk_pathfinder"],
+		Skills = [/*"actives/werewolf_bite",*/ "perks/perk_pathfinder"],
 		Flags = ["frenzy"],
 		Sprite = [
 			[-8, 13], //For rider
 			[ 0, -18], //For mount
 		],
-		MountedBonus = { ActionPoints = 3, Stamina = 20, Initiative = 23, MeleeDefense = 9, RangedDefense = 5, Threat = 0, },
+		MountedBonus = { ActionPoints = 3, Stamina = 10, Initiative = 15, MeleeDefense = 5, RangedDefense = 5, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/werewolf_hurt_01.wav",
 			"sounds/enemies/werewolf_hurt_02.wav",
@@ -579,13 +602,13 @@ gt.Const.GoblinRiderMounts <- [
 	//6 - Hyena
 	{
 		Attributes = "Hyena",
-		Skills = ["actives/hyena_bite_skill", "perks/perk_pathfinder"],
+		Skills = [/*"actives/hyena_bite_skill",*/ "perks/perk_pathfinder"],
 		Flags = [],
 		Sprite = [
 			[-8, 13], //For rider
 			[ 0, -18], //For mount
 		],
-		MountedBonus = { ActionPoints = 5, Stamina = 15, Initiative = 15, MeleeDefense = 7, RangedDefense = 6, Threat = 0, },
+		MountedBonus = { ActionPoints = 3, Stamina = 10, Initiative = 11, MeleeDefense = 5, RangedDefense = 4, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/dlc6/hyena_hurt_01.wav",
 			"sounds/enemies/dlc6/hyena_hurt_02.wav",
@@ -626,13 +649,13 @@ gt.Const.GoblinRiderMounts <- [
 	//7 - HyenaFrenzied
 	{
 		Attributes = "FrenziedHyena",
-		Skills = ["actives/hyena_bite_skill", "perks/perk_pathfinder"],
+		Skills = [/*"actives/hyena_bite_skill",*/ "perks/perk_pathfinder"],
 		Flags = ["frenzy"],
 		Sprite = [
 			[-8, 13], //For rider
 			[ 0, -18], //For mount
 		],
-		MountedBonus = { ActionPoints = 5, Stamina = 18, Initiative = 18, MeleeDefense = 8, RangedDefense = 6, Threat = 0, },
+		MountedBonus = { ActionPoints = 3, Stamina = 10, Initiative = 13, MeleeDefense = 6, RangedDefense = 5, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/dlc6/hyena_hurt_01.wav",
 			"sounds/enemies/dlc6/hyena_hurt_02.wav",
@@ -673,13 +696,13 @@ gt.Const.GoblinRiderMounts <- [
 	//8 - Bear
 	{
 		Attributes = "LegendBear",
-		Skills = ["actives/werewolf_bite", "actives/line_breaker", "perks/perk_battering_ram", "perks/perk_stalwart"],
+		Skills = [/*"actives/werewolf_bite",*/ "actives/line_breaker", "perks/perk_battering_ram", "perks/perk_stalwart"],
 		Flags = ["ride_bear"],
 		Sprite = [
 			[-12, 15], //For rider
 			[0, -15], //For mount
 		],
-		MountedBonus = { ActionPoints = 2, Stamina = 35, Initiative = 0, MeleeDefense = 7, RangedDefense = -5, Threat = 0, },
+		MountedBonus = { ActionPoints = 2, Stamina = 25, Initiative = 0, MeleeDefense = 7, RangedDefense = -5, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/bear_hit1.wav",
 			"sounds/enemies/bear_hit2.wav"
@@ -702,7 +725,7 @@ gt.Const.GoblinRiderMounts <- [
 			[-25, 40], //For rider
 			[0, 0], //For mount
 		],
-		MountedBonus = { ActionPoints = 2, Stamina = 15, Initiative = 25, MeleeDefense = 10, RangedDefense = 5, Threat = 0, },
+		MountedBonus = { ActionPoints = 3, Stamina = 0, Initiative = 25, MeleeDefense = 5, RangedDefense = 8, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/dlc2/giant_spider_hurt_01.wav",
 			"sounds/enemies/dlc2/giant_spider_hurt_02.wav",

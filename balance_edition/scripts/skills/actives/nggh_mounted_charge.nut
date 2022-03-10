@@ -1,7 +1,8 @@
 this.nggh_mounted_charge <- this.inherit("scripts/skills/skill", {
 	m = {
-		IsCharging = false,
-		ChargeDis = 1,
+		IsSpent = false,
+		//IsCharging = false,
+		//ChargeDis = 1,
 	},
 	function create()
 	{
@@ -21,15 +22,25 @@ this.nggh_mounted_charge <- this.inherit("scripts/skills/skill", {
 		this.m.Order = this.Const.SkillOrder.UtilityTargeted;
 		this.m.IsSerialized = false;
 		this.m.IsActive = true;
-		this.m.IsTargeted = true;
+		this.m.IsTargeted = false;
 		this.m.IsStacking = false;
 		this.m.IsAttack = true;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsUsingHitchance = false;
-		this.m.ActionPointCost = 6;
-		this.m.FatigueCost = 30;
-		this.m.MinRange = 2;
-		this.m.MaxRange = 3;
+		this.m.ActionPointCost = 0;
+		this.m.FatigueCost = 15;
+		this.m.MinRange = 0;
+		this.m.MaxRange = 0;
+	}
+
+	function getActionPointCost()
+	{
+		return 0;
+	}
+
+	function getFatigueCost()
+	{
+		return this.Math.ceil(this.m.FatigueCost * this.getContainer().getActor().getCurrentProperties().FatigueEffectMult);
 	}
 
 	function getTooltip()
@@ -40,19 +51,13 @@ this.nggh_mounted_charge <- this.inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Use one of your weapon skill as a charging attack"
+				text = "Improving your next mounted charge attack for 1 turn"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "[color=" + this.Const.UI.Color.DamageValue + "]+25%[/color] damage for each tile between you and your target"
-			}
-			{
-				id = 6,
-				type = "text",
-				icon = "ui/icons/special.png",
-				text = "May cause knock back and stagger"
+				text = "Mounted charge attack can cause knock back and stagger or daze"
 			},
 		]);
 
@@ -96,7 +101,53 @@ this.nggh_mounted_charge <- this.inherit("scripts/skills/skill", {
         return !this.getContainer().getActor().isMounted();
     }
 
-	function findTileToKnockBackTo( _userTile, _targetTile )
+    function isUsable()
+	{
+		local actor = this.getContainer().getActor();
+
+		if (actor.getCurrentProperties().IsRooted || actor.isArmedWithRangedWeapon())
+		{
+			return false;
+		}
+
+		if (this.m.IsSpent)
+		{
+			return false;
+		}
+
+		if (this.Tactical.isActive() && actor.getTile().hasZoneOfControlOtherThan(actor.getAlliedFactions()))
+		{
+			return false;
+		}
+
+		return this.skill.isUsable();
+	}
+
+	function onTurnStart()
+	{
+		this.m.IsSpent = false;
+	}
+
+	function onMovementFinished( _tile )
+	{
+		this.m.IsSpent = true;
+	}
+
+	function onUse( _user, _targetTile )
+	{
+		this.m.IsSpent = true;
+		local charge = this.getContainer().getSkillByID("special.nggh_mounted_charge");
+
+		if (charge == null)
+		{
+			return false;
+		}
+
+		charge.setImproveChargeEffect();
+		return true;
+	}
+
+	/*function findTileToKnockBackTo( _userTile, _targetTile )
 	{
 		local dir = _userTile.getDirectionTo(_targetTile);
 
@@ -135,33 +186,13 @@ this.nggh_mounted_charge <- this.inherit("scripts/skills/skill", {
 		}
 
 		return null;
-	}
-
-	function isUsable()
-	{
-		local actor = this.getContainer().getActor();
-
-		if (actor.getCurrentProperties().IsRooted)
-		{
-			return false;
-		}
-
-		if (actor.isArmedWithRangedWeapon())
-		{
-			return false;
-		}
-
-		if (this.Tactical.isActive() && actor.getTile().hasZoneOfControlOtherThan(actor.getAlliedFactions()))
-		{
-			return false;
-		}
-
-		return this.skill.isUsable();
-	}
+	}*/
 
 	function onVerifyTarget( _originTile, _targetTile )
 	{
-		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
+		return true;
+
+		/*if (!this.skill.onVerifyTarget(_originTile, _targetTile))
 		{
 			return false;
 		}
@@ -190,10 +221,10 @@ this.nggh_mounted_charge <- this.inherit("scripts/skills/skill", {
 			}
 		}
 
-		return false;
+		return false;*/
 	}
 
-	function onUse( _user, _targetTile )
+	/*function onUse( _user, _targetTile )
 	{
 		local myTile = _user.getTile();
 		local tiles = [];
@@ -439,7 +470,7 @@ this.nggh_mounted_charge <- this.inherit("scripts/skills/skill", {
 	    }
 
 	    return 0;
-	}
+	}*/
 
 });
 
