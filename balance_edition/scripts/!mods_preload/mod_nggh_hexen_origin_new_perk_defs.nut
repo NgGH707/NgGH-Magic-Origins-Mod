@@ -995,18 +995,23 @@ this.getroottable().HexenHooks.hookPerkDefs <- function ()
 		ID = "Goblin Mount",
 		Name = "GoblinMount",
 		Descriptions = ["goblin mount"],
+		WeightMultipliers = [
+			{Multiplier = 0.0, Tree = this.Const.Perks.DaggerTree},
+			{Multiplier = 0.0, Tree = this.Const.Perks.CrossbowTree},
+			{Multiplier = 0.0, Tree = this.Const.Perks.PolearmTree},
+		],
 		Tree = [
+			[],
 			[],
 			[
 				gt.Const.Perks.PerkDefs.GoblinWolfRider
 			],
 			[
-				gt.Const.Perks.PerkDefs.GoblinMountedCharge
-			],
-			[
 				gt.Const.Perks.PerkDefs.LegendHorseLiberty
 			],
-			[],
+			[
+				gt.Const.Perks.PerkDefs.GoblinMountedCharge
+			],
 			[
 				gt.Const.Perks.PerkDefs.GoblinMountedArchery
 			],

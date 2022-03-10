@@ -2113,23 +2113,6 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 	});
 
 
-	// disallow the use of footwork while mounting
-	::mods_hookExactClass("skills/actives/footwork", function(obj) 
-	{
-	    obj.isHidden <- function()
-	    {
-	        local skill = this.getContainer().getSkillByID("special.goblin_rider");
-
-	        if (skill != null)
-	        {
-	        	return skill.isMounted();
-	        }
-
-	        return this.m.IsHidden;
-	    }
-	});
-
-
 	// a slight buff for goblin balls
 	::mods_hookExactClass("skills/actives/throw_balls", function ( obj )
 	{

@@ -372,7 +372,7 @@ gt.Const.GoblinRiderMounts <- [
 			[-5, 10], //For rider
 			[10, -8], //For mount
 		],
-		MountedBonus = { ActionPoints = 3, Stamina = 15, Initiative = 20, MeleeDefense = 5, RangedDefense = 5, Threat = 0, },
+		MountedBonus = { ActionPoints = 3, Stamina = 5, Initiative = 10, MeleeDefense = 3, RangedDefense = 3, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/wardog_hurt_00.wav",
 			"sounds/enemies/wardog_hurt_01.wav",
@@ -405,7 +405,7 @@ gt.Const.GoblinRiderMounts <- [
 			[-5, 15], //For rider
 			[ 5, -8], //For mount
 		],
-		MountedBonus = { ActionPoints = 3, Stamina = 25, Initiative = 10, MeleeDefense = 7, RangedDefense = 0, Threat = 0, },
+		MountedBonus = { ActionPoints = 3, Stamina = 10, Initiative = 8, MeleeDefense = 5, RangedDefense = 0, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/wardog_hurt_00.wav",
 			"sounds/enemies/wardog_hurt_01.wav",
@@ -438,7 +438,7 @@ gt.Const.GoblinRiderMounts <- [
 			[-8, 13], //For rider
 			[ 0, -18], //For mount
 		],
-		MountedBonus = { ActionPoints = 3, Stamina = 20, Initiative = 20, MeleeDefense = 7, RangedDefense = 3, Threat = 0, },
+		MountedBonus = { ActionPoints = 3, Stamina = 8, Initiative = 12, MeleeDefense = 4, RangedDefense = 4, Threat = 0, },
 		SoundsOther1 = [
 			"sounds/enemies/wolf_hurt_00.wav",
 			"sounds/enemies/wolf_hurt_01.wav",

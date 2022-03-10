@@ -87,7 +87,6 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 	
 	function onSetUp()
 	{
-		
 		this.getContainer().getActor().m.Background = this;
 		this.getContainer().getActor().m.StarWeights = this.buildAttributes(null, null);
 		this.getContainer().getActor().fillTalentValues();
@@ -95,10 +94,6 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 		this.getContainer().add(this.new("scripts/skills/traits/intensive_training_trait"));
 		local attributes = this.buildPerkTree();
 		this.addPerk(this.Const.Perks.PerkDefs.BoondockBlade, 0);
-		this.addPerk(this.Const.Perks.PerkDefs.GoblinWolfRider, 1);
-		this.addPerk(this.Const.Perks.PerkDefs.GoblinMountedCharge, 2);
-		this.addPerk(this.Const.Perks.PerkDefs.LegendHorseLiberty, 3);
-		this.addPerk(this.Const.Perks.PerkDefs.GoblinMountedArchery, 5);
 		this.setAppearance();
 
 		if (this.m.Names.len() != 0)
@@ -183,7 +178,7 @@ this.charmed_goblin_background <- this.inherit("scripts/skills/backgrounds/chara
 		
 		if (this.m.IsWolfrider)
 		{
-			this.getContainer().add(this.new("scripts/skills/perks/perk_wolf_rider"));
+			this.World.Assets.getOrigin().addScenarioPerk(this, this.Const.Perks.PerkDefs.GoblinWolfRider, 1);
 			items.equip(this.new("scripts/items/accessory/wolf_item"));
 		}
 		

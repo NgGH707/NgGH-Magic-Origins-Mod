@@ -188,55 +188,74 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		gt.Const.PerksCharmedUnit.LindwurmTree[5].push(gt.Const.Perks.PerkDefs.PTRUtilitarian);
 		gt.Const.PerksCharmedUnit.LindwurmTree[5].push(gt.Const.Perks.PerkDefs.PTRExudeConfidence);
 		gt.Const.PerksCharmedUnit.SchratTree[5].push(gt.Const.Perks.PerkDefs.PTRExudeConfidence);
+
 		gt.Const.PerksCharmedUnit.GoblinAmbusher <- {
 			WeightMultipliers = [
-				{Multiplier = 2.0, Tree = this.Const.Perks.FitTree},
+				{Multiplier = 2.0, Tree = this.Const.Perks.UnstoppableTree},
 				{Multiplier = 10.0, Tree = this.Const.Perks.BowTree},
 				{Multiplier = 2.0, Tree = this.Const.Perks.DaggerTree}
 			],
+			Class = [
+				[
+					{Weight = 75, Tree = this.Const.Perks.ScoutClassTree},
+					{Weight = 25, Tree = this.Const.Perks.GoblinMountTree},
+				]
+			],
 			Profession = [
 				[{Weight = 100, Tree = this.Const.Perks.HunterProfessionTree}]
-			],
-			Traits = [
-				[
-					{Weight = 34, Tree = this.Const.Perks.AgileTree},
-					{Weight = 33, Tree = this.Const.Perks.DeviousTree},
-					{Weight = 33, Tree = this.Const.Perks.ViciousTree}
-				]
 			],
 			Styles = [
 				[{Weight = 100, Tree = this.Const.Perks.RangedTree}]
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.LightArmorTree}]
-			]
+			],
+			Traits = [
+				[{Weight = 100, Tree = this.Const.Perks.FastTree}],
+				[{Weight = 100, Tree = this.Const.Perks.AgileTree}]
+			],
 		};
 
 		gt.Const.PerksCharmedUnit.GoblinFighter <- {
 			WeightMultipliers = [
 				{Multiplier = 5.0, Tree = this.Const.Perks.ShieldTree},
+				{Multiplier = 5.0, Tree = this.Const.Perks.PolearmTree},
+			],
+			Class = [
+				[
+					{Weight = 40, Tree = this.Const.Perks.TrapperClassTree},
+					{Weight = 20, Tree = this.Const.Perks.GoblinMountTree},
+					{Weight = 40, Tree = this.Const.Perks.ScoutClassTree}
+				],
 			],
 			Profession = [
-				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}],
-				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
+				[
+					{Weight = 50, Tree = this.Const.Perks.SoldierProfessionTree},
+					{Weight = 50, Tree = this.Const.Perks.JugglerProfessionTree}
+				],
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.LightArmorTree}]
 			],
 			Weapon = [
-				[{Weight = 34, Tree = this.Const.Perks.SpearTree}],
-				[{Weight = 33, Tree = this.Const.Perks.SwordTree}],
-				[{Weight = 33, Tree = this.Const.Perks.ThrowingTree}]
+				[{Weight = 100, Tree = this.Const.Perks.SwordTree}],
+				[
+					{Weight = 20, Tree = this.Const.Perks.ThrowingTree},
+					{Weight = 20, Tree = this.Const.Perks.SpearTree},
+					{Weight = 20, Tree = this.Const.Perks.AxeTree},
+					{Weight = 20, Tree = this.Const.Perks.FlailTree},
+					{Weight = 20, Tree = this.Const.Perks.DaggerTree},
+				],
 			],
 			Styles = [
-				[{Weight = 100, Tree = this.Const.Perks.OneHandedTree}]
+				[
+					{Weight = 80, Tree = this.Const.Perks.OneHandedTree},
+					{Weight = 20, Tree = this.Const.Perks.TwoHandedTree}
+				]
 			],
 			Traits = [
-				[
-					{Weight = 34, Tree = this.Const.Perks.AgileTree},
-					{Weight = 33, Tree = this.Const.Perks.FitTree},
-					{Weight = 33, Tree = this.Const.Perks.ViciousTree}
-				]
+				[{Weight = 100, Tree = this.Const.Perks.FastTree}],
+				[{Weight = 100, Tree = this.Const.Perks.AgileTree}]
 			],
 		};
 
@@ -244,50 +263,64 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 			WeightMultipliers = [
 				{ Multiplier = 0.25, Tree = this.Const.Perks.OrganisedTree },
 				{ Multiplier = 0.25, Tree = this.Const.Perks.DeviousTree },
-				{ Multiplier = 3.0, Tree = this.Const.Perks.SergeantClassTree },
-				{ Multiplier = 0.33, Tree = this.Const.Perks.LightArmorTree },
 				{ Multiplier = 0.33, Tree = this.Const.Perks.ShieldTree },
-				{ Multiplier = 0, Tree = this.Const.Perks.HeavyArmorTree },
-				{ Multiplier = 2.0, Tree = this.Const.Perks.BowTree },
-				{ Multiplier = 10.0, Tree = this.Const.Perks.CrossbowTree },
-				{ Multiplier = 0, Tree = this.Const.Perks.SlingsTree },
-				{ Multiplier = 0.0, Tree = this.Const.Perks.SpearTree }
+				{ Multiplier = 0.0, Tree = this.Const.Perks.HeavyArmorTree },
+				{ Multiplier = 0.0, Tree = this.Const.Perks.BowTree },
+				{ Multiplier = 0.0, Tree = this.Const.Perks.SlingsTree },
+				{ Multiplier = 0.0, Tree = this.Const.Perks.SpearTree },
 				{ Multiplier = 1.25, Tree = this.Const.Perks.TrainedTree }
 			],
 			Class = [
-				[{Weight = 50, Tree = this.Const.Perks.SergeantClassTree}],
-				[{Weight = 50, Tree = this.Const.Perks.HunterProfessionTree}],
+				[
+					{Weight = 50, Tree = this.Const.Perks.SergeantClassTree},
+					{Weight = 50, Tree = this.Const.Perks.TacticianClassTree}
+				],
 			],
 			Defense = [
-				[
-					{Weight = 50, Tree = this.Const.Perks.MediumArmorTree},
-					{Weight = 50, Tree = this.Const.Perks.LightArmorTree}
-				]
+				[{Weight = 100, Tree = this.Const.Perks.LightArmorTree}]
 			],
 			Weapon = [
-				[{Weight = 100, Tree = this.Const.Perks.SwordTree}]
+				[{Weight = 100, Tree = this.Const.Perks.SwordTree}],
+				[{Weight = 100, Tree = this.Const.Perks.CrossbowTree}],
+				[
+					{Weight = 25, Tree = this.Const.Perks.AxeTree},
+					{Weight = 25, Tree = this.Const.Perks.FlailTree},
+					{Weight = 25, Tree = this.Const.Perks.CleaverTree},
+					{Weight = 25, Tree = this.Const.Perks.HammerTree},
+				],
 			]
 			Styles = [
-				[{Weight = 100, Tree = this.Const.Perks.OneHandedTree}],
-				[{Weight = 100, Tree = this.Const.Perks.RangedTree}]
-			]
+				[
+					{Weight = 60, Tree = this.Const.Perks.RangedTree},
+					{Weight = 40, Tree = this.Const.Perks.OneHandedTree}
+				]
+			],
+			Traits = [
+				[{Weight = 100, Tree = this.Const.Perks.AgileTree}],
+				[
+					{Weight = 50, Tree = this.Const.Perks.GoblinMountTree},
+					{Weight = 50, Tree = this.Const.Perks.UnstoppableTree},
+				]
+			],
 		};
 
 		gt.Const.PerksCharmedUnit.GoblinShaman <- {
 			WeightMultipliers = [
+				{Multiplier = 2.0, Tree = this.Const.Perks.CalmTree},
 			],
 			Profession = [
-				[{Weight = 100, Tree = this.Const.Perks.ApothecaryProfessionTree}]
+				[{Weight = 100, Tree = this.Const.Perks.ApothecaryProfessionTree}] 
 			],
-			Traits = [
+			Class = [
 				[
-					{Weight = 34, Tree = this.Const.Perks.AgileTree},
-					{Weight = 33, Tree = this.Const.Perks.DeviousTree},
-					{Weight = 33, Tree = this.Const.Perks.ViciousTree}
-				]
+					{Weight = 55, Tree = this.Const.Perks.HealerClassTree},
+					{Weight = 35, Tree = this.Const.Perks.EntertainerClassTree},
+					{Weight = 10, Tree = this.Const.Perks.GoblinMountTree},
+				],
 			],
 			Weapon = [
-				[{Weight = 100, Tree = this.Const.Perks.StavesTree}]
+				[{Weight = 100, Tree = this.Const.Perks.StavesTree}],
+				[{Weight = 100, Tree = this.Const.Perks.DaggerTree}],
 			]
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.LightArmorTree}]
@@ -298,94 +331,79 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 			Styles = [
 				[{Weight = 100, Tree = this.Const.Perks.TwoHandedTree}]
 			],
+			Traits = [
+				[{Weight = 100, Tree = this.Const.Perks.AgileTree}],
+				[{Weight = 100, Tree = this.Const.Perks.TalentedTree}]
+			],
 		};
 
 		gt.Const.PerksCharmedUnit.GoblinWolfrider <- {
 			WeightMultipliers = [
-				{Multiplier = 5.0, Tree = this.Const.Perks.ShieldTree},
+				{Multiplier = 0.0, Tree = this.Const.Perks.ShieldTree},
+				{Multiplier = 0.0, Tree = this.Const.Perks.PolearmTree},
+			],
+			Class = [
+				[
+					{Weight = 40, Tree = this.Const.Perks.ScoutClassTree},
+					{Weight = 60, Tree = this.Const.Perks.HoundmasterClassTree},
+				],
 			],
 			Profession = [
-				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}],
 				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.LightArmorTree}]
 			],
 			Weapon = [
-				[{Weight = 34, Tree = this.Const.Perks.SpearTree}],
-				[{Weight = 33, Tree = this.Const.Perks.SwordTree}],
-				[{Weight = 33, Tree = this.Const.Perks.ThrowingTree}]
+				[{Weight = 100, Tree = this.Const.Perks.SpearTree}],
+				[{Weight = 100, Tree = this.Const.Perks.SwordTree}],
+				[
+					{Weight = 25, Tree = this.Const.Perks.ThrowingTree},
+					{Weight = 25, Tree = this.Const.Perks.CleaverTree},
+					{Weight = 25, Tree = this.Const.Perks.MaceTree},
+					{Weight = 25, Tree = this.Const.Perks.HammerTree},
+				],
 			],
 			Styles = [
-				[{Weight = 100, Tree = this.Const.Perks.OneHandedTree}]
+				[
+					{Weight = 67, Tree = this.Const.Perks.OneHandedTree},
+					{Weight = 33, Tree = this.Const.Perks.TwoHandedTree}
+				],
 			],
 			Traits = [
-				[
-					{Weight = 34, Tree = this.Const.Perks.AgileTree},
-					{Weight = 33, Tree = this.Const.Perks.FitTree},
-					{Weight = 33, Tree = this.Const.Perks.ViciousTree}
-				]
+				[{Weight = 100, Tree = this.Const.Perks.GoblinMountTree}],
+				[{Weight = 100, Tree = this.Const.Perks.FastTree}],
+				[{Weight = 100, Tree = this.Const.Perks.AgileTree}]
 			],
 		};
 
 		gt.Const.PerksCharmedUnit.OrcYoung <- {
 			WeightMultipliers = [
+				{Multiplier = 4, Tree = this.Const.Perks.LaborerProfessionTree},
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
 				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
-				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
-				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
-				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
 				{Multiplier = 1.33, Tree = this.Const.Perks.ShieldTree},
-				{Multiplier = 0, Tree = this.Const.Perks.DaggerTree},
+				{Multiplier = 0.5, Tree = this.Const.Perks.DaggerTree},
 				{Multiplier = 2, Tree = this.Const.Perks.SwordTree},
 				{Multiplier = 2, Tree = this.Const.Perks.MaceTree},
 				{Multiplier = 2, Tree = this.Const.Perks.FlailTree},
 				{Multiplier = 3, Tree = this.Const.Perks.CleaverTree},
 				{Multiplier = 2, Tree = this.Const.Perks.HammerTree},
-				{Multiplier = 0.25, Tree = this.Const.Perks.PolearmTree},
+				{Multiplier = 0.5, Tree = this.Const.Perks.PolearmTree},
 				{Multiplier = 2, Tree = this.Const.Perks.ThrowingTree},
+				{Multiplier = 0.5, Tree = this.Const.Perks.SlingsTree},
 				{Multiplier = 0, Tree = this.Const.Perks.BowTree},
 				{Multiplier = 0, Tree = this.Const.Perks.CrossbowTree},
-				{Multiplier = 0, Tree = this.Const.Perks.SlingsTree},
-				{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
-			],
-			Profession = [
-				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}],
-				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
-			],
-			Defense = [
-				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}]
-			],
-			Styles = [
-				[{Weight = 100, Tree = this.Const.Perks.OneHandedTree}],
-				[{Weight = 100, Tree = this.Const.Perks.TwoHandedTree}]
-			],
-		};
-
-		gt.Const.PerksCharmedUnit.OrcBerserker <- {
-			WeightMultipliers = [
-				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
-				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
 				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
-				{Multiplier = 1.33, Tree = this.Const.Perks.ShieldTree},
-				{Multiplier = 0, Tree = this.Const.Perks.DaggerTree},
-				{Multiplier = 2, Tree = this.Const.Perks.SwordTree},
-				{Multiplier = 2, Tree = this.Const.Perks.MaceTree},
-				{Multiplier = 3, Tree = this.Const.Perks.CleaverTree},
-				{Multiplier = 2, Tree = this.Const.Perks.FlailTree},
-				{Multiplier = 2, Tree = this.Const.Perks.HammerTree},
-				{Multiplier = 0, Tree = this.Const.Perks.PolearmTree},
-				{Multiplier = 2, Tree = this.Const.Perks.ThrowingTree},
-				{Multiplier = 0, Tree = this.Const.Perks.BowTree},
-				{Multiplier = 0, Tree = this.Const.Perks.CrossbowTree},
-				{Multiplier = 0, Tree = this.Const.Perks.SlingsTree},
-				{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
+			],
+			Weapon = [
+				[{Weight = 100, Tree = this.Const.Perks.AxeTree}],
 			],
 			Profession = [
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}],
 				[{Weight = 100, Tree = this.Const.Perks.WildlingProfessionTree}],
-				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}]
@@ -396,77 +414,133 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 			],
 			Traits = [
 				[
-					{Weight = 50, Tree = this.Const.Perks.IndestructibleTree},
-					{Weight = 50, Tree = this.Const.Perks.SturdyTree},
+					{Weight = 20, Tree = this.Const.Perks.ViciousTree},
+					{Weight = 20, Tree = this.Const.Perks.SturdyTree},
+					{Weight = 20, Tree = this.Const.Perks.LargeTree},
+					{Weight = 20, Tree = this.Const.Perks.UnstoppableTree},
+					{Weight = 10, Tree = this.Const.Perks.TrainedTree},
+					{Weight = 10, Tree = this.Const.Perks.FastTree},
+				]
+			]
+		};
+
+		gt.Const.PerksCharmedUnit.OrcBerserker <- {
+			WeightMultipliers = [
+				{Multiplier = 4, Tree = this.Const.Perks.LaborerProfessionTree},
+				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
+				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
+				{Multiplier = 0, Tree = this.Const.Perks.ShieldTree},
+				{Multiplier = 0.5, Tree = this.Const.Perks.DaggerTree},
+				{Multiplier = 2, Tree = this.Const.Perks.SwordTree},
+				{Multiplier = 2, Tree = this.Const.Perks.MaceTree},
+				{Multiplier = 3, Tree = this.Const.Perks.CleaverTree},
+				{Multiplier = 2, Tree = this.Const.Perks.HammerTree},
+				{Multiplier = 0, Tree = this.Const.Perks.PolearmTree},
+				{Multiplier = 2, Tree = this.Const.Perks.ThrowingTree},
+				{Multiplier = 0, Tree = this.Const.Perks.SlingsTree},
+				{Multiplier = 0, Tree = this.Const.Perks.BowTree},
+				{Multiplier = 0, Tree = this.Const.Perks.CrossbowTree},
+				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
+				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
+			],
+			Profession = [
+				[{Weight = 100, Tree = this.Const.Perks.WildlingProfessionTree}],
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}],
+				[{Weight = 100, Tree = this.Const.Perks.LumberjackProfessionTree}],
+			],
+			Weapon = [
+				[{Weight = 100, Tree = this.Const.Perks.AxeTree}],
+				[{Weight = 100, Tree = this.Const.Perks.FlailTree}],
+			],
+			Defense = [
+				[
+					{Weight = 5, Tree = this.Const.Perks.MediumArmorTree},
+					{Weight = 45, Tree = this.Const.Perks.HeavyArmorTree},
+					{Weight = 50, Tree = this.Const.Perks.LightArmorTree}
+				],
+			],
+			Styles = [
+				[{Weight = 100, Tree = this.Const.Perks.OneHandedTree}],
+				[{Weight = 100, Tree = this.Const.Perks.TwoHandedTree}]
+			],
+			Traits = [
+				[{Weight = 100, Tree = this.Const.Perks.UnstoppableTree}],
+				[{Weight = 100, Tree = this.Const.Perks.IndestructibleTree}],
+				[
+					{Weight = 30, Tree = this.Const.Perks.ViciousTree},
+					{Weight = 30, Tree = this.Const.Perks.SturdyTree},
+					{Weight = 25, Tree = this.Const.Perks.LargeTree},
+					{Weight = 25, Tree = this.Const.Perks.FastTree},
 				]
 			],
 		};
 
 		gt.Const.PerksCharmedUnit.OrcWarrior <- {
 			WeightMultipliers = [
+				{Multiplier = 4, Tree = this.Const.Perks.LaborerProfessionTree},
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
 				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
-				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
-				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
-				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
-				{Multiplier = 1.33, Tree = this.Const.Perks.ShieldTree},
-				{Multiplier = 0, Tree = this.Const.Perks.DaggerTree},
+				{Multiplier = 0.5, Tree = this.Const.Perks.DaggerTree},
 				{Multiplier = 2, Tree = this.Const.Perks.SwordTree},
 				{Multiplier = 2, Tree = this.Const.Perks.MaceTree},
 				{Multiplier = 3, Tree = this.Const.Perks.CleaverTree},
-				{Multiplier = 2, Tree = this.Const.Perks.FlailTree},
 				{Multiplier = 2, Tree = this.Const.Perks.HammerTree},
 				{Multiplier = 0, Tree = this.Const.Perks.PolearmTree},
 				{Multiplier = 2, Tree = this.Const.Perks.ThrowingTree},
-				{Multiplier = 0, Tree = this.Const.Perks.BowTree},
-				{Multiplier = 0, Tree = this.Const.Perks.CrossbowTree},
 				{Multiplier = 0, Tree = this.Const.Perks.SlingsTree},
-				{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
+				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
+				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
+				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
 			],
 			Profession = [
 				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}],
 				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
 			],
 			Defense = [
-				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}]
+				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}],
+				[{Weight = 100, Tree = this.Const.Perks.ShieldTree}]
 			],
 			Styles = [
 				[{Weight = 100, Tree = this.Const.Perks.OneHandedTree}],
 				[{Weight = 100, Tree = this.Const.Perks.TwoHandedTree}]
 			],
 			Traits = [
+				[{Weight = 100, Tree = this.Const.Perks.IndestructibleTree}],
 				[
-					{Weight = 50, Tree = this.Const.Perks.IndestructibleTree},
-					{Weight = 50, Tree = this.Const.Perks.SturdyTree},
+					{Weight = 20, Tree = this.Const.Perks.ViciousTree},
+					{Weight = 20, Tree = this.Const.Perks.SturdyTree},
+					{Weight = 20, Tree = this.Const.Perks.LargeTree},
+					{Weight = 20, Tree = this.Const.Perks.UnstoppableTree},
+					{Weight = 20, Tree = this.Const.Perks.TrainedTree},
 				]
 			],
 		};
 
 		gt.Const.PerksCharmedUnit.OrcWarlord <- {
 			WeightMultipliers = [
+				{Multiplier = 4, Tree = this.Const.Perks.LaborerProfessionTree},
+				{Multiplier = 0, Tree = this/Const.Perks.ShieldTree},
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
 				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
+				{Multiplier = 0.5, Tree = this.Const.Perks.DaggerTree},
+				{Multiplier = 2, Tree = this.Const.Perks.SwordTree},
+				{Multiplier = 2, Tree = this.Const.Perks.MaceTree},
+				{Multiplier = 2, Tree = this.Const.Perks.CleaverTree},
+				{Multiplier = 2, Tree = this.Const.Perks.HammerTree},
+				{Multiplier = 0, Tree = this.Const.Perks.PolearmTree},
+				{Multiplier = 2, Tree = this.Const.Perks.FlailTree},
+				{Multiplier = 2, Tree = this.Const.Perks.ThrowingTree},
+				{Multiplier = 0, Tree = this.Const.Perks.SlingsTree},
+				{Multiplier = 0, Tree = this.Const.Perks.BowTree},
+				{Multiplier = 0, Tree = this.Const.Perks.CrossbowTree},
 				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
 				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
-				{Multiplier = 1.33, Tree = this.Const.Perks.ShieldTree},
-				{Multiplier = 0, Tree = this.Const.Perks.DaggerTree},
-				{Multiplier = 2, Tree = this.Const.Perks.SwordTree},
-				{Multiplier = 3, Tree = this.Const.Perks.CleaverTree},
-				{Multiplier = 2, Tree = this.Const.Perks.MaceTree},
-				{Multiplier = 2, Tree = this.Const.Perks.FlailTree},
-				{Multiplier = 2, Tree = this.Const.Perks.HammerTree},
-				{Multiplier = 2, Tree = this.Const.Perks.AxeTree},
-				{Multiplier = 0, Tree = this.Const.Perks.PolearmTree},
-				{Multiplier = 2, Tree = this.Const.Perks.ThrowingTree},
-				{Multiplier = 0, Tree = this.Const.Perks.BowTree},
-				{Multiplier = 0, Tree = this.Const.Perks.CrossbowTree},
-				{Multiplier = 0, Tree = this.Const.Perks.SlingsTree},
-				{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
 			],
 			Profession = [
-				[{Weight = 50, Tree = this.Const.Perks.SergeantClassTree}],
-				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}],
+				[{Weight = 100, Tree = this.Const.Perks.SergeantClassTree}],
+				[{Weight = 100, Tree = this.Const.Perks.TacticianClassTree}],
 			],
 			Defense = [
 				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}]
@@ -476,9 +550,12 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				[{Weight = 100, Tree = this.Const.Perks.TwoHandedTree}]
 			],
 			Traits = [
+				[{Weight = 100, Tree = this.Const.Perks.IndestructibleTree}],
 				[
-					{Weight = 50, Tree = this.Const.Perks.IndestructibleTree},
-					{Weight = 50, Tree = this.Const.Perks.SturdyTree},
+					{Weight = 20, Tree = this.Const.Perks.ViciousTree},
+					{Weight = 20, Tree = this.Const.Perks.SturdyTree},
+					{Weight = 30, Tree = this.Const.Perks.LargeTree},
+					{Weight = 30, Tree = this.Const.Perks.UnstoppableTree},
 				]
 			],
 		};
@@ -516,50 +593,52 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				[{Weight = 100, Tree = this.Const.Perks.TwoHandedTree}]
 			],
 			Traits = [
+				[{Weight = 100, Tree = this.Const.Perks.IndestructibleTree}],
 				[
-					{Weight = 50, Tree = this.Const.Perks.FitTree},
-					{Weight = 50, Tree = this.Const.Perks.SturdyTree},
+					{Weight = 30, Tree = this.Const.Perks.SturdyTree},
+					{Weight = 30, Tree = this.Const.Perks.LargeTree},
+					{Weight = 40, Tree = this.Const.Perks.UnstoppableTree},
 				]
 			],
 		};
 
 		gt.Const.PerksCharmedUnit.LegendOrcElite <- {
 			WeightMultipliers = [
+				{Multiplier = 4, Tree = this.Const.Perks.LaborerProfessionTree},
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
 				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
+				{Multiplier = 0.5, Tree = this.Const.Perks.DaggerTree},
+				{Multiplier = 2, Tree = this.Const.Perks.SwordTree},
+				{Multiplier = 2, Tree = this.Const.Perks.MaceTree},
+				{Multiplier = 3, Tree = this.Const.Perks.CleaverTree},
+				{Multiplier = 2, Tree = this.Const.Perks.HammerTree},
+				{Multiplier = 0, Tree = this.Const.Perks.PolearmTree},
+				{Multiplier = 2, Tree = this.Const.Perks.ThrowingTree},
+				{Multiplier = 0, Tree = this.Const.Perks.SlingsTree},
 				{Multiplier = 0, Tree = this.Const.Perks.DeviousTree},
 				{Multiplier = 0, Tree = this.Const.Perks.OrganisedTree},
 				{Multiplier = 0, Tree = this.Const.Perks.LightArmorTree},
-				{Multiplier = 1.33, Tree = this.Const.Perks.ShieldTree},
-				{Multiplier = 0, Tree = this.Const.Perks.DaggerTree},
-				{Multiplier = 2, Tree = this.Const.Perks.SwordTree},
-				{Multiplier = 3, Tree = this.Const.Perks.CleaverTree},
-				{Multiplier = 2, Tree = this.Const.Perks.MaceTree},
-				{Multiplier = 2, Tree = this.Const.Perks.FlailTree},
-				{Multiplier = 2, Tree = this.Const.Perks.HammerTree},
-				{Multiplier = 2, Tree = this.Const.Perks.AxeTree},
-				{Multiplier = 0, Tree = this.Const.Perks.PolearmTree},
-				{Multiplier = 2, Tree = this.Const.Perks.ThrowingTree},
-				{Multiplier = 0, Tree = this.Const.Perks.BowTree},
-				{Multiplier = 0, Tree = this.Const.Perks.CrossbowTree},
-				{Multiplier = 0, Tree = this.Const.Perks.SlingsTree},
-				{Multiplier = 0, Tree = this.Const.Perks.SpearTree}
 			],
 			Profession = [
 				[{Weight = 100, Tree = this.Const.Perks.SoldierProfessionTree}],
-				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}]
+				[{Weight = 100, Tree = this.Const.Perks.RaiderProfessionTree}],
+				[{Weight = 100, Tree = this.Const.Perks.LumberjackProfessionTree}]
 			],
 			Defense = [
-				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}]
+				[{Weight = 100, Tree = this.Const.Perks.HeavyArmorTree}],
+				[{Weight = 100, Tree = this.Const.Perks.ShieldTree}]
 			],
 			Styles = [
 				[{Weight = 100, Tree = this.Const.Perks.OneHandedTree}],
 				[{Weight = 100, Tree = this.Const.Perks.TwoHandedTree}]
 			],
 			Traits = [
+				[{Weight = 100, Tree = this.Const.Perks.IndestructibleTree}],
 				[
-					{Weight = 50, Tree = this.Const.Perks.IndestructibleTree},
-					{Weight = 50, Tree = this.Const.Perks.SturdyTree},
+					{Weight = 25, Tree = this.Const.Perks.ViciousTree},
+					{Weight = 25, Tree = this.Const.Perks.SturdyTree},
+					{Weight = 25, Tree = this.Const.Perks.LargeTree},
+					{Weight = 25, Tree = this.Const.Perks.UnstoppableTree},
 				]
 			],
 		};

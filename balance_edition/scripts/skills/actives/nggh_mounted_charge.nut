@@ -40,7 +40,12 @@ this.nggh_mounted_charge <- this.inherit("scripts/skills/skill", {
 
 	function getFatigueCost()
 	{
-		return this.Math.ceil(this.m.FatigueCost * this.getContainer().getActor().getCurrentProperties().FatigueEffectMult);
+		if (this.getContainer() != null && this.getContainer().getActor().getCurrentProperties().FatigueEffectMult <= 0.0)
+		{
+			return 0;
+		}
+
+		return this.m.FatigueCost;
 	}
 
 	function getTooltip()

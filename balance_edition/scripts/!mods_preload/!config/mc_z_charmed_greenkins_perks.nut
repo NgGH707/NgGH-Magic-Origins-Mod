@@ -26,7 +26,9 @@ gt.Const.PerksCharmedUnit.GoblinAmbusher <- {
 	Class = [
 		this.Const.Perks.ShortbowClassTree,
 	],
-	Magic = []
+	Magic = [
+		this.Const.Perks.GoblinMountTree
+	]
 };
 
 gt.Const.PerksCharmedUnit.GoblinFighter <- {
@@ -50,7 +52,9 @@ gt.Const.PerksCharmedUnit.GoblinFighter <- {
 	Class = [
 		this.Const.Perks.BeastClassTree,
 	],
-	Magic = []
+	Magic = [
+		this.Const.Perks.GoblinMountTree
+	]
 };
 
 gt.Const.PerksCharmedUnit.GoblinLeader <- {
@@ -71,7 +75,9 @@ gt.Const.PerksCharmedUnit.GoblinLeader <- {
 	],
 	Enemy = [],
 	Class = [],
-	Magic = []
+	Magic = [
+		this.Const.Perks.GoblinMountTree
+	]
 };
 
 gt.Const.PerksCharmedUnit.GoblinShaman <- {
@@ -118,7 +124,9 @@ gt.Const.PerksCharmedUnit.GoblinWolfrider<- {
 	Class = [
 		this.Const.Perks.BeastClassTree
 	],
-	Magic = []
+	Magic = [
+		this.Const.Perks.GoblinMountTree
+	]
 };
 
 

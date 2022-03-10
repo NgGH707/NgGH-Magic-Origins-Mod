@@ -3,7 +3,7 @@ this.nggh_mounted_charge_effect <- this.inherit("scripts/skills/skill", {
 		Stacks = 0,
 		BaseBonusMeleeSkill = 3,
 		BaseBonusDamage = 0.10,
-		BaseBonusDirectDamage = 0.03,
+		BaseBonusDirectDamage = 0.02,
 		IsUpgraded = false
 	},
 	function create()
@@ -95,7 +95,7 @@ this.nggh_mounted_charge_effect <- this.inherit("scripts/skills/skill", {
 		this.m.Stacks = 0;
 		this.m.BaseBonusMeleeSkill = 3;
 		this.m.BaseBonusDamage = 0.10;
-		this.m.BaseBonusDirectDamage = 0.03;
+		this.m.BaseBonusDirectDamage = 0.02;
 		this.m.IsUpgraded = false;
 	}
 
@@ -103,7 +103,7 @@ this.nggh_mounted_charge_effect <- this.inherit("scripts/skills/skill", {
 	{
 		this.m.BaseBonusMeleeSkill = 5;
 		this.m.BaseBonusDamage = 0.15;
-		this.m.BaseBonusDirectDamage = 0.05;
+		this.m.BaseBonusDirectDamage = 0.04;
 		this.m.IsUpgraded = true;
 	}
 
@@ -140,15 +140,26 @@ this.nggh_mounted_charge_effect <- this.inherit("scripts/skills/skill", {
 
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
-		if (this.m.IsUpgraded && _targetEntity.isAlive() && !_targetEntity.isDying())
+		if (this.m.IsUpgraded)
 		{
-			if (_targetEntity.isNonCombatant() || _targetEntity.getCurrentProperties().IsImmuneToKnockBackAndGrab)
+			if (_targetEntity.isAlive() || !_targetEntity.isDying())
 			{
-				this.applyEffect(_targetEntity);
+				if (_targetEntity.isNonCombatant() || _targetEntity.getCurrentProperties().IsImmuneToKnockBackAndGrab)
+				{
+					this.applyEffect(_targetEntity);
+				}
+				else
+				{
+					this.onKnockingBack(_targetEntity);
+				}
 			}
 			else
 			{
-				this.onKnockingBack(_targetEntity);
+				this.Time.scheduleEvent(this.TimeUnit.Virtual, 250, this.onFollow, {
+					Attacker = user,
+					Skill = this,
+					Tile = knockToTile,
+				});
 			}
 		}
 
@@ -324,16 +335,16 @@ this.nggh_mounted_charge_effect <- this.inherit("scripts/skills/skill", {
 
 	function onMoveForward( _entity, _tag )
 	{
-		if (!_tag.Tile.IsOccupiedByActor)
-		{
-			this.Tactical.getNavigator().teleport(_tag.Attacker, _tag.Tile, null, null, true);
-		}
+		this.Time.scheduleEvent(this.TimeUnit.Virtual, 250, _tag.Skill.onFollow, _tag);
+	}
 
-		//_entity.setCurrentMovementType(this.Const.Tactical.MovementType.Involuntary);
-		//this.Time.scheduleEvent(this.TimeUnit.Virtual, 150, function( _tag )
-		//{
-		//	
-		//}, _tag);
+	function onFollow( _tag )
+	{
+		if (!_tag.Tile.IsEmpty)
+		{	
+			_tag.Attacker.setCurrentMovementType(this.Const.Tactical.MovementType.Default);
+			this.Tactical.getNavigator().teleport(_tag.Attacker, _tag.Tile, null, null, false, 3.0);
+		}
 	}
 
 });
