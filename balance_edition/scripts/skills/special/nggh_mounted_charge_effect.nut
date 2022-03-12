@@ -26,8 +26,8 @@ this.nggh_mounted_charge_effect <- this.inherit("scripts/skills/skill", {
 	function getTooltip()
 	{
 		local meleeSkill = this.m.BaseBonusMeleeSkill;
-		local meleeDamage = this.m.BaseBonusDamage * 100;
-		local damgeDirect = this.m.BaseBonusDirectDamage * 100;
+		local meleeDamage = this.m.BaseBonusDamage * 100 * this.m.Stacks;
+		local damgeDirect = this.m.BaseBonusDirectDamage * 100 * this.m.Stacks; 
 		local ret = [
 			{
 				id = 1,
@@ -82,17 +82,17 @@ this.nggh_mounted_charge_effect <- this.inherit("scripts/skills/skill", {
 
 	function isHidden()
 	{
-		return this.m.Stacks == 0;
+		return this.m.Stacks <= 0;
 	}
 
 	function resetCounter()
 	{
-		this.m.Stacks = 0;
+		this.m.Stacks = -1;
 	}
 
 	function resetAll()
 	{
-		this.m.Stacks = 0;
+		this.resetCounter();
 		this.m.BaseBonusMeleeSkill = 3;
 		this.m.BaseBonusDamage = 0.10;
 		this.m.BaseBonusDirectDamage = 0.02;
@@ -184,7 +184,7 @@ this.nggh_mounted_charge_effect <- this.inherit("scripts/skills/skill", {
 
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
-		if (_skill.isAttack() && !_skill.isRanged() && this.m.Stacks != 0)
+		if (_skill.isAttack() && !_skill.isRanged() && this.m.Stacks > 0)
 		{
 			//_properties.MeleeSkill += this.m.Stacks * this.m.BaseBonusMeleeSkill;
 			_properties.MeleeDamageMult *= 1.0 + this.m.Stacks * this.m.BaseBonusDamage;

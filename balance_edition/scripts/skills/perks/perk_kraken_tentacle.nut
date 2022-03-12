@@ -16,24 +16,8 @@ this.perk_kraken_tentacle <- this.inherit("scripts/skills/skill", {
 	function onUpdate( _properties )
 	{
 		_properties.IsImmuneToBleeding = true;
-	}
-
-	function onBeforeDamageReceived( _attacker, _skill, _hitInfo, _properties )
-	{
-		if (_hitInfo.DamageRegular != 0)
-		{
-			_hitInfo.DamageRegular = this.Math.maxf(0.0, _hitInfo.DamageRegular - 10);
-		}
-
-		if (_hitInfo.DamageArmor != 0)
-		{
-			_hitInfo.DamageArmor = this.Math.maxf(0.0, _hitInfo.DamageArmor - 10);
-		}
-
-		if (_hitInfo.DamageMinimum != 0)
-		{
-			_hitInfo.DamageMinimum = this.Math.maxf(0.0, _hitInfo.DamageMinimum - 10);
-		}
+		_properties.DamageRegularReduction += 10;
+		_properties.DamageArmorReduction += 10
 	}
 
 });

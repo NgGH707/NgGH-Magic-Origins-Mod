@@ -336,7 +336,7 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 
 		local myTile = this.isPlacedOnMap() ? this.getTile() : null;
 		local tile = this.findTileToSpawnCorpse(_killer);
-		this.m.Skills.onDeath();
+		this.m.Skills.onDeath( _fatalityType );
 		this.onDeath(_killer, _skill, tile, _fatalityType);
 
 		if (!this.Tactical.State.isFleeing() && _killer != null)
@@ -426,6 +426,7 @@ this.undead_player <- this.inherit("scripts/entity/tactical/player", {
 		
 		this.World.Contracts.onActorKilled(this, _killer, this.Tactical.State.getStrategicProperties().CombatID);
 		this.World.Events.onActorKilled(this, _killer, this.Tactical.State.getStrategicProperties().CombatID);
+		this.World.Assets.getOrigin().onActorKilled(this, _killer, this.Tactical.State.getStrategicProperties().CombatID);
 
 		if (this.Tactical.State.getStrategicProperties() != null && this.Tactical.State.getStrategicProperties().IsArenaMode)
 		{

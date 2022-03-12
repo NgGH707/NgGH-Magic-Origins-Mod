@@ -173,7 +173,7 @@ this.mod_lightning_storm_skill <- this.inherit("scripts/skills/skill", {
 		return true;
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		foreach( tile in this.m.AffectedTiles )
 		{

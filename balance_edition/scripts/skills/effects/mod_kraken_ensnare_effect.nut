@@ -158,7 +158,7 @@ this.mod_kraken_ensnare_effect <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		if (this.m.OnRemoveCallbackData != null)
 		{

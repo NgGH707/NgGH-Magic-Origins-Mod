@@ -122,7 +122,7 @@ this.charmed_pet_effect <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		return;
 

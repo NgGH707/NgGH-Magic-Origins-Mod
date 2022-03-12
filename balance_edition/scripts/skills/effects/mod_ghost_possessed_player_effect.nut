@@ -425,7 +425,7 @@ this.mod_ghost_possessed_player_effect <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		this.onRemoved();
 	}

@@ -313,7 +313,7 @@ this.charm_spell <- this.inherit("scripts/skills/mc_magic_skill", {
 		this.Const.HexenOrigin.Magic.SpawnCharmParticleEffect(_target.getTile());
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		foreach( id in this.m.SlavesID )
 		{

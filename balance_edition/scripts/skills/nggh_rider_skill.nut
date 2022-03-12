@@ -317,7 +317,7 @@ this.nggh_rider_skill <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		if (this.isMounted() && this.IsAccessoryCompanionsExist)
 		{

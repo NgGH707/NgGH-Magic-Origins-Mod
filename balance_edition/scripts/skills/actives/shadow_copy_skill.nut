@@ -326,7 +326,7 @@ this.shadow_copy_skill <- this.inherit("scripts/skills/skill", {
 		this.spawnShadow();
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		this.removeCopy(true);
 		this.removeAllTiles();

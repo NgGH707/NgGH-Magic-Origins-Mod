@@ -202,7 +202,7 @@ this.egg_attachment <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		this.m.IsDeath = true;
 	}

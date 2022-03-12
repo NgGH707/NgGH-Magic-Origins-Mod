@@ -151,7 +151,7 @@ this.mc_siphon_strength_master_effect <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		this.onRemoved();
 	}

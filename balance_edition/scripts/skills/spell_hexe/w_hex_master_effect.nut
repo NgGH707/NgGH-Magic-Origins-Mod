@@ -168,7 +168,7 @@ this.w_hex_master_effect <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		this.onRemoved();
 	}

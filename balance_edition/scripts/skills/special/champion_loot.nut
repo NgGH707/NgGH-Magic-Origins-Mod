@@ -344,9 +344,9 @@ this.champion_loot <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
-		this.skill.onDeath();
+		this.skill.onDeath( _fatalityType );
 		local actor = this.getContainer().getActor();
 		local myTile = actor.getTile();
 

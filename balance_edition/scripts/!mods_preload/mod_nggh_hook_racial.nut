@@ -69,7 +69,7 @@ this.getroottable().Nggh_MagicConcept.hookRacial <- function ()
 			this.Sound.play(this.m.SoundOnUse[this.Math.rand(0, this.m.SoundOnUse.len() - 1)], this.Const.Sound.Volume.Skill);
 			this.Time.scheduleEvent(this.TimeUnit.Virtual, 30, this.teleport.bindenv(this), tag);
 		};
-		obj.onDeath = function()
+		obj.onDeath = function( _fatalityType )
 		{
 			local tag = {
 				Faction = this.getContainer().getActor().getFaction(),

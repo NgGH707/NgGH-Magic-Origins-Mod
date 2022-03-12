@@ -3746,7 +3746,7 @@ this.getroottable().Nggh_MagicConcept.hookActives <- function ()
 		{
 			this.updateTiles();
 		};
-		obj.onDeath <- function()
+		obj.onDeath <- function( _fatalityType )
 		{
 			this.removeAllTiles();
 		};

@@ -72,7 +72,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	// nacho
 	gt.Const.World.Spawn.Troops.Ghoul.NameList <- this.Const.Strings.NachoNames;
 	gt.Const.World.Spawn.Troops.Ghoul.TitleList <- null;
-	gt.Const.World.Spawn.Troops.Ghoul.Variant = 1;
+	gt.Const.World.Spawn.Troops.Ghoul.Variant = 2;
 
 	gt.Const.World.Spawn.Troops.GhoulHIGH.NameList <- this.Const.Strings.NachoNames;
 	gt.Const.World.Spawn.Troops.GhoulHIGH.TitleList <- null;
@@ -80,11 +80,11 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.NameList <- this.Const.Strings.NachoNames;
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.TitleList <- null;
-	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.Variant = 1;
+	gt.Const.World.Spawn.Troops.LegendSkinGhoulMED.Variant = 2;
 
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.NameList <- this.Const.Strings.NachoNames;
 	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.TitleList <- null;
-	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.Variant = 1;
+	gt.Const.World.Spawn.Troops.LegendSkinGhoulHIGH.Variant = 2;
 
 	// snake
 	gt.Const.World.Spawn.Troops.Lindwurm.NameList <- this.Const.Strings.LindwurmNames;
@@ -132,7 +132,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	// spider
 	gt.Const.World.Spawn.Troops.Spider.NameList <- this.Const.Strings.SpiderNames;
 	gt.Const.World.Spawn.Troops.Spider.TitleList <- null;
-	gt.Const.World.Spawn.Troops.Spider.Variant = 1;
+	gt.Const.World.Spawn.Troops.Spider.Variant = 3;
 
 	/*gt.Const.World.Spawn.Troops.SpiderBodyguard.NameList <- gt.Const.Strings.SpiderNames;
 	gt.Const.World.Spawn.Troops.SpiderBodyguard.TitleList <- null;
@@ -174,8 +174,6 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 	gt.Const.World.Spawn.Troops.HyenaHIGH.NameList <- this.Const.Strings.WolfNames;
 	gt.Const.World.Spawn.Troops.HyenaHIGH.TitleList <- null;
 	gt.Const.World.Spawn.Troops.HyenaHIGH.Variant = 3;
-
-
 
 	//Change perk tree of goblins/orcs with a suitable one from PTR mod
 	if (::mods_getRegisteredMod("mod_legends_PTR") != null)
@@ -519,7 +517,7 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 		gt.Const.PerksCharmedUnit.OrcWarlord <- {
 			WeightMultipliers = [
 				{Multiplier = 4, Tree = this.Const.Perks.LaborerProfessionTree},
-				{Multiplier = 0, Tree = this/Const.Perks.ShieldTree},
+				{Multiplier = 0, Tree = this.Const.Perks.ShieldTree},
 				{Multiplier = 2, Tree = this.Const.Perks.ResilientTree},
 				{Multiplier = 5, Tree = this.Const.Perks.ViciousTree},
 				{Multiplier = 0.5, Tree = this.Const.Perks.DaggerTree},
@@ -642,6 +640,14 @@ this.getroottable().Nggh_MagicConcept.hookHexeOrigin <- function ()
 				]
 			],
 		};
+	}
+	else
+	{
+		gt.Const.PerksCharmedUnit.GoblinAmbusher.Magic.push(this.Const.Perks.GoblinMountTree);
+		gt.Const.PerksCharmedUnit.GoblinFighter.Magic.push(this.Const.Perks.GoblinMountTree);
+		gt.Const.PerksCharmedUnit.GoblinLeader.Magic.push(this.Const.Perks.GoblinMountTree);
+		gt.Const.PerksCharmedUnit.GoblinShaman.Magic.push(this.Const.Perks.GoblinMountTree);
+		gt.Const.PerksCharmedUnit.GoblinWolfrider.Magic.push(this.Const.Perks.GoblinMountTree);
 	}
 
 	//Adding new custom charmed unit entries 

@@ -323,7 +323,7 @@ this.mc_DIA_shadow_demon <- this.inherit("scripts/skills/mc_magic_skill", {
 		entity.onDamageReceived(this.getContainer().getActor(), _skill, hitInfo);
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		this.killEntity();
 	}

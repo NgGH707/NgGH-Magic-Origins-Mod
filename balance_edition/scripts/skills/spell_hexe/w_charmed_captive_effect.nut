@@ -203,7 +203,7 @@ this.w_charmed_captive_effect <- this.inherit("scripts/skills/skill", {
 		actor.setDirty(true);
 	}
 
-	function onDeath()
+	function onDeath( _fatalityType )
 	{
 		if (this.m.IsKillInRightWay)
 		{
