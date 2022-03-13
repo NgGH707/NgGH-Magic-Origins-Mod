@@ -11,7 +11,7 @@ this.legend_rune_unstable_blueprint <- this.inherit("scripts/crafting/legend_run
 
 	function getRuneSigilTooltip()
 	{
-		return "This item has the power of the rune sigil of Unstable:\nAttacks have [color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] to deal triple the original damage.";
+		return "This item has the power of the rune sigil of Unstable:\nAttacks have [color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] to either deal triple or a third of the original damage.";
 	}
 
 	function onEnchant( _stash, _bonus )

@@ -20,6 +20,7 @@
 		this.Nggh_MagicConcept.hookEvents();
 		this.Nggh_MagicConcept.hookWorldScenarios();
 		this.Nggh_MagicConcept.hookAddCorpseDatabase();
+		this.Nggh_MagicConcept.createLuckyRuneLootTable();
 		this.Const.CharacterBackgroundsRandom.extend([
 			"geomancer_background",
 			"battlemage_background",

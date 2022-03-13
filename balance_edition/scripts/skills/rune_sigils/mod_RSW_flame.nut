@@ -83,8 +83,8 @@ this.mod_RSW_flame <- this.inherit("scripts/skills/skill", {
 				tile.spawnDetail("impact_decal", this.Const.Tactical.DetailFlag.Scorchmark, false, true);
 			}
 
-			this.spawnIcon("status_effect_116", tile);
 			this.Tactical.EventLog.logEx("The flaming rune on " + this.Const.UI.getColorizedEntityName(actor) + "\'s weapon sets the tile on fire");
+			this.Const.Tactical.Common.onApplyFire(tile, _targetEntity);
 		}
 	}
 

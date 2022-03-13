@@ -94,7 +94,7 @@ this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 	{
 		if (this.getContainer().getActor().getFlags().getAsInt("mc_mage") == this.Const.MC_Job.BattleMage)
 		{
-			this.m.HitpointsMax = 125;
+			this.m.HitpointsMax = 100;
 			this.m.HitpointsThreshold = 50;
 			this.m.Hitpoints = this.m.HitpointsThreshold;
 		}
@@ -127,6 +127,7 @@ this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 			_properties.IsImmuneToBleeding = true;
 			_properties.IsImmuneToPoison = true;
 			_properties.IsImmuneToStun = true;
+			_properties.RangedDefense -= 10;
 		}
 	}
 	
@@ -138,7 +139,7 @@ this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 		
-		local damage = this.Math.max(1, this.Math.floor(_hitInfo.DamageRegular * 0.75));
+		local damage = this.Math.max(1, _hitInfo.DamageRegular);
 		local mult = _hitInfo.DamageArmor / this.Math.maxf(1.0, _hitInfo.DamageRegular);
 		local shieldBreak = false;
 		local isArmorDamage = false;
@@ -146,7 +147,7 @@ this.mod_RSH_shielding <- this.inherit("scripts/skills/skill", {
 		if (_skill != null && _skill.getID() == "actives.crush_armor")
 		{
 			isArmorDamage = true;
-			damage = this.Math.max(1, this.Math.floor(_hitInfo.DamageArmor * 0.75));
+			damage = this.Math.max(1, _hitInfo.DamageArmor);
 			mult = 1.0;
 		}
 

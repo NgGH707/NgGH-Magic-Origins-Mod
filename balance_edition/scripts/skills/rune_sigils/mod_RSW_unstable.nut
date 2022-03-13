@@ -31,15 +31,22 @@ this.mod_RSW_unstable <- this.inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (this.Math.rand(1, 100) < 90)
-		{
-			return;
-		}
+		local roll = this.Math.rand(1, 100);
 
-		_hitInfo.DamageRegular *= 2.0;
-		_hitInfo.DamageArmor *= 2.0;
-		this.spawnIcon("status_effect_106", _targetEntity.getTile());
-		this.Tactical.EventLog.logEx("It\'s a devastating strike thanks to the rune on your weapon");
+		if (roll > 90)
+		{
+			_hitInfo.DamageRegular *= 3.0;
+			_hitInfo.DamageArmor *= 3.0;
+			this.spawnIcon("status_effect_106", _targetEntity.getTile());
+			this.Tactical.EventLog.logEx("It\'s a devastating strike thanks to the rune on your weapon");
+		}
+		else if (roll <= 10)
+		{
+			_hitInfo.DamageRegular /= 3.0;
+			_hitInfo.DamageArmor /= 3.0;
+			this.spawnIcon("status_effect_111", _targetEntity.getTile());
+			this.Tactical.EventLog.logEx("It\'s a pathetic strike all due to the rune on your weapon");
+		}		
 	}
 
 });
