@@ -69,29 +69,17 @@ this.mod_kraken_ensnare_effect <- this.inherit("scripts/skills/skill", {
 				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Unable to move[/color]"
 			},
 			{
-				id = 9,
+				id = 10,
 				type = "text",
-				icon = "ui/icons/melee_skill.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-15%[/color] Melee Skill"
+				icon = "ui/icons/action_points.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Unable to use skills[/color]"
 			},
 			{
-				id = 9,
+				id = 11,
 				type = "text",
-				icon = "ui/icons/ranged_defense.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-15%[/color] Ranged Skill"
-			},
-			{
-				id = 9,
-				type = "text",
-				icon = "ui/icons/melee_defense.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-15%[/color] Melee Defense"
-			},
-			{
-				id = 9,
-				type = "text",
-				icon = "ui/icons/ranged_defense.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-15%[/color] Ranged Defense"
-			},
+				icon = "ui/icons/initiative.png",
+				text = "[color=" + this.Const.UI.Color.NegativeValue + "]-40%[/color] Initiative"
+			}
 		];
 	}
 
@@ -105,7 +93,7 @@ this.mod_kraken_ensnare_effect <- this.inherit("scripts/skills/skill", {
 			{
 				damage = this.Math.rand(15, 20);
 				this.m.LastRoundApplied = this.Time.getRound();
-			} 
+			}
 
 			if (this.m.SoundOnUse.len() != 0)
 			{
@@ -132,10 +120,15 @@ this.mod_kraken_ensnare_effect <- this.inherit("scripts/skills/skill", {
 		this.m.SpriteScaleBackup = sprite1.Scale;
 		sprite1.Scale = 1.0;
 		sprite2.Scale = 1.0;
-		actor.getAIAgent().addBehavior(this.new("scripts/ai/tactical/behaviors/mod_ai_drag"));
+
+		local drag_AI = this.new("scripts/ai/tactical/behaviors/ai_mod_drag");
+		drag_AI.setParentID(this.m.ParentID);
+		actor.getAIAgent().addBehavior(drag_AI);
+
 		local drag = this.new("scripts/skills/actives/mod_kraken_move_ensnared_skill");
 		drag.m.ParentID = this.m.ParentID;
 		this.getContainer().add(drag);
+
 		this.Tactical.TurnSequenceBar.pushEntityBack(this.getContainer().getActor().getID());
 
 		if (this.m.ParentID != null)
@@ -171,11 +164,13 @@ this.mod_kraken_ensnare_effect <- this.inherit("scripts/skills/skill", {
 	function onUpdate( _properties )
 	{
 		_properties.IsRooted = true;
-		_properties.MeleeSkillMult *= 0.85;
-		_properties.RangedSkillMult *= 0.85;
-		_properties.MeleeDefenseMult *= 0.85;
-		_properties.RangedDefenseMult *= 0.85;
-		_properties.InitiativeForTurnOrderAdditional = -100;
+		_properties.IsAbleToUseSkills = false;
+		_properties.InitiativeMult *= 0.6;
+	}
+
+	function onAfterUpdate( _properties )
+	{
+		_properties.Vision = 7;
 	}
 
 	function onNewRound()

@@ -210,13 +210,14 @@ this.mod_kraken_ensnare_skill <- this.inherit("scripts/skills/skill", {
 			}
 		}, _data);
 		_data.TargetEntity.getSkills().add(ensnare);
+		local penalty = this.Math.max(1, _data.User.getHitpoints() * 0.1);
 		local breakFree = this.new("scripts/skills/actives/break_free_skill");
 		breakFree.m.Icon = "skills/active_148.png";
 		breakFree.m.IconDisabled = "skills/active_148_sw.png";
 		breakFree.m.Overlay = "active_148";
 		breakFree.m.SoundOnUse = _data.Skill.m.SoundOnHitHitpoints;
 		breakFree.setDecal(this.Const.BloodDecals[this.Const.BloodType.Red][this.Math.rand(0, this.Const.BloodDecals[this.Const.BloodType.Red].len() - 1)]);
-		breakFree.setChanceBonus(0);
+		breakFree.setChanceBonus(-penalty);
 		_data.TargetEntity.getSkills().add(breakFree);
 		_data.TargetEntity.raiseRootsFromGround(_data.User.getHitpointsPct() > 0.5 ? "kraken_ensnare_front" : "kraken_ensnare_front_injured", _data.User.getMode() == 0 ? "kraken_ensnare_back" : "kraken_ensnare_back_2");
 		_data.User.getSkills().setBusy(false);

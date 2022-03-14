@@ -2,11 +2,11 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 	m = {
 		Tentacles = [],
 		TentaclesDestroyed = 0,
-		IsEnraged = false,
+		IsEnraged = true,
 		Script = "scripts/entity/tactical/minions/special/dev_files/kraken_tentacle_player",
 	},
-	function getStrength() {return 90}
-	function getHealthRecoverMult() {return 25.0}
+	function getStrength() {return 75}
+	function getHealthRecoverMult() {return 50.0}
 	function getTentacles()
 	{
 		return this.m.Tentacles;
@@ -220,7 +220,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		}
 
 		local hitInfo = clone this.Const.Tactical.HitInfo;
-		hitInfo.DamageRegular = this.Math.max(150, 200);
+		hitInfo.DamageRegular = this.Math.max(50, 145 - (this.m.TentaclesDestroyed - 1) * 5);
 		hitInfo.DamageDirect = 1.0;
 		hitInfo.BodyPart = this.Const.BodyPart.Head;
 		hitInfo.BodyDamageMult = 1.0;
@@ -298,9 +298,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Kraken);
 		b.Vision = 11;
-		b.Hitpoints = 4000;
-		b.Armor = [1000, 1000];
-		b.ArmorMax = [1000, 1000];
+		b.DamageReceivedRegularMult *= 1.33;
 		b.FatigueRecoveryRate = 45;
 		b.TargetAttractionMult = 0.75;
 		b.DailyFood = 20;
@@ -340,8 +338,9 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.m.Skills.add(this.new("scripts/skills/actives/mod_kraken_devour_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/mod_kraken_command_drag_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/mod_kraken_spawn_tentacle_skill"));
-		this.m.Skills.add(this.new("scripts/skills/actives/mod_kraken_enrage_skill"));
 		this.m.Skills.add(this.new("scripts/skills/actives/mod_kraken_command_squeeze_skill"));
+
+		//this.m.Skills.add(this.new("scripts/skills/actives/mod_kraken_enrage_skill"));
 	}
 
 	function onFactionChanged()
@@ -356,7 +355,6 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.player_beast.onCombatStart();
 		this.m.TentaclesDestroyed = 0;
 		this.m.Tentacles = [];
-		this.setEnraged(false);
 		this.spawnTentaclesAtBattleStart();
 	}
 	
@@ -376,7 +374,6 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 
 		this.m.TentaclesDestroyed = 0;
 		this.m.Tentacles = [];
-		this.setEnraged(false);
 	}
 
 	function giveStats( _tentacle )
@@ -393,8 +390,8 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		b.RangedDefense += lv;
 		b.Initiative += 3 * lv;
 		_tentacle.m.ActionPoints = b.ActionPoints;
-		_tentacle.setHitpointsPct(1.0);
 		_tentacle.m.Skills.update();
+		_tentacle.setHitpointsPct(1.0);
 	}
 
 	function givePerks( _tentacle )
@@ -506,9 +503,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		local b = this.m.BaseProperties;
 		b.setValues(this.Const.Tactical.Actor.Kraken);
 		b.Vision = 11;
-		b.Hitpoints = 4000;
-		b.Armor = [1000, 1000];
-		b.ArmorMax = [1000, 1000];
+		b.DamageReceivedRegularMult *= 1.33;
 		b.FatigueRecoveryRate = 45;
 		b.TargetAttractionMult = 0.75;
 		b.DailyFood = 20;
@@ -531,7 +526,34 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 		this.fillAttributeLevelUpValues(this.Const.XP.MaxLevelWithPerkpoints - 1);
 	}
 
-	function onPlacedOnMap()
+	function onRoundStart()
+	{
+		local myTile = this.getTile();
+
+		if (myTile.hasNextTile(this.Const.Direction.N))
+		{
+			local tile = myTile.getNextTile(this.Const.Direction.N);
+
+			if (tile.IsEmpty)
+			{
+				this.Tactical.spawnEntity("scripts/entity/tactical/objects/swamp_tree1", tile.Coords);
+			}
+
+			if (tile.hasNextTile(this.Const.Direction.N))
+			{
+				local tile = tile.getNextTile(this.Const.Direction.N);
+
+				if (tile.IsEmpty)
+				{
+					this.Tactical.spawnEntity("scripts/entity/tactical/objects/swamp_tree1", tile.Coords);
+				}
+			}
+		}
+
+		this.player_beast.onRoundStart();
+	}
+
+	/*function onPlacedOnMap()
 	{
 		this.player_beast.onPlacedOnMap();
 		this.getTile().clear();
@@ -557,7 +579,7 @@ this.kraken_player <- this.inherit("scripts/entity/tactical/player_beast", {
 				}
 			}
 		}
-	}
+	}*/
 	
 	function fillAttributeLevelUpValues( _amount, _maxOnly = false, _minOnly = false )
 	{

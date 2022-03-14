@@ -146,7 +146,7 @@ this.kraken_tentacle_player <- this.inherit("scripts/entity/tactical/player_beas
 
 		if (this.Const.Tactical.TerrainDropdownParticles[_tile.Subtype].len() != 0)
 		{
-			for( local i = 0; i < this.Const.Tactical.TerrainDropdownParticles[_tile.Subtype].len(); i = i )
+			for( local i = 0; i < this.Const.Tactical.TerrainDropdownParticles[_tile.Subtype].len(); i = ++i )
 			{
 				if (this.Tactical.getWeather().IsRaining && !this.Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].ApplyOnRain)
 				{
@@ -155,16 +155,13 @@ this.kraken_tentacle_player <- this.inherit("scripts/entity/tactical/player_beas
 				{
 					this.Tactical.spawnParticleEffect(false, this.Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Brushes, _tile, this.Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Delay, this.Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Quantity, this.Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].LifeTimeQuantity, this.Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].SpawnRate, this.Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Stages);
 				}
-
-				i = ++i;
 			}
 		}
 		else if (this.Const.Tactical.RaiseFromGroundParticles.len() != 0)
 		{
-			for( local i = 0; i < this.Const.Tactical.RaiseFromGroundParticles.len(); i = i )
+			for( local i = 0; i < this.Const.Tactical.RaiseFromGroundParticles.len(); i = ++i )
 			{
 				this.Tactical.spawnParticleEffect(false, this.Const.Tactical.RaiseFromGroundParticles[i].Brushes, _tile, this.Const.Tactical.RaiseFromGroundParticles[i].Delay, this.Const.Tactical.RaiseFromGroundParticles[i].Quantity, this.Const.Tactical.RaiseFromGroundParticles[i].LifeTimeQuantity, this.Const.Tactical.RaiseFromGroundParticles[i].SpawnRate, this.Const.Tactical.RaiseFromGroundParticles[i].Stages);
-				i = ++i;
 			}
 		}
 

@@ -131,9 +131,21 @@ this.mod_kraken_bite_skill <- this.inherit("scripts/skills/skill", {
 
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
-		if (_skill == this)
+		if (_skill == this && _targetEntity != null)
 		{
-			if (_targetEntity != null && this.getContainer().getActor().getTile().getDistanceTo(_targetEntity.getTile()) == this.m.MaxRange)
+			if (_targetEntity.getCurrentProperties().IsRooted)
+			{
+				_properties.MeleeSkill += 25;
+				_properties.DamageDirectAdd += 0.1;
+			}
+
+			if (_targetEntity.getCurrentProperties().IsStunned)
+			{
+				_properties.DamageTotalMult *= 1.25;
+				_properties.DamageDirectAdd += 0.1;
+			}
+
+			if (this.getContainer().getActor().getTile().getDistanceTo(_targetEntity.getTile()) == this.m.MaxRange))
 			{
 				_properties.MeleeSkill -= 5;
 			}

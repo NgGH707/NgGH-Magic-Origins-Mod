@@ -28,7 +28,7 @@ this.mod_kraken_command_drag_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsAttack = false;
 		this.m.IsRanged = true;
 		this.m.IsIgnoredAsAOO = true;
-		this.m.ActionPointCost = 1;
+		this.m.ActionPointCost = 8;
 		this.m.FatigueCost = 5;
 		this.m.MinRange = 0;
 		this.m.MaxRange = 99;
@@ -107,18 +107,19 @@ this.mod_kraken_command_drag_skill <- this.inherit("scripts/skills/skill", {
 
 		if (b == null)
 		{
-			this.Tactical.EventLog.log("[color=" + this.Const.UI.Color.NegativeValue + "]No prey for you to drag[/color]");
-			return false;
+			this.Tactical.EventLog.log("[color=" + this.Const.UI.Color.NegativeValue + "]Fail to find a suitable place to drag to[/color]");
 		}
-
-		local score = b.onEvaluate(target, true, _user.get());
-
-		if (score > 0.0)
+		else
 		{
-			b.onExecute(target);
-			return true;
+			b.setForcedDrag(true);
+			local score = b.onEvaluate(target);
+
+			if (score > this.Const.AI.Behavior.Score.Zero)
+			{
+				return b.onExecute(target);
+			}
 		}
-		
+
 		return false;
 	}
 

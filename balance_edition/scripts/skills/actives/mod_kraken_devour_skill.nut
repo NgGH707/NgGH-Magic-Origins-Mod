@@ -25,7 +25,7 @@ this.mod_kraken_devour_skill <- this.inherit("scripts/skills/skill", {
 		this.m.IsActive = true;
 		this.m.IsTargeted = true;
 		this.m.IsTargetingActor = false;
-		this.m.IsVisibleTileNeeded = true;
+		this.m.IsVisibleTileNeeded = false;
 		this.m.IsStacking = false;
 		this.m.IsAttack = true;
 		this.m.IsIgnoredAsAOO = false;
@@ -35,7 +35,7 @@ this.mod_kraken_devour_skill <- this.inherit("scripts/skills/skill", {
 		this.m.InjuriesOnBody = this.Const.Injury.CuttingBody;
 		this.m.InjuriesOnHead = this.Const.Injury.CuttingHead;
 		this.m.ActionPointCost = 2;
-		this.m.FatigueCost = 100;
+		this.m.FatigueCost = 75;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
 		this.m.MaxLevelDifference = 4;
@@ -131,26 +131,24 @@ this.mod_kraken_devour_skill <- this.inherit("scripts/skills/skill", {
 			this.Tactical.State.m.StrategicProperties.Loot.push("scripts/items/supplies/strange_meat_item");
 		}
 
-		if (!this.getContainer().getActor().getCurrentProperties().IsSpecializedInGreatSwords)
+		if (this.getContainer().getActor().getCurrentProperties().IsSpecializedInGreatSwords)
 		{
-			return;
-		}
+			local tentacles = this.getContainer().getActor().getTentacles();
 
-		local tentacles = this.getContainer().getActor().getTentacles();
-
-		foreach (i, t in tentacles)
-		{
-			if (t == null || t.isNull() || !t.isAlive() || t.isDying())
+			foreach (i, t in tentacles)
 			{
-				continue;
+				if (t == null || t.isNull() || !t.isAlive() || t.isDying())
+				{
+					continue;
+				}
+
+			    t.setHitpoints(this.Math.min(t.getHitpointsMax(), t.getHitpoints() + this.Math.rand(10, 25)));
+
+			    if (t.isPlacedOnMap())
+			    {
+			    	this.spawnIcon("status_effect_79", t.getTile());
+			    }
 			}
-
-		    t.setHitpoints(this.Math.min(t.getHitpointsMax(), t.getHitpoints() + 10));
-
-		    if (t.isPlacedOnMap())
-		    {
-		    	this.spawnIcon("status_effect_79", t.getTile());
-		    }
 		}
 	}
 

@@ -66,6 +66,24 @@ this.getroottable().HexenHooks.hookActorAndEntity <- function ()
 				}
 			}
 		}
+
+		local ws_onInit = obj.onInit;
+		obj.onInit = function()
+		{
+			ws_onInit();
+			this.m.IsEnraged = this.World.Flags.get("IsKrakenOrigin");
+
+			if (this.m.IsEnraged)
+			{
+				foreach( t in this.m.Tentacles )
+				{
+					if (!t.isNull())
+					{
+						t.setMode(1);
+					}
+				}
+			}
+		}
 	});
 
 

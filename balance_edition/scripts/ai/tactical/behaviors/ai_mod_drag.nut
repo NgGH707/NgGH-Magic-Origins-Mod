@@ -1,12 +1,48 @@
-this.mod_ai_drag <- this.inherit("scripts/ai/tactical/behavior", {
+this.ai_mod_drag <- this.inherit("scripts/ai/tactical/behavior", {
 	m = {
+		Parent = null,
 		TargetTile = null,
 		IsWaiting = false,
+		IsForceDrag = false,
 		PossibleSkills = [
 			"actives.mod_kraken_move_ensnared"
 		],
 		Skill = null,
 	},
+	function setParentID( _id )
+	{
+		local entity = this.Tactical.getEntityByID(_id);
+
+		if (entity != null)
+		{
+			this.setParent(entity);
+		}
+	}
+
+	function setParent( _p )
+	{
+		if (_p == null)
+		{
+			this.m.Parent = null;
+		}
+		else
+		{
+			if (typeof _p == "instance")
+			{
+				this.m.Parent = _p;
+			}
+			else
+			{
+				this.m.Parent = this.WeakTableRef(_p);
+			}
+		}
+	}
+
+	function setForcedDrag( _f )
+	{
+		this.m.IsForceDrag = _f;
+	}
+
 	function create()
 	{
 		this.m.ID = this.Const.AI.Behavior.ID.Drag;
@@ -15,13 +51,13 @@ this.mod_ai_drag <- this.inherit("scripts/ai/tactical/behavior", {
 		this.behavior.create();
 	}
 
-	function onEvaluate( _entity , _isForce = false , _kraken = null )
+	function onEvaluate( _entity )
 	{
 		this.m.Skill = null;
 		this.m.TargetTile = null;
 		this.m.IsWaiting = false;
 
-		if (!_isForce || _kraken == null)
+		if (this.m.Parent == null || this.m.Parent.isNull())
 		{
 			return this.Const.AI.Behavior.Score.Zero;
 		}
@@ -44,7 +80,8 @@ this.mod_ai_drag <- this.inherit("scripts/ai/tactical/behavior", {
 			return this.Const.AI.Behavior.Score.Zero;
 		}
 
-		this.m.Skill = skills[this.Math.rand(0, skills.len() - 1)];
+		this.m.Skill = skills[0];
+		local kraken = this.m.Parent.get();
 		local navigator = this.Tactical.getNavigator();
 		local settings = navigator.createSettings();
 		settings.ActionPointCosts = this.Const.PathfinderMovementAPCost;
@@ -57,12 +94,12 @@ this.mod_ai_drag <- this.inherit("scripts/ai/tactical/behavior", {
 		settings.AlliedFactions = _entity.getAlliedFactions();
 		settings.Faction = _entity.getFaction();
 
-		if (navigator.findPath(_entity.getTile(), _kraken.getTile(), settings, 1))
+		if (navigator.findPath(_entity.getTile(), kraken.getTile(), settings, 1))
 		{
 			local movementCosts = navigator.getCostForPath(_entity, settings, 9, 100);
 			this.m.TargetTile = movementCosts.End;
 		}
-		else if (this.Tactical.TurnSequenceBar.entityWaitTurn(_entity))
+		else if (!this.m.IsForceDrag && this.Tactical.TurnSequenceBar.entityWaitTurn(_entity))
 		{
 			this.m.IsWaiting = true;
 		}
@@ -111,6 +148,7 @@ this.mod_ai_drag <- this.inherit("scripts/ai/tactical/behavior", {
 			this.getAgent().declareEvaluationDelay(delay);
 		}
 
+		this.setForcedDrag(false);
 		return true;
 	}
 

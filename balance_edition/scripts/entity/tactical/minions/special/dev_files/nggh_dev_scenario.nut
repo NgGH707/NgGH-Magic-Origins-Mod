@@ -25,7 +25,6 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 		this.World.Assets.m.VisionRadiusMult *= 1.5;
 		this.World.Assets.m.FoodAdditionalDays += 5;
 		this.World.Assets.m.ChampionChanceAdditional += 15;
-		this.World.Assets.updateLook(9990);
 	}
 
 	function onCombatFinished()
@@ -109,7 +108,7 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 		local kraken = roster.create("scripts/entity/tactical/minions/special/dev_files/kraken_player");
 		kraken.setScenarioValues();
 		kraken.setVeteranPerks(2);
-		kraken.getBackground().m.RawDescription = "A true terror of the depth, has decided to start its hunt on the land of human. Time to hunt and kill, let your hunger be satiety with fresh prey.";
+		kraken.getBackground().m.RawDescription = "A true terror of the depth, has decided to start its hunt on the land of human. Time to hunt and kill, let your hunger be satiated with fresh prey.";
 		kraken.getBackground().buildDescription(true);
 		kraken.getSkills().removeByID("trait.survivor");
 		kraken.getSkills().removeByID("trait.loyal");
@@ -117,7 +116,7 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 		kraken.getSkills().removeByID("trait.greedy");
 		kraken.setPlaceInFormation(13);
 		kraken.m.HireTime = this.Time.getVirtualTimeF();
-		kraken.getSprite("miniboss").setBrush("bust_miniboss");
+		kraken.getSprite("miniboss").setBrush("bust_miniboss_lone_wolf");
 		this.World.Assets.addBusinessReputation(this.m.StartingBusinessReputation);
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/strange_meat_item"));
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/strange_meat_item"));
@@ -128,7 +127,7 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/legend_yummy_sausages"));
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/legend_yummy_sausages"));
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/legend_yummy_sausages"));
-		this.World.Assets.m.Money = this.World.Assets.m.Money + 1000;
+		this.World.Assets.m.Money += 1000;
 	}
 
 	function onSpawnPlayer()
@@ -182,7 +181,7 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 		while (1);
 
 		this.World.State.m.Player = this.World.spawnEntity("scripts/entity/world/player_party", randomVillageTile.Coords.X, randomVillageTile.Coords.Y);
-		this.World.Assets.updateLook(9993);
+		this.updateLook();
 		this.World.getCamera().setPos(this.World.State.m.Player.getPos());
 		this.World.Flags.set("IsKrakenCultVisited", true);
 		this.World.Flags.set("IsKrakenOrigin", true);
@@ -190,6 +189,11 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 		{
 			this.Music.setTrackList(this.Const.Music.ArenaTracks, this.Const.Music.CrossFadeTime);
 		}, null);
+	}
+
+	function updateLook()
+	{
+		this.World.State.getPlayer().getSprite("body").setBrush("figure_player_9993");
 	}
 
 });
