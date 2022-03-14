@@ -24,7 +24,7 @@ this.mortar_item <- this.inherit("scripts/items/item", {
 
 	function create()
 	{
-		this.item.create();
+		//this.item.create();
 		this.m.ID = "misc.mc_mortar";
 		this.m.Name = "Mortar";
 		this.m.Description = "A kind of siege weapon that has been used by city states in the south.";

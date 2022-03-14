@@ -95,7 +95,7 @@ this.mod_kraken_ensnare_skill <- this.inherit("scripts/skills/skill", {
 
 	function onAfterUpdate( _properties )
 	{
-		this.m.DamageMult = _properties.IsSpecializedInNets ? 1.25 : 1.0;
+		this.m.DamageMult = _properties.IsSpecializedInNets ? 1.35 : 1.0;
 	}
 
 	function onVerifyTarget( _originTile, _targetTile )

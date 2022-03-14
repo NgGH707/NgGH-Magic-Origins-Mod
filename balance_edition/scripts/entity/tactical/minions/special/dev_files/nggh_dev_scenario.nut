@@ -181,13 +181,13 @@ this.nggh_dev_scenario <- this.inherit("scripts/scenarios/world/starting_scenari
 		while (1);
 
 		this.World.State.m.Player = this.World.spawnEntity("scripts/entity/world/player_party", randomVillageTile.Coords.X, randomVillageTile.Coords.Y);
-		this.updateLook();
-		this.World.getCamera().setPos(this.World.State.m.Player.getPos());
+		this.World.State.getPlayer().getSprite("body").setBrush("figure_player_9993");
+		this.World.getCamera().setPos(this.World.State.getPlayer().getPos());
 		this.World.Flags.set("IsKrakenCultVisited", true);
 		this.World.Flags.set("IsKrakenOrigin", true);
 		this.Time.scheduleEvent(this.TimeUnit.Real, 1000, function ( _tag )
 		{
-			this.Music.setTrackList(this.Const.Music.ArenaTracks, this.Const.Music.CrossFadeTime);
+			this.Music.setTrackList(this.Const.Music.BeastTracks, this.Const.Music.CrossFadeTime);
 		}, null);
 	}
 

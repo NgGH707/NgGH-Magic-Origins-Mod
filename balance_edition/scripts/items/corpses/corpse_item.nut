@@ -23,7 +23,7 @@ this.corpse_item <- this.inherit("scripts/items/item", {
 	},
 	function create()
 	{
-		this.item.create();
+		//this.item.create();
 		this.m.ID = "items.necro.corpse";
 		this.m.SlotType = this.Const.ItemSlot.Bag;
 		this.m.ItemType = this.Const.Items.ItemType.Corpse | this.Const.Items.ItemType.Misc;

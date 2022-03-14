@@ -89,8 +89,8 @@ this.mod_kraken_bite_skill <- this.inherit("scripts/skills/skill", {
 	{
 		if (_properties.IsSpecializedInCleavers)
 		{
-			_properties.DamageRegularMin += 5;
-			_properties.DamageRegularMax += 12;
+			_properties.DamageRegularMin += 8;
+			_properties.DamageRegularMax += 18;
 		}
 	}
 
