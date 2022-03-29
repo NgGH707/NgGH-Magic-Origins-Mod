@@ -34,7 +34,6 @@ this.load_mortar <- this.inherit("scripts/skills/skill", {
 	
 	function getTooltip()
 	{
-		local p = this.getContainer().getActor().getCurrentProperties();
 		local ret = [
 			{
 				id = 1,
@@ -133,7 +132,7 @@ this.load_mortar <- this.inherit("scripts/skills/skill", {
 		local siege_weapon = _targetTile.getEntity();
 		this.consumeAmmo();	
 		siege_weapon.getFlags().set("isLoaded", true);
-		siege_weapon.getSprite("body").setBrush("mortar_02");
+		siege_weapon.getSprite("body").setBrush("mortar_01");
 		this.spawnIcon(this.m.Overlay, _targetTile);
 		
 		return true;

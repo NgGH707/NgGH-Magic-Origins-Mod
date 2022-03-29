@@ -207,6 +207,7 @@ this.alp_shadow_minion <- this.inherit("scripts/entity/tactical/minion", {
 		}
 
 		this.m.Skills.update();
+		this.setHitpointsPct(1.0);
 	}
 
 	function onInit()

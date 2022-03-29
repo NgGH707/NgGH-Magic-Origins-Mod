@@ -3,19 +3,19 @@ this.bomb_bag <- this.inherit("scripts/items/ammo/ammo", {
 	function create()
 	{
 		this.m.ID = "ammo.mortar";
-		this.m.Name = "Cannon Balls Bag";
-		this.m.Description = "A bag contains black powder and some cannon balls, used for reloading a mortar, and very heavy. Is automatically refilled after each battle if you have enough ammunition.";
-		this.m.Icon = "ammo/powder_bag.png";
-		this.m.IconEmpty = "ammo/powder_bag_empty.png";
+		this.m.Name = "Mortar Supply Bag";
+		this.m.Description = "A strong bag contains black powder and some mortar shells, used for reloading a mortar, and very heavy. Is automatically refilled after each battle if you have enough ammunition.";
+		this.m.Icon = "accessory/legend_pack_large.png";
+		this.m.IconEmpty = "accessory/legend_pack_large.png";
 		this.m.SlotType = this.Const.ItemSlot.Ammo;
 		this.m.ItemType = this.Const.Items.ItemType.Ammo;
 		this.m.AmmoType = this.Const.Items.AmmoType.Powder;
 		this.m.ShowOnCharacter = false;
 		this.m.ShowQuiver = false;
 		this.m.Value = 1000;
-		this.m.Ammo = 3;
-		this.m.AmmoMax = 3;
-		this.m.StaminaModifier = -18;
+		this.m.Ammo = 4;
+		this.m.AmmoMax = 4;
+		this.m.StaminaModifier = -6;
 		this.m.IsDroppedAsLoot = true;
 		this.m.IsAllowedInBag = false;
 		this.m.AddGenericSkill = true;
@@ -60,13 +60,13 @@ this.bomb_bag <- this.inherit("scripts/items/ammo/ammo", {
 			text = this.getValueString()
 		});
 		
-		if (this.m.StaminaModifier < 0)
+		if (this.getStaminaModifier() < 0)
 		{
 			result.push({
 				id = 8,
 				type = "text",
 				icon = "ui/icons/fatigue.png",
-				text = "Maximum Fatigue [color=" + this.Const.UI.Color.NegativeValue + "]" + this.m.StaminaModifier + "[/color]"
+				text = "Maximum Fatigue [color=" + this.Const.UI.Color.NegativeValue + "]" + this.getStaminaModifier() + "[/color]"
 			});
 		}
 
@@ -91,11 +91,15 @@ this.bomb_bag <- this.inherit("scripts/items/ammo/ammo", {
 
 		return result;
 	}
+
+	function getStaminaModifier()
+	{
+		return this.m.StaminaModifier * this.m.Ammo;
+	}
 	
 	function onUpdateProperties( _properties )
 	{
-		this.m.StaminaModifier = -6 * this.m.Ammo;
-		_properties.Stamina -= 6 * this.m.Ammo;
+		_properties.Stamina -= this.getStaminaModifier();
 	}
 	
 	function onEquip()

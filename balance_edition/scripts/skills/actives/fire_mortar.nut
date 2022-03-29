@@ -38,22 +38,23 @@ this.fire_mortar <- this.inherit("scripts/skills/skill", {
 		this.m.IsTargeted = true;
 		this.m.IsStacking = false;
 		this.m.IsAttack = true;
-		this.m.IsRanged = false;
+		this.m.IsRanged = true;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsShowingProjectile = false;
 		this.m.IsAOE = true;
 		this.m.IsTargetingActor = false;
 		this.m.IsUsingHitchance = false;
+		this.m.IsRangeLimitsEnforced = false;
 		this.m.IsDoingForwardMove = true;
 		this.m.IsVisibleTileNeeded = false;
 		this.m.IsRemovedAfterBattle = true;
 		this.m.InjuriesOnBody = this.Const.Injury.BurningAndPiercingBody;
 		this.m.InjuriesOnHead = this.Const.Injury.BurningAndPiercingHead;
 		this.m.DirectDamageMult = 0.2;
-		this.m.ActionPointCost = 6;
-		this.m.FatigueCost = 10;
-		this.m.MinRange = 3;
-		this.m.MaxRange = 18;
+		this.m.ActionPointCost = 7;
+		this.m.FatigueCost = 5;
+		this.m.MinRange = 4;
+		this.m.MaxRange = 99;
 		this.m.MaxLevelDifference = 4;
 	}
 	
@@ -66,6 +67,12 @@ this.fire_mortar <- this.inherit("scripts/skills/skill", {
 				type = "text",
 				icon = "ui/icons/vision.png",
 				text = "Has a range from [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMinRange() + "[/color] to [color=" + this.Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles on even ground"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/hitchance.png",
+				text = "Shots can easily go astray and hit other tiles"
 			}
 		]);
 
@@ -112,7 +119,7 @@ this.fire_mortar <- this.inherit("scripts/skills/skill", {
 	{
 		local IsSpecialized = this.getContainer().hasSkill("background.legend_inventor");
 		this.m.FatigueCostMult = IsSpecialized ? this.Const.Combat.WeaponSpecFatigueMult : 1.0;
-		this.m.ActionPointCost = IsSpecialized ? 4 : 6;
+		this.m.ActionPointCost = IsSpecialized ? 5 : 7;
 	}
 
 	function isWaitingOnImpact()
@@ -125,7 +132,7 @@ this.fire_mortar <- this.inherit("scripts/skills/skill", {
 		local ret = [
 			_targetTile
 		];
-		local myTile = this.m.Container.getActor().getTile();
+		local myTile = this.getContainer().getActor().getTile();
 
 		for( local i = 0; i < 6; i = ++i )
 		{
@@ -153,7 +160,15 @@ this.fire_mortar <- this.inherit("scripts/skills/skill", {
 	function onUse( _user, _targetTile )
 	{
 		local myTile = _user.getTile();
-		this.m.AffectedTiles = this.getAffectedTiles(_targetTile);
+		local dis = myTile.getDistanceTo(_targetTile);
+		local targetTiles = this.getAffectedTiles(_targetTile);
+
+		if (dis > 11 && this.Math.rand(1, 100) <= 25 + (dis - 12) * 10)
+		{
+			targetTiles = this.getAffectedTiles(this.MSU.Array.getRandom(targetTiles));
+		}
+
+		this.m.AffectedTiles = this.getAffectedTiles(this.MSU.Array.getRandom(targetTiles));
 		this.m.SiegeWeapon.getFlags().set("isLoaded", false);
 
 		foreach( tile in this.m.AffectedTiles )
@@ -193,9 +208,9 @@ this.fire_mortar <- this.inherit("scripts/skills/skill", {
 			}
 		}
 		
-		this.Time.scheduleEvent(this.TimeUnit.Real, 100, function (_tag) 
+		this.Time.scheduleEvent(this.TimeUnit.Real, 150, function (_tag) 
 		{
-			_tag.m.SiegeWeapon.getSprite("body").setBrush("mortar_01");
+			_tag.m.SiegeWeapon.getSprite("body").setBrush("mortar_02");
 		}, _tag);
 		_tag.updateImpact();
 	}
@@ -256,25 +271,13 @@ this.fire_mortar <- this.inherit("scripts/skills/skill", {
 		}
 	}
 	
-	function canDoubleGrip()
-	{
-		local main = this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Mainhand);
-		local off = this.getContainer().getActor().getItems().getItemAtSlot(this.Const.ItemSlot.Offhand);
-		return main != null && off == null && main.isDoubleGrippable();
-	}
-	
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
 		if (_skill == this)
 		{
-			_properties.DamageRegularMin = 55;
-			_properties.DamageRegularMax = 80;
-			_properties.DamageArmorMult *= 0.7;
-			
-			if (this.canDoubleGrip())
-			{
-				_properties.DamageTotalMult /= 1.25;
-			}
+			_properties.DamageRegularMin = 48;
+			_properties.DamageRegularMax = 88;
+			_properties.DamageArmorMult = 0.7;
 		}
 	}
 

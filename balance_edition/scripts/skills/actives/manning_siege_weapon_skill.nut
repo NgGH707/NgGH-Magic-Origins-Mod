@@ -10,9 +10,9 @@ this.manning_siege_weapon_skill <- this.inherit("scripts/skills/skill", {
 		this.m.Name = "Manning Siege Weapon";
 		this.m.Description = "Operating a siege weapon near you.";
 		this.m.KilledString = "";
-		this.m.Icon = "ui/perks/perk_38_active.png";
-		this.m.IconDisabled = "ui/perks/perk_38_active_sw.png";
-		this.m.Overlay = "perk_38_active";
+		this.m.Icon = "skills/active_maning_mortar.png";
+		this.m.IconDisabled = "skills/active_maning_mortar_sw.png";
+		this.m.Overlay = "active_maning_mortar";
 		this.m.SoundOnHitDelay = 0;
 		this.m.Type = this.Const.SkillType.Active;
 		this.m.Order = this.Const.SkillOrder.OffensiveTargeted + 4;
@@ -31,7 +31,7 @@ this.manning_siege_weapon_skill <- this.inherit("scripts/skills/skill", {
 	
 	function getTooltip()
 	{
-		local ret = this.getDefaultTooltip();
+		local ret = this.getDefaultUtilityTooltip();
 		ret.extend([
 			{
 				id = 6,

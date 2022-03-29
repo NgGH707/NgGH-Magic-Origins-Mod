@@ -33,7 +33,7 @@ this.mortar_entity <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.AIAgent = this.new("scripts/ai/tactical/agents/donkey_agent");
 		this.m.AIAgent.setActor(this);
 		this.m.Flags.add("siege_weapon");
-		this.m.Flags.set("isLoaded", true);
+		this.m.Flags.set("isLoaded", false);
 	}
 
 	function assignUser( _user , _manningSkill )
@@ -90,7 +90,7 @@ this.mortar_entity <- this.inherit("scripts/entity/tactical/actor", {
 		this.m.FatigueCosts = this.Const.DefaultMovementFatigueCost;
 		this.addSprite("socket").setBrush("bust_base_player");
 		local body = this.addSprite("body");
-		body.setBrush("mortar_02");
+		body.setBrush("mortar_01");
 		this.addDefaultStatusSprites();
 		this.m.Skills.update();
 	}

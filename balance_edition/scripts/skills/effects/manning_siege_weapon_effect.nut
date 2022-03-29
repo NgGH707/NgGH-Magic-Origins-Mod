@@ -1,14 +1,15 @@
 this.manning_siege_weapon_effect <- this.inherit("scripts/skills/skill", {
 	m = {
-		SiegeWeapon = null
+		SiegeWeapon = null,
+		Turn = 2,
 	},
 	function create()
 	{
 		this.m.ID = "effects.manning_siege_weapon";
 		this.m.Name = "Manning a ";
-		this.m.Icon = "ui/perks/perk_38.png";
-		this.m.IconMini = "perk_38_mini";
-		this.m.Overlay = "perk_38";
+		this.m.Icon = "skills/active_maning_mortar.png";
+		this.m.IconMini = "active_maning_mortar_mini";
+		this.m.Overlay = "active_maning_mortar";
 		this.m.Type = this.Const.SkillType.StatusEffect;
 		this.m.IsActive = false;
 		this.m.IsStacking = false;
@@ -17,7 +18,47 @@ this.manning_siege_weapon_effect <- this.inherit("scripts/skills/skill", {
 
 	function getDescription()
 	{
-		return "This character is manning a " + this.m.SiegeWeapon.getName();
+		return "This character is manning a " + this.m.SiegeWeapon.getName() + ". For every time this character ends turn while having 4 or more AP, his vision range will increase by 1 due to having extra time to lookout. Having \'Lookout\' perk or released falcon will further improve your vision.";
+	}
+
+	function getTooltip()
+	{
+		local accessory = this.getContainer().getActor().getItemAtSlot(this.Const.ItemSlot.Accessory);
+		local lookout = this.getContainer.hasSkill("perk.lookout");
+		local ret = [
+			{
+				id = 1,
+				type = "title",
+				text = this.getName()
+			},
+			{
+				id = 2,
+				type = "description",
+				text = this.getDescription()
+			},
+		];
+
+		if (this.m.Turn > 0)
+		{
+			ret.push({
+				id = 8,
+				type = "text",
+				icon = "ui/icons/vision.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+" + this.m.Turn + "[/color] Vision"
+			});
+		}
+
+		if (accessory != null && accessory.getID() == "accessory.falcon" && accessory.isReleased())
+		{
+			ret.push({
+				id = 8,
+				type = "text",
+				icon = "ui/icons/vision.png",
+				text = "[color=" + this.Const.UI.Color.PositiveValue + "]+3[/color] Vision thanks to your falcon"
+			});
+		}
+
+		return ret;
 	}
 
 	function onAdded()
@@ -27,6 +68,19 @@ this.manning_siege_weapon_effect <- this.inherit("scripts/skills/skill", {
 
 	function onUpdate( _properties )
 	{
+		local accessory = this.getContainer().getActor().getItemAtSlot(this.Const.ItemSlot.Accessory);
+
+		if (accessory != null && accessory.getID() == "accessory.falcon" && accessory.isReleased())
+		{
+			_properties.Vision += 3;
+		}
+
+		if (this.getContainer.hasSkill("perk.lookout"))
+		{
+			_properties.Vision += 1;
+		}
+
+		_properties.Vision += this.m.Turn;
 	}
 
 	function isManningSiegeWeapon( _tile = null )
@@ -57,8 +111,7 @@ this.manning_siege_weapon_effect <- this.inherit("scripts/skills/skill", {
 
 	function onRemoved()
 	{
-		local skill = this.getContainer().getSkillByID("actives.manning_siege_weapon");
-		skill.clear();
+		this.getContainer().getSkillByID("actives.manning_siege_weapon").clear();
 	}
 
 	function onTurnStart()
@@ -68,6 +121,11 @@ this.manning_siege_weapon_effect <- this.inherit("scripts/skills/skill", {
 
 	function onTurnEnd()
 	{
+		if (this.getContainer().getActor().getActionPoints() >= 4)
+		{
+			++this.m.Turn;
+		}
+
 		this.isManningSiegeWeapon();
 	}
 
