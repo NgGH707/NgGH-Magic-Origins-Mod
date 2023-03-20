@@ -145,22 +145,22 @@ if (!("PerksCharmedUnit" in ::Const))
 	],
 	[
 		::Const.Perks.PerkDefs.Backstabber,
-		::Const.Perks.PerkDefs.Overwhelm,
+		::Const.Perks.PerkDefs.BattleForged,
 		::Const.Perks.PerkDefs.NggHMiscNighttime,
+		::Const.Perks.PerkDefs.LegendGruesomeFeast,
 	],
 	[
 		::Const.Perks.PerkDefs.Relentless,
-		::Const.Perks.PerkDefs.Fearsome,
 		::Const.Perks.PerkDefs.Footwork,
 		::Const.Perks.PerkDefs.Rotation,
+		::Const.Perks.PerkDefs.Overwhelm,
 	],
 	[
-		::Const.Perks.PerkDefs.Berserk,
-		::Const.Perks.PerkDefs.BattleForged,
+		::Const.Perks.PerkDefs.Fearsome,
 		::Const.Perks.PerkDefs.NggHWolfBite,
 	],
 	[
-		::Const.Perks.PerkDefs.LegendGruesomeFeast,
+		::Const.Perks.PerkDefs.Berserk,
 		::Const.Perks.PerkDefs.LoneWolf,
 		::Const.Perks.PerkDefs.LegendTrueBeliever,
 		::Const.Perks.PerkDefs.DevastatingStrikes
@@ -189,31 +189,31 @@ if (!("PerksCharmedUnit" in ::Const))
 	],
 	[
 		::Const.Perks.PerkDefs.Backstabber,
-		::Const.Perks.PerkDefs.Overwhelm,
+		::Const.Perks.PerkDefs.LegendGruesomeFeast,
 		::Const.Perks.PerkDefs.NggHMiscNighttime,
 	],
 	[
 		::Const.Perks.PerkDefs.Relentless,
-		::Const.Perks.PerkDefs.Fearsome,
 		::Const.Perks.PerkDefs.Footwork,
 		::Const.Perks.PerkDefs.Rotation,
+		::Const.Perks.PerkDefs.Overwhelm,
 	],
 	[
-		::Const.Perks.PerkDefs.Berserk,
-		::Const.Perks.PerkDefs.BattleForged,
 		::Const.Perks.PerkDefs.NggHWolfBite,
+		::Const.Perks.PerkDefs.InspiringPresence,
+		::Const.Perks.PerkDefs.Fearsome,
 	],
 	[
-		::Const.Perks.PerkDefs.LegendGruesomeFeast,
+		::Const.Perks.PerkDefs.BattleForged,
 		::Const.Perks.PerkDefs.LoneWolf,
 		::Const.Perks.PerkDefs.NggHMiscLineBreaker,
 		::Const.Perks.PerkDefs.DevastatingStrikes
 	],
 	[
+		::Const.Perks.PerkDefs.Berserk,
 		::Const.Perks.PerkDefs.LegendTerrifyingVisage,
 		::Const.Perks.PerkDefs.LegendSecondWind,
 		::Const.Perks.PerkDefs.LastStand,
-		::Const.Perks.PerkDefs.InspiringPresence,
 		::Const.Perks.PerkDefs.NggHWolfEnrage,
 	],
 	[

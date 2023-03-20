@@ -599,7 +599,7 @@ if (!("CharmedUnits" in ::Const))
 			
 		//Direwolf = 54,
 			{
-				StatMod = { Hitpoints = [-30, 0], Bravery = [-5, -5], Stamina = [-30, 0], MeleeSkill = [-5, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-10, 0] },
+				StatMod = { Hitpoints = [-30, 0], Bravery = [-5, -5], Stamina = [-30, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [1, 5], RangedDefense = [1, 2], Initiative = [-15, 0] },
 				Perks = [],
 				Difficulty = 25,
 				Custom =  {
@@ -724,7 +724,7 @@ if (!("CharmedUnits" in ::Const))
 			
 		//Spider = 59,
 			{
-				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-20, -10] },
+				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [-2, 2], RangedDefense = [-3, 0], Initiative = [-22, -12] },
 				Skills = ["actives/spider_bite_skill", "racial/spider_racial"],
 				Difficulty = 0,
 				Custom =  {
@@ -1047,7 +1047,7 @@ if (!("CharmedUnits" in ::Const))
 			
 		//Hyena = 83,
 			{
-				StatMod = { Hitpoints = [-20, 0], Bravery = [-5, -5], Stamina = [-30, 0], MeleeSkill = [-5, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [5, 10] },
+				StatMod = { Hitpoints = [-20, 0], Bravery = [-5, -5], Stamina = [-30, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [1, 5], RangedDefense = [0, 0], Initiative = [0, 5] },
 				Perks = [],
 				Difficulty = 25,
 				Custom =  {
