@@ -1,0 +1,794 @@
+this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scenario", {
+	m = {
+		Look = 9997,
+		IsLuftAdventure = false,
+	},
+	function create()
+	{
+		this.m.ID = "scenario.hexe";
+		this.m.Name = "Hexe";
+		this.m.Description = "[p=c][img]gfx/ui/events/event_106.png[/img][/p][p]A Hexe founds a mercenary company to secretly collect offerings for a ritual.\n\n[color=#bcad8c]Witch:[/color] Start with a hexe and some simps.\n[color=#bcad8c]Gotta catch 'em all:[/color] Charm the enemy and add them to your roster.\n[color=#bcad8c]Simps:[/color] Those fell for your charm don\'t need money, they only need love.";
+		this.m.Difficulty = 1;
+		this.m.Order = 109;
+		this.m.IsFixedLook = true;
+		this.m.StartingBusinessReputation = 25;
+		this.m.StartingRosterTier = ::Const.Roster.getTierForSize(12);
+		this.setRosterReputationTiers(::Const.Roster.createReputationTiers(this.m.StartingBusinessReputation));
+	}
+
+	function getDescription()
+	{
+		return this.m.Description + "\n[color=#bcad8c]The Price For Beauty:[/color] Have to perform a ritual every " + ::Nggh_MagicConcept.HexeOriginRitual.Cooldown + " day(s) or face the consequences.\n[color=#bcad8c]Avatar:[/color] If your Hexe dies, the campaign ends.[/p]";
+	}
+
+	function onSpawnAssets()
+	{
+		::World.Flags.set("looks", ::Math.rand(9995, 9997));
+		::World.Flags.set("RitualTimer", 1);
+		
+		local roster = ::World.getPlayerRoster();
+		local hexe = roster.create("scripts/entity/tactical/player");
+		hexe.setStartValuesEx(["nggh_mod_hexe_commander_background"]);
+		hexe.getBackground().buildDescription(true);
+		hexe.getSkills().removeByID("trait.survivor");
+		hexe.getSkills().removeByID("trait.loyal");
+		hexe.getSkills().removeByID("trait.disloyal");
+		hexe.getSkills().removeByID("trait.greedy");
+		hexe.getSkills().add(::new("scripts/skills/traits/player_character_trait"));
+		hexe.setPlaceInFormation(13);
+		hexe.getFlags().set("IsPlayerCharacter", true);
+		hexe.getSprite("miniboss").setBrush("bust_miniboss_lone_wolf");
+		hexe.m.HireTime = ::Time.getVirtualTimeF();
+		hexe.m.PerkPoints = 1;
+		hexe.m.LevelUps = 0;
+		hexe.m.Level = 1;
+		hexe.m.Talents = [];
+		hexe.m.Attributes = [];
+		hexe.fillTalentValues(3);
+		hexe.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
+		
+		local name = ::World.Assets.getName().toupper();
+		local seed = ::World.Assets.getSeedString().toupper();
+		
+		if (::Const.HexeOrigin.EasterEggSeed.find(seed) != null || this.isLuftName(name))
+		{
+			this.setupLuftStart();
+		}
+		else
+		{
+			local forced_start_ID = this.isForceSeed(seed, name);
+			//0:eggs - 1:spider - 2:redback - 3:wolf - 4:white wolf - 5:hyena - 6:serpent - 7:unhold - 8:ghoul - 9:alp - 10:goblin - 11:orc - 12:human - 13:ijirok - 14:lindwurm - 15:schrat - 16:bear - 17:circus
+
+			if (forced_start_ID == null)
+			{
+				this.setupRandomStart();
+			}
+			else
+			{
+				this.setupSpecialStart(forced_start_ID, hexe);
+
+				if (forced_start_ID == null)
+				{
+					::logError("forceSeed = null");
+				}
+				else
+				{
+					::logInfo("With your seed/name, your start id = " + forced_start_ID);
+					::logInfo("Your starting party would be: " + ::Const.HexeOrigin.StartingRollNames[forced_start_ID]);
+				}
+			}
+		}
+		
+		foreach ( b in roster.getAll() )
+		{
+			b.setVeteranPerks(2);
+		}
+		
+		::World.Assets.addBusinessReputation(this.m.StartingBusinessReputation);
+		::World.Assets.getStash().add(::new("scripts/items/supplies/dates_item"));
+		::World.Assets.getStash().add(::new("scripts/items/supplies/black_marsh_stew_item"));
+		::World.Assets.getStash().add(::new("scripts/items/supplies/black_marsh_stew_item"));
+		::World.Assets.getStash().add(::new("scripts/items/misc/witch_hair_item"));
+		::World.Assets.getStash().add(::new("scripts/items/misc/poisoned_apple_item"));
+		::World.Assets.getStash().add(::new("scripts/items/misc/werewolf_pelt_item"));
+		
+		if (::Math.rand(1, 100) > 5)
+		{
+			::World.Assets.getStash().add(::new("scripts/items/accessory/" + ::MSU.Array.rand(::Const.HexeOrigin.PossibleStartingPotions)));
+		}
+		else
+		{
+			::World.Assets.getStash().add(::new("scripts/items/special/bodily_reward_item"));
+		}
+		
+		if (::Math.rand(1, 100) > 5)
+		{
+			::World.Assets.getStash().add(::new("scripts/items/accessory/" + ::MSU.Array.rand(::Const.HexeOrigin.PossibleStartingPotions)));
+		}
+		else
+		{
+			::World.Assets.getStash().add(::new("scripts/items/special/spiritual_reward_item"));
+		}
+		
+		if (::Math.rand(1, 100) == 1)
+		{
+			::World.Assets.getStash().add(::new("scripts/items/special/fountain_of_youth_item"));
+		}
+	}
+
+	function onSpawnPlayer()
+	{
+		local randomVillage;
+
+		for( local i = 0; i != ::World.EntityManager.getSettlements().len(); ++i )
+		{
+			randomVillage = ::World.EntityManager.getSettlements()[i];
+
+			if (!randomVillage.isMilitary() && !randomVillage.isIsolatedFromRoads() && randomVillage.getSize() == 1)
+			{
+				break;
+			}
+		}
+
+		local randomVillageTile = randomVillage.getTile();
+		local navSettings = ::World.getNavigator().createSettings();
+		navSettings.ActionPointCosts = ::Const.World.TerrainTypeNavCost_Flat;
+
+		do
+		{
+			local x = ::Math.rand(::Math.max(2, randomVillageTile.SquareCoords.X - 4), ::Math.min(::Const.World.Settings.SizeX - 2, randomVillageTile.SquareCoords.X + 4));
+			local y = ::Math.rand(::Math.max(2, randomVillageTile.SquareCoords.Y - 4), ::Math.min(::Const.World.Settings.SizeY - 2, randomVillageTile.SquareCoords.Y + 4));
+
+			if (!::World.isValidTileSquare(x, y))
+			{
+			}
+			else
+			{
+				local tile = ::World.getTileSquare(x, y);
+
+				if (tile.Type == ::Const.World.TerrainType.Ocean || tile.Type == ::Const.World.TerrainType.Shore || tile.IsOccupied)
+				{
+				}
+				else if (tile.getDistanceTo(randomVillageTile) <= 1)
+				{
+				}
+				else if (tile.Type != ::Const.World.TerrainType.Plains && tile.Type != ::Const.World.TerrainType.Steppe && tile.Type != ::Const.World.TerrainType.Tundra && tile.Type != ::Const.World.TerrainType.Snow)
+				{
+				}
+				else
+				{
+					local path = ::World.getNavigator().findPath(tile, randomVillageTile, navSettings, 0);
+
+					if (!path.isEmpty())
+					{
+						randomVillageTile = tile;
+						break;
+					}
+				}
+			}
+		}
+		while (1);
+		
+		local eventID = this.m.IsLuftAdventure ? "event.luft_scenario_intro" : "event.hexe_intro_event";
+		::World.State.m.Player = ::World.spawnEntity("scripts/entity/world/player_party", randomVillageTile.Coords.X, randomVillageTile.Coords.Y);
+		::World.Assets.updateLook(::World.Flags.getAsInt("looks"));
+		::World.getCamera().setPos(::World.State.m.Player.getPos());
+		::Time.scheduleEvent(::TimeUnit.Real, 1000, function ( _tag )
+		{
+			::Music.setTrackList(::Const.Music.BeastsTracks, ::Const.Music.CrossFadeTime);
+			::World.Events.fire(eventID);
+		}, null);
+		this.m.IsLuftAdventure = false;
+	}
+	
+	function onInit()
+	{
+		this.starting_scenario.onInit();
+		::World.Assets.m.FootprintVision *= 1.5;
+	}
+
+	function updateLook()
+	{
+		local looks = ::World.Flags.getAsInt("looks") == 0 ? this.m.Look : ::World.Flags.getAsInt("looks");
+		looks = ::World.Flags.has("isExposed") ? 9994 : looks;
+		::World.State.getPlayer().getSprite("body").setBrush("figure_player_" + looks);
+	}
+	
+	function onHiredByScenario( bro )
+	{
+		if ([
+			"background.eunuch",
+			"background.hexe",
+			"background.hexe_commander",
+		].find(bro.getBackground().getID()) == null)
+		{
+			bro.getSkills().add(::new("scripts/skills/hexe/nggh_mod_fake_charmed_effect"));
+		}
+		else if (bro.getBackground().getID() == "background.eunuch")
+		{
+			bro.worsenMood(5.0, "Horrified by knowing the true nature of this company");
+		}
+	}
+	
+	function onUpdateHiringRoster( _roster )
+	{
+		local bros = _roster.getAll();
+		local garbage = [];
+
+		foreach( i, bro in bros )
+		{
+			if (::Const.WitchHaters.find(bro.getBackground().m.ID) != null)
+			{
+				garbage.push(bro);
+			}
+			
+			if (bro.getSkills().hasSkill("trait.bright"))
+			{
+				bro.getSkills().removeByID("trait.bright");
+			}
+			
+			if (!bro.getSkills().hasSkill("trait.dumb") && ::Math.rand(1, 4) == 4)
+			{
+				bro.getSkills().add(::new("scripts/skills/traits/dumb_trait"));
+			}
+		}
+		
+		foreach( g in garbage )
+		{
+			_roster.remove(g);
+		}
+	}
+
+	function onCombatFinished()
+	{
+		foreach( bro in ::World.getPlayerRoster().getAll() )
+		{
+			if (bro.getFlags().get("IsPlayerCharacter"))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	function isLuftName( _name )
+	{
+		// disable this start
+		return false;
+
+		local key = "LUFT";
+		local possibleName = [];
+		possibleName.push(" " + key + " ");
+		possibleName.push(key + " ");
+		possibleName.push(" " + key);
+		possibleName.push(key);
+
+		foreach ( p in possibleName ) 
+		{
+			if(_name.find(p) != null)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	function isForceSeed( _inputSeed , _inputName )
+	{
+		// check name first
+		foreach (i, array in ::Const.HexeOrigin.NameKeywords)
+		{
+		    foreach ( name in array )
+		    {
+		    	local possibleName = [];
+			    possibleName.push(" " + name + " ");
+			    possibleName.push(name + " ");
+			    possibleName.push(" " + name);
+			    possibleName.push(name);
+
+			    foreach ( p in possibleName) 
+			    {
+			        if(_inputName.find(p) != null)
+			    	{
+			    		return i;
+			    	}
+			    }
+		    }
+		}
+
+		// then check the seed
+		local length = _inputSeed.len();
+		foreach (i, string in ::Const.HexeOrigin.SeedKeywords)
+		{
+			if (string.len() > length)
+			{
+				return null;
+			}
+
+			local keyword = string.len() == length ? _inputSeed : _inputSeed.slice(0, string.len());
+			
+			if (keyword == string)
+			{
+				return i;
+			}
+		}
+		
+		return null;
+	}
+	
+	function setupLuftStart()
+	{
+		local roster = ::World.getPlayerRoster();
+		roster.clear();
+
+		local luft = roster.create("scripts/entity/tactical/player_beast/nggh_mod_player_luft");
+		luft.worsenMood(0.5, "I\'m hungry");
+		luft.setStartValuesEx();
+		luft.getBackground().buildDescription(true);
+		luft.getSkills().add(::new("scripts/skills/traits/player_character_trait"));
+		luft.setPlaceInFormation(12);
+		luft.getFlags().set("IsPlayerCharacter", true);
+		luft.getSprite("miniboss").setBrush("bust_miniboss_lone_wolf");
+		luft.m.HireTime = ::Time.getVirtualTimeF();
+		luft.m.PerkPoints += 1;
+		
+		::logInfo("With your seed/name, your start id = LUFT");
+		this.m.IsLuftAdventure = true;
+		this.setupRandomStart(6);
+		::World.Flags.set("looks", 9991);
+		::World.Flags.set("IsLuftAdventure", true);
+		::World.Flags.remove("RitualTimer");
+	}
+
+	function setupSpecialStart( _id, _hexe )
+	{
+		local roster = ::World.getPlayerRoster();
+
+		switch(_id)
+		{
+		case 0:
+			for( local i = 0; i < 3; ++i )
+			{
+				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_spider_eggs_player");
+				beast.improveMood(1.0, "Eggs! Eggs! Eggs!");
+				beast.setStartValuesEx();
+				beast.setPlaceInFormation(i + 21);
+				beast.addLightInjury();
+				beast.onHired();
+			}
+			
+			_hexe.setTitle(::Math.rand(1, 2) == 1 ? "the Eggscellent" : "the Eggmaniac");
+			break;
+
+		case 1:
+			for( local i = 0; i < 2; ++i )
+			{
+				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_spider_player");
+				beast.improveMood(1.0, "Still alive to serve the queen");
+				beast.setStartValuesEx();
+				beast.setPlaceInFormation(i + 3);
+				beast.addHeavyInjury();
+				beast.onHired();
+			}
+			
+			local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_spider_eggs_player");
+			beast.improveMood(1.0, "...");
+			beast.setStartValuesEx();
+			beast.setPlaceInFormation(12);
+			beast.addLightInjury();
+			beast.onHired();
+			
+			_hexe.setTitle("the Spider Queen");
+			break;
+
+		case 2:
+			local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_spider_player");
+			beast.improveMood(1.0, "...");
+			beast.setStartValuesEx(false, true);
+			beast.addLightInjury();
+			beast.setPlaceInFormation(12);
+			beast.onHired();
+			
+			_hexe.setTitle("the Black Widow");
+			break;
+			
+		case 3:
+			for( local i = 0; i < 2; ++i )
+			{
+				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_direwolf_player");
+				beast.improveMood(1.0, "Loyal doggie");
+				beast.setStartValuesEx();
+				beast.setPlaceInFormation(i + 3);
+				beast.addHeavyInjury();
+				beast.onHired();
+			}
+			
+			_hexe.setTitle("the Mother Wolf");
+			break;
+
+		case 4:
+			local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_direwolf_player");
+			beast.improveMood(1.0, "");
+			beast.setStartValuesEx(false, true);
+			beast.setPlaceInFormation(12);
+			beast.addHeavyInjury();
+			beast.onHired();
+			beast.setName("Yama-inu");
+
+			// dunno if you know this name
+			_hexe.setName("Mononoke Hime");
+			_hexe.setTitle("");
+			break;
+			
+		case 5:
+			for( local i = 0; i < 2; i = ++i )
+			{
+				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_hyena_player");
+				beast.improveMood(1.0, "Loyal doggie");
+				beast.setStartValuesEx();
+				beast.setPlaceInFormation(i + 3);
+				beast.addHeavyInjury();
+				beast.onHired();
+			}
+			
+			_hexe.setTitle("the Desert Lily");
+			break;
+			
+		case 6:
+			for( local i = 0; i < 3; ++i )
+			{
+				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_serpent_player");
+				beast.improveMood(1.0, "Loyal snake pet");
+				beast.setStartValuesEx(i == 1 ? ::Math.rand(1, 100) <= 10 : false);
+				beast.setPlaceInFormation(i + 3);
+				beast.addHeavyInjury();
+				beast.onHired();
+			}
+			
+			_hexe.setTitle("the Gorgeous Viper");
+			break;
+			
+		case 7:
+			local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_unhold_player");
+			beast.improveMood(1.0, "Still alive to serve the queen");
+			beast.setStartValuesEx();
+			beast.setPlaceInFormation(4);
+			beast.setHitpointsPct(::Math.rand(40, 65) * 0.01);
+			beast.onHired();
+			_hexe.setTitle("the Empress");
+			break;
+			
+		case 8:
+			for( local i = 0; i < 2; ++i )
+			{
+				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_ghoul_player");
+				beast.improveMood(1.0, "Loyal pet monkey");
+				beast.setStartValuesEx(false, false, ::Math.rand(1, 100) <= 15 ? 2 : 1);
+				beast.setPlaceInFormation(i + 3);
+				beast.addHeavyInjury();
+				beast.onHired();
+			}
+			
+			_hexe.setTitle("the Empress");
+			break;
+			
+		case 9:
+			for( local i = 0; i < 3; ++i )
+			{
+				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_alp_player");
+				beast.improveMood(1.0, "Enthralled");
+				beast.setStartValuesEx();
+				beast.setPlaceInFormation(i == 2 ? 12 : i + 3);
+				beast.addHeavyInjury();
+				beast.onHired();
+			}
+			
+			_hexe.setTitle("the Dreamy Goddess");
+			break;
+			
+		case 10:
+			for( local i = 0; i < ::Math.rand(3, 4); ++i )
+			{
+				local goblin = roster.create("scripts/entity/tactical/nggh_mod_player_goblin");
+				goblin.improveMood(1.0, "Still alive to serve the queen");
+				goblin.setStartValuesEx();
+				goblin.setPlaceInFormation(i + 3);
+				goblin.addLightInjury();
+				goblin.onHired();
+			}
+			
+			_hexe.setTitle("the Rose");
+			break;
+			
+		case 11:
+			for( local i = 0; i < 2; ++i )
+			{
+				local orc = roster.create("scripts/entity/tactical/nggh_mod_player_orc");
+				orc.improveMood(1.0, "We are warriors of the mistress");
+				orc.setStartValuesEx();
+				orc.setPlaceInFormation(i + 3);
+				orc.addHeavyInjury();
+				orc.onHired();
+			}
+			
+			_hexe.setTitle("the Warrior Queen");
+			break;
+			
+		case 12:
+			for( local i = 0; i < 2; ++i )
+			{
+				local bro = roster.create("scripts/entity/tactical/player");
+				bro.setStartValuesEx(::Const.CharacterBackgrounds);
+				bro.improveMood(1.0, "Still alive to serve the mistress");
+				bro.setPlaceInFormation(i + 3);
+				bro.addHeavyInjury();
+				bro.onHired();
+			}
+			
+			_hexe.setTitle("the Beauty");
+			break;
+			
+		case 13:
+			local god = roster.create("scripts/entity/tactical/player_beast/nggh_mod_trickster_god_player");
+			god.improveMood(1.0, "Bodyguarding for my fairy godmother");
+			god.setStartValuesEx();
+			god.setPlaceInFormation(4);
+			god.onHired();
+			god.setHitpointsPct(::Math.rand(40, 65) * 0.01);
+			_hexe.setTitle("the Fairy");
+			break;
+
+		case 14:
+			local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_lindwurm_player");
+			beast.improveMood(1.0, "Pet lindwurm");
+			beast.setStartValuesEx(false, ::Math.rand(1, 100) <= 5);
+			beast.setPlaceInFormation(4);
+			beast.onHired();
+			beast.setHitpointsPct(::Math.rand(40, 65) * 0.01);
+			_hexe.setTitle("the Dragon Queen");
+			break;
+
+		case 15:
+			if (::Math.rand(1, 100) <= 33)
+			{
+				for (local i = 0; i < 3; ++i)
+				{
+					local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_schrat_small_player");
+					beast.improveMood(1.0, "...");
+					beast.setStartValuesEx(i == 1 ? ::Math.rand(1, 100) <= 25 : false);
+					beast.setPlaceInFormation(i + 3);
+					beast.onHired();
+				}
+			}
+			else
+			{
+				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_schrat_player");
+				beast.improveMood(1.0, "...");
+				beast.setStartValuesEx();
+				beast.setPlaceInFormation(4);
+				beast.onHired();
+				beast.setHitpointsPct(::Math.rand(40, 65) * 0.01);
+			}
+
+			_hexe.setTitle("the Wicked");
+			break;
+
+		case 16:
+			local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_unhold_player");
+			beast.improveMood(1.0, "I\'m a bear");
+			beast.setStartValuesEx(false, true);
+			beast.setPlaceInFormation(4);
+			beast.setHitpointsPct(::Math.rand(40, 65) * 0.01);
+			beast.setName("Mor'du");
+			beast.onHired();
+
+			_hexe.setTitle("the Enchantress");
+			break;
+
+		case 17:
+			_hexe.getItems().unequip(_hexe.getItems().getItemAtSlot(::Const.ItemSlot.Mainhand));
+			_hexe.getItems().equip(::new("scripts/items/weapons/battle_whip"));
+			_hexe.setPlaceInFormation(22);
+			_hexe.setTitle("the Ringmistress");
+			
+			local a = [];
+			local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_unhold_player");
+			beast.improveMood(1.0, "I\'m Mor'du");
+			beast.setStartValuesEx(false, true);
+			beast.setPlaceInFormation(4);
+			beast.setHitpointsPct(::Math.rand(40, 65) * 0.01);
+			beast.setName("Mor'du");
+			a.push(beast);
+
+			beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_hyena_player");
+			beast.improveMood(1.0, "Loyal doggie");
+			beast.setStartValuesEx();
+			beast.setPlaceInFormation(3);
+			beast.addHeavyInjury();
+			a.push(beast);
+
+			beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_serpent_player");
+			beast.improveMood(1.0, "Talented snake");
+			beast.setStartValuesEx();
+			beast.setPlaceInFormation(5);
+			beast.addHeavyInjury();
+			a.push(beast);
+
+			local bro = roster.create("scripts/entity/tactical/player");
+			bro.setStartValuesEx(["juggler_background"]);
+			bro.improveMood(1.0, "Simping to the ringmistress");
+			bro.setPlaceInFormation(12);
+			bro.addHeavyInjury();
+			a.push(bro);
+
+			foreach ( _b in a )
+			{
+				_b.onHired();
+
+				local items = _b.getItems();
+				items.unequip(items.getItemAtSlot(::Const.ItemSlot.Head));
+				items.equip(::Const.World.Common.pickHelmet([
+					[1, "jesters_hat"],
+				]));
+			}
+			break;
+
+		case 18:
+			for( local i = 0; i < 2; ++i )
+			{
+				local orc = roster.create("scripts/entity/tactical/nggh_mod_player_orc");
+				orc.improveMood(1.0, "We are warriors of the mistress");
+				orc.setStartValuesEx();
+				orc.setPlaceInFormation(i + 2);
+				orc.addHeavyInjury();
+				orc.onHired();
+			}
+
+			for( local i = 0; i < 2; ++i )
+			{
+				local goblin = roster.create("scripts/entity/tactical/nggh_mod_player_goblin");
+				goblin.improveMood(1.0, "Still alive to serve the queen");
+				goblin.setStartValuesEx();
+				goblin.setPlaceInFormation(i + 4);
+				goblin.addLightInjury();
+				goblin.onHired();
+			}
+
+			local goblin = roster.create("scripts/entity/tactical/nggh_mod_player_goblin");
+			goblin.improveMood(1.0, "Still alive to serve the queen");
+			goblin.setStartValuesEx(false, ::Const.Goblin.Variants.find(::Const.EntityType.GoblinAmbusher));
+			goblin.setPlaceInFormation(12);
+			goblin.addLightInjury();
+			goblin.onHired();
+
+			_hexe.setTitle("Queen of Greenskin");
+			break;
+
+		case 19:
+			local donation = 0;
+			_hexe.setPlaceInFormation(22);
+			_hexe.getSkills().add(::new(::Const.Perks.PerkDefObjects[::MSU.Array.rand([::Const.Perks.PerkDefs.NggHCharmSpec, ::Const.Perks.PerkDefs.NggHCharmNudist, ::Const.Perks.PerkDefs.NggHCharmAppearance])].Script));
+			_hexe.getSkills().add(::new("scripts/skills/traits/seductive_trait"));
+			_hexe.getItems().addToBag(::new("scripts/items/weapons/barbarians/thorned_whip"));
+
+			for( local i = 0; i < 5; ++i )
+			{
+				local bro = roster.create("scripts/entity/tactical/player");
+				bro.setStartValuesEx(["beggar_southern_background", "beggar_background"]);
+				bro.getSkills().add(::new("scripts/skills/traits/loyal_trait"));
+				bro.setPlaceInFormation(i + 2);
+				bro.addHeavyInjury();
+				bro.onHired();
+				local money = ::Math.rand(1, 8) * 10;
+				bro.improveMood(0.5, "Amouranth\'s loyal simp");
+				bro.improveMood(0.2, "Donated " + money + " crowns to Amouranth");
+				bro.improveMood(0.3, (money >= 70 ? "I'm broke, but feel good for supporting Amouranth" : "Feel good for supporting Amouranth"));
+				donation += money;
+
+				local goblin = roster.create("scripts/entity/tactical/nggh_mod_player_goblin");
+				goblin.setStartValuesEx();
+				goblin.getSkills().add(::new("scripts/skills/traits/loyal_trait"));
+				goblin.setPlaceInFormation(i + 6);
+				goblin.addLightInjury();
+				goblin.onHired();
+				money = ::Math.rand(1, 8) * 10;
+				goblin.improveMood(0.5, "Amouranth\'s loyal simp");
+				goblin.improveMood(0.2, "Donated " + money + " crowns to Amouranth");
+				goblin.improveMood(0.3, (money >= 70 ? "I'm broke, but feel good for supporting Amouranth" : "Feel good for supporting Amouranth"));
+				donation += money;
+			}
+			
+			_hexe.improveMood(0.5, "Finished a stream");
+			_hexe.improveMood(0.5, "Received " + donation + " crowns of donation from gullible simps");
+			_hexe.setName("@Amouranth");
+			_hexe.setTitle("ASMR streamer");
+			::World.Assets.addMoney(donation);
+			::World.Assets.m.Name = ::removeFromBeginningOfText("The ", ::removeFromBeginningOfText("the ", "@Amouranth Simps Corp"));
+			break;
+
+		default:
+			for( local i = 0; i < 3; ++i )
+			{
+				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_spider_player");
+				beast.improveMood(1.0, "Still alive to serve the queen");
+				beast.setStartValuesEx();
+				beast.setPlaceInFormation(i + 3);
+				beast.addHeavyInjury();
+				beast.onHired();
+			}
+
+			_hexe.setTitle("the Spider Queen");
+		}
+	}
+
+	function setupRandomStart( _fixed = 0 )
+	{
+		::logInfo("Your starting party would be: RANDOM");
+		local roster = ::World.getPlayerRoster();
+		local c = 2;
+		local ret = [];
+		local tries = 0;
+
+		if (_fixed >= 2)
+		{
+			c = _fixed;
+		}
+		else
+		{
+			c = ::Math.rand(5, 7)
+
+			if (c >= 7)
+			{
+				c = ::Math.rand(5, 7);
+			}
+		}
+
+		::logInfo("Your party budget: " + c + " credits");
+
+		while (c >= 2 && tries < 100)
+		{
+			local r = ::MSU.Array.rand(::Const.HexeOrigin.PossibleStartingPlayers);
+
+			if (r[0] > c)
+			{
+				++tries;
+				continue;
+			}
+
+			::logInfo("rolled: " + r[2] + " , cost: " + r[0] + " credits");
+			ret.push(r[1]);
+			c -= r[0];
+			tries = 0;
+		}
+
+		foreach ( i, script in ret )
+		{
+			local starter = roster.create("scripts/entity/tactical/" + script);
+
+			if (script == "player")
+			{
+				starter.setStartValuesEx(::Const.CharacterBackgrounds);
+				starter.improveMood(1.0, "Still alive to serve the mistress");
+			}
+			else 
+			{
+				starter.setStartValuesEx();
+				starter.improveMood(1.0, "Loyal servant");
+			}
+
+			starter.getSkills().removeByID("trait.disloyal");
+			starter.getSkills().removeByID("trait.greedy");
+			starter.setPlaceInFormation(i + 3);
+			starter.onHired();
+
+			if (!this.m.IsLuftAdventure)
+			{
+				starter.addHeavyInjury();
+			}
+		}
+	}
+
+});
+
