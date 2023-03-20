@@ -1,0 +1,26 @@
+
+.turnsequencebar-module .stats-column > .l-extra-stats-column
+{
+	top	    : 4.6rem;
+	left	: 0;
+	right   : 0;
+	bottom  : 0;
+	width   : 20.0rem;
+	height  : 3.2rem;
+	position: absolute;
+	margin  : auto;
+}
+
+.ui-control-stats-progressbar.magic-points
+{
+	background-image: url("coui://gfx/ui/skin/bar_fill_magic_preview.png");
+	background-repeat: no-repeat;
+	background-size: 15.5rem 2.6rem;
+}
+
+.ui-control-stats-progressbar-preview.magic-points
+{
+	background-image: url("coui://gfx/ui/skin/bar_fill_magic.png");
+	background-repeat: no-repeat;
+	background-size: 15.5rem 2.6rem;
+}
