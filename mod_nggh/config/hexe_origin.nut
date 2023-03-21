@@ -76,7 +76,6 @@ if (!("HexeOrigin" in ::Const))
 		//11
 		"ORC",
 		"BRUTE",
-		"BERSERKER",
 		"WARRIOR"
 	],
 	[
@@ -124,6 +123,16 @@ if (!("HexeOrigin" in ::Const))
 		"ASMR",
 		"STREAMER"
 	],
+	[
+		//20
+		"BERSERK"
+	],
+	[
+		//21
+		"WITCHES",
+		"WITCH COVEN",
+		"HEXEN COVEN",
+	]
 ];
 ::Const.HexeOrigin.SeedKeywords <- [
 	"EGG",//0
@@ -144,8 +153,10 @@ if (!("HexeOrigin" in ::Const))
 	"SCH",//15
 	"BEA",//16
 	"CIRCUS",//17
-	"GREEN"//18
+	"GREEN",//18
 	"ASMR",//19
+	"BER",//20
+	"HEX",//21
 ];
 ::Const.HexeOrigin.StartingRollNames <- [
 	"EGGS",
@@ -168,7 +179,8 @@ if (!("HexeOrigin" in ::Const))
 	"CIRCUS",
 	"GREENSKINS",
 	"AMOURANTH TWITCH",
-	"",
+	"BERSERK",
+	"HEXEN COVEN"
 ];
 ::Const.HexenCharmablePet <-[
 	::Const.EntityType.Wolf,	

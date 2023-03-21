@@ -15,7 +15,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		this.m.IconMini = "status_effect_85_mini";
 		this.m.Overlay = "status_effect_85";
 		this.m.SoundOnUse = "";
-		this.m.Type = this.Const.SkillType.StatusEffect;
+		this.m.Type = ::Const.SkillType.StatusEffect;
 		this.m.IsActive = false;
 		this.m.IsRemovedAfterBattle = false;
 	}

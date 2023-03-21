@@ -708,6 +708,111 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			::World.Assets.m.Name = ::removeFromBeginningOfText("The ", ::removeFromBeginningOfText("the ", "@Amouranth Simps Corp"));
 			break;
 
+		case 20:
+			// the witch
+			this.removeTraitsFrom(_hexe);
+			_hexe.setName("Schierke");
+			_hexe.setTitle("");
+			_hexe.getSkills().add("scripts/skills/traits/tiny_trait");
+			_hexe.getSkills().add("scripts/skills/traits/light_trait");
+			_hexe.getItems().equip(::new("scripts/items/weapons/legend_staff_gnarled"));
+			_hexe.getItems().equip(::Const.World.Common.pickHelmet([[1, "dark_cowl"]]));
+			this.addScenarioPerk(_hexe.getBackground(), ::Const.Perks.PerkDefs.LegendMagicMissile);
+
+			// berserker
+			local guts = roster.create("scripts/entity/tactical/player");
+			guts.setStartValuesEx(["legend_berserker_background"], true, -1, false);
+			guts.setTitle("the Black Swordsman");
+			guts.setName("Guts");
+			guts.onHired();
+
+			this.removeTraitsFrom(guts);
+			guts.getSkills().add("scripts/skills/traits/huge_trait");
+			guts.getSkills().add("scripts/skills/traits/heavy_trait");
+			guts.getSkills().add("scripts/skills/traits/tough_trait");
+			guts.getSkills().add("scripts/skills/traits/strong_trait");
+			guts.getItems().equip(::new("scripts/items/weapons/greatsword"));
+			guts.getItems().equip(::Const.World.Common.pickHelmet([[1, "full_helm"]]));
+			guts.getItems().equip(::Const.World.Common.pickArmor([[1, "coat_of_plates"]]));
+
+			// branded peasant
+			local casca = roster.create("scripts/entity/tactical/player");
+			casca.setStartValuesEx(["belly_dancer_background"]);
+			casca.setTitle("the Branded Girl");
+			casca.setName("Casca");
+			casca.onHired();
+
+			this.removeTraitsFrom(casca);
+			casca.getSkills().add("scripts/skills/traits/fear_beasts_trait");
+			casca.getSkills().add("scripts/skills/traits/mad_trait");
+
+			// brat thief
+			local isidro = roster.create("scripts/entity/tactical/player");
+			isidro.setStartValuesEx(["thief_background"]);
+			isidro.setName("Isidro");
+			isidro.setTitle("");
+			isidro.onHired();
+
+			this.removeTraitsFrom(isidro);
+			isidro.getSkills().add("scripts/skills/traits/cocky_trait");
+			isidro.getSkills().add("scripts/skills/traits/dexterous_trait");
+			isidro.getSkills().add("scripts/skills/traits/quick_trait");
+			isidro.getSkills().add("scripts/skills/traits/tiny_trait");
+
+			// knight woman
+			local farnese = roster.create("scripts/entity/tactical/player");
+			farnese.setStartValuesEx(["female_adventurous_noble_background"], true, -1, false);
+			farnese.getSprite("hair").setBrush("hair_blonde_21");
+			farnese.setTitle("de Vandimion");
+			farnese.setName("Farnese");
+			farnese.onHired();
+
+			this.removeTraitsFrom(farnese);
+			this.addScenarioPerk(farnese.getBackground(), ::Const.Perks.PerkDefs.SpecSword);
+			farnese.getSkills().add("scripts/skills/traits/hesitant_trait");
+			farnese.getSkills().add("scripts/skills/traits/fainthearted_trait");
+			farnese.getItems().equip(::new("scripts/items/weapons/noble_sword"));
+			farnese.getItems().equip(::Const.World.Common.pickArmor([[1, "mail_hauberk"]]));
+
+			// knight woman's servant
+			local serpico = roster.create("scripts/entity/tactical/player");
+			serpico.setStartValuesEx(["servant_background"], true, -1, false);
+			serpico.getSprite("hair").setBrush("hair_blonde_03");
+			serpico.setName("Serpico");
+			serpico.setTitle("");
+			serpico.onHired();
+
+			this.removeTraitsFrom(serpico);
+			this.addScenarioPerk(serpico.getBackground(), ::Const.Perks.PerkDefs.SpecSword);
+			serpico.getSkills().add("scripts/skills/traits/irrational_trait");
+			serpico.getSkills().add("scripts/skills/traits/loyal_trait");
+			serpico.getSkills().add("scripts/skills/traits/bright_trait");
+			serpico.getItems().equip(::new("scripts/items/weapons/fencing_sword"));
+			serpico.getItems().equip(::Const.World.Common.pickArmor([
+				[1, "seedmaster_noble_armor"],
+				[1, "citreneking_noble_armor"],
+			]));
+			break;
+
+		case 21:
+			local num = ::Math.rand(1, 3);
+			local credits = 5;
+
+			for( local i = 0; i < num; ++i )
+			{
+				local hexe = roster.create("scripts/entity/tactical/player");
+				hexe.setStartValuesEx(["nggh_mod_hexe_regular_background"]);
+				hexe.getBackground().buildDescription(true);
+				hexe.setPlaceInFormation(12 + i);
+				hexe.onHired();
+				credits += 3;
+			}
+			
+			_hexe.setPlaceInFormation(11);
+			_hexe.setTitle("the Coven Leader");
+			this.setupRandomStart(credits, false);
+			break;
+
 		default:
 			for( local i = 0; i < 3; ++i )
 			{
@@ -723,17 +828,21 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		}
 	}
 
-	function setupRandomStart( _fixed = 0 )
+	function setupRandomStart( _credits = 0 , _declare = true )
 	{
-		::logInfo("Your starting party would be: RANDOM");
+		if (_declare)
+		{
+			::logInfo("Your starting party would be: RANDOM");
+		}
+		
 		local roster = ::World.getPlayerRoster();
 		local c = 2;
 		local ret = [];
 		local tries = 0;
 
-		if (_fixed >= 2)
+		if (_credits >= 2)
 		{
-			c = _fixed;
+			c = _credits;
 		}
 		else
 		{
@@ -787,6 +896,19 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			{
 				starter.addHeavyInjury();
 			}
+		}
+	}
+
+	function removeTraitsFrom( _bro )
+	{
+		foreach(trait in _bro.getSkills().getAllSkillsOfType(::Const.SkillType.Trait))
+		{
+			if (trait.isType(::Const.SkillType.Background))
+			{
+				continue;
+			}
+
+			trait.removeSelf();
 		}
 	}
 

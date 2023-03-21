@@ -1,7 +1,7 @@
 ::Nggh_MagicConcept <- {
 	ID = "mod_nggh_magic_concept",
 	Name = "NgGH Magic Concept",
-	Version = "3.0.0",
+	Version = "3.0.0-beta.41",
 };
 
 ::mods_registerMod(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, "NecrOwO\'s Forbidden Magic");
@@ -16,7 +16,7 @@
 
 	// add NexusMods mod source (for an easy link)
 	::Nggh_MagicConcept.Mod.Registry.addModSource(::MSU.System.Registry.ModSourceDomain.NexusMods, "https://www.nexusmods.com/battlebrothers/mods/207");
-	
+
 	// important consts and objects
 	::IsAccessoryCompanionsExist <- ::mods_getRegisteredMod("mod_AC") != null;
 	::Is_PTR_Exist <- ::mods_getRegisteredMod("mod_legends_PTR") != null;
