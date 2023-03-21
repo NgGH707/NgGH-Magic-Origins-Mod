@@ -16,7 +16,6 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 			Weapon = [
 				::Const.Perks.DaggerTree,
 				::Const.Perks.StaffTree,
-				::Const.Perks.PolearmTree,
 			],
 			Defense = [
 				::Const.Perks.LightArmorTree
@@ -27,9 +26,7 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 				::Const.Perks.InspirationalTree,
 			],
 			Enemy = [],
-			Class = [
-				::Const.Perks.HealerClassTree,
-			],
+			Class = [],
 			Magic = []
 		};
 
