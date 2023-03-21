@@ -7,7 +7,7 @@ A mod of Battle Brother that brings out new unqiue origins and new mechanism
 
 ## Requirements
 * Battle Brothers with all DLC installed, version 1.4.0.49
-* Legends mod, the latest version from [BB Legends Mod Discord Server](https://discord.gg/aErQSMhZ)
+* Legends mod, the latest version from [BB Legends Mod Discord Server](https://github.com/Battle-Brothers-Legends/Legends/releases)
 * mod_nggh_magic_origins_legends.zip, the latest version
 
 ## Usage
@@ -23,7 +23,7 @@ To install this mod you should do step-by-step:
 
 This repository is used for private mod Battle Brothers game and as a submod for Legends mod.
 
-This file is part of the NgGH-Magic-Expansion Project. 
+This repository is part of the NgGH-Magic-Concept Project. 
 
 AUTHORS: NgGH707.
 
@@ -35,6 +35,6 @@ CREDITS:
 * GRIBABAS - Artworks for named staves
 * Enke - Artworks for the new upcoming necromancer faction
 
-COPYRIGHT: Reprint or usage of materials/scripts from this repository is permitted only with the consent of the owner. Many sprites and images used in this mod aren't mine, i don't own them. All rights reserved to their rightful owner and their licensors.
+COPYRIGHT: Reprint or usage of materials/scripts from this repository is permitted only with the consent of the owner. All rights reserved to their rightful owner and their licensors.
 
 Battle Brothers content and materials are trademarks and copyrights of Overhype Studios or its licensors. All rights reserved. This mod project is not affiliated with Overhype Studios or its licensors.
