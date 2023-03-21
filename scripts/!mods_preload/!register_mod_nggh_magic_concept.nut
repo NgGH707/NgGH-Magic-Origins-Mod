@@ -10,6 +10,13 @@
 	// define mod class of this mod
 	::Nggh_MagicConcept.Mod <- ::MSU.Class.Mod(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, ::Nggh_MagicConcept.Name);
 
+	// add GitHub mod source
+	::Nggh_MagicConcept.Mod.Registry.addModSource(::MSU.System.Registry.ModSourceDomain.GitHub, "https://github.com/NgGH707/NgGH-Magic-Origins-Mod");
+	::Nggh_MagicConcept.Mod.Registry.setUpdateSource(::MSU.System.Registry.ModSourceDomain.GitHub)
+
+	// add NexusMods mod source (for an easy link)
+	::Nggh_MagicConcept.Mod.Registry.addModSource(::MSU.System.Registry.ModSourceDomain.NexusMods, "https://www.nexusmods.com/battlebrothers/mods/207");
+	
 	// important consts and objects
 	::IsAccessoryCompanionsExist <- ::mods_getRegisteredMod("mod_AC") != null;
 	::Is_PTR_Exist <- ::mods_getRegisteredMod("mod_legends_PTR") != null;
