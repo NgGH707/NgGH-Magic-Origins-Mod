@@ -805,7 +805,13 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 				if (c != null && !c.isNull() && c.isAlive())
 				{
 					::logInfo("Trying to enslave - " + c.getName());
-					c.getSkills().getSkillByID("effects.charmed_captive").onCombatFinished();
+
+					local charm = c.getSkills().getSkillByID("effects.charmed_captive");
+
+					if (charm != null)
+					{
+						charm.onCombatFinished();
+					}
 				}
 			}
 		}

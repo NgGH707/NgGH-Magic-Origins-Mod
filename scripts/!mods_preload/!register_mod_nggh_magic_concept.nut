@@ -1,11 +1,11 @@
 ::Nggh_MagicConcept <- {
 	ID = "mod_nggh_magic_concept",
 	Name = "NgGH Magic Concept",
-	Version = "3.0.0-beta.41",
+	Version = "3.0.0-beta.42",
 };
 
 ::mods_registerMod(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, "NecrOwO\'s Forbidden Magic");
-::mods_queue(::Nggh_MagicConcept.ID, "mod_legends, mod_msu(>=1.2.0-rc.2), >mod_legends_PTR", function()
+::mods_queue(::Nggh_MagicConcept.ID, "mod_legends, mod_msu(>=1.2.4), >mod_legends_PTR(>=2.1.27)", function()
 {
 	// define mod class of this mod
 	::Nggh_MagicConcept.Mod <- ::MSU.Class.Mod(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, ::Nggh_MagicConcept.Name);

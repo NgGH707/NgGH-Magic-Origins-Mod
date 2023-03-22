@@ -79,9 +79,10 @@ this.nggh_mod_charmed_captive_effect <- ::inherit("scripts/skills/skill", {
 		
 		if (this.m.IsTheLastEnemy)
 		{
+			this.onCombatFinished();
+			this.removeSelf();
 			::Tactical.Entities.setLastCombatResult(::Const.Tactical.CombatResult.EnemyRetreated);
       		::Tactical.Entities.checkCombatFinished(true);
-			this.onCombatFinished();
 			return;
 		}
 		
