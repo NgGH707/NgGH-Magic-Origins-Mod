@@ -713,8 +713,8 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			this.removeTraitsFrom(_hexe);
 			_hexe.setName("Schierke");
 			_hexe.setTitle("");
-			_hexe.getSkills().add("scripts/skills/traits/tiny_trait");
-			_hexe.getSkills().add("scripts/skills/traits/light_trait");
+			_hexe.getSkills().add(::new("scripts/skills/traits/tiny_trait"));
+			_hexe.getSkills().add(::new("scripts/skills/traits/light_trait"));
 			_hexe.getItems().equip(::new("scripts/items/weapons/legend_staff_gnarled"));
 			_hexe.getItems().equip(::Const.World.Common.pickHelmet([[1, "dark_cowl"]]));
 			this.addScenarioPerk(_hexe.getBackground(), ::Const.Perks.PerkDefs.LegendMagicMissile);
@@ -727,10 +727,10 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			guts.onHired();
 
 			this.removeTraitsFrom(guts);
-			guts.getSkills().add("scripts/skills/traits/huge_trait");
-			guts.getSkills().add("scripts/skills/traits/heavy_trait");
-			guts.getSkills().add("scripts/skills/traits/tough_trait");
-			guts.getSkills().add("scripts/skills/traits/strong_trait");
+			guts.getSkills().add(::new("scripts/skills/traits/huge_trait"));
+			guts.getSkills().add(::new("scripts/skills/traits/heavy_trait"));
+			guts.getSkills().add(::new("scripts/skills/traits/tough_trait"));
+			guts.getSkills().add(::new("scripts/skills/traits/strong_trait"));
 			guts.getItems().equip(::new("scripts/items/weapons/greatsword"));
 			guts.getItems().equip(::Const.World.Common.pickHelmet([[1, "full_helm"]]));
 			guts.getItems().equip(::Const.World.Common.pickArmor([[1, "coat_of_plates"]]));
@@ -743,8 +743,8 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			casca.onHired();
 
 			this.removeTraitsFrom(casca);
-			casca.getSkills().add("scripts/skills/traits/fear_beasts_trait");
-			casca.getSkills().add("scripts/skills/traits/mad_trait");
+			casca.getSkills().add(::new("scripts/skills/traits/fear_beasts_trait"));
+			casca.getSkills().add(::new("scripts/skills/traits/mad_trait"));
 
 			// brat thief
 			local isidro = roster.create("scripts/entity/tactical/player");
@@ -754,10 +754,10 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			isidro.onHired();
 
 			this.removeTraitsFrom(isidro);
-			isidro.getSkills().add("scripts/skills/traits/cocky_trait");
-			isidro.getSkills().add("scripts/skills/traits/dexterous_trait");
-			isidro.getSkills().add("scripts/skills/traits/quick_trait");
-			isidro.getSkills().add("scripts/skills/traits/tiny_trait");
+			isidro.getSkills().add(::new("scripts/skills/traits/cocky_trait"));
+			isidro.getSkills().add(::new("scripts/skills/traits/dexterous_trait"));
+			isidro.getSkills().add(::new("scripts/skills/traits/quick_trait"));
+			isidro.getSkills().add(::new("scripts/skills/traits/tiny_trait"));
 
 			// knight woman
 			local farnese = roster.create("scripts/entity/tactical/player");
@@ -769,8 +769,8 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 
 			this.removeTraitsFrom(farnese);
 			this.addScenarioPerk(farnese.getBackground(), ::Const.Perks.PerkDefs.SpecSword);
-			farnese.getSkills().add("scripts/skills/traits/hesitant_trait");
-			farnese.getSkills().add("scripts/skills/traits/fainthearted_trait");
+			farnese.getSkills().add(::new("scripts/skills/traits/hesitant_trait"));
+			farnese.getSkills().add(::new("scripts/skills/traits/fainthearted_trait"));
 			farnese.getItems().equip(::new("scripts/items/weapons/noble_sword"));
 			farnese.getItems().equip(::Const.World.Common.pickArmor([[1, "mail_hauberk"]]));
 
@@ -784,9 +784,9 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 
 			this.removeTraitsFrom(serpico);
 			this.addScenarioPerk(serpico.getBackground(), ::Const.Perks.PerkDefs.SpecSword);
-			serpico.getSkills().add("scripts/skills/traits/irrational_trait");
-			serpico.getSkills().add("scripts/skills/traits/loyal_trait");
-			serpico.getSkills().add("scripts/skills/traits/bright_trait");
+			serpico.getSkills().add(::new("scripts/skills/traits/irrational_trait"));
+			serpico.getSkills().add(::new("scripts/skills/traits/loyal_trait"));
+			serpico.getSkills().add(::new("scripts/skills/traits/bright_trait"));
 			serpico.getItems().equip(::new("scripts/items/weapons/fencing_sword"));
 			serpico.getItems().equip(::Const.World.Common.pickArmor([
 				[1, "seedmaster_noble_armor"],

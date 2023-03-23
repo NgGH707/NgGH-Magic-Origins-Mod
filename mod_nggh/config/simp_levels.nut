@@ -20,3 +20,8 @@ if (!("Simp" in ::Const))
 	["BraveryMult",          "Resolve",         "bravery"     ],
 	["InitiativeMult",       "Initiative",      "initiative"  ],
 ];
+
+::Const.Simp.SpecialBonuses <- [
+	["DamageTotalMult",      "Attack Damage",   "damage_dealt",  5],
+	[  "HitpointsMult",          "Hitpoints",         "health", 10]
+]

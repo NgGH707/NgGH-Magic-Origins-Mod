@@ -88,7 +88,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 			return ret;
 		}
 		
-		local table = this.compileBonusesTable(lv, ::Const.Simp.DefaultBonusValue, true);
+		local table = this.compileBonusTable(lv, ::Const.Simp.DefaultBonusValue, true);
 		local i = ret.len() + 1;
 
 		foreach (k, c in table)
@@ -118,7 +118,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 			return;
 		}
 
-		local table = this.compileBonusesTable(lv, ::Const.Simp.DefaultBonusValue);
+		local table = this.compileBonusTable(lv, ::Const.Simp.DefaultBonusValue);
 
 		foreach (k, c in table)
 		{
@@ -126,7 +126,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		}
 	}
 
-	function compileBonusesTable( _level = null, _value = ::Const.Simp.DefaultBonusValue, _forTooltips = false )
+	function compileBonusTable( _level = null, _value = ::Const.Simp.DefaultBonusValue, _forTooltips = false )
 	{
 		local table = {};
 
@@ -137,27 +137,42 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 
 		for (local i = 1; i <= _level; ++i)
 		{
-			local _key = ::Const.Simp.Bonuses[i][0];
+			this.fillBonusTable(table, _value, ::Const.Simp.Bonuses[i], _forTooltips);
+		}
 
-			if (table.rawin(_key))
+		foreach (array in ::Const.Simp.SpecialBonuses)
+		{
+			if (_level < array[3])
 			{
-				table[_key].Value += _value;
+				continue;
 			}
-			else
-			{
-				table.rawset(_key, {
-					Value = _value,
-				});
 
-				if (_forTooltips)
-				{
-					table[_key].Name <- ::Const.Simp.Bonuses[i][1];
-					table[_key].Icon <- ::Const.Simp.Bonuses[i][2];
-				}
-			}
+			this.fillBonusTable(table, _value, array, _forTooltips);
 		}
 
 		return table;
+	}
+
+	function fillBonusTable( _table, _value, _array , _forTooltips = false )
+	{
+		local _key = _array[0];
+
+		if (_table.rawin(_key))
+		{
+			_table[_key].Value += _value;
+		}
+		else
+		{
+			_table.rawset(_key, {
+				Value = _value,
+			});
+
+			if (_forTooltips)
+			{
+				_table[_key].Name <- _array[1];
+				_table[_key].Icon <- _array[2];
+			}
+		}
 	}
 
 	function resetToDefault()
