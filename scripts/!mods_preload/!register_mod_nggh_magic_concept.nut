@@ -5,7 +5,7 @@
 };
 
 ::mods_registerMod(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, "NecrOwO\'s Forbidden Magic");
-::mods_queue(::Nggh_MagicConcept.ID, "mod_legends, mod_msu(>=1.2.4), >mod_legends_PTR(>=2.1.27)", function()
+::mods_queue(::Nggh_MagicConcept.ID, "mod_legends, mod_msu(>=1.2.4), >mod_legends_PTR", function()
 {
 	// define mod class of this mod
 	::Nggh_MagicConcept.Mod <- ::MSU.Class.Mod(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, ::Nggh_MagicConcept.Name);
@@ -20,6 +20,7 @@
 	// important consts and objects
 	::IsAccessoryCompanionsExist <- ::mods_getRegisteredMod("mod_AC") != null;
 	::Is_PTR_Exist <- ::mods_getRegisteredMod("mod_legends_PTR") != null;
+	::Nggh_MagicConcept.Class <- {};
 
 	// set up mod settings 
 	::Nggh_MagicConcept.mod_settings();

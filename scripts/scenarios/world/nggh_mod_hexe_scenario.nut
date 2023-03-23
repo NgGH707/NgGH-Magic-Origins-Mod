@@ -194,19 +194,19 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		::World.State.getPlayer().getSprite("body").setBrush("figure_player_" + looks);
 	}
 	
-	function onHiredByScenario( bro )
+	function onHiredByScenario( _bro )
 	{
 		if ([
 			"background.eunuch",
 			"background.hexe",
 			"background.hexe_commander",
-		].find(bro.getBackground().getID()) == null)
+		].find(_bro.getBackground().getID()) == null)
 		{
-			bro.getSkills().add(::new("scripts/skills/hexe/nggh_mod_fake_charmed_effect"));
+			_bro.getSkills().add(::new("scripts/skills/hexe/nggh_mod_fake_charmed_effect"));
 		}
-		else if (bro.getBackground().getID() == "background.eunuch")
+		else if (_bro.getBackground().getID() == "background.eunuch")
 		{
-			bro.worsenMood(5.0, "Horrified by knowing the true nature of this company");
+			_bro.worsenMood(5.0, "Horrified by knowing the true nature of this company");
 		}
 	}
 	
@@ -280,7 +280,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		// check name first
 		foreach (i, array in ::Const.HexeOrigin.NameKeywords)
 		{
-		    foreach ( name in array )
+		    foreach (name in array)
 		    {
 		    	local possibleName = [];
 			    possibleName.push(" " + name + " ");
@@ -288,9 +288,9 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			    possibleName.push(" " + name);
 			    possibleName.push(name);
 
-			    foreach ( p in possibleName) 
+			    foreach (p in possibleName) 
 			    {
-			        if(_inputName.find(p) != null)
+			        if (_inputName.find(p) != null)
 			    	{
 			    		return i;
 			    	}
@@ -795,8 +795,10 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			break;
 
 		case 21:
-			local num = ::Math.rand(1, 3);
 			local credits = 5;
+			local num = ::Math.rand(1, 3);
+			_hexe.setPlaceInFormation(11);
+			_hexe.setTitle("the Coven Leader");
 
 			for( local i = 0; i < num; ++i )
 			{
@@ -807,9 +809,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 				hexe.onHired();
 				credits += 3;
 			}
-			
-			_hexe.setPlaceInFormation(11);
-			_hexe.setTitle("the Coven Leader");
+
 			this.setupRandomStart(credits, false);
 			break;
 
