@@ -1,7 +1,7 @@
 ::Nggh_MagicConcept <- {
 	ID = "mod_nggh_magic_concept",
 	Name = "NgGH Magic Concept",
-	Version = "3.0.0-beta.42",
+	Version = "3.0.0-beta.43",
 };
 
 ::mods_registerMod(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, "NecrOwO\'s Forbidden Magic");
@@ -37,7 +37,8 @@
 	// will probably put these to a callback after the new UI is connected
 	::PerkTreeBuilder <- ::new("scripts/mods/perk_tree_builder");
 	::TalentFiller <- ::new("scripts/mods/talent_filler");
-	::nggh_processingEntries();
-	::nggh_overwriteEntries();
+	//::nggh_processingEntries();
+	//::nggh_overwriteEntries();
+
 });
 

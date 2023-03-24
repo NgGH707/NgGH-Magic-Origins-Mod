@@ -721,7 +721,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 
 			// berserker
 			local guts = roster.create("scripts/entity/tactical/player");
-			guts.setStartValuesEx(["legend_berserker_background"], true, -1, false);
+			guts.setStartValuesEx(["legend_berserker_background"], true, 0, false);
 			guts.setTitle("the Black Swordsman");
 			guts.setName("Guts");
 			guts.onHired();
@@ -731,6 +731,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			guts.getSkills().add(::new("scripts/skills/traits/heavy_trait"));
 			guts.getSkills().add(::new("scripts/skills/traits/tough_trait"));
 			guts.getSkills().add(::new("scripts/skills/traits/strong_trait"));
+			guts.getSkills().add(::new("scripts/skills/injury_permanent/missing_eye_injury"));
 			guts.getItems().equip(::new("scripts/items/weapons/greatsword"));
 			guts.getItems().equip(::Const.World.Common.pickHelmet([[1, "full_helm"]]));
 			guts.getItems().equip(::Const.World.Common.pickArmor([[1, "coat_of_plates"]]));
@@ -761,7 +762,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 
 			// knight woman
 			local farnese = roster.create("scripts/entity/tactical/player");
-			farnese.setStartValuesEx(["female_adventurous_noble_background"], true, -1, false);
+			farnese.setStartValuesEx(["female_adventurous_noble_background"], true, 1, false);
 			farnese.getSprite("hair").setBrush("hair_blonde_21");
 			farnese.setTitle("de Vandimion");
 			farnese.setName("Farnese");

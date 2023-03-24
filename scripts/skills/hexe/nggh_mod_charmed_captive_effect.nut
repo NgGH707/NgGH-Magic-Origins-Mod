@@ -178,9 +178,11 @@ this.nggh_mod_charmed_captive_effect <- ::inherit("scripts/skills/skill", {
 				this.m.Self.getSkills().add(ini);
 			}
 			
-			::World.getPlayerRoster().add(this.m.Self);
 			//this.m.Self.getBackground().onAddEquipment();
+			this.m.Self.setInReserves(true);
 			this.m.Self.onHired();
+
+			::World.getPlayerRoster().add(this.m.Self);
 			this.m.Self = null;
 		}
 		
