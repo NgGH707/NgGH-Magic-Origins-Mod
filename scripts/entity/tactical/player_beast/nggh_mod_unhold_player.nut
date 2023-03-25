@@ -367,9 +367,6 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		this.setSpriteOffset("status_rooted", ::createVec(-10, 16));
 		this.setSpriteOffset("status_stunned", ::createVec(0, 10));
 		this.setSpriteOffset("arrow", ::createVec(0, 10));
-
-		// can use armor for protection
-		this.m.Skills.removeByID("special.cosmetic");
 	}
 	
 	function onAfterInit()
@@ -614,7 +611,13 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		if (this.isBear())
 		{	
 			this.changeBearSounds();
+			this.getItems().getData()[::Const.ItemSlot.Body][0] = -1;
 			this.getItems().updateAppearance();
+		}
+		else
+		{
+			// can use armor for protection
+			this.m.Skills.removeByID("special.cosmetic");
 		}
 	}
 

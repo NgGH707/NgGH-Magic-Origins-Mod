@@ -42,15 +42,15 @@ if (!("Nggh_AttributesLevelUp" in ::Const))
 ::Const.Nggh_AttributesLevelUp.Direwolf <- [
 	{
 		Min = 3,
-		Max = 4
-	},
-	{
-		Min = 3,
-		Max = 4
-	},
-	{
-		Min = 3,
 		Max = 5
+	},
+	{
+		Min = 3,
+		Max = 4
+	},
+	{
+		Min = 3,
+		Max = 4
 	},
 	{
 		Min = 4,
@@ -76,7 +76,7 @@ if (!("Nggh_AttributesLevelUp" in ::Const))
 
 ::Const.Nggh_AttributesLevelUp.Hyena <- [
 	{
-		Min = 3,
+		Min = 4,
 		Max = 5
 	},
 	{
@@ -84,7 +84,7 @@ if (!("Nggh_AttributesLevelUp" in ::Const))
 		Max = 4
 	},
 	{
-		Min = 4,
+		Min = 3,
 		Max = 5
 	},
 	{
