@@ -34,6 +34,7 @@ this.nggh_mod_goblin_shaman_armor <- ::inherit("scripts/items/legend_armor/legen
 	{
 		this.legend_armor.onEquip();
 		this.m.IsDroppedAsLoot = ::Nggh_MagicConcept.isHexeOrigin();
+		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
 		{

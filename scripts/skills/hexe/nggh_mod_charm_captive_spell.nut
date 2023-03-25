@@ -797,8 +797,9 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 	{
 		this.m.Count = 0;
 		this.m.IsInBattle = false;
+		local isVictory = ::Tactical.Entities.getCombatResult() == ::Const.Tactical.CombatResult.EnemyDestroyed || ::Tactical.Entities.getCombatResult() == ::Const.Tactical.CombatResult.EnemyRetreated;
 		
-		if (this.m.Capture.len() != 0)
+		if (isVictory && this.m.Capture.len() != 0)
 		{
 			foreach (c in this.m.Capture)
 			{
@@ -817,7 +818,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		}
 		
 		this.m.Capture = [];
-		::World.getTemporaryRoster().clear();
+		//::World.getTemporaryRoster().clear();
 	}
 
 	function onTargetSelected( _targetTile ) {}

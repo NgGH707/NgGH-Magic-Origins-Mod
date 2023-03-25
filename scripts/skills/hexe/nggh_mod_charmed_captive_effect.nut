@@ -131,6 +131,7 @@ this.nggh_mod_charmed_captive_effect <- ::inherit("scripts/skills/skill", {
 		{
 			local count = ::Tactical.Entities.getFlags().getAsInt("CharmedCount");
 			::Tactical.Entities.getFlags().set("CharmedCount", ::Math.max(0, count - 1));
+			::Tactical.getTemporaryRoster().remove(this.m.Self);
 
 			if (this.m.Charm != null && !this.m.Charm.isNull())
 			{
@@ -179,10 +180,12 @@ this.nggh_mod_charmed_captive_effect <- ::inherit("scripts/skills/skill", {
 			}
 			
 			//this.m.Self.getBackground().onAddEquipment();
+			::World.getPlayerRoster().add(this.m.Self);
 			this.m.Self.setInReserves(true);
 			this.m.Self.onHired();
-
-			::World.getPlayerRoster().add(this.m.Self);
+			
+			::Tactical.getRetreatRoster().add(this.m.Self);
+			::Tactical.getTemporaryRoster().remove(this.m.Self);
 			this.m.Self = null;
 		}
 		

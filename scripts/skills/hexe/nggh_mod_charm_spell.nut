@@ -735,6 +735,7 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 	
 	function onCombatStarted()
 	{
+		this.m.Cooldown = 0;
 		this.m.SlavesID = [];
 		this.m.Slaves = [];
 		this.m.SlavesPet = [];
@@ -755,6 +756,7 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 			}
 		}
 		
+		this.m.Cooldown = 0;
 		this.m.SlavesID = [];
 		this.m.Slaves = [];
 		this.m.SlavesPet = [];
