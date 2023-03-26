@@ -38,15 +38,15 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			"trait.fainthearted",
 		];
 		
-		this.m.Faces = this.Const.Faces.AllMale;
-		this.m.Bodies = this.Const.Bodies.Skinny;
+		this.m.Faces = ::Const.Faces.AllMale;
+		this.m.Bodies = ::Const.Bodies.Skinny;
 		this.m.Hairs = null;
 		this.m.HairColors = null;
 		this.m.Beards = null;
 		this.m.BeardChance = 0;
 		this.m.Ethnicity = 0
-		this.m.AlignmentMin = this.Const.LegendMod.Alignment.NeutralMin;
-		this.m.AlignmentMax = this.Const.LegendMod.Alignment.NeutralMax;
+		this.m.AlignmentMin = ::Const.LegendMod.Alignment.NeutralMin;
+		this.m.AlignmentMax = ::Const.LegendMod.Alignment.NeutralMax;
 		this.m.CustomPerkTree = null;
 	}
 
@@ -79,26 +79,12 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			this.m.Titles = ::Const.Strings.GoblinTitles;
 		}
 
-		if (this.m.Skills != null && this.m.Skills.len() != 0)
-		{
-			foreach ( script in this.m.Skills )
-			{
-				if (script.len() == 0)
-				{
-					continue;
-				}
-
-				local skill = ::new("scripts/skills/" + script);
-				skill.m.IsSerialized = false;
-				this.getContainer().add(skill);
-			}
-		}
-		
-		local type = this.getContainer().getActor().getFlags().getAsInt("Type");
+		local hasTempData = this.m.TempData != null && ("Type" in this.m.TempData);
+		local type = hasTempData ? this.m.TempData.Type : this.getContainer().getActor().getFlags().getAsInt("Type");
 		
 		if (type > 0)
 		{
-			this.m.AttMods = ::Const.CharmedUnits.getStatsModifiers(type);
+			this.setupWhenOnAdded(type);
 		}
 		
 		this.character_background.onAdded();
@@ -124,7 +110,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		this.m.IsOrc = ::Const.Orc.Variants.find(this.m.TempData.Type) != null;
 		this.m.IsGoblin = ::Const.Goblin.Variants.find(this.m.TempData.Type) != null;
 		this.m.AttMods = ::Const.CharmedUnits.getStatsModifiers(this.m.TempData.Type);
-		this.m.Skills = ::Const.CharmedUnits.getSpecialSkills(this.m.TempData.Type);
+		//this.m.Skills = ::Const.CharmedUnits.getSpecialSkills(this.m.TempData.Type);
 		this.m.Name = "Charmed " + ::Const.Strings.EntityName[this.m.TempData.Type];
 		this.m.Icon = "ui/backgrounds/" + ::Const.CharmedUnits.getBackgroundIcon(this.m.TempData.Type);
 		::Const.CharmedUtilities.processingCharmedBackground(this.m.TempData, this);
@@ -191,6 +177,32 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		foreach (i, Const in this.m.TempData.Perks )
 		{
 			::World.Assets.getOrigin().addScenarioPerk(this, ::Const.Perks.PerkDefs[Const], i);
+		}
+	}
+
+	function setupWhenOnAdded( _type )
+	{
+		this.m.AttMods = ::Const.CharmedUnits.getStatsModifiers(_type);
+		this.m.Skills = ::Const.CharmedUnits.getSpecialSkills(_type);
+
+		if (this.m.Skills != null && this.m.Skills.len() != 0)
+		{
+			foreach ( script in this.m.Skills )
+			{
+				if (script.len() == 0)
+				{
+					continue;
+				}
+
+				local skill = this.new("scripts/skills/" + script);
+				skill.m.IsSerialized = false;
+				this.getContainer().add(skill);
+			}
+		}
+		
+		if (this.isBackgroundType(::Const.BackgroundType.Cultist))
+		{
+			this.removeBackgroundType(::Const.BackgroundType.Cultist);
 		}
 	}
 
@@ -607,11 +619,13 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		_out.writeF32(this.m.Modifiers.Training);
 		_out.writeF32(this.m.Modifiers.Enchanting);
 		
+		/*
 		_out.writeU8(this.m.Skills.len());
 		for( local i = 0; i != this.m.Skills.len(); ++i )
 		{
 			_out.writeString(this.m.Skills[i]);
 		}
+		*/
 
 		foreach ( _mod in this.m.Modifiers.Terrain )
 		{
@@ -646,12 +660,15 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		this.m.Modifiers.Training = _in.readF32();
 		this.m.Modifiers.Enchanting = _in.readF32();
 		
-		local numSkills = _in.readU8();
-		this.m.Skills = array(numSkills, "");
-
-		for( local i = 0; i != numSkills; ++i )
+		if (!::Nggh_MagicConcept.Mod.Serialization.isSavedVersionAtLeast("3.0.0-beta.45", _in.getMetaData()))
 		{
-			this.m.Skills[i] = _in.readString();
+			local numSkills = _in.readU8();
+			this.m.Skills = array(numSkills, "");
+
+			for( local i = 0; i != numSkills; ++i )
+			{
+				this.m.Skills[i] = _in.readString();
+			}
 		}
 
 		for( local i = 0; i != this.m.Modifiers.Terrain.len(); ++i )

@@ -915,13 +915,13 @@ if (!("CharmedUnits" in ::Const))
 		//BarbarianBeastmaster = 74,
 			{
 				StatMod = { Hitpoints = [-20, -20], Bravery = [-30, -20], Stamina = [-20, -10], MeleeSkill = [-5, -5], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-5, -5] },
-				Skills = ["actives/barbarian_fury_skill"],
+				Skills = ["actives/barbarian_fury_skill", "actives/crack_the_whip_skill"],
 				Difficulty = 33,
 				Custom = {
 					ID = "background.houndmaster",
 				},
 				Requirements = ["NggHCharmWords"],
-				PerkTree = "converted_cultist_background",
+				PerkTree = "cultist_background",
 			},
 			
 		//BarbarianUnhold = 75,
