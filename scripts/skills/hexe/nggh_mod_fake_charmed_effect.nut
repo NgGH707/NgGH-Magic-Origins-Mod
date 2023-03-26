@@ -88,19 +88,19 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 			return ret;
 		}
 		
-		local table = this.compileBonusTable(lv, ::Const.Simp.DefaultBonusValue, true);
-		local i = ret.len() + 1;
+		local table = this.compileBonusTable(lv, ::Const.Simp.DefaultBonusTooltipValue, true);
+		local i = ret.len();
 
 		foreach (k, c in table)
 		{
+			++i;
+
 			ret.push({
 				id = i,
 				type = "text",
 				icon = "ui/icons/" + c.Icon + ".png",
 				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + c.Value + "%[/color] " + c.Name
 			});
-
-			++i;
 		}
 
 		return ret;

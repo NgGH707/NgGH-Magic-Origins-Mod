@@ -121,6 +121,11 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 
 		return ret;
 	}
+
+	function isUsable()
+	{
+		return this.skill.isUsable() && !this.getContainer().hasSkill("effects.cursed_badly");
+	}
 	
 	function onVerifyTarget( _originTile, _targetTile )
 	{

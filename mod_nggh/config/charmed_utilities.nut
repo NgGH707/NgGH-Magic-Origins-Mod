@@ -436,6 +436,7 @@ if (!("CharmedUtilities" in ::Const))
 
 ::Const.CharmedUtilities.BackgroundTypeToCopy <- [
 	"Combat",
+	"ConvertedCultist",
 	"Educated",
 	"Noble",
 	"Lowborn",

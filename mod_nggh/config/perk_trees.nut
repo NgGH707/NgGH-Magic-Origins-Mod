@@ -169,7 +169,7 @@
 	]
 };
 
-::Const.Perks.GoblinMountTree <- {     
+::Const.Perks.NggH_GoblinMountTree <- {     
 	ID = "Goblin Mount",
 	Name = "Mounting",
 	Descriptions = ["goblin mount"],
@@ -197,7 +197,7 @@
 	]
 };
 
-::Const.Perks.AlpTree <- {
+::Const.Perks.NggH_AlpTree <- {
 	ID = "Alp",
 	Name = "Alp",
 	Descriptions = ["alp"],
@@ -225,7 +225,7 @@
 	]
 };
 
-::Const.Perks.DemonAlpTree <- {
+::Const.Perks.NggH_DemonAlpTree <- {
 	ID = "Demon Alp",
 	Name = "Demonology",
 	Descriptions = ["demon alp"],
@@ -250,7 +250,7 @@
 	]
 };
 
-::Const.Perks.WolfTree <- {
+::Const.Perks.NggH_WolfTree <- {
 	ID = "Wolf",
 	Name = "Canine",
 	Descriptions = ["wolf"],
@@ -272,7 +272,7 @@
 	]
 };
 
-::Const.Perks.HyenaTree <- {
+::Const.Perks.NggH_HyenaTree <- {
 	ID = "Hyena",
 	Name = "Canine",
 	Descriptions = ["hyena"],
@@ -294,7 +294,7 @@
 	]
 };
 
-::Const.Perks.NachoTree <- {
+::Const.Perks.NggH_NachoTree <- {
 	ID = "Nacho",
 	Name = "Ghoul",
 	Descriptions = ["nacho"],
@@ -321,7 +321,7 @@
 	]
 };
 
-::Const.Perks.LindwurmTree <- {
+::Const.Perks.NggH_LindwurmTree <- {
 	ID = "Lindwurm",
 	Name = "Lindwurm",
 	Descriptions = ["lindwurm"],
@@ -344,7 +344,7 @@
 	]
 };
 
-::Const.Perks.SchratTree <- {
+::Const.Perks.NggH_SchratTree <- {
 	ID = "Schrat",
 	Name = "Schrat",
 	Descriptions = ["schrat"],
@@ -370,7 +370,7 @@
 	]
 };
 
-::Const.Perks.SmallSchratTree <- {
+::Const.Perks.NggH_SmallSchratTree <- {
 	ID = "SmallSchrat",
 	Name = "Sapling",
 	Descriptions = ["small schrat"],
@@ -387,7 +387,7 @@
 	]
 };
 
-::Const.Perks.SerpentTree <- {
+::Const.Perks.NggH_SerpentTree <- {
 	ID = "Serpent",
 	Name = "Serpent",
 	Descriptions = ["serpent"],
@@ -411,7 +411,7 @@
 	]
 };
 
-::Const.Perks.SpiderTree <- {
+::Const.Perks.NggH_SpiderTree <- {
 	ID = "Webknecht",
 	Name = "Arachnid",
 	Descriptions = ["spider"],
@@ -422,19 +422,19 @@
 		[],
 		[],
 		[
-			::Const.Perks.PerkDefs.NggHSpiderVenom,	
+			::Const.Perks.PerkDefs.NggHSpiderVenom,
 		],
+		[],
 		[
 			::Const.Perks.PerkDefs.NggHSpiderWeb,
 		],
 		[
 			::Const.Perks.PerkDefs.NggHSpiderBite,
 		],
-		[],
 	]
 };
 
-::Const.Perks.UnholdTree <- {
+::Const.Perks.NggH_UnholdTree <- {
 	ID = "Unhold",
 	Name = "Unhold",
 	Descriptions = ["unhold"],
@@ -454,7 +454,7 @@
 	]
 };
 
-::Const.Perks.SpiderHiveTree <- {
+::Const.Perks.NggH_SpiderHiveTree <- {
 	ID = "Webknecht Eggs",
 	Name = "???",
 	Descriptions = ["spider hive"],
@@ -476,7 +476,7 @@
 	]			
 };
 
-::Const.Perks.KrakenTree <- {
+::Const.Perks.NggH_KrakenTree <- {
 	ID = "Kraken",
 	Name = "Beast of Beasts",
 	Descriptions = ["beast of beasts"],
@@ -531,19 +531,19 @@
 
 ////////////////////////////////////////////////////
 ::Const.Perks.HexenBeastTrees <- [
-	::Const.Perks.NachoTree,
-	::Const.Perks.UnholdTree,
-	::Const.Perks.SchratTree,
-	::Const.Perks.SerpentTree,
-	::Const.Perks.LindwurmTree,
-	::Const.Perks.WolfTree,
-	::Const.Perks.HyenaTree,
-	::Const.Perks.AlpTree,
-	::Const.Perks.DemonAlpTree,
-	::Const.Perks.SpiderTree,
-	::Const.Perks.SpiderHiveTree,
-	::Const.Perks.GoblinMountTree,
-	::Const.Perks.KrakenTree,
+	::Const.Perks.NggH_NachoTree,
+	::Const.Perks.NggH_UnholdTree,
+	::Const.Perks.NggH_SchratTree,
+	::Const.Perks.NggH_SerpentTree,
+	::Const.Perks.NggH_LindwurmTree,
+	::Const.Perks.NggH_WolfTree,
+	::Const.Perks.NggH_HyenaTree,
+	::Const.Perks.NggH_AlpTree,
+	::Const.Perks.NggH_DemonAlpTree,
+	::Const.Perks.NggH_SpiderTree,
+	::Const.Perks.NggH_SpiderHiveTree,
+	::Const.Perks.NggH_GoblinMountTree,
+	::Const.Perks.NggH_KrakenTree,
 	::Const.Perks.NggH_MiscTree,
 ];
 ////////////////////////////////////////////////////

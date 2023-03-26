@@ -40,10 +40,10 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 				::Const.Perks.PerkDefs.Gifted,
 			],
 			[
-				::Const.Perks.PerkDefs.NggHSpiderVenom,
+				::Const.Perks.PerkDefs.NggHNachoFrenzy,
 			],
 			[
-				::Const.Perks.PerkDefs.NggHNachoFrenzy,
+				::Const.Perks.PerkDefs.NggHSpiderVenom,
 			],
 			[],
 			[
@@ -55,7 +55,7 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 			[]
 		];
 
-		foreach (i, row in ::Const.Perks.SpiderHiveTree.Tree )
+		foreach (i, row in ::Const.Perks.NggH_SpiderHiveTree.Tree )
 		{
 			foreach ( perkDef in row )
 			{
