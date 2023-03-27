@@ -2,7 +2,7 @@ this.nggh_mod_world_cursed_effect <- ::inherit("scripts/skills/skill", {
 	m = {
 		Factions = [],
 		PlayerRelations = [],
-		HasBeenRemoved = false;
+		HasBeenRemoved = false,
 	},
 	function create()
 	{

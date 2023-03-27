@@ -17,7 +17,7 @@
 	Class = [
 		::MSU.Class.WeightedContainer([
 			[75, ::Const.Perks.ScoutClassTree],
-			[25, ::Const.Perks.GoblinMountTree],
+			[25, ::Const.Perks.NggH_GoblinMountTree],
 		])
 	],
 	Profession = [
@@ -43,7 +43,7 @@
 	Class = [
 		::MSU.Class.WeightedContainer([
 			[40, ::Const.Perks.TrapperClassTree],
-			[20, ::Const.Perks.GoblinMountTree],
+			[20, ::Const.Perks.NggH_GoblinMountTree],
 			[40, ::Const.Perks.ScoutClassTree]
 		]),
 	],
@@ -117,7 +117,7 @@
 	Traits = [
 		::Const.Perks.AgileTree,
 		::MSU.Class.WeightedContainer([
-			[50, ::Const.Perks.GoblinMountTree],
+			[50, ::Const.Perks.NggH_GoblinMountTree],
 			[50, ::Const.Perks.UnstoppableTree],
 		])
 	],
@@ -134,7 +134,7 @@
 		::MSU.Class.WeightedContainer([
 			[55, ::Const.Perks.HealerClassTree],
 			[35, ::Const.Perks.EntertainerClassTree],
-			[10, ::Const.Perks.GoblinMountTree],
+			[10, ::Const.Perks.NggH_GoblinMountTree],
 		]),
 	],
 	Weapon = [
@@ -190,7 +190,7 @@
 		]),
 	],
 	Traits = [
-		::Const.Perks.GoblinMountTree,
+		::Const.Perks.NggH_GoblinMountTree,
 		::MSU.Class.WeightedContainer([
 			[50, ::Const.Perks.FastTree],
 			[50, ::Const.Perks.AgileTree]

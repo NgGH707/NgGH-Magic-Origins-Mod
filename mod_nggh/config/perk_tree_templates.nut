@@ -638,7 +638,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.ShortbowClassTree,
 	],
 	Magic = [
-		::Const.Perks.GoblinMountTree
+		::Const.Perks.NggH_GoblinMountTree
 	]
 };
 
@@ -664,7 +664,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.BeastClassTree,
 	],
 	Magic = [
-		::Const.Perks.GoblinMountTree
+		::Const.Perks.NggH_GoblinMountTree
 	]
 };
 
@@ -687,7 +687,7 @@ if (!("PerksCharmedUnit" in ::Const))
 	Enemy = [],
 	Class = [],
 	Magic = [
-		::Const.Perks.GoblinMountTree
+		::Const.Perks.NggH_GoblinMountTree
 	]
 };
 
@@ -712,7 +712,7 @@ if (!("PerksCharmedUnit" in ::Const))
 	],
 	Magic = [
 		::Const.Perks.EvocationMagicTree,
-		::Const.Perks.GoblinMountTree
+		::Const.Perks.NggH_GoblinMountTree
 	]
 };
 
@@ -737,7 +737,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.BeastClassTree
 	],
 	Magic = [
-		::Const.Perks.GoblinMountTree
+		::Const.Perks.NggH_GoblinMountTree
 	]
 };
 
