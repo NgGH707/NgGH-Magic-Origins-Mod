@@ -556,7 +556,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 			local find;
 			foreach (i, t in tooltip)
 			{
-				if (t.id == 3 && type == "progressbar")
+				if (t.id == 3 && t.type == "progressbar")
 				{
 					find = i;
 					break;
@@ -572,10 +572,15 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 					text = "[u][size=14]Mount[/size][/u]"
 				});
 				toAdd.extend(this.m.Mount.getMountTooltip());
+				toAdd.push({
+					id = 3,
+					type = "text",
+					text = "[u][size=14]Rider[/size][/u]"
+				});
 
 				foreach(i, t in toAdd)
 				{
-					tooltip.insert(find + 1 + i, t);
+					tooltip.insert(find + i, t);
 				}
 			}
 		}

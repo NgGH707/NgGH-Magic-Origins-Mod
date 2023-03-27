@@ -115,6 +115,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		if (lv == 0)
 		{
 			_properties.Bravery += 20;
+			_properties.SurviveWithInjuryChanceMult *= 0.0;
 			return;
 		}
 
@@ -194,7 +195,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onTurnStart()
+	function onTurnEnd()
 	{
 		if (this.getSimpLevel() > 0)
 		{
@@ -216,6 +217,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		this.m.OldAIAgent = actor.getAIAgent();
 		this.m.IsMutiny = true;
 
+		actor.getFlags().set("Charmed", true);
 		actor.setFaction(::World.FactionManager.m.Factions.find(::World.FactionManager.getFactionOfType(::Const.FactionType.Arena)));
 		actor.setAIAgent(::new("scripts/ai/tactical/agents/charmed_player_agent"));
 		actor.getAIAgent().setActor(actor);
@@ -230,6 +232,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 			actor.setAIAgent(this.m.OldAIAgent);
 		}
 
+		actor.getFlags().set("Charmed", false);
 		actor.setFaction(::Const.Faction.Player);
 		actor.setDirty(true);
 	}
@@ -255,8 +258,8 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 
 		if (::Tactical.Entities.getInstancesNum(::Const.Faction.Player) == 0)
 		{
-			::World.getPlayerRoster().remove(this.getContainer().getActor().get());
-			//this.getContainer().getActor().kill(null, null, ::Const.FatalityType.Suicide);
+			//::World.getPlayerRoster().remove(this.getContainer().getActor().get());
+			this.getContainer().getActor().kill(null, null, ::Const.FatalityType.Suicide);
 		}
 	}
 
