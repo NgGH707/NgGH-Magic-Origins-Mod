@@ -67,6 +67,7 @@ this.nggh_mod_world_cursed_badly_effect <- ::inherit("scripts/skills/effects_wor
 			actor.getSprite("hair").setBrush(background.m.RealHair);
 			actor.getSprite("head").setBrush(background.m.RealHead);
 			actor.getSprite("body").setBrush(background.m.RealBody);
+			actor.setDirty(true);
 		}
 		
 		this.m.IsNew = false;

@@ -2,6 +2,7 @@ this.nggh_mod_world_cursed_effect <- ::inherit("scripts/skills/skill", {
 	m = {
 		Factions = [],
 		PlayerRelations = [],
+		HasBeenRemoved = false;
 	},
 	function create()
 	{
@@ -61,6 +62,8 @@ this.nggh_mod_world_cursed_effect <- ::inherit("scripts/skills/skill", {
 	
 	function onRemoved()
 	{
+		if (this.m.HasBeenRemoved) return;
+
 		if (this.m.Factions.len() != 0 && this.m.PlayerRelations.len() != 0)
 		{
 			foreach ( i, id in this.m.Factions )
@@ -73,11 +76,13 @@ this.nggh_mod_world_cursed_effect <- ::inherit("scripts/skills/skill", {
 		
 		this.m.Factions = [];
 		this.m.PlayerRelations = [];
+		this.m.HasBeenRemoved = true;
 		
 		local actor = this.getContainer().getActor();
 		actor.getSprite("hair").setBrush(::MSU.Array.rand(::Const.HexeOrigin.FakeHair));
 		actor.getSprite("head").setBrush(::MSU.Array.rand(::Const.HexeOrigin.FakeHead));
 		actor.getSprite("body").setBrush("bust_hexen_fake_body_00");
+		actor.setDirty(true)
 	}
 	
 	function onSerialize( _out )

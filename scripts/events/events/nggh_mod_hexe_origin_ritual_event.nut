@@ -78,9 +78,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 					Stash.remove(_item);
 				}
 				
-				local cursed = _event.m.Hexe.getSkills().getSkillByID("effects.cursed");
-				
-				if (cursed != null)
+				if (::World.Flags.get("isExposed"))
 				{
 					this.List.push({
 						id = 10,
@@ -96,38 +94,41 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 					});
 					
 					_event.m.Hexe.getFlags().remove("isCursed");
-					cursed.removeSelf();
-					::World.Flags.remove("isExposed");
+					_event.m.Hexe.getSkills().removeByID("effects.cursed");
+					_event.m.Hexe.getSkills().removeByID("effects.cursed_badly");
 					::World.Flags.set("looks", ::Math.rand(9995, 9997));
+					::World.Flags.set("isExposed", false);
 					::World.Assets.updateLook();
-					return;
-				}
-				else
-				{
-					cursed = _event.m.Hexe.getSkills().getSkillByID("effects.cursed_badly");
-					
-					if (cursed != null)
+
+					foreach ( bro in ::World.getPlayerRoster().getAll() )
 					{
-						this.List.push({
-							id = 10,
-							icon = "skills/status_effect_49.png",
-							text = _event.m.Hexe.getName() + " is lifted from the curse"
-						});
-						
-						_event.m.Hexe.improveMood(6.0, "The curse is lifted. I have regained my beauty");
-						this.List.push({
-							id = 10,
-							icon = ::Const.MoodStateIcon[_event.m.Hexe.getMoodState()],
-							text = _event.m.Hexe.getName() + ::Const.MoodStateEvent[_event.m.Hexe.getMoodState()]
-						});
-						
-						_event.m.Hexe.getFlags().remove("isCursed");
-						cursed.removeSelf();
-						::World.Flags.remove("isExposed");
-						::World.Flags.set("looks", ::Math.rand(9995, 9997));
-						::World.Assets.updateLook();
-						return;
+						local skill = bro.getSkills().getSkillByID("effects.simp");
+
+						if (skill == null)
+						{
+							continue;
+						}
+
+						if (!bro.getFlags().get("isCursed"))
+						{
+							continue;
+						}
+
+						if (::Math.rand(1, 100) <= 66)
+						{
+							skill.gainSimpLevel();
+
+							this.List.push({
+								id = 10,
+								icon = bro.getBackground().getIcon(),
+								text = bro.getNameOnly() + " regains the lost simp level"
+							});
+						}
+
+						bro.getFlags().set("isCursed", false);
 					}
+
+					return;
 				}
 				
 				local effect = ::new("scripts/skills/effects_world/nggh_mod_blessed_effect");
@@ -733,6 +734,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 
 	function decreaseSimpLevel( _bro )
 	{
+		_bro.getFlags().set("isCursed", true);
 		_bro.getSkills().getSkillByID("effects.simp").loseSimpLevel();
 		_bro.worsenMood(1.0, this.m.Hexe.getName() + " scares me");
 		//return charm;
