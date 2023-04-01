@@ -91,23 +91,13 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		::World.Assets.getStash().add(::new("scripts/items/misc/witch_hair_item"));
 		::World.Assets.getStash().add(::new("scripts/items/misc/poisoned_apple_item"));
 		::World.Assets.getStash().add(::new("scripts/items/misc/werewolf_pelt_item"));
+			
+		// add 2 random potions
+		local weightedContainer = ::MSU.Class.WeightedContainer(::Const.HexeOrigin.PossibleStartingPotions);
 		
-		if (::Math.rand(1, 100) > 5)
+		for (local i = 0; i < 2; ++i)
 		{
-			::World.Assets.getStash().add(::new("scripts/items/accessory/" + ::MSU.Array.rand(::Const.HexeOrigin.PossibleStartingPotions)));
-		}
-		else
-		{
-			::World.Assets.getStash().add(::new("scripts/items/special/bodily_reward_item"));
-		}
-		
-		if (::Math.rand(1, 100) > 5)
-		{
-			::World.Assets.getStash().add(::new("scripts/items/accessory/" + ::MSU.Array.rand(::Const.HexeOrigin.PossibleStartingPotions)));
-		}
-		else
-		{
-			::World.Assets.getStash().add(::new("scripts/items/special/spiritual_reward_item"));
+			::World.Assets.getStash().add(::new("scripts/items/" + weightedContainer.roll()));
 		}
 		
 		if (::Math.rand(1, 100) == 1)
@@ -727,6 +717,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			guts.onHired();
 
 			this.removeTraitsFrom(guts);
+			this.addScenarioPerk(guts.getBackground(), ::Const.Perks.PerkDefs.SpecSword);
 			guts.getSkills().add(::new("scripts/skills/traits/huge_trait"));
 			guts.getSkills().add(::new("scripts/skills/traits/heavy_trait"));
 			guts.getSkills().add(::new("scripts/skills/traits/tough_trait"));
@@ -812,6 +803,42 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			}
 
 			this.setupRandomStart(credits, false);
+			break;
+
+		case 22:
+			for( local i = 0; i < 2; ++i )
+			{
+				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_alp_player");
+				beast.improveMood(1.0, "Enthralled");
+				beast.setStartValuesEx(false, true, 0);
+				beast.setPlaceInFormation(i == 2 ? 12 : 14);
+				beast.addHeavyInjury();
+				beast.onHired();
+
+				// why not?
+				beast.getItems().equip(::new("scripts/items/weapons/legend_swordstaff"));
+				beast.setTitle("the Hell Guard");
+
+				// add specialized perk group too
+				local background = beast.getBackground();
+				background.addPerkGroup(::Const.Perks.SpearTree.Tree);
+
+				if (::Is_PTR_Exist)
+				{
+					background.addPerkGroup(::Const.Perks.TwoHandedTree.Tree);
+				}
+			}
+			
+			_hexe.setTitle("the Demon Countess");
+			_hexe.getItems().equip(::new("scripts/items/weapons/barbarians/claw_club"));
+			_hexe.getItems().equip(::Const.World.Common.pickArmor([[3, "oriental/vizier_gear"]]));
+			_hexe.getItems().equip(::Const.World.Common.pickHelmet([[1, "cultist_leather_hood"]]));
+			_hexe.getBaseProperties().Hitpoints += 15;
+			_hexe.getBaseProperties().Stamina += 20;
+			_hexe.getBaseProperties().MeleeSkill += 20;
+			_hexe.getBaseProperties().MeleeDefense += 10;
+			_hexe.getSkills().update();
+			_hexe.setHitpoints(1.0);
 			break;
 
 		default:

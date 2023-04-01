@@ -114,6 +114,10 @@ if (!("CharmedUtilities" in ::Const))
 		{
 			names = [_data.Entity.getName()];
 		}
+		else
+		{
+			names = [];
+		}
 
 		if (("Custom" in _data) && _data.Custom.len() != 0)
 		{
@@ -151,8 +155,6 @@ if (!("CharmedUtilities" in ::Const))
 			{
 				_background.m.Modifiers = _data.Custom.BgModifiers;
 			}
-
-			names = [];
 
 			if (("Names" in _data.Custom) && typeof _data.Custom.Names == "string" && (_data.Custom.Names in ::Const.Strings))
 			{

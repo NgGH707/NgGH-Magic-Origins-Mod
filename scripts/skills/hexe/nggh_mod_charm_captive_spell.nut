@@ -1,11 +1,12 @@
 //For Legends BB version, don't you dare messing with this file. P/S: NgGH707 (Hans)
 this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 	m = {
-		Capture = [],
-		Count = 2,
 		IsInBattle = false,
+		Capture = [],
+
+		Count = 2,
 		MaxAttempt = 3,
-		ChampionMult = 1.33
+		ChampionMult = 1.4
 	},
 
 	function create()
@@ -316,7 +317,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		local CasterPower = resolve + res;
 		
 		local bonus = _targetEntity.getTile().getDistanceTo(myTile) == 1 ? 10 : 0;
-		bonus = bonus + (_targetEntity.getSkills().hasSkill("effects.charmed") ? 20 : 0) + _targetEntity.getFlags().getAsInt("charm_attempt") * 4;
+		bonus = bonus + (_targetEntity.getSkills().hasSkill("effects.charmed") ? 15 : 0) + _targetEntity.getFlags().getAsInt("charm_attempt") * 4;
 		bonus = bonus + this.getBonus();
 		local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
 		local resist = (defenderProperties.getBravery() + defenderProperties.MoraleCheckBravery[1]) * defenderProperties.MoraleCheckBraveryMult[1];
@@ -376,26 +377,32 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 	        return ::Math.max(5, ::Math.min(10, toHit));
 
 	    case ::Const.EntityType.TricksterGod:
-			return ::Math.max(1, ::Math.min(5, toHit));
+			return ::Math.max(2, ::Math.min(7, toHit));
 
 	    case ::Const.EntityType.Kraken:
-	        return ::Math.max(0, ::Math.min(3, toHit));
+	        return ::Math.max(0, ::Math.min(5, toHit));
 	
 	    default:
 	    	return ::Math.max(5, ::Math.min(95, toHit));
 		}
+	}
+
+	function getAffectedSkills()
+	{
+		return [
+			"perk.mastery_charm",
+			"perk.boobas_charm",
+			"perk.charm_nudist",
+			"trait.gift_of_people",
+			"trait.seductive",
+		];
 	}
 	
 	function getBonus()
 	{
 		local bonus = 0;
 		
-		foreach (id in [
-			"perk.mastery_charm",
-			"perk.boobas_charm",
-			"perk.charm_nudist",
-			"trait.seductive",
-		])
+		foreach (id in this.getAffectedSkills())
 		{
 			local skill = this.getContainer().getSkillByID(id);
 			
@@ -419,6 +426,25 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		{
 			return ret;
 		}
+
+		local green = function ( _text )
+		{
+			if (!_text)
+			{
+				return "";
+			}
+
+			return "[color=" + ::Const.UI.Color.PositiveValue + "]" + _text + "[/color]";
+		};
+		local red = function ( _text )
+		{
+			if (!_text)
+			{
+				return "";
+			}
+
+			return "[color=" + ::Const.UI.Color.NegativeValue + "]" + _text + "[/color]";
+		};
 
 		local _targetEntity = targetEntity;
 		local _user = this.getContainer().getActor();
@@ -445,11 +471,11 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			return ret;
 		}
 
-		if (targetEntity.getType() != 79 && (defenderProperties.MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack] >= 1000.0 || resist >= 500))
+		if (targetEntity.getType() != ::Const.EntityType.TricksterGod && (defenderProperties.MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack] >= 1000.0 || resist >= 500))
 		{
 			ret.push({
 				icon = "ui/icons/cancel.png",
-				text = "Extreme high magic resistance"
+				text = "Extremely high magic resistance"
 			});
 			
 			return ret;
@@ -513,35 +539,33 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 				{
 					ret.push({
 						icon = "ui/tooltips/warning.png",
-						text = "[color=" + ::Const.UI.Color.NegativeValue + "]Can\'t be charmed[/color]"
+						text = red("Can\'t be charmed")
 					});
-					::logError("Fail to evaluating " + targetEntity.getName + ", reason is unknown")
+					::logError("Fail to evaluating " + targetEntity.getName + ". Reason is unknown")
 					continue;
 				}
 				
 				ret.push({
 					icon = "ui/tooltips/warning.png",
-					text = "Require [color=" + ::Const.UI.Color.NegativeValue + "]'" + r + "'[/color] perk"
+					text = "Require " + red(r) + " perk"
 				});
 			}
 			
 			return ret;
 		}
-		else
+	
+		if (attempts != 0)
 		{
-			if (attempts != 0)
-			{
-				ret.push({
-					icon = "ui/icons/health.png",
-					text = "Fail attempts: [color=" + ::Const.UI.Color.NegativeValue + "]" + attempts + "[/color]/[color=" + ::Const.UI.Color.NegativeValue + "]" + this.m.MaxAttempt + "[/color]"
-				});
-			}
+			ret.push({
+				icon = "ui/icons/mood_02.png",
+				text = "Failed attempt(s): " + red(attempts) + "/" + red(this.m.MaxAttempt)
+			});
 		}
 
 		ret.extend([
 			{
 				icon = "ui/icons/bravery.png",
-				text = "Your willpower: [color=#0b0084]" + CasterPower + "[/color]"
+				text = "Your charm strength: [color=#0b0084]" + CasterPower + "[/color]"
 			},
 			{
 				icon = "ui/icons/bravery.png",
@@ -554,21 +578,21 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 	    case ::Const.EntityType.LegendStollwurm:
 	        ret.push({
 				icon = "ui/icons/chance_to_hit_head.png",
-				text = "A [color=" + ::Const.UI.Color.NegativeValue + "]Fearsome Beast[/color]"
+				text = "A " + red("Fearsome Beast")
 			});
 			break;
 
 	    case ::Const.EntityType.TricksterGod:
 	       	ret.push({
 				icon = "ui/icons/chance_to_hit_head.png",
-				text = "A [color=" + ::Const.UI.Color.NegativeValue + "]God[/color]"
+				text = "A " + red("God")
 			});
 			break;
 
 	    case ::Const.EntityType.Kraken:
 	        ret.push({
 				icon = "ui/icons/chance_to_hit_head.png",
-				text = "A [color=" + ::Const.UI.Color.NegativeValue + "]True Terror[/color]"
+				text = "A " + red("True Terror")
 			});
 	        break;
 		}
@@ -591,13 +615,12 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 				{
 					if (tile.getEntity().isAlliedWith(_user))
 					{
-						numAlliesAdjacent = ++numAlliesAdjacent;
-						threatBonus = threatBonus + tile.getEntity().getCurrentProperties().Threat;
+						++numAlliesAdjacent;
+						threatBonus += tile.getEntity().getCurrentProperties().Threat;
 					}
 					else
 					{
-						numOpponentsAdjacent = ++numOpponentsAdjacent;
-						
+						++numOpponentsAdjacent;
 					}
 				}
 			}
@@ -611,14 +634,14 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Difficulty: [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.floor(::Math.abs(difficultyPenalty)) + "%[/color]"
+				text = green(::Math.floor(::Math.abs(difficultyPenalty)) + "%") + " Difficulty"
 			});
 		}
 		else 
 		{
-		   ret.push({
+			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = "Difficulty: [color=" + ::Const.UI.Color.NegativeValue + "]" + ::Math.floor(::Math.abs(difficultyPenalty)) + "%[/color]"
+				text = red(::Math.floor(::Math.abs(difficultyPenalty)) + "%") + " Difficulty"
 			});
 		}
 
@@ -626,16 +649,11 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Bonus from fail attempts: [color=" + ::Const.UI.Color.PositiveValue + "]" + attempts * 4 + "%[/color]"
+				text = green((attempts * 4) + "%") + " Failed attempt(s)"
 			});
 		}
 		
-		foreach (id in [
-			"perk.mastery_charm",
-			"perk.boobas_charm",
-			"trait.seductive",
-			"perk.charm_nudist",
-		])
+		foreach (id in this.getAffectedSkills())
 		{
 			local skill = this.getContainer().getSkillByID(id);
 			
@@ -643,7 +661,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			{
 				ret.push({
 					icon = "ui/tooltips/positive.png",
-					text = skill.getName() + ": [color=" + ::Const.UI.Color.PositiveValue + "]" + skill.getBonus() + "%[/color]"
+					text = green(skill.getBonus() + "%") + " " + skill.getName()
 				});
 			}
 		}
@@ -652,7 +670,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Temporarily charmed: [color=" + ::Const.UI.Color.PositiveValue + "]20%[/color]"
+				text = green("15%") + " Temporarily charmed"
 			});
 		}
 
@@ -662,10 +680,9 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Debuff: [color=" + ::Const.UI.Color.PositiveValue + "]" + debuff * 2 + "%[/color]"
+				text = green((debuff * 2) + "%") + " Debuff"
 			});
 		}
-
 		
 		local hpLeft = _targetEntity.getHitpointsPct();
 		local modInjury = ::Math.max(0.4, hpLeft + 0.25);
@@ -674,21 +691,21 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = "Unharmed: [color=" + ::Const.UI.Color.NegativeValue + "]" + resist + "%[/color]"
+				text = red(resist + "%") + " Unharmed"
 			});	
 		}
 		else if (modInjury > 1)
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = "Light injury: [color=" + ::Const.UI.Color.NegativeValue + "]" + ::Math.floor(resist * (1 - modInjury)) + "%[/color]"
+				text = red(::Math.floor(resist * (1 - modInjury)) + "%") + " Light injury"
 			});
 		}
 		else 
 		{
 		    ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Severe injury: [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.floor(resist * (1 - modInjury)) + "%[/color]"
+				text = green(::Math.floor(resist * (1 - modInjury)) + "%") + " Severe injury"
 			});
 		}
 
@@ -696,7 +713,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Intimidated: [color=" + ::Const.UI.Color.PositiveValue + "]" + threatBonus + "%[/color]"
+				text = green(threatBonus + "%") + " Intimidated"
 			});
 		}
 			
@@ -706,7 +723,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Surrounded: [color=" + ::Const.UI.Color.PositiveValue + "]" + modAllies + "%[/color]"
+				text = green(modAllies + "%") + " Surrounded"
 			});
 		}
 
@@ -716,7 +733,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = "Allies nearby: [color=" + ::Const.UI.Color.NegativeValue + "]" + modEnemies + "%[/color]"
+				text = red(modEnemies + "%") + " Allies nearby"
 			});
 		}
 
@@ -724,7 +741,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Too close: [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color]"
+				text = green("10%") + " Too close"
 			});
 		}
 		

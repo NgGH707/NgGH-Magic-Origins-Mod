@@ -59,6 +59,7 @@ this.mount_manager <- {
 	function setActor( _a )
 	{
 		this.m.Actor = ::WeakTableRef(_a);
+		this.m.Actor.getFlags().set("can_mount", true);
 	}
 
 	function getActor()

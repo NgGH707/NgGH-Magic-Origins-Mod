@@ -1,6 +1,6 @@
 ::mods_hookExactClass("skills/actives/nightmare_skill", function ( obj )
 {
-	obj.m.ConvertRate <- 0.15;
+	obj.m.ConvertRate <- 0.10;
 
 	local ws_create = obj.create;
 	obj.create = function()
@@ -32,7 +32,7 @@
 				id = 8,
 				type = "text",
 				icon = "ui/icons/bravery.png",
-				text = "Damage is increased equal to [color=" + ::Const.UI.Color.PositiveValue + "]" + this.m.ConvertRate * 100 + "%[/color] of current Resolve"
+				text = "Damage is increased equal to [color=" + ::Const.UI.Color.PositiveValue + "]" + (this.m.ConvertRate * 100) + "%[/color] of current Resolve"
 			},
 			{
 				id = 8,
@@ -46,9 +46,12 @@
 	};
 	obj.onAfterUpdate <- function( _properties )
 	{
-		local isSpecialized = this.getContainer().hasSkill("perk.mastery_nightmare");
-		this.m.FatigueCostMult = isSpecialized ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
-		this.m.ConvertRate = isSpecialized ? 0.3 : 0.15;
+		this.m.FatigueCostMult = _properties.IsSpecializedInMagic ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
+
+		if (_properties.IsSpecializedInMagic)
+		{
+			this.m.ConvertRate += 0.15;
+		}
 	};
 	obj.getDamage = function( _actor , _properties = null )
 	{
@@ -102,7 +105,7 @@
 
 		if (::isKindOf(target, "player") && bonus_damage > 0)
 		{
-			bonus_damage = ::Math.max(1, bonus_damage - ::Math.floor(defenderProperties.getBravery() * 0.25));
+			bonus_damage = ::Math.max(1, bonus_damage - ::Math.floor(defenderProperties.getBravery() * 0.33));
 		}
 
 		local total_damage = ::Math.rand(damage + bonus_damage, damage + bonus_damage + 5) * properties.DamageDirectMult * (1.0 + properties.DamageDirectAdd) * properties.DamageTotalMult;
@@ -169,7 +172,7 @@
 			},
 			{
 				icon = "ui/icons/regular_damage.png",
-				text = "Total damage: [color=" + ::Const.UI.Color.DamageValue + "]" + totaldamage + "[/color] - [color=" + ::Const.UI.Color.DamageValue + "]" + totaldamageMax + "[/color]" 
+				text = "Estimated damage: [color=" + ::Const.UI.Color.DamageValue + "]" + totaldamage + "[/color] - [color=" + ::Const.UI.Color.DamageValue + "]" + totaldamageMax + "[/color]" 
 			},
 		]);
 
@@ -187,6 +190,7 @@
 
 		return ret;
 
+		// cringe stuffs, but i haven't wanted to remove yet
 		ret.push({
 			icon = "ui/icons/special.png",
 			text = "[color=#0b0084]Damage modidiers[/color]:"
@@ -214,11 +218,11 @@
 				text = "From target: [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.floor(defMod * 100) + "%[/color]"
 			});
 		}
-		else if (defMod > 0 && ::Math.floor(defMod * 100) != 100)
+		else if (defMod < 1.0)
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = "From target: [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.floor(defMod * 100) + "%[/color]"
+				text = "From target: [color=" + ::Const.UI.Color.NegativeValue + "]" + ::Math.floor(defMod * 100) + "%[/color]"
 			});
 		}
 

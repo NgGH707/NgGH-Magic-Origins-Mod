@@ -17,6 +17,11 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		Simps = [],
 		Money = 0,
 	},
+	function getAmbushChance()
+	{
+		return this.m.AmbushChance;
+	}
+
 	function create()
 	{
 		this.m.ID = "event.hexe_origin_ritual";
@@ -39,7 +44,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 							return "LevelupSimp";
 						}
 
-						if (::Math.rand(1, 100) <= _event.m.AmbushChance)
+						if (::Math.rand(1, 100) <= _event.getAmbushChance())
 						{
 							return "Ambush";
 						}
@@ -161,7 +166,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 					Text = "No! This can\'t be.",
 					function getResult( _event )
 					{
-						if (::Math.rand(1, 100) <= _event.m.AmbushChance)
+						if (::Math.rand(1, 100) <= _event.getAmbushChance())
 						{
 							return "Ambush";
 						}
@@ -242,7 +247,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 					Text = "Maybe at a later time.",
 					function getResult( _event )
 					{
-						if (::Math.rand(1, 100) <= _event.m.AmbushChance)
+						if (::Math.rand(1, 100) <= _event.getAmbushChance())
 						{
 							return "Ambush";
 						}
@@ -254,16 +259,18 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 			],
 			function start( _event )
 			{
-				foreach (s in _event.m.Simps)
+				foreach (i, s in _event.m.Simps)
 				{
 					this.Options.push({
+						Actor = s,
 						Text = s.getNameOnly() + " - " + s.getSkills().getSkillByID("effects.simp").getName(),
-						function getResult( _event )
+						function getResult( _e )
 						{
-							_event.increaseSimpLevel(s);
-							_event.consumeChosenItems();
+							::logInfo("Hexe Origin Ritual - select this option: \'" + this.Text + "\'");
+							_e.increaseSimpLevel(this.Actor);
+							_e.consumeChosenItems();
 
-							if (::Math.rand(1, 100) <= _event.m.AmbushChance)
+							if (::Math.rand(1, 100) <= _e.getAmbushChance())
 							{
 								return "Ambush";
 							}
@@ -449,7 +456,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 					continue;
 				}
 
-				if (skill.getSimpLevel() == ::Const.Simp.MaximumLevel)
+				if (skill.getSimpLevel() >= ::Const.Simp.MaximumLevel)
 				{
 					continue;
 				}
@@ -512,7 +519,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 			}
 		}
 
-		this.m.AmbushChance = this.getAmbushChance();
+		this.m.AmbushChance = this.recalculateAmbushChance();
 	}
 	
 	function getModifier( _days )
@@ -525,7 +532,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		return ::Math.min(6, ::Math.max(1, ::Math.floor(_days / 80)));
 	}
 
-	function getAmbushChance()
+	function recalculateAmbushChance()
 	{
 		local playerTile = ::World.State.getPlayer().getTile();
 		local towns = ::World.EntityManager.getSettlements();
@@ -729,6 +736,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		_bro.getSkills().getSkillByID("effects.simp").gainSimpLevel();
 		_bro.improveMood(1.0, this.m.Hexe.getName() + " loves me");
 		_bro.getSkills().add(::new("scripts/skills/effects_world/nggh_mod_blessed_effect"));
+		::logInfo("Hexe Origin Ritual - " + _bro.getNameOnly() + " gains a simp level");
 		//return charm;
 	}
 
@@ -736,7 +744,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 	{
 		_bro.getFlags().set("isCursed", true);
 		_bro.getSkills().getSkillByID("effects.simp").loseSimpLevel();
-		_bro.worsenMood(1.0, this.m.Hexe.getName() + " scares me");
+		_bro.worsenMood(1.0, this.m.Hexe.getNameOnly() + " scares me");
 		//return charm;
 	}
 

@@ -1342,50 +1342,50 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 ];
 
 ::Const.HumanoidBeast <- [
-::Const.EntityType.Alp,
-::Const.EntityType.SchratSmall,
-::Const.EntityType.LegendDemonAlp,
-::Const.EntityType.LegendGreenwoodSchratSmall,
+	::Const.EntityType.Alp,
+	::Const.EntityType.SchratSmall,
+	::Const.EntityType.LegendDemonAlp,
+	::Const.EntityType.LegendGreenwoodSchratSmall,
 ];
 
 ::Const.BeastHasAoE <- [
-::Const.EntityType.Unhold,
-::Const.EntityType.UnholdFrost,
-::Const.EntityType.UnholdBog,
-::Const.EntityType.BarbarianUnhold,
-::Const.EntityType.BarbarianUnholdFrost,
-::Const.EntityType.LegendRockUnhold,
-::Const.EntityType.Lindwurm,
-::Const.EntityType.LegendStollwurm,
-::Const.EntityType.Schrat,
-::Const.EntityType.LegendGreenwoodSchrat,
-::Const.EntityType.LegendSkinGhoul,
-::Const.EntityType.LegendBear,
+	::Const.EntityType.Unhold,
+	::Const.EntityType.UnholdFrost,
+	::Const.EntityType.UnholdBog,
+	::Const.EntityType.BarbarianUnhold,
+	::Const.EntityType.BarbarianUnholdFrost,
+	::Const.EntityType.LegendRockUnhold,
+	::Const.EntityType.Lindwurm,
+	::Const.EntityType.LegendStollwurm,
+	::Const.EntityType.Schrat,
+	::Const.EntityType.LegendGreenwoodSchrat,
+	::Const.EntityType.LegendSkinGhoul,
+	::Const.EntityType.LegendBear,
 ];
 
 ::Const.BeastNeverHasNimble <- [
-::Const.EntityType.Unhold,
-::Const.EntityType.UnholdFrost,
-::Const.EntityType.UnholdBog,
-::Const.EntityType.BarbarianUnhold,
-::Const.EntityType.BarbarianUnholdFrost,
-::Const.EntityType.LegendRockUnhold,
-::Const.EntityType.Lindwurm,
-::Const.EntityType.LegendStollwurm,
-::Const.EntityType.Schrat,
-::Const.EntityType.LegendGreenwoodSchrat,
-::Const.EntityType.LegendSkinGhoul,
-::Const.EntityType.TricksterGod,
+	::Const.EntityType.Unhold,
+	::Const.EntityType.UnholdFrost,
+	::Const.EntityType.UnholdBog,
+	::Const.EntityType.BarbarianUnhold,
+	::Const.EntityType.BarbarianUnholdFrost,
+	::Const.EntityType.LegendRockUnhold,
+	::Const.EntityType.Lindwurm,
+	::Const.EntityType.LegendStollwurm,
+	::Const.EntityType.Schrat,
+	::Const.EntityType.LegendGreenwoodSchrat,
+	::Const.EntityType.LegendSkinGhoul,
+	::Const.EntityType.TricksterGod,
 ];
 
 ::Const.PerkDefaultPerRow <- [
-6,
-6,
-6,
-9,
-5,
-4,
-4
+	6,
+	6,
+	6,
+	9,
+	5,
+	4,
+	4
 ];
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

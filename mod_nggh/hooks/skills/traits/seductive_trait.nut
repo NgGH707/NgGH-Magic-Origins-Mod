@@ -16,7 +16,7 @@
 				id = 10,
 				type = "text",
 				icon = "ui/icons/health.png",
-				text = "Increases chance to charm a target by [color=" + ::Const.UI.Color.PositiveValue + "]+5%[/color]"
+				text = "Has a [color=" + ::Const.UI.Color.PositiveValue + "]+" + this.m.Bonus + "%[/color] to successfully charm a target"
 			});
 		}
 

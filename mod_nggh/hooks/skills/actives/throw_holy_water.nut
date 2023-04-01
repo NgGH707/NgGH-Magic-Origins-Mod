@@ -1,4 +1,4 @@
-::mods_hookExactClass("skills/actives/", function(obj) 
+::mods_hookExactClass("skills/actives/throw_holy_water", function(obj) 
 {
 	obj.m.AttackerID <- null;
 

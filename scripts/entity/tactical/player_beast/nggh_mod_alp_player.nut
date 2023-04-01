@@ -397,7 +397,7 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 		this.setAlwaysApplySpriteOffset(true);
 	}
 
-	function setStartValuesEx( _isElite = false , _isDemonAlp = false , _assignMeleeEquipment = false, _assignRangedEquipment = false )
+	function setStartValuesEx( _isElite = false , _isDemonAlp = false , _assignEquipment = 3 )
 	{
 		local b = this.m.BaseProperties;
 		local type = _isDemonAlp ? ::Const.EntityType.LegendDemonAlp : ::Const.EntityType.Alp;
@@ -434,25 +434,16 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 		this.setSpriteOffset("status_rooted", ::createVec(0, 10));
 		this.addDefaultBackground(type);
 
-		if (!_assignMeleeEquipment && !_assignRangedEquipment)
+		if (_assignEquipment > 2)
 		{
-			local r = ::Math.rand(1, 100);
-
-			if (r <= 25)
-			{
-				_assignMeleeEquipment = true;
-			}
-			else if (r <= 50)
-			{
-				_assignRangedEquipment = true;
-			}
+			_assignEquipment = ::Math.rand(0, 2);
 		}
 
-		if (_assignMeleeEquipment)
+		if (_assignEquipment == 1)
 		{
 			this.assignMeleeEquipment();
 		}
-		else if (_assignRangedEquipment)
+		else if (_assignEquipment == 2)
 		{
 			this.assignRangedEquipment();
 		}

@@ -3,7 +3,7 @@ if (!("Simp" in ::Const))
 	::Const.Simp <- {};
 }
 
-::Const.Simp.MaximumLevel <- 4;
+::Const.Simp.MaximumLevel <- 10;
 ::Const.Simp.DefaultBonusValue <- 0.05;
 ::Const.Simp.DefaultBonusTooltipValue <- 5;
 

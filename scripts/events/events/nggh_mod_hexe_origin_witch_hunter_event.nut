@@ -11,7 +11,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 	{
 		this.m.ID = "event.witch_hunter";
 		this.m.Title = "Along the way...";
-		this.m.Cooldown = 21.0 * ::World.getTime().SecondsPerDay;
+		this.m.Cooldown = 20.0 * ::World.getTime().SecondsPerDay;
 
 		this.m.Screens.push({
 			ID = "Encounter",
@@ -125,7 +125,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 
 	function onUpdateScore()
 	{
-		if (::World.getTime().Days < 35)
+		if (::World.getTime().Days < 25)
 		{
 			return;
 		}

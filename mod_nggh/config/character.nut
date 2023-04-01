@@ -1,9 +1,9 @@
 
 ::Const.CharacterProperties.IsStealthy <- false;
 ::Const.CharacterProperties.IsSpecializedInHex <- false;
+::Const.CharacterProperties.IsSpecializedInMagic <- false;
 /* new character properties
 ::Const.CharacterProperties.IsHasMagicTraining <- false;
-::Const.CharacterProperties.IsSpecializedInMC_Magic <- false;
 ::Const.CharacterProperties.MagicalPower <- 1.0;
 ::Const.CharacterProperties.MagicPointsEfficiency <- 1.0;
 ::Const.CharacterProperties.IsAbleToUseMagicSkills <- true;

@@ -132,31 +132,37 @@ if (!("HexeOrigin" in ::Const))
 		"WITCHES",
 		"WITCH COVEN",
 		"HEXEN COVEN",
+	],
+	[
+		//22
+		"SHADOW",
+		"DEMON"
 	]
 ];
 ::Const.HexeOrigin.SeedKeywords <- [
-	"EGG",//0
-	"SPI",//1
-	"RED",//2
-	"WOL",//3
-	"WHI",//4
-	"HYE",//5
-	"SER",//6
-	"UNH",//7
-	"GHO",//8
-	"ALP",//9
-	"GOB",//10
-	"ORC",//11
-	"HUM",//12
+	"EGG",   //0
+	"SPI",   //1
+	"RED",   //2
+	"WOL",   //3
+	"WHI",   //4
+	"HYE",   //5
+	"SER",   //6
+	"UNH",   //7
+	"GHO",   //8
+	"ALP",   //9
+	"GOB",   //10
+	"ORC",   //11
+	"HUM",   //12
 	"IJIROK",//13
-	"LIN",//14
-	"SCH",//15
-	"BEA",//16
+	"LIN",   //14
+	"SCH",   //15
+	"BEA",   //16
 	"CIRCUS",//17
-	"GREEN",//18
-	"ASMR",//19
-	"BER",//20
-	"HEX",//21
+	"GREEN", //18
+	"ASMR",  //19
+	"BER",   //20
+	"HEX",   //21
+	"DEM",   //22
 ];
 ::Const.HexeOrigin.StartingRollNames <- [
 	"EGGS",
@@ -180,7 +186,8 @@ if (!("HexeOrigin" in ::Const))
 	"GREENSKINS",
 	"AMOURANTH TWITCH",
 	"BERSERK",
-	"HEXEN COVEN"
+	"HEXEN COVEN",
+	"DEMON ALP"
 ];
 ::Const.HexenCharmablePet <-[
 	::Const.EntityType.Wolf,	
@@ -214,20 +221,18 @@ if (!("HexeOrigin" in ::Const))
 	"nggh_mod_lindwurm_player",
 ];
 ::Const.HexeOrigin.PossibleStartingPotions <- [
-	"cat_potion_item",
-	"cat_potion_item",
-	"iron_will_potion_item",
-	"iron_will_potion_item",
-	"recovery_potion_item",
-	"recovery_potion_item",
-	"lionheart_potion_item",
-	"lionheart_potion_item",
-	"night_vision_elixir_item",
-	"night_vision_elixir_item",
-	"legend_heartwood_sap_flask_item",
-	"legend_hexen_ichor_potion_item",
-	"legend_skin_ghoul_blood_flask_item",
-	"legend_stollwurm_blood_flask_item",
+	[10, "accessory/poison_item"],
+	[10, "accessory/cat_potion_item"],
+	[10, "accessory/iron_will_potion_item"],
+	[10, "accessory/recovery_potion_item"],
+	[10, "accessory/lionheart_potion_item"],
+	[10, "accessory/night_vision_elixir_item"],
+	[ 5, "accessory/legend_heartwood_sap_flask_item"],
+	[ 5, "accessory/legend_hexen_ichor_potion_item"],
+	[ 5, "accessory/legend_skin_ghoul_blood_flask_item"],
+	[ 5, "accessory/legend_stollwurm_blood_flask_item"],
+	[ 1, "special/bodily_reward_item"],
+	[ 1, "special/spiritual_reward_item"],
 ];
 ::Const.HexeOrigin.PossibleStartingPlayers <- [
 	[2, "player_beast/nggh_mod_spider_player", "SPIDER"],

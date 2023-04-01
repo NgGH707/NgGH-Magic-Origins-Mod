@@ -97,7 +97,6 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		this.m.Mount.setActor(this);
 		this.m.Mount.addExcludedMount("accessory.spider");
 		this.m.Mount.addExcludedMount("accessory.tempo_spider");
-		this.m.Flags.add("can_mount");
 		this.m.Flags.add("goblin");
 	}
 

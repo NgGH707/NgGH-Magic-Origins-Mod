@@ -210,6 +210,25 @@
 		{
 			return ret;
 		}
+
+		local green = function ( _text )
+		{
+			if (!_text)
+			{
+				return "";
+			}
+
+			return "[color=" + ::Const.UI.Color.PositiveValue + "]" + _text + "[/color]";
+		};
+		local red = function ( _text )
+		{
+			if (!_text)
+			{
+				return "";
+			}
+
+			return "[color=" + ::Const.UI.Color.NegativeValue + "]" + _text + "[/color]";
+		};
 		
 		local _targetEntity = targetEntity;
 		local _user = this.getContainer().getActor();
@@ -255,7 +274,7 @@
 		{
 			ret.push({
 				icon = "ui/icons/cancel.png",
-				text = "Can\'t put to sleep right now"
+				text = "Stunned"
 			});
 			
 			return ret;
@@ -275,7 +294,7 @@
 		{
 			ret.push({
 				icon = "ui/icons/cancel.png",
-				text = "Immune to sleep"
+				text = "Mindless"
 			});
 			
 			return ret;
@@ -288,7 +307,7 @@
 			},
 			{
 				icon = "ui/tooltips/positive.png",
-				text = "Default bonus: [color=" + ::Const.UI.Color.PositiveValue + "]30%[/color]"
+				text = green("30%") + " Default bonus"
 			}
 		]);
 
@@ -299,18 +318,20 @@
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = "Too close: [color=" + ::Const.UI.Color.NegativeValue + "]" + _difficulty + "%[/color]"
+				text = red(_difficulty + "%") + " Too close"
 			});
+
 			_difficulty -= 10;
 		}
 
-		if (attempts != 0)
+		if (attempts != 0 && _difficulty != 0)
 		{
 			local add = ::Math.floor(_difficulty * attempts * 0.1);
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Fail attempts: [color=" + ::Const.UI.Color.PositiveValue + "]" + add + "%[/color]"
+				text = green(add + "%") + " Failed attempt(s)"
 			});
+
 			_difficulty += add;
 		}
 
@@ -324,8 +345,9 @@
 			});
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Overslept perk: [color=" + ::Const.UI.Color.PositiveValue + "]" + add + "%[/color]"
+				text = green(add + "%") + " Overslept perk"
 			});
+
 			_difficulty += add;
 		}
 
@@ -334,7 +356,7 @@
 			local add = ::Math.floor(_difficulty * (defenderProperties.MoraleEffectMult - 1.0));
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Sensitive: [color=" + ::Const.UI.Color.PositiveValue + "]" + add + "%[/color]"
+				text = green(add + "%") + " Sensitive"
 			});
 		}
 		else if (defenderProperties.MoraleEffectMult < 1.0 && defenderProperties.MoraleEffectMult > 0)
@@ -342,7 +364,7 @@
 			local add = ::Math.floor(_difficulty * (1.0 - defenderProperties.MoraleEffectMult));
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = "Insensitive: [color=" + ::Const.UI.Color.NegativeValue + "]" + add + "%[/color]"
+				text = red(add + "%") + " Insensitive"
 			});
 		}
 
@@ -363,13 +385,12 @@
 				{
 					if (tile.getEntity().isAlliedWith(_user))
 					{
-						numAlliesAdjacent = ++numAlliesAdjacent;
-						threatBonus = threatBonus + tile.getEntity().getCurrentProperties().Threat;
+						++numAlliesAdjacent;
+						threatBonus += tile.getEntity().getCurrentProperties().Threat;
 					}
 					else
 					{
-						numOpponentsAdjacent = ++numOpponentsAdjacent;
-						
+						++numOpponentsAdjacent;
 					}
 				}
 			}
@@ -379,7 +400,7 @@
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Intimidated: [color=" + ::Const.UI.Color.PositiveValue + "]" + threatBonus + "%[/color]"
+				text = green(threatBonus + "%") + " Intimidated"
 			});
 		}
 			
@@ -389,7 +410,7 @@
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Surrounded: [color=" + ::Const.UI.Color.PositiveValue + "]" + modAllies + "%[/color]"
+				text = green(modAllies + "%") + " Surrounded"
 			});
 		}
 
@@ -399,7 +420,7 @@
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = "Allies nearby: [color=" + ::Const.UI.Color.NegativeValue + "]" + modEnemies + "%[/color]"
+				text = red(modEnemies + "%") + " Allies nearby"
 			});
 		}
 

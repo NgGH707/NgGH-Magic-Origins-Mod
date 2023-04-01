@@ -12,6 +12,11 @@ this.perk_nggh_alp_nightmare_mastery <- ::inherit("scripts/skills/skill", {
 		this.m.IsStacking = false;
 		this.m.IsHidden = false;
 	}
+
+	function onUpdate( _properties )
+	{
+		_properties.IsSpecializedInMagic = true;
+	}
 	
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{

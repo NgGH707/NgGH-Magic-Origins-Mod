@@ -271,6 +271,25 @@ this.nggh_mod_sleep_spell <- ::inherit("scripts/skills/skill", {
 		{
 			return ret;
 		}
+
+		local green = function ( _text )
+		{
+			if (!_text)
+			{
+				return "";
+			}
+
+			return "[color=" + ::Const.UI.Color.PositiveValue + "]" + _text + "[/color]";
+		};
+		local red = function ( _text )
+		{
+			if (!_text)
+			{
+				return "";
+			}
+
+			return "[color=" + ::Const.UI.Color.NegativeValue + "]" + _text + "[/color]";
+		};
 		
 		local _targetEntity = targetEntity;
 		local _user = this.getContainer().getActor();
@@ -290,7 +309,7 @@ this.nggh_mod_sleep_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/icons/cancel.png",
-				text = "Extreme high magic resistance"
+				text = "Extremely high magic resistance"
 			});
 			
 			return ret;
@@ -361,7 +380,7 @@ this.nggh_mod_sleep_spell <- ::inherit("scripts/skills/skill", {
 			},
 			{
 				icon = "ui/tooltips/positive.png",
-				text = "Default bonus: [color=" + ::Const.UI.Color.PositiveValue + "]" + this.m.BonusChance + "%[/color]"
+				text = green(this.m.BonusChance + "%") + " Default bonus"
 			}
 		]);
 
@@ -369,14 +388,14 @@ this.nggh_mod_sleep_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = "Distance of " + dis + ": [color=" + ::Const.UI.Color.NegativeValue + "]5%[/color]"
+				text = red("5%") + " Distance of " + dis
 			});
 		}
 		else if (dis == 1)
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Too close: [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color]"
+				text = green("5%") + " Too close"
 			});
 		}
 		
@@ -384,7 +403,7 @@ this.nggh_mod_sleep_spell <- ::inherit("scripts/skills/skill", {
 		local numAlliesAdjacent = 0;
 		local threatBonus = 0;
 
-		for( local i = 0; i != 6; i = ++i )
+		for( local i = 0; i != 6; ++i )
 		{
 			if (!targetTile.hasNextTile(i))
 			{
@@ -397,13 +416,12 @@ this.nggh_mod_sleep_spell <- ::inherit("scripts/skills/skill", {
 				{
 					if (tile.getEntity().isAlliedWith(_user))
 					{
-						numAlliesAdjacent = ++numAlliesAdjacent;
-						threatBonus = threatBonus + tile.getEntity().getCurrentProperties().Threat;
+						++numAlliesAdjacent;
+						threatBonus += tile.getEntity().getCurrentProperties().Threat;
 					}
 					else
 					{
-						numOpponentsAdjacent = ++numOpponentsAdjacent;
-						
+						++numOpponentsAdjacent;
 					}
 				}
 			}
@@ -417,7 +435,7 @@ this.nggh_mod_sleep_spell <- ::inherit("scripts/skills/skill", {
 			{
 				ret.push({
 					icon = "ui/tooltips/positive.png",
-					text = skill.getName() + ": [color=" + ::Const.UI.Color.PositiveValue + "]" + skill.getBonus() + "%[/color]"
+					text = green(skill.getBonus() + "%") + " " + skill.getName()
 				});
 			}
 		}
@@ -428,7 +446,7 @@ this.nggh_mod_sleep_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Debuff: [color=" + ::Const.UI.Color.PositiveValue + "]" + debuff * 2 + "%[/color]"
+				text = green((debuff * 2) + "%") + " Debuff"
 			});
 		}
 
@@ -436,7 +454,7 @@ this.nggh_mod_sleep_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Intimidated: [color=" + ::Const.UI.Color.PositiveValue + "]" + threatBonus + "%[/color]"
+				text = green(threatBonus + "%") + " Intimidated"
 			});
 		}
 			
@@ -446,7 +464,7 @@ this.nggh_mod_sleep_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = "Surrounded: [color=" + ::Const.UI.Color.PositiveValue + "]" + modAllies + "%[/color]"
+				text = green(modAllies + "%") + " Surrounded"
 			});
 		}
 
@@ -456,7 +474,7 @@ this.nggh_mod_sleep_spell <- ::inherit("scripts/skills/skill", {
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = "Allies nearby: [color=" + ::Const.UI.Color.NegativeValue + "]" + modEnemies + "%[/color]"
+				text = red(modEnemies + "%") + " Allies nearby"
 			});
 		}
 
