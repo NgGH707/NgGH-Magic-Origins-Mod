@@ -450,6 +450,16 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 
 		this.setScenarioValues(type, _isElite);
 	}
+
+	function setScenarioValues( _type, _isElite = false, _randomizedTalents = false, _setName = false )
+	{
+		this.nggh_mod_player_beast.setScenarioValues(_type, _isElite, _randomizedTalents, _setName);
+
+		if (_type == ::Const.EntityType.LegendDemonAlp && this.getBaseProperties().Initiative > 900)
+		{
+			this.getBaseProperties().Initiative -= 905;
+		}
+	}
 	
 	function assignMeleeEquipment()
 	{
@@ -522,6 +532,16 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 		local brush = this.getSprite("body").getBrush().Name;
 		app.Body = brush;
 		app.Corpse = brush + "_dead";
+
+		if (this.isDemonAlp())
+		{
+			this.m.BaseProperties.InitiativeForTurnOrderAdditional = 900;
+
+			if (this.m.BaseProperties.Initiative > 900)
+			{
+				this.m.BaseProperties.Initiative -= 905;
+			}
+		}
 	}
 
 	function updateInjuryVisuals( _setDirty = true )

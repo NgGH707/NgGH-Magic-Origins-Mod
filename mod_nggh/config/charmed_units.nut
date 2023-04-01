@@ -1447,7 +1447,7 @@ if (!("CharmedUnits" in ::Const))
 			
 		//LegendDemonAlp = 115,
 			{
-				StatMod = { Hitpoints = [0, 0], Bravery = [-50, -50], Stamina = [-50, -25], MeleeSkill = [-5, 5], RangedSkill = [-5, 5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-899, -860] },
+				StatMod = { Hitpoints = [0, 0], Bravery = [-50, -50], Stamina = [-50, -25], MeleeSkill = [-5, 5], RangedSkill = [-5, 5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
 				Perks = ["Footwork"],
 				Skills = ["actives/legend_demon_shadows_skill", "actives/horrific_scream", "actives/gruesome_feast", "effects/gruesome_feast_effect"],
 				Difficulty = 50,
