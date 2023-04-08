@@ -1,5 +1,10 @@
 ::mods_hookExactClass("entity/tactical/player", function(obj)
 {
+	obj.getPlannedPerks <- function()
+	{
+		return this.m.PlannedPerks;
+	}
+	
 	/*
 	local ws_onCombatStart = obj.onCombatStart;
 	obj.onCombatStart <- function()

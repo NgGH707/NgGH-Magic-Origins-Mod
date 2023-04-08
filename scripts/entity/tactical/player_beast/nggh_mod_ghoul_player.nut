@@ -6,6 +6,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		IsLoadingSaveData = false,
 		IsBroughtInBattle = false,
 		IsDegraded = false,
+		IsInitGhoul = false,
 	},
 	function isSkinGhoul()
 	{
@@ -479,6 +480,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		body_blood.setBrush("bust_body_bloodied_02");
 		body_blood.Visible = false;
 		
+		this.m.IsInitGhoul = true;
 		this.addDefaultStatusSprites();
 		this.getSprite("status_rooted").Scale = 0.45;
 		this.setSpriteOffset("status_rooted", ::createVec(-4, 7));
@@ -494,7 +496,11 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 
 	function addDefaultStatusSprites()
 	{
-		this.addSprite("dirt");
+		if (this.m.IsInitGhoul)
+		{
+			this.addSprite("dirt");
+		}
+		
 		local hex = this.addSprite("status_hex");
 		hex.Visible = false;
 		local sweat = this.addSprite("status_sweat");

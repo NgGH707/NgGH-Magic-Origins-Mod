@@ -34,10 +34,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		hexe.getSkills().removeByID("trait.loyal");
 		hexe.getSkills().removeByID("trait.disloyal");
 		hexe.getSkills().removeByID("trait.greedy");
-		hexe.getSkills().add(::new("scripts/skills/traits/player_character_trait"));
 		hexe.setPlaceInFormation(13);
-		hexe.getFlags().set("IsPlayerCharacter", true);
-		hexe.getSprite("miniboss").setBrush("bust_miniboss_lone_wolf");
 		hexe.m.HireTime = ::Time.getVirtualTimeF();
 		hexe.m.PerkPoints = 1;
 		hexe.m.LevelUps = 0;
@@ -244,9 +241,6 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 
 	function isLuftName( _name )
 	{
-		// disable this start
-		return false;
-
 		local key = "LUFT";
 		local possibleName = [];
 		possibleName.push(" " + key + " ");
@@ -313,23 +307,21 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		local roster = ::World.getPlayerRoster();
 		roster.clear();
 
-		local luft = roster.create("scripts/entity/tactical/player_beast/nggh_mod_player_luft");
-		luft.worsenMood(0.5, "I\'m hungry");
-		luft.setStartValuesEx();
-		luft.getBackground().buildDescription(true);
-		luft.getSkills().add(::new("scripts/skills/traits/player_character_trait"));
-		luft.setPlaceInFormation(12);
-		luft.getFlags().set("IsPlayerCharacter", true);
-		luft.getSprite("miniboss").setBrush("bust_miniboss_lone_wolf");
-		luft.m.HireTime = ::Time.getVirtualTimeF();
-		luft.m.PerkPoints += 1;
-		
-		::logInfo("With your seed/name, your start id = LUFT");
-		this.m.IsLuftAdventure = true;
-		this.setupRandomStart(6);
 		::World.Flags.set("looks", 9991);
 		::World.Flags.set("IsLuftAdventure", true);
 		::World.Flags.remove("RitualTimer");
+		::logInfo("With your seed/name, your start id = LUFT");
+
+		local luft = roster.create("scripts/entity/tactical/player_beast/nggh_mod_luft_player");
+		luft.setStartValuesEx();
+		luft.getBackground().buildDescription(true);
+		luft.worsenMood(0.5, "I\'m hungry");
+		luft.setPlaceInFormation(12);
+		luft.m.HireTime = ::Time.getVirtualTimeF();
+		
+		this.m.IsLuftAdventure = true;
+		this.setupRandomStart(6, false);
+		this.addScenarioPerk(luft.getBackground(), ::Const.Perks.PerkDefs.NggHCharmEnemyGhoul);
 	}
 
 	function setupSpecialStart( _id, _hexe )

@@ -7,7 +7,7 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 	},
 	function getStrengthMult() 
 	{
-		return 35.0
+		return 25.0;
 	}
 
 	function getTentacles()
@@ -354,10 +354,10 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 	function onAfterInit()
 	{
 		this.nggh_mod_player_beast.onAfterInit();
-		this.m.Skills.add(::new("scripts/skills/actives/kraken/nggh_mod_kraken_devour_skill"));
-		this.m.Skills.add(::new("scripts/skills/actives/kraken/nggh_mod_kraken_command_drag_skill"));
-		this.m.Skills.add(::new("scripts/skills/actives/kraken/nggh_mod_kraken_spawn_tentacle_skill"));
-		this.m.Skills.add(::new("scripts/skills/actives/kraken/nggh_mod_kraken_command_squeeze_skill"));
+		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_devour_skill"));
+		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_command_drag_skill"));
+		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_spawn_tentacle_skill"));
+		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_command_squeeze_skill"));
 
 		//this.m.Skills.add(this.new("scripts/skills/actives/mod_kraken_enrage_skill"));
 	}
@@ -433,7 +433,7 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 			}
 			*/
 
-			local script = this.findPerkInConst(p.getID());
+			local script = ::Nggh_MagicConcept.findPerkScriptByID(p.getID());
 
 			if (script == null)
 			{
@@ -444,19 +444,6 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 			_tentacle.getSkills().add(perk);
 			perk.onCombatStarted();
 		}
-	}
-
-	function findPerkInConst( _id )
-	{
-		foreach ( Def in ::Const.Perks.PerkDefObjects )
-		{
-			if (Def.ID == _id)
-			{
-				return Def.Script;
-			}
-		}
-
-		return null;
 	}
 
 	function spawnTentaclesAtBattleStart()

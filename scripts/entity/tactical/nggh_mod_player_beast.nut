@@ -293,7 +293,7 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 	{
 		if (this.getBackground() != null && ("Custom" in this.getBackground().m.TempData))
 		{
-			::TalentFiller.fillModdedTalentValues(this , this.getBackground().m.TempData.Custom.Talents , _stars , _force);
+			::Nggh_MagicConcept.TalentFiller.fillModdedTalentValues(this , this.getBackground().m.TempData.Custom.Talents , _stars , _force);
 		}
 	}
 

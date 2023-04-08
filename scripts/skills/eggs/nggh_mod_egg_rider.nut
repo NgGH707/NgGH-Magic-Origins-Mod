@@ -32,7 +32,7 @@ this.nggh_mod_egg_rider <- ::inherit("scripts/skills/nggh_mod_rider_skill", {
 			};
 			local mount = this.m.Manager.getMount();
 
-			if (::IsAccessoryCompanionsExist || ("getAttributes" in mount.get()))
+			if (::Is_AccessoryCompanions_Exist || ("getAttributes" in mount.get()))
 			{
 				stats = mount.getAttributes();
 			}
@@ -85,7 +85,7 @@ this.nggh_mod_egg_rider <- ::inherit("scripts/skills/nggh_mod_rider_skill", {
 			],
 		};
 
-		/*if (::IsAccessoryCompanionsExist && _item != null)
+		/*if (::Is_AccessoryCompanions_Exist && _item != null)
 		{
 			_item.m.Attributes.Hitpoints = stats.HitpointsMax;
 			_item.m.Attributes.Stamina = stats.Stamina;

@@ -61,5 +61,20 @@
 			_target.BlockedSlots <- blocked;
 		}
 	}
+
+	if (::Is_PlanYourPerks_Exist && ("addPlannedPerksToUIData" in obj))
+	{
+		local ws_addPlannedPerksToUIData = obj.addPlannedPerksToUIData;
+		obj.addPlannedPerksToUIData = function( _entity )
+		{
+			local PlannedPerksDict = {}
+			//weird error
+			if (_entity.getPlannedPerks().len() == 0) return ws_addPlannedPerksToUIData(_entity)
+			foreach(key, value in _entity.getPlannedPerks()){
+				PlannedPerksDict[key] <- value
+			}
+			return PlannedPerksDict
+		}
+	}
 	
 });

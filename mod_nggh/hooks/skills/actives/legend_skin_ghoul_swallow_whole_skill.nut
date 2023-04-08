@@ -144,7 +144,7 @@
 			return;
 		}
 		
-		::Tactical.spawnSpriteEffect("luft_swallow_quote_" + ::Math.rand(1, 4), ::createColor("#ffffff"), _user.getTile(), ::Const.Tactical.Settings.SkillOverlayOffsetX, 145, ::Const.Tactical.Settings.SkillOverlayScale, ::Const.Tactical.Settings.SkillOverlayScale, ::Const.Tactical.Settings.SkillOverlayStayDuration + 300, 0, ::Const.Tactical.Settings.SkillOverlayFadeDuration);
+		::Nggh_MagicConcept.spawnQuote("luft_swallow_quote_" + ::Math.rand(1, 4), _user.getTile());
 	};
 	obj.onUse = function( _user, _targetTile )
 	{

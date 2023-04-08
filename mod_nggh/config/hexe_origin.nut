@@ -5,7 +5,7 @@ if (!("HexeOrigin" in ::Const))
 }
 
 ::Const.HexeOrigin.EasterEggSeed <- [
-	//"LUFTISHERE" temporarily disable this special seed due to bugs
+	"LUFTISHERE"
 ];
 
 ::Const.HexeOrigin.NameKeywords <- [

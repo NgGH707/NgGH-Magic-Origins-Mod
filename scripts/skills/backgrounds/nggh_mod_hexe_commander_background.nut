@@ -138,6 +138,10 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 			this.m.CharmHead = ::MSU.Array.rand(::Const.HexeOrigin.FakeHead);
 			this.m.CharmHair = ::MSU.Array.rand(::Const.HexeOrigin.FakeHair);
 			this.m.CharmBody = ::Const.HexeOrigin.Body[1];
+
+			this.getContainer().add(::new("scripts/skills/traits/player_character_trait"));
+			this.getContainer().getActor().getSprite("miniboss").setBrush("bust_miniboss_lone_wolf");
+			this.getContainer().getActor().getFlags().set("IsPlayerCharacter", true);
 		}
 
 		this.nggh_mod_hexe_background.onAdded();

@@ -177,7 +177,7 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 
 		if (!this.m.IsOnDeserializing)
 		{
-			this.m.CustomPerkTree = ::PerkTreeBuilder.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), false, false, true);
+			this.m.CustomPerkTree = ::Nggh_MagicConcept.PerkTreeBuilder.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), false, false, true);
 		}
 
 		local pT = ::Const.Perks.BuildCustomPerkTree(this.m.CustomPerkTree);

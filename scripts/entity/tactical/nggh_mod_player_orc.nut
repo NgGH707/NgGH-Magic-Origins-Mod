@@ -1264,7 +1264,7 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 	{
 		if (this.getBackground() != null && ("Custom" in this.getBackground().m.TempData))
 		{
-			::TalentFiller.fillModdedTalentValues(this , this.getBackground().m.TempData.Custom.Talents , _stars , _force);
+			::Nggh_MagicConcept.TalentFiller.fillModdedTalentValues(this , this.getBackground().m.TempData.Custom.Talents , _stars , _force);
 		}
 	}
 

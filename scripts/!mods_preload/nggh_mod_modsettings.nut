@@ -4,10 +4,11 @@
 	::Nggh_MagicConcept.IsOPMode <- false;
 	::Nggh_MagicConcept.IsCosmeticEnable <- true;
 	::Nggh_MagicConcept.IsAbleToCharmInArena <- false;
+	::Nggh_MagicConcept.IsNoKrakenVsKraken <- false;
 	::Nggh_MagicConcept.HexeOriginRitual <- {
 		UnluckyChance = 5,
 		UnluckyMult = 10.0,
-		RandomizeMin = 70,
+		RandomizeMin = 80,
 		RandomizeMax = 150,
 		Cooldown = 7,
 		Mult = 7.0,
@@ -104,6 +105,14 @@
 		if (this.getValue() == _oldValue) return;
 		::logInfo("After change \'Charm In Arena\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.IsAbleToCharmInArena = this.getValue();
+	});
+	local kraken = page.addBooleanSetting("kraken_vs_kraken", ::Nggh_MagicConcept.IsNoKrakenVsKraken, "Skip Kraken vs Kraken");
+	kraken.setDescription("If checked, allows you to skip the kraken vs kraken fight at the start of [color=" + ::Const.UI.Color.NegativeValue + "]Beast of Beasts[/color] origin.");
+	kraken.addAfterChangeCallback(function (_oldValue)
+	{
+		if (this.getValue() == _oldValue) return;
+		::logInfo("After change \'Skip Kraken vs Kraken\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
+	    ::Nggh_MagicConcept.IsNoKrakenVsKraken = this.getValue();
 	});
 
 	// 1-divider

@@ -296,7 +296,7 @@ this.mount_manager <- {
 		    this.m.Skills.push(_s);
 		}
 
-		if (::IsAccessoryCompanionsExist)
+		if (::Is_AccessoryCompanions_Exist)
 		{
 			foreach( i, quirk in this.m.Mount.getQuirks() )
 			{
@@ -1090,7 +1090,7 @@ this.mount_manager <- {
 		this.m.Attributes.HitpointsMax = this.m.Attributes.Hitpoints;
 		this.m.IsRegenHealth = false;
 
-		if (::IsAccessoryCompanionsExist)
+		if (::Is_AccessoryCompanions_Exist)
 		{
 			local attr = {
 				Hitpoints = 0,
@@ -1226,7 +1226,7 @@ this.mount_manager <- {
 				this.addSkills();
 			}
 
-			if (::IsAccessoryCompanionsExist)
+			if (::Is_AccessoryCompanions_Exist)
 			{
 				local lossPct = ::Math.floor((1 - this.getHitpointsPct()) * 100);
 				this.getMount().setWounds(lossPct);

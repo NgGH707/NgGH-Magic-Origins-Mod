@@ -3,9 +3,14 @@
 	//obj.m.MagicPoints <- 0;
 	//obj.m.PreviewMagicPoints <- 0;
 	//obj.m.IsAbleToUseMagic <- false;
+	obj.m.PlannedPerks <- {};
 
 	//---------------------------------------
 	// extra stuff, not related to magic
+	obj.getPlannedPerks <- function()
+	{
+		return this.m.PlannedPerks;
+	}
 	obj.isMounted <- function() 
 	{
 		return false;

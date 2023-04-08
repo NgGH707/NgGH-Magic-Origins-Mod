@@ -38,7 +38,7 @@ if (::Is_PTR_Exist)
 	}
 }
 
-if (::IsAccessoryCompanionsExist)
+if (::Is_AccessoryCompanions_Exist)
 {
 	foreach (file in ::IO.enumerateFiles("mod_nggh/tweak_ac"))
 	{

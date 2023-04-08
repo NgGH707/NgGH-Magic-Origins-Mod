@@ -455,9 +455,9 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 	{
 		this.nggh_mod_player_beast.setScenarioValues(_type, _isElite, _randomizedTalents, _setName);
 
-		if (_type == ::Const.EntityType.LegendDemonAlp && this.getBaseProperties().Initiative > 900)
+		if (!::Nggh_MagicConcept.IsOPMode && _type == ::Const.EntityType.LegendDemonAlp && this.getBaseProperties().Initiative > 900)
 		{
-			this.getBaseProperties().Initiative -= 905;
+			this.getBaseProperties().Initiative -= 925;
 		}
 	}
 	
@@ -537,9 +537,9 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 		{
 			this.m.BaseProperties.InitiativeForTurnOrderAdditional = 900;
 
-			if (this.m.BaseProperties.Initiative > 900)
+			if (!::Nggh_MagicConcept.IsOPMode && this.m.BaseProperties.Initiative > 900)
 			{
-				this.m.BaseProperties.Initiative -= 905;
+				this.m.BaseProperties.Initiative -= 925;
 			}
 		}
 	}

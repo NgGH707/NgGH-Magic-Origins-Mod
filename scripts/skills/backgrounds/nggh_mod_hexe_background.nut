@@ -142,7 +142,7 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 			
 			if (cursed != null || lesserCursed != null)
 			{
-				if (this.m.IsCharming)
+				if (this.getBackground().m.IsCharming)
 				{
 					return;
 				}
@@ -251,7 +251,7 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 		_properties.TargetAttractionMult *= 1.25;
 
 		// should i remove this, it's kinda an unfair advantage
-		_properties.IsImmuneToDisarm = true;
+		//_properties.IsImmuneToDisarm = true;
 
 		// she has way to defend against this kind of magic/curse
 		_properties.IsImmuneToDamageReflection = true;

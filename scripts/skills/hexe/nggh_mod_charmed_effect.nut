@@ -116,20 +116,25 @@ this.nggh_mod_charmed_effect <- ::inherit("scripts/skills/effects/charmed_effect
 		{
 			this.m.Master.setCooldown(1);
 		}
-
-		if (this.m.IsSuicide || this.m.IsDead)
+		else
 		{
-			if (hasMaster)
-			{
-				this.m.Master.removeSlave(this.getContainer().getActor().getID());
-				this.m.Master = null;
-			}
-
-			return;
+			this.m.Master = null;
 		}
 
-		this.getContainer().add(::new("scripts/skills/hexe/nggh_mod_charm_resistance_effect"));
+		if (hasMaster && (this.m.IsSuicide || this.m.IsDead))
+		{
+			this.m.Master.removeSlave(this.getContainer().getActor().getID());
+			this.m.Master = null;
+		}
+		else
+		{
+			this.getContainer().add(::new("scripts/skills/hexe/nggh_mod_charm_resistance_effect"));
+		}
+		
 		this.getContainer().getActor().m.IsControlledByPlayer = false;
+
+		if (this.m.OriginalSocket == null) return;
+
 		this.charmed_effect.onRemoved();
 
 		/*
@@ -142,6 +147,7 @@ this.nggh_mod_charmed_effect <- ::inherit("scripts/skills/effects/charmed_effect
 
 	function onCombatFinished()
 	{
+		this.m.IsSuicide = true;
 		this.charmed_effect.onCombatFinished();
 		local actor = this.getContainer().getActor();
 		local troop = actor.getWorldTroop();

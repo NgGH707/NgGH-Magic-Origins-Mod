@@ -81,9 +81,10 @@ this.nggh_mod_world_cursed_badly_effect <- ::inherit("scripts/skills/effects_wor
 		{
 			local weaken_curse = ::new("scripts/skills/effects_world/nggh_mod_world_cursed_effect");
 			weaken_curse.m.Factions.extend(this.m.Factions);
-			weaken_curse.m.PlayerRelation.extend(this.m.PlayerRelation);
+			weaken_curse.m.PlayerRelations.extend(this.m.PlayerRelations);
 			this.getContainer().add(weaken_curse);
 			this.m.IsForceRemoved = false;
+			this.m.HasBeenRemoved = true;
 			this.removeSelf();
 		}
 	}

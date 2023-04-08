@@ -101,6 +101,16 @@ this.nggh_mod_nacho_vomit_skill <- ::inherit("scripts/skills/skill", {
 		return _targetTile.IsEmpty;
 	}
 
+	function onBeforeUse( _user , _targetTile )
+	{
+		if (!_user.getFlags().has("luft"))
+		{
+			return;
+		}
+		
+		::Nggh_MagicConcept.spawnQuote("luft_eat_quote_" + ::Math.rand(1, 5), _user.getTile());
+	}
+
 	function onUse( _user, _targetTile )
 	{
 		this.getContainer().removeByID("effects.swallowed_whole");

@@ -1,7 +1,8 @@
 ::Nggh_MagicConcept <- {
 	ID = "mod_nggh_magic_concept",
 	Name = "NgGH Magic Concept",
-	Version = "3.0.0-beta.47",
+	Version = "3.0.0-beta.48",
+	Class = {},
 };
 
 ::mods_registerMod(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, "NecrOwO\'s Forbidden Magic");
@@ -20,9 +21,13 @@
 	//::Nggh_MagicConcept.Mod.Registry.setUpdateSource(::MSU.System.Registry.ModSourceDomain.NexusMods);
 
 	// important consts and objects
-	::Nggh_MagicConcept.Class <- {};
 	::Is_PTR_Exist <- ::mods_getRegisteredMod("mod_legends_PTR") != null;
-	::IsAccessoryCompanionsExist <- ::mods_getRegisteredMod("mod_AC") != null;
+	::Is_PlanYourPerks_Exist <- ::mods_getRegisteredMod("mod_plan_perks") != null;
+	::Is_AccessoryCompanions_Exist <- ::mods_getRegisteredMod("mod_AC") != null;
+
+	// will probably put these to a callback after the new UI is connected
+	::Nggh_MagicConcept.PerkTreeBuilder <- ::new("scripts/mods/perk_tree_builder");
+	::Nggh_MagicConcept.TalentFiller <- ::new("scripts/mods/talent_filler");
 
 	// set up mod settings 
 	::Nggh_MagicConcept.mod_settings();
@@ -35,10 +40,7 @@
 	::mods_registerJS("nggh_hooks/character_screen_paperdoll_module.js");
 	::mods_registerJS("nggh_hooks/turnsequencebar_module.js");
 	::mods_registerCSS("nggh_hooks/turnsequencebar_module.css");
-
-	// will probably put these to a callback after the new UI is connected
-	::PerkTreeBuilder <- ::new("scripts/mods/perk_tree_builder");
-	::TalentFiller <- ::new("scripts/mods/talent_filler");
+	
 	//::nggh_processingEntries();
 	//::nggh_overwriteEntries();
 

@@ -206,9 +206,9 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 		this.setSpriteOffset("arrow", ::createVec(0, 25));
 		this.setSpriteOffset("status_stunned", ::createVec(0, 25));
 		
-		this.m.Skills.add(::new("scripts/skills/actives/kraken/nggh_mod_kraken_bite_skill"));
-		this.m.Skills.add(::new("scripts/skills/actives/kraken/nggh_mod_kraken_move_skill"));
-		this.m.Skills.add(::new("scripts/skills/actives/kraken/nggh_mod_kraken_ensnare_skill"));
+		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_bite_skill"));
+		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_move_skill"));
+		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_ensnare_skill"));
 
 		::Tactical.getTemporaryRoster().add(this);
 	}

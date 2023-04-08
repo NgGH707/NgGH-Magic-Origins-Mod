@@ -1,6 +1,6 @@
 ::mods_hookExactClass("entity/tactical/warwolf", function ( obj )
 {
-	if (!::IsAccessoryCompanionsExist)
+	if (!::Is_AccessoryCompanions_Exist)
 	{
 		obj.setVariant <- function( _v )
 		{

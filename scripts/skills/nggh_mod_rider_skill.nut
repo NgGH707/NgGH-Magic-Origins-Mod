@@ -319,7 +319,7 @@ this.nggh_mod_rider_skill <- ::inherit("scripts/skills/skill", {
 
 	function onDeath( _fatalityType )
 	{
-		if (this.isMounted() && ::IsAccessoryCompanionsExist)
+		if (this.isMounted() && ::Is_AccessoryCompanions_Exist)
 		{
 			local lossPct = ::Math.floor((1 - this.m.Manager.getHitpointsPct()) * 100);
 			this.m.Manager.getMount().setWounds(lossPct);

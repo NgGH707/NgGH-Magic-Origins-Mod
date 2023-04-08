@@ -1012,11 +1012,9 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 	
 	function fillModsTalentValues( _stars = 0 , _force = false )
 	{
-		local helper = this.getroottable().TalentFiller;
-		
 		if (this.getBackground() != null && ("Custom" in this.getBackground().m.TempData))
 		{
-			helper.fillModdedTalentValues(this , this.getBackground().m.TempData.Custom.Talents , _stars , _force);
+			::Nggh_MagicConcept.TalentFiller.fillModdedTalentValues(this , this.getBackground().m.TempData.Custom.Talents , _stars , _force);
 		}
 	}
 

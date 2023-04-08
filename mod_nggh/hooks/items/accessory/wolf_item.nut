@@ -1,4 +1,4 @@
-if (!::IsAccessoryCompanionsExist)
+if (!::Is_AccessoryCompanions_Exist)
 {
 	// make wolf_item have an actual right icon for it wolf variant
 	::mods_hookExactClass("items/accessory/wolf_item", function(obj) 

@@ -1,4 +1,4 @@
-this.bomb_bag <- this.inherit("scripts/items/ammo/ammo", {
+this.nggh_mod_bomb_bag <- this.inherit("scripts/items/ammo/ammo", {
 	m = {},
 	function create()
 	{

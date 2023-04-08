@@ -364,7 +364,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			local isHumaniod = ::Const.HumanoidBeast.find(this.m.TempData.Type) != null;
 			local hasAoE = ::Const.BeastHasAoE.find(this.m.TempData.Type) != null;
 			local removeNimble = ::Const.BeastNeverHasNimble.find(this.m.TempData.Type) != null;
-			this.m.CustomPerkTree = ::PerkTreeBuilder.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), isHumaniod, hasAoE, removeNimble);
+			this.m.CustomPerkTree = ::Nggh_MagicConcept.PerkTreeBuilder.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), isHumaniod, hasAoE, removeNimble);
 		}
 		
 		local origin = this.World.Assets.getOrigin();
@@ -571,7 +571,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			})
 		}
 		
-		ret.extend(::Const.CharmedUtilities.getTooltip(this.getContainer().getActor()));
+		ret.extend(::Const.CharmedUtilities.getTooltip(actor));
 		ret.extend(this.getAttributesTooltip());
 		return ret;
 	}

@@ -82,7 +82,7 @@ this.nggh_mod_patting_skill <- ::inherit("scripts/skills/skill", {
 			return;
 		}
 		
-		::Tactical.spawnSpriteEffect("luft_pet_quote_" + ::Math.rand(1, 5), ::createColor("#ffffff"), _user.getTile(), ::Const.Tactical.Settings.SkillOverlayOffsetX, 145, ::Const.Tactical.Settings.SkillOverlayScale, ::Const.Tactical.Settings.SkillOverlayScale, ::Const.Tactical.Settings.SkillOverlayStayDuration + 100, 0, ::Const.Tactical.Settings.SkillOverlayFadeDuration);
+		::Nggh_MagicConcept.spawnQuote("luft_pet_quote_" + ::Math.rand(1, 5), _user.getTile());
 	}
 
 	function onUse( _user, _targetTile )
@@ -147,11 +147,11 @@ this.nggh_mod_patting_skill <- ::inherit("scripts/skills/skill", {
 
 		if (this.m.Hit == 0 && this.m.Count > 0)
 		{
-			actor.worsenMood(1.0, "They dodged all my pet");
+			actor.worsenMood(1.0, "They dodged all my head pats");
 		}
 		else if (this.m.Hit == 0)
 		{
-			actor.worsenMood(0.2, "Can\'t give any pet in this battle");
+			actor.worsenMood(0.2, "Can\'t give any head pat in this battle");
 		}
 		else
 		{
@@ -160,7 +160,7 @@ this.nggh_mod_patting_skill <- ::inherit("scripts/skills/skill", {
 
 		if (this.m.Kill != 0)
 		{
-			actor.improveMood(0.2, "I just killed someone with a pet");
+			actor.improveMood(0.2, "I just killed someone with my head pat");
 		}
 	}
 

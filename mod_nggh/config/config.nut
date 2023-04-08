@@ -4,14 +4,31 @@
 	return ("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getOrigin() != null && ::World.Assets.getOrigin().getID() == "scenario.hexe";
 }
 
-::Nggh_MagicConcept.findPerkScriptByID <- function( _id )
+::Nggh_MagicConcept.spawnQuote <- function( _brush, _tile )
+{
+	::Tactical.spawnSpriteEffect(_brush, ::createColor("#ffffff"), _tile, ::Const.Tactical.Settings.SkillOverlayOffsetX, ::Const.Tactical.Settings.SkillOverlayOffsetY + 30, ::Const.Tactical.Settings.SkillOverlayScale, ::Const.Tactical.Settings.SkillOverlayScale, ::Const.Tactical.Settings.SkillOverlayStayDuration + 750, 0, ::Const.Tactical.Settings.SkillOverlayFadeDuration - 150);
+}
+
+::Nggh_MagicConcept.findPerkDefByID <- function( _id )
 {
 	foreach ( Def in ::Const.Perks.PerkDefObjects )
 	{
 		if (Def.ID == _id)
 		{
-			return Def.Script;
+			return Def;
 		}
+	}
+
+	return null;
+}
+
+::Nggh_MagicConcept.findPerkScriptByID <- function( _id )
+{
+	local Def = ::Nggh_MagicConcept.findPerkDefByID(_id);
+
+	if (Def != null)
+	{
+		return Def.Script;
 	}
 
 	return null;

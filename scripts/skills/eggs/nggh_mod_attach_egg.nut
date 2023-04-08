@@ -77,7 +77,7 @@ this.nggh_mod_attach_egg <- ::inherit("scripts/skills/skill", {
 		local e = _targetTile.getEntity();
 		local _item = ::new("scripts/items/accessory/nggh_mod_accessory_spider");
 
-		/*if (this.IsAccessoryCompanionsExist)
+		/*if (this.Is_AccessoryCompanions_Exist)
 		{
 			_item = this.new("scripts/items/accessory/wardog_item");
 			_item.setType(this.Const.Companions.TypeList.Spider);

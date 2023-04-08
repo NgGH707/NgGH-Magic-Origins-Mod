@@ -3,7 +3,7 @@ this.nggh_mod_cosmetic <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "special.cosmetic";
-		this.m.Name = "Cosplay";
+		this.m.Name = "Cosmetic";
 		this.m.Icon = "skills/status_effect_cosmetic.png";
 		this.m.Description = "This hat gonna look good on my head. Looks! How pretty i am!";
 		this.m.Type = ::Const.SkillType.Special | ::Const.SkillType.Trait | ::Const.SkillType.Alert;
@@ -30,19 +30,19 @@ this.nggh_mod_cosmetic <- ::inherit("scripts/skills/skill", {
 				id = 10,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Doesn\'t gain any armor from helmet and armor pieces"
+				text = "[color=" + ::Const.UI.Color.NegativeValue + "]Doesn\'t gain any armor from helmet or armor pieces[/color]"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Doesn\'t suffer any fatigue or vision penalty from helmet and armor pieces"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]Doesn\'t suffer any fatigue or vision penalty from helmet or armor pieces[/color]"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Can still gain any special effect or rune effect from helmet and armor pieces"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]Can still gain any special effect or rune effect from helmet and armor pieces[/color]"
 			}
 		];
 	}
@@ -64,15 +64,8 @@ this.nggh_mod_cosmetic <- ::inherit("scripts/skills/skill", {
 			return true;
 		}
 
-		local h = this.getContainer().getActor().getItems().getItemAtSlot(::Const.ItemSlot.Head);
-		local a = this.getContainer().getActor().getItems().getItemAtSlot(::Const.ItemSlot.Body);
-
-		if (h == null && a == null)
-		{
-			return true;
-		}
-		
-		return false;
+		local actor = this.getContainer().getActor();
+		return actor.getHeadItem() == null && actor.getBodyItem() == null;
 	}
 
 	function onAfterUpdate( _properties )
@@ -82,8 +75,9 @@ this.nggh_mod_cosmetic <- ::inherit("scripts/skills/skill", {
 			return;
 		}
 
-		local h = this.getContainer().getActor().getItems().getItemAtSlot(::Const.ItemSlot.Head);
-		local a = this.getContainer().getActor().getItems().getItemAtSlot(::Const.ItemSlot.Body);
+		local actor = this.getContainer().getActor();
+		local h = actor.getHeadItem();
+		local a = actor.getBodyItem();
 
 		if (h == null && a == null)
 		{
