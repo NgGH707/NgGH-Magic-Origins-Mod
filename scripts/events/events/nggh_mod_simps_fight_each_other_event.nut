@@ -373,7 +373,17 @@ this.nggh_mod_simps_fight_each_other_event <- ::inherit("scripts/events/event", 
 
 			if (charm != null)
 			{
-				simps[charm.getSimpLevel()].push(bro);
+				local lv = charm.getSimpLevel();
+
+				if (lv > 3)
+				{
+					simps[4].push(bro);
+				}
+				else
+				{
+					simps[lv].push(bro);
+				}
+				
 				continue;
 			}
 		}

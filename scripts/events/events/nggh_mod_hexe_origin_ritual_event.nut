@@ -213,21 +213,24 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 				FM.makeNoblesUnfriendlyToPlayer();
 				FM.makeSettlementsUnfriendlyToPlayer();
 
-				foreach ( bro in ::World.getPlayerRoster().getAll() )
+				if (::Nggh_MagicConcept.HexeOriginRitual.IsLoseLevelWhenFail)
 				{
-					local skill = bro.getSkills().getSkillByID("effects.simp");
-
-					if (skill == null)
+					foreach ( bro in ::World.getPlayerRoster().getAll() )
 					{
-						continue;
-					}
+						local skill = bro.getSkills().getSkillByID("effects.simp");
 
-					if (skill.getSimpLevel() <= 0)
-					{
-						continue;
-					}
+						if (skill == null)
+						{
+							continue;
+						}
 
-					_event.decreaseSimpLevel(bro);
+						if (skill.getSimpLevel() <= 0)
+						{
+							continue;
+						}
+
+						_event.decreaseSimpLevel(bro);
+					}
 				}
 
 				::World.Flags.add("isExposed", true);
@@ -349,15 +352,18 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		local Required = ::Math.max(1, ::Math.ceil(party_strength * (::Nggh_MagicConcept.HexeOriginRitual.Mult + modifier) * randomness));
 		::logInfo("Hexe Origin Ritual - Required offering value? " + Required);
 
-		if (::Math.rand(1, 100) <= ::Math.ceil(::Nggh_MagicConcept.HexeOriginRitual.UnluckyChance + ::World.Flags.getAsInt("HexeOriginLucky") * 2))
+		if (!::World.Flags.get("isExposed"))
 		{
-			Required = ::Math.ceil(Required * ::Nggh_MagicConcept.HexeOriginRitual.UnluckyMult);
-			::logInfo("Hexe Origin Ritual - Required offering value increases! " + Required + " is the new value (Very unlucky you are)");
-			::World.Flags.set("HexeOriginLucky", 0);
-		}
-		else
-		{
-			::World.Flags.increment("HexeOriginLucky");
+			if (::Math.rand(1, 100) <= ::Math.ceil(::Nggh_MagicConcept.HexeOriginRitual.UnluckyChance + ::World.Flags.getAsInt("HexeOriginLucky") * 2))
+			{
+				Required = ::Math.ceil(Required * ::Nggh_MagicConcept.HexeOriginRitual.UnluckyMult);
+				::logInfo("Hexe Origin Ritual - Required offering value increases! " + Required + " is the new value (Very unlucky you are)");
+				::World.Flags.set("HexeOriginLucky", 0);
+			}
+			else
+			{
+				::World.Flags.increment("HexeOriginLucky");
+			}
 		}
 
 		local Money = ::Math.ceil(Required * 0.33);

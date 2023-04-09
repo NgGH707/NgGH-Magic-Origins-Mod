@@ -6,6 +6,7 @@
 	::Nggh_MagicConcept.IsAbleToCharmInArena <- false;
 	::Nggh_MagicConcept.IsNoKrakenVsKraken <- false;
 	::Nggh_MagicConcept.HexeOriginRitual <- {
+		IsLoseLevelWhenFail = true,
 		UnluckyChance = 5,
 		UnluckyMult = 10.0,
 		RandomizeMin = 80,
@@ -122,6 +123,14 @@
 	page.addTitle("title_2", "Hexe Origin Ritual").setDescription("This section contains settings for the Ritual event that is tied with the [color=" + ::Const.UI.Color.NegativeValue + "]Elder Hexe[/color] background from Hexe origin.");
 
 	// 2-content
+	local loseLevel = page.addBooleanSetting("ritual_lose_level", ::Nggh_MagicConcept.HexeOriginRitual.IsLoseLevelWhenFail, "Is Lose Simp Level When Failing");
+	loseLevel.setDescription("If checked, when you fail this ritual event, all your charmed characters also lose [color=" + ::Const.UI.Color.NegativeValue + "]1[/color] simp level. This level loss has [color=" + ::Const.UI.Color.PositiveValue + "]60%[/color] to be reversed if you successfully perform the next ritual.")
+	loseLevel.addAfterChangeCallback(function (_oldValue)
+	{
+		if (this.getValue() == _oldValue) return;
+		::logInfo("After change \'Is Lose Simp Level When Failing\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
+	    ::Nggh_MagicConcept.HexeOriginRitual.IsLoseLevelWhenFail = this.getValue();
+	});
 	local ritual = page.addRangeSetting("ritual_cooldown", ::Nggh_MagicConcept.HexeOriginRitual.Cooldown, 1, 30, 1, "Cooldown");
 	ritual.setDescription("Determines how many days till the next mandatory Hexe Origin Ritual comes up again.");
 	ritual.addAfterChangeCallback(function (_oldValue)

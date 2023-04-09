@@ -39,13 +39,13 @@ this.nggh_mod_frenzy_effect <- ::inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/regular_damage.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+30%[/color] Attack Damage"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+15%[/color] Attack Damage"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/melee_skill.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+30%[/color] Melee Skill"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+15%[/color] Melee Skill"
 			},
 			{
 				id = 6,
@@ -90,8 +90,8 @@ this.nggh_mod_frenzy_effect <- ::inherit("scripts/skills/skill", {
 	{
 		_properties.AdditionalActionPointCost -= 1;
 		_properties.FatalityChanceMult *= 10000.0;
-		_properties.MeleeDamageMult *= 1.3;
-		_properties.MeleeSkillMult *= 1.3;
+		_properties.MeleeDamageMult *= 1.15;
+		_properties.MeleeSkillMult *= 1.15;
 		_properties.InitiativeMult *= 1.5;
 		_properties.MeleeDefenseMult *= 0.5;
 		_properties.TargetAttractionMult *= 1.15;

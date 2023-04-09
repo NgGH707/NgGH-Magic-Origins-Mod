@@ -21,7 +21,7 @@ this.nggh_mod_frenzy_skill <- ::inherit("scripts/skills/skill", {
 		this.m.IsStacking = false;
 		this.m.IsAttack = false;
 		this.m.ActionPointCost = 3;
-		this.m.FatigueCost = 15;
+		this.m.FatigueCost = 25;
 		this.m.MinRange = 0;
 		this.m.MaxRange = 0;
 	}
@@ -38,28 +38,20 @@ this.nggh_mod_frenzy_skill <- ::inherit("scripts/skills/skill", {
 
 	function getTooltip()
 	{
-		return [
-			{
-				id = 1,
-				type = "title",
-				text = this.getName()
-			},
-			{
-				id = 2,
-				type = "description",
-				text = this.getDescription()
-			},
+		local ret = this.getDefaultUtilityTooltip();
+
+		ret.extend([
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/regular_damage.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+30%[/color] Attack Damage"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+15%[/color] Attack Damage"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/melee_skill.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+30%[/color] Melee Skill"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+15%[/color] Melee Skill"
 			},
 			{
 				id = 6,
@@ -89,15 +81,17 @@ this.nggh_mod_frenzy_skill <- ::inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Become immune to stun or daze"
+				text = "Becomes immune to stun or daze"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Become immune to knocked back or grab"
+				text = "Becomes immune to knocked back or grab"
 			}
-		];
+		]);
+
+		return ret;
 	}
 
 	function isUsable()
