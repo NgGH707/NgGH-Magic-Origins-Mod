@@ -24,7 +24,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 	function onSpawnAssets()
 	{
 		::World.Flags.set("looks", ::Math.rand(9995, 9997));
-		::World.Flags.set("RitualTimer", 1);
+		::World.Flags.set("RitualTimer", 2); // set at 2 will make sure the first ritual will be at days 7
 		
 		local roster = ::World.getPlayerRoster();
 		local hexe = roster.create("scripts/entity/tactical/player");
@@ -62,8 +62,6 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			}
 			else
 			{
-				this.setupSpecialStart(forced_start_ID, hexe);
-
 				if (forced_start_ID == null)
 				{
 					::logError("forceSeed = null");
@@ -73,6 +71,8 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 					::logInfo("With your seed/name, your start id = " + forced_start_ID);
 					::logInfo("Your starting party would be: " + ::Const.HexeOrigin.StartingRollNames[forced_start_ID]);
 				}
+
+				this.setupSpecialStart(forced_start_ID, hexe);
 			}
 		}
 		
@@ -85,9 +85,9 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		::World.Assets.getStash().add(::new("scripts/items/supplies/dates_item"));
 		::World.Assets.getStash().add(::new("scripts/items/supplies/black_marsh_stew_item"));
 		::World.Assets.getStash().add(::new("scripts/items/supplies/black_marsh_stew_item"));
-		::World.Assets.getStash().add(::new("scripts/items/misc/witch_hair_item"));
 		::World.Assets.getStash().add(::new("scripts/items/misc/poisoned_apple_item"));
 		::World.Assets.getStash().add(::new("scripts/items/misc/werewolf_pelt_item"));
+		::World.Assets.getStash().add(::new("scripts/items/misc/witch_hair_item"));
 			
 		// add 2 random potions
 		local weightedContainer = ::MSU.Class.WeightedContainer(::Const.HexeOrigin.PossibleStartingPotions);
@@ -177,8 +177,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 	function updateLook()
 	{
 		local looks = ::World.Flags.getAsInt("looks") == 0 ? this.m.Look : ::World.Flags.getAsInt("looks");
-		looks = ::World.Flags.has("isExposed") ? 9994 : looks;
-		::World.State.getPlayer().getSprite("body").setBrush("figure_player_" + looks);
+		::World.State.getPlayer().getSprite("body").setBrush("figure_player_" + (::World.Flags.has("isExposed") ? 9994 : looks));
 	}
 	
 	function onHiredByScenario( _bro )
@@ -214,7 +213,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 				bro.getSkills().removeByID("trait.bright");
 			}
 			
-			if (!bro.getSkills().hasSkill("trait.dumb") && ::Math.rand(1, 4) == 4)
+			if (!bro.getSkills().hasSkill("trait.dumb") && ::Math.rand(1, 100) <= 25)
 			{
 				bro.getSkills().add(::new("scripts/skills/traits/dumb_trait"));
 			}
@@ -308,8 +307,8 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		roster.clear();
 
 		::World.Flags.set("looks", 9991);
-		::World.Flags.set("IsLuftAdventure", true);
 		::World.Flags.remove("RitualTimer");
+		::World.Flags.set("IsLuftAdventure", true);
 		::logInfo("With your seed/name, your start id = LUFT");
 
 		local luft = roster.create("scripts/entity/tactical/player_beast/nggh_mod_luft_player");
@@ -321,7 +320,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		
 		this.m.IsLuftAdventure = true;
 		this.setupRandomStart(6, false);
-		this.addScenarioPerk(luft.getBackground(), ::Const.Perks.PerkDefs.NggHCharmEnemyGhoul);
+		this.addScenarioPerk(luft.getBackground(), ::Const.Perks.PerkDefs.NggHCharmEnemyGhoul, 4);
 	}
 
 	function setupSpecialStart( _id, _hexe )
@@ -405,7 +404,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			break;
 			
 		case 5:
-			for( local i = 0; i < 2; i = ++i )
+			for( local i = 0; i < 2; ++i )
 			{
 				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_hyena_player");
 				beast.improveMood(1.0, "Loyal doggie");
@@ -611,9 +610,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 
 				local items = _b.getItems();
 				items.unequip(items.getItemAtSlot(::Const.ItemSlot.Head));
-				items.equip(::Const.World.Common.pickHelmet([
-					[1, "jesters_hat"],
-				]));
+				items.equip(::Const.World.Common.pickHelmet([[1, "jesters_hat"]]));
 			}
 			break;
 
@@ -855,10 +852,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			::logInfo("Your starting party would be: RANDOM");
 		}
 		
-		local roster = ::World.getPlayerRoster();
 		local c = 2;
-		local ret = [];
-		local tries = 0;
 
 		if (_credits >= 2)
 		{
@@ -875,24 +869,38 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		}
 
 		::logInfo("Your party budget: " + c + " credits");
+		this.spawnStarterFromList(this.pickStarter(c));
+	}
 
-		while (c >= 2 && tries < 100)
+	function pickStarter( _credits )
+	{
+		local ret = [];
+		local tries = 0;
+
+		while (_credits >= 2 && tries < 250)
 		{
 			local r = ::MSU.Array.rand(::Const.HexeOrigin.PossibleStartingPlayers);
 
-			if (r[0] > c)
+			if (r.Cost > _credits)
 			{
 				++tries;
 				continue;
 			}
 
-			::logInfo("rolled: " + r[2] + " , cost: " + r[0] + " credits");
-			ret.push(r[1]);
-			c -= r[0];
+			::logInfo("rolled: " + r.Name + " , cost: " + r.Cost + " credits");
+			_credits -= r.Cost;
+			ret.push(r.Script);
 			tries = 0;
 		}
 
-		foreach ( i, script in ret )
+		return ret;
+	}
+
+	function spawnStarterFromList( _list )
+	{
+		local roster = ::World.getPlayerRoster();
+
+		foreach ( i, script in _list )
 		{
 			local starter = roster.create("scripts/entity/tactical/" + script);
 

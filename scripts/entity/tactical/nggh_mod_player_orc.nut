@@ -628,9 +628,7 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 		}
 		else if (_pickRandom)
 		{
-			local container = ::new("scripts/mods/script_container");
-			container.extend(::Const.Orc.VariantRolls);
-			type = container.roll();
+			type = ::MSU.Class.WeightedContainer(::Const.Orc.VariantRolls).roll();
 			this.m.Variant = ::Const.Orc.Variants.find(type);
 		}
 		else

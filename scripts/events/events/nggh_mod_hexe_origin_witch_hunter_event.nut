@@ -11,7 +11,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 	{
 		this.m.ID = "event.witch_hunter";
 		this.m.Title = "Along the way...";
-		this.m.Cooldown = 20.0 * ::World.getTime().SecondsPerDay;
+		this.m.Cooldown = 21.0 * ::World.getTime().SecondsPerDay;
 
 		this.m.Screens.push({
 			ID = "Encounter",
@@ -28,7 +28,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 						local spawnTile;
 						local tries = 0;
 
-						while (tries++ < 100)
+						while (++tries < 250)
 						{
 							local x = ::Math.rand(playerTile.SquareCoords.X - 3, playerTile.SquareCoords.X + 3);
 							local y = ::Math.rand(playerTile.SquareCoords.Y - 3, playerTile.SquareCoords.Y + 3);
@@ -84,10 +84,12 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 			],
 			function start( _event )
 			{
+				local _i = [];
+				_i.extend(::Const.Injury.PiercingBody);
+				_i.extend(::Const.Injury.PiercingHead);
+
 				if (::Math.rand(1, 80) > _event.m.Hexe.getCurrentProperties().getRangedDefense())
 				{
-					local _i = ::Const.Injury.PiercingBody;
-					_i.extend(::Const.Injury.PiercingHead);
 					local injury = _event.m.Hexe.addInjury(_i);
 					this.List.push({
 						id = 10,
@@ -99,6 +101,9 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 				}
 				
 				local brothers = ::World.getPlayerRoster().getAll();
+
+				if (brothers.len() == 1) return;
+
 				local bro = ::MSU.Array.rand(brothers);
 
 				while (bro.getID() == _event.m.Hexe.getID())
@@ -108,8 +113,6 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 
 				if (::Math.rand(1, 80) > bro.getCurrentProperties().getRangedDefense())
 				{
-					local _i = ::Const.Injury.PiercingBody;
-					_i.extend(::Const.Injury.PiercingHead);
 					local injury = bro.addInjury(_i);
 					this.List.push({
 						id = 10,
@@ -184,26 +187,22 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 			return;
 		}
 
-		this.m.Score = 18 * (Hexe + 1);
+		this.m.Score = 20 * Hexe;
 	}
 
 	function onDetermineStartScreen()
 	{
-
 		if (!::World.getTime().IsDaytime)
 		{
 			return "Ambush";
 		}
 
-		local currentTile = ::World.State.getPlayer().getTile();
-
 		if ([
 			::Const.World.TerrainType.Swamp,
 			::Const.World.TerrainType.Forest,
-			::Const.World.TerrainType.LeaveForest,
 			::Const.World.TerrainType.SnowyForest,
 			::Const.World.TerrainType.Mountains,
-		].find(currentTile.Type) != null)
+		].find(::World.State.getPlayer().getTile().Type) != null)
 		{
 			return "Ambush";
 		}
@@ -290,8 +289,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 		}
 
 		local party = faction.spawnEntity(_tile, "Witch Hunters", false, null, 0);
-		local resources = this.getResources();
-		local template = ::Const.World.Common.buildDynamicTroopList(::Const.World.Spawn.Nggh_WitchHunter, resources);
+		local template = ::Const.World.Common.buildDynamicTroopList(::Const.World.Spawn.Nggh_WitchHunter, this.getResources());
 		local troopMbMap = {};
 
 		party.getSprite("banner").setBrush(this.m.Town.getBanner());
@@ -356,17 +354,17 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 		if (r <= 30)
 		{
 			this.m.ChampionChance = 0;
-			this.m.DifficultyMult = ::Math.rand(70, 85) * 0.01;
+			this.m.DifficultyMult = ::Math.rand(75, 90) * 0.01;
 		}
 		else if (r <= 80)
 		{
 			this.m.ChampionChance = 1;
-			this.m.DifficultyMult = ::Math.rand(95, 105) * 0.01;
+			this.m.DifficultyMult = ::Math.rand(100, 115) * 0.01;
 		}
 		else
 		{
 			this.m.ChampionChance = 4;
-			this.m.DifficultyMult = ::Math.rand(115, 135) * 0.01;
+			this.m.DifficultyMult = ::Math.rand(125, 140) * 0.01;
 		}
 
 		this.m.ChampionChance += this.getAdditionalChampionChance();
@@ -390,9 +388,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 
 	function getScaledDifficultyMult()
 	{
-		local s = ::Math.maxf(0.75, 0.9 * ::Math.pow(0.01 * ::World.State.getPlayer().getStrength(), 0.85));
-		local d = ::Math.minf(5.0, s);
-		return d * ::Const.Difficulty.EnemyMult[::World.Assets.getCombatDifficulty()];
+		return ::Math.minf(5.0, ::Math.maxf(0.75, ::Math.pow(0.01 * ::World.State.getPlayer().getStrength(), 0.85))) * ::Const.Difficulty.EnemyMult[::World.Assets.getCombatDifficulty()];
 	}
 
 	function getResources()
@@ -402,8 +398,8 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 
 	function calcResourceBoost()
 	{
-		local defaultBoost = -10;
-		local dayModifier = ::Math.min(::World.getTime().Days / 5, 30);
+		local defaultBoost = 25;
+		local dayModifier = ::Math.min(::World.getTime().Days / 5, 50);
 		return defaultBoost + dayModifier;
 	}
 

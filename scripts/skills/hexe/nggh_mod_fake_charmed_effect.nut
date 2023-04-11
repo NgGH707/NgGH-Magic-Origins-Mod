@@ -1,6 +1,7 @@
 this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 	m = {
 		SimpLevel = 1,
+		HasBeenRemoved = false,
 
 		// UwU when you are no longer want to be a simp
 		OldAIAgent = null,
@@ -212,7 +213,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 			return;
 		}
 
-		local actor = this.getContainer().getActor();
+		local actor = this.getContainer().getActor().get();
 		this.spawnIcon("status_effect_106", actor.getTile());
 		this.m.OldAIAgent = actor.getAIAgent();
 		this.m.IsMutiny = true;
@@ -225,6 +226,8 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 
 	function onRemoved()
 	{
+		if (this.m.HasBeenRemoved) return;
+
 		local actor = this.getContainer().getActor();
 
 		if (this.m.OldAIAgent != null)
@@ -235,6 +238,9 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		actor.getFlags().set("Charmed", false);
 		actor.setFaction(::Const.Faction.Player);
 		actor.setDirty(true);
+
+		this.m.OldAIAgent = null;
+		this.m.HasBeenRemoved = true;
 	}
 
 	function onDeath( _fatalityType )
@@ -244,7 +250,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 
 	function onCombatStarted()
 	{
-		this.m.MutinyChance = ::World.Flags.get("isExposed") ? ::Math.rand(12, 24) : ::Math.rand(3, 6);
+		this.m.MutinyChance = ::World.Flags.get("isExposed") ? ::Math.rand(10, 20) : ::Math.rand(2, 5);
 	}
 
 	function onCombatFinished()

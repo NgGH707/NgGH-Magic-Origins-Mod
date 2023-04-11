@@ -153,7 +153,7 @@ this.nggh_mod_RSH_shielding <- ::inherit("scripts/skills/skill", {
 			_hitInfo.DamageFatigue = 0;
 			_hitInfo.DamageDirect = 0.0;
 			this.setHitpoints(-overflow);
-			::Tactical.EventLog.log(::getName() + " absorbs [b]" + damage + "[/b] damage");
+			::Tactical.EventLog.log(this.getName() + " absorbs [b]" + damage + "[/b] damage");
 		}
 		else
 		{

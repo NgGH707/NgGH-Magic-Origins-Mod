@@ -647,9 +647,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		}
 		else if (_pickRandom)
 		{
-			local container = ::new("scripts/mods/script_container");
-			container.extend(::Const.Goblin.VariantRolls);
-			type = container.roll();
+			type = ::MSU.Class.WeightedContainer(::Const.Goblin.VariantRolls).roll();
 		}
 		else
 		{
@@ -693,7 +691,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		
 		if (_addUniqueTrait)
 		{
-			this.m.Skills.add(::new("scripts/traits/nggh_mod_born_to_hunt_trait"));
+			//this.m.Skills.add(::new("scripts/traits/nggh_mod_born_to_hunt_trait"));
 		}
 
 		this.setScenarioValues(type, _isElite);
@@ -774,18 +772,19 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 
 		// a shaman after all, so they should have stuffs a shaman or witch doctor should have
 		// a random potion
-		this.m.Items.addToBag(::new("scripts/items/" + ::Const.World.Common.pickItem([
-			[2, "accessory/night_vision_elixir_item"],
-			[1, "accessory/lionheart_potion_item"],
-			[1, "accessory/recovery_potion_item"],
-			[1, "accessory/cat_potion_item"],
-			[1, "tools/acid_flask_item"],
+		this.m.Items.addToBag(::new("scripts/items/" + ::MSU.Array.rand([
+			"accessory/night_vision_elixir_item",
+			"accessory/night_vision_elixir_item",
+			"accessory/lionheart_potion_item",
+			"accessory/recovery_potion_item",
+			"accessory/cat_potion_item",
+			"tools/acid_flask_item",
 		])));
 
 		// a random first aid item
-		this.m.Items.addToBag(::new("scripts/items/" + ::Const.World.Common.pickItem([
-			[0, "accessory/antidote_item"],
-			[0, "accessory/bandage_item"],
+		this.m.Items.addToBag(::new("scripts/items/" + ::MSU.Array.rand([
+			"accessory/antidote_item",
+			"accessory/bandage_item",
 		])));
 	}
 
@@ -820,21 +819,18 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 
 		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Offhand) == null)
 		{
-			local shields = [
+			this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand([
 				"shields/greenskins/goblin_light_shield",
 				"shields/greenskins/goblin_heavy_shield"
-			];
-			this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand(shields)));
+			])));
 		}
 
 		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		{
-			local armor = [
+			this.m.Items.equip(::new("scripts/items/armor/greenskins/" + ::MSU.Array.rand([
 				"goblin_medium_armor",
 				"goblin_heavy_armor"
-			];
-
-			this.m.Items.equip(::new("scripts/items/armor/greenskins/" + ::MSU.Array.rand(armor)));
+			])));
 			
 			if (::Math.rand(1, 100) <= 50)
 			{
@@ -850,12 +846,10 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		}
 		else 
 		{
-			local armor = [
+			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_" + ::MSU.Array.rand([
 				"goblin_medium_armor",
 				"goblin_heavy_armor"
-			];
-
-			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_" + ::MSU.Array.rand(armor)));
+			])));
 
 			if (::Math.rand(1, 100) <= 50)
 			{
@@ -876,13 +870,11 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 
 	function assignGoblinAmbusherEquipment()
 	{
-		local weapons = [
+		this.m.Items.equip(::new("scripts/items/weapons/greenskins/" + ::MSU.Array.rand([
 			"goblin_bow",
 			"goblin_heavy_bow"
-		];
-
+		])));
 		this.m.Items.equip(::new("scripts/items/ammo/quiver_of_arrows"));
-		this.m.Items.equip(::new("scripts/items/weapons/greenskins/" + ::MSU.Array.rand(weapons)));
 		this.m.Items.addToBag(::new("scripts/items/weapons/greenskins/goblin_notched_blade"));
 
 		if (::Math.rand(1, 100) <= 40)
@@ -904,14 +896,12 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 
 	function assignGoblinFighterEquipment()
 	{
-		local weapons = [
+		this.m.Items.equip(::new("scripts/items/weapons/" + ::MSU.Array.rand([
 			"greenskins/goblin_falchion",
 			"greenskins/goblin_spear",
 			"greenskins/goblin_pike"
 			"legend_chain"
-		];
-		
-		this.m.Items.equip(::new("scripts/items/weapons/" + ::MSU.Array.rand(weapons)));
+		])));
 
 		// pick side arm
 		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Mainhand).getID() == "weapon.goblin_falchion")
@@ -933,22 +923,19 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 			}
 			else
 			{
-				local shields = [
+				this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand([
 					"shields/greenskins/goblin_light_shield",
 					"shields/greenskins/goblin_heavy_shield"
-				];
-				this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand(shields)));
+				])));
 			}
 		}
 
 		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		{
-			local armor = [
+			this.m.Items.equip(::new("scripts/items/armor/greenskins/" + ::MSU.Array.rand([
 				"goblin_medium_armor",
 				"goblin_heavy_armor"
-			];
-
-			this.m.Items.equip(::new("scripts/items/armor/greenskins/" + ::MSU.Array.rand(armor)));
+			])));
 			
 			if (::Math.rand(1, 100) <= 50)
 			{
@@ -964,12 +951,10 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		}
 		else 
 		{
-			local armor = [
+			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_" + ::MSU.Array.rand([
 				"goblin_medium_armor",
 				"goblin_heavy_armor"
-			];
-
-			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_" + ::MSU.Array.rand(armor)));
+			])));
 
 			if (::Math.rand(1, 100) <= 50)
 			{
@@ -1143,11 +1128,11 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		{
 		case ::Const.EntityType.GoblinShaman:
 			b.IsAffectedByNight = false;
-			b.TargetAttractionMult = 2.0;
+			b.TargetAttractionMult = 1.5;
 			break;
 
 		case ::Const.EntityType.GoblinAmbusher:
-			b.TargetAttractionMult = 1.25;
+			b.TargetAttractionMult = 1.15;
 			break;
 
 		case ::Const.EntityType.GoblinLeader:

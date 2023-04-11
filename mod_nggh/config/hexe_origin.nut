@@ -235,17 +235,61 @@ if (!("HexeOrigin" in ::Const))
 	[ 1, "special/spiritual_reward_item"],
 ];
 ::Const.HexeOrigin.PossibleStartingPlayers <- [
-	[2, "player_beast/nggh_mod_spider_player", "SPIDER"],
-	[4, "player_beast/nggh_mod_spider_eggs_player", "EGGS"],
-	[3, "player_beast/nggh_mod_direwolf_player", "WOLF"],
-	[3, "player_beast/nggh_mod_hyena_player", "HYENA"],
-	[2, "player_beast/nggh_mod_serpent_player", "SERPENT"],
-	[5, "player_beast/nggh_mod_unhold_player", "UNHOLD"],
-	[2, "player_beast/nggh_mod_ghoul_player", "GHOUL"],
-	[3, "player_beast/nggh_mod_alp_player", "ALP"],
-	[2, "nggh_mod_player_goblin", "GOBLIN"],
-	[3, "nggh_mod_player_orc", "ORC"],
-	[2, "player", "HUMAN"],
+	{
+		Cost = 2,
+		Name = "SPIDER",
+		Script = "player_beast/nggh_mod_spider_player"
+	},
+	{
+		Cost = 5,
+		Name = "EGGS",
+		Script = "player_beast/nggh_mod_spider_eggs_player"
+	},
+	{
+		Cost = 3,
+		Name = "WOLF",
+		Script = "player_beast/nggh_mod_direwolf_player"
+	},
+	{
+		Cost = 3,
+		Name = "HYENA",
+		Script = "player_beast/nggh_mod_hyena_player"
+	},
+	{
+		Cost = 2,
+		Name = "SERPENT",
+		Script = "player_beast/nggh_mod_serpent_player"
+	},
+	{
+		Cost = 5,
+		Name = "UNHOLD",
+		Script = "player_beast/nggh_mod_unhold_player"
+	},
+	{
+		Cost = 2,
+		Name = "GHOUL",
+		Script = "player_beast/nggh_mod_ghoul_player"
+	},
+	{
+		Cost = 3,
+		Name = "ALP",
+		Script = "player_beast/nggh_mod_alp_player"
+	},
+	{
+		Cost = 2,
+		Name = "GOBLIN",
+		Script = "nggh_mod_player_goblin"
+	},
+	{
+		Cost = 3,
+		Name = "ORC",
+		Script = "nggh_mod_player_orc"
+	},
+	{
+		Cost = 2,
+		Name = "HUMAN",
+		Script = "player"
+	},
 ];
 
 ::Const.HexeOrigin.Magic <- 

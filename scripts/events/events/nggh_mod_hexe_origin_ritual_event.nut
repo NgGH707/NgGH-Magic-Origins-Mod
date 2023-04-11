@@ -22,6 +22,20 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		return this.m.AmbushChance;
 	}
 
+	function isAmbushed()
+	{
+		local rolled = ::Math.rand(1, 100);
+
+		if (rolled > this.getAmbushChance())
+		{
+			::logInfo("Hexe Origin Ritual - No ambushed attack today (Chance: " + this.getAmbushChance() + ", Rolled: " + rolled + ")");
+			return false;
+		}
+
+		::logInfo("Hexe Origin Ritual - Ambushed time!!! (Chance: " + this.getAmbushChance() + ", Rolled: " + rolled + ")");
+		return true;
+	}
+
 	function create()
 	{
 		this.m.ID = "event.hexe_origin_ritual";
@@ -44,8 +58,9 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 							return "LevelupSimp";
 						}
 
-						if (::Math.rand(1, 100) <= _event.getAmbushChance())
+						if (_event.isAmbushed())
 						{
+							
 							return "Ambush";
 						}
 
@@ -137,19 +152,21 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 				}
 				
 				local effect = ::new("scripts/skills/effects_world/nggh_mod_blessed_effect");
-				this.List.push({
-					id = 10,
-					icon = "skills/status_effect_73.png",
-					text = _event.m.Hexe.getName() + " is blessed with power"
-				});
-				
 				_event.m.Hexe.improveMood(1.0, "Blessed");
-				this.List.push({
-					id = 10,
-					icon = ::Const.MoodStateIcon[_event.m.Hexe.getMoodState()],
-					text = _event.m.Hexe.getName() + ::Const.MoodStateEvent[_event.m.Hexe.getMoodState()]
-				});
 				_event.m.Hexe.getSkills().add(effect);
+
+				this.List.extend([
+					{
+						id = 10,
+						icon = "skills/status_effect_73.png",
+						text = _event.m.Hexe.getName() + " is blessed with power"
+					},
+					{
+						id = 10,
+						icon = ::Const.MoodStateIcon[_event.m.Hexe.getMoodState()],
+						text = _event.m.Hexe.getName() + ::Const.MoodStateEvent[_event.m.Hexe.getMoodState()]
+					}
+				]);
 			}
 
 		});
@@ -166,7 +183,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 					Text = "No! This can\'t be.",
 					function getResult( _event )
 					{
-						if (::Math.rand(1, 100) <= _event.getAmbushChance())
+						if (_event.isAmbushed())
 						{
 							return "Ambush";
 						}
@@ -180,25 +197,11 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 			function start( _event )
 			{
 				local effect = ::new("scripts/skills/effects_world/nggh_mod_world_cursed_badly_effect");
-				this.Characters.push(_event.m.Hexe.getImagePath());
-				this.List.push({
-					id = 10,
-					icon = effect.getIcon(),
-					text = _event.m.Hexe.getName() + " is cursed"
-				});
-				_event.m.Hexe.worsenMood(3.0, "Cursed for not collecting enough offerings");
-				this.List.push({
-					id = 10,
-					icon = ::Const.MoodStateIcon[_event.m.Hexe.getMoodState()],
-					text = _event.m.Hexe.getName() + ::Const.MoodStateEvent[_event.m.Hexe.getMoodState()]
-				});
-				
-				local FM = ::World.FactionManager;
 				local Factions = [];
 				local FactionIDs = [];
 				local RelationShips = [];
-				Factions.extend(FM.getFactionsOfType(::Const.FactionType.NobleHouse));
-				Factions.extend(FM.getFactionsOfType(::Const.FactionType.Settlement));
+				Factions.extend(::World.FactionManager.getFactionsOfType(::Const.FactionType.NobleHouse));
+				Factions.extend(::World.FactionManager.getFactionsOfType(::Const.FactionType.Settlement));
 				
 				foreach ( f in Factions )
 				{
@@ -208,10 +211,8 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 				
 				effect.m.Factions = FactionIDs;
 				effect.m.PlayerRelations = RelationShips;
+				_event.m.Hexe.worsenMood(3.0, "Cursed for not collecting enough offerings");
 				_event.m.Hexe.getSkills().add(effect);
-				
-				FM.makeNoblesUnfriendlyToPlayer();
-				FM.makeSettlementsUnfriendlyToPlayer();
 
 				if (::Nggh_MagicConcept.HexeOriginRitual.IsLoseLevelWhenFail)
 				{
@@ -233,8 +234,25 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 					}
 				}
 
+				::World.FactionManager.makeNoblesUnfriendlyToPlayer();
+				::World.FactionManager.makeSettlementsUnfriendlyToPlayer();
 				::World.Flags.add("isExposed", true);
 				::World.Assets.updateLook();
+
+				this.List.extend([
+					{
+						id = 10,
+						icon = effect.getIcon(),
+						text = _event.m.Hexe.getName() + " is cursed"
+					},
+					{
+						id = 10,
+						icon = ::Const.MoodStateIcon[_event.m.Hexe.getMoodState()],
+						text = _event.m.Hexe.getName() + ::Const.MoodStateEvent[_event.m.Hexe.getMoodState()]
+					}
+				]);
+
+				this.Characters.push(_event.m.Hexe.getImagePath());
 			}
 
 		});
@@ -250,7 +268,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 					Text = "Maybe at a later time.",
 					function getResult( _event )
 					{
-						if (::Math.rand(1, 100) <= _event.getAmbushChance())
+						if (_event.isAmbushed())
 						{
 							return "Ambush";
 						}
@@ -266,14 +284,14 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 				{
 					this.Options.push({
 						Actor = s,
-						Text = s.getNameOnly() + " - " + s.getSkills().getSkillByID("effects.simp").getName(),
+						Text = s.getName() + " - " + s.getSkills().getSkillByID("effects.simp").getName(),
 						function getResult( _e )
 						{
 							::logInfo("Hexe Origin Ritual - select this option: \'" + this.Text + "\'");
 							_e.increaseSimpLevel(this.Actor);
 							_e.consumeChosenItems();
 
-							if (::Math.rand(1, 100) <= _e.getAmbushChance())
+							if (_e.isAmbushed())
 							{
 								return "Ambush";
 							}
@@ -354,7 +372,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 
 		if (!::World.Flags.get("isExposed"))
 		{
-			if (::Math.rand(1, 100) <= ::Math.ceil(::Nggh_MagicConcept.HexeOriginRitual.UnluckyChance + ::World.Flags.getAsInt("HexeOriginLucky") * 2))
+			if (::Math.rand(1, 100) <= ::Math.ceil(::Nggh_MagicConcept.HexeOriginRitual.UnluckyChance + ::World.Flags.getAsInt("HexeOriginLucky") * 1.5))
 			{
 				Required = ::Math.ceil(Required * ::Nggh_MagicConcept.HexeOriginRitual.UnluckyMult);
 				::logInfo("Hexe Origin Ritual - Required offering value increases! " + Required + " is the new value (Very unlucky you are)");
@@ -586,7 +604,9 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		this.m.Town = best;
 		local randomness = ::Math.rand(80, 120) * 0.01;
 		local chance = ::Math.ceil(7.5 * (8 - nearest) * randomness);
-		return ::Math.max(5, ::Math.min(95, chance));
+		local ret = ::Math.max(5, ::Math.min(95, chance));
+		::logInfo("Hexe Origin Ritual - Calculating ambushed chance... Finished! -> Result: " + ret + "%");
+		return ret;
 	}
 	
 	function onPrepareOfferings()
@@ -631,22 +651,6 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 	
 	function processThisItemValue( _item , _table )
 	{
-		/*
-		local p = 0;
-		local exclude = [
-			"tent.craft_tent",
-			"tent.enchant_tent",
-			"tent.fletcher_tent",
-			"tent.gather_tent",
-			"tent.healer_tent",
-			"tent.hunter_tent",
-			"tent.repair_tent",
-			"tent.scout_tent",
-			"tent.scrap_tent",
-			"tent.training_tent",
-		];
-		*/
-
 		if (_item.isItemType(::Const.Items.ItemType.Loot))
 		{
 			_table.Loot.push({
@@ -668,8 +672,6 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 				Value = ::Math.floor(_item.m.Value * 1.5),
 			});
 		}
-		
-		//return ::Math.floor(p);
 	}
 	
 	function onSortByValueAscend( _a, _b )
@@ -880,7 +882,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 
 	function getScaledDifficultyMult()
 	{
-		local s = ::Math.maxf(0.75, 0.9 * ::Math.pow(0.01 * ::World.State.getPlayer().getStrength(), 0.85));
+		local s = ::Math.maxf(0.75, ::Math.pow(0.01 * ::World.State.getPlayer().getStrength(), 0.85));
 		local d = ::Math.minf(5.0, s);
 		return d * ::Const.Difficulty.EnemyMult[::World.Assets.getCombatDifficulty()];
 	}
