@@ -283,13 +283,13 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 	function onTurnStart()
 	{
 		this.updateMode();
-		this.player_beast.onTurnStart();
+		this.nggh_mod_player_beast.onTurnStart();
 	}
 
 	function onTurnResumed()
 	{
 		this.updateMode();
-		this.player_beast.onTurnResumed();
+		this.nggh_mod_player_beast.onTurnResumed();
 	}
 
 	function updateMode()

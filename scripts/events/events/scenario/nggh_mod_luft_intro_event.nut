@@ -431,25 +431,6 @@ this.nggh_mod_luft_intro_event <- ::inherit("scripts/events/event", {
 					{
 						item = ::new("scripts/items/accessory/wardog_item");
 						item.setType(::Const.Companions.TypeList.Nacho);
-						local nacho = ::World.getTemporaryRoster().create("scripts/entity/tactical/enemies/ghoul");
-						local nacho_perks = nacho.getSkills().query(::Const.SkillType.Perk);
-						foreach(perk in nacho_perks)
-						{
-							local quirk = "";
-							foreach( i, v in ::Const.Perks.PerkDefObjects )
-							{
-								if (perk.getID() == v.ID)
-								{
-									quirk = v.Script;
-									break;
-								}
-							}
-							if (quirk != "" && item.m.Quirks.find(quirk) == null)
-							{
-								item.m.Quirks.push(quirk);
-							}			
-						}
-
 						item.updateCompanion();
 					}
 
@@ -691,14 +672,9 @@ this.nggh_mod_luft_intro_event <- ::inherit("scripts/events/event", {
 
 		});
 
-
-		local wisdom1 = "%SPEECH_START%They say [color=#bcad8c]Ijirok[/color] can be charmed or just put IJIROK to the seed.%SPEECH_OFF%";
-		local wisdom2 = "%SPEECH_START%I heard there is an ultimate [color=#bcad8c]Simp[/color] level earned by love and rejection.%SPEECH_OFF%";
-		local wisdom3 = "%SPEECH_START%Necro used to tell me, Spider can guide you to their [color=#bcad8c]Nest[/color].%SPEECH_OFF%";
-		//local wisdom4 = "%SPEECH_START%A wise man once told me, [color=#bcad8c]Credits[/color] can lead you to secret.%SPEECH_OFF%";
 		this.m.Screens.push({
 			ID = "Tips",
-			Text = "[img]gfx/ui/events/event_40.png[/img]{" + wisdom1 + " | " + wisdom2 + " | " + wisdom3 + "}",
+			Text =  "",
 			Image = "",
 			Banner = "",
 			List = [],
@@ -723,6 +699,14 @@ this.nggh_mod_luft_intro_event <- ::inherit("scripts/events/event", {
 			],
 			function start( _event )
 			{
+				this.Text = "[img]gfx/ui/events/event_40.png[/img]{";
+
+				foreach (tip in ::Const.LuftTips)
+				{
+					this.Text += "%SPEECH_START%" + tip + "%SPEECH_OFF% | ";
+				}
+
+				this.Text += "}";
 				this.Banner = "ui/banners/" + ::World.Assets.getBanner() + "s.png";
 
 				if (_event.m.Luft != null)

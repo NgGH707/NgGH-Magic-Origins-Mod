@@ -136,7 +136,7 @@ this.nggh_mod_kraken_ensnare_skill <- ::inherit("scripts/skills/skill", {
 	{
 		if (this.m.SoundOnHit.len() != 0)
 		{
-			::Sound.play(::MSU.Array.rand(this.m.SoundOnHit), thisConst.Sound.Volume.Skill, _data.TargetEntity.getPos());
+			::Sound.play(::MSU.Array.rand(this.m.SoundOnHit), ::Const.Sound.Volume.Skill, _data.TargetEntity.getPos());
 		}
 
 		local ensnare = thisnew("scripts/skills/effects/nggh_mod_kraken_ensnare_effect");
@@ -149,9 +149,9 @@ this.nggh_mod_kraken_ensnare_skill <- ::inherit("scripts/skills/skill", {
 			local tile;
 			local n = _data.User.m.BloodType;
 
-			for( local i = 0; i < thisConst.Tactical.BloodEffects[n].len(); ++i )
+			for( local i = 0; i < ::Const.Tactical.BloodEffects[n].len(); ++i )
 			{
-				thisTactical.spawnParticleEffect(false, thisConst.Tactical.BloodEffects[n][i].Brushes, targetTile, thisConst.Tactical.BloodEffects[n][i].Delay, thisConst.Tactical.BloodEffects[n][i].Quantity, thisConst.Tactical.BloodEffects[n][i].LifeTimeQuantity, thisConst.Tactical.BloodEffects[n][i].SpawnRate, thisConst.Tactical.BloodEffects[n][i].Stages);
+				::Tactical.spawnParticleEffect(false, ::Const.Tactical.BloodEffects[n][i].Brushes, targetTile, ::Const.Tactical.BloodEffects[n][i].Delay, ::Const.Tactical.BloodEffects[n][i].Quantity, ::Const.Tactical.BloodEffects[n][i].LifeTimeQuantity, ::Const.Tactical.BloodEffects[n][i].SpawnRate, ::Const.Tactical.BloodEffects[n][i].Stages);
 			}
 
 			if (_data.User.getParent() != null)
@@ -175,13 +175,13 @@ this.nggh_mod_kraken_ensnare_skill <- ::inherit("scripts/skills/skill", {
 
 				if (tile == null)
 				{
-					local mapSize = thisTactical.getMapSize();
+					local mapSize = ::Tactical.getMapSize();
 
 					for( local attempts = 0; attempts < 500; ++attempts )
 					{
-						local x = thisMath.rand(5, mapSize.X - 5);
-						local y = thisMath.rand(5, mapSize.Y - 5);
-						local t = thisTactical.getTileSquare(x, y);
+						local x = ::Math.rand(5, mapSize.X - 5);
+						local y = ::Math.rand(5, mapSize.Y - 5);
+						local t = ::Tactical.getTileSquare(x, y);
 
 						if (t.IsEmpty)
 						{
@@ -193,12 +193,12 @@ this.nggh_mod_kraken_ensnare_skill <- ::inherit("scripts/skills/skill", {
 
 				if (tile != null)
 				{
-					thisTactical.addEntityToMap(_data.User, tile.Coords.X, tile.Coords.Y);
+					::Tactical.addEntityToMap(_data.User, tile.Coords.X, tile.Coords.Y);
 					_data.User.updateVisibilityForFaction();
 
 					if (_data.LoseHitpoints)
 					{
-						_data.User.setHitpoints(thisMath.max(25, _data.User.getHitpoints() - thisMath.rand(15, 30)));
+						_data.User.setHitpoints(::Math.max(25, _data.User.getHitpoints() - ::Math.rand(15, 30)));
 						_data.User.spawnBloodDecals(targetTile);
 					}
 
@@ -209,7 +209,7 @@ this.nggh_mod_kraken_ensnare_skill <- ::inherit("scripts/skills/skill", {
 			}
 		}, _data);
 		_data.TargetEntity.getSkills().add(ensnare);
-		local penalty = thisMath.max(1, _data.User.getHitpoints() * 0.1);
+		local penalty = ::Math.max(1, _data.User.getHitpoints() * 0.1);
 		local breakFree = thisnew("scripts/skills/actives/break_free_skill");
 		breakFree.m.Icon = "skills/active_148.png";
 		breakFree.m.IconDisabled = "skills/active_148_sw.png";

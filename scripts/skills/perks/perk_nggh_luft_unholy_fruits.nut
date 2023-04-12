@@ -6,8 +6,8 @@ this.perk_nggh_luft_unholy_fruits <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.boobas_charm";
-		this.m.Name = ::Const.Strings.PerkName.UnholyFruits;
-		this.m.Description = ::Const.Strings.PerkDescription.UnholyFruits;
+		this.m.Name = ::Const.Strings.PerkName.NggHLuftUnholyFruits;
+		this.m.Description = ::Const.Strings.PerkDescription.NggHLuftUnholyFruits;
 		this.m.Icon = "ui/perks/perk_unholy_fruits.png";
 		this.m.Type = ::Const.SkillType.Perk;
 		this.m.Order = ::Const.SkillOrder.Perk;
