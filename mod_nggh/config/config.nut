@@ -1626,6 +1626,5 @@ foreach (directory in ancient_weapons)
 	"Gosh! I wish i would be jumped scared by a burrowed Stollwurm in a middle of combat. It would be fun to see, i\'m telling you.",
 	"I had a dream about a necromancer origin where you can collect body parts to make your own undead. It likes something coming out of frankenstein movie. I\'m not hating it, switching body parts seems fun to me.",
 	"It\' best to keep a spare named item in your stash. You never know you will meet someone willing to make a deal for it."
-	"Consider supporting Necro on \'https://ko-fi.com/nggh707\'",
-	//A wise man once told me, [color=#bcad8c]Credits[/color] can lead you to secret.
+	//A wise man once told me, [color=#bcad8c]Credits[/color] can lead you to a secret.
 ]

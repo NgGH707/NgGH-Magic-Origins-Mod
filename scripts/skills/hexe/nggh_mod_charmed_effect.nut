@@ -148,14 +148,15 @@ this.nggh_mod_charmed_effect <- ::inherit("scripts/skills/effects/charmed_effect
 	function onCombatFinished()
 	{
 		this.m.IsSuicide = true;
-		this.charmed_effect.onCombatFinished();
 		local actor = this.getContainer().getActor();
 		local troop = actor.getWorldTroop();
-		
+
 		if (troop != null && ("Party" in troop) && troop.Party != null && !troop.Party.isNull())
 		{
 			troop.Party.removeTroop(troop);
 		}
+
+		this.charmed_effect.onCombatFinished();
 	}
 
 	function onDeath( _fatalityType )

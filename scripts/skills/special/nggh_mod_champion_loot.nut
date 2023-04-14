@@ -48,7 +48,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	    case ::Const.EntityType.Ghoul:
 	        this.m.LootScript.extend([
 	        	[2, ["loot/growth_pearls_item"]],
-	        	[1, ["accessory/ghoul_trophy_item", "misc/legend_scroll_item"]]
+	        	[1, ["accessory/ghoul_trophy_item", "misc/legend_ancient_scroll_item"]]
 	        ]);
 	        break;
 
@@ -58,7 +58,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 		    	this.m.LootScript.extend([
 	    			[1, ["accessory/legend_skin_ghoul_blood_flask_item"]],
 	    			[2, ["misc/legend_skin_ghoul_skin_item"]],
-	        		[1, ["misc/legend_scroll_item"]]
+	        		[1, ["misc/legend_ancient_scroll_item"]]
 	       		]);
 	    	}
 	    	else
@@ -66,7 +66,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	    		this.m.LootScript.extend([
 	    			[2, ["loot/growth_pearls_item"]],
 	    			[1, ["misc/legend_skin_ghoul_skin_item"]],
-	        		[1, ["misc/legend_scroll_item"]]
+	        		[1, ["misc/legend_ancient_scroll_item"]]
 	       		]);
 	    	}
 	        break;
@@ -328,7 +328,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	     default:
 	     	this.m.BonusXP *= 2;
 	     	this.m.LootScript.extend([
-	    		[2, ["misc/legend_scroll_item", "misc/potion_of_oblivion_item", "misc/potion_of_knowledge_item", "misc/potion_of_knowledge_item"]]
+	    		[2, ["misc/legend_ancient_scroll_item", "misc/potion_of_oblivion_item", "misc/potion_of_knowledge_item", "misc/potion_of_knowledge_item"]]
         	]);
 		}
 	}
@@ -352,7 +352,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 			this.m.Killer = this.m.Killer.get();
 		}
 
-		if (this.m.Killer == null || this.m.Killer.getFaction() == ::Const.Faction.Player)
+		if (this.m.Killer == null || this.m.Killer.getFaction() == ::Const.Faction.Player || this.m.Killer.getFaction() == ::Const.Faction.PlayerAnimals)
 		{
 			foreach ( entry in this.m.LootScript )
 			{
@@ -390,6 +390,9 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 
 	function addXP( _actor, _xp )
 	{
+		_actor.addXP(_xp);
+		return;
+
 		local isScenarioMode = !(("State" in ::World) && ::World.State != null);
 
 		if (_actor.m.Level >= ::Const.LevelXP.len() || _actor.isGuest() || !isScenarioMode && ::World.Assets.getOrigin().getID() == "scenario.manhunters" && _actor.m.Level >= 7 && _actor.getBackground().getID() == "background.slave")

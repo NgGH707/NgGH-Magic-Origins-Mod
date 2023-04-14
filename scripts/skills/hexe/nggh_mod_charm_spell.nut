@@ -15,7 +15,7 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 
 		if (e != null)
 		{
-			this.m.Slaves.push(e);
+			this.m.Slaves.push(::WeakTableRef(e));
 		}
 		else
 		{
@@ -767,9 +767,7 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 		{
 			if (slave != null)
 			{
-				local type = typeof slave;
-
-				if (type != "integer")
+				if (typeof slave == "instance")
 				{
 					slave.kill(this.getContainer().getActor(), this, ::Const.FatalityType.Suicide, true);
 				}

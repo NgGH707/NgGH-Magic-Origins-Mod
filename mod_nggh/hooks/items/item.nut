@@ -10,35 +10,35 @@
 		switch(this.m.RuneVariant)
 		{
 		case 100:
-			this.addSkill(this.new("scripts/skills/rune_sigils/nggh_mod_RSH_shielding"));
+			this.addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSH_shielding"));
 			break;
 
 		case 101:
-			this.addSkill(this.new("scripts/skills/rune_sigils/nggh_mod_RSW_unstable"));
+			this.addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSW_unstable"));
 			break;
 
 		case 102:
-			this.addSkill(this.new("scripts/skills/rune_sigils/nggh_mod_RSA_thorns"));
+			this.addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSA_thorns"));
 			break;
 
 		case 103:
-			this.addSkill(this.new("scripts/skills/rune_sigils/nggh_mod_RSA_repulsion"));
+			this.addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSA_repulsion"));
 			break;
 
 		case 104:
-			this.addSkill(this.new("scripts/skills/rune_sigils/nggh_mod_RSW_corrosion"));
+			this.addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSW_corrosion"));
 			break;
 
 		case 105:
-			this.addSkill(this.new("scripts/skills/rune_sigils/nggh_mod_RSW_lucky"));
+			this.addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSW_lucky"));
 			break;
 
 		case 106:
-			this.addSkill(this.new("scripts/skills/rune_sigils/nggh_mod_RSS_brimstone"));
+			this.addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSS_brimstone"));
 			break;
 
 		case 107:
-			this.addSkill(this.new("scripts/skills/rune_sigils/mod_RSH_night_vision"));
+			this.addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSH_night_vision"));
 			break;
 
 		default:
@@ -52,28 +52,28 @@
 		switch(this.m.RuneVariant)
 		{
 		case 100:
-			return "This item has the power of the rune sigil of Shielding:\nGrant a [color=" + this.Const.UI.Color.PositiveValue + "]Protective Barrier[/color] that can repel physical attacks.";
+			return "This item has the power of the rune sigil of Shielding:\nGrant a [color=" + ::Const.UI.Color.PositiveValue + "]Protective Barrier[/color] that can repel physical attacks.";
 		
 		case 101:
-			return "This item has the power of the rune sigil of Unstable:\nAttacks have [color=" + this.Const.UI.Color.PositiveValue + "]10%[/color] to either deal triple or a third of the original damage.";
+			return "This item has the power of the rune sigil of Unstable:\nAttacks have [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color] to either deal triple or a third of the original damage.";
 		
 		case 102:
-			return "This item has the power of the rune sigil of Thorns:\n[color=" + this.Const.UI.Color.PositiveValue + "]+25%[/color] Damage taken to your armor.\nReflect [color=" + this.Const.UI.Color.PositiveValue + "]35[/color]-[color=" + this.Const.UI.Color.PositiveValue + "]65%[/color] Damage taken to armor back to the attacker.";
+			return "This item has the power of the rune sigil of Thorns:\n[color=" + ::Const.UI.Color.PositiveValue + "]+25%[/color] Damage taken to your armor.\nReflect [color=" + ::Const.UI.Color.PositiveValue + "]35[/color]-[color=" + ::Const.UI.Color.PositiveValue + "]65%[/color] Damage taken to armor back to the attacker.";
 		
 		case 103:
-			return "This item has the power of the rune sigil of Repulsion:\n[color=" + this.Const.UI.Color.PositiveValue + "]50%[/color] to knock back your attacker. [color=" + this.Const.UI.Color.PositiveValue + "]Immune[/color] to knockbacks and grabs.";
+			return "This item has the power of the rune sigil of Repulsion:\n[color=" + ::Const.UI.Color.PositiveValue + "]50%[/color] to knock back your attacker. [color=" + ::Const.UI.Color.PositiveValue + "]Immune[/color] to knockbacks and grabs.";
 
 		case 104:
-			return "This item has the power of the rune sigil of Corrosion:\n[color=" + this.Const.UI.Color.PositiveValue + "]1 to 2[/color] turn(s) of acid applied, which capable of destroying [color=" + this.Const.UI.Color.NegativeValue + "]10%[/color] of affected target\'s armor per turn.";
+			return "This item has the power of the rune sigil of Corrosion:\n[color=" + ::Const.UI.Color.PositiveValue + "]1 to 2[/color] turn(s) of acid applied, which capable of destroying [color=" + ::Const.UI.Color.NegativeValue + "]10%[/color] of affected target\'s armor per turn.";
 		
 		case 105:
-			return "This item has the power of the rune sigil of Lucky:\nKilled enemy has [color=" + this.Const.UI.Color.PositiveValue + "](XP / " + ::Const.LuckyRuneChanceModifier + ")%[/color] to drop a random item, you may get a free named item if you are super lucky!";
+			return "This item has the power of the rune sigil of Lucky:\nKilled enemy has [color=" + ::Const.UI.Color.PositiveValue + "](XP / " + ::Const.LuckyRuneChanceModifier + ")%[/color] to drop a random item, you may get a free named item if you are super lucky!";
 		
 		case 106:
-			return "This item has the power of the rune sigil of Brimstone:\n[color=" + this.Const.UI.Color.PositiveValue + "]Immune[/color] to fire, gain [color=" + this.Const.UI.Color.NegativeValue + "]+10[/color] Fatigue recovery per turn and a slight damage reduction while standing on fire.";
+			return "This item has the power of the rune sigil of Brimstone:\n[color=" + ::Const.UI.Color.PositiveValue + "]Immune[/color] to fire, gain [color=" + ::Const.UI.Color.NegativeValue + "]+10[/color] Fatigue recovery per turn and a slight damage reduction while standing on fire.";
 
 		case 107:
-			return "This item has the power of the rune sigil of Night Vision:\nNot affected by [color=" + this.Const.UI.Color.PositiveValue + "]Nighttime[/color] effect";
+			return "This item has the power of the rune sigil of Night Vision:\nNot affected by [color=" + ::Const.UI.Color.PositiveValue + "]Nighttime[/color] effect";
 		}
 
 		return getRuneSigilTooltip();
