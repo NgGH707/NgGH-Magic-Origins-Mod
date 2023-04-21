@@ -40,6 +40,11 @@ if (!("Passive" in ::Const.UI.Color))
 	::Const.UI.Color.Active <- "#000ec1";
 }
 
+::Const.KrakenTentacleMode <- {
+	Ensnaring = 0,
+	Attacking = 1
+};
+
 ::Const.AlpWeaponDamageMod <- 0.85;
 
 ::Const.MaximumSpiderling <- 5;

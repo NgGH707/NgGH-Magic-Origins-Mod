@@ -118,6 +118,23 @@ this.nggh_mod_kraken_ensnare_skill <- ::inherit("scripts/skills/skill", {
 		return true;
 	}
 
+	function isUsable()
+	{
+		if (!this.skill.isUsable())
+		{
+			return false;
+		}
+
+		local actor = this.getContainer().getActor();
+
+		if (!actor.m.IsControlledByPlayer)
+		{
+			return actor.getMode() == ::Const.KrakenTentacleMode.Ensnaring;
+		}
+		
+		return true;
+	}
+
 	function onUse( _user, _targetTile )
 	{
 		_user.sinkIntoGround(0.75);
@@ -139,7 +156,7 @@ this.nggh_mod_kraken_ensnare_skill <- ::inherit("scripts/skills/skill", {
 			::Sound.play(::MSU.Array.rand(this.m.SoundOnHit), ::Const.Sound.Volume.Skill, _data.TargetEntity.getPos());
 		}
 
-		local ensnare = thisnew("scripts/skills/effects/nggh_mod_kraken_ensnare_effect");
+		local ensnare = ::new("scripts/skills/effects/nggh_mod_kraken_ensnare_effect");
 		ensnare.setDamageMult(this.m.DamageMult);
 		ensnare.setMode(_data.User.getMode());
 		ensnare.setParentID(_data.User.getParent() != null && !_data.User.getParent().isNull() ? _data.User.getParent().getID() : null);
@@ -210,7 +227,7 @@ this.nggh_mod_kraken_ensnare_skill <- ::inherit("scripts/skills/skill", {
 		}, _data);
 		_data.TargetEntity.getSkills().add(ensnare);
 		local penalty = ::Math.max(1, _data.User.getHitpoints() * 0.1);
-		local breakFree = thisnew("scripts/skills/actives/break_free_skill");
+		local breakFree = ::new("scripts/skills/actives/break_free_skill");
 		breakFree.m.Icon = "skills/active_148.png";
 		breakFree.m.IconDisabled = "skills/active_148_sw.png";
 		breakFree.m.Overlay = "active_148";

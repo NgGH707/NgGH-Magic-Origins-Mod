@@ -10,6 +10,7 @@ this.nggh_mod_schrat_small_minion <- ::inherit("scripts/entity/tactical/nggh_mod
 		this.m.DecapitateBloodAmount = 1.0;
 		this.m.DeathBloodAmount = 0.35;
 		this.nggh_mod_minion.create();
+		this.m.IsControlledByPlayer = false;
 		this.m.Sound[::Const.Sound.ActorEvent.DamageReceived] = [
 			"sounds/enemies/dlc2/schrat_hurt_shield_up_01.wav",
 			"sounds/enemies/dlc2/schrat_hurt_shield_up_02.wav",
@@ -55,6 +56,13 @@ this.nggh_mod_schrat_small_minion <- ::inherit("scripts/entity/tactical/nggh_mod
 		this.m.SoundVolume[::Const.Sound.ActorEvent.Idle] = 1.5;
 		this.m.SoundVolume[::Const.Sound.ActorEvent.Move] = 1.5;
 		this.m.SoundPitch = ::Math.rand(101, 110) * 0.01;
+		this.m.AIAgent = this.new("scripts/ai/tactical/agents/direwolf_agent");
+		this.m.AIAgent.setActor(this);
+	}
+
+	function makeControllable()
+	{
+		this.m.IsControlledByPlayer = true;
 		this.m.AIAgent = ::new("scripts/ai/tactical/player_agent");
 		this.m.AIAgent.setActor(this);
 	}

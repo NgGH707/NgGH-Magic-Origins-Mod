@@ -78,7 +78,7 @@ this.nggh_mod_kraken_ensnare_effect <- ::inherit("scripts/skills/skill", {
 				id = 11,
 				type = "text",
 				icon = "ui/icons/initiative.png",
-				text = "[color=" + ::Const.UI.Color.NegativeValue + "]-40%[/color] Initiative"
+				text = "[color=" + ::Const.UI.Color.NegativeValue + "]-50%[/color] Initiative"
 			}
 		];
 	}
@@ -121,7 +121,7 @@ this.nggh_mod_kraken_ensnare_effect <- ::inherit("scripts/skills/skill", {
 		sprite1.Scale = 1.0;
 		sprite2.Scale = 1.0;
 
-		local drag_AI = ::new("scripts/ai/tactical/behaviors/ai_mod_drag");
+		local drag_AI = ::new("scripts/ai/tactical/behaviors/nggh_mod_ai_drag");
 		drag_AI.setParentID(this.m.ParentID);
 		actor.getAIAgent().addBehavior(drag_AI);
 
@@ -143,7 +143,7 @@ this.nggh_mod_kraken_ensnare_effect <- ::inherit("scripts/skills/skill", {
 		actor.getSprite("status_rooted").Scale = this.m.SpriteScaleBackup;
 		actor.getSprite("status_rooted_back").Scale = this.m.SpriteScaleBackup;
 		actor.getAIAgent().removeBehavior(::Const.AI.Behavior.ID.Drag);
-		this.getContainer().removeByID("actives.mod_kraken_move_ensnared");
+		this.getContainer().removeByID("actives.kraken_move_ensnared");
 
 		if (this.m.OnRemoveCallback != null && !::Tactical.Entities.isCombatFinished())
 		{
@@ -165,9 +165,10 @@ this.nggh_mod_kraken_ensnare_effect <- ::inherit("scripts/skills/skill", {
 	{
 		_properties.IsRooted = true;
 		_properties.IsAbleToUseSkills = false;
-		_properties.InitiativeMult *= 0.6;
+		_properties.InitiativeMult *= 0.5;
 	}
 
+	// don't rememver why i added this
 	function onAfterUpdate( _properties )
 	{
 		_properties.Vision = 7;

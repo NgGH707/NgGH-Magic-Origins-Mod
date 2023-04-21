@@ -34,7 +34,7 @@ this.nggh_mod_kraken_devour_skill <- ::inherit("scripts/skills/skill", {
 		this.m.IsUsingActorPitch = true;
 		this.m.InjuriesOnBody = ::Const.Injury.CuttingBody;
 		this.m.InjuriesOnHead = ::Const.Injury.CuttingHead;
-		this.m.ActionPointCost = 2;
+		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = 50;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
@@ -48,7 +48,7 @@ this.nggh_mod_kraken_devour_skill <- ::inherit("scripts/skills/skill", {
 			id = 7,
 			type = "text",
 			icon = "ui/icons/chance_to_hit_head.png",
-			text = "[color=" + ::Const.UI.Color.PositiveValue + "]Instantly Kill[/color] any target"
+			text = "[color=" + ::Const.UI.Color.PositiveValue + "]Instantly Kills[/color] any non-boss target"
 		});
 
 		if (this.m.Cooldown != 0)
@@ -79,11 +79,26 @@ this.nggh_mod_kraken_devour_skill <- ::inherit("scripts/skills/skill", {
 		return true;
 	}
 
-	function spawnBloodbath( _targetTile )
+	function spawnBloodbath( _targetTile , _bloodType )
 	{
-		for( local i = 0; i != ::Const.CorpsePart.len(); ++i )
+		switch(_bloodType)
 		{
-			_targetTile.spawnDetail(::Const.CorpsePart[i]);
+		case ::Const.BloodType.Red:
+		case ::Const.BloodType.Dark:
+			for( local i = 0; i != ::Const.CorpsePart.len(); ++i )
+			{
+				_targetTile.spawnDetail(::Const.CorpsePart[i]);
+			}
+			break;
+
+		case ::Const.BloodType.Green:
+			_targetTile.spawnDetail(::MSU.Array.rand(::Const.BloodPoolDecals[_bloodType]));
+			break;
+		}
+
+		if (::Const.BloodDecals[_bloodType].len() == 0)
+		{
+			return;
 		}
 
 		for( local i = 0; i != 6; ++i )
@@ -97,7 +112,7 @@ this.nggh_mod_kraken_devour_skill <- ::inherit("scripts/skills/skill", {
 
 				for( local n = ::Math.rand(0, 2); n != 0; --n )
 				{
-					tile.spawnDetail(::MSU.Array.rand(::Const.BloodDecals[::Const.BloodType.Red]));
+					tile.spawnDetail(::MSU.Array.rand(::Const.BloodDecals[_bloodType]));
 				}
 			}
 		}
@@ -106,20 +121,21 @@ this.nggh_mod_kraken_devour_skill <- ::inherit("scripts/skills/skill", {
 
 		for( local n = 2; n != 0; --n )
 		{
-			myTile.spawnDetail(::MSU.Array.rand(::Const.BloodDecals[::Const.BloodType.Red]));
+			myTile.spawnDetail(::MSU.Array.rand(::Const.BloodDecals[_bloodType]));
 		}
 	}
 
 	function onRemoveTarget( _targetTile )
 	{
+		local blood = _targetTile.getEntity().getBloodType();
 		_targetTile.getEntity().kill(this.getContainer().getActor(), this, ::Const.FatalityType.Kraken);
 		::Tactical.Entities.removeCorpse(_targetTile);
 		_targetTile.clear(::Const.Tactical.DetailFlag.Corpse);
 		_targetTile.Properties.remove("Corpse");
 		_targetTile.Properties.remove("IsSpawningFlies");
-		this.spawnBloodbath(_targetTile);
+		this.spawnBloodbath(_targetTile, blood);
 
-		if (::Tactical.State.m.StrategicProperties != null)
+		if (::Tactical.State.m.StrategicProperties != null && blood == ::Const.BloodType.Red || blood == ::Const.BloodType.Dark)
 		{
 			if (!("Loot" in ::Tactical.State.m.StrategicProperties))
 			{
@@ -140,7 +156,7 @@ this.nggh_mod_kraken_devour_skill <- ::inherit("scripts/skills/skill", {
 					continue;
 				}
 
-			    t.setHitpoints(::Math.min(t.getHitpointsMax(), t.getHitpoints() + ::Math.rand(20, 35)));
+			    t.setHitpoints(::Math.min(t.getHitpointsMax(), t.getHitpoints() + ::Math.rand(25, 40)));
 
 			    if (t.isPlacedOnMap())
 			    {
@@ -156,7 +172,7 @@ this.nggh_mod_kraken_devour_skill <- ::inherit("scripts/skills/skill", {
 
 		if (!_targetTile.IsOccupiedByActor || _targetTile.getEntity().isAlliedWith(_user))
 		{
-			for( local i = 0; i != 6; i = ++i )
+			for( local i = 0; i != 6; ++i )
 			{
 				if (!myTile.hasNextTile(i))
 				{
@@ -178,8 +194,18 @@ this.nggh_mod_kraken_devour_skill <- ::inherit("scripts/skills/skill", {
 			return false;
 		}
 
-		this.m.Cooldown = _user.getCurrentProperties().IsSpecializedInGreatSwords ? 1 : ::Math.rand(1, 2);
-		::Time.scheduleEvent(::TimeUnit.Virtual, 1000, ::onDelayedEffect.bindenv(this), {
+		if (_targetTile.getEntity().getFlags().has("boss"))
+		{
+			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_targetTile.getEntity()) + " can\'t be devoured");
+			return false;
+		}
+
+		if (_user.getCurrentProperties().IsSpecializedInGreatSwords)
+		{
+			this.m.Cooldown = 1;
+		}
+
+		::Time.scheduleEvent(::TimeUnit.Virtual, 1000, this.onDelayedEffect.bindenv(this), {
 			User = _user,
 			TargetTile = _targetTile
 		});

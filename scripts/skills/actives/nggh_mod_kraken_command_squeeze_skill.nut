@@ -29,7 +29,7 @@ this.nggh_mod_kraken_command_squeeze_skill <- ::inherit("scripts/skills/skill", 
 		this.m.InjuriesOnBody = ::Const.Injury.BluntBody;
 		this.m.InjuriesOnHead = ::Const.Injury.BluntHead;
 		this.m.ActionPointCost = 5;
-		this.m.FatigueCost = 60;
+		this.m.FatigueCost = 50;
 		this.m.MinRange = 0;
 		this.m.MaxRange = 0;
 		this.m.MaxLevelDifference = 4;
@@ -61,7 +61,7 @@ this.nggh_mod_kraken_command_squeeze_skill <- ::inherit("scripts/skills/skill", 
 			{
 				id = 6,
 				type = "text",
-				icon = "ui/icons/difficulty_hard.png",
+				icon = "ui/icons/special.png",
 				text = "Affects all ensnared targets"
 			}
 		]);
@@ -85,16 +85,16 @@ this.nggh_mod_kraken_command_squeeze_skill <- ::inherit("scripts/skills/skill", 
 			return false;
 		}
 
-		local tentacles = this.getContainer().getActor().getTentacles();
-
-		foreach ( t in tentacles )
+		foreach ( a in ::Tactical.Entities.getAllInstancesAsArray() ) 
 		{
-			if (t == null || t.isNull() || !t.isAlive() || t.isDying())
-			{
-				continue;
-			}
-			
-			if (!t.isPlacedOnMap())
+			local skill = a.getSkills().getSkillByID("effects.kraken_ensnare");
+
+		    if (skill == null)
+		    {
+		    	continue;
+		    }
+
+		    if (skill.m.ParentID != null && this.getContainer().getActor().getID() == skill.m.ParentID)
 			{
 				return true;
 			}

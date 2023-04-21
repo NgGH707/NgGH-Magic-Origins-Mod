@@ -73,9 +73,21 @@ this.nggh_mod_kraken_bite_skill <- ::inherit("scripts/skills/skill", {
 		return ret;
 	}
 
-	function isHidden()
+	function isUsable()
 	{
-		return this.getContainer().getActor().getMode() != 1;
+		if (!this.skill.isUsable())
+		{
+			return false;
+		}
+
+		local actor = this.getContainer().getActor();
+
+		if (!actor.m.IsControlledByPlayer)
+		{
+			return actor.getMode() == ::Const.KrakenTentacleMode.Attacking;
+		}
+		
+		return true;
 	}
 
 	function onUpdate( _properties )

@@ -1,7 +1,7 @@
 this.nggh_mod_RSH_shielding <- ::inherit("scripts/skills/skill", {
 	m = {
 		Hitpoints = 25,
-		HitpointsMax = 100,
+		HitpointsMax = 75,
 		HitpointsThreshold = 25,
 		IsActivated = true,
 		IsRegenerate = false,
@@ -130,16 +130,7 @@ this.nggh_mod_RSH_shielding <- ::inherit("scripts/skills/skill", {
 		}
 		
 		local damage = ::Math.max(1, _hitInfo.DamageRegular);
-		local mult = _hitInfo.DamageArmor / ::Math.maxf(1.0, _hitInfo.DamageRegular);
 		local shieldBreak = false;
-		local isArmorDamage = false;
-
-		if (_skill != null && _skill.getID() == "actives.crush_armor")
-		{
-			isArmorDamage = true;
-			damage = ::Math.max(1, _hitInfo.DamageArmor);
-			mult = 1.0;
-		}
 
 		local overflow = damage - this.getHitpoints();
 		this.spawnIcon("status_effect_322a", this.getContainer().getActor().getTile());
@@ -157,8 +148,8 @@ this.nggh_mod_RSH_shielding <- ::inherit("scripts/skills/skill", {
 		}
 		else
 		{
-			_hitInfo.DamageRegular = isArmorDamage ? 0 : ::Math.max(1, overflow);
-			_hitInfo.DamageArmor = ::Math.max(0, ::Math.floor(overflow * mult));
+			_hitInfo.DamageRegular = ::Math.max(1, overflow);
+			_hitInfo.DamageArmor = _hitInfo.DamageRegular;
 
 			if (this.getHitpoints() > 0)
 			{

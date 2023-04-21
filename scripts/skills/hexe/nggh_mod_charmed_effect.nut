@@ -132,9 +132,6 @@ this.nggh_mod_charmed_effect <- ::inherit("scripts/skills/effects/charmed_effect
 		}
 		
 		this.getContainer().getActor().m.IsControlledByPlayer = false;
-
-		if (this.m.OriginalSocket == null) return;
-
 		this.charmed_effect.onRemoved();
 
 		/*

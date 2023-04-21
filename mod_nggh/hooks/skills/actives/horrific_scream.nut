@@ -10,6 +10,7 @@
 		this.m.Icon = "skills/active_41.png";
 		this.m.IconDisabled = "skills/active_41_sw.png";
 		this.m.Order = ::Const.SkillOrder.UtilityTargeted;
+		this.m.FatigueCost = 25;
 	};
 	obj.getTooltip <- function()
 	{

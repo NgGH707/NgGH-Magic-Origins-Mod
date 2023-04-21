@@ -129,13 +129,14 @@
 
 				local sapling = ::Tactical.spawnEntity("scripts/entity/tactical/" + this.m.Script, ::MSU.Array.rand(candidates).Coords);
 				sapling.setFaction(isPlayer ? ::Const.Faction.PlayerAnimals : actor.getFaction());
-				sapling.riseFromGround();
 
 				if (isPlayer && isSpecialized)
 				{
 					sapling.setMaster(actor);
-					sapling.setFaction(actor.getFaction());
+					sapling.makeControllable();
 				}
+
+				sapling.riseFromGround();
 			}
 		}
 	};

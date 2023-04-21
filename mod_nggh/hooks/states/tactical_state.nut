@@ -85,16 +85,9 @@
 			{
 				if (a.isAlive())
 				{
-					if (a.getFaction() == ::Const.Faction.Player)
+					if (a.getFaction() == ::Const.Faction.Player && a.getFlags().has("egg") || a.getFlags().has("kraken"))
 					{
-						if (a.getFlags().has("egg"))
-						{
-							a.onRetreating();
-						}
-						else if (a.getFlags().has("boss") && a.getFlags().has("kraken"))
-						{
-							a.killSilently();
-						}
+						a.onRetreating();
 					}
 					else if (a.getFaction() == ::Const.Faction.PlayerAnimals)
 					{

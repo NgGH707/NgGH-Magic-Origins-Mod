@@ -1,7 +1,7 @@
 this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_beast", {
 	m = {
 		Parent = null,
-		Mode = 0
+		Mode = ::Const.KrakenTentacleMode.Ensnaring
 	},
 	function setParent( _p )
 	{
@@ -11,7 +11,7 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 		}
 		else
 		{
-			this.m.Parent = ::WeakTableRef(_p);
+			this.m.Parent = typeof _p == "instance" ? _p : ::WeakTableRef(_p);
 		}
 	}
 
@@ -42,18 +42,10 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 
 	function setMode( _m )
 	{
+		if (this.m.Mode == _m) return;
+
 		this.m.Mode = _m;
-
-		if (this.isPlacedOnMap())
-		{
-			if (this.m.Mode == 0 && _m == 1)
-			{
-				this.m.IsUsingZoneOfControl = true;
-				this.setZoneOfControl(this.getTile(), true);
-			}
-
-			this.onUpdateInjuryLayer();
-		}
+		this.updateMode();
 	}
 
 	function create()
@@ -127,7 +119,7 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 	{
 		_tile = this.getTile();
 
-		local decal_body = _tile.spawnDetail(this.getMode() == 0 ? "bust_kraken_tentacle_01_injured" : "bust_kraken_tentacle_02_injured", ::Const.Tactical.DetailFlag.Corpse, false);
+		local decal_body = _tile.spawnDetail(this.getMode() == ::Const.KrakenTentacleMode.Ensnaring ? "bust_kraken_tentacle_01_injured" : "bust_kraken_tentacle_02_injured", ::Const.Tactical.DetailFlag.Corpse, false);
 		local corpse_data = {
 			Body = decal_body,
 			Start = ::Time.getRealTimeF(),
@@ -230,7 +222,7 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 
 		if (this.getHitpointsPct() > 0.5)
 		{
-			if (this.m.Mode == 0)
+			if (this.getMode() == ::Const.KrakenTentacleMode.Ensnaring)
 			{
 				body.setBrush("bust_kraken_tentacle_01");
 			}
@@ -239,7 +231,7 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 				body.setBrush("bust_kraken_tentacle_02");
 			}
 		}
-		else if (this.m.Mode == 0)
+		else if (this.getMode() == ::Const.KrakenTentacleMode.Ensnaring)
 		{
 			body.setBrush("bust_kraken_tentacle_01_injured");
 		}
@@ -282,22 +274,22 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 
 	function onTurnStart()
 	{
-		this.updateMode();
+		//this.updateMode();
 		this.nggh_mod_player_beast.onTurnStart();
 	}
 
 	function onTurnResumed()
 	{
-		this.updateMode();
+		//this.updateMode();
 		this.nggh_mod_player_beast.onTurnResumed();
 	}
 
 	function updateMode()
 	{
-		if (this.m.Mode == 1)
+		if (this.isPlacedOnMap())
 		{
-			this.m.IsUsingZoneOfControl = true;
-			this.setZoneOfControl(this.getTile(), true);
+			this.m.IsUsingZoneOfControl = this.m.Mode == ::Const.KrakenTentacleMode.Attacking;
+			this.setZoneOfControl(this.getTile(), this.m.Mode == ::Const.KrakenTentacleMode.Attacking);
 		}
 
 		this.onUpdateInjuryLayer();

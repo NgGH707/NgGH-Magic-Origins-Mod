@@ -47,11 +47,7 @@
 	obj.onAfterUpdate <- function( _properties )
 	{
 		this.m.FatigueCostMult = _properties.IsSpecializedInMagic ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
-
-		if (_properties.IsSpecializedInMagic)
-		{
-			this.m.ConvertRate += 0.15;
-		}
+		this.m.ConvertRate = _properties.IsSpecializedInMagic ? 0.25 : 0.10;
 	};
 	obj.getDamage = function( _actor , _properties = null )
 	{
@@ -124,7 +120,7 @@
 		if (_skill == this)
 		{
 			local add = this.getAdditionalDamage(_properties);
-			_properties.DamageRegularMin = 15 + add;
+			_properties.DamageRegularMin = 10 + add;
 			_properties.DamageRegularMax = 30 + add;
 			_properties.DamageArmorMult = 0;
 			_properties.IsIgnoringArmorOnAttack = true;

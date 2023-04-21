@@ -1,10 +1,11 @@
 this.nggh_mod_kraken_move_ensnared_skill <- ::inherit("scripts/skills/skill", {
 	m = {
 		ParentID = null,
+		IsSpent = false
 	},
 	function create()
 	{
-		this.m.ID = "actives.mod_kraken_move_ensnared";
+		this.m.ID = "actives.kraken_move_ensnared";
 		this.m.Name = "Drag";
 		this.m.Description = "";
 		this.m.Icon = "skills/active_147.png";
@@ -44,7 +45,7 @@ this.nggh_mod_kraken_move_ensnared_skill <- ::inherit("scripts/skills/skill", {
 
 	function isUsable()
 	{
-		return this.m.IsUsable;
+		return this.m.IsUsable && !this.m.IsSpent;
 	}
 
 	function onVerifyTarget( _originTile, _targetTile )
@@ -59,6 +60,8 @@ this.nggh_mod_kraken_move_ensnared_skill <- ::inherit("scripts/skills/skill", {
 
 	function onUse( _user, _targetTile )
 	{
+		this.m.IsSpent = true;
+
 		local tag = {
 			Skill = this,
 			User = _user,
@@ -126,6 +129,11 @@ this.nggh_mod_kraken_move_ensnared_skill <- ::inherit("scripts/skills/skill", {
 		{
 			::Sound.play(::MSU.Array.rand(_tag.Skill.m.SoundOnHit), ::Const.Sound.Volume.Skill, _entity.getPos());
 		}
+	}
+
+	function onTurnStart()
+	{
+		this.m.IsSpent = false;
 	}
 
 });

@@ -62,6 +62,23 @@ this.nggh_mod_kraken_swing_skill <- ::inherit("scripts/skills/skill", {
 		return ret;
 	}
 
+	function isUsable()
+	{
+		if (!this.skill.isUsable())
+		{
+			return false;
+		}
+
+		local actor = this.getContainer().getActor();
+
+		if (!actor.m.IsControlledByPlayer)
+		{
+			return actor.getMode() == ::Const.KrakenTentacleMode.Attacking;
+		}
+		
+		return true;
+	}
+
 	function onUse( _user, _targetTile )
 	{
 		this.spawnAttackEffect(_targetTile, ::Const.Tactical.AttackEffectSwing);

@@ -16,12 +16,12 @@
 		this.m.InjuriesOnBody = ::Const.Injury.BurningBody;
 		this.m.InjuriesOnHead = ::Const.Injury.BurningHead;
 		this.m.DirectDamageMult = 0.35;
+		this.m.FatigueCost = 15;
 	};
 	obj.onAdded <- function()
 	{
 		if (this.getContainer().getActor().isPlayerControlled())
 		{
-			this.m.FatigueCost = 13;
 			this.m.MaxRange = 8;
 			this.m.IsVisibleTileNeeded = true;
 		}

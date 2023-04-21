@@ -4,10 +4,12 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		TentaclesDestroyed = 0,
 		IsEnraged = true,
 		Script = "scripts/entity/tactical/player_beast/nggh_mod_kraken_tentacle_player",
+
+		Mode = null,
 	},
 	function getStrengthMult() 
 	{
-		return 25.0;
+		return 15.5;
 	}
 
 	function getTentacles()
@@ -52,6 +54,27 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 				t.setMode(this.m.IsEnraged ? 1 : 0);
 			}
 		}
+	}
+
+	function setMode( _m )
+	{
+		if (_m == null)
+		{
+			this.m.Mode = null;
+		}
+		else if (typeof _m == "instance")
+		{
+			this.m.Mode = _m;
+		}
+		else 
+		{
+			this.m.Mode = ::WeakTableRef(_m);			    
+		}
+	}
+
+	function getMode()
+	{
+		return this.m.Mode;
 	}
 
 	function create()
@@ -315,18 +338,22 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		this.nggh_mod_player_beast.onInit();
 		local b = this.m.BaseProperties;
 		b.setValues(::Const.Tactical.Actor.Kraken);
-		b.Vision = 11;
-		b.DamageReceivedRegularMult = 1.33;
-		b.FatigueRecoveryRate = 45;
+		b.DamageReceivedRegularMult = 1.25;
+		b.MovementFatigueCostMult = 2.0;
 		b.TargetAttractionMult = 0.75;
+		b.MovementAPCostMult = 1.67;
+		b.FatigueRecoveryRate = 50;
 		b.DailyFood = 20;
-		b.IsRooted = true;
-		b.IsMovable = false;
+		b.Vision = 11;
+		
 		b.IsAffectedByRain = false;
 		b.IsAffectedByNight = false;
 		b.IsAffectedByInjuries = false;
 		b.IsImmuneToDisarm = true;
 		b.IsImmuneToStun = true;
+		b.IsImmuneToDaze = true;
+		b.IsMovable = false;
+		//b.IsRooted = true;
 
 		this.m.ActionPoints = b.ActionPoints;
 		this.m.Hitpoints = b.Hitpoints;
@@ -355,9 +382,23 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 	{
 		this.nggh_mod_player_beast.onAfterInit();
 		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_devour_skill"));
-		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_command_drag_skill"));
+		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_command_release_skill"));
 		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_spawn_tentacle_skill"));
 		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_command_squeeze_skill"));
+
+		// autopilot 
+		local mode = ::new("scripts/skills/actives/nggh_mod_kraken_autopilot_mode");
+		this.setMode(mode);
+		this.m.Skills.add(mode);
+
+		// switch mode (single)
+		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_change_tentacle_mode_single"));
+
+		// switch mode (all)
+		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_change_tentacle_mode_all"));
+
+		// preferred mode
+		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_kraken_preferred_tentacle_mode"));
 
 		//this.m.Skills.add(this.new("scripts/skills/actives/mod_kraken_enrage_skill"));
 	}
@@ -377,7 +418,7 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 	
 	function onCombatFinished()
 	{
-		this.player_beast.onCombatFinished();
+		this.nggh_mod_player_beast.onCombatFinished();
 
 		foreach( t in this.m.Tentacles )
 		{
@@ -477,19 +518,31 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		local tentacle = ::Tactical.spawnEntity(this.m.Script, _tile.Coords);
 		tentacle.setParent(this);
 		tentacle.setFaction(this.getFaction());
-		tentacle.setMode(this.m.IsEnraged ? 1 : 0);
+		tentacle.setMode(this.getTentacleBattleMode());
 		tentacle.setName(this.getNameOnly() + "\'s Irrlicht");
+		tentacle.getFlags().set("Source", this.getID());
 
 		if (!_isInstant)
 		{
 			tentacle.riseFromGround(0.75);
 		}
 
+		this.getMode().onChangeAI(tentacle);
 		this.givePerks(tentacle);
 		this.giveStats(tentacle);
 
 		this.m.Tentacles.push(::WeakTableRef(tentacle));
 		return tentacle;
+	}
+
+	function getTentacleBattleMode()
+	{
+		if (this.getFlags().get("tentacle_autopilot"))
+		{
+			return this.getFlags().getAsInt("tentacle_mode");
+		}
+
+		return ::Const.KrakenTentacleMode.Attacking;
 	}
 
 	function setStartValuesEx( _isElite = false , _parameter_1 = null , _parameter_2 = null , _parameter_3 = null )
@@ -531,6 +584,21 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		*/
 
 		this.nggh_mod_player_beast.onRoundStart();
+
+		if (::Time.getRound() == 1 && this.isAlive())
+		{
+			this.playSound(::Const.Sound.ActorEvent.Other1, ::Const.Sound.Volume.Actor * this.m.SoundVolume[::Const.Sound.ActorEvent.Other1] * this.m.SoundVolumeOverall);
+		}
+	}
+
+	function onRetreating()
+	{
+		if (!this.isPlacedOnMap())
+		{
+			return;
+		}
+
+		this.getMode().switchMode(true);
 	}
 
 	function canEnterBarber()

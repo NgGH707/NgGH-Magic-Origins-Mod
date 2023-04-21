@@ -6,18 +6,6 @@
 		ws_create();
 		this.m.IconDisabled = "skills/active_116_sw.png";
 		this.m.Order =  ::Const.SkillOrder.UtilityTargeted + 2;
-		this.m.IsVisibleTileNeeded = true;
-	};
-	obj.getFatigueCost <- function()
-	{
-		local ret = this.skill.getFatigueCost();
-
-		if (!this.getContainer().getActor().isPlayerControlled())
-		{
-			return ret;
-		}
-
-		return ret * 2;
 	};
 	obj.getTooltip <- function()
 	{
@@ -36,6 +24,13 @@
 		});
 
 		return ret;
+	};
+	obj.onAdded <- function()
+	{
+		if (this.getContainer().getActor().isPlayerControlled())
+		{
+			this.m.FatigueCostMult = 2.0;
+		}
 	};
 	obj.onAfterUpdate <- function( _properties )
 	{
@@ -57,9 +52,9 @@
 		}
 
 		return [
-			 ::Const.EntityType.Alp,
-			 ::Const.EntityType.AlpShadow,
-			 ::Const.EntityType.LegendDemonAlp,
+			::Const.EntityType.Alp,
+			::Const.EntityType.AlpShadow,
+			::Const.EntityType.LegendDemonAlp,
 		].find(_target.getType()) == null;
 	};
 	obj.onDelayedEffect = function( _tag )
@@ -85,6 +80,7 @@
 				{
 					::Tactical.EventLog.log( ::Const.UI.getColorizedEntityName(target) + " can not be put to sleep.");
 				}
+				
 				continue;
 			}
 

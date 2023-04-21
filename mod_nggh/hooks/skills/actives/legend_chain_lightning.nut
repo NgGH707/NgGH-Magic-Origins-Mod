@@ -33,7 +33,7 @@
 		};
 		this.applyEffect(data, 100);
 		local potentialTiles = this.searchTiles(targetTile, myTile);
-		local potentialTargets= this.searchTargets(_user , potentialTargets, selectedTargets);
+		local potentialTargets = this.searchTargets(_user , potentialTiles, selectedTargets);
 
 		if (potentialTargets.len() != 0)
 		{
@@ -55,7 +55,7 @@
 		};
 		this.applyEffect(data, 350);
 		potentialTiles = this.searchTiles(targetTile, myTile);
-		potentialTargets= this.searchTargets(_user , potentialTargets, selectedTargets);
+		potentialTargets= this.searchTargets(_user , potentialTiles, selectedTargets);
 
 		if (potentialTargets.len() != 0)
 		{
