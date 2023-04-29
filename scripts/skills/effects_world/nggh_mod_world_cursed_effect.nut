@@ -69,7 +69,7 @@ this.nggh_mod_world_cursed_effect <- ::inherit("scripts/skills/skill", {
 			foreach ( i, id in this.m.Factions )
 			{
 				local f = ::World.FactionManager.getFaction(id)
-				f.m.PlayerRelations = this.m.PlayerRelations[i];
+				f.m.PlayerRelation = this.m.PlayerRelations[i];
 				f.updatePlayerRelation();
 			}
 		}
@@ -82,7 +82,7 @@ this.nggh_mod_world_cursed_effect <- ::inherit("scripts/skills/skill", {
 		actor.getSprite("hair").setBrush(::MSU.Array.rand(::Const.HexeOrigin.FakeHair));
 		actor.getSprite("head").setBrush(::MSU.Array.rand(::Const.HexeOrigin.FakeHead));
 		actor.getSprite("body").setBrush("bust_hexen_fake_body_00");
-		actor.setDirty(true)
+		actor.setDirty(true);
 	}
 	
 	function onSerialize( _out )

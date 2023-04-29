@@ -291,6 +291,11 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 				target.setMoraleState(::Const.MoraleState.Steady);
 			}
 
+			if (target.getFlags().has("lindwurm"))
+			{
+				::Tactical.Entities.setLastCombatResult(::Const.Tactical.CombatResult.EnemyRetreated);
+			}
+
 			local charmed = ::new("scripts/skills/hexe/nggh_mod_charmed_effect");
 			charmed.setMasterFaction(_user.getFaction() == ::Const.Faction.Player ? ::Const.Faction.PlayerAnimals : _user.getFaction());
 			charmed.setMaster(this);

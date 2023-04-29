@@ -197,7 +197,7 @@ this.nggh_mod_hex_slave_effect <- ::inherit("scripts/skills/skill", {
 				return;
 
 			case ::Const.Hex.Type.Weakening:
-				_properties.DamageTotalMult *= 0.67;
+				_properties.DamageTotalMult *= 0.60;
 				_properties.StaminaMult *= 0.67;
 				_properties.FatigueRecoveryRate -= 5;
 				break;
@@ -208,7 +208,7 @@ this.nggh_mod_hex_slave_effect <- ::inherit("scripts/skills/skill", {
 				break;
 
 			case ::Const.Hex.Type.Misfortune:
-				_properties.TotalAttackToHitMult *= 0.85;
+				_properties.TotalAttackToHitMult *= 0.88;
 				_properties.TotalDefenseToHitMult *= 0.9;
 			}
 		}

@@ -21,9 +21,9 @@ this.nggh_mod_named_stollwurm_scales_legend_upgrade <- ::inherit("scripts/items/
 		this.m.SpriteCorpseFront = null;
 		this.m.SpriteCorpseBack = "upgrade_stollwurm_back_dead";
 		this.m.Value = 6000;
-		this.m.Condition = 45;
-		this.m.ConditionMax = 45;
-		this.m.ConditionModifier = 45;
+		this.m.Condition = 50;
+		this.m.ConditionMax = 50;
+		this.m.ConditionModifier = 50;
 		this.m.StaminaModifier = -4;
 		this.randomizeValues();
 	}

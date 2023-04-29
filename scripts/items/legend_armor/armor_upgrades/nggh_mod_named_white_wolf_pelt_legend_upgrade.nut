@@ -1,7 +1,7 @@
 this.nggh_mod_named_white_wolf_pelt_legend_upgrade <- ::inherit("scripts/items/legend_armor/legend_named_armor_upgrade", {
 	m = {
 		DefaultName = "Pelt Mantle",
-		SpecialValue = 10
+		SpecialValue = 15
 	},
 	function create()
 	{

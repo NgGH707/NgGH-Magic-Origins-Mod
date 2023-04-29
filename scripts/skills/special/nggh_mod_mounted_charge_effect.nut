@@ -2,8 +2,8 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 	m = {
 		Stacks = 0,
 		BaseBonusMeleeSkill = 3,
-		BaseBonusDamage = 0.10,
-		BaseBonusDirectDamage = 0.02,
+		BaseBonusDamage = 0.12,
+		BaseBonusDirectDamage = 0.03,
 		IsUpgraded = false
 	},
 	function create()
@@ -25,9 +25,6 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 
 	function getTooltip()
 	{
-		local meleeSkill = this.m.BaseBonusMeleeSkill;
-		local meleeDamage = this.m.BaseBonusDamage * 100 * this.m.Stacks;
-		local damgeDirect = this.m.BaseBonusDirectDamage * 100 * this.m.Stacks; 
 		local ret = [
 			{
 				id = 1,
@@ -39,25 +36,35 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 				type = "description",
 				text = this.getDescription()
 			},
-			/*{
-				id = 6,
-				type = "text",
-				icon = "ui/icons/melee_skill.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + meleeSkill + "[/color] Melee Defense"
-			},*/
-			{
-				id = 6,
-				type = "text",
-				icon = "ui/icons/regular_damage.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + meleeDamage + "%[/color] Melee Damage"
-			},
-			{
-				id = 6,
-				type = "text",
-				icon = "ui/icons/direct_damage.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + damgeDirect + "%[/color] Melee Direct Damage"
-			},
 		];
+
+		if (this.m.Stacks >= 0)
+		{
+			local meleeSkill = this.m.BaseBonusMeleeSkill * this.m.Stacks;
+			local meleeDamage = this.m.BaseBonusDamage * 100 * this.m.Stacks;
+			local damgeDirect = this.m.BaseBonusDirectDamage * 100 * this.m.Stacks; 
+
+			ret.extend([
+				{
+					id = 6,
+					type = "text",
+					icon = "ui/icons/melee_skill.png",
+					text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + meleeSkill + "[/color] Melee Skill"
+				},
+				{
+					id = 6,
+					type = "text",
+					icon = "ui/icons/regular_damage.png",
+					text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + meleeDamage + "%[/color] Melee Damage"
+				},
+				{
+					id = 6,
+					type = "text",
+					icon = "ui/icons/direct_damage.png",
+					text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + damgeDirect + "%[/color] Melee Direct Damage"
+				},
+			]);
+		}
 
 		if (this.m.Stacks >= 3)
 		{
@@ -94,16 +101,16 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 	{
 		this.resetCounter();
 		this.m.BaseBonusMeleeSkill = 3;
-		this.m.BaseBonusDamage = 0.10;
-		this.m.BaseBonusDirectDamage = 0.02;
+		this.m.BaseBonusDamage = 0.12;
+		this.m.BaseBonusDirectDamage = 0.03;
 		this.m.IsUpgraded = false;
 	}
 
 	function setImproveChargeEffect()
 	{
-		this.m.BaseBonusMeleeSkill = 5;
-		this.m.BaseBonusDamage = 0.15;
-		this.m.BaseBonusDirectDamage = 0.04;
+		this.m.BaseBonusMeleeSkill = 6;
+		this.m.BaseBonusDamage = 0.18;
+		this.m.BaseBonusDirectDamage = 0.05;
 		this.m.IsUpgraded = true;
 	}
 
@@ -155,7 +162,7 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 			else
 			{
 				::Time.scheduleEvent(::TimeUnit.Virtual, 250, this.onFollow, {
-					Attacker = user,
+					Attacker = this.getContainer().getActor(),
 					Skill = this,
 					Tile = knockToTile,
 				});
@@ -185,10 +192,11 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 	{
 		if (_skill.isAttack() && !_skill.isRanged() && this.m.Stacks > 0)
 		{
-			//_properties.MeleeSkill += this.m.Stacks * this.m.BaseBonusMeleeSkill;
+			_properties.MeleeSkill += this.m.Stacks * this.m.BaseBonusMeleeSkill;
 			_properties.MeleeDamageMult *= 1.0 + this.m.Stacks * this.m.BaseBonusDamage;
 			_properties.DamageDirectMult *= 1.0 + this.m.Stacks * this.m.BaseBonusDirectDamage;
 
+			/*
 			if (_targetEntity != null)
 			{
 				local d = this.getContainer().getActor().getTile().getDistanceTo(_targetEntity.getTile());
@@ -200,6 +208,7 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 					_properties.DamageDirectMult /= 1.0 + this.m.Stacks * this.m.BaseBonusDirectDamage;
 				}
 			}
+			*/
 		}
 	}
 
@@ -246,18 +255,10 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 
 	function applyEffect( _targetEntity, _isKnockBack = false )
 	{
-		if (_isKnockBack)
+		if (_targetEntity.getCurrentProperties().IsImmuneToDaze || _isKnockBack)
 		{
-			if (::Math.rand(1, 4) > 1)
-			{
-				_targetEntity.getSkills().add(::new("scripts/skills/effects/staggered_effect"));
-				::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_targetEntity) + " is staggered for one turn");
-			}
-			else
-			{
-				_targetEntity.getSkills().add(::new("scripts/skills/effects/dazed_effect"));
-				::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_targetEntity) + " is dazed for one turn");
-			}
+			_targetEntity.getSkills().add(::new("scripts/skills/effects/staggered_effect"));
+			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_targetEntity) + " is staggered for one turn");
 		}
 		else
 		{

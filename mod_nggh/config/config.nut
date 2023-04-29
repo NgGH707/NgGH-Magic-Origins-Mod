@@ -972,7 +972,7 @@ if (!("Goblin" in ::Const))
 // orc berserker
 ::Const.World.Spawn.Troops.OrcBerserker.NameList <- ::Const.Strings.OrcNames;
 ::Const.World.Spawn.Troops.OrcBerserker.TitleList <- ::Const.Strings.BarbarianTitles;
-::Const.World.Spawn.Troops.OrcBerserker.Variant = 1;
+::Const.World.Spawn.Troops.OrcBerserker.Variant = 2;
 
 // demon hound
 ::Const.World.Spawn.Troops.LegendDemonHound.NameList <- ::Const.Strings.DemonHoundNames;
@@ -982,11 +982,11 @@ if (!("Goblin" in ::Const))
 // ghost
 ::Const.World.Spawn.Troops.Ghost.NameList <- ::Const.Strings.GhostNames;
 ::Const.World.Spawn.Troops.Ghost.TitleList <- ::Const.Strings.GhostTitles;
-::Const.World.Spawn.Troops.Ghost.Variant = 3;
+::Const.World.Spawn.Troops.Ghost.Variant = 5;
 
 ::Const.World.Spawn.Troops.LegendBanshee.NameList <- ::Const.Strings.BansheeNames;
 ::Const.World.Spawn.Troops.LegendBanshee.TitleList <- ::Const.Strings.BansheeTitles;
-::Const.World.Spawn.Troops.LegendBanshee.Variant = 5;
+::Const.World.Spawn.Troops.LegendBanshee.Variant = 7;
 
 // hexe
 ::Const.World.Spawn.Troops.Hexe.NameList <- ::Const.Strings.HexeNames;
@@ -1000,11 +1000,11 @@ if (!("Goblin" in ::Const))
 // wolf
 ::Const.World.Spawn.Troops.Direwolf.NameList <- ::Const.Strings.WolfNames;
 ::Const.World.Spawn.Troops.Direwolf.TitleList <- null;
-::Const.World.Spawn.Troops.Direwolf.Variant = 1;
+::Const.World.Spawn.Troops.Direwolf.Variant = 2;
 
 ::Const.World.Spawn.Troops.DirewolfHIGH.NameList <- ::Const.Strings.WolfNames;
 ::Const.World.Spawn.Troops.DirewolfHIGH.TitleList <- null;
-::Const.World.Spawn.Troops.DirewolfHIGH.Variant = 2;
+::Const.World.Spawn.Troops.DirewolfHIGH.Variant = 4;
 
 ::Const.World.Spawn.Troops.LegendWhiteDirewolf.NameList <- ::Const.Strings.WolfNames;
 ::Const.World.Spawn.Troops.LegendWhiteDirewolf.TitleList <- null;
@@ -1013,11 +1013,11 @@ if (!("Goblin" in ::Const))
 // nacho
 ::Const.World.Spawn.Troops.Ghoul.NameList <- ::Const.Strings.NachoNames;
 ::Const.World.Spawn.Troops.Ghoul.TitleList <- null;
-::Const.World.Spawn.Troops.Ghoul.Variant = 2;
+::Const.World.Spawn.Troops.Ghoul.Variant = 1;
 
 ::Const.World.Spawn.Troops.GhoulHIGH.NameList <- ::Const.Strings.NachoNames;
 ::Const.World.Spawn.Troops.GhoulHIGH.TitleList <- null;
-::Const.World.Spawn.Troops.GhoulHIGH.Variant = 5;
+::Const.World.Spawn.Troops.GhoulHIGH.Variant = 4;
 
 ::Const.World.Spawn.Troops.LegendSkinGhoulMED.NameList <- ::Const.Strings.NachoNames;
 ::Const.World.Spawn.Troops.LegendSkinGhoulMED.TitleList <- null;
@@ -1030,7 +1030,7 @@ if (!("Goblin" in ::Const))
 // snake
 ::Const.World.Spawn.Troops.Lindwurm.NameList <- ::Const.Strings.LindwurmNames;
 ::Const.World.Spawn.Troops.Lindwurm.TitleList <- null;
-::Const.World.Spawn.Troops.Lindwurm.Variant = 3;
+::Const.World.Spawn.Troops.Lindwurm.Variant = 5;
 
 ::Const.World.Spawn.Troops.LegendStollwurm.NameList <- ::Const.Strings.LindwurmNames;
 ::Const.World.Spawn.Troops.LegendStollwurm.TitleList <- null;
@@ -1038,7 +1038,7 @@ if (!("Goblin" in ::Const))
 
 ::Const.World.Spawn.Troops.Serpent.NameList <- ::Const.Strings.SerpentNames;
 ::Const.World.Spawn.Troops.Serpent.TitleList <- null;
-::Const.World.Spawn.Troops.Serpent.Variant = 3;
+::Const.World.Spawn.Troops.Serpent.Variant = 5;
 
 // bear
 ::Const.World.Spawn.Troops.LegendBear.NameList <- ::Const.Strings.OrcNames;
@@ -1048,23 +1048,23 @@ if (!("Goblin" in ::Const))
 // unhold
 ::Const.World.Spawn.Troops.Unhold.NameList <- ::Const.Strings.UnholdNames;
 ::Const.World.Spawn.Troops.Unhold.TitleList <- null;
-::Const.World.Spawn.Troops.Unhold.Variant = 2;
+::Const.World.Spawn.Troops.Unhold.Variant = 5;
 
 ::Const.World.Spawn.Troops.UnholdFrost.NameList <- ::Const.Strings.UnholdNames;
 ::Const.World.Spawn.Troops.UnholdFrost.TitleList <- null;
-::Const.World.Spawn.Troops.UnholdFrost.Variant = 3;
+::Const.World.Spawn.Troops.UnholdFrost.Variant = 2;
 
 ::Const.World.Spawn.Troops.UnholdBog.NameList <- ::Const.Strings.UnholdNames;
 ::Const.World.Spawn.Troops.UnholdBog.TitleList <- null;
-::Const.World.Spawn.Troops.UnholdBog.Variant = 2;
+::Const.World.Spawn.Troops.UnholdBog.Variant = 5;
 
 ::Const.World.Spawn.Troops.BarbarianUnhold.NameList <- ::Const.Strings.UnholdNames;
 ::Const.World.Spawn.Troops.BarbarianUnhold.TitleList <- null;
-::Const.World.Spawn.Troops.BarbarianUnhold.Variant = 2;
+::Const.World.Spawn.Troops.BarbarianUnhold.Variant = 5;
 
 ::Const.World.Spawn.Troops.BarbarianUnholdFrost.NameList <- ::Const.Strings.UnholdNames;
 ::Const.World.Spawn.Troops.BarbarianUnholdFrost.TitleList <- null;
-::Const.World.Spawn.Troops.BarbarianUnholdFrost.Variant = 2;
+::Const.World.Spawn.Troops.BarbarianUnholdFrost.Variant = 5;
 
 ::Const.World.Spawn.Troops.LegendRockUnhold.NameList <- ::Const.Strings.UnholdNames;
 ::Const.World.Spawn.Troops.LegendRockUnhold.TitleList <- ["the Mountain"];
@@ -1082,7 +1082,7 @@ if (!("Goblin" in ::Const))
 // alp
 ::Const.World.Spawn.Troops.Alp.NameList <- ::Const.Strings.GoblinNames;
 ::Const.World.Spawn.Troops.Alp.TitleList <- null;
-::Const.World.Spawn.Troops.Alp.Variant = 3;
+::Const.World.Spawn.Troops.Alp.Variant = 5;
 
 ::Const.World.Spawn.Troops.LegendDemonAlp.NameList <- ::Const.Strings.GoblinNames;
 ::Const.World.Spawn.Troops.LegendDemonAlp.TitleList <- null;
@@ -1091,6 +1091,7 @@ if (!("Goblin" in ::Const))
 // schrat
 ::Const.World.Spawn.Troops.Schrat.NameList <- ::Const.Strings.SchratNames;
 ::Const.World.Spawn.Troops.Schrat.TitleList <- null;
+::Const.World.Spawn.Troops.Schrat.Variant = 5;
 
 // kraken
 ::Const.World.Spawn.Troops.Kraken.Variant = 40;
@@ -1102,11 +1103,11 @@ if (!("Goblin" in ::Const))
 // hyena
 ::Const.World.Spawn.Troops.Hyena.NameList <- ::Const.Strings.WolfNames;
 ::Const.World.Spawn.Troops.Hyena.TitleList <- null;
-::Const.World.Spawn.Troops.Hyena.Variant = 1;
+::Const.World.Spawn.Troops.Hyena.Variant = 2;
 
 ::Const.World.Spawn.Troops.HyenaHIGH.NameList <- ::Const.Strings.WolfNames;
 ::Const.World.Spawn.Troops.HyenaHIGH.TitleList <- null;
-::Const.World.Spawn.Troops.HyenaHIGH.Variant = 3;
+::Const.World.Spawn.Troops.HyenaHIGH.Variant = 5;
 
 /* bodyguard version of beasts can never be champion
 ::Const.World.Spawn.Troops.DirewolfBodyguard.NameList <- ::Const.Strings.WolfNames;
@@ -1124,116 +1125,6 @@ if (!("Goblin" in ::Const))
 ::Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.NameList <- ::Const.Strings.SpiderNames;
 ::Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.TitleList <- null;
 ::Const.World.Spawn.Troops.LegendRedbackSpiderBodyguard.Variant = 3;
-
-
-// new troop
-local inquisitor_titles = [];
-inquisitor_titles.extend(::Const.Strings.WitchhunterTitles);
-inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
-
-::Const.World.Spawn.Troops.Inquisitor <- {
-	ID = ::Const.EntityType.Knight,
-	Variant = 2,
-	Strength = 40,
-	Cost = 40,
-	Row = 0,
-	Script = "scripts/entity/tactical/humans/nggh_mod_inquisitor",
-	NameList = ::Const.Strings.KnightNames,
-	TitleList = inquisitor_titles
-};
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// new tactical effects
-::Const.World.Spawn.Nggh_WitchHunter <- {
-	Name = "WitchHunter",
-	IsDynamic = true,
-	MovementSpeedMult = 5.0,
-	VisibilityMult = 1.0,
-	VisionMult = 99.0,
-	Body = "figure_noble_02",
-	MinR = 75,
-	MaxR = 690,
-	Troops = [
-		{
-			Weight = 50,
-			Types = [
-				{
-					MaxR = 400,
-					Type = ::Const.World.Spawn.Troops.MercenaryLOW,
-					Cost = 18
-				},
-				{
-					Type = ::Const.World.Spawn.Troops.Mercenary,
-					Cost = 25
-				}
-			]
-		},
-		{
-			Weight = 22,
-			Types = [
-				{
-					Type = ::Const.World.Spawn.Troops.LegendPeasantWitchHunter,
-					Cost = 20
-				}
-			]
-		},
-		{
-			Weight = 12,
-			Types = [
-				{
-					Type = ::Const.World.Spawn.Troops.LegendPeasantMonk,
-					Cost = 20
-				},
-				{
-					Type = ::Const.World.Spawn.Troops.MercenaryRanged,
-					Cost = 25
-				}
-			]
-		},
-		{
-			Weight = 5,
-			Types = [
-				{
-					Type = ::Const.World.Spawn.Troops.ArmoredWardog,
-					Cost = 5
-				}
-			]
-		},
-		{
-			Weight = 3,
-			MinR = 250,
-			Types = [
-				{
-					Type = ::Const.World.Spawn.Troops.Inquisitor,
-					Cost = 40
-				},
-				{
-					Type = ::Const.World.Spawn.Troops.HedgeKnight,
-					Cost = 40
-				},
-				{
-					Type = ::Const.World.Spawn.Troops.Swordmaster,
-					Cost = 40
-				},
-				{
-					Type = ::Const.World.Spawn.Troops.MasterArcher,
-					Cost = 40
-				}
-			]
-		},
-		{
-			Weight = 3,
-			MinR = 250,
-			Types = [
-				{
-					Type = ::Const.World.Spawn.Troops.Inquisitor,
-					Cost = 40
-				}
-			]
-		},
-	]
-};
 */
 
 
@@ -1403,7 +1294,7 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 ::Const.PerkDefaultPerRow <- [
 	6,
 	6,
-	6,
+	7,
 	9,
 	5,
 	4,

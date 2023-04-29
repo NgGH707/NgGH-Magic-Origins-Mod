@@ -17,7 +17,7 @@
 	Class = [
 		::MSU.Class.WeightedContainer([
 			[75, ::Const.Perks.ScoutClassTree],
-			[25, ::Const.Perks.NggH_GoblinMountTree],
+			[33, ::Const.Perks.NggH_GoblinMountTree],
 		])
 	],
 	Profession = [
@@ -43,8 +43,8 @@
 	Class = [
 		::MSU.Class.WeightedContainer([
 			[40, ::Const.Perks.TrapperClassTree],
-			[20, ::Const.Perks.NggH_GoblinMountTree],
-			[40, ::Const.Perks.ScoutClassTree]
+			[30, ::Const.Perks.NggH_GoblinMountTree],
+			[30, ::Const.Perks.ScoutClassTree]
 		]),
 	],
 	Profession = [

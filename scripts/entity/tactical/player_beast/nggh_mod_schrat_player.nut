@@ -195,7 +195,7 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 				}
 			}
 
-			::new("scripts/items/tools/ancient_amber_item").drop(_tile);
+			::new("scripts/items/misc/ancient_amber_item").drop(_tile);
 
 			if (::Math.rand(1, 100) <= 5)
 			{
@@ -210,7 +210,7 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 
 		if (!this.isArmedWithShield())
 		{
-			if (this.getHitpointsPct() >= 0.5 && ::Math.rand(1, 10) <= 5)
+			if (this.getHitpointsPct() >= 0.5 && ::Math.rand(1, 100) <= 50)
 			{
 				return;
 			}
@@ -380,9 +380,9 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 	////
 	function canEquipThis( _item )
 	{
-		if (_item.getSlotType() == this.Const.ItemSlot.Offhand)
+		if (_item.getSlotType() == ::Const.ItemSlot.Offhand)
 		{
-			return _item.isItemType(this.Const.Items.ItemType.Shield);
+			return _item.isItemType(::Const.Items.ItemType.Shield);
 		}
 
 		return true;
