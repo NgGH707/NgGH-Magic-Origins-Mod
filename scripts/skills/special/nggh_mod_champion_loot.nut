@@ -48,7 +48,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	    case ::Const.EntityType.Ghoul:
 	        this.m.LootScript.extend([
 	        	[2, ["loot/growth_pearls_item"]],
-	        	[1, ["accessory/ghoul_trophy_item", "misc/legend_ancient_scroll_item"]]
+	        	[1, ["accessory/named/nggh_mod_named_ghoul_trophy_item"]]
 	        ]);
 	        break;
 
@@ -57,7 +57,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	    	{
 		    	this.m.LootScript.extend([
 	    			[1, ["accessory/legend_skin_ghoul_blood_flask_item"]],
-	    			[2, ["misc/legend_skin_ghoul_skin_item"]],
+	    			[1, ["accessory/named/nggh_mod_named_ghoul_trophy_item"]],
 	        		[1, ["misc/legend_ancient_scroll_item"]]
 	       		]);
 	    	}
@@ -65,7 +65,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	    	{
 	    		this.m.LootScript.extend([
 	    			[2, ["loot/growth_pearls_item"]],
-	    			[1, ["misc/legend_skin_ghoul_skin_item"]],
+	    			[1, ["accessory/named/nggh_mod_named_ghoul_trophy_item"]],
 	        		[1, ["misc/legend_ancient_scroll_item"]]
 	       		]);
 	    	}
@@ -240,7 +240,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	    	this.m.BonusXP += 25;
 	        this.m.LootScript.extend([
 	        	[1, ["loot/soul_splinter_item", "misc/petrified_scream_item"]],
-	        	[1, ["special/fountain_of_youth_item"]]
+	        	[1, ["accessory/named/nggh_mod_named_alp_trophy_item"]]
 	        ]);
 	        break;
 
