@@ -76,7 +76,7 @@
 			Target = target
 		};
 		this.applyEffect(data, 550);
-		return success;
+		return true;
 	}
 	obj.searchTiles <- function( _tile, _originTile )
 	{

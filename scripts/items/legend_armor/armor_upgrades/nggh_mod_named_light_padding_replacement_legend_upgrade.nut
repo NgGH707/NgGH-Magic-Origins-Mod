@@ -1,7 +1,7 @@
 this.nggh_mod_named_light_padding_replacement_legend_upgrade <- ::inherit("scripts/items/legend_armor/legend_named_armor_upgrade", {
 	m = {
 		DefaultName = "Silk Padding",
-		SpecialValue = 20,
+		SpecialValue = 40,
 		PreviousValue = 0
 	},
 	function create()

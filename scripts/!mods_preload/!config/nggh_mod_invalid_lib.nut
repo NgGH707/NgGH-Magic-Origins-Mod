@@ -32,6 +32,7 @@ local items = [
 	"scripts/items/tools/mortar_item",
 	"scripts/items/ammo/bomb_bag",
 	"scripts/items/accessory/nggh_mod_accessory_spider",
+	"scripts/items/accessory/named/nggh_mod_named_accessory"
 ];
 
 if (!("Invalid" in ::Const))

@@ -81,14 +81,14 @@ this.nggh_mod_frenzy_skill <- ::inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Becomes immune to stun or daze"
-			},
+				text = "Becomes immune to knocked back or grab"
+			}
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Becomes immune to knocked back or grab"
-			}
+				text = "Becomes immune to stun"
+			},
 		]);
 
 		return ret;

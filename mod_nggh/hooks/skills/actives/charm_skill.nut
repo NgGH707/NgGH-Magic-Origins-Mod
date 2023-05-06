@@ -81,7 +81,7 @@
 		{
 			local bonus = _targetTile.getDistanceTo(_user.getTile()) == 1 ? -5 : 0;
 
-			if (!this.isViableTarget(_user, target) || target.getSkills().hasSkill("background.eunuch") || target.getSkills().hasSkill("trait.player"))
+			if (!this.isViableTarget(_user, target) || target.getSkills().hasSkill("background.eunuch") || target.getSkills().hasSkill("trait.player") || target.getSkills().hasSkill("trait.loyal"))
 			{
 				if (!_user.isHiddenToPlayer() && !target.isHiddenToPlayer())
 				{

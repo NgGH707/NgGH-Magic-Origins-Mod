@@ -124,6 +124,7 @@ table.loot_table = tools.enumerateScripts("accessory/", [
 	"legendary/cursed_crystal_skull",
 ]);
 tools.removeScriptWithText(table.loot_table, "special/");
+tools.removeScriptWithText(table.loot_table, "named/");
 table.lucky_pool.push([10, table.loot_table]);
 
 

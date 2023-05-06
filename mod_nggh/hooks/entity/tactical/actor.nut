@@ -158,6 +158,7 @@
 			}
 		}
 	};
+	/*
 	local ws_onAttacked = obj.onAttacked
 	obj.onAttacked = function( _attacker )
 	{
@@ -190,11 +191,12 @@
 
 		ws_onAttacked(_attacker);
 	}
+
 	// extra stuff, not related to magic
 	//----------------------------------------
 
 	
-	/*
+	
 	obj.isAbleToUseMagic <- function()
 	{
 		return this.m.IsAbleToUseMagic;

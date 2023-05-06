@@ -75,14 +75,14 @@ this.nggh_mod_frenzy_effect <- ::inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Become immune to stun or daze"
+				text = "Become immune to knocked back or grab"
 			},
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Become immune to knocked back or grab"
-			}
+				text = "Becomes immune to stun"
+			},
 		];
 	}
 
@@ -97,7 +97,6 @@ this.nggh_mod_frenzy_effect <- ::inherit("scripts/skills/skill", {
 		_properties.TargetAttractionMult *= 1.15;
 		_properties.IsImmuneToKnockBackAndGrab = true;
 		_properties.IsImmuneToStun = true;
-		_properties.IsImmuneToDaze = true;
 	}
 
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
@@ -147,7 +146,7 @@ this.nggh_mod_frenzy_effect <- ::inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (!this.getContainer().hasSkill("effects.nacho_eat"))
+		if (!this.getContainer().hasSkill("effects.nacho_eat") && !this.getContainer().getActor().getCurrentProperties().IsImmuneToDaze)
 		{
 			this.getContainer().add(::new("scripts/skills/effects/dazed_effect"));
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(this.getContainer().getActor()) + " is dazed for 2 turns");

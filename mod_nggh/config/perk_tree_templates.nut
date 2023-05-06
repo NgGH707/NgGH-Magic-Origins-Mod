@@ -550,7 +550,6 @@ if (!("PerksCharmedUnit" in ::Const))
 	],
 	[
 		::Const.Perks.PerkDefs.BloodyHarvest,
-		::Const.Perks.PerkDefs.NggHNachoFrenzy,
 	],
 	[
 		::Const.Perks.PerkDefs.LegendFullForce,

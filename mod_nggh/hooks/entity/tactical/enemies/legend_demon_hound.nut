@@ -45,7 +45,10 @@
 	{
 		local b = this.m.BaseProperties;
 		this.m.XP = ::Const.Tactical.Actor.LegendWhiteDirewolf.XP;
-		this.m.BaseProperties.setValues(::Const.Tactical.Actor.LegendWhiteDirewolf);
+		b.setValues(::Const.Tactical.Actor.LegendWhiteDirewolf);
+		b.Hitpoints = 500;
+		b.DamageRegularMult = 1.15;
+
 		this.m.ActionPoints = b.ActionPoints;
 		this.m.CurrentProperties = clone b;
 		this.m.AIAgent = ::new("scripts/ai/tactical/agents/legend_white_wolf_agent");
@@ -56,7 +59,6 @@
 		this.m.Skills.add(::new("scripts/skills/racial/nggh_mod_fake_champion_racial"));
 		this.m.Skills.add(::new("scripts/skills/racial/ghost_racial"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_overwhelm"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_inspiring_presence"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_fast_adaption"));
 		//this.m.Skills.add(::new("scripts/skills/perks/perk_skeleton_harden_bone"));
@@ -68,6 +70,7 @@
 
 		if (::Is_PTR_Exist)
 		{
+			this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_vengeful_spite"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_menacing"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_bully"));
 		}

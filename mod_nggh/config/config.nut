@@ -1048,7 +1048,7 @@ if (!("Goblin" in ::Const))
 // unhold
 ::Const.World.Spawn.Troops.Unhold.NameList <- ::Const.Strings.UnholdNames;
 ::Const.World.Spawn.Troops.Unhold.TitleList <- null;
-::Const.World.Spawn.Troops.Unhold.Variant = 5;
+//::Const.World.Spawn.Troops.Unhold.Variant = 5;
 
 ::Const.World.Spawn.Troops.UnholdFrost.NameList <- ::Const.Strings.UnholdNames;
 ::Const.World.Spawn.Troops.UnholdFrost.TitleList <- null;
@@ -1056,11 +1056,11 @@ if (!("Goblin" in ::Const))
 
 ::Const.World.Spawn.Troops.UnholdBog.NameList <- ::Const.Strings.UnholdNames;
 ::Const.World.Spawn.Troops.UnholdBog.TitleList <- null;
-::Const.World.Spawn.Troops.UnholdBog.Variant = 5;
+//::Const.World.Spawn.Troops.UnholdBog.Variant = 5;
 
 ::Const.World.Spawn.Troops.BarbarianUnhold.NameList <- ::Const.Strings.UnholdNames;
 ::Const.World.Spawn.Troops.BarbarianUnhold.TitleList <- null;
-::Const.World.Spawn.Troops.BarbarianUnhold.Variant = 5;
+//::Const.World.Spawn.Troops.BarbarianUnhold.Variant = 5;
 
 ::Const.World.Spawn.Troops.BarbarianUnholdFrost.NameList <- ::Const.Strings.UnholdNames;
 ::Const.World.Spawn.Troops.BarbarianUnholdFrost.TitleList <- null;
@@ -1086,7 +1086,7 @@ if (!("Goblin" in ::Const))
 
 ::Const.World.Spawn.Troops.LegendDemonAlp.NameList <- ::Const.Strings.GoblinNames;
 ::Const.World.Spawn.Troops.LegendDemonAlp.TitleList <- null;
-::Const.World.Spawn.Troops.LegendDemonAlp.Variant = 1;
+//::Const.World.Spawn.Troops.LegendDemonAlp.Variant = 1;
 
 // schrat
 ::Const.World.Spawn.Troops.Schrat.NameList <- ::Const.Strings.SchratNames;

@@ -6,7 +6,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 
 		Count = 2,
 		MaxAttempt = 3,
-		ChampionMult = 1.4
+		ChampionMult = 1.33
 	},
 
 	function create()
@@ -367,7 +367,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		local modifier = ::Math.pow(1.13, ::Math.max(0, numAlliesAdjacent - 1));
 		local penalty = ::Const.CharmedUnits.getDifficulty(_targetEntity.getType()) * (_targetEntity.getSkills().hasSkill("racial.champion") ? this.m.ChampionMult : 1.0);
 		toHit += numAlliesAdjacent * ::Const.Morale.OpponentsAdjacentMult - numOpponentsAdjacent * 6;
-		toHit -= penalty < 0 ? penalty * modifier : penalty / modifier;
+		toHit -= penalty <= 0 ? penalty / modifier : penalty * modifier;
 		toHit += threatBonus;
 		toHit += bonus;
 

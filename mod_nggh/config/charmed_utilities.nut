@@ -105,10 +105,7 @@ if (!("CharmedUtilities" in ::Const))
 			    break;
 			}
 		}
-		else if (_data.Custom != null && ("Talents" in _data.Custom))
-		{
-			_background.m.ExcludedTalents = _data.Custom.Talents.ExcludedTalents;
-		}
+		
 			
 		if (_data.Entity != null && _data.Entity.getName() != ::Const.Strings.EntityName[_data.Type])
 		{
@@ -154,6 +151,11 @@ if (!("CharmedUtilities" in ::Const))
 			if ("BgModifiers" in _data.Custom)
 			{
 				_background.m.Modifiers = _data.Custom.BgModifiers;
+			}
+
+			if ("Talents" in _data.Custom)
+			{
+				_background.m.ExcludedTalents.extend(_data.Custom.Talents.ExcludedTalents);
 			}
 
 			if (("Names" in _data.Custom) && typeof _data.Custom.Names == "string" && (_data.Custom.Names in ::Const.Strings))

@@ -44,7 +44,7 @@ this.nggh_mod_named_staff <- ::inherit("scripts/items/weapons/named/named_weapon
 			id = 64,
 			type = "text",
 			icon = "ui/icons/special.png",
-			text = "Grant [color=#0b0084]" + ::Const.Nggh_NamedStaff_MagicSkills[this.m.MagicType].Name + "[/color] skill"
+			text = "Grants [color=#0b0084]" + ::Const.Nggh_NamedStaff_MagicSkills[this.m.MagicType].Name + "[/color] skill"
 		});
 
 		return ret

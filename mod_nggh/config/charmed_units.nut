@@ -536,7 +536,7 @@ if (!("CharmedUnits" in ::Const))
 			
 		//Mercenary = 47,
 			{
-				StatMod = { Hitpoints = [-25, -20], Bravery = [-30, -20], Stamina = [-25, -20], MeleeSkill = [-11, 0], RangedSkill = [-5, -5], MeleeDefense = [-8, -5], RangedDefense = [-2, 0], Initiative = [-10, -10] },
+				StatMod = { Hitpoints = [-35, -25], Bravery = [-20, -10], Stamina = [-25, -20], MeleeSkill = [-13, -8], RangedSkill = [-10, -5], MeleeDefense = [-8, -5], RangedDefense = [-10, 0], Initiative = [-20, -10] },
 				Perks = ["Overwhelm"],
 				Difficulty = 15,
 				Custom = {},
@@ -546,7 +546,7 @@ if (!("CharmedUnits" in ::Const))
 			
 		//MercenaryRanged = 48,
 			{
-				StatMod = { Hitpoints = [-20, -15], Bravery = [-30, -20], Stamina = [-20, -20], MeleeSkill = [-5, -5], RangedSkill = [-10, 0], MeleeDefense = [-2, 0], RangedDefense = [-3, 0], Initiative = [0, 0] },
+				StatMod = { Hitpoints = [-10, -10], Bravery = [-20, -10], Stamina = [-20, -20], MeleeSkill = [-10, -10], RangedSkill = [0, 0], MeleeDefense = [-2, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
 				Perks = ["Overwhelm", "Footwork"],
 				Difficulty = 15,
 				Custom = {},
@@ -1115,7 +1115,7 @@ if (!("CharmedUnits" in ::Const))
 			
 		//Assassin = 88,
 			{
-				StatMod = { Hitpoints = [-25, -15], Bravery = [-20, -10], Stamina = [-30, -10], MeleeSkill = [-11, -5], RangedSkill = [5, 5], MeleeDefense = [-8, 0], RangedDefense = [0, 0], Initiative = [-15, -10] },
+				StatMod = { Hitpoints = [-15, -10], Bravery = [-20, -10], Stamina = [-30, -10], MeleeSkill = [-10, -7], RangedSkill = [-5, -5], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-15, -10] },
 				Perks = ["QuickHands", "Backstabber", "SpecDagger"],
 				Difficulty = 60,
 				Custom = {
@@ -1589,7 +1589,7 @@ if (!("CharmedUnits" in ::Const))
 			
 		//LegendPeasantMonk = 127,
 			{
-				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
+				StatMod = { Hitpoints = [-5, 0], Bravery = [-35, -10], Stamina = [-5, -5], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [-12, -10], RangedDefense = [-10, 0], Initiative = [0, 0] },
 				Perks = ["LegendSpecBandage"],
 				Difficulty = 25,
 				Custom = {},
@@ -1599,9 +1599,9 @@ if (!("CharmedUnits" in ::Const))
 			
 		//LegendPeasantFarmhand = 128,
 			{
-				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
+				StatMod = { Hitpoints = [-5, -5], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [-5, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
 				Perks = ["LegendSpecialistPitchforkSkill"],
-				Difficulty = 0,
+				Difficulty = 10,
 				Custom = {},
 				PerkTree = "farmhand_background",
 				IsExperienced = true,
@@ -1628,9 +1628,9 @@ if (!("CharmedUnits" in ::Const))
 			
 		//LegendPeasantWoodsman = 131,
 			{
-				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
+				StatMod = { Hitpoints = [-40, -30], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
 				Perks = ["LegendSpecialistWoodaxeSkill"],
-				Difficulty = 0,
+				Difficulty = 25,
 				Custom = {},
 				PerkTree = "lumberjack_background",
 				IsExperienced = true,
@@ -1640,7 +1640,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
 				Perks = ["LegendSpecialistPickaxeSkill"],
-				Difficulty = 0,
+				Difficulty = 15,
 				Custom = {},
 				PerkTree = "miner_background",
 				IsExperienced = true,

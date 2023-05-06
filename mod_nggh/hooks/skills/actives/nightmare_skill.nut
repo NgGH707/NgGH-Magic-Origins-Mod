@@ -1,6 +1,6 @@
 ::mods_hookExactClass("skills/actives/nightmare_skill", function ( obj )
 {
-	obj.m.ConvertRate <- 0.10;
+	obj.m.ConvertRate <- 0.15;
 
 	local ws_create = obj.create;
 	obj.create = function()
@@ -47,7 +47,7 @@
 	obj.onAfterUpdate <- function( _properties )
 	{
 		this.m.FatigueCostMult = _properties.IsSpecializedInMagic ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
-		this.m.ConvertRate = _properties.IsSpecializedInMagic ? 0.25 : 0.10;
+		this.m.ConvertRate = _properties.IsSpecializedInMagic ? 0.30 : 0.15;
 	};
 	obj.getDamage = function( _actor , _properties = null )
 	{
@@ -98,12 +98,6 @@
 
 		local damage = this.getDamage(target, defenderProperties);
 		local bonus_damage = this.getAdditionalDamage(properties);
-
-		if (::isKindOf(target, "player") && bonus_damage > 0)
-		{
-			bonus_damage = ::Math.max(1, bonus_damage - ::Math.floor(defenderProperties.getBravery() * 0.33));
-		}
-
 		local total_damage = ::Math.rand(damage + bonus_damage, damage + bonus_damage + 5) * properties.DamageDirectMult * (1.0 + properties.DamageDirectAdd) * properties.DamageTotalMult;
 		local hitInfo = clone ::Const.Tactical.HitInfo;
 		hitInfo.DamageRegular = total_damage;
