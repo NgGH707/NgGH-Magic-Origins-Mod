@@ -154,6 +154,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		actor.m.Background = this;
 		actor.m.StarWeights = this.buildAttributes(null, null);
 		local attributes = this.buildPerkTree();
+		this.setAppearance();
 		
 		if (this.m.AdditionalPerks != null)
 		{
@@ -173,7 +174,6 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			actor.setScenarioValues(this.m.TempData.Type, this.m.TempData.IsMiniboss, true, this.m.Names.len() == 0);
 		}
 
-		this.setAppearance();
 		this.addBonusAttributes(attributes);
 		this.onAfterSetUp();
 		this.onAddEquipment();
@@ -292,6 +292,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			case ::Const.EntityType.LegendSkinGhoul:
 				actor.setVariant(entity.m.Head);
 				actor.getFlags().set("has_eaten", true);
+				actor.getFlags().set("Type", data.Type);
 				local n = ::Math.max(0, entity.getSize() - 1);
 				for (local i = 0; i < n; ++i)
 				{

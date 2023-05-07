@@ -628,7 +628,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		
 		local modifier = ::Math.pow(1.13, ::Math.max(0, numAlliesAdjacent - 1));
 		local penalty = ::Const.CharmedUnits.getDifficulty(_targetEntity.getType()) * (_targetEntity.getSkills().hasSkill("racial.champion") ? this.m.ChampionMult : 1.0);
-		local difficultyPenalty = penalty < 0 ? penalty * modifier : penalty / modifier;
+		local difficultyPenalty = penalty <= 0 ? penalty / modifier : penalty * modifier;
 
 		if (difficultyPenalty <= 0)
 		{
