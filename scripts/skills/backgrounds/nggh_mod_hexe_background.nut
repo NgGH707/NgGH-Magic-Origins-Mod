@@ -232,7 +232,7 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 	function getMagicalDefense()
 	{
 		local lv = this.getContainer().getActor().getLevel();
-		return lv < 11 ? lv * 3 : (lv - 11) * 1 + 30;
+		return lv < 11 ? lv * 2 : (lv - 11) * 1 + 20;
 	}
 
 	function onTurnStart()
