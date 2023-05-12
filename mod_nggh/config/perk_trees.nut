@@ -18,11 +18,10 @@
 			::Const.Perks.PerkDefs.NggH_BDSM_WhipPunish,
 		],
 		[
+			::Const.Perks.PerkDefs.NggH_BDSM_DommyMommy,
 			::Const.Perks.PerkDefs.NggH_BDSM_WhipLove,
 		],
-		[
-			::Const.Perks.PerkDefs.NggH_BDSM_DommyMommy,
-		],
+		[],
 	]
 };
 

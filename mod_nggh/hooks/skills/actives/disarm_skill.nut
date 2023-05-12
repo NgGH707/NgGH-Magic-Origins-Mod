@@ -1,7 +1,7 @@
 ::mods_hookExactClass("skills/actives/disarm_skill", function ( obj )
 {
-	local ws_onAfterUpdate = o.onAfterUpdate;
-	o.onAfterUpdate = function( _properties )
+	local ws_onAfterUpdate = obj.onAfterUpdate;
+	obj.onAfterUpdate = function( _properties )
 	{
 		if (_properties.IsSpecializedInWhips)
 		{

@@ -1,7 +1,7 @@
 ::mods_hookExactClass("skills/actives/legend_flaggelate_skill", function ( obj )
 {
-	local ws_onAfterUpdate = o.onAfterUpdate;
-	o.onAfterUpdate = function( _properties )
+	local ws_onAfterUpdate = obj.onAfterUpdate;
+	obj.onAfterUpdate = function( _properties )
 	{
 		local special = this.getContainer().getSkillByID("perk.bdsm_mask_on");
 

@@ -41,7 +41,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 
 			if (::Const.HexeOrigin.SeedsStartWithWhip.find(forced_start_ID) != null)
 			{
-				::World.Flags.has("Whip_PerkTree", true);
+				::Nggh_MagicConcept.ForceWhipPerk = true;
 			}
 
 			local hexe = roster.create("scripts/entity/tactical/player");
@@ -171,7 +171,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			::World.Events.fire(eventID);
 		}, null);
 
-		::World.Flags.remove("Whip_PerkTree");
+		::Nggh_MagicConcept.ForceWhipPerk = false;
 		this.m.IsLuftAdventure = false;
 	}
 	

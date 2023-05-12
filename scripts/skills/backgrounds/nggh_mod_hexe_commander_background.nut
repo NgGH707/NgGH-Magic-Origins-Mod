@@ -18,7 +18,7 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		this.m.Bodies = ["bust_hexen_fake_body_00"];
 		this.m.Faces = ::Const.HexeOrigin.FakeHead;
 		this.m.Hairs = ::Const.HexeOrigin.FakeHair;
-		this.m.IsHavingWhipTree = ::World.Flags.has("Whip_PerkTree") ? ::World.Flags.get("Whip_PerkTree") : ::Math.rand(1, 100) <= 50;
+		this.m.IsHavingWhipTree = ::Nggh_MagicConcept.ForceWhipPerk || ::Math.rand(1, 100) <= 50;
 		this.m.Modifiers.Enchanting = 1.0;
 		
 		this.setupCustomPerkTree();
@@ -51,35 +51,34 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 				::Const.Perks.PerkDefs.HoldOut,
 				::Const.Perks.PerkDefs.Student,
 				::Const.Perks.PerkDefs.Recover,
-				::Const.Perks.PerkDefs.LegendMealPreperation,
 				::Const.Perks.PerkDefs.QuickHands,
 				::Const.Perks.PerkDefs.LegendAlert,
 			],
 			[ // 1
 				::Const.Perks.PerkDefs.Dodge,
 				::Const.Perks.PerkDefs.Gifted,
+				::Const.Perks.PerkDefs.RallyTheTroops,
 				::Const.Perks.PerkDefs.LegendEntice,
 				::Const.Perks.PerkDefs.LegendFieldTreats,
-				::Const.Perks.PerkDefs.LegendMedIngredients,
-				::Const.Perks.PerkDefs.LegendCampCook,
 			],
 			[ // 2
 				::Const.Perks.PerkDefs.Relentless,
 				::Const.Perks.PerkDefs.Anticipation,
-				::Const.Perks.PerkDefs.RallyTheTroops,
 				::Const.Perks.PerkDefs.Rotation,
-				::Const.Perks.PerkDefs.LegendAlcoholBrewing,
+				::Const.Perks.PerkDefs.Footwork,
+				::Const.Perks.PerkDefs.Inspire,
+				::Const.Perks.PerkDefs.LegendGatherer,
 			],
 			[ // 3
 				::Const.Perks.PerkDefs.Nimble,
 				::Const.Perks.PerkDefs.FortifiedMind,
 				::Const.Perks.PerkDefs.LegendTrueBeliever,
+				::Const.Perks.PerkDefs.InspiringPresence,
 				::Const.Perks.PerkDefs.LegendHerbcraft,
 				::Const.Perks.PerkDefs.LegendPotionBrewer,
 				::Const.Perks.PerkDefs.LegendValaInscribeShield,
 			],
 			[ // 4
-				::Const.Perks.PerkDefs.Footwork,
 				::Const.Perks.PerkDefs.LegendClarity,
 				::Const.Perks.PerkDefs.LegendValaInscribeWeapon,
 				::Const.Perks.PerkDefs.LegendDistantVisions,
@@ -90,7 +89,6 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 				::Const.Perks.PerkDefs.LegendValaInscribeHelmet,
 				::Const.Perks.PerkDefs.LegendValaInscribeArmor,
 				::Const.Perks.PerkDefs.LegendMindOverBody,
-				::Const.Perks.PerkDefs.LegendHeightenedReflexes,
 			],
 			[ // 6
 				::Const.Perks.PerkDefs.PerfectFocus,
@@ -104,16 +102,26 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 
 	function addSpecializePerks()
 	{
-		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [::Const.Perks.MediumArmorTree, ::Const.Perks.HealerClassTree]);
+		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [::Const.Perks.MediumArmorTree, ::Const.Perks.PhilosophyMagicTree, ::Const.Perks.ChefClassTree,::Const.Perks.HealerClassTree]);
+
+		if (::Math.rand(1, 100) >= 95)
+		{
+			this.m.CustomPerkTree[2].push(::Const.Perks.PerkDefs.NggHMiscFairGame);
+		}
+
+		if (::Math.rand(1, 100) == 100)
+		{
+			this.m.CustomPerkTree[6].push(::Const.Perks.PerkDefs.NggHMiscChampion);
+		}
 
 		if (this.m.IsHavingWhipTree) return;
 		
 		this.m.CustomPerkTree[0].extend([::Const.Perks.PerkDefs.Bullseye, ::Const.Perks.PerkDefs.LegendMagicMissile]);
 		this.m.CustomPerkTree[2].push(::Const.Perks.PerkDefs.Ballistics);
 		this.m.CustomPerkTree[3].push(::Const.Perks.PerkDefs.MageLegendMasteryMagicMissileFocus);
-		this.m.CustomPerkTree[5].push(::Const.Perks.PerkDefs.LegendScholar);
+		this.m.CustomPerkTree[5].push(::Const.Perks.PerkDefs.LegendHeightenedReflexes);
 		this.m.CustomPerkTree[6].push(::Const.Perks.PerkDefs.MageLegendMasteryMagicMissileMastery);
-		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [::Const.Perks.StaffTree]);
+		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [::Const.Perks.StaffTree, ::Const.Perks.SlingTree]);
 	}
 
 	function addPTR_Perks()
@@ -140,12 +148,11 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 
 		if (this.m.IsHavingWhipTree)
 		{
+			list.insert(0,::Const.Perks.CleaverTree);
 			list.push(::Const.Perks.Hexe_BDSM_Tree);
 		}
-		else
-		{
-			list.extend([::Const.Perks.HexeBasicTree,::Const.Perks.HexeBeastCharmTree,::Const.Perks.HexeBeastCharmAdvancedTree]);
-		}
+
+		list.extend([::Const.Perks.HexeBasicTree,::Const.Perks.HexeBeastCharmTree,::Const.Perks.HexeBeastCharmAdvancedTree]);
 
 		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, list);
 	}
@@ -449,19 +456,6 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		
 		::logInfo("Hexe Origin Ritual - Successfully started the event. The timer reset.");
 		::World.Flags.set("RitualTimer", 1);
-	}
-
-	function onFinishingPerkTree()
-	{
-		if (::Math.rand(1, 100) == 100)
-		{
-			this.addPerk(::Const.Perks.PerkDefs.NggHMiscChampion, 6);
-		}
-
-		if (::Math.rand(1, 100) >= 95)
-		{
-			this.addPerk(::Const.Perks.PerkDefs.NggHMiscFairGame, 2);
-		}
 	}
 
 	function onSerialize( _out )

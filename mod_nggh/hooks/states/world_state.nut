@@ -9,12 +9,17 @@
 		{
 			if (!bro.getFlags().has("Hexe")) continue;
 
+			local background = bro.getBackground();
+
+			if (background.getID() != "background.hexe_commander") continue;
+
 			if (bro.getFlags().get("HasBeenResetPerk")) continue;
 
 			if (bro.getNameOnly().find("Artemis Snow") == null) continue;
 
 			bro.getFlags().set("HasBeenResetPerk", true);
-			bro.getBackground().forceResetCustomPerkTree();
+			background.m.IsHavingWhipTree = true;
+			background.forceResetCustomPerkTree();
 
 			local b = bro.getBaseProperties();
 			b.Stamina += 14;
