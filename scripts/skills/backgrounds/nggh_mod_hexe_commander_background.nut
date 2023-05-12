@@ -18,7 +18,7 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		this.m.Bodies = ["bust_hexen_fake_body_00"];
 		this.m.Faces = ::Const.HexeOrigin.FakeHead;
 		this.m.Hairs = ::Const.HexeOrigin.FakeHair;
-		this.m.IsHavingWhipTree = ::Nggh_MagicConcept.ForceWhipPerk || ::Math.rand(1, 100) <= 50;
+		this.m.IsHavingWhipTree = ::Nggh_MagicConcept.ForceWhipPerk || ::Math.rand(1, 100) <= 45;
 		this.m.Modifiers.Enchanting = 1.0;
 		
 		this.setupCustomPerkTree();
@@ -255,7 +255,7 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 
 		if (this.m.IsHavingWhipTree)
 		{
-			items.equip(::new("scripts/items/weapons/greenskins/battle_whip"));
+			items.equip(::new("scripts/items/weapons/" + (::Math.rand(1, 100) <= 33 ? "barbarians/thorned_whip" : "battle_whip")));
 		}
 		else
 		{

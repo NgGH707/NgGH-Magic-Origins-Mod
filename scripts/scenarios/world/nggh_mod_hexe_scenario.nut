@@ -673,7 +673,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 				local goblin = roster.create("scripts/entity/tactical/nggh_mod_player_goblin");
 				goblin.setStartValuesEx();
 				goblin.getSkills().add(::new("scripts/skills/traits/loyal_trait"));
-				goblin.setPlaceInFormation(i + 6);
+				goblin.setPlaceInFormation(i + 11);
 				goblin.addLightInjury();
 				goblin.onHired();
 				money = ::Math.rand(1, 8) * 10;
