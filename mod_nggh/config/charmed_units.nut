@@ -1660,7 +1660,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-25, -10], Bravery = [-15, -10], Stamina = [-5, -5], MeleeSkill = [-2, 0], RangedSkill = [-20, -12], MeleeDefense = [-10, -10], RangedDefense = [-10, -10], Initiative = [-10, -10] },
 				Perks = ["Ballistics"],
-				Difficulty = 25,
+				Difficulty = 60,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "witchhunter_background",

@@ -21,7 +21,7 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 		local b = this.m.BaseProperties;
 		b.setValues({
 			ActionPoints = 9,
-			Hitpoints = 180,
+			Hitpoints = 190,
 			Bravery = 240,
 			Stamina = 180,
 			MeleeSkill = 100,
@@ -55,13 +55,11 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 		this.m.Skills.add(::new("scripts/skills/perks/perk_brawny"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_captain"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_fast_adaption"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_crippling_strikes"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_devastating_strikes"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_coup_de_grace"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_battle_forged"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_reach_advantage"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_berserk"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_underdog"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_last_stand"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_rotation"));
@@ -70,19 +68,34 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 		this.m.Skills.add(::new("scripts/skills/perks/perk_legend_specialist_shield_push"));
 		this.m.Skills.add(::new("scripts/skills/actives/rally_the_troops"));
 
+		if (::Is_PTR_Exist)
+		{
+			this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_man_of_steel"));
+			this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_exude_confidence"));
+			this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_bulwark"));
+			this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_pattern_recognition"));
+		}
+
 		if("Assets" in ::World && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
 		{
-			this.m.Skills.add(::new("scripts/skills/perks/perk_steel_brow"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_feint"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_legend_smashing_shields"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_shield_bash"));
-			this.m.Skills.add(::new("scripts/skills/perks/perk_legend_full_force"));
-			this.m.Skills.add(::new("scripts/skills/perks/perk_legend_back_to_basics"));
-			this.m.Skills.add(::new("scripts/skills/perks/perk_underdog"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_legend_forceful_swing"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_bloody_harvest"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_legend_composure"));
 			this.m.Skills.add(::new("scripts/skills/traits/fearless_trait"));
+
+			if (::Is_PTR_Exist)
+			{
+				this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_personal_armor"));
+			}
+			else
+			{
+				this.m.Skills.add(::new("scripts/skills/perks/perk_legend_full_force"));
+				this.m.Skills.add(::new("scripts/skills/perks/perk_legend_back_to_basics"));
+				this.m.Skills.add(::new("scripts/skills/perks/perk_steel_brow"));
+			}
 		}
 	}
 

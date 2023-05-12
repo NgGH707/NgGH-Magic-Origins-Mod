@@ -803,5 +803,71 @@
 		IconDisabled = "ui/perks/perk_fair_game_sw.png",
 		Const = "NggHMiscFairGame"
 	},
+
+// bdsm
+	{
+		ID = "perk.bdsm_whip_lash",
+		Script = "scripts/skills/perks/perk_nggh_bdsm_whip_lash",
+		Name = ::Const.Strings.PerkName.NggH_BDSM_WhipLash,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_BDSM_WhipLash,
+		Icon = "ui/perks/perk_bdsm_whip.png",
+		IconDisabled = "ui/perks/perk_bdsm_whip_sw.png",
+		Const = "NggH_BDSM_WhipLash"
+	},
+	{
+		ID = "perk.bdsm_whip_mastery",
+		Script = "scripts/skills/perks/perk_nggh_bdsm_whip_mastery",
+		Name = ::Const.Strings.PerkName.NggH_BDSM_WhipMastery,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_BDSM_WhipMastery,
+		Icon = "ui/perks/perk_whip_mastery.png",
+		IconDisabled = "ui/perks/perk_whip_mastery_sw.png",
+		Const = "NggH_BDSM_WhipMastery"
+	},
+	{
+		ID = "perk.bdsm_mask_on",
+		Script = "scripts/skills/perks/perk_nggh_bdsm_mask_on",
+		Name = ::Const.Strings.PerkName.NggH_BDSM_MaskOn,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_BDSM_MaskOn,
+		Icon = "ui/perks/perk_bdsm_mask_on.png",
+		IconDisabled = "ui/perks/perk_bdsm_mask_on_sw.png",
+		Const = "NggH_BDSM_MaskOn"
+	},
+	{
+		ID = "perk.bdsm_bondage",
+		Script = "scripts/skills/perks/perk_nggh_bdsm_bondage",
+		Name = ::Const.Strings.PerkName.NggH_BDSM_Bondage,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_BDSM_Bondage,
+		Icon = "ui/perks/perk_bdsm_bondage.png",
+		IconDisabled = "ui/perks/perk_bdsm_bondage_sw.png",
+		Const = "NggH_BDSM_Bondage"
+	},
+	{
+		ID = "perk.bdsm_whip_punish",
+		Script = "scripts/skills/perks/perk_nggh_bdsm_whip_punish",
+		Name = ::Const.Strings.PerkName.NggH_BDSM_WhipPunish,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_BDSM_WhipPunish,
+		Icon = "ui/perks/perk_bdsm_bad_boy_must_be_punished.png",
+		IconDisabled = "ui/perks/perk_bdsm_bad_boy_must_be_punished_sw.png",
+		Const = "NggH_BDSM_WhipPunish"
+	},
+	{
+		ID = "perk.bdsm_whip_love",
+		Script = "scripts/skills/perks/perk_nggh_bdsm_whip_love",
+		Name = ::Const.Strings.PerkName.NggH_BDSM_WhipLove,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_BDSM_WhipLove,
+		Icon = "ui/perks/perk_bdsm_love_is_pain.png",
+		IconDisabled = "ui/perks/perk_bdsm_love_is_pain_sw.png",
+		Const = "NggH_BDSM_WhipLove"
+	},
+	{
+		ID = "perk.bdsm_dommy_mommy",
+		Script = "scripts/skills/perks/perk_nggh_bdsm_dommy_mommy",
+		Name = ::Const.Strings.PerkName.NggH_BDSM_DommyMommy,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_BDSM_DommyMommy,
+		Icon = "ui/perks/perk_bdsm_dommy_mommy.png",
+		IconDisabled = "ui/perks/perk_bdsm_dommy_mommy_sw.png",
+		Const = "NggH_BDSM_DommyMommy"
+	},
+
 ]);
 

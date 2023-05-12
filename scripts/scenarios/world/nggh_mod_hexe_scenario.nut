@@ -11,7 +11,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		this.m.Difficulty = 1;
 		this.m.Order = 109;
 		this.m.IsFixedLook = true;
-		this.m.StartingBusinessReputation = 25;
+		this.m.StartingBusinessReputation = 50;
 		this.m.StartingRosterTier = ::Const.Roster.getTierForSize(12);
 		this.setRosterReputationTiers(::Const.Roster.createReputationTiers(this.m.StartingBusinessReputation));
 	}
@@ -27,23 +27,6 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		::World.Flags.set("RitualTimer", 2); // set at 2 will make sure the first ritual will be at days 7
 		
 		local roster = ::World.getPlayerRoster();
-		local hexe = roster.create("scripts/entity/tactical/player");
-		hexe.setStartValuesEx(["nggh_mod_hexe_commander_background"]);
-		hexe.getBackground().buildDescription(true);
-		hexe.getSkills().removeByID("trait.survivor");
-		hexe.getSkills().removeByID("trait.loyal");
-		hexe.getSkills().removeByID("trait.disloyal");
-		hexe.getSkills().removeByID("trait.greedy");
-		hexe.setPlaceInFormation(13);
-		hexe.m.HireTime = ::Time.getVirtualTimeF();
-		hexe.m.PerkPoints = 1;
-		hexe.m.LevelUps = 0;
-		hexe.m.Level = 1;
-		hexe.m.Talents = [];
-		hexe.m.Attributes = [];
-		hexe.fillTalentValues(3);
-		hexe.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
-		
 		local name = ::World.Assets.getName().toupper();
 		local seed = ::World.Assets.getSeedString().toupper();
 		
@@ -55,6 +38,28 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		{
 			local forced_start_ID = this.isForceSeed(seed, name);
 			//0:eggs - 1:spider - 2:redback - 3:wolf - 4:white wolf - 5:hyena - 6:serpent - 7:unhold - 8:ghoul - 9:alp - 10:goblin - 11:orc - 12:human - 13:ijirok - 14:lindwurm - 15:schrat - 16:bear - 17:circus
+
+			if (::Const.HexeOrigin.SeedsStartWithWhip.find(forced_start_ID) != null)
+			{
+				::World.Flags.has("Whip_PerkTree", true);
+			}
+
+			local hexe = roster.create("scripts/entity/tactical/player");
+			hexe.setStartValuesEx(["nggh_mod_hexe_commander_background"]);
+			hexe.getBackground().buildDescription(true);
+			hexe.getSkills().removeByID("trait.survivor");
+			hexe.getSkills().removeByID("trait.loyal");
+			hexe.getSkills().removeByID("trait.disloyal");
+			hexe.getSkills().removeByID("trait.greedy");
+			hexe.setPlaceInFormation(13);
+			hexe.m.HireTime = ::Time.getVirtualTimeF();
+			hexe.m.PerkPoints = 1;
+			hexe.m.LevelUps = 0;
+			hexe.m.Level = 1;
+			hexe.m.Talents = [];
+			hexe.m.Attributes = [];
+			hexe.fillTalentValues(3);
+			hexe.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
 
 			if (forced_start_ID == null)
 			{
@@ -165,6 +170,8 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			::Music.setTrackList(::Const.Music.BeastsTracks, ::Const.Music.CrossFadeTime);
 			::World.Events.fire(eventID);
 		}, null);
+
+		::World.Flags.remove("Whip_PerkTree");
 		this.m.IsLuftAdventure = false;
 	}
 	
@@ -304,8 +311,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 	function setupLuftStart()
 	{
 		local roster = ::World.getPlayerRoster();
-		roster.clear();
-
+	
 		::World.Flags.set("looks", 9991);
 		::World.Flags.remove("RitualTimer");
 		::World.Flags.set("IsLuftAdventure", true);
@@ -569,8 +575,6 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			break;
 
 		case 17:
-			_hexe.getItems().unequip(_hexe.getItems().getItemAtSlot(::Const.ItemSlot.Mainhand));
-			_hexe.getItems().equip(::new("scripts/items/weapons/battle_whip"));
 			_hexe.setPlaceInFormation(22);
 			_hexe.setTitle("the Ringmistress");
 			

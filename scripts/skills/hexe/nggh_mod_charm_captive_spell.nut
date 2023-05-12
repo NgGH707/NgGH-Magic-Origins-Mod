@@ -317,10 +317,12 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		local CasterPower = resolve + res;
 		
 		local bonus = _targetEntity.getTile().getDistanceTo(myTile) == 1 ? 10 : 0;
-		bonus = bonus + (_targetEntity.getSkills().hasSkill("effects.charmed") ? 15 : 0) + _targetEntity.getFlags().getAsInt("charm_attempt") * 4;
-		bonus = bonus + this.getBonus();
+		bonus += (_targetEntity.getSkills().hasSkill("effects.charmed") ? 15 : 0) + _targetEntity.getFlags().getAsInt("charm_attempt") * 4;
+		bonus += this.getContainer().hasSkill("perk.bdsm_bondage") && _targetEntity.getCurrentProperties().IsRooted ? 10 : 0;
+		bonus += this.getContainer().hasSkill("perk.bdsm_whip_love") ? ::Math.min(20, _targetEntity.getFlags().getAsInt("whipped") * 4) : 0;
+		bonus += this.getBonus();
 		local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
-		local resist = (defenderProperties.getBravery() + defenderProperties.MoraleCheckBravery[1]) * defenderProperties.MoraleCheckBraveryMult[1];
+		local resist = (defenderProperties.getBravery() + defenderProperties.MoraleCheckBravery[1]) * defenderProperties.MoraleCheckBraveryMult[1] * (_targetEntity.getSkills().hasSkill("racial.champion") ? this.m.ChampionMult : 1.0);
 		
 		if (resist > 500 && _targetEntity.getType() != ::Const.EntityType.TricksterGod)
 		{
@@ -365,9 +367,9 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		}
 		
 		local modifier = ::Math.pow(1.13, ::Math.max(0, numAlliesAdjacent - 1));
-		local penalty = ::Const.CharmedUnits.getDifficulty(_targetEntity.getType()) * (_targetEntity.getSkills().hasSkill("racial.champion") ? this.m.ChampionMult : 1.0);
+		local penalty = ::Const.CharmedUnits.getDifficulty(_targetEntity.getType());
 		toHit += numAlliesAdjacent * ::Const.Morale.OpponentsAdjacentMult - numOpponentsAdjacent * 6;
-		toHit -= penalty <= 0 ? penalty / modifier : penalty * modifier;
+		toHit -= penalty <= 0 ? penalty * modifier : penalty / modifier;
 		toHit += threatBonus;
 		toHit += bonus;
 
@@ -456,7 +458,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		local CasterPower = ::Math.floor(resolve + res);
 
 		local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
-		local resist = ::Math.floor((defenderProperties.getBravery() + defenderProperties.MoraleCheckBravery[1]) * defenderProperties.MoraleCheckBraveryMult[1]);
+		local resist = ::Math.floor((defenderProperties.getBravery() + defenderProperties.MoraleCheckBravery[1]) * defenderProperties.MoraleCheckBraveryMult[1] * (_targetEntity.getSkills().hasSkill("racial.champion") ? this.m.ChampionMult : 1.0));
 
 		local requirements = this.checkRequirement(targetEntity, true);
 		local attempts = _targetEntity.getFlags().getAsInt("charm_attempt");
@@ -627,21 +629,21 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		}
 		
 		local modifier = ::Math.pow(1.13, ::Math.max(0, numAlliesAdjacent - 1));
-		local penalty = ::Const.CharmedUnits.getDifficulty(_targetEntity.getType()) * (_targetEntity.getSkills().hasSkill("racial.champion") ? this.m.ChampionMult : 1.0);
-		local difficultyPenalty = penalty <= 0 ? penalty / modifier : penalty * modifier;
+		local penalty = ::Const.CharmedUnits.getDifficulty(_targetEntity.getType());
+		local difficultyPenalty = ::Math.floor(penalty <= 0 ? penalty * modifier : penalty / modifier);
 
 		if (difficultyPenalty <= 0)
 		{
 			ret.push({
 				icon = "ui/tooltips/positive.png",
-				text = green(::Math.floor(::Math.abs(difficultyPenalty)) + "%") + " Difficulty"
+				text = green(::Math.abs(difficultyPenalty) + "%") + " Difficulty"
 			});
 		}
 		else 
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = red(::Math.floor(::Math.abs(difficultyPenalty)) + "%") + " Difficulty"
+				text = red(::Math.abs(difficultyPenalty) + "%") + " Difficulty"
 			});
 		}
 
@@ -664,6 +666,24 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 					text = green(skill.getBonus() + "%") + " " + skill.getName()
 				});
 			}
+		}
+
+		if (this.getContainer().hasSkill("perk.bdsm_bondage") && _targetEntity.getCurrentProperties().IsRooted)
+		{
+			ret.push({
+				icon = "ui/tooltips/positive.png",
+				text = green("10%") + "" + ::Const.Strings.PerkName.NggH_BDSM_Bondage
+			});
+		}
+
+		local count = _targetEntity.getFlags().getAsInt("whipped");
+
+		if (this.getContainer().hasSkill("perk.bdsm_whip_love") && count > 0)
+		{
+			ret.push({
+				icon = "ui/tooltips/positive.png",
+				text = green(::Math.min(20, count * 4) + "%") + " Whipped (x" + count + ")"
+			});
 		}
 
 		if (_targetEntity.getSkills().hasSkill("effects.charmed"))

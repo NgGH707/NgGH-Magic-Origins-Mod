@@ -6,6 +6,9 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		CharmHead = null,
 		CharmHair = null,
 		CharmBody = null,
+
+		// perk tree stuff
+		IsHavingWhipTree = false,
 	},
 	function create()
 	{
@@ -15,117 +18,136 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		this.m.Bodies = ["bust_hexen_fake_body_00"];
 		this.m.Faces = ::Const.HexeOrigin.FakeHead;
 		this.m.Hairs = ::Const.HexeOrigin.FakeHair;
+		this.m.IsHavingWhipTree = ::World.Flags.has("Whip_PerkTree") ? ::World.Flags.get("Whip_PerkTree") : ::Math.rand(1, 100) <= 50;
 		this.m.Modifiers.Enchanting = 1.0;
 		
-		this.m.CustomPerkTree = [
+		this.setupCustomPerkTree();
+	}
+
+	function forceResetCustomPerkTree()
+	{
+		// refund perks
+		this.getContainer().getActor().resetPerks();
+
+		// rebuild perk tree
+		this.m.PerkTree = null;
+		this.setupCustomPerkTree();
+		this.buildPerkTree();
+	}
+
+	function setupCustomPerkTree()
+	{
+		this.m.CustomPerkTree = this.getDefaultCustomPerkTree();
+		this.addSpecializePerks();
+		this.addPTR_Perks();
+		this.addHexenPerks();
+	}
+
+	function getDefaultCustomPerkTree()
+	{
+		return [
 			[ // 0
-				::Const.Perks.PerkDefs.LegendMagicMissile,
-				::Const.Perks.PerkDefs.Bullseye,
 				::Const.Perks.PerkDefs.Pathfinder,
 				::Const.Perks.PerkDefs.HoldOut,
 				::Const.Perks.PerkDefs.Student,
 				::Const.Perks.PerkDefs.Recover,
+				::Const.Perks.PerkDefs.LegendMealPreperation,
 				::Const.Perks.PerkDefs.QuickHands,
 				::Const.Perks.PerkDefs.LegendAlert,
-				::Const.Perks.PerkDefs.LegendMealPreperation,
-				::Const.Perks.PerkDefs.LegendCheerOn,
-				::Const.Perks.PerkDefs.LegendSpecialistLuteSkill,
 			],
 			[ // 1
 				::Const.Perks.PerkDefs.Dodge,
 				::Const.Perks.PerkDefs.Gifted,
 				::Const.Perks.PerkDefs.LegendEntice,
-				::Const.Perks.PerkDefs.LegendDaze,
-				::Const.Perks.PerkDefs.LegendSpecStaffSkill,
 				::Const.Perks.PerkDefs.LegendFieldTreats,
 				::Const.Perks.PerkDefs.LegendMedIngredients,
 				::Const.Perks.PerkDefs.LegendCampCook,
-				::Const.Perks.PerkDefs.NggHCharmBasic,
-				::Const.Perks.PerkDefs.NggHCharmEnemySpider,
 			],
 			[ // 2
-				::Const.Perks.PerkDefs.LegendBalance,
+				::Const.Perks.PerkDefs.Relentless,
 				::Const.Perks.PerkDefs.Anticipation,
-				::Const.Perks.PerkDefs.LegendMasteryStaves,
-				::Const.Perks.PerkDefs.LegendSpecialistLuteDamage,
-				::Const.Perks.PerkDefs.Ballistics,
 				::Const.Perks.PerkDefs.RallyTheTroops,
 				::Const.Perks.PerkDefs.Rotation,
 				::Const.Perks.PerkDefs.LegendAlcoholBrewing,
-				::Const.Perks.PerkDefs.NggHHexHexer,
-				::Const.Perks.PerkDefs.NggHCharmEnemyAlp,
-				::Const.Perks.PerkDefs.NggHCharmEnemyDirewolf,
 			],
 			[ // 3
-				::Const.Perks.PerkDefs.MageLegendMasteryMagicMissileFocus,
-				::Const.Perks.PerkDefs.SpecMace,
 				::Const.Perks.PerkDefs.Nimble,
-				::Const.Perks.PerkDefs.LegendLithe,
-				::Const.Perks.PerkDefs.LegendSpecStaffStun,
 				::Const.Perks.PerkDefs.FortifiedMind,
 				::Const.Perks.PerkDefs.LegendTrueBeliever,
 				::Const.Perks.PerkDefs.LegendHerbcraft,
 				::Const.Perks.PerkDefs.LegendPotionBrewer,
 				::Const.Perks.PerkDefs.LegendValaInscribeShield,
-				::Const.Perks.PerkDefs.NggHHexMastery,
-				::Const.Perks.PerkDefs.NggHCharmWords,
-				::Const.Perks.PerkDefs.NggHCharmEnemyGoblin,
 			],
 			[ // 4
-				::Const.Perks.PerkDefs.Inspire,
 				::Const.Perks.PerkDefs.Footwork,
-				::Const.Perks.PerkDefs.LegendPush,
 				::Const.Perks.PerkDefs.LegendClarity,
 				::Const.Perks.PerkDefs.LegendValaInscribeWeapon,
 				::Const.Perks.PerkDefs.LegendDistantVisions,
 				::Const.Perks.PerkDefs.LegendTerrifyingVisage,
-				::Const.Perks.PerkDefs.NggHHexSuffering,
-				::Const.Perks.PerkDefs.NggHHexWeakening,
-				::Const.Perks.PerkDefs.NggHHexVulnerability,
-				::Const.Perks.PerkDefs.NggHHexMisfortune,
-				::Const.Perks.PerkDefs.NggHCharmEnemyGhoul,
-				::Const.Perks.PerkDefs.NggHCharmEnemyOrk,
 			],
 			[ // 5
 				::Const.Perks.PerkDefs.LegendValaInscriptionMastery,	
 				::Const.Perks.PerkDefs.LegendValaInscribeHelmet,
 				::Const.Perks.PerkDefs.LegendValaInscribeArmor,
-				::Const.Perks.PerkDefs.InspiringPresence,
-				::Const.Perks.PerkDefs.LegendDrumsOfWar,
 				::Const.Perks.PerkDefs.LegendMindOverBody,
 				::Const.Perks.PerkDefs.LegendHeightenedReflexes,
-				::Const.Perks.PerkDefs.NggHCharmEnemyUnhold,
-				::Const.Perks.PerkDefs.NggHCharmEnemySchrat,
-				
 			],
 			[ // 6
-				::Const.Perks.PerkDefs.MageLegendMasteryMagicMissileMastery,
 				::Const.Perks.PerkDefs.PerfectFocus,
-				::Const.Perks.PerkDefs.LegendDrumsOfLife,
-				::Const.Perks.PerkDefs.NggHHexSharePain,
-				::Const.Perks.PerkDefs.NggHCharmSpec,
-				::Const.Perks.PerkDefs.NggHCharmNudist,
-				::Const.Perks.PerkDefs.NggHCharmAppearance,
-				::Const.Perks.PerkDefs.NggHCharmEnemyLindwurm,
 			],
 			[],
 			[],
 			[],
 			[]
 		];
+	}
+
+	function addSpecializePerks()
+	{
+		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [::Const.Perks.MediumArmorTree, ::Const.Perks.HealerClassTree]);
+
+		if (this.m.IsHavingWhipTree) return;
 		
-		if (::Is_PTR_Exist)
+		this.m.CustomPerkTree[0].extend([::Const.Perks.PerkDefs.Bullseye, ::Const.Perks.PerkDefs.LegendMagicMissile]);
+		this.m.CustomPerkTree[2].push(::Const.Perks.PerkDefs.Ballistics);
+		this.m.CustomPerkTree[3].push(::Const.Perks.PerkDefs.MageLegendMasteryMagicMissileFocus);
+		this.m.CustomPerkTree[5].push(::Const.Perks.PerkDefs.LegendScholar);
+		this.m.CustomPerkTree[6].push(::Const.Perks.PerkDefs.MageLegendMasteryMagicMissileMastery);
+		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [::Const.Perks.StaffTree]);
+	}
+
+	function addPTR_Perks()
+	{
+		if (!::Is_PTR_Exist) return;
+
+		local list = [::Const.Perks.LightArmorTree,::Const.Perks.MediumArmorTree,::Const.Perks.TalentedTree];
+
+		if (this.m.IsHavingWhipTree)
 		{
-			this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [
-				::Const.Perks.HealerClassTree,
-				::Const.Perks.LightArmorTree,
-				::Const.Perks.MediumArmorTree,
-				::Const.Perks.TalentedTree,
-				::Const.Perks.TwoHandedTree,
-				::Const.Perks.StaffTree,
-				::Const.Perks.RangedTree
-			]);
+			list.push(::Const.Perks.OneHandedTree);
 		}
+		else
+		{
+			list.extend([::Const.Perks.TwoHandedTree,::Const.Perks.RangedTree]);
+		}
+
+		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, list);
+	}
+
+	function addHexenPerks()
+	{
+		local list = [::Const.Perks.HexeHexTree,::Const.Perks.HexeSpecializedHexTree];
+
+		if (this.m.IsHavingWhipTree)
+		{
+			list.push(::Const.Perks.Hexe_BDSM_Tree);
+		}
+		else
+		{
+			list.extend([::Const.Perks.HexeBasicTree,::Const.Perks.HexeBeastCharmTree,::Const.Perks.HexeBeastCharmAdvancedTree]);
+		}
+
+		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, list);
 	}
 
 	function onAdded()
@@ -187,27 +209,43 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 	{
 		_properties.ActionPoints = 9;
 		_properties.Hitpoints = ::Math.rand(48, 52);
-		_properties.Bravery = ::Math.rand(45, 55);
-		_properties.Stamina = ::Math.rand(70, 82);
-		_properties.MeleeSkill = ::Math.rand(40, 45);
-		_properties.RangedSkill = ::Math.rand(50, 62);
-		_properties.MeleeDefense = ::Math.rand(0, 5);
 		_properties.RangedDefense = 5;
-		_properties.Initiative = ::Math.rand(90, 110);
+
+		if (this.m.IsHavingWhipTree)
+		{
+			_properties.Bravery = ::Math.rand(42, 52);
+			_properties.Stamina = ::Math.rand(83, 96);
+			_properties.MeleeSkill = ::Math.rand(50, 60);
+			_properties.RangedSkill = ::Math.rand(40, 45);
+			_properties.MeleeDefense = ::Math.rand(2, 9);
+			_properties.Initiative = ::Math.rand(95, 115);
+		}
+		else
+		{
+			_properties.Bravery = ::Math.rand(45, 55);
+			_properties.Stamina = ::Math.rand(70, 82);
+			_properties.MeleeSkill = ::Math.rand(40, 45);
+			_properties.RangedSkill = ::Math.rand(50, 62);
+			_properties.MeleeDefense = ::Math.rand(0, 5);
+			_properties.Initiative = ::Math.rand(90, 110);
+		}
 	}
 
 	function onAddEquipment()
 	{
 		local items = this.getContainer().getActor().getItems();
-		items.equip(::new("scripts/items/weapons/greenskins/goblin_staff"));
-		items.equip(::Const.World.Common.pickArmor([
-			[1, "thick_dark_tunic"]
-		]));
-		items.equip(::Const.World.Common.pickHelmet([
-			[1, "dark_cowl"],
-			[1, "hood"],
-			[1, ""]
-		]));
+
+		if (this.m.IsHavingWhipTree)
+		{
+			items.equip(::new("scripts/items/weapons/greenskins/battle_whip"));
+		}
+		else
+		{
+			items.equip(::new("scripts/items/weapons/greenskins/goblin_staff"));
+		}
+
+		items.equip(::Const.World.Common.pickArmor([[1, "thick_dark_tunic"]]));
+		items.equip(::Const.World.Common.pickHelmet([[1, "dark_cowl"],[1, "hood"],[1, ""]]));
 	}
 
 	function onCombatStarted()

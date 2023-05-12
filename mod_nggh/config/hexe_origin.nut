@@ -189,6 +189,12 @@ if (!("HexeOrigin" in ::Const))
 	"HEXEN COVEN",
 	"DEMON ALP"
 ];
+::Const.HexeOrigin.SeedsStartWithWhip <- [
+	12,
+	17,
+	19,
+];
+
 ::Const.HexenCharmablePet <-[
 	::Const.EntityType.Wolf,	
 	::Const.EntityType.Wardog,

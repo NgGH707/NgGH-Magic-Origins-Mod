@@ -1,6 +1,7 @@
 
 ::Const.CharacterProperties.IsStealthy <- false;
 ::Const.CharacterProperties.IsSpecializedInHex <- false;
+::Const.CharacterProperties.IsSpecializedInWhips <- false;
 ::Const.CharacterProperties.IsSpecializedInMagic <- false;
 /* new character properties
 ::Const.CharacterProperties.IsHasMagicTraining <- false;

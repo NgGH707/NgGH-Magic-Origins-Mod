@@ -403,6 +403,8 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 		local CasterPower = resolve + res;
 		
 		local bonus = this.getBonus() + (_targetEntity.getTile().getDistanceTo(myTile) == 1 ? 5 : 0); // ::Const.HexeOrigin.Magic.CountDebuff(_targetEntity) * 3
+		bonus += this.getContainer().hasSkill("perk.bdsm_bondage") && _targetEntity.getCurrentProperties().IsRooted ? 10 : 0;
+		bonus += this.getContainer().hasSkill("perk.bdsm_whip_love") ? ::Math.min(20, _targetEntity.getFlags().getAsInt("whipped") * 4) : 0;
 		bonus += _targetEntity.getFlags().getAsInt("charm_fail") * 2;
 		local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
 		local resist = (defenderProperties.getBravery() + defenderProperties.MoraleCheckBravery[1]) * defenderProperties.MoraleCheckBraveryMult[1] * (_targetEntity.getSkills().hasSkill("racial.champion") ? this.m.ChampionMult : 1.0);
@@ -668,6 +670,24 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 					text = green(skill.getBonus() + "%") + " " + skill.getName()
 				});
 			}
+		}
+
+		if (this.getContainer().hasSkill("perk.bdsm_bondage") && _targetEntity.getCurrentProperties().IsRooted)
+		{
+			ret.push({
+				icon = "ui/tooltips/positive.png",
+				text = green("10%") + "" + ::Const.Strings.PerkName.NggH_BDSM_Bondage
+			});
+		}
+
+		local count = _targetEntity.getFlags().getAsInt("whipped");
+
+		if (this.getContainer().hasSkill("perk.bdsm_whip_love") && count > 0)
+		{
+			ret.push({
+				icon = "ui/tooltips/positive.png",
+				text = green(::Math.min(20, count * 4) + "%") + " Whipped (x" + count + ")"
+			});
 		}
 
 		/*

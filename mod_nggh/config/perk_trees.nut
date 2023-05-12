@@ -1,3 +1,30 @@
+::Const.Perks.Hexe_BDSM_Tree <- {
+	ID = "bdsm",
+	Name = "BDSM",
+	Descriptions = ["kinky stuffs"],
+	Tree = [
+		[
+			::Const.Perks.PerkDefs.NggH_BDSM_WhipLash,
+		],
+		[
+			::Const.Perks.PerkDefs.NggH_BDSM_MaskOn,
+		],
+		[],
+		[
+			::Const.Perks.PerkDefs.NggH_BDSM_WhipMastery,
+			::Const.Perks.PerkDefs.NggH_BDSM_Bondage,
+		],
+		[
+			::Const.Perks.PerkDefs.NggH_BDSM_WhipPunish,
+		],
+		[
+			::Const.Perks.PerkDefs.NggH_BDSM_WhipLove,
+		],
+		[
+			::Const.Perks.PerkDefs.NggH_BDSM_DommyMommy,
+		],
+	]
+};
 
 ::Const.Perks.HexeBeastCharmAdvancedTree <- {
 	ID = "charm 3",
@@ -136,6 +163,7 @@
 	::Const.Perks.HexeBasicTree,
 	::Const.Perks.HexeBeastCharmTree,
 	::Const.Perks.HexeBeastCharmAdvancedTree,
+	::Const.Perks.Hexe_BDSM_Tree,
 	//::Const.Perks.LuftTree,
 ];
 

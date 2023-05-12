@@ -98,6 +98,7 @@
   <sprite id="perk_madden_active" ic="FF2E326F" img="skills\perk_madden_active.png" />
   <sprite id="perk_madden" ic="FF2E326F" img="skills\perk_madden.png" />
   <sprite id="perk_madden_mini" offsetY="35" ic="FF2E326F" img="skills\mini\perk_madden_mini.png" />
+  <sprite id="perk_bdsm_mask_on_mini" offsetY="35" ic="FF2E326F" img="skills\mini\perk_bdsm_mask_on_mini.png" />
   <sprite id="perk_energize_meal" ic="FF2E326F" img="skills\perk_energize_meal.png" />
   <sprite id="perk_energize_meal_mini" offsetY="35" ic="FF2E326F" img="skills\mini\perk_energize_meal_mini.png" />
   <sprite id="perk_alp_living_nightmare" ic="FF2E326F" img="skills\perk_alp_living_nightmare.png" />
