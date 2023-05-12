@@ -87,6 +87,11 @@ this.perk_nggh_bdsm_mask_on <- ::inherit("scripts/skills/skill", {
 		this.m.Bonus = v > 0 ? -v : ::Math.abs(v);
 	}
 
+	function onAdded()
+	{
+		this.updateBonus();
+	}
+
 	function onUpdate( _properties )
 	{
 		this.updateBonus();

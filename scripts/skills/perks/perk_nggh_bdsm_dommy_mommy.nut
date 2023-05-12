@@ -17,7 +17,7 @@ this.perk_nggh_bdsm_dommy_mommy <- ::inherit("scripts/skills/skill", {
  	{
  		if (!this.m.IsNew) return;
  		
- 		::World.Assets.getOrigin().addScenarioPerk(this.getContainer().getBackground(), ::Const.Perks.PerkDefs.Fearsome, 5);
+ 		::World.Assets.getOrigin().addScenarioPerk(this.getContainer().getActor().getBackground(), ::Const.Perks.PerkDefs.Fearsome, 5);
 		this.m.IsNew = false;
  	}
 

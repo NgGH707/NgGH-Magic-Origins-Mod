@@ -33,8 +33,8 @@ this.perk_nggh_bdsm_whip_lash <- ::inherit("scripts/skills/skill", {
 		if (_targetEntity == null) return;
 			
 		local d = this.getContainer().getActor().getTile().getDistanceTo(_targetEntity.getTile()) - 1;
-		_properties.MeleeDamageMult *= 1.0 + (0.1 * d);
-		_properties.DamageDirectAdd += 0.05 * d;
+		_properties.MeleeDamageMult *= 1.0 + (0.12 * d);
+		_properties.DamageDirectAdd += 0.06 * d;
 	}
 
 });

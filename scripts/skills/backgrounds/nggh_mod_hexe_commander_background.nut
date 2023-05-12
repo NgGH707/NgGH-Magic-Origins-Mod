@@ -37,6 +37,15 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 
 	function setupCustomPerkTree()
 	{
+		if (this.m.IsHavingWhipTree)
+		{
+			this.m.ExcludedTalents = [
+				::Const.Attributes.Hitpoints,
+				::Const.Attributes.RangedSkill,
+				::Const.Attributes.RangedDefense
+			];
+		}
+
 		this.m.CustomPerkTree = this.getDefaultCustomPerkTree();
 		this.addSpecializePerks();
 		this.addPTR_Perks();
@@ -72,11 +81,12 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 			[ // 3
 				::Const.Perks.PerkDefs.Nimble,
 				::Const.Perks.PerkDefs.FortifiedMind,
-				::Const.Perks.PerkDefs.LegendTrueBeliever,
 				::Const.Perks.PerkDefs.InspiringPresence,
+				::Const.Perks.PerkDefs.LegendTrueBeliever,
+				::Const.Perks.PerkDefs.LegendValaInscribeShield,
 				::Const.Perks.PerkDefs.LegendHerbcraft,
 				::Const.Perks.PerkDefs.LegendPotionBrewer,
-				::Const.Perks.PerkDefs.LegendValaInscribeShield,
+				
 			],
 			[ // 4
 				::Const.Perks.PerkDefs.LegendClarity,
@@ -132,6 +142,8 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 
 		if (this.m.IsHavingWhipTree)
 		{
+			this.m.CustomPerkTree[4].push(::Const.Perks.PerkDefs.PTRBloodlust);
+			this.m.CustomPerkTree[6].push(::Const.Perks.PerkDefs.PTRMauler);
 			list.push(::Const.Perks.OneHandedTree);
 		}
 		else
@@ -148,7 +160,6 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 
 		if (this.m.IsHavingWhipTree)
 		{
-			list.insert(0,::Const.Perks.CleaverTree);
 			list.push(::Const.Perks.Hexe_BDSM_Tree);
 		}
 

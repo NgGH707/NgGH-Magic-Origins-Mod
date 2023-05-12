@@ -3,6 +3,11 @@
 	local ws_onAfterUpdate = obj.onAfterUpdate;
 	obj.onAfterUpdate = function( _properties )
 	{
+		if (_properties.IsSpecializedInWhips)
+		{
+			this.m.ActionPointCost -= 1;
+		}
+		
 		local special = this.getContainer().getSkillByID("perk.bdsm_mask_on");
 
 		if (special != null)

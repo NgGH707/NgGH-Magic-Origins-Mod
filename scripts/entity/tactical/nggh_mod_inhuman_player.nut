@@ -346,6 +346,7 @@ this.nggh_mod_inhuman_player <- ::inherit("scripts/entity/tactical/player", {
 
 		// update stuffs
 		this.updateVariant();
+		this.getItems().updateAppearance();
 		this.getSkills().update();
 	}
 

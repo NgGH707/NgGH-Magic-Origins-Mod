@@ -32,7 +32,7 @@ this.perk_nggh_bdsm_whip_mastery <- ::inherit("scripts/skills/skill", {
 		local n = skills.getNumOfSkill("effects.bleeding");
 		n += skills.getNumOfSkill("effects.legend_grazed_effect");
 		n += skills.getNumOfSkill("ptr_internal_hemorrhage");
-		_properties.MeleeDamageMult *= 1.0 + (0.06 * n);
+		_properties.MeleeDamageMult *= 1.0 + (0.05 * n);
 	}
 
 });

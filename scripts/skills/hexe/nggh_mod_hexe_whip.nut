@@ -15,7 +15,7 @@ this.nggh_mod_hexe_whip <- ::inherit("scripts/skills/skill", {
 			"sounds/combat/dlc6/whip_slave_03.wav"
 		];
 		this.m.Type = ::Const.SkillType.Active;
-		this.m.Order = ::Const.SkillOrder.Any;
+		this.m.Order = ::Const.SkillOrder.UtilityTargeted + 1;
 		this.m.IsSerialized = true;
 		this.m.IsActive = true;
 		this.m.IsTargeted = true;
@@ -23,7 +23,7 @@ this.nggh_mod_hexe_whip <- ::inherit("scripts/skills/skill", {
 		this.m.IsAttack = false;
 		this.m.IsVisibleTileNeeded = true;
 		this.m.ActionPointCost = 4;
-		this.m.FatigueCost = 12;
+		this.m.FatigueCost = 13;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
 	}

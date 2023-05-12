@@ -58,6 +58,33 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 		}
 	}
 
+	function removePerkFromCustomPerkTree( _perk )
+	{
+		local r;
+		local index;
+
+		foreach (i, row in this.m.CustomPerkTree)
+		{
+			foreach (j, perk in row)
+			{
+				if (perk == _perk)
+				{
+					r = i;
+					index = j;
+					break;
+				}
+			}
+		}
+
+		if (r == null || index == null)
+		{
+			return false;
+		}
+
+		this.m.CustomPerkTree[r].remove(index);
+		return true;
+	}
+
 	function onAdded()
 	{
 		if (this.m.IsNew)
@@ -249,6 +276,9 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 	{
 		// being too beautiful/ugly has its disadvantage
 		_properties.TargetAttractionMult *= 1.25;
+
+		// why not
+		_properties.Vision += 1;
 
 		// should i remove this, it's kinda an unfair advantage
 		//_properties.IsImmuneToDisarm = true;
