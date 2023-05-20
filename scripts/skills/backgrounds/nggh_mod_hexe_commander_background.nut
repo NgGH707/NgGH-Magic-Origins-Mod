@@ -455,7 +455,7 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		
 		if (!::World.Events.canFireEvent(true, true))
 		{
-			::logInfo("Hexe Origin Ritual - Failed to start the event. \'::World.Events.canFireEvent\' returns false.");
+			::logInfo("Hexe Origin Ritual - Failed to start the event. \'::World.Events.canFireEvent\' return false.");
 			return;
 		}
 		

@@ -336,11 +336,12 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			return 0;
 		}
 
-		local toHit = CasterPower * defenderProperties.MoraleEffectMult - (resist * (hpLeft == 1.0 ? 2.0 : ::Math.max(0.4, hpLeft + 0.25)) - ::Const.HexeOrigin.Magic.CountDebuff(_targetEntity) * 2);
+		local hpMod = hpLeft == 1.0 ? (resist * 0.75) : -(resist * ::Math.max(0.5, ::Math(1.0, (1.0 - hpLeft) / 2)));
+		local toHit = CasterPower * defenderProperties.MoraleEffectMult - (resist + hpMod - ::Const.HexeOrigin.Magic.CountDebuff(_targetEntity) * 2);
 		local targetTile = _targetEntity.getTile();
 		local numOpponentsAdjacent = 0;
 		local numAlliesAdjacent = 0;
-		local threatBonus = 0;
+		local threatBonus = 0;0
 
 		for( local i = 0; i != 6; ++i )
 		{
@@ -705,28 +706,32 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		}
 		
 		local hpLeft = _targetEntity.getHitpointsPct();
-		local modInjury = ::Math.max(0.4, hpLeft + 0.25);
 
 		if (hpLeft >= 1.0)
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
-				text = red(resist + "%") + " Unharmed"
+				text = red(::Math.floor(resist * 0.75) + "%") + " Unharmed"
 			});	
 		}
-		else if (modInjury > 1)
+		else
 		{
-			ret.push({
-				icon = "ui/tooltips/negative.png",
-				text = red(::Math.floor(resist * (1 - modInjury)) + "%") + " Light injury"
-			});
-		}
-		else 
-		{
-		    ret.push({
-				icon = "ui/tooltips/positive.png",
-				text = green(::Math.floor(resist * (1 - modInjury)) + "%") + " Severe injury"
-			});
+			local modInjury = ::Math.floor(resist * ::Math.max(0.5, ::Math(1.0, (1.0 - hpLeft) / 2)));
+
+			if (hpLeft <= 0.6)
+			{
+				ret.push({
+					icon = "ui/tooltips/positive.png",
+					text = green(modInjury + "%") + " Severe injury"
+				});
+			}
+			else 
+			{
+				ret.push({
+					icon = "ui/tooltips/negative.png",
+					text = red(modInjury + "%") + " Light injury"
+				});
+			}
 		}
 
 		if (threatBonus != 0)

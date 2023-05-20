@@ -252,6 +252,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.NggHNachoBigTummy,
 	],
 	[
+		::Const.Perks.PerkDefs.NggHNachoScavenger,
 		::Const.Perks.PerkDefs.BattleFlow,
 		//::Const.Perks.PerkDefs.NggHNachoVomit,
 	],

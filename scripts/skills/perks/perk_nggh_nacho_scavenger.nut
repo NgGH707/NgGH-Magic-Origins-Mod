@@ -13,5 +13,10 @@ this.perk_nggh_nacho_scavenger <- ::inherit("scripts/skills/skill", {
 		this.m.IsHidden = false;
 	}
 
+	function applyEffect()
+	{
+		this.getContainer().add(::new("scripts/skills/effects/nggh_mod_well_fed_effect"));
+	}
+
 });
 

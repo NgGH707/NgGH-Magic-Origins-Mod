@@ -364,7 +364,7 @@
 	//0 - Wardog
 	{
 		Attributes = "Wardog",
-		Skills = [/*"actives/wardog_bite",*/ "perks/perk_pathfinder"],
+		Skills = [/*"actives/wardog_bite", "perks/perk_pathfinder"*/],
 		Strength = 1.1,
 		Flags = [],
 		Sprite = [
@@ -508,7 +508,7 @@
 	//4 - Direwolf
 	{
 		Attributes = "Direwolf",
-		Skills = [/*"actives/werewolf_bite",*/ "perks/perk_pathfinder"],
+		Skills = [/*"actives/werewolf_bite", "perks/perk_pathfinder"*/],
 		Strength = 1.25,
 		Flags = [],
 		Sprite = [
@@ -557,7 +557,7 @@
 	//5 - DirewolfFrenzied
 	{
 		Attributes = "FrenziedDirewolf",
-		Skills = [/*"actives/werewolf_bite",*/ "perks/perk_pathfinder"],
+		Skills = [/*"actives/werewolf_bite", "perks/perk_pathfinder"*/],
 		Strength = 1.30,
 		Flags = ["frenzy"],
 		Sprite = [
@@ -606,7 +606,7 @@
 	//6 - Hyena
 	{
 		Attributes = "Hyena",
-		Skills = [/*"actives/hyena_bite_skill",*/ "perks/perk_pathfinder"],
+		Skills = [/*"actives/hyena_bite_skill", "perks/perk_pathfinder"*/],
 		Strength = 1.25,
 		Flags = [],
 		Sprite = [
@@ -654,7 +654,7 @@
 	//7 - HyenaFrenzied
 	{
 		Attributes = "FrenziedHyena",
-		Skills = [/*"actives/hyena_bite_skill",*/ "perks/perk_pathfinder"],
+		Skills = [/*"actives/hyena_bite_skill", "perks/perk_pathfinder"*/],
 		Strength = 1.30,
 		Flags = ["frenzy"],
 		Sprite = [

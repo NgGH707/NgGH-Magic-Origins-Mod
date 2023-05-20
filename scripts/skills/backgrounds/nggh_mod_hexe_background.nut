@@ -99,6 +99,7 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 		this.setupUpdateInjuryLayer();
 		this.setupSoundSettings();
 		this.setupDefaultSkills();
+		this.getContainer().getActor().setDirty(true);
 	}
 
 	function setupSpriteLayers()

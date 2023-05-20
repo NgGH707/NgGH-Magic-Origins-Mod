@@ -1,6 +1,6 @@
 ::Const.Perks.Hexe_BDSM_Tree <- {
 	ID = "bdsm",
-	Name = "BDSM",
+	Name = "Dommy Mommy",
 	Descriptions = ["kinky stuffs"],
 	Tree = [
 		[

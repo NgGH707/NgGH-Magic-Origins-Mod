@@ -5,7 +5,6 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		ScaleStartTime = 0,
 		IsLoadingSaveData = false,
 		IsBroughtInBattle = false,
-		IsDegraded = false,
 		IsInitGhoul = false,
 	},
 	function isSkinGhoul()
@@ -191,47 +190,22 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 	{
 		this.nggh_mod_player_beast.onCombatStart();
 		
-		if (!this.m.IsBroughtInBattle)
+		if (this.getSize() <= 1)
 		{
-			local size = this.getSize();
-
-			if (size <= 2)
-			{
-				return;
-			}
-
-			if (this.getFlags().get("has_eaten"))
-			{
-				this.m.IsDegraded = false;
-			    this.getFlags().set("has_eaten", false);
-			}
-			else 
-			{
-				this.m.IsDegraded = true;
-				this.getFlags().set("has_eaten", true);
-			}
-
-			this.m.IsBroughtInBattle = true;
+			return;
 		}
+
+		this.getFlags().set("has_eaten", false);
+		this.m.IsBroughtInBattle = true;
 	} 
 
 	function onCombatFinished()
 	{
 		this.nggh_mod_player_beast.onCombatFinished();
 		
-		if (this.m.IsBroughtInBattle)
+		if (this.m.IsBroughtInBattle && !this.onFeastingLeftoverCorpses())
 		{
-			if (this.onFeastingLeftoverCorpses())
-			{
-				this.m.IsDegraded = false;
-			}
-
-			if (this.m.IsDegraded)
-			{
-				this.setSize(::Math.max(2, this.getSize() - 1));
-			}
-
-			this.m.IsDegraded = false;
+			this.setSize(::Math.max(1, this.getSize() - 1));
 		}
 
 		this.m.IsBroughtInBattle = false;
@@ -240,13 +214,17 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 	// hungry boi luv cleaning up the feasting field :3
 	function onFeastingLeftoverCorpses()
 	{	
-		if (!this.getSkills().hasSkill("perk.nacho_scavenger"))
+		local hasEaten = this.getFlags().get("has_eaten");
+		local perk = this.getSkills().getSkillByID("perk.nacho_scavenger");
+
+		if (perk == null)
 		{
-			return this.getFlags().get("has_eaten");
+			return hasEaten;
 		}
 
-		if (this.getFlags().get("has_eaten"))
+		if (hasEaten)
 		{
+			perk.applyEffect();
 			return true;
 		}
 
@@ -820,6 +798,8 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		this.nggh_mod_player_beast.onDeserialize(_in);
 		this.m.Size = _in.readU8();
 		this.m.IsLoadingSaveData = false;
+
+		this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHNachoScavenger, 6);
 	}
 
 });
