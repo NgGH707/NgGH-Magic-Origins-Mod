@@ -558,7 +558,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-30, -20], Bravery = [-30, -20], Stamina = [-15, -15], MeleeSkill = [-25, -15], RangedSkill = [-10, -10], MeleeDefense = [-35, -30], RangedDefense = [-15, -10], Initiative = [-5, -5] },
 				Perks = ["Duelist", "SpecSword", "LegendSpecGreatSword"],
-				Difficulty = 110,
+				Difficulty = 125,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "swordmaster_background"
@@ -568,7 +568,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-50, -30], Bravery = [-30, -20], Stamina = [-15, -15], MeleeSkill = [-25, -25], RangedSkill = [0, 0], MeleeDefense = [-15, -10], RangedDefense = [-12, -8], Initiative = [-15, -5] },
 				Perks = ["DevastatingStrikes", "SteelBrow", "Brawny"],
-				Difficulty = 90,
+				Difficulty = 100,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "hedge_knight_background"
@@ -578,7 +578,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-20, -15], Bravery = [-10, 0], Stamina = [-15, -15], MeleeSkill = [-5, -5], RangedSkill = [-15, -5], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-25, -10] },
 				Perks = ["Bullseye", "QuickHands", "SpecCrossbow", "SpecBow"],
-				Difficulty = 90,
+				Difficulty = 100,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "legend_master_archer_background",
@@ -1201,7 +1201,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-20, -15], Bravery = [-10, 0], Stamina = [-15, -15], MeleeSkill = [-5, -5], RangedSkill = [-15, -10], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-25, -10] },
 				Perks = ["Bullseye", "QuickHands", "SpecCrossbow", "SpecBow"],
 				Skills = ["actives/throw_dirt_skill"],
-				Difficulty = 90,
+				Difficulty = 100,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "legend_master_archer_background",
@@ -1212,7 +1212,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-50, -25], Bravery = [-20, -15], Stamina = [-10, -10], MeleeSkill = [-15, -5], RangedSkill = [0, 0], MeleeDefense = [-5, 0], RangedDefense = [-12, -8], Initiative = [-15, -5] },
 				Perks = ["DevastatingStrikes", "SteelBrow", "Brawny"],
 				Skills = ["actives/throw_dirt_skill"],
-				Difficulty = 90,
+				Difficulty = 100,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "hedge_knight_background"
@@ -1223,7 +1223,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-20, -20], Bravery = [-20, -15], Stamina = [-15, -15], MeleeSkill = [-25, -25], RangedSkill = [-10, -10], MeleeDefense = [-15, -10], RangedDefense = [-10, -10], Initiative = [-5, -5] },
 				Perks = ["Duelist", "SpecSword", "LegendSpecGreatSword"],
 				Skill = ["actives/throw_dirt_skill"],
-				Difficulty = 90,
+				Difficulty = 110,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "swordmaster_background"

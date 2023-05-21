@@ -336,7 +336,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			return 0;
 		}
 
-		local hpMod = hpLeft == 1.0 ? (resist * 0.75) : -(resist * ::Math.max(0.5, ::Math(1.0, (1.0 - hpLeft) / 2)));
+		local hpMod = hpLeft == 1.0 ? (resist * 0.75) : -(resist * ::Math.max(0.5, ::Math.min(1.0, (1.0 - hpLeft) / 2)));
 		local toHit = CasterPower * defenderProperties.MoraleEffectMult - (resist + hpMod - ::Const.HexeOrigin.Magic.CountDebuff(_targetEntity) * 2);
 		local targetTile = _targetEntity.getTile();
 		local numOpponentsAdjacent = 0;
@@ -383,7 +383,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			return ::Math.max(2, ::Math.min(7, toHit));
 
 	    case ::Const.EntityType.Kraken:
-	        return ::Math.max(0, ::Math.min(5, toHit));
+	        return ::Math.max(0, ::Math.min(10, toHit));
 	
 	    default:
 	    	return ::Math.max(5, ::Math.min(95, toHit));
@@ -544,7 +544,8 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 						icon = "ui/tooltips/warning.png",
 						text = red("Can\'t be charmed")
 					});
-					::logError("Fail to evaluating " + targetEntity.getName + ". Reason is unknown")
+
+					::logError("Fail to evaluating " + targetEntity.getName() + ". Reason is unknown")
 					continue;
 				}
 				
@@ -581,7 +582,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 	    case ::Const.EntityType.LegendStollwurm:
 	        ret.push({
 				icon = "ui/icons/chance_to_hit_head.png",
-				text = "A " + red("Fearsome Beast")
+				text = "A " + red("Fearsome Monster")
 			});
 			break;
 
@@ -595,7 +596,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 	    case ::Const.EntityType.Kraken:
 	        ret.push({
 				icon = "ui/icons/chance_to_hit_head.png",
-				text = "A " + red("True Terror")
+				text = "A " + red("Eldritch Horror")
 			});
 	        break;
 		}
@@ -716,7 +717,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		}
 		else
 		{
-			local modInjury = ::Math.floor(resist * ::Math.max(0.5, ::Math(1.0, (1.0 - hpLeft) / 2)));
+			local modInjury = ::Math.floor(resist * ::Math.max(0.5, ::Math.min(1.0, (1.0 - hpLeft) / 2)));
 
 			if (hpLeft <= 0.6)
 			{
