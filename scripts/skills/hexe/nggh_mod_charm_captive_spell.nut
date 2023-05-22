@@ -323,20 +323,25 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		bonus += this.getBonus();
 		local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
 		local resist = (defenderProperties.getBravery() + defenderProperties.MoraleCheckBravery[1]) * defenderProperties.MoraleCheckBraveryMult[1] * (_targetEntity.getSkills().hasSkill("racial.champion") ? this.m.ChampionMult : 1.0);
-		
-		if (resist > 500 && _targetEntity.getType() != ::Const.EntityType.TricksterGod)
-		{
-			return 0;
-		}
-		
-		local hpLeft = _targetEntity.getHitpointsPct();
+		local isFullHP = _targetEntity.getHitpoints() == _targetEntity.getHitpointsMax();
 
-		if (hpLeft >= 1.0 && _targetEntity.getType() == ::Const.EntityType.TricksterGod)
+		if (resist >= 500 && isFullHP)
 		{
 			return 0;
 		}
 
-		local hpMod = hpLeft == 1.0 ? (resist * 0.75) : -(resist * ::Math.max(0.5, ::Math.min(1.0, (1.0 - hpLeft) / 2)));
+		local hpMod = 0;
+
+		if (isFullHP)
+		{
+			hpMod += resist * 0.75;
+		}
+		else
+		{
+			local missingHitpointsPct = 1.0 - _targetEntity.getHitpointsPct();
+			hpMod -= resist * (missingHitpointsPct / 2);
+		}
+
 		local toHit = CasterPower * defenderProperties.MoraleEffectMult - (resist + hpMod - ::Const.HexeOrigin.Magic.CountDebuff(_targetEntity) * 2);
 		local targetTile = _targetEntity.getTile();
 		local numOpponentsAdjacent = 0;
@@ -383,7 +388,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			return ::Math.max(2, ::Math.min(7, toHit));
 
 	    case ::Const.EntityType.Kraken:
-	        return ::Math.max(0, ::Math.min(10, toHit));
+	        return ::Math.max(1, ::Math.min(10, toHit));
 	
 	    default:
 	    	return ::Math.max(5, ::Math.min(95, toHit));
@@ -463,6 +468,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 
 		local requirements = this.checkRequirement(targetEntity, true);
 		local attempts = _targetEntity.getFlags().getAsInt("charm_attempt");
+		local isFullHP = _targetEntity.getHitpoints() == _targetEntity.getHitpointsMax();
 
 		if (this.m.Count - ::Tactical.Entities.getFlags().getAsInt("CharmedCount") <= 0)
 		{
@@ -474,11 +480,11 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			return ret;
 		}
 
-		if (targetEntity.getType() != ::Const.EntityType.TricksterGod && (defenderProperties.MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack] >= 1000.0 || resist >= 500))
+		if (defenderProperties.MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack] >= 1000.0 || (resist >= 500 && isFullHP))
 		{
 			ret.push({
 				icon = "ui/icons/cancel.png",
-				text = "Extremely high magic resistance"
+				text = "Extremely high resistance"
 			});
 			
 			return ret;
@@ -705,10 +711,8 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 				text = green((debuff * 2) + "%") + " Debuff"
 			});
 		}
-		
-		local hpLeft = _targetEntity.getHitpointsPct();
 
-		if (hpLeft >= 1.0)
+		if (isFullHP)
 		{
 			ret.push({
 				icon = "ui/tooltips/negative.png",
@@ -717,22 +721,14 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		}
 		else
 		{
-			local modInjury = ::Math.floor(resist * ::Math.max(0.5, ::Math.min(1.0, (1.0 - hpLeft) / 2)));
-
-			if (hpLeft <= 0.6)
-			{
-				ret.push({
-					icon = "ui/tooltips/positive.png",
-					text = green(modInjury + "%") + " Severe injury"
-				});
-			}
-			else 
-			{
-				ret.push({
-					icon = "ui/tooltips/negative.png",
-					text = red(modInjury + "%") + " Light injury"
-				});
-			}
+			local hpLeft = _targetEntity.getHitpointsPct();
+			local missingHitpointsPct = 1.0 - hpLeft;
+			local hpMod = ::Math.floor(resist * (missingHitpointsPct / 2));
+			
+			ret.push({
+				icon = "ui/tooltips/positive.png",
+				text = green(hpMod + "%") + " " + (hpLeft <= 0.6 ? "Severe injury" : "Light injury") 
+			});
 		}
 
 		if (threatBonus != 0)

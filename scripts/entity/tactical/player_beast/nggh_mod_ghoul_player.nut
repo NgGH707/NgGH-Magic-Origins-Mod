@@ -203,12 +203,24 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 	{
 		this.nggh_mod_player_beast.onCombatFinished();
 		
-		if (this.m.IsBroughtInBattle && !this.onFeastingLeftoverCorpses())
+		if (this.m.IsBroughtInBattle && !this.checkHunger())
 		{
 			this.setSize(::Math.max(1, this.getSize() - 1));
 		}
 
 		this.m.IsBroughtInBattle = false;
+	}
+
+	function checkHunger()
+	{
+		if (this.onFeastingLeftoverCorpses())
+		{
+			this.improveMood(0.5, "Had a great meal");
+			return true;
+		}
+
+		this.worsenMood(1.5, "Starved");
+		return false;
 	}
 
 	// hungry boi luv cleaning up the feasting field :3
@@ -228,25 +240,39 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 			return true;
 		}
 
-		foreach (i, tile in ::Tactical.Entities.getCorpses())
+		local garbage = [];
+		local corpses = ::Tactical.Entities.getCorpses();
+		local hp = ::Nggh_MagicConcept.IsOPMode ? 100 : 25;
+		local num = corpses.len() - 1;
+
+		for (local i = num; i >= 0; --i) 
 		{
+			local tile = corpses[i];
+
 			if (tile.Properties.get("Corpse") == null)
 			{
-				::Tactical.Entities.removeCorpse(tile);
+				garbage.push(tile);
 				continue;
 			}
 
 		    if (tile.Properties.get("Corpse").IsConsumable)
 		    {
 				this.getFlags().set("has_eaten", true);
-				this.setHitpoints(::Math.min(this.getHitpoints() + 25, this.getHitpointsMax()));
-				::Tactical.Entities.removeCorpse(tile);
+				this.setHitpoints(::Math.min(this.getHitpoints() + hp, this.getHitpointsMax()));
 				tile.Properties.remove("Corpse");
-				return true;
+				garbage.push(tile);
+				perk.applyEffect();
+				hasEaten = true;
+				break;
 		    }
 		}
 
-		return false;
+		foreach (tile in garbage)
+		{
+			::Tactical.Entities.removeCorpse(tile);
+		}
+
+		return hasEaten;
 	}
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )

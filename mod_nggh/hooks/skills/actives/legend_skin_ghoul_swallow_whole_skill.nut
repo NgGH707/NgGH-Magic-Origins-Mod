@@ -211,8 +211,12 @@
 	};
 	obj.onSwallow <- function( _user )
 	{
-		_user.setHitpoints(::Math.min(_user.getHitpoints() + 100, _user.getHitpointsMax()));
 		_user.getFlags().set("has_eaten", true);
+		_user.addXP(this.m.SwallowedEntity.getXPValue());
+		_user.setHitpoints(::Math.min(_user.getHitpoints() + 100, _user.getHitpointsMax()));
+		_user.getSprite("head").setBrush("bust_ghoulskin_03_head_0" + actor.m.Head);
+		_user.getSprite("injury").setBrush("bust_ghoulskin_03_injured");
+		_user.getSprite("body").setBrush("bust_ghoulskin_body_03");
 	};
 	obj.onCombatStarted <- function()
 	{
@@ -229,11 +233,8 @@
 			{
 				this.m.SwallowedEntity.m.WorldTroop.Party.removeTroop(this.m.SwallowedEntity.m.WorldTroop);
 			}
+			
 			this.onSwallow(actor);
-			actor.addXP(this.m.SwallowedEntity.getXPValue());
-			actor.getSprite("body").setBrush("bust_ghoulskin_body_03");
-			actor.getSprite("head").setBrush("bust_ghoulskin_03_head_0" + actor.m.Head);
-			actor.getSprite("injury").setBrush("bust_ghoulskin_03_injured");
 		}
 		
 		this.m.SwallowedEntity = null;
