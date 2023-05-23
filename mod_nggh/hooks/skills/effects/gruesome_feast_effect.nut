@@ -29,23 +29,17 @@
 				text = this.getDescription()
 			}
 		];
-		
-		if (this.getContainer().getActor().getSize() == 2)
-		{
-			ret.extend(this.getMidSizeTooltips());
-		}
-		
-		if (this.getContainer().getActor().getSize() == 3)
-		{
-			ret.extend(this.getHugeSizeTooltips());
-		}
 
-		ret.push({
-			id = 4,
-			type = "text",
-			icon = "ui/icons/special.png",
-			text = "Needs to [color=" + ::Const.UI.Color.PositiveValue + "]Eat[/color] regularly in battle"
-		});
+		switch(this.getContainer().getActor().getSize())
+		{
+		case 2:
+			ret.extend(this.getMidSizeTooltips());
+			break;
+
+		case 3:
+			ret.extend(this.getHugeSizeTooltips());
+			break;
+		}
 		
 		return ret;
 	};
@@ -68,7 +62,7 @@
 				id = 10,
 				type = "text",
 				icon = "ui/icons/regular_damage.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+20[/color] Attack Damage"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+25[/color] Attack Damage"
 			},
 			{
 				id = 10,
@@ -80,13 +74,13 @@
 				id = 10,
 				type = "text",
 				icon = "ui/icons/melee_defense.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+5[/color] Melee Defense"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+6[/color] Melee Defense"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/ranged_defense.png",
-				text = "[color=" + ::Const.UI.Color.NegativeValue + "]-5[/color] Ranged Defense"
+				text = "[color=" + ::Const.UI.Color.NegativeValue + "]-6[/color] Ranged Defense"
 			},
 			{
 				id = 10,
@@ -115,7 +109,7 @@
 				id = 10,
 				type = "text",
 				icon = "ui/icons/regular_damage.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+40[/color] Attack Damage"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+50[/color] Attack Damage"
 			},
 			{
 				id = 10,
@@ -127,19 +121,19 @@
 				id = 10,
 				type = "text",
 				icon = "ui/icons/melee_defense.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+10[/color] Melee Defense"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+12[/color] Melee Defense"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/ranged_defense.png",
-				text = "[color=" + ::Const.UI.Color.NegativeValue + "]-10[/color] Ranged Defense"
+				text = "[color=" + ::Const.UI.Color.NegativeValue + "]-12[/color] Ranged Defense"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/initiative.png",
-				text = "[color=" + ::Const.UI.Color.NegativeValue + "]-30[/color] Initiative"
+				text = "[color=" + ::Const.UI.Color.NegativeValue + "]-25[/color] Initiative"
 			},
 		];
 	};
@@ -154,42 +148,42 @@
 		{
 			_properties.Hitpoints += 120;
 			_properties.MeleeSkill += 10;
-			_properties.MeleeDefense += 5;
-			_properties.RangedDefense -= 5;
+			_properties.MeleeDefense += 6;
+			_properties.RangedDefense -= 6;
 			_properties.Bravery += 30;
-			_properties.Initiative -= 15;
+			_properties.Initiative -= 10;
 			_properties.DailyFood += 1;
 
 			if (mainhand == null || mainhand.isItemType(::Const.Items.ItemType.TwoHanded) && !mainhand.isItemType(::Const.Items.ItemType.RangedWeapon))
 			{
-				_properties.DamageRegularMin += 15;
-				_properties.DamageRegularMax += 20;
+				_properties.DamageRegularMin += 20;
+				_properties.DamageRegularMax += 25;
 			}
 			else
 			{
-				_properties.DamageRegularMin += 5;
-				_properties.DamageRegularMax += 8;
+				_properties.DamageRegularMin += 10;
+				_properties.DamageRegularMax += 12;
 			}
 		}
 		else if (size == 3)
 		{
 			_properties.Hitpoints += 300;
 			_properties.MeleeSkill += 20;
-			_properties.MeleeDefense += 10;
-			_properties.RangedDefense -= 10;
+			_properties.MeleeDefense += 12;
+			_properties.RangedDefense -= 12;
 			_properties.Bravery += 60;
-			_properties.Initiative -= 30;
-			_properties.DailyFood += 4;
+			_properties.Initiative -= 25;
+			_properties.DailyFood += 3;
 
 			if (mainhand == null || mainhand.isItemType(::Const.Items.ItemType.TwoHanded) && !mainhand.isItemType(::Const.Items.ItemType.RangedWeapon))
 			{
-				_properties.DamageRegularMin += 30;
-				_properties.DamageRegularMax += 40;
+				_properties.DamageRegularMin += 40;
+				_properties.DamageRegularMax += 60;
 			}
 			else
 			{
-				_properties.DamageRegularMin += 10;
-				_properties.DamageRegularMax += 15;
+				_properties.DamageRegularMin += 20;
+				_properties.DamageRegularMax += 30;
 			}
 			
 			if (!isPlayer)
@@ -198,4 +192,5 @@
 			}
 		}
 	}
+	
 });

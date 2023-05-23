@@ -94,7 +94,7 @@ this.nggh_mod_well_fed_effect <- ::inherit("scripts/skills/skill", {
 	function onAfterUpdate( _properties )
 	{
 		// eat less on world map
-		_properties.DailyFood = ::Math.max(1, DailyFood * 0.75);
+		_properties.DailyFood = ::Math.max(1, _properties.DailyFood * 0.75);
 	}
 
 	function onSerialize( _out )

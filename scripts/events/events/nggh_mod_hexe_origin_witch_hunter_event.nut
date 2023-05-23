@@ -161,21 +161,16 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 
 			local faction = t.getFactionOfType(::Const.FactionType.Settlement);
 
-			if (faction != null)
+			if (faction == null)
 			{
-				if (faction.getPlayerRelation() >= 90.0)
-				{
-					continue;
-				}
+				continue;
 			}
-			else
+			else if (faction.getPlayerRelation() >= 90.0)
 			{
 				continue;
 			}
 
-			local d = playerTile.getDistanceTo(t.getTile());
-
-			if (d <= 9)
+			if (playerTile.getDistanceTo(t.getTile()) <= 10)
 			{
 				nearTown = true;
 				break;
@@ -187,7 +182,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 			return;
 		}
 
-		this.m.Score = 20 * Hexe;
+		this.m.Score = 22 * Hexe;
 	}
 
 	function onDetermineStartScreen()

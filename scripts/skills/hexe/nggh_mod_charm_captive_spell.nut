@@ -6,7 +6,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 
 		Count = 2,
 		MaxAttempt = 3,
-		ChampionMult = 1.33
+		ChampionMult = 1.25
 	},
 
 	function create()

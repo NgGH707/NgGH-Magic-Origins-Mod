@@ -136,6 +136,16 @@
 				continue;
 			}
 
+			if (!::MSU.isKindOf("player", a))
+			{	
+				continue;
+			}
+
+			if (a.getSkills().hasSkill("effects.simp"))
+			{
+				continue;
+			}
+
 			if (a.getFlags().has("Hexe") || !a.getFlags().has("human") || a.getMoraleState() == ::Const.MoraleState.Ignore)
 			{
 				continue;
@@ -146,7 +156,7 @@
 				continue;
 			}
 
-			a.getSkills().add(::new("scripts/skills/effects/legend_dazed_effect"));
+			a.getSkills().add(::new("scripts/skills/effects/legend_baffled_effect"));
 			a.worsenMood(1.0, "Witnessed a brother eats a corpse");
 		}
 

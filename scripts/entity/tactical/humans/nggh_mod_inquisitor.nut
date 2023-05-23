@@ -5,7 +5,8 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 		this.m.Type = ::Const.EntityType.Knight;
 		this.m.BloodType = ::Const.BloodType.Red;
 		this.m.XP = 500;
-		this.m.Name = "Inquisitor";
+		this.m.Name = this.generateName();
+		this.m.IsGeneratingKillName = false;
 		this.human.create();
 		this.m.Faces = ::Const.Faces.SmartMale;
 		this.m.Hairs = ::Const.Hair.CommonMale;
@@ -13,6 +14,12 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 		this.m.Beards = ::Const.Beards.Tidy;
 		this.m.AIAgent = ::new("scripts/ai/tactical/agents/military_melee_agent");
 		this.m.AIAgent.setActor(this);
+	}
+
+	function generateName()
+	{
+		this.m.Title = ::MSU.Array.rand(::Const.World.Spawn.Troops.Inquisitor.TitleList);
+		return ::MSU.Array.rand(::Const.Strings.KnightNames);
 	}
 
 	function onInit()
@@ -55,7 +62,6 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 		this.m.Skills.add(::new("scripts/skills/perks/perk_brawny"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_captain"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_fast_adaption"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_devastating_strikes"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_coup_de_grace"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_battle_forged"));
@@ -78,7 +84,6 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 
 		if("Assets" in ::World && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
 		{
-			this.m.Skills.add(::new("scripts/skills/perks/perk_feint"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_legend_smashing_shields"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_shield_bash"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_legend_forceful_swing"));
@@ -101,42 +106,38 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 
 	function assignRandomEquipment()
 	{
-		local r;
-
 		if (this.m.Items.hasEmptySlot(::Const.ItemSlot.Mainhand))
 		{
-			local weapons = [
+			this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand([
 				"weapons/fighting_axe",
 				"weapons/noble_sword",
 				"weapons/warhammer",
 				"weapons/legend_swordstaff",
 				"weapons/two_handed_flanged_mace",
 				"weapons/two_handed_flail",
-			];
-			this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand(weapons)));
+			])));
 		}
 
 		if (this.m.Items.hasEmptySlot(::Const.ItemSlot.Offhand))
 		{
-			r = ::Math.rand(1, 2);
-			local shield;
-
-			if (r == 1)
+			switch(::Math.rand(1, 2))
 			{
-				shield = ::new("scripts/items/shields/heater_shield");
-			}
-			else if (r == 2)
-			{
-				shield = ::new("scripts/items/shields/kite_shield");
-			}
+			case 1:
+				this.m.Items.equip(::new("scripts/items/shields/heater_shield"));
+				break;
 
-			this.m.Items.equip(shield);
+			default:
+				this.m.Items.equip(::new("scripts/items/shields/kite_shield"));
+			}
 		}
 
-		this.m.Items.equip(::Const.World.Common.pickArmor([
-			[1, "coat_of_plates"],
-			[1, "coat_of_scales"]
-		]));
+		if (this.m.Items.hasEmptySlot(::Const.ItemSlot.Body))
+		{
+			this.m.Items.equip(::Const.World.Common.pickArmor([
+				[1, "coat_of_plates"],
+				[1, "coat_of_scales"]
+			]));
+		}
 
 		if (this.m.Items.hasEmptySlot(::Const.ItemSlot.Head))
 		{
@@ -158,6 +159,18 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 				[1, "legend_frogmouth_helm_crested"]
 			]))
 		}
+
+		if (::Is_PTR_Exist)
+		{
+			if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
+			{
+				this.m.Skills.addTreeOfEquippedWeapon(7);
+			}
+			else
+			{
+				this.m.Skills.addTreeOfEquippedWeapon(6);
+			}
+		}
 	}
 
 	function makeMiniboss()
@@ -168,40 +181,34 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 		}
 
 		this.getSprite("miniboss").setBrush("bust_miniboss");
-		local weapons = [
-			"weapons/named/named_axe",
-			"weapons/named/named_greatsword",
-			"weapons/named/named_mace",
-			"weapons/named/named_sword"
-			"weapons/named/named_longsword"
-		];
-		local shields = clone ::Const.Items.NamedShields;
-		local armor = [
-			"armor/named/brown_coat_of_plates_armor",
-			"armor/named/golden_scale_armor",
-			"armor/named/green_coat_of_plates_armor",
-			"armor/named/heraldic_mail_armor"
-		];
 
-		local r = ::Math.rand(1, 3);
+		switch(::Math.rand(1, 3))
+		{
+		case 1:
+			this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand([
+				"weapons/named/named_axe",
+				"weapons/named/named_greatsword",
+				"weapons/named/named_mace",
+				"weapons/named/named_sword"
+				"weapons/named/named_longsword"
+			])));
+			break;
 
-		if (r == 1)
-		{
-			this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand(weapons)));
+		case 2:
+			this.m.Items.equip(::Const.World.Common.pickArmor(
+				::Const.World.Common.convNameToList([
+					"armor/named/brown_coat_of_plates_armor",
+					"armor/named/golden_scale_armor",
+					"armor/named/green_coat_of_plates_armor",
+					"armor/named/heraldic_mail_armor"
+				])
+			));
+			break;
+
+		default:
+			this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand(::Const.Items.NamedShields)));
 		}
-		else if (r == 2)
-		{
-			this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand(shields)));
-		}
-		else
-		{
-			local h = ::Const.World.Common.pickArmor(
-				::Const.World.Common.convNameToList(
-					armor
-				)
-			)
-			this.m.Items.equip(h);
-		}
+
 		this.m.Items.equip(::Const.World.Common.pickHelmet([
 			[3, "named/legend_frogmouth_helm_crested_painted"],
 			[3, "named/bascinet_named"],
@@ -211,7 +218,6 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 			[3, "named/italo_norman_helm_named"],
 			[1, "named/legend_helm_full_named"]
 		]))
-
 
 		this.m.Skills.add(::new("scripts/skills/perks/perk_killing_frenzy"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_hold_out"));

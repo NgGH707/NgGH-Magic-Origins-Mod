@@ -18,15 +18,15 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 ::Const.World.Spawn.Nggh_WitchHunter <- {
 	Name = "WitchHunter",
 	IsDynamic = true,
-	MovementSpeedMult = 5.0,
-	VisibilityMult = 1.0,
+	MovementSpeedMult = 1.15,
+	VisibilityMult = 0.9,
 	VisionMult = 99.0,
 	Body = "figure_noble_02",
-	MinR = 75,
-	MaxR = 690,
+	MinR = 69, // funny number :3
+	MaxR = 969, 
 	Troops = [
 		{
-			Weight = 50,
+			Weight = 39,
 			Types = [
 				{
 					MaxR = 400,
@@ -35,21 +35,21 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 				},
 				{
 					Type = ::Const.World.Spawn.Troops.Mercenary,
-					Cost = 25
+					Cost = 22
 				}
 			]
 		},
 		{
-			Weight = 22,
+			Weight = 39,
 			Types = [
 				{
 					Type = ::Const.World.Spawn.Troops.LegendPeasantWitchHunter,
-					Cost = 20
+					Cost = 15
 				}
 			]
 		},
 		{
-			Weight = 12,
+			Weight = 15,
 			Types = [
 				{
 					Type = ::Const.World.Spawn.Troops.LegendPeasantMonk,
@@ -57,21 +57,12 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 				},
 				{
 					Type = ::Const.World.Spawn.Troops.MercenaryRanged,
-					Cost = 25
+					Cost = 22
 				}
 			]
 		},
 		{
-			Weight = 5,
-			Types = [
-				{
-					Type = ::Const.World.Spawn.Troops.ArmoredWardog,
-					Cost = 5
-				}
-			]
-		},
-		{
-			Weight = 3,
+			Weight = 4,
 			MinR = 250,
 			Types = [
 				{

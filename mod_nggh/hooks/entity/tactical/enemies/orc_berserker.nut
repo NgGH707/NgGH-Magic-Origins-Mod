@@ -1,9 +1,13 @@
 ::mods_hookExactClass("entity/tactical/enemies/orc_berserker", function (obj) 
 {
+	obj.m.HasAssignedEquipment <- false;
+
 	local ws_assignRandomEquipment = obj.assignRandomEquipment
     obj.assignRandomEquipment = function()
 	{
-		ws_assignRandomEquipment()
+		if (this.m.HasAssignedEquipment) return;
+
+		ws_assignRandomEquipment();
 		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Body));
 		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Head));
 
@@ -37,6 +41,8 @@
 				this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_orc_berserker_helmet"));
 			}
 		}
+
+		this.m.HasAssignedEquipment = true;
 	}
 
 	obj.makeMiniboss <- function()
@@ -45,6 +51,9 @@
 		{
 			return false;
 		}
+
+		// force assign weapon first
+		this.assignRandomEquipment();
 
 		this.m.XP *= 1.5; // extra xp
 		this.m.BaseProperties.Bravery += 10;
@@ -81,6 +90,13 @@
 			this.m.Skills.add(::new("scripts/skills/perks/perk_underdog"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_colossus"));
 		}
+
+		// has a chance to already be high at start
+		if (::Math.rand(1, 100) <= 33)
+		{
+			this.m.Skills.add(::new("scripts/skills/effects/berserker_mushrooms_effect"));
+			this.m.Items.addToBag(::new("scripts/items/accessory/berserker_mushrooms_item"));
+		}
 		
 		this.m.Skills.add(::new("scripts/skills/perks/perk_legend_second_wind"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
@@ -89,13 +105,6 @@
 		{
 			this.m.Skills.add(::new("scripts/skills/perks/perk_last_stand"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_steel_brow"));
-		}
-
-		// has a chance to already be high at start
-		if (::Math.rand(1, 100) <= 25)
-		{
-			this.m.Skills.add(::new("scripts/skills/effects/berserker_mushrooms_effect"));
-			this.m.Items.addToBag(::new("scripts/items/accessory/berserker_mushrooms_item"));
 		}
 
 		return true;

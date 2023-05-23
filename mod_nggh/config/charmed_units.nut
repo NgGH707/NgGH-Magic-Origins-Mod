@@ -1319,7 +1319,7 @@ if (!("CharmedUnits" in ::Const))
 			
 		//LegendWhiteDirewolf = 110,
 			{
-				StatMod = { Hitpoints = [-200, -150], Bravery = [-40, -25], Stamina = [-80, -40], MeleeSkill = [-15, -15], RangedSkill = [0, 0], MeleeDefense = [-8, -8], RangedDefense = [-8, -8], Initiative = [-45, -35] },
+				StatMod = { Hitpoints = [-200, -150], Bravery = [-40, -25], Stamina = [-80, -40], MeleeSkill = [-12, -10], RangedSkill = [0, 0], MeleeDefense = [-8, -8], RangedDefense = [-8, -8], Initiative = [-45, -35] },
 				Perks = ["Footwork", "Rotation"],
 				Skills = ["racial/werewolf_racial", "actives/legend_white_wolf_bite", "actives/legend_white_wolf_howl"],
 				Difficulty = 150,

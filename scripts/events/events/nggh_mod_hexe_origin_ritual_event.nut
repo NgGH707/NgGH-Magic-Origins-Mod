@@ -287,7 +287,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 						Text = s.getName() + " - " + s.getSkills().getSkillByID("effects.simp").getName(),
 						function getResult( _e )
 						{
-							::logInfo("Hexe Origin Ritual - select this option: \'" + this.Text + "\'");
+							::logInfo("Hexe Origin Ritual - Selected option: \"" + this.Text + "\"");
 							_e.increaseSimpLevel(this.Actor);
 							_e.consumeChosenItems();
 
