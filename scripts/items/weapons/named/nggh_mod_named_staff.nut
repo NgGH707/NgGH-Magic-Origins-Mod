@@ -27,8 +27,8 @@ this.nggh_mod_named_staff <- ::inherit("scripts/items/weapons/named/named_weapon
 		this.m.RangeIdeal = 2;
 		this.m.RegularDamage = 50;
 		this.m.RegularDamageMax = 70;
-		this.m.ArmorDamageMult = 0.45;
-		this.m.DirectDamageMult = 0.3;
+		this.m.ArmorDamageMult = 0.40;
+		this.m.DirectDamageMult = 0.4;
 		this.pickMagicSkill();
 		this.randomizeValues();
 		this.updateVariant();

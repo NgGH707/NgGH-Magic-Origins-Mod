@@ -7,6 +7,7 @@ if (!("CharmedUnits" in ::Const))
 //Database of default entries (Legends version)
 ::Const.CharmedUnits <- 
 {
+	// Default database
 	Data = [
 		//Necromancer = 0,
 			{
@@ -76,7 +77,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "NachoTree",
 				Script = "player_beast/nggh_mod_ghoul_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyGhoul"],
 			},
 			
@@ -101,7 +101,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "OrcYoung",
 				Script = "nggh_mod_player_orc",
-				Background = "nggh_mod_charmed_background",
 				Requirements = [],
 				IsExperienced = true,
 			},
@@ -128,7 +127,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "OrcBerserker",
 				Script = "nggh_mod_player_orc",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyOrk"],
 			},
 			
@@ -137,7 +135,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-50, -50], Bravery = [-15, -10], Stamina = [-80, -80], MeleeSkill = [-10, -10], RangedSkill = [0, 0], MeleeDefense = [-3, -3], RangedDefense = [-5, -5], Initiative = [-15, -10] },
 				Perks = ["LegendComposure", "Stalwart", "ShieldBash"],
 				Skills = ["actives/line_breaker"],
-				Difficulty = 30,
+				Difficulty = 25,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 10, Meds = 8, Stash = 15, Healing = 0.0, Injury = 0.0, Repair = 0.05, Salvage = 0.1, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.1, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.1, Enchanting = 0.0,
@@ -154,7 +152,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "OrcWarrior",
 				Script = "nggh_mod_player_orc",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyOrk"],
 			},
 			
@@ -163,7 +160,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-90, -65], Bravery = [-35, -25], Stamina = [-110, -110], MeleeSkill = [-15, -9], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-5, -5] },
 				Perks = ["LegendComposure", "Stalwart", "ShieldBash"],
 				Skills = ["actives/warcry", "actives/line_breaker", "perks/perk_captain"],
-				Difficulty = 90,
+				Difficulty = 25,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 15, Meds = 10, Stash = 20, Healing = 0.05, Injury = 0.0, Repair = 0.0, Salvage = 0.2, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.1, Enchanting = 0.0,
@@ -180,7 +177,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "OrcWarlord",
 				Script = "nggh_mod_player_orc",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyOrk", "NggHCharmEnemyOrk"],
 			},
 			
@@ -259,7 +255,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-12, -10], Bravery = [-15, -12], Stamina = [-25, -20], MeleeSkill = [-10, -8], RangedSkill = [0, 0], MeleeDefense = [-2, 0], RangedDefense = [-2, 0], Initiative = [-10, 0] },
 				Perks = ["Recover"],
-				Difficulty = 12,
+				Difficulty = 10,
 				Custom = {
 					ID = "background.caravan_hand",
 				},
@@ -284,7 +280,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-25, -25], Bravery = [-15, -10], Stamina = [-15, -10], MeleeSkill = [-8, -8], RangedSkill = [0, 0], MeleeDefense = [-10, -5], RangedDefense = [0, 0], Initiative = [-5, 0] },
 				Perks = ["Rotation", "LoneWolf"],
-				Difficulty = 33,
+				Difficulty = 30,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "legend_noble_2h",
@@ -315,7 +311,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-20, -15], Bravery = [-12, -10], Stamina = [-30, -15], MeleeSkill = [-5, -5], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-5, -5] },
 				Perks = ["Rotation", "InspiringPresence"],
 				Skills = ["perks/perk_captain"],
-				Difficulty = 50,
+				Difficulty = 35,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "legend_noble_event_background",
@@ -325,7 +321,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-30, -30], Bravery = [-20, -10], Stamina = [-15, -10], MeleeSkill = [-15, -10], RangedSkill = [0, 0], MeleeDefense = [-10, -7], RangedDefense = [0, 0], Initiative = [-15, -10] },
 				Perks = ["Rotation", "Duelist"],
-				Difficulty = 50,
+				Difficulty = 45,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "legend_noble_background",
@@ -336,7 +332,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-35, -35], Bravery = [-25, -15], Stamina = [-20, -15], MeleeSkill = [-20, -20], RangedSkill = [0, 0], MeleeDefense = [-10, -7], RangedDefense = [0, 5], Initiative = [0, 5] },
 				Perks = ["Rotation", "Brawny"],
 				Skills = ["perks/perk_captain"],
-				Difficulty = 75,
+				Difficulty = 45,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "hedge_knight_background",
@@ -390,7 +386,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-30, -30], Bravery = [-30, -30], Stamina = [-30, -25], MeleeSkill = [-13, -10], RangedSkill = [-10, -8], MeleeDefense = [-15, -8], RangedDefense = [-8, -5], Initiative = [-20, -15] },
 				Perks = ["NineLives"],
 				Skills = ["perks/perk_captain"]
-				Difficulty = 35,
+				Difficulty = 15,
 				Custom = {
 					ID = "background.raider",
 				},
@@ -420,7 +416,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "GoblinAmbusher",
 				Script = "nggh_mod_player_goblin",
-				Background = "nggh_mod_charmed_background",
 				Requirements = [],
 			},
 			
@@ -445,7 +440,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "GoblinFighter",
 				Script = "nggh_mod_player_goblin",
-				Background = "nggh_mod_charmed_background",
 				Requirements = [],
 			},
 			
@@ -453,7 +447,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [-5, 0], Stamina = [-20, -20], MeleeSkill = [-17, -15], RangedSkill = [-15, -14], MeleeDefense = [-5, -5], RangedDefense = [-10, -10], Initiative = [-25, -23] },
 				Skills = ["perks/perk_captain", "actives/goblin_whip"],
-				Difficulty = 65,
+				Difficulty = 30,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 25, ArmorParts = 8, Meds = 10, Stash = 3, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.1, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.1, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.2, Enchanting = 0.0,
@@ -470,7 +464,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "GoblinLeader",
 				Script = "nggh_mod_player_goblin",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyGoblin"],
 			},
 			
@@ -478,7 +471,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [-2, 0], RangedSkill = [-2, 0], MeleeDefense = [-5, -5], RangedDefense = [-10, -10], Initiative = [-25, -20] },
 				Skills = ["racial/goblin_shaman_racial", "actives/root_skill", "actives/insects_skill", "actives/grant_night_vision_skill"],
-				Difficulty = 90,
+				Difficulty = 45,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 25, Stash = 0, Healing = 0.25, Injury = 0.25, Repair = 0.0, Salvage = 0.0, Crafting = 0.1, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.0, Fletching = 0.0, Scout = 0.0, Gathering = 0.1, Training = 0.0, Enchanting = 0.4,
@@ -495,7 +488,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "GoblinShaman",
 				Script = "nggh_mod_player_goblin",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyGoblin"],
 			},
 			
@@ -503,7 +495,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-20, -20], Bravery = [-15, -15], Stamina = [-55, -55], MeleeSkill = [-13, -13], RangedSkill = [-1, 1], MeleeDefense = [0, 0], RangedDefense = [-5, -5], Initiative = [-23, -27] },
 				Perks = [],
-				Difficulty = 18,
+				Difficulty = 12,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 10, ArmorParts = 15, Meds = 0, Stash = 3, Healing = 0.0, Injury = 0.0, Repair = 0.15, Salvage = 0.0, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.3, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -520,7 +512,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "GoblinWolfrider",
 				Script = "nggh_mod_player_goblin",
-				Background = "nggh_mod_charmed_background",
 				Requirements = [],
 				IsExperienced = true,
 			},
@@ -538,7 +529,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-35, -25], Bravery = [-20, -10], Stamina = [-25, -20], MeleeSkill = [-13, -8], RangedSkill = [-10, -5], MeleeDefense = [-8, -5], RangedDefense = [-10, 0], Initiative = [-20, -10] },
 				Perks = ["Overwhelm"],
-				Difficulty = 15,
+				Difficulty = 10,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "sellsword_background",
@@ -548,7 +539,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-10, -10], Bravery = [-20, -10], Stamina = [-20, -20], MeleeSkill = [-10, -10], RangedSkill = [0, 0], MeleeDefense = [-2, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
 				Perks = ["Overwhelm", "Footwork"],
-				Difficulty = 15,
+				Difficulty = 12,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "sellsword_background",
@@ -558,7 +549,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-30, -20], Bravery = [-30, -20], Stamina = [-15, -15], MeleeSkill = [-25, -15], RangedSkill = [-10, -10], MeleeDefense = [-35, -30], RangedDefense = [-15, -10], Initiative = [-5, -5] },
 				Perks = ["Duelist", "SpecSword", "LegendSpecGreatSword"],
-				Difficulty = 125,
+				Difficulty = 75,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "swordmaster_background"
@@ -568,7 +559,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-50, -30], Bravery = [-30, -20], Stamina = [-15, -15], MeleeSkill = [-25, -25], RangedSkill = [0, 0], MeleeDefense = [-15, -10], RangedDefense = [-12, -8], Initiative = [-15, -5] },
 				Perks = ["DevastatingStrikes", "SteelBrow", "Brawny"],
-				Difficulty = 100,
+				Difficulty = 60,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "hedge_knight_background"
@@ -578,7 +569,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-20, -15], Bravery = [-10, 0], Stamina = [-15, -15], MeleeSkill = [-5, -5], RangedSkill = [-15, -5], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-25, -10] },
 				Perks = ["Bullseye", "QuickHands", "SpecCrossbow", "SpecBow"],
-				Difficulty = 100,
+				Difficulty = 70,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "legend_master_archer_background",
@@ -618,7 +609,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "WolfTree",
 				Script = "player_beast/nggh_mod_direwolf_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyDirewolf"],
 			},
 			
@@ -626,7 +616,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-300, -300], Bravery = [-50, -50], Stamina = [-225, -200], MeleeSkill = [-10, -5], RangedSkill = [5, -5], MeleeDefense = [-3, -3], RangedDefense = [-3, -3], Initiative = [-10, -5] },
 				Perks = [],
-				Difficulty = 70,
+				Difficulty = 10,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 15, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.2, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -643,7 +633,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "LindwurmTree",
 				Script = "player_beast/nggh_mod_lindwurm_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyLindwurm"],
 			},
 			
@@ -651,7 +640,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-100, -100], Bravery = [-50, -50], Stamina = [-200, -200], MeleeSkill = [-8, -5], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
 				Skills = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
-				Difficulty = 40,
+				Difficulty = 10,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 20, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.3, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -668,7 +657,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "UnholdTree",
 				Script = "player_beast/nggh_mod_unhold_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyUnhold"],
 			},
 			
@@ -676,7 +664,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-150, -150], Bravery = [-50, -50], Stamina = [-200, -200], MeleeSkill = [-8, -5], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
 				Skills = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
-				Difficulty = 60,
+				Difficulty = 0,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 20, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.3, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -693,7 +681,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "UnholdTree",
 				Script = "player_beast/nggh_mod_unhold_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyUnhold"],
 			},
 			
@@ -701,7 +688,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-100, -100], Bravery = [-50, -50], Stamina = [-200, -200], MeleeSkill = [-8, -5], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
 				Skills = ["racial/legend_bog_unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
-				Difficulty = 40,
+				Difficulty = 15,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 20, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.3, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -718,7 +705,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "UnholdTree",
 				Script = "player_beast/nggh_mod_unhold_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyUnhold"],
 			},
 			
@@ -726,7 +712,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [-2, 2], RangedDefense = [-3, 0], Initiative = [-22, -12] },
 				Skills = ["actives/spider_bite_skill", "racial/spider_racial"],
-				Difficulty = 0,
+				Difficulty = -5,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 5, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.1, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.1, Fletching = 0.0, Scout = 0.3, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -743,7 +729,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "SpiderTree",
 				Script = "player_beast/nggh_mod_spider_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemySpider"],
 			},
 			
@@ -755,7 +740,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [0, 0], Bravery = [-25, -15], Stamina = [0, 0], MeleeSkill = [-5, 5], RangedSkill = [-5, 5], MeleeDefense = [-2, 0], RangedDefense = [-2, 0], Initiative = [0, 0] },
 				Perks = ["Underdog"],
 				Skills = ["actives/sleep_skill", "actives/nightmare_skill", "actives/alp_teleport_skill"],
-				Difficulty = 35,
+				Difficulty = 12,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 5, Stash = 3, Healing = 0.1, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.1, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.0, Fletching = 0.0, Scout = 0.2, Gathering = 0.1, Training = 0.0, Enchanting = 0.1,
@@ -772,7 +757,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "AlpTree",
 				Script = "player_beast/nggh_mod_alp_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyAlp"],
 			},
 			
@@ -783,7 +767,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-200, -200], Bravery = [0, 0], Stamina = [-100, -100], MeleeSkill = [-10, -5], RangedSkill = [5, -5], MeleeDefense = [-3, -3], RangedDefense = [-3, -3], Initiative = [-5, 0] },
 				Skills = ["racial/schrat_racial", "actives/grow_shield_skill"],
-				Difficulty = 75,
+				Difficulty = -25,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 10, Stash = 12, Healing = 0.2, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.0, Fletching = 0.0, Scout = 0.1, Gathering = 0.3, Training = 0.0, Enchanting = 0.0,
@@ -800,7 +784,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "SchratTree",
 				Script = "player_beast/nggh_mod_schrat_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemySchrat"],
 			},
 		
@@ -808,7 +791,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [-10, -8], RangedSkill = [0, 0], MeleeDefense = [-3, 0], RangedDefense = [-3, 0], Initiative = [0, 0] },
 				Perks = [],
-				Difficulty = -20,
+				Difficulty = -50,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 4, Stash = 5, Healing = 0.2, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.0, Fletching = 0.0, Scout = 0.1, Gathering = 0.2, Training = 0.0, Enchanting = 0.0,
@@ -825,7 +808,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "SmallSchratTree",
 				Script = "player_beast/nggh_mod_schrat_small_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = [],
 			},
 			
@@ -842,7 +824,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
 				Perks = [],
-				Difficulty = -200,
+				Difficulty = -689,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 100, ArmorParts = 100, Meds = 100, Stash = 300, Healing = 0.1, Injury = 0.1, Repair = 0.1, Salvage = 0.1, Crafting = 0.1, Barter = 0.1, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 1.0, Fletching = 0.1, Scout = 0.1, Gathering = 1.0, Training = 0.1, Enchanting = 50.0,
@@ -859,7 +841,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "KrakenTree",
 				Script = "player_beast/nggh_mod_kraken_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmSpec"],
 			},
 			
@@ -876,7 +857,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-10, -5], Bravery = [-2, 2], Stamina = [-2, 2], MeleeSkill = [-2, 2], RangedSkill = [-2, 2], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-2, 2] },
 				Skills = ["actives/barbarian_fury_skill"],
-				Difficulty = 5,
+				Difficulty = 0,
 				Custom = {},
 				PerkTree = "barbarian_background"
 			},
@@ -885,7 +866,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-40, -40], Bravery = [-20, -15], Stamina = [-10, -10], MeleeSkill = [-5, -5], RangedSkill = [-7, -5], MeleeDefense = [-5, -5], RangedDefense = [-3, -3], Initiative = [-15, -5] },
 				Skills = ["actives/barbarian_fury_skill"],
-				Difficulty = 25,
+				Difficulty = 5,
 				Custom = {},
 				PerkTree = "barbarian_background"
 				IsExperienced = true,
@@ -896,7 +877,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-50, -50], Bravery = [-20, -20], Stamina = [-25, -25], MeleeSkill = [-15, -10], RangedSkill = [-8, -8], MeleeDefense = [-10, -5], RangedDefense = [0, 0], Initiative = [-15, -5] },
 				Perks = ["Brawny"],
 				Skills = ["actives/barbarian_fury_skill"],
-				Difficulty = 67,
+				Difficulty = 42,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "barbarian_background"
@@ -906,7 +887,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-20, -20], Bravery = [-30, -20], Stamina = [-20, -10], MeleeSkill = [-5, -5], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-5, -5] },
 				Skills = ["actives/barbarian_fury_skill"],
-				Difficulty = 15,
+				Difficulty = 0,
 				Custom = {},
 				PerkTree = "minstrel_background",
 				IsExperienced = true,
@@ -916,7 +897,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-20, -20], Bravery = [-30, -20], Stamina = [-20, -10], MeleeSkill = [-5, -5], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-5, -5] },
 				Skills = ["actives/barbarian_fury_skill", "actives/crack_the_whip_skill"],
-				Difficulty = 33,
+				Difficulty = 10,
 				Custom = {
 					ID = "background.houndmaster",
 				},
@@ -928,7 +909,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-100, -100], Bravery = [-50, -50], Stamina = [-200, -200], MeleeSkill = [-8, -5], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
 				Skills = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
-				Difficulty = 40,
+				Difficulty = 10,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 20, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.3, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -945,7 +926,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "UnholdTree",
 				Script = "player_beast/nggh_mod_unhold_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyUnhold"],
 			},
 			
@@ -953,7 +933,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-150, -150], Bravery = [-50, -50], Stamina = [-200, -200], MeleeSkill = [-8, -5], RangedSkill = [5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
 				Skills = ["racial/unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
-				Difficulty = 60,
+				Difficulty = 0,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 20, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.3, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -970,7 +950,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "UnholdTree",
 				Script = "player_beast/nggh_mod_unhold_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyUnhold"],
 			},
 			
@@ -979,7 +958,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-50, -50], Bravery = [-20, -15], Stamina = [-25, -25], MeleeSkill = [-10, -10], RangedSkill = [-8, -8], MeleeDefense = [-10, 0], RangedDefense = [0, 0], Initiative = [-15, -5] },
 				Perks = ["DevastatingStrikes", "Brawny"],
 				Skills = ["actives/barbarian_fury_skill"],
-				Difficulty = 90,
+				Difficulty = 40,
 				Custom = {
 					ID = "background.barbarian",
 				},
@@ -994,7 +973,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [5, -5], Bravery = [5, -5], Stamina = [5, -5], MeleeSkill = [5, -5], RangedSkill = [5, -5], MeleeDefense = [3, -3], RangedDefense = [3, -3], Initiative = [10, -10] },
 				Perks = [],
-				Difficulty = -500,
+				Difficulty = -799,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 50, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.5, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.5, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -1010,7 +989,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "UnholdTree",
 				Script = "player_beast/nggh_mod_trickster_god_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmSpec"],
 			},
 			
@@ -1021,7 +999,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-10, -10], Bravery = [-15, -10], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [25, 25] },
 				Perks = [],
-				Difficulty = 0,
+				Difficulty = -15,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 5, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.3, Fletching = 0.0, Scout = 0.2, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -1038,7 +1016,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "SerpentTree",
 				Script = "player_beast/nggh_mod_serpent_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = [],
 			},
 			
@@ -1049,7 +1026,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-20, 0], Bravery = [-5, -5], Stamina = [-30, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [4, 6], RangedDefense = [0, 0], Initiative = [0, 5] },
 				Perks = [],
-				Difficulty = 25,
+				Difficulty = 5,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 3, Meds = 0, Stash = 5, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.3, Fletching = 0.0, Scout = 0.3, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -1066,7 +1043,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "HyenaTree",
 				Script = "player_beast/nggh_mod_hyena_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyDirewolf"],
 			},
 
@@ -1074,7 +1050,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-7, -10], Bravery = [-10, -10], Stamina = [-10, -10], MeleeSkill = [-8, -8], RangedSkill = [-5, -5], MeleeDefense = [0, -5], RangedDefense = [0, -3], Initiative = [-10, -10] },
 				Perks = ["Rotation"],
-				Difficulty = 10,
+				Difficulty = 5,
 				Custom = {},
 				PerkTree = "legend_noble_shield",
 				IsExperienced = true,
@@ -1084,7 +1060,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-10, -10], Bravery = [-15, -10], Stamina = [-10, -10], MeleeSkill = [-5, -5], RangedSkill = [-8, -5], MeleeDefense = [-2, -1], RangedDefense = [-2, 0], Initiative = [0, 0] },
 				Perks = ["Rotation", "SpecCrossbow"],
-				Difficulty = 15,
+				Difficulty = 10,
 				Custom = {},
 				PerkTree = "legend_noble_ranged",
 				IsExperienced = true,
@@ -1095,7 +1071,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-35, -30], Bravery = [-20, -10], Stamina = [-17, -12], MeleeSkill = [-17, -12], RangedSkill = [0, 0], MeleeDefense = [-10, -7], RangedDefense = [0, 0], Initiative = [-15, -10] },
 				Perks = ["QuickHands", "Rotation", "Duelist"],
 				Skills = ["perks/perk_captain"]
-				Difficulty = 55,
+				Difficulty = 45,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "legend_noble_background",
@@ -1105,7 +1081,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-30, -30], Bravery = [-30, -25], Stamina = [-20, -10], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
 				Perks = ["Rotation"],
-				Difficulty = 25,
+				Difficulty = 30,
 				Custom = {
 					ID = "background.legend_inventor"
 				},
@@ -1115,9 +1091,9 @@ if (!("CharmedUnits" in ::Const))
 			
 		//Assassin = 88,
 			{
-				StatMod = { Hitpoints = [-15, -10], Bravery = [-20, -10], Stamina = [-30, -10], MeleeSkill = [-10, -7], RangedSkill = [-5, -5], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-15, -10] },
+				StatMod = { Hitpoints = [-15, -10], Bravery = [-20, -10], Stamina = [-30, -10], MeleeSkill = [-10, -7], RangedSkill = [-5, -5], MeleeDefense = [0, 2], RangedDefense = [0, 0], Initiative = [-10, -5] },
 				Perks = ["QuickHands", "Backstabber", "SpecDagger"],
-				Difficulty = 60,
+				Difficulty = 45,
 				Custom = {
 					ID = "background.assassin_southern"
 				},
@@ -1138,7 +1114,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-40, -28], Bravery = [-30, -30], Stamina = [-15, -10], MeleeSkill = [-8, -8], RangedSkill = [-3, -3], MeleeDefense = [-10, -8], RangedDefense = [0, 0], Initiative = [-15, -15] },
 				Perks = ["Footwork", "Underdog"],
-				Difficulty = 35,
+				Difficulty = 15,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "gladiator_background",
@@ -1188,7 +1164,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-30, -20], Bravery = [-20, -20], Stamina = [-25, -15], MeleeSkill = [-13, -8], RangedSkill = [-8, -8], MeleeDefense = [-13, -8], RangedDefense = [-8, -5], Initiative = [-20, -15] },
 				Perks = ["NineLives"],
 				Skills = ["actives/throw_dirt_skill", "perks/perk_captain"],
-				Difficulty = 35,
+				Difficulty = 15,
 				Custom = {
 					ID = "background.nomad",
 				},
@@ -1201,7 +1177,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-20, -15], Bravery = [-10, 0], Stamina = [-15, -15], MeleeSkill = [-5, -5], RangedSkill = [-15, -10], MeleeDefense = [-5, -5], RangedDefense = [0, 0], Initiative = [-25, -10] },
 				Perks = ["Bullseye", "QuickHands", "SpecCrossbow", "SpecBow"],
 				Skills = ["actives/throw_dirt_skill"],
-				Difficulty = 100,
+				Difficulty = 70,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "legend_master_archer_background",
@@ -1212,7 +1188,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-50, -25], Bravery = [-20, -15], Stamina = [-10, -10], MeleeSkill = [-15, -5], RangedSkill = [0, 0], MeleeDefense = [-5, 0], RangedDefense = [-12, -8], Initiative = [-15, -5] },
 				Perks = ["DevastatingStrikes", "SteelBrow", "Brawny"],
 				Skills = ["actives/throw_dirt_skill"],
-				Difficulty = 100,
+				Difficulty = 50,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "hedge_knight_background"
@@ -1223,7 +1199,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-20, -20], Bravery = [-20, -15], Stamina = [-15, -15], MeleeSkill = [-25, -25], RangedSkill = [-10, -10], MeleeDefense = [-15, -10], RangedDefense = [-10, -10], Initiative = [-5, -5] },
 				Perks = ["Duelist", "SpecSword", "LegendSpecGreatSword"],
 				Skill = ["actives/throw_dirt_skill"],
-				Difficulty = 110,
+				Difficulty = 50,
 				Custom = {},
 				Requirements = ["NggHCharmAppearance"],
 				PerkTree = "swordmaster_background"
@@ -1270,7 +1246,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-100, -70], Bravery = [-35, -35], Stamina = [-120, -120], MeleeSkill = [-17, -9], RangedSkill = [-5, -2], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-25, -20] },
 				Perks = ["LegendComposure", "Stalwart", "ShieldBash"],
 				Skills = ["actives/line_breaker"],
-				Difficulty = 67,
+				Difficulty = 55,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 10, Meds = 10, Stash = 15, Healing = 0.0, Injury = 0.1, Repair = 0.0, Salvage = 0.30, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.15, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.1, Enchanting = 0.0,
@@ -1287,7 +1263,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "LegendOrcElite",
 				Script = "nggh_mod_player_orc",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyOrk"]
 			},
 			
@@ -1296,7 +1271,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-420, -400], Bravery = [-20, -15], Stamina = [-200, -200], MeleeSkill = [-12, -10], RangedSkill = [0, 0], MeleeDefense = [-7, -5], RangedDefense = [-5, -5], Initiative = [-7, 1] },
 				Perks = ["Stalwart"]
 				Skills = ["actives/line_breaker", "perks/perk_legend_taste_the_pain"],
-				Difficulty = 200,
+				Difficulty = 105,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 20, Meds = 0, Stash = 30, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.3, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -1313,7 +1288,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "LegendOrcBehemoth",
 				Script = "nggh_mod_player_orc",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyOrk", "NggHCharmSpec"]
 			},
 			
@@ -1322,7 +1296,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-200, -150], Bravery = [-40, -25], Stamina = [-80, -40], MeleeSkill = [-12, -10], RangedSkill = [0, 0], MeleeDefense = [-8, -8], RangedDefense = [-8, -8], Initiative = [-45, -35] },
 				Perks = ["Footwork", "Rotation"],
 				Skills = ["racial/werewolf_racial", "actives/legend_white_wolf_bite", "actives/legend_white_wolf_howl"],
-				Difficulty = 150,
+				Difficulty = 25,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 3, Meds = 0, Stash = 5, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.3, Fletching = 0.0, Scout = 0.3, Gathering = 0.1, Training = 0.0, Enchanting = 0.0,
@@ -1339,7 +1313,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "WhiteWolfTree",
 				Script = "player_beast/nggh_mod_direwolf_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyDirewolf", "NggHCharmSpec"],
 			},
 			
@@ -1347,7 +1320,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-80, -60], Bravery = [-30, -15], Stamina = [-10, -10], MeleeSkill = [-20, -15], RangedSkill = [0, 0], MeleeDefense = [-12, -10], RangedDefense = [-7, -7], Initiative = [-25, -25] },
 				Skills = ["actives/legend_skin_ghoul_claws", "actives/legend_skin_ghoul_swallow_whole_skill", "traits/fearless_trait"],
-				Difficulty = 120,
+				Difficulty = 20,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 8, Stash = 9, Healing = 0.0, Injury = 0.0, Repair = 0.1, Salvage = 0.1, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.1, Fletching = 0.0, Scout = 0.1, Gathering = 0.2, Training = 0.0, Enchanting = 0.0,
@@ -1364,7 +1337,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "NachoTree",
 				Script = "player_beast/nggh_mod_ghoul_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyGhoul", "NggHCharmSpec"],
 			},
 			
@@ -1373,7 +1345,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-750, -550], Bravery = [-80, -50], Stamina = [-225, -200], MeleeSkill = [-10, -10], RangedSkill = [0, 0], MeleeDefense = [-10, -10], RangedDefense = [-5, -5], Initiative = [0, 0] },
 				Perks = ["LegendMuscularity"],
 				Skills = ["actives/legend_stollwurm_move_skill"],
-				Difficulty = 270,
+				Difficulty = 75,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 15, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.2, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.1, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -1390,7 +1362,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "LindwurmTree",
 				Script = "player_beast/nggh_mod_lindwurm_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyLindwurm", "NggHCharmSpec"],
 			},
 			
@@ -1398,7 +1369,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-500, -500], Bravery = [-100, -100], Stamina = [-200, -200], MeleeSkill = [-10, -10], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-5, -5] },
 				Skills = ["racial/unhold_racial", "racial/legend_rock_unhold_racial", "actives/sweep_skill", "actives/sweep_zoc_skill", "actives/fling_back_skill"],
-				Difficulty = 175,
+				Difficulty = -60,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 20, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.3, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.0, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -1415,7 +1386,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "UnholdTree",
 				Script = "player_beast/nggh_mod_unhold_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyUnhold", "NggHCharmSpec"],
 			},
 			
@@ -1424,7 +1394,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-50, -50], Bravery = [-20, -20], Stamina = [-30, -20], MeleeSkill = [-20, -10], RangedSkill = [0, 0], MeleeDefense = [-10, -10], RangedDefense = [-10, -10], Initiative = [-45, -35] },
 				Perks = ["BattleForged"],
 				Skills = ["actives/legend_redback_spider_bite_skill", "racial/legend_redback_spider_racial"],
-				Difficulty = 100,
+				Difficulty = 25,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 0, Stash = 5, Healing = 0.0, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.1, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.2, Fletching = 0.0, Scout = 0.3, Gathering = 0.0, Training = 0.0, Enchanting = 0.0,
@@ -1441,7 +1411,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "SpiderTree",
 				Script = "player_beast/nggh_mod_spider_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemySpider", "NggHCharmSpec"],
 			},
 			
@@ -1450,7 +1419,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [0, 0], Bravery = [-50, -50], Stamina = [-50, -25], MeleeSkill = [-5, 5], RangedSkill = [-5, 5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
 				Perks = ["Footwork"],
 				Skills = ["actives/legend_demon_shadows_skill", "actives/horrific_scream", "actives/gruesome_feast", "effects/gruesome_feast_effect"],
-				Difficulty = 50,
+				Difficulty = 0,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 5, Stash = 3, Healing = 0.1, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.1, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.0, Fletching = 0.0, Scout = 0.2, Gathering = 0.1, Training = 0.0, Enchanting = 0.5,
@@ -1467,7 +1436,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "DemonAlpTree",
 				Script = "player_beast/nggh_mod_alp_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyAlp", "NggHCharmSpec"],
 			},
 			
@@ -1479,7 +1447,7 @@ if (!("CharmedUnits" in ::Const))
 				StatMod = { Hitpoints = [-300, -300], Bravery = [0, 0], Stamina = [-200, -150], MeleeSkill = [-15, -15], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-10, 0] },
 				Perks = ["SteelBrow"],
 				Skills = ["racial/legend_greenwood_schrat_racial", "actives/legend_grow_greenwood_shield_skill"],
-				Difficulty = 150,
+				Difficulty = -10,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 10, Stash = 12, Healing = 0.2, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.0, Fletching = 0.0, Scout = 0.1, Gathering = 0.3, Training = 0.0, Enchanting = 0.0,
@@ -1496,7 +1464,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "SchratTree",
 				Script = "player_beast/nggh_mod_schrat_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemySchrat", "NggHCharmSpec"],
 			},
 			
@@ -1504,7 +1471,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-25, -25], Bravery = [-25, -25], Stamina = [-100, -100], MeleeSkill = [-10, -10], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-5, 5] },
 				Skills = ["racial/schrat_racial"],
-				Difficulty = 30,
+				Difficulty = -50,
 				Custom =  {
 					BgModifiers = {
 						Ammo = 0, ArmorParts = 0, Meds = 4, Stash = 5, Healing = 0.2, Injury = 0.0, Repair = 0.0, Salvage = 0.0, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.0, Fletching = 0.0, Scout = 0.1, Gathering = 0.2, Training = 0.0, Enchanting = 0.0,
@@ -1521,7 +1488,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "SmallSchratTree",
 				Script = "player_beast/nggh_mod_schrat_small_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = [],
 				IsExperienced = true,
 			},
@@ -1559,7 +1525,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-60, -60], Bravery = [-70, -60], Stamina = [-50, -50], MeleeSkill = [-30, -30], RangedSkill = [-25, -15], MeleeDefense = [-18, -15], RangedDefense = [-25, -20], Initiative = [-50, -30] },
 				Perks = ["NineLives", "SunderingStrikes"],
-				Difficulty = 88,
+				Difficulty = -10,
 				Custom = {
 					ID = "background.raider",
 				},
@@ -1660,7 +1626,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-25, -10], Bravery = [-15, -10], Stamina = [-5, -5], MeleeSkill = [-2, 0], RangedSkill = [-20, -12], MeleeDefense = [-10, -10], RangedDefense = [-10, -10], Initiative = [-10, -10] },
 				Perks = ["Ballistics"],
-				Difficulty = 60,
+				Difficulty = 25,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "witchhunter_background",
@@ -1680,7 +1646,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-12, -12], Bravery = [-5, 0], Stamina = [-20, -15], MeleeSkill = [0, 0], RangedSkill = [-3, 1], MeleeDefense = [-2, -1], RangedDefense = [0, 0], Initiative = [0, 0] },
 				Perks = ["Rotation", "LegendMasterySlings"],
-				Difficulty = 10,
+				Difficulty = 27,
 				Custom = {
 					ID = "background.legend_noble_ranged",
 				},
@@ -1691,7 +1657,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [-35, -25], Bravery = [-25, -15], Stamina = [-15, -15], MeleeSkill = [-15, -10], RangedSkill = [0, 0], MeleeDefense = [-20, -15], RangedDefense = [-8, -5], Initiative = [-25, -20] },
 				Perks = ["Rotation", "Feint", "Duelist"],
-				Difficulty = 75,
+				Difficulty = 53,
 				Custom = {},
 				Requirements = ["NggHCharmWords"],
 				PerkTree = "adventurous_noble_background",
@@ -1729,7 +1695,6 @@ if (!("CharmedUnits" in ::Const))
 				},
 				PerkTree = "BearTree",
 				Script = "player_beast/nggh_mod_unhold_player",
-				Background = "nggh_mod_charmed_background",
 				Requirements = ["NggHCharmEnemyDirewolf"],
 			},
 			
@@ -1746,7 +1711,7 @@ if (!("CharmedUnits" in ::Const))
 			{
 				StatMod = { Hitpoints = [0, 0], Bravery = [0, 0], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
 				Perks = [],
-				Difficulty = -10,
+				Difficulty = -15,
 				Custom = {
 					ID = "background.beggar",
 				},
@@ -1916,10 +1881,10 @@ if (!("CharmedUnits" in ::Const))
 			}
 	],
 
-	//Database for new entries registered by ::nggh_registerCharmedEntries(_array)
+	// Database for new entries registered by ::nggh_registerCharmedEntries(_array)
 	CustomEntries = [],
 
-	//Database of all background icon directories, used to confirm if a background icon exists or not
+	// Database of all background icon directories, used to confirm if a background icon exists or not
 	BackgroundIcons = [],
 
 	function getIndex( _index )
@@ -1962,14 +1927,9 @@ if (!("CharmedUnits" in ::Const))
 
 		find = this.getIndex(_type);
 
-		if (find != null)
+		if (find != null && ::isThisBackgroundIconExist("background_charmed_" + _type + ".png"))
 		{
-			local ret = "background_charmed_" + _type + ".png";
-
-			if (::isThisBackgroundIconExist(ret))
-			{
-				return ret;
-			}
+			return "background_charmed_" + _type + ".png";
 		}
 
 		return "background_charmed_unknown.png";
@@ -1983,32 +1943,21 @@ if (!("CharmedUnits" in ::Const))
 		}
 
 		local index = _data.Type;
-		local isHuman = _entity != null ? _entity.getFlags().has("human") : false;
+		local isHuman = _entity != null ? _entity.getFlags().has("human") : this.isHuman(index);
 
 		if (!("Script" in _data))
 		{
 			_data.Script <- this.getScript(index);
 		}
 
-		if (!("Background" in _data))
-		{
-			_data.Background <- this.getBackground(index);
-		}
-
 		if (!("Requirements" in _data))
 		{
 			_data.Requirements <- this.getRequirements(index, isHuman);
-			if (_data.Requirements != null && _data.Requirements.len() != 0) _data.IsExperienced <- true;
 		}
 
-		if (!("IsExperienced" in _data))
+		if (!("IsHuman" in _data))
 		{
-			_data.IsExperienced <- this.isExperienced(index);
-		}
-
-		if (::World.getTime().Days >= 100)
-		{
-			_data.IsExperienced = true;
+			_data.IsHuman <- isHuman;
 		}
 	}
 
@@ -2038,6 +1987,11 @@ if (!("CharmedUnits" in ::Const))
 		if (!("PerkTree" in _data))
 		{
 			_data.PerkTree <- this.getPerkTree(index);
+		}
+
+		if (!("Background" in _data))
+		{
+			_data.Background <- this.getBackground(index);
 		}
 
 		if (!("Custom" in _data))
@@ -2070,152 +2024,93 @@ if (!("CharmedUnits" in ::Const))
 		return _data;
 	}
 
-	function isExperienced( _type )
+	function isHuman( _type )
 	{
-		local database = this.getData(_type);
+		return this.getScript() != null;
+	}
 
-		if (database == null)
+	function isKeyExist( _key, _data )
+	{
+		if (_data == null || !(_key in _data) || _data[_key] == null)
 		{
 			return false;
 		}
 
-		return database.rawin("IsExperienced");
+		return true;
+	}
+
+	function getDataByKey( _type, _key, _defaultReturnValue = null )
+	{
+		local database = this.getData(_type);
+
+		if (!this.isKeyExist(_key, database))
+		{
+			return _defaultReturnValue;
+		}
+
+		switch(typeof database[_key])
+		{
+		case "table":
+		case "array":
+			return ::nggh_deepCopy(database[_key]);
+
+		default:
+			return database[_key];
+		}
+
+		return null;
 	}
 
 	function getScript( _type )
 	{
-		local database = this.getData(_type);
-
-		if (database == null || !("Script" in database) || database.Script == null)
-		{
-			return "player";
-		}
-
-		return database.Script;
-	}
-
-	function getBackground( _type )
-	{
-		local database = this.getData(_type);
-
-		if (database == null || !("Background" in database) || database.Background == null)
-		{
-			return "nggh_mod_charmed_human_background";
-		}
-
-		//return "nggh_mod_charmed_background";
-		return database.Background;
+		return this.getDataByKey(_type, "Script", "player");
 	}
 
 	function getRequirements( _type , _isFindingHuman = false )
 	{
-		local database = this.getData(_type);
-
-		if (database == null || !("Requirements" in database) || database.Requirements == null)
-		{
-			if (_isFindingHuman)
-			{
-				return [];
-			}
-
-			return null;
-		}
-
-		return ::nggh_deepCopy(database.Requirements);
+		return this.getDataByKey(_type, "Requirements", _isFindingHuman ? [] : null);
 	}
 	
-	function getStatsModifiers( _type )
+	function getStatMod( _type )
 	{
-		local database = this.getData(_type);
+		return this.getDataByKey(_type, "StatMod", { Hitpoints = [-5, -5], Bravery = [-5, -5], Stamina = [-5, -5], MeleeSkill = [-5, -5], RangedSkill = [-5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-5, -5] }, true);
+	}
 
-		if (database == null || !("StatMod" in database) || database.StatMod == null)
-		{
-			return { Hitpoints = [-5, -5], Bravery = [-5, -5], Stamina = [-5, -5], MeleeSkill = [-5, -5], RangedSkill = [-5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-5, -5] };
-		}
-
-		return ::nggh_deepCopy(database.StatMod);
+	function getBackground( _type )
+	{
+		return !this.isHuman(_type) ? this.getDataByKey(_type, "Background") : null;
 	}
 	
-	function getSpecialPerks( _type )
+	function getPerks( _type )
 	{
-		local database = this.getData(_type);
-
-		if (database == null || !("Perks" in database) || database.Perks == null)
-		{
-			return [];
-		}
-
-		return ::nggh_deepCopy(database.Perks);
+		return this.getDataByKey(_type, "Perks", []);
 	}
 
-	function getSpecialSkills( _type )
+	function getSkills( _type )
 	{
-		local database = this.getData(_type);
+		return this.getDataByKey(_type, "Skills", []);
+	}
 
-		if (database == null || !("Skills" in database) || database.Skills == null)
-		{
-			return [];
-		}
-
-		return ::nggh_deepCopy(database.Skills);
+	function getCustom( _type )
+	{
+		return this.getDataByKey(_type, "Custom", {});
 	}
 	
 	function getDifficulty( _type )
 	{
-		local database = this.getData(_type);
-
-		if (database == null || !("Difficulty" in database) || database.Difficulty == null)
-		{
-			return 0;
-		}
-
-		return ::nggh_deepCopy(database.Difficulty);
-	}
-	
-	function getCustom( _type )
-	{	
-		local database = this.getData(_type);
-
-		if (database == null || !("Custom" in database) || database.Custom == null)
-		{
-			return {};
-		}
-
-		return ::nggh_deepCopy(database.Custom);
+		return this.getDataByKey(_type, "Difficulty", 0);
 	}
 	
 	function getPerkTree( _type )
 	{
-		local database = this.getData(_type);
-
-		if (database == null || !("PerkTree" in database) || database.PerkTree == null)
-		{
-			return null;
-		}
-
-		if (database.PerkTree in ::Const.PerksCharmedUnit)
-		{
-			return ::nggh_deepCopy(::Const.PerksCharmedUnit[database.PerkTree]);
-		}
-		
-		return database.PerkTree;
+		local perkTreeName = this.getDataByKey(_type, "PerkTree");
+		return perkTreeName != null && (perkTreeName in ::Const.PerksCharmedUnit) ? ::nggh_deepCopy(::Const.PerksCharmedUnit[perkTreeName]) : null;
 	}
 
 	function getNames( _type )
 	{
-		local database = this.getData(_type);
-
-		if (database == null || !("Names" in database) || database.Names == null)
-		{
-			return null;
-		}
-
-		if (database.Names in ::Const.Strings)
-		{
-			return ::nggh_deepCopy(::Const.Strings[database.Names]);
-		}
-
-		return null;
+		local key = this.getDataByKey(_type, "Names");
+		return key != null && (key in ::Const.Strings) ? ::nggh_deepCopy(::Const.Strings[key]) : null;
 	}
 	
 	function getAppeareace( _entity )
@@ -2235,6 +2130,46 @@ if (!("CharmedUnits" in ::Const))
 	}
 };
 
+local defaultTemplate =
+{
+	StatMod = { Hitpoints = [0, 0], Bravery = [-10, -5], Stamina = [0, 0], MeleeSkill = [-5, -5], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-25, -25] },
+	Skills = ["actives/ghoul_claws", "actives/swallow_whole_skill"],
+	Perks = ["HeadHunter", "Anticipation"],
+	Requirements = ["NggHCharmEnemyGhoul"],
+	Script = "player_beast/nggh_mod_ghoul_player",
+	Background = "barbarian_background",
+	PerkTree = "NachoTree", 
+	Difficulty = 15,
+
+	Custom =  {
+		ID = "background.legend_necromancer",
+		AdditionalPerkGroup = [1 ,["BasicNecroMagicTree", "ZombieMagicTree", "SkeletonMagicTree"]],
+		BgModifiers = {
+			Ammo = 0, ArmorParts = 0, Meds = 8, Stash = 9, Healing = 0.0, Injury = 0.0, Repair = 0.1, Salvage = 0.1, Crafting = 0.0, Barter = 0.0, ToolConsumption = 0.0, MedConsumption = 0.0, Hunting = 0.1, Fletching = 0.0, Scout = 0.1, Gathering = 0.2, Training = 0.0, Enchanting = 0.0,
+			Terrain = [0.0, 0.0, 0.025, 0.0, 0.0, 0.025, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+		},
+		Talents = {
+			ExcludedTalents = [1, 5],
+			PrimaryTalents = [],
+			SecondaryTalents = [0, 4, 5],
+			StarsMax = 9,
+			StarsMin = 1,
+		},
+		Names = "NachoNames",
+	},
+	
+	// all functions below will use '.call(background)' 
+
+	function onAppearanceChanged( _playerEntity, _enemyEntity )
+	{
+		
+	}
+
+	function onBeforeBuildPerkTree()
+	{
+		
+	}
+};
 
 local prefix = "gfx/ui/backgrounds/";
 foreach (directory in ::IO.enumerateFiles(prefix))

@@ -80,7 +80,7 @@ this.nggh_mod_charmed_human_background <- ::inherit("scripts/skills/backgrounds/
 		
 		if (type > 0)
 		{
-			this.m.AttMods = ::Const.CharmedUnits.getStatsModifiers(type);
+			this.m.AttMods = ::Const.CharmedUnits.getStatMod(type);
 		}
 		
 		this.character_background.onAdded();
@@ -103,8 +103,8 @@ this.nggh_mod_charmed_human_background <- ::inherit("scripts/skills/backgrounds/
 
 	function processTempData()
 	{
-		this.m.AttMods = ::Const.CharmedUnits.getStatsModifiers(this.m.TempData.Type);
-		this.m.Skills = ::Const.CharmedUnits.getSpecialSkills(this.m.TempData.Type);
+		this.m.AttMods = ::Const.CharmedUnits.getStatMod(this.m.TempData.Type);
+		this.m.Skills = ::Const.CharmedUnits.getSkills(this.m.TempData.Type);
 		this.m.Name = "Charmed " + ::Const.Strings.EntityName[this.m.TempData.Type];
 		this.m.Icon = "ui/backgrounds/" + ::Const.CharmedUnits.getBackgroundIcon(this.m.TempData.Type);
 		::Const.CharmedUtilities.processingCharmedBackground(this.m.TempData, this);

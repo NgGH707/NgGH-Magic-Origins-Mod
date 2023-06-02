@@ -272,7 +272,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			return null;
 		}
 		
-		local background = ::new("scripts/skills/backgrounds/" + data.Background);
+		local background = ::new("scripts/skills/backgrounds/" + (data.IsHuman ? : "nggh_mod_charmed_human_background" : "nggh_mod_charmed_background"));
 		local victim = roster.create("scripts/entity/tactical/" + data.Script);
 		victim.improveMood(2.0, "found a new purpose of life, to serve you, of course");
 		background.setTempData(data);

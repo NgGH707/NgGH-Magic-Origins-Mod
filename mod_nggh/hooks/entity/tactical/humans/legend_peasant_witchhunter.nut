@@ -6,7 +6,7 @@
 	{
 		ws_create();
 
-		if (::Math.rand(1, 100) <= 33)
+		if (::Math.rand(1, 100) <= 40)
 		{
 			this.m.IsMeleeWitchHunter = true;
 			this.m.AIAgent = ::new("scripts/ai/tactical/agents/bounty_hunter_melee_agent");
@@ -20,7 +20,7 @@
 		if (!this.m.IsMeleeWitchHunter)
 		{
 			ws_onInit();
-			this.m.BaseProperties.MoraleCheckBravery[1] += 20;
+			this.m.BaseProperties.MoraleCheckBravery[1] += 25;
 			return;
 		}
 		
@@ -31,7 +31,7 @@
 			ActionPoints = 9,
 			Hitpoints = 110,
 			Bravery = 100,
-			Stamina = 135,
+			Stamina = 140,
 			MeleeSkill = 75,
 			RangedSkill = 65,
 			MeleeDefense = 25,
@@ -43,7 +43,7 @@
 			FatigueRecoveryRate = 20
 		});
 
-		b.MoraleCheckBravery[1] += 20;
+		b.MoraleCheckBravery[1] += 25;
 		b.IsSpecializedInSwords = true;
 		b.IsSpecializedInAxes = true;
 		b.IsSpecializedInMaces = true;
@@ -73,11 +73,12 @@
 		this.m.Skills.add(::new("scripts/skills/perks/perk_footwork"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_recover"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_legend_net_casting"));
+		this.m.Skills.add(::new("scripts/skills/perks/perk_legend_assured_conquest"));
+		this.m.Skills.add(::new("scripts/skills/perks/perk_push_the_advantage"));
 
 		if (::Is_PTR_Exist)
 		{
 			this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_follow_up"));
-			this.m.Skills.add(::new("scripts/skills/perks/perk_legend_assured_conquest"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_legend_net_repair"));
 		}
 
@@ -85,7 +86,6 @@
 		{
 			this.m.Skills.add(::new("scripts/skills/perks/perk_pathfinder"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_head_hunter"));
-			this.m.Skills.add(::new("scripts/skills/perks/perk_push_the_advantage"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_legend_clarity"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_sundering_strikes"));
 			this.m.Skills.add(::new("scripts/skills/perks/perk_anticipation"));
@@ -104,7 +104,7 @@
 	local ws_assignRandomEquipment = obj.assignRandomEquipment;
 	obj.assignRandomEquipment = function()
 	{
-		local hasWitchHunterTag = this.m.WorldTroop != null && ("Party" in this.m.WorldTroop) && this.m.WorldTroop.Party != null && !this.m.WorldTroop.Party.isNull() && this.m.WorldTroop.Party.getFlags().has("WitchHunters")
+		local hasWitchHunterTag = this.m.WorldTroop != null && ("Party" in this.m.WorldTroop) && this.m.WorldTroop.Party != null && !this.m.WorldTroop.Party.isNull() && this.m.WorldTroop.Party.getFlags().has("WitchHunters");
 
 		if (hasWitchHunterTag)
 		{
@@ -123,7 +123,7 @@
 
 			if (::Is_PTR_Exist)
 			{
-				// shenanigans shit to make this boy has better perk
+				// shenanigans shit just in case if spetum is no longer treated as spear, it still gets the correct perks in ptr
 				this.m.Items.equip(weapon);
 
 				if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
@@ -154,9 +154,15 @@
 			// special melee witch hunter
 			if (hasWitchHunterTag)
 			{
-				this.m.BaseProperties.MeleeDamageMult = 1.15;
-				this.m.Items.equip(::Const.World.Common.pickArmor([[3, "werewolf_mail_armor"],[1, "northern_mercenary_armor_00"],[3, "northern_mercenary_armor_01"],[2, "mail_shirt"],[4, "mail_hauberk"]]));
-				this.m.Items.equip(::Const.World.Common.pickHelmet([[1, "witchhunter_hat"],[1, "hood"]]))
+				this.m.BaseProperties.MeleeDamageMult *= 1.25;
+				this.m.Skills.add(::new("scripts/skills/perks/perk_legend_big_game_hunter"));
+				this.m.Items.equip(::Const.World.Common.pickArmor([[2, "werewolf_mail_armor"],[1, "northern_mercenary_armor_00"],[3, "northern_mercenary_armor_01"],[2, "mail_shirt"],[4, "mail_hauberk"],[1, "light_scale_armor"],[3, "leather_scale_armor"]]));
+				this.m.Items.equip(::Const.World.Common.pickHelmet([[1, "witchhunter_hat"],[1, "hood"],[1, "rondel_helm"]]));
+				
+				if (::Is_PTR_Exist)
+				{
+					this.m.Skills.addPerkTree(::Const.Perks.TwoHandedTree);
+				}
 			}
 			// regular melee witch hunter
 			else
@@ -165,13 +171,17 @@
 
 				if (::Math.rand(1, 100) <= 66)
 				{
-					this.m.Items.equip(::Const.World.Common.pickHelmet([[1, "witchhunter_hat"],[6, "hood"]]))
+					this.m.Items.equip(::Const.World.Common.pickHelmet([[1, "witchhunter_hat"],[6, "hood"]]));
 				}
 			}
 
 			return;
 		}
 		
+		// give better AI agent
+		this.m.AIAgent = ::new("scripts/ai/tactical/agents/bounty_hunter_ranged_agent");
+		this.m.AIAgent.setActor(this);
+
 		// special ranged witch hunter
 		if (::Math.rand(1, 100) <= 66)
 		{
@@ -188,11 +198,24 @@
 
 		// nastier :)
 		this.m.BaseProperties.RangedSkill += ::Math.rand(2, 7);
+		this.m.BaseProperties.Initiative -= ::Math.rand(10, 15);
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_anticipation"));
+		this.m.Skills.add(::new("scripts/skills/perks/perk_legend_big_game_hunter"));
+		this.m.Skills.add(::new("scripts/skills/perks/perk_quick_hands"));
+		this.m.Skills.add(::new("scripts/skills/perks/perk_footwork"));
+
+		if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
+		{
+			this.m.Skills.add(::new("scripts/skills/perks/perk_recover"));
+			this.m.Skills.add(::new("scripts/skills/perks/perk_rotation"));
+			this.m.Skills.add(::new("scripts/skills/perks/perk_crippling_strikes"));
+			this.m.Skills.add(::new("scripts/skills/perks/perk_fast_adaption"));
+		}
 
 		if (::Is_PTR_Exist)
 		{
+			this.m.Skills.add(::new("scripts/skills/perks/perk_anticipation"));
+
 			if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
 			{
 				this.m.Skills.addTreeOfEquippedWeapon(7);
@@ -203,7 +226,7 @@
 			}
 		}
 
-		this.m.Items.equip(::Const.World.Common.pickArmor([[1, "padded_leather"],[2, "werewolf_hide_armor"],[1, "basic_mail_shirt"],[2, "mail_shirt"]]));
+		this.m.Items.equip(::Const.World.Common.pickArmor([[1, "padded_leather"],[2, "werewolf_hide_armor"],[2, "mail_shirt"]]));
 		this.m.Items.equip(::Const.World.Common.pickHelmet([[3, "witchhunter_hat"],[2, "hood"]]));
 	}
 

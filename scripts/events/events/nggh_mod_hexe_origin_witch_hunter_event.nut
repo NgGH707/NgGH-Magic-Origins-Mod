@@ -289,7 +289,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 
 		party.getSprite("banner").setBrush(this.m.Town.getBanner());
 		party.getSprite("body").setBrush(template.Body);
-		party.setMovementSpeed(::Const.World.MovementSettings.Speed * template.MovementSpeedMult * 5.0);
+		party.setMovementSpeed(::Const.World.MovementSettings.Speed * template.MovementSpeedMult);
 		party.setVisibilityMult(template.VisibilityMult);
 		party.setVisionRadius(::Const.World.Settings.Vision * template.VisionMult);
 		party.setDescription("Brave men sent from [color=" + ::Const.UI.Color.NegativeValue + "]" + this.m.Town.getName() + "[/color] to vanquish heretics.");

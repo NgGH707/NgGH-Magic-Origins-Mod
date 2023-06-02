@@ -4,7 +4,7 @@
 	obj.onInit = function()
 	{
 		onInit();
-		local chance = 25;
+		local chance = 15;
 
 		if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
 		{
@@ -13,7 +13,7 @@
 
 		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 100)
 		{
-			chance = ::Math.min(100, chance + ::Math.max(10, ::World.getTime().Days - 100));
+			chance = ::Math.min(100, chance + ::Math.max(5, ::World.getTime().Days - 100));
 		}
 
 		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHSerpentBite, ::Const.Perks.PerkDefs.NggHSerpentVenom], chance - 15);

@@ -1,10 +1,10 @@
 <brush name="gfx/named_staves.png" version="17">
-  <sprite id="icon_mod_staff_named_01" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_01.png" left="-47" right="13" top="-59" bottom="70" />
-  <sprite id="icon_mod_staff_named_01_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_01_bloodied.png" left="-47" right="13" top="-59" bottom="70" />
-  <sprite id="icon_mod_staff_named_02" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_02.png" left="-47" right="13" top="-59" bottom="70" />
-  <sprite id="icon_mod_staff_named_02_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_02_bloodied.png" left="-47" right="13" top="-59" bottom="70" />
-  <sprite id="icon_mod_staff_named_03" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_03.png" left="-47" right="13" top="-59" bottom="70" />
-  <sprite id="icon_mod_staff_named_03_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_03_bloodied.png" left="-47" right="13" top="-59" bottom="70" />
-  <sprite id="icon_mod_staff_named_04" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_04.png" left="-47" right="13" top="-59" bottom="70" />
-  <sprite id="icon_mod_staff_named_04_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_04_bloodied.png" left="-47" right="13" top="-59" bottom="70" />
+  <sprite id="icon_mod_staff_named_01" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_01.png" left="-44" right="16" top="-61" bottom="68" />
+  <sprite id="icon_mod_staff_named_01_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_01_bloodied.png" left="-44" right="16" top="-61" bottom="68" />
+  <sprite id="icon_mod_staff_named_02" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_02.png" left="-44" right="16" top="-61" bottom="68" />
+  <sprite id="icon_mod_staff_named_02_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_02_bloodied.png" left="-44" right="16" top="-61" bottom="68" />
+  <sprite id="icon_mod_staff_named_03" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_03.png" left="-44" right="16" top="-61" bottom="68" />
+  <sprite id="icon_mod_staff_named_03_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_03_bloodied.png" left="-44" right="16" top="-61" bottom="68" />
+  <sprite id="icon_mod_staff_named_04" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_04.png" left="-44" right="16" top="-61" bottom="68" />
+  <sprite id="icon_mod_staff_named_04_bloodied" offsetY="35" ic="FF3B404A" width="60" height="129" img="icons\icon_mod_staff_named_04_bloodied.png" left="-44" right="16" top="-61" bottom="68" />
 </brush>

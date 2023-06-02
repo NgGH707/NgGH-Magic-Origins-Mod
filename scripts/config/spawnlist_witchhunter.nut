@@ -14,6 +14,9 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 	TitleList = inquisitor_titles
 };
 
+// change witch hunter strength rating
+::Const.World.Spawn.Troops.LegendPeasantWitchHunter.Strength = 30;
+
 // new tactical effects
 ::Const.World.Spawn.Nggh_WitchHunter <- {
 	Name = "WitchHunter",
@@ -21,15 +24,22 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 	MovementSpeedMult = 1.15,
 	VisibilityMult = 0.9,
 	VisionMult = 99.0,
-	Body = "figure_noble_02",
+	Body = "figure_player_inquisition",
 	MinR = 69, // funny number :3
-	MaxR = 969, 
+	MaxR = 969,
+	Fixed = [
+		{
+			Weight = 100 
+			Type = ::Const.World.Spawn.Troops.Inquisitor,
+			Cost = 40
+		}
+	],
 	Troops = [
 		{
-			Weight = 39,
+			Weight = 40,
 			Types = [
 				{
-					MaxR = 400,
+					MaxR = 300,
 					Type = ::Const.World.Spawn.Troops.MercenaryLOW,
 					Cost = 18
 				},
@@ -40,7 +50,7 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 			]
 		},
 		{
-			Weight = 39,
+			Weight = 40,
 			Types = [
 				{
 					Type = ::Const.World.Spawn.Troops.LegendPeasantWitchHunter,
@@ -52,6 +62,7 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 			Weight = 15,
 			Types = [
 				{
+					MaxCount = 2,
 					Type = ::Const.World.Spawn.Troops.LegendPeasantMonk,
 					Cost = 20
 				},
@@ -62,8 +73,8 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 			]
 		},
 		{
-			Weight = 4,
-			MinR = 250,
+			Weight = 5,
+			MinR = 400,
 			Types = [
 				{
 					Type = ::Const.World.Spawn.Troops.Inquisitor,
@@ -83,13 +94,96 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 				}
 			]
 		},
+	]
+};
+
+::Const.World.Spawn.Nggh_WitchHunterAndNoble <- {
+	Name = "WitchHunter",
+	IsDynamic = true,
+	MovementSpeedMult = 1.15,
+	VisibilityMult = 0.9,
+	VisionMult = 99.0,
+	Body = "figure_player_inquisition",
+	MinR = 69, // funny number :3
+	MaxR = 969,
+	Fixed = [
+		{
+			Weight = 100 
+			Type = ::Const.World.Spawn.Troops.StandardBearer,
+			Cost = 20
+		}
+	],
+	Troops = [
+		{
+			Weight = 50,
+			Types = [
+				{
+					Type = ::Const.World.Spawn.Troops.LegendPeasantWitchHunter,
+					Cost = 15
+				}
+			]
+		},
+		{
+			Weight = 39,
+			Types = [
+				{
+					MaxCount = 1,
+					Type = ::Const.World.Spawn.Troops.LegendPeasantMonk,
+					Cost = 20
+				},
+				{
+					Type = ::Const.World.Spawn.Troops.Footman,
+					Cost = 15
+				}
+			]
+		},
+		{
+			Weight = 5,
+			Types = [
+				{
+					Type = ::Const.World.Spawn.Troops.Greatsword,
+					Cost = 30
+				}
+			]
+		},
+		{
+			Weight = 5,
+			Types = [
+				{
+					MaxCount = 3,
+					Type = ::Const.World.Spawn.Troops.ArmoredWardog,
+					Cost = 5
+				}
+			]
+		},
+		{
+			Weight = 5,
+			Types = [
+				{
+					Type = ::Const.World.Spawn.Troops.Greatsword,
+					Cost = 30
+				}
+			]
+		},
 		{
 			Weight = 3,
-			MinR = 250,
+			MinR = 150,
+			Types = [
+				{
+					Type = ::Const.World.Spawn.Troops.Sergeant,
+					Cost = 40,
+					Roll = true
+				}
+			]
+		},
+		{
+			Weight = 3,
+			MinR = 300,
 			Types = [
 				{
 					Type = ::Const.World.Spawn.Troops.Inquisitor,
-					Cost = 40
+					Cost = 40,
+					Roll = true
 				}
 			]
 		},
