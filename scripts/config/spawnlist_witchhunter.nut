@@ -62,13 +62,13 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 			Weight = 15,
 			Types = [
 				{
+					Type = ::Const.World.Spawn.Troops.MercenaryRanged,
+					Cost = 22
+				},
+				{
 					MaxCount = 2,
 					Type = ::Const.World.Spawn.Troops.LegendPeasantMonk,
 					Cost = 20
-				},
-				{
-					Type = ::Const.World.Spawn.Troops.MercenaryRanged,
-					Cost = 22
 				}
 			]
 		},
@@ -127,14 +127,14 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 			Weight = 39,
 			Types = [
 				{
+					Type = ::Const.World.Spawn.Troops.Footman,
+					Cost = 15
+				},
+				{
 					MaxCount = 1,
 					Type = ::Const.World.Spawn.Troops.LegendPeasantMonk,
 					Cost = 20
 				},
-				{
-					Type = ::Const.World.Spawn.Troops.Footman,
-					Cost = 15
-				}
 			]
 		},
 		{

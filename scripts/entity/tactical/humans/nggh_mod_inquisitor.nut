@@ -175,7 +175,7 @@ this.nggh_mod_inquisitor <- ::inherit("scripts/entity/tactical/human", {
 				tier = 7;
 			}
 			
-			if (this.m.Items.getMainhandItem().isItemType(::Const.Items.ItemType.TwoHanded))
+			if (this.getMainhandItem().isItemType(::Const.Items.ItemType.TwoHanded))
 			{
 				this.m.BaseProperties.MeleeDefense += 10;
 				this.m.Skills.addPerkTree(::Const.Perks.TwoHandedTree, tier);
