@@ -5,7 +5,7 @@
 	{
 		ws_assignRandomEquipment()
 		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Body));
-		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Head))
+		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Head));
 
 		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		{
