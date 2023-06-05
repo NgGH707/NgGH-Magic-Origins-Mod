@@ -456,7 +456,7 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		this.setSpriteOffset("status_rooted", ::createVec(-10, 16));
 		this.setSpriteOffset("status_stunned", ::createVec(0, 10));
 		this.setSpriteOffset("arrow", ::createVec(0, 10));
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 		
 		this.setScenarioValues(type, _isElite);
 	}

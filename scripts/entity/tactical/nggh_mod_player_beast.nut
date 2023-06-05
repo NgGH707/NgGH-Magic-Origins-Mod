@@ -254,6 +254,7 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 		}
 		*/
 		
+		this.getBackground().onfillTalentsValues(this.getTalents());
 		this.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
 
 		if (_setName)
@@ -270,11 +271,6 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscChampion, 6);
 		}
 
-		if (::Math.rand(1, 100) <= 5)
-		{
-			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscFairGame, 2);
-		}
-
 		if (!this.m.Skills.hasSkill("trait.intensive_training_trait"))
 		{
 			this.m.Skills.add(::new("scripts/skills/traits/intensive_training_trait"));
@@ -289,6 +285,7 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 		// do nothing but its children will
 	}
 	
+	/*
 	function fillModsTalentValues( _stars = 0 , _force = false )
 	{
 		if (this.getBackground() != null && ("Custom" in this.getBackground().m.TempData))
@@ -296,6 +293,7 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 			::Nggh_MagicConcept.TalentFiller.fillModdedTalentValues(this , this.getBackground().m.TempData.Custom.Talents , _stars , _force);
 		}
 	}
+	*/
 
 	function fillTalentValues( _num = null , _force = false )
 	{

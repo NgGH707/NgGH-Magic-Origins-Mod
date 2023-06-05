@@ -110,7 +110,7 @@ this.nggh_mod_luft_player <- ::inherit("scripts/entity/tactical/player_beast/ngg
 		this.setName("Luft");
 	}
 
-	function addDefaultBackground( _type )
+	function addDefaultBackground( _type , _isElite = false )
 	{
 		local background = ::new("scripts/skills/backgrounds/nggh_mod_luft_background");
 		this.m.Skills.add(background);

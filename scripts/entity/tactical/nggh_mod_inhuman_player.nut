@@ -256,12 +256,14 @@ this.nggh_mod_inhuman_player <- ::inherit("scripts/entity/tactical/player", {
 		}
 	}
 
-	function addDefaultBackground( _type )
+	function addDefaultBackground( _type , _isElite = false )
 	{
 		local background = ::new("scripts/skills/backgrounds/nggh_mod_charmed_background");
-		background.setTempDataByType(_type);
+		background.setTempDataByType(_type, _isElite);
 		this.m.Skills.add(background);
-		background.setup();
+
+		::Const.CharmedUtilities.setup(background, true);
+
 		background.buildDescription();
 	}
 

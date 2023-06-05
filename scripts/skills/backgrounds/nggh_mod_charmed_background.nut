@@ -1,24 +1,61 @@
 this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/character_background", {
 	m = {
-		TempData = null,
-		
-		IsOrc = false,
-		IsGoblin = false,
-		
 		PerkGroupMultipliers = [],
-		AdditionalPerks = null,
+		HasFixedName = false,
+		IsOnDeserializing = false,
+		IsSavingModifier = false,
+		IsSavingBackgroundType = false,
+
+		TempData = null,
+		CharmID = null,
 		AttMods = null,
-		Skills = null,
+		Race = 0,
 	},
 
-	function isOrc()
+	function isHuman()
 	{
-		return this.m.IsOrc;
+		return this.m.Race == 0;
 	}
 
 	function isGoblin()
 	{
-		return this.m.IsGoblin;
+		return this.m.Race == 1;
+	}
+
+	function isOrc()
+	{
+		return this.m.Race == 2;
+	}
+
+	function isBeast()
+	{
+		return this.m.Race == 3;
+	}
+
+	function onBuildDescription()
+	{
+		return this.m.BackgroundDescription;
+	}
+
+	function getCharmDataByID( _id )
+	{
+		return ::Const.CharmedUnits.getData(_id);
+	}
+
+	function setTempDataByType( _type, _isElite = false )
+	{
+		local ret = {Type = _type, Entity = null};
+
+		if (_isElite) ret.IsMiniboss <- true;
+
+		this.setTempData(ret);
+	}
+
+	function setTempData( _data )
+	{
+		this.m.CharmID = _data.Type;
+		this.m.TempData = ::Const.CharmedUnits.addAdditionalData(_data);
+		::Const.CharmedUtilities.processingCharmedBackground(this.m.TempData, this);
 	}
 	
 	function create()
@@ -60,28 +97,28 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		return this.m.AttMods;
 	}
 
-	function onBuildDescription()
+	function onUpdate( _properties )
 	{
-		return this.m.BackgroundDescription;
+		local data = this.getCharmDataByID(this.m.CharmID);
+
+		this.character_background.onUpdate(_properties);
+
+		if (("onUpdate" in data) && typeof data.onUpdate == "function") data.onUpdate.call(this, _properties);
 	}
 
 	function onAdded()
 	{
+		local data = this.getCharmDataByID(this.m.CharmID);
+
 		if (this.isOrc() || this.isGoblin())
 		{
-			this.addBackgroundType(::Const.BackgroundType.Combat);
 			this.m.AlignmentMin = ::Const.LegendMod.Alignment.Cruel;
 			this.m.AlignmentMax = ::Const.LegendMod.Alignment.Merciless;
 		}
 
-		if (this.isGoblin())
+		if (("Skills" in data) && data.Skills != null && data.Skills.len() != 0)
 		{
-			this.m.Titles = ::Const.Strings.GoblinTitles;
-		}
-
-		if (this.m.Skills != null && this.m.Skills.len() != 0)
-		{
-			foreach ( script in this.m.Skills )
+			foreach ( script in data.Skills )
 			{
 				if (script.len() == 0)
 				{
@@ -94,240 +131,52 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			}
 		}
 		
-		local type = this.getContainer().getActor().getFlags().getAsInt("Type");
-		
-		if (type > 0)
-		{
-			this.m.AttMods = ::Const.CharmedUnits.getStatMod(type);
-		}
-		
+		this.m.AttMods = ::nggh_deepCopy(data.StatMod);
+
+		if (!this.isHuman()) this.addBackgroundType(::Const.BackgroundType.Combat);
+
+		if (!this.m.IsSavingModifier && ("Custom" in data) && typeof data.Custom == "table" && ("BgModifiers" in data.Custom) && data.Custom.BgModifiers != null) this.m.Modifiers = ::nggh_deepCopy(data.Custom.BgModifiers);
+
+		if (("onAdded" in data) && typeof data.onAdded == "function") data.onAdded.call(this);
+
 		this.character_background.onAdded();
-	}
-
-	function setTempData( _data )
-	{
-		this.m.TempData = ::Const.CharmedUnits.addAdditionalData(_data);
-		this.processTempData();
-	}
-
-	function setTempDataByType( _type )
-	{
-		this.setTempData({
-			Type = _type,
-			IsExperienced = true,
-			Entity = null
-		});
-	}
-
-	function processTempData()
-	{
-		this.m.IsOrc = ::Const.Orc.Variants.find(this.m.TempData.Type) != null;
-		this.m.IsGoblin = ::Const.Goblin.Variants.find(this.m.TempData.Type) != null;
-		this.m.AttMods = ::Const.CharmedUnits.getStatMod(this.m.TempData.Type);
-		this.m.Skills = ::Const.CharmedUnits.getSkills(this.m.TempData.Type);
-		this.m.Name = "Charmed " + ::Const.Strings.EntityName[this.m.TempData.Type];
-		this.m.Icon = "ui/backgrounds/" + ::Const.CharmedUnits.getBackgroundIcon(this.m.TempData.Type);
-		::Const.CharmedUtilities.processingCharmedBackground(this.m.TempData, this);
-	}
-	
-	function setup( _isFromScenario = true )
-	{
-		if (this.isOrc())
-		{
-			this.m.ExcludedTalents.extend([
-				::Const.Attributes.Initiative,
-				::Const.Attributes.RangedSkill,
-				::Const.Attributes.RangedDefense
-			]);
-		}
-
-		if (this.isGoblin())
-		{
-			this.m.ExcludedTalents.extend([
-				::Const.Attributes.Hitpoints,
-				::Const.Attributes.Fatigue,
-				::Const.Attributes.Bravery
-			]);
-		}
-
-		local actor = this.getContainer().getActor();
-		actor.m.Background = this;
-		actor.m.StarWeights = this.buildAttributes(null, null);
-		local attributes = this.buildPerkTree();
-		this.setAppearance();
-		
-		if (this.m.AdditionalPerks != null)
-		{
-			foreach ( _array in this.m.AdditionalPerks )
-			{
-				this.addPerkGroup(_array);
-			}
-		}
-
-		if (this.m.Names.len() != 0)
-		{
-			actor.setName(::MSU.Array.rand(this.m.Names));
-		}
-
-		if (!_isFromScenario)
-		{
-			actor.setScenarioValues(this.m.TempData.Type, this.m.TempData.IsMiniboss, true, this.m.Names.len() == 0);
-		}
-
-		this.addBonusAttributes(attributes);
-		this.onAfterSetUp();
-		this.onAddEquipment();
-	}
-
-	function onAfterSetUp()
-	{
-		if (!("Perks" in this.m.TempData) || this.m.TempData.Perks == null)
-		{
-			return;
-		}
-
-		this.m.TempData.Perks.extend(this.getContainer().getActor().getSignaturePerks());
-
-		foreach (i, Const in this.m.TempData.Perks )
-		{
-			::World.Assets.getOrigin().addScenarioPerk(this, ::Const.Perks.PerkDefs[Const], i);
-		}
 	}
 
 	function onAddEquipment()
 	{
+		local data = this.getCharmDataByID(this.m.CharmID);
 		local items = this.getContainer().getActor().getItems();
 		
-		if (this.m.TempData != null && ("Items" in this.m.TempData) && this.m.TempData.Items != null)
-		{
-			this.m.TempData.Items.transferTo(items);
-		}
-
-		if (this.m.TempData.Type == ::Const.EntityType.GoblinWolfrider)
-		{
-			::World.Assets.getOrigin().addScenarioPerk(this, ::Const.Perks.PerkDefs.NggHGoblinMountTraining, 1);
-			items.equip(::new("scripts/items/accessory/wolf_item"));
-		}
+		if (this.m.TempData != null && ("Items" in this.m.TempData) && this.m.TempData.Items != null) this.m.TempData.Items.transferTo(items);
 		
-		if (!("IsExperienced" in this.m.TempData))
-		{
-			return;
-		}
-		
-		local r = this.m.TempData.IsExperienced ? ::Math.rand(2, 4) : 1;
-
-		if (r == 1)
-		{
-			r += this.calculateAdditionalRecruitmentLevels();
-		}
-
-		if (::World.getTime().Days >= 150)
-		{
-			r += 1;
-		}
-
-		r = ::Math.min(7, r);
-		this.getContainer().getActor().m.PerkPoints = r - 1;
-		this.getContainer().getActor().m.Level = r;
-		this.getContainer().getActor().m.LevelUps = r - 1;
-		
-		if (r > 1)
-		{
-			this.getContainer().getActor().m.XP = ::Const.LevelXP[r - 1];
-		}
+		if (("onAddEquipment" in data) && typeof data.onAddEquipment == "function") data.onAddEquipment.call(this);
 	}
-	
+
 	function setAppearance()
 	{
 		local actor = this.getContainer().getActor();
-		local data = this.m.TempData;
+		local data = this.getCharmDataByID(this.m.CharmID);
 		local entity = this.m.TempData.Entity;
-		local b = actor.m.BaseProperties;
 
-		if (entity != null && data != null && ("Appearance" in data) && data.Appearance != null && typeof data.Appearance == "array")
+		if (this.m.HasFixedName)
 		{
-			::logInfo("Identifying charmed target: " + ::Const.Strings.EntityName[entity.getType()]);
-			::logInfo("Copying sprites to a new charmed slave container...");
-			actor.copySpritesFrom(entity, data.Appearance);
-			
-			switch (data.Type)
+			actor.setName(this.m.Names[0]);
+
+			if (this.m.Titles.len() != 0)
 			{
-			case ::Const.EntityType.Spider:
-			case ::Const.EntityType.LegendRedbackSpider:
-				actor.setSize(entity.m.Size);
-				if (!::Nggh_MagicConcept.IsOPMode && data.Type == ::Const.EntityType.LegendRedbackSpider)
-				{
-					b.ArmorMax[0] = 160;
-					b.ArmorMax[1] = 160;
-					b.Armor[0] = ::Math.floor(b.Armor[0] / 3 * 2);
-					b.Armor[1] = ::Math.floor(b.Armor[1] / 3 * 2);
-				}
-				break;
+				actor.setTitle(this.m.Titles[0]);
+			}
+		}
 
-			case ::Const.EntityType.Direwolf:
-				if (entity.getSprite("head_frenzy").HasBrush)
-				{
-					local head_frenzy = actor.getSprite("head_frenzy");
-					head_frenzy.setBrush(actor.getSprite("head").getBrush().Name + "_frenzy");
-					actor.getFlags().add("frenzy");
-				}
-				else
-				{
-					this.addPerk(::Const.Perks.PerkDefs.NggHWolfRabies, 6);
-				}
-				break;
+		if (entity != null && this.m.TempData != null && ("Appearance" in this.m.TempData) && this.m.TempData.Appearance != null && typeof this.m.TempData.Appearance == "array")
+		{
+			::logInfo("Identifying charmed target: " + ::Const.Strings.EntityName[this.m.CharmID]);
+			::logInfo("Copying sprites to a new charmed slave container...");
+			actor.copySpritesFrom(entity, this.m.TempData.Appearance);
 
-			case ::Const.EntityType.Hyena:
-				if (entity.m.IsHigh)
-				{
-					actor.getFlags().add("frenzy");
-				}
-				else
-				{
-					this.addPerk(::Const.Perks.PerkDefs.NggHWolfRabies, 6);
-				}
-				break;
-
-			case ::Const.EntityType.Ghoul:
-			case ::Const.EntityType.LegendSkinGhoul:
-				actor.setVariant(entity.m.Head);
-				actor.getFlags().set("has_eaten", true);
-				actor.getFlags().set("Type", data.Type);
-				local n = ::Math.max(0, entity.getSize() - 1);
-				for (local i = 0; i < n; ++i)
-				{
-					actor.grow(true);
-				}
-				break;
-
-			case ::Const.EntityType.Serpent:
-				actor.setVariant(entity.m.Variant);
-				break;
-
-			case ::Const.EntityType.UnholdFrost:
-			case ::Const.EntityType.BarbarianUnholdFrost:
-				actor.getFlags().add("regen_armor");
-				actor.setVariant(1);
-				break;
-
-			case ::Const.EntityType.Unhold:
-			case ::Const.EntityType.BarbarianUnhold:
-				actor.setVariant(2);
-				break;
-
-			case ::Const.EntityType.UnholdBog:
-				actor.setVariant(3);
-				break;
-
-			case ::Const.EntityType.LegendRockUnhold:
-				actor.getFlags().add("regen_armor")
-				actor.setVariant(4);
-				break;
-
-			case ::Const.EntityType.LegendBear:
-				actor.getFlags().add("regen_armor")
-				actor.setVariant(5);
-				break;
+			if (("onSetAppearance" in data) && typeof data.onSetAppearance == "function")
+			{
+				data.onSetAppearance.call(this, actor, entity);
 			}
 
 			if (this.isOrc())
@@ -342,43 +191,213 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 				}
 			}
 			
-			actor.updateVariant();
+			if (this.isHuman())
+			{
+				if (entity.m.Surcoat != null)
+				{
+					actor.m.Surcoat = entity.m.Surcoat;
+				}
+				
+				if (entity.getEthnicity() != 0)
+				{
+					this.m.Ethnicity = entity.getEthnicity();
+					actor.m.Ethnicity = entity.getEthnicity();
+				}
+			}
+			else
+			{
+				actor.updateVariant();
+			}
+			
 			actor.onUpdateInjuryLayer();
 		}
+
+		if (this.m.HasFixedName) return;
+
+		if (this.m.Names.len() != 0)
+		{
+			local name = ::MSU.Array.rand(this.m.Names);
+
+			if (this.m.LastNames != 0) name += " " +  ::MSU.Array.rand(this.m.LastNames);
+
+			actor.setName(name);
+		}
+
+		if (actor.getTitle().len() == 0 && this.m.Titles.len() != 0)
+		{
+			actor.setTitle(::MSU.Array.rand(this.m.Titles));
+		}
+	}
+
+	function pickCurrentLevel()
+	{
+		local r = ::Math.rand(1, 3);
+
+		if (r == 1) r += this.calculateAdditionalRecruitmentLevels();
+
+		if (::World.getTime().Days >= 150) r += 1;
+
+		r = ::Math.min(7, r);
+		this.getContainer().getActor().m.PerkPoints = r - 1;
+		this.getContainer().getActor().m.Level = r;
+		this.getContainer().getActor().m.LevelUps = r - 1;
+		
+		if (r > 1)
+		{
+			this.getContainer().getActor().m.XP = ::Const.LevelXP[r - 1];
+		}
+	}
+
+	function onBeforeBuildPerkTree()
+	{
+		local data = this.getCharmDataByID(this.m.CharmID);
+
+		if (("PerkTree" in data) && data.PerkTree != null)
+		{
+			switch (typeof data.PerkTree)
+			{
+			case "array":
+				this.m.CustomPerkTree = ::nggh_deepCopy(data.PerkTree);
+				break;
+
+			case "table":
+				this.m.PerkTreeDynamic = ::nggh_deepCopy(data.PerkTree);
+				break;
+			}
+		}
+
+		if (this.m.PerkGroupMultipliers.len() == 0 && this.m.PerkTreeDynamic != null && ("WeightMultipliers" in this.m.PerkTreeDynamic))
+		{
+			this.m.PerkGroupMultipliers = this.m.PerkTreeDynamic.WeightMultipliers;
+			delete this.m.PerkTreeDynamic.WeightMultipliers;
+		}
+		
+		if (("onBeforeBuildPerkTree" in data) && typeof data.onBeforeBuildPerkTree == "function") data.onBeforeBuildPerkTree.call(this);
 	}
 	
 	function buildPerkTree()
 	{
-		if (this.isOrc() || this.isGoblin())
-		{
-			return this.character_background.buildPerkTree();
-		}
-
 		if (this.m.PerkTree != null)
 		{
 			return ::Const.DefaultChangeAttributes;
 		}
 		
-		if (this.m.TempData != null)
+		if (!this.isBeast())
 		{
-			this.m.CustomPerkTree = clone this.m.TempData.PerkTree;
-			local isHumaniod = ::Const.HumanoidBeast.find(this.m.TempData.Type) != null;
-			local hasAoE = ::Const.BeastHasAoE.find(this.m.TempData.Type) != null;
-			local removeNimble = ::Const.BeastNeverHasNimble.find(this.m.TempData.Type) != null;
-			this.m.CustomPerkTree = ::Nggh_MagicConcept.PerkTreeBuilder.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), isHumaniod, hasAoE, removeNimble);
+			if (!this.m.IsOnDeserializing && this.m.TempData != null) this.onBeforeBuildPerkTree();
+			
+			local ret = this.character_background.buildPerkTree();
+			
+			if (!this.m.IsOnDeserializing) this.onBuildPerkTree();
+
+			return ret;
 		}
 		
+		if (!this.m.IsOnDeserializing && this.m.TempData != null)
+		{
+			local isHumaniod = ::Const.HumanoidBeast.find(this.m.CharmID) != null;
+			local hasAoE = ::Const.BeastHasAoE.find(this.m.CharmID) != null;
+			local removeNimble = ::Const.BeastNeverHasNimble.find(this.m.CharmID) != null;
+			this.m.CustomPerkTree = ::Nggh_MagicConcept.PerkTreeBuilder.fillWithRandomPerk(this.m.CharmID, this.getContainer(), isHumaniod, hasAoE, removeNimble);
+			this.onBeforeBuildPerkTree();
+		}
+
 		local origin = this.World.Assets.getOrigin();
 		local pT = this.Const.Perks.BuildCustomPerkTree(this.m.CustomPerkTree);
 		this.m.PerkTree = pT.Tree;
 		this.m.PerkTreeMap = pT.Map;
 
-		if (origin != null)
-		{
-			this.World.Assets.getOrigin().onBuildPerkTree(this);
-		}
+		if (origin != null) this.World.Assets.getOrigin().onBuildPerkTree(this);
+
+		if (!this.m.IsOnDeserializing) this.onBuildPerkTree();
 
 		return ::Const.DefaultChangeAttributes;
+	}
+
+	function onBuildPerkTree()
+	{
+		local actor = this.getContainer().getActor();
+		local data = this.getCharmDataByID(this.m.CharmID);
+		local perks = [];
+
+		if (actor.getFlags().has("nggh_character")) perks.extend(.getSignaturePerks());
+
+		if (("Perks" in data) && typeof data.Perks == "array") perks.extend(data.Perks);
+
+		foreach (i, Const in perks )
+		{
+			::World.Assets.getOrigin().addScenarioPerk(this, ::Const.Perks.PerkDefs[Const], i);
+		}
+
+		if (("onBuildPerkTree" in data) && typeof data.onBuildPerkTree == "function") data.onBuildPerkTree.call(this);
+
+		if (::Math.rand(1, 100) <= 5) this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscFairGame, 2);
+	}
+
+	function onfillTalentsValues( _talents )
+	{
+		if (_talents.len() == 0) return;
+
+		local actor = this.getContainer().getActor();
+		local data = this.getCharmDataByID(this.m.CharmID);
+
+		if (this.isHuman())
+		{
+			actor.fillTalentValues(3);
+
+			if (("onfillTalentsValues" in data) && typeof data.onfillTalentsValues == "function") data.onfillTalentsValues.call(this, actor.getTalents());
+
+			this.getContainer().add(::new("scripts/skills/traits/intensive_training_trait"));
+			actor.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
+			actor.getFlags().set("Type", this.m.CharmID);
+			return;
+		}
+		
+		if (("onfillTalentsValues" in data) && typeof data.onfillTalentsValues == "function") data.onfillTalentsValues.call(this, _talents);
+	}
+
+	function onBuildAttributes( _properties )
+	{
+		local data = this.getCharmDataByID(this.m.CharmID);
+
+		if (this.m.TempData != null && ("Stats" in this.m.TempData) && this.m.TempData.Stats != null)
+		{
+			_properties.setValues(this.m.TempData.Stats);
+		}
+
+		if (!::Nggh_MagicConcept.IsOPMode)
+		{
+			if (!this.getContainer().hasSkill("trait.player"))
+			{
+				if (_properties.ArmorMax[0] >= 500 || _properties.ArmorMax[1] >= 500)
+				{
+					_properties.ArmorMax[0] = ::Math.floor(_properties.ArmorMax[0] * 0.5);
+					_properties.ArmorMax[1] = ::Math.floor(_properties.ArmorMax[1] * 0.5);
+					_properties.Armor[0] = ::Math.floor(_properties.Armor[0] * 0.5);
+					_properties.Armor[1] = ::Math.floor(_properties.Armor[1] * 0.5);
+				}
+				else if (_properties.ArmorMax[0] >= 250 || _properties.ArmorMax[1] >= 250)
+				{
+					_properties.ArmorMax[0] = ::Math.floor(_properties.ArmorMax[0] * 0.75);
+					_properties.ArmorMax[1] = ::Math.floor(_properties.ArmorMax[1] * 0.75);
+					_properties.Armor[0] = ::Math.floor(_properties.Armor[0] * 0.75);
+					_properties.Armor[1] = ::Math.floor(_properties.Armor[1] * 0.75);
+				}
+			}
+			
+			if (this.isGoblin() || this.isHuman())
+			{
+				_properties.ActionPoints = 9;
+				_properties.FatigueRecoveryRate = ::Math.min(18, _properties.FatigueRecoveryRate);
+			}
+		}
+
+		if (("onBuildAttributes" in data) && typeof data.onBuildAttributes == "function")
+		{
+			data.onBuildAttributes.call(this, _properties);
+		}
+
+		return _properties;
 	}
 
 	function addBonusAttributes( _attr )
@@ -395,14 +414,14 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		this.getContainer().getActor().m.CurrentProperties = clone b;
 	}
 
-	function addTraits()
+	function addTraits( _maxTraits = 2 )
 	{
-		local maxTraits = 2;
 		local traits = [this];
 
 		if (this.m.IsGuaranteed.len() > 0)
 		{
-			maxTraits = maxTraits - this.m.IsGuaranteed.len();
+			_maxTraits -= this.m.IsGuaranteed.len();
+
 			foreach(trait in this.m.IsGuaranteed)
 			{
 				traits.push(::new("scripts/skills/traits/" + trait));
@@ -410,9 +429,9 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		}
 
 		this.m.Excluded.extend(this.getContainer().getActor().getExcludedTraits());
-		this.getContainer().getActor().pickTraits(traits, maxTraits);
+		this.getContainer().getActor().pickTraits(traits, _maxTraits);
 
-		for( local i = 1; i < traits.len(); i = ++i )
+		for( local i = 1; i < traits.len(); +i )
 		{
 			this.getContainer().add(traits[i]);
 
@@ -421,103 +440,6 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 				traits[i].addTitle();
 			}
 		}
-	}
-	
-	function buildAttributes( _tag = null, _attrs = null )
-	{
-		local a = this.onChangeAttributes();
-
-		if (_attrs != null)
-		{
-			a.Hitpoints[0] += _attrs.Hitpoints[0];
-			a.Hitpoints[1] += _attrs.Hitpoints[1];
-			a.Bravery[0] += _attrs.Bravery[0];
-			a.Bravery[1] += _attrs.Bravery[1];
-			a.Stamina[0] += _attrs.Stamina[0];
-			a.Stamina[1] += _attrs.Stamina[1];
-			a.MeleeSkill[0] += _attrs.MeleeSkill[0];
-			a.MeleeSkill[1] += _attrs.MeleeSkill[1];
-			a.MeleeDefense[0] += _attrs.MeleeDefense[0];
-			a.MeleeDefense[1] += _attrs.MeleeDefense[1];
-			a.RangedSkill[0] += _attrs.RangedSkill[0];
-			a.RangedSkill[1] += _attrs.RangedSkill[1];
-			a.RangedDefense[0] += _attrs.RangedDefense[0];
-			a.RangedDefense[1] += _attrs.RangedDefense[1];
-			a.Initiative[0] += _attrs.Initiative[0];
-			a.Initiative[1] += _attrs.Initiative[1];
-		}
-
-		local b = this.getContainer().getActor().getBaseProperties();
-		
-		if (this.m.TempData != null && ("Stats" in this.m.TempData) && this.m.TempData.Stats != null)
-		{
-			b.setValues(this.m.TempData.Stats);
-		}
-
-		if (this.isGoblin())
-		{
-			b.ActionPoints = 9;
-			b.FatigueRecoveryRate = ::Nggh_MagicConcept.IsOPMode ? b.FatigueRecoveryRate : ::Math.min(18, b.FatigueRecoveryRate);
-		}
-
-		if (!Nggh_MagicConcept.IsOPMode && !this.getContainer().hasSkill("trait.player"))
-		{
-			if (b.ArmorMax[0] >= 500 || b.ArmorMax[1] >= 500)
-			{
-				b.ArmorMax[0] = ::Math.floor(b.ArmorMax[0] * 0.5);
-				b.ArmorMax[1] = ::Math.floor(b.ArmorMax[1] * 0.5);
-				b.Armor[0] = ::Math.floor(b.Armor[0] * 0.5);
-				b.Armor[1] = ::Math.floor(b.Armor[1] * 0.5);
-			}
-			else if (b.ArmorMax[0] >= 250 || b.ArmorMax[1] >= 250)
-			{
-				b.ArmorMax[0] = ::Math.floor(b.ArmorMax[0] * 0.75);
-				b.ArmorMax[1] = ::Math.floor(b.ArmorMax[1] * 0.75);
-				b.Armor[0] = ::Math.floor(b.Armor[0] * 0.75);
-				b.Armor[1] = ::Math.floor(b.Armor[1] * 0.75);
-			}
-		}
-		
-		local Hitpoints1 = ::Math.rand(a.Hitpoints[0] - 2, a.Hitpoints[1] + 2);
-		local Bravery1 = ::Math.rand(a.Bravery[0] - 2, a.Bravery[1] + 2);
-		local Stamina1 = ::Math.rand(a.Stamina[0] - 10, a.Stamina[1] + 5);
-		local MeleeSkill1 = ::Math.rand(a.MeleeSkill[0] - 2, a.MeleeSkill[1] + 2);
-		local RangedSkill1 = ::Math.rand(a.RangedSkill[0] - 2, a.RangedSkill[1] + 2);
-		local MeleeDefense1 = ::Math.rand(a.MeleeDefense[0] - 2, a.MeleeDefense[1] + 2);
-		local RangedDefense1 = ::Math.rand(a.RangedDefense[0] - 2, a.RangedDefense[1] + 2);
-		local Initiative1 = ::Math.rand(a.Initiative[0] - 10, a.Initiative[1] + 5);
-		
-		local Hitpoints2 = ::Math.rand(a.Hitpoints[0] - 2, a.Hitpoints[1] + 2);
-		local Bravery2 = ::Math.rand(a.Bravery[0] - 2, a.Bravery[1] + 2);
-		local Stamina2 = ::Math.rand(a.Stamina[0] - 10, a.Stamina[1] + 5);
-		local MeleeSkill2 = ::Math.rand(a.MeleeSkill[0] - 2,  a.MeleeSkill[1] + 2);
-		local RangedSkill2 = ::Math.rand(a.RangedSkill[0] - 2, a.RangedSkill[1] + 2);
-		local MeleeDefense2 = ::Math.rand(a.MeleeDefense[0] - 2, a.MeleeDefense[1] + 2);
-		local RangedDefense2 = ::Math.rand(a.RangedDefense[0] - 2, a.RangedDefense[1] + 2);
-		local Initiative2 = ::Math.rand(a.Initiative[0] - 10, a.Initiative[1] + 5);
-		
-		local HitpointsAvg = ::Math.round((Hitpoints1 + Hitpoints2) / 2);
-		local BraveryAvg = ::Math.round((Bravery1 + Bravery2) / 2);
-		local StaminaAvg = ::Math.round((Stamina1 + Stamina2) / 2);
-		local MeleeSkillAvg = ::Math.round((MeleeSkill1 + MeleeSkill2) / 2);
-		local RangedSkillAvg = ::Math.round((RangedSkill1 + RangedSkill2) / 2);
-		local MeleeDefenseAvg = ::Math.round((MeleeDefense1 + MeleeDefense2) / 2);
-		local RangedDefenseAvg = ::Math.round((RangedDefense1 + RangedDefense2) / 2);
-		local InitiativeAvg = ::Math.round((Initiative1 + Initiative2) / 2);
-		
-		b.Hitpoints += HitpointsAvg;
-		b.Bravery += BraveryAvg;
-		b.Stamina += StaminaAvg;
-		b.MeleeSkill += MeleeSkillAvg;
-		b.RangedSkill += RangedSkillAvg;
-		b.MeleeDefense += MeleeDefenseAvg;
-		b.RangedDefense += RangedDefenseAvg;
-		b.Initiative += InitiativeAvg;
-		
-		this.addTraits();
-		this.getContainer().getActor().m.CurrentProperties = clone b;
-		this.getContainer().getActor().setHitpoints(b.Hitpoints);
-		return array(8, 50);
 	}
 
 	function getTooltip()
@@ -555,30 +477,16 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			});
 		}
 		
-		if (this.getContainer() == null || this.getContainer().getActor() == null)
-		{
-			return ret;
-		}
+		if (this.getContainer() == null || this.getContainer().getActor() == null) return ret;
 
 		local actor = this.getContainer().getActor();
+		local data = this.getCharmDataByID(this.m.CharmID);
 
-		if (actor.getFlags().has("has_eaten") && actor.getSize() > 1)
-		{
-			ret.push({
-				id = 10,
-				type = "text",
-				icon = "ui/icons/asset_food.png",
-				text = "Needs to eat a [color=" + ::Const.UI.Color.NegativeValue + "]corpse[/color] every battle or will shrink in size"
-			})
-		}
+		if (("addTooltip" in data) && typeof data.addTooltip == "function") data.addTooltip.call(this, ret);
 		
 		ret.extend(::Const.CharmedUtilities.getTooltip(actor));
 		ret.extend(this.getAttributesTooltip());
 		return ret;
-	}
-
-	function onCombatStarted()
-	{
 	}
 	
 	function onSerialize( _out )
@@ -587,78 +495,98 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		_out.writeString(this.m.ID);
 		_out.writeString(this.m.Icon);
 		_out.writeString(this.m.Name);
-		_out.writeBool(this.m.IsOrc);
-		_out.writeBool(this.m.IsGoblin);
-		_out.writeF32(this.m.Modifiers.Ammo);
-		_out.writeF32(this.m.Modifiers.ArmorParts);
-		_out.writeF32(this.m.Modifiers.Meds);
-		_out.writeF32(this.m.Modifiers.Stash);
-		_out.writeF32(this.m.Modifiers.Healing);
-		_out.writeF32(this.m.Modifiers.Injury);
-		_out.writeF32(this.m.Modifiers.Repair);
-		_out.writeF32(this.m.Modifiers.Salvage);
-		_out.writeF32(this.m.Modifiers.Crafting);
-		_out.writeF32(this.m.Modifiers.Barter);
-		_out.writeF32(this.m.Modifiers.ToolConsumption);
-		_out.writeF32(this.m.Modifiers.MedConsumption);
-		_out.writeF32(this.m.Modifiers.Hunting);
-		_out.writeF32(this.m.Modifiers.Fletching);
-		_out.writeF32(this.m.Modifiers.Scout);
-		_out.writeF32(this.m.Modifiers.Gathering);
-		_out.writeF32(this.m.Modifiers.Training);
-		_out.writeF32(this.m.Modifiers.Enchanting);
-		
-		_out.writeU8(this.m.Skills.len());
-		for( local i = 0; i != this.m.Skills.len(); ++i )
+		_out.writeU32(this.m.CharmID);
+		_out.writeU8(this.m.Race);
+		_out.writeBool(this.m.IsSavingModifier);
+		_out.writeBool(this.m.IsSavingBackgroundType);
+
+		if (this.m.IsSavingModifier)
 		{
-			_out.writeString(this.m.Skills[i]);
+			_out.writeF32(this.m.Modifiers.Ammo);
+			_out.writeF32(this.m.Modifiers.ArmorParts);
+			_out.writeF32(this.m.Modifiers.Meds);
+			_out.writeF32(this.m.Modifiers.Stash);
+			_out.writeF32(this.m.Modifiers.Healing);
+			_out.writeF32(this.m.Modifiers.Injury);
+			_out.writeF32(this.m.Modifiers.Repair);
+			_out.writeF32(this.m.Modifiers.Salvage);
+			_out.writeF32(this.m.Modifiers.Crafting);
+			_out.writeF32(this.m.Modifiers.Barter);
+			_out.writeF32(this.m.Modifiers.ToolConsumption);
+			_out.writeF32(this.m.Modifiers.MedConsumption);
+			_out.writeF32(this.m.Modifiers.Hunting);
+			_out.writeF32(this.m.Modifiers.Fletching);
+			_out.writeF32(this.m.Modifiers.Scout);
+			_out.writeF32(this.m.Modifiers.Gathering);
+			_out.writeF32(this.m.Modifiers.Training);
+			_out.writeF32(this.m.Modifiers.Enchanting);
+
+			foreach ( _mod in this.m.Modifiers.Terrain )
+			{
+				_out.writeF32(_mod);
+			}
 		}
 
-		foreach ( _mod in this.m.Modifiers.Terrain )
+		if (this.m.IsSavingBackgroundType)
 		{
-			_out.writeF32(_mod);
+			for( local i = 0; i != ::Const.CharmedUtilities.BackgroundTypeToCopy.len(); ++i )
+			{
+				_out.writeBool(this.isBackgroundType(::Const.BackgroundType[::Const.CharmedUtilities.BackgroundTypeToCopy[i]]));
+			}
 		}
 	}
 
 	function onDeserialize( _in )
 	{
+		this.m.IsOnDeserializing = true;
 		this.character_background.onDeserialize(_in);
 		this.m.ID = _in.readString();
 		this.m.Icon = _in.readString();
 		this.m.Name = _in.readString();
-		this.m.IsOrc = _in.readBool();
-		this.m.IsGoblin = _in.readBool();
-		this.m.Modifiers.Ammo = _in.readF32();
-		this.m.Modifiers.ArmorParts = _in.readF32();
-		this.m.Modifiers.Meds = _in.readF32();
-		this.m.Modifiers.Stash = _in.readF32();
-		this.m.Modifiers.Healing = _in.readF32();
-		this.m.Modifiers.Injury = _in.readF32();
-		this.m.Modifiers.Repair = _in.readF32();
-		this.m.Modifiers.Salvage = _in.readF32();
-		this.m.Modifiers.Crafting = _in.readF32();
-		this.m.Modifiers.Barter = _in.readF32();
-		this.m.Modifiers.ToolConsumption = _in.readF32();
-		this.m.Modifiers.MedConsumption = _in.readF32();
-		this.m.Modifiers.Hunting = _in.readF32();
-		this.m.Modifiers.Fletching = _in.readF32();
-		this.m.Modifiers.Scout = _in.readF32();
-		this.m.Modifiers.Gathering = _in.readF32();
-		this.m.Modifiers.Training = _in.readF32();
-		this.m.Modifiers.Enchanting = _in.readF32();
+		this.m.CharmID = _in.readU32();
+		this.m.Race = _in.readU8();
+		this.m.IsSavingModifier = _in.readBool();
+		this.m.IsSavingBackgroundType = _in.readBool();
+
+		if (this.m.IsSavingModifier)
+		{
+			this.m.Modifiers.Ammo = _in.readF32();
+			this.m.Modifiers.ArmorParts = _in.readF32();
+			this.m.Modifiers.Meds = _in.readF32();
+			this.m.Modifiers.Stash = _in.readF32();
+			this.m.Modifiers.Healing = _in.readF32();
+			this.m.Modifiers.Injury = _in.readF32();
+			this.m.Modifiers.Repair = _in.readF32();
+			this.m.Modifiers.Salvage = _in.readF32();
+			this.m.Modifiers.Crafting = _in.readF32();
+			this.m.Modifiers.Barter = _in.readF32();
+			this.m.Modifiers.ToolConsumption = _in.readF32();
+			this.m.Modifiers.MedConsumption = _in.readF32();
+			this.m.Modifiers.Hunting = _in.readF32();
+			this.m.Modifiers.Fletching = _in.readF32();
+			this.m.Modifiers.Scout = _in.readF32();
+			this.m.Modifiers.Gathering = _in.readF32();
+			this.m.Modifiers.Training = _in.readF32();
+			this.m.Modifiers.Enchanting = _in.readF32();
+
+			for( local i = 0; i != this.m.Modifiers.Terrain.len(); ++i )
+			{
+				this.m.Modifiers.Terrain[i] = _in.readF32();
+			}
+		}
 		
-		local numSkills = _in.readU8();
-		this.m.Skills = array(numSkills, "");
-
-		for( local i = 0; i != numSkills; ++i )
+		if (this.m.IsSavingBackgroundType)
 		{
-			this.m.Skills[i] = _in.readString();
+			for( local i = 0; i != ::Const.CharmedUtilities.BackgroundTypeToCopy.len(); ++i )
+			{
+				if (_in.readBool())
+				{
+					this.addBackgroundType(::Const.BackgroundType[::Const.CharmedUtilities.BackgroundTypeToCopy[i]]);
+				}
+			}
 		}
 
-		for( local i = 0; i != this.m.Modifiers.Terrain.len(); ++i )
-		{
-			this.m.Modifiers.Terrain[i] = _in.readF32();
-		}
+		this.m.IsOnDeserializing = false;
 	}
 
 });

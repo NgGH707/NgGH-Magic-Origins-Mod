@@ -29,6 +29,7 @@
 		}
 
 		local b = this.m.BaseProperties;
+		b.ActionPoints += 1;
 		b.Hitpoints += 50;
 		b.MeleeSkill += 15;
 		b.MeleeDefense += 15;

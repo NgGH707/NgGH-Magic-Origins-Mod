@@ -246,14 +246,14 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			*/
 
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(target) + " has been captive by your charm (Chance: " + chance + ", Rolled: " + roll + ")");
-			if (this.onCharm(_user, target) != null)
+			if (this.charm(_user, target) != null)
 			{
 				::Tactical.Entities.getFlags().increment("CharmedCount");
 			}
 		}.bindenv(this), this);
 	}
 	
-	function onCharm( _user, _targetEntity )
+	function charm( _user, _targetEntity )
 	{
 		local isLindwurm = _targetEntity.getFlags().has("lindwurm");
 
@@ -262,9 +262,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			_targetEntity = _targetEntity.m.Body;
 		}
 		
-		local roster = ::World.getTemporaryRoster();
-		local func = _targetEntity.getFlags().has("human") ? "TypeToInfoHuman" : "TypeToInfoNonHuman";
-		local data = ::Const.CharmedUtilities[func](_targetEntity);
+		local data = ::Const.CharmedUtilities.TypeToInfo(_targetEntity);
 		
 		if (data == null)
 		{
@@ -272,20 +270,23 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			return null;
 		}
 		
-		local background = ::new("scripts/skills/backgrounds/" + (data.IsHuman ? "nggh_mod_charmed_human_background" : "nggh_mod_charmed_background"));
-		local victim = roster.create("scripts/entity/tactical/" + data.Script);
-		victim.improveMood(2.0, "found a new purpose of life, to serve you, of course");
+		local victim = ::World.getTemporaryRoster().create("scripts/entity/tactical/" + data.Script);
+		victim.improveMood(2.0, "Found a new purpose of life. To serve " + _user.getNameOnly() + "! Of course!");
+
+		local background = ::new("scripts/skills/backgrounds/nggh_mod_charmed_background");
 		background.setTempData(data);
 		victim.getSkills().add(background);
-		background.setup(false);
+
+		// setup the background with given data
+		::Const.CharmedUtilities.setup(background, false);
+
 		background.buildDescription();
-		victim.m.Background = background;
 		
-		this.onFinishCharm(_targetEntity, victim, isLindwurm);
+		this.onCharm(_targetEntity, victim, isLindwurm);
 		return victim;
 	}
 	
-	function onFinishCharm( _targetEntity, _victim , _isAFuckingLindwurm = false )
+	function onCharm( _targetEntity, _victim , _isAFuckingLindwurm = false )
 	{
 		local isFinish = _isAFuckingLindwurm ? ::Tactical.Entities.getHostilesNum() <= 2 : ::Tactical.Entities.getHostilesNum() == 1;
 		this.m.Capture.push(::WeakTableRef(_targetEntity));
@@ -773,8 +774,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 	function checkRequirement( _targetEntity , _isForToolTips = false )
 	{
 		local _user = this.getContainer().getActor();
-		local func = _targetEntity.getFlags().has("human") ? "TypeToInfoHuman" : "TypeToInfoNonHuman";
-		local requirements = ::Const.CharmedUtilities[func](_targetEntity, true);
+		local requirements = ::Const.CharmedUtilities.TypeToInfo(_targetEntity, true);
 		
 		if (requirements == null || typeof requirements != "array")
 		{

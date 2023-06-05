@@ -37,8 +37,8 @@ this.nggh_mod_RSW_lucky <- ::inherit("scripts/skills/skill", {
 		}
 		
 		local tile = _targetEntity.getTile();
-		local weight_container_name = ::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue() ? "_Vanilla" : "_Legends";
-		local pick = ::Const["LuckyRuneLootWeightContainer" + weight_container_name].roll();
+		//local weight_container_name = ::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue() ? "_Vanilla" : "";
+		local pick = ::Const.LuckyRuneLootWeightContainer_Legends.roll();
 		local item = ::new("scripts/items/" + ::MSU.Array.rand(pick));
 
 		for( local i = 0; i < ::Const.Tactical.DazeParticles.len(); ++i )

@@ -72,6 +72,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        break;
 
 	    case ::Const.EntityType.Hyena:
+	    	/*
 	    	if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		    {
 		    	this.m.LootScript.extend([
@@ -80,6 +81,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        	]);
 		    }
 		    else
+		    */
 		    {
 		    	this.m.LootScript.extend([
 		    		[1, ["loot/sabertooth_item"]],
@@ -89,6 +91,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        break;
 
 	    case ::Const.EntityType.Direwolf:
+	    	/*
 	        if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		    {
 		    	this.m.LootScript.extend([
@@ -97,6 +100,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        	]);
 		    }
 		    else
+		    */
 		    {
 		    	this.m.LootScript.extend([
 		    		[1, ["loot/sabertooth_item"]],
@@ -106,6 +110,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        break;
 
 	    case ::Const.EntityType.LegendWhiteDirewolf:
+	    	/*
 	        if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		    {
 		    	this.m.LootScript.extend([
@@ -114,6 +119,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        	]);
 		    }
 		    else
+		    */
 		    {
 		    	this.m.LootScript.extend([
 		    		[2, ["loot/sabertooth_item"]],
@@ -123,14 +129,16 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        break;
 
 	    case ::Const.EntityType.Lindwurm:
+	    	/*
 	        if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 			{
 				this.m.LootScript.extend([
 					[1, ["tools/acid_flask_item"]],
-	    			[1, ["legend_armor/armor_upgrades/nggh_mod_named_lindwurm_scales_legend_upgrade", "shields/named/named_lindwurm_shield"/*, "legend_armor/legendary/legend_lindwurm_armor"*/]]
+	    			[1, ["legend_armor/armor_upgrades/nggh_mod_named_lindwurm_scales_legend_upgrade", "shields/named/named_lindwurm_shield"]]
 	       		]);
 			}
 			else
+			*/
 			{
 				this.m.LootScript.extend([
 					[1, ["tools/acid_flask_item"]],
@@ -140,6 +148,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        break;
 
 	    case ::Const.EntityType.LegendStollwurm:
+	    	/*
 	        if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		    {
 		    	this.m.LootScript.extend([
@@ -148,6 +157,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        	]);
 		    }
 		    else
+		    */
 		    {
 		    	this.m.LootScript.extend([
 		    		[1, ["tools/acid_flask_item"]],
@@ -169,6 +179,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 
 	    case ::Const.EntityType.UnholdFrost:
 	   	case ::Const.EntityType.BarbarianUnholdFrost:
+	   		/*
 	        if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		    {
 		    	this.m.LootScript.extend([
@@ -177,6 +188,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        	]);
 		    }
 		    else
+		    */
 		    {
 		    	this.m.LootScript.extend([
 		    		[1, ["loot/deformed_valuables_item"]],
@@ -203,6 +215,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        break;
 
 	    case ::Const.EntityType.Spider:
+	    	/*
 	        if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		    {
 		    	this.m.LootScript.extend([
@@ -211,6 +224,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        	]);
 		    }
 		    else
+		    */
 		    {
 		    	this.m.LootScript.extend([
 		    		[1, ["loot/webbed_valuables_item"]],
@@ -220,6 +234,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        break;
 
 	    case ::Const.EntityType.LegendRedbackSpider:
+	    	/*
 	        if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		    {
 		    	this.m.LootScript.extend([
@@ -228,6 +243,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        	]);
 		    }
 		    else
+		    */
 		    {
 		    	this.m.LootScript.extend([
 		    		[2, ["loot/webbed_valuables_item"]],
@@ -276,6 +292,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        	[2, ["misc/kraken_tentacle_item", "misc/kraken_horn_plate_item"]],
 	        	[1, ["shields/special/craftable_kraken_shield"]]
 	        ]);
+	        /*
 	        if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		    {
 		    	this.m.LootScript.push(
@@ -283,6 +300,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 		    	);
 		    }
 		    else
+		    */
 		    {
 		    	this.m.LootScript.push(
 		    		[1, ["armor_upgrades/named/nggh_mod_named_horn_plate_upgrade"]]
@@ -292,6 +310,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 
 	    case ::Const.EntityType.TricksterGod:
 	    	this.m.BonusXP += 900;
+	    	/*
 	        if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		    {
 		    	this.m.LootScript.extend([
@@ -300,6 +319,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 		    	]);
 		    }
 		    else
+		    */
 		    {
 		    	this.m.LootScript.extend([
 		    		[1, ["armor/legendary/ijirok_armor"]],
@@ -309,6 +329,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        break;
 
 	    case ::Const.EntityType.Serpent:
+	    	/*
 	        if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		    {
 		    	this.m.LootScript.extend([
@@ -317,6 +338,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        	]);
 		    }
 		    else
+		    */
 		    {
 		    	this.m.LootScript.extend([
 		    		[2, ["loot/rainbow_scale_item"]],

@@ -591,7 +591,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		injury.Visible = false;
 		body_blood.setBrush("bust_body_bloodied_02");
 		body_blood.Visible = false;
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 
 		if (_size > 1)
 		{
@@ -599,17 +599,6 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		}
 
 		this.setScenarioValues(type, _isElite);
-	}
-
-	function setScenarioValues( _type, _isElite = false, _randomizedTalents = false, _setName = false )
-	{
-		this.nggh_mod_player_beast.setScenarioValues(_type, _isElite, _randomizedTalents, _setName);
-
-		if (this.m.Skills.hasSkill("racial.champion"))
-		{
-			// UwU champion nacho is always a big bara boi
-			this.grow(true);
-		}
 	}
 	
 	function grow( _instant = false )

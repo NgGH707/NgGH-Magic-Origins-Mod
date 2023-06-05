@@ -241,7 +241,7 @@ this.nggh_mod_schrat_small_player <- ::inherit("scripts/entity/tactical/nggh_mod
 		body.varySaturation(0.2);
 		body.varyColor(0.05, 0.05, 0.05);
 		this.m.BloodColor = body.Color;
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 
 		this.setScenarioValues(type, _isElite);
 	}

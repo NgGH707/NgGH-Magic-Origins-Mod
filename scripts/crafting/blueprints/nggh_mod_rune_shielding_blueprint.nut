@@ -16,6 +16,7 @@ this.nggh_mod_rune_shielding_blueprint <- ::inherit("scripts/crafting/legend_run
 
 	function onEnchant( _stash, _bonus )
 	{
+		/*
 		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		{
 			local rune = ::new("scripts/items/rune_sigils/legend_vala_inscription_token");
@@ -24,6 +25,7 @@ this.nggh_mod_rune_shielding_blueprint <- ::inherit("scripts/crafting/legend_run
 			_stash.add(rune);
 			return;
 		}
+		*/
 
 		local rune = ::new("scripts/items/legend_helmets/runes/nggh_mod_rune_shielding");
 		rune.setRuneVariant(this.m.Rune);

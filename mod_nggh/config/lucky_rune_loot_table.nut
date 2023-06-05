@@ -1,4 +1,3 @@
-
 local tools = 
 {
 	function removeScript(_scripts, _array, _prefix = "")

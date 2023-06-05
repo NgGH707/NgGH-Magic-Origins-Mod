@@ -395,7 +395,7 @@ this.nggh_mod_direwolf_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 
 		this.getSprite("status_rooted").Scale = 0.54;
 		this.setSpriteOffset("status_rooted", ::createVec(0, 0));
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 
 		if (!_isWhiteWolf && !_isFrenzied)
 		{

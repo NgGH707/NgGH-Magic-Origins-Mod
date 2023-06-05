@@ -605,6 +605,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		}
 		*/
 		
+		this.getBackground().onfillTalentsValues(this.getTalents());
 		this.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
 
 		if (_setName)
@@ -619,11 +620,6 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		else if (::Math.rand(1, 100) <= 1)
 		{
 			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscChampion, 6);
-		}
-
-		if (::Math.rand(1, 100) <= 5)
-		{
-			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscFairGame, 2);
 		}
 
 		this.getBackground().addPerk(::Const.Perks.PerkDefs.BoondockBlade, 0);
@@ -682,12 +678,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 
 		// update the properties
 		this.m.CurrentProperties = clone this.m.BaseProperties;
-		this.addDefaultBackground(type);
-
-		if (type == ::Const.EntityType.GoblinWolfrider)
-		{ 
-			::World.Assets.getOrigin().addScenarioPerk(this.getBackground(), ::Const.Perks.PerkDefs.NggHGoblinMountTraining, 2);
-		}
+		this.addDefaultBackground(type, _isElite);
 		
 		if (_addUniqueTrait)
 		{
@@ -759,12 +750,14 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 	{
 		this.m.Items.equip(::new("scripts/items/weapons/greenskins/goblin_staff"));
 
+		/*
 		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		{
 			this.m.Items.equip(::new("scripts/items/armor/greenskins/goblin_shaman_armor"));
 			this.m.Items.equip(::new("scripts/items/helmets/greenskins/goblin_shaman_helmet"));
 		}
 		else 
+		*/
 		{
 		    this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_goblin_shaman_armor"));
 			this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_shaman_helmet"));
@@ -794,12 +787,14 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		this.m.Items.equip(::new("scripts/items/weapons/greenskins/goblin_crossbow"));
 		this.m.Items.addToBag(::new("scripts/items/weapons/greenskins/goblin_falchion"));
 		
+		/*
 		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		{
 			this.m.Items.equip(::new("scripts/items/armor/greenskins/goblin_leader_armor"));
 			this.m.Items.equip(::new("scripts/items/helmets/greenskins/goblin_leader_helmet"));
 		}
-		else 
+		else
+		*/ 
 		{
 		    this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_goblin_leader_armor"));
 			this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_leader_helmet"));
@@ -825,6 +820,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 			])));
 		}
 
+		/*
 		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		{
 			this.m.Items.equip(::new("scripts/items/armor/greenskins/" + ::MSU.Array.rand([
@@ -845,6 +841,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 			}
 		}
 		else 
+		*/
 		{
 			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_" + ::MSU.Array.rand([
 				"goblin_medium_armor",
@@ -865,7 +862,10 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		}
 
 		// here is the mount, very good boi OwO too :head_pet:
-		this.getItems().equip(::new("scripts/items/accessory/wolf_item"));
+		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Accessory) == null)
+		{
+			this.getItems().equip(::new("scripts/items/accessory/wolf_item"));
+		}
 	}
 
 	function assignGoblinAmbusherEquipment()
@@ -882,12 +882,14 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 			this.m.Items.addToBag(::new("scripts/items/accessory/poison_item"));
 		}
 
+		/*
 		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		{
 			this.m.Items.equip(::new("scripts/items/armor/greenskins/goblin_skirmisher_armor"));
 			this.m.Items.equip(::new("scripts/items/helmets/greenskins/goblin_skirmisher_helmet"));
 		}
 		else
+		*/
 		{
 			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_goblin_skirmisher_armor"));
 			this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_skirmisher_helmet"));
@@ -930,6 +932,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 			}
 		}
 
+		/*
 		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		{
 			this.m.Items.equip(::new("scripts/items/armor/greenskins/" + ::MSU.Array.rand([
@@ -950,6 +953,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 			}
 		}
 		else 
+		*/
 		{
 			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_" + ::MSU.Array.rand([
 				"goblin_medium_armor",

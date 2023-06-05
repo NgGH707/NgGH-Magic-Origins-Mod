@@ -7,11 +7,9 @@ if (!("Invalid" in ::Const))
 
 local backgrounds = [
 	"scripts/skills/backgrounds/nggh_mod_charmed_background",
-	"scripts/skills/backgrounds/nggh_mod_charmed_human_background",
 	"scripts/skills/backgrounds/nggh_mod_hexe_background",
 	"scripts/skills/backgrounds/nggh_mod_luft_background",
 	"scripts/skills/backgrounds/nggh_mod_spider_eggs_background",
-	"scripts/skills/backgrounds/charmed_human_engineer_background",
 ];
 
 // backgrounds

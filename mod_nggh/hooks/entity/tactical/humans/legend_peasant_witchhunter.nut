@@ -155,7 +155,7 @@
 			if (hasWitchHunterTag)
 			{
 				this.m.BaseProperties.MeleeDamageMult *= 1.25;
-				this.m.Skills.add(::new("scripts/skills/perks/perk_legend_big_game_hunter"));
+				this.m.Skills.add(::new("scripts/skills/effects/legend_hunting_big_game"));
 				this.m.Items.equip(::Const.World.Common.pickArmor([[2, "werewolf_mail_armor"],[1, "northern_mercenary_armor_00"],[3, "northern_mercenary_armor_01"],[2, "mail_shirt"],[4, "mail_hauberk"],[1, "light_scale_armor"],[3, "leather_scale_armor"]]));
 				this.m.Items.equip(::Const.World.Common.pickHelmet([[1, "witchhunter_hat"],[1, "hood"],[1, "rondel_helm"]]));
 				
@@ -197,7 +197,7 @@
 		}
 
 		// nastier :)
-		this.m.BaseProperties.RangedSkill += ::Math.rand(2, 7);
+		this.m.BaseProperties.RangedSkill += ::Math.rand(5, 10);
 		this.m.BaseProperties.Initiative -= ::Math.rand(10, 15);
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_legend_big_game_hunter"));

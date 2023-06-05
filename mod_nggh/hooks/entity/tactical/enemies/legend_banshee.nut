@@ -83,30 +83,14 @@
 			else if (type <= 80)
 			{
 				local helmets = clone ::Const.Items.NamedHelmets;
-
-				if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
-				{
-					local weightName = ::Const.World.Common.convNameToList(helmets);
-					loot = ::Const.World.Common.pickHelmet(weightName);
-				}
-				else
-				{
-					loot = ::new("scripts/items/" + ::MSU.Array.rand(helmets));
-				}
+				local weightName = ::Const.World.Common.convNameToList(helmets);
+				loot = ::Const.World.Common.pickHelmet(weightName);
 			}
 			else if (type <= 100)
 			{
 				local armor = clone ::Const.Items.NamedArmors;
-				
-				if (!::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
-				{
-					local weightName = ::Const.World.Common.convNameToList(armor);
-					loot = ::Const.World.Common.pickArmor(weightName);
-				}
-				else
-				{
-					loot = ::new("scripts/items/" + ::MSU.Array.rand(armor));
-				}
+				local weightName = ::Const.World.Common.convNameToList(armor);
+				loot = ::Const.World.Common.pickArmor(weightName);
 			}
 
 			if (loot != null)

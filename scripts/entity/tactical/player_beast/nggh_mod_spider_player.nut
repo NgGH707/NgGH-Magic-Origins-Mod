@@ -480,7 +480,7 @@ this.nggh_mod_spider_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		this.setSpriteOffset("status_rooted", ::createVec(7, 10));
 		this.setSpriteOffset("status_stunned", ::createVec(0, -20));
 		this.setSpriteOffset("arrow", ::createVec(0, -20));
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 
 		this.setSize(_size, false);
 		this.setScenarioValues(type, _isElite);

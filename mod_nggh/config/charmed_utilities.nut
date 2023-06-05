@@ -31,33 +31,7 @@ if (!("CharmedUtilities" in ::Const))
 		"actives.load_mortar_player",
 	],
 
-	function removeAllHumanSprites( _entity, _exclude = null, _removeDefaultSprites = false )
-	{
-		_exclude = _exclude != null ? _exclude : [];
-
-		foreach (id in ::Const.CharmedUtilities.SpritesToRemove)
-		{
-			if (_exclude.find(id) == null)
-		    {
-		    	_entity.removeSprite(id);
-		    }
-		}
-
-		if (!_removeDefaultSprites)
-		{
-			return;
-		}
-
-		foreach (id in ::Const.CharmedUtilities.DefaultSprites)
-		{
-		    _entity.removeSprite(id);
-		}
-
-		if (_entity.getMoraleState() != ::Const.MoraleState.Ignore)
-		{
-			_entity.removeSprite("morale");
-		}
-	}
+/////////////////////////////////////////////////////////
 
 	function processingCharmedBackground( _data, _background )
 	{
@@ -69,93 +43,60 @@ if (!("CharmedUtilities" in ::Const))
 		local names;
 		local lastNames;
 
-		if (("PerkTree" in _data) && _data.PerkTree != null)
+		if (("Background" in _data) && _data.Background != null)
 		{
-			switch (typeof _data.PerkTree)
+		    local bg = ::new("scripts/skills/backgrounds/" + _data.Background);
+		    _background.m.ID = bg.m.ID;
+			_background.m.ExcludedTalents = bg.m.ExcludedTalents;
+			_background.m.BackgroundType = bg.m.BackgroundType;
+			_background.m.Modifiers = bg.m.Modifiers;
+			_background.m.IsSavingBackgroundType = true;
+			_background.m.IsSavingModifier = true;
+			
+			if (bg.m.CustomPerkTree != null)
 			{
-			case "array":
-				_background.m.CustomPerkTree = _data.PerkTree;
-				break;
+				_background.m.CustomPerkTree = bg.m.CustomPerkTree;
+			}
+			else if (bg.m.PerkTreeDynamic != null)
+			{
+				_background.m.CustomPerkTree = null;
+				_background.m.PerkTreeDynamic = bg.m.PerkTreeDynamic;
+			}
 
-			case "table":
-				_background.m.PerkTreeDynamic = _data.PerkTree;
-				break;
-
-			case "string":
-			    local bg = ::new("scripts/skills/backgrounds/" + _data.PerkTree);
-			    _background.m.ID = bg.m.ID;
-				_background.m.ExcludedTalents = bg.m.ExcludedTalents;
-				_background.m.BackgroundType = bg.m.BackgroundType;
-				_background.m.Modifiers = bg.m.Modifiers;
-				
-				if (bg.m.CustomPerkTree != null)
-				{
-					_background.m.CustomPerkTree = bg.m.CustomPerkTree;
-				}
-				else if (bg.m.PerkTreeDynamic != null)
-				{
-					_background.m.CustomPerkTree = null;
-					_background.m.PerkTreeDynamic = bg.m.PerkTreeDynamic;
-				}
-
-				if ("PerkGroupMultipliers" in bg.m)
-				{
-					_background.m.PerkGroupMultipliers = bg.m.PerkGroupMultipliers;
-				}
-			    break;
+			if ("PerkGroupMultipliers" in bg.m)
+			{
+				_background.m.PerkGroupMultipliers = bg.m.PerkGroupMultipliers;
 			}
 		}
-		
 			
 		if (_data.Entity != null && _data.Entity.getName() != ::Const.Strings.EntityName[_data.Type])
 		{
-			names = [_data.Entity.getName()];
+			_background.m.HasFixedName = true;
+			_background.m.Titles = [_data.Entity.getTitle()];
+			names = [_data.Entity.getNameOnly()];
 		}
 		else
 		{
 			names = [];
 		}
 
-		if (("Custom" in _data) && _data.Custom.len() != 0)
+		if (("Custom" in _data) && typeof _data.Custom == "table" && _data.Custom.len() != 0)
 		{
 			if ("ID" in _data.Custom)
 			{
 				_background.m.ID = _data.Custom.ID;
 			}
 
-			if ("AdditionalPerkGroup" in _data.Custom)
+			if ("ExcludedTalents" in _data.Custom)
 			{
-				local input = [];
-				_background.m.AdditionalPerks = [];
-
-				foreach (_string in _data.Custom.AdditionalPerkGroup[1])
+				if (_data.Custom.ExcludedTalents.len() == ::Const.Attributes.COUNT)
 				{
-					if (!(_string in ::Const.Perks))
-					{
-						continue;
-					}
-
-					input.push(::Const.Perks[_string].Tree);
-				}
-
-				if (_data.Custom.AdditionalPerkGroup[0] == 0)
-				{
-					_background.m.AdditionalPerks.extend(input);
+					_background.addBackgroundType(::Const.BackgroundType.Untalented);
 				}
 				else
 				{
-				    _background.m.AdditionalPerks.push(::MSU.Array.rand(input));
+					_background.m.ExcludedTalents.extend(_data.Custom.ExcludedTalents);
 				}
-			}
-			
-			if ("BgModifiers" in _data.Custom)
-			{
-				_background.m.Modifiers = _data.Custom.BgModifiers;
-			}
-
-			if ("Talents" in _data.Custom)
-			{
-				_background.m.ExcludedTalents.extend(_data.Custom.Talents.ExcludedTalents);
 			}
 
 			if (("Names" in _data.Custom) && typeof _data.Custom.Names == "string" && (_data.Custom.Names in ::Const.Strings))
@@ -168,36 +109,138 @@ if (!("CharmedUtilities" in ::Const))
 			}
 		}
 
-		if (_background.m.PerkGroupMultipliers.len() == 0 && _background.m.PerkTreeDynamic != null && ("WeightMultipliers" in _background.m.PerkTreeDynamic))
+		if (::Const.Goblin.Variants.find(_data.Type) != null)
 		{
-			_background.m.PerkGroupMultipliers = _background.m.PerkTreeDynamic.WeightMultipliers;
-			delete _background.m.PerkTreeDynamic.WeightMultipliers;
+			_background.m.Race = 1;
+		}
+		else if (::Const.Orc.Variants.find(_data.Type) != null)
+		{
+			_background.m.Race = 2;
+		}
+		else if (!_data.IsHuman)
+		{
+			_background.m.Race = 3;
 		}
 		
 		_background.m.Names = names != null ? names : [];
+		_background.m.Name = "Charmed " + ::Const.Strings.EntityName[_data.Type];
+		_background.m.Icon = "ui/backgrounds/" + ::Const.CharmedUnits.getBackgroundIcon(_data.Type);
 	}
-	
-	function TypeToInfoHuman( _human, _returnViable = false )
+
+	function setup( _background, _isFromScenario = true )
 	{
-		local _type = _human.getType();
+		local actor = _background.getContainer().getActor();
+		actor.m.Background = _background;
+		actor.m.StarWeights = this.buildAttributes.call(_background, null, null);
+		_background.onfillTalentsValues(actor.getTalents());
+		local attributes = _background.buildPerkTree();
+		_background.setAppearance();
 
-		if (_returnViable)
+		if (!_isFromScenario && actor.getFlags().has("nggh_character"))
 		{
-			return ::Const.CharmedUnits.getRequirements(_type, true);
+			actor.setScenarioValues(this.m.CharmID, this.m.TempData.IsMiniboss, true, this.m.Names.len() == 0);
 		}
-		
-		local ret = {
-			Type = _type,
-			Entity = _human,
-			Script = "player",
-			Background = "nggh_mod_charmed_human_background",
-		};
 
-		::Const.CharmedUnits.addBasicData(ret, _human);
-		return ret;
+		_background.addBonusAttributes(attributes);
+		_background.pickCurrentLevel();
+		_background.onAddEquipment();
+
+		// finishing
+		this.onSetup.call(_background);
+	}
+
+	// special functions, all of them will use call.(background);
+	function onSetup()
+	{
+		local data = this.getCharmDataByID(this.m.CharmID);
+
+		if (this.isHuman()) 
+		{
+			if (this.m.TempData != null && this.m.TempData.IsMiniboss)
+			{
+				this.getContainer().add(::new("scripts/skills/racial/champion_racial"));
+			}
+			else if (::Math.rand(1, 100) <= 1)
+			{
+				this.addPerk(::Const.Perks.PerkDefs.NggHMiscChampion, 6);
+			}
+		}
+
+		if (("onSetup" in data) && typeof data.onSetup == "function") data.onSetup.call(this);
+	}
+
+	function buildAttributes( _tag = null, _attrs = null )
+	{
+		local a = this.onChangeAttributes();
+
+		if (_attrs != null)
+		{
+			a.Hitpoints[0] += _attrs.Hitpoints[0];
+			a.Hitpoints[1] += _attrs.Hitpoints[1];
+			a.Bravery[0] += _attrs.Bravery[0];
+			a.Bravery[1] += _attrs.Bravery[1];
+			a.Stamina[0] += _attrs.Stamina[0];
+			a.Stamina[1] += _attrs.Stamina[1];
+			a.MeleeSkill[0] += _attrs.MeleeSkill[0];
+			a.MeleeSkill[1] += _attrs.MeleeSkill[1];
+			a.MeleeDefense[0] += _attrs.MeleeDefense[0];
+			a.MeleeDefense[1] += _attrs.MeleeDefense[1];
+			a.RangedSkill[0] += _attrs.RangedSkill[0];
+			a.RangedSkill[1] += _attrs.RangedSkill[1];
+			a.RangedDefense[0] += _attrs.RangedDefense[0];
+			a.RangedDefense[1] += _attrs.RangedDefense[1];
+			a.Initiative[0] += _attrs.Initiative[0];
+			a.Initiative[1] += _attrs.Initiative[1];
+		}
+
+		local b = this.onBuildAttributes(this.getContainer().getActor().getBaseProperties());
+		local Hitpoints1 = ::Math.rand(a.Hitpoints[0] - 2, a.Hitpoints[1] + 2);
+		local Bravery1 = ::Math.rand(a.Bravery[0] - 2, a.Bravery[1] + 2);
+		local Stamina1 = ::Math.rand(a.Stamina[0] - 10, a.Stamina[1] + 5);
+		local MeleeSkill1 = ::Math.rand(a.MeleeSkill[0] - 2, a.MeleeSkill[1] + 2);
+		local RangedSkill1 = ::Math.rand(a.RangedSkill[0] - 2, a.RangedSkill[1] + 2);
+		local MeleeDefense1 = ::Math.rand(a.MeleeDefense[0] - 2, a.MeleeDefense[1] + 2);
+		local RangedDefense1 = ::Math.rand(a.RangedDefense[0] - 2, a.RangedDefense[1] + 2);
+		local Initiative1 = ::Math.rand(a.Initiative[0] - 10, a.Initiative[1] + 5);
+		
+		local Hitpoints2 = ::Math.rand(a.Hitpoints[0] - 2, a.Hitpoints[1] + 2);
+		local Bravery2 = ::Math.rand(a.Bravery[0] - 2, a.Bravery[1] + 2);
+		local Stamina2 = ::Math.rand(a.Stamina[0] - 10, a.Stamina[1] + 5);
+		local MeleeSkill2 = ::Math.rand(a.MeleeSkill[0] - 2,  a.MeleeSkill[1] + 2);
+		local RangedSkill2 = ::Math.rand(a.RangedSkill[0] - 2, a.RangedSkill[1] + 2);
+		local MeleeDefense2 = ::Math.rand(a.MeleeDefense[0] - 2, a.MeleeDefense[1] + 2);
+		local RangedDefense2 = ::Math.rand(a.RangedDefense[0] - 2, a.RangedDefense[1] + 2);
+		local Initiative2 = ::Math.rand(a.Initiative[0] - 10, a.Initiative[1] + 5);
+		
+		local HitpointsAvg = ::Math.round((Hitpoints1 + Hitpoints2) / 2);
+		local BraveryAvg = ::Math.round((Bravery1 + Bravery2) / 2);
+		local StaminaAvg = ::Math.round((Stamina1 + Stamina2) / 2);
+		local MeleeSkillAvg = ::Math.round((MeleeSkill1 + MeleeSkill2) / 2);
+		local RangedSkillAvg = ::Math.round((RangedSkill1 + RangedSkill2) / 2);
+		local MeleeDefenseAvg = ::Math.round((MeleeDefense1 + MeleeDefense2) / 2);
+		local RangedDefenseAvg = ::Math.round((RangedDefense1 + RangedDefense2) / 2);
+		local InitiativeAvg = ::Math.round((Initiative1 + Initiative2) / 2);
+		
+		b.Hitpoints += HitpointsAvg;
+		b.Bravery += BraveryAvg;
+		b.Stamina += StaminaAvg;
+		b.MeleeSkill += MeleeSkillAvg;
+		b.RangedSkill += RangedSkillAvg;
+		b.MeleeDefense += MeleeDefenseAvg;
+		b.RangedDefense += RangedDefenseAvg;
+		b.Initiative += InitiativeAvg;
+		
+		this.getContainer().getActor().m.CurrentProperties = clone b;
+		this.getContainer().getActor().setHitpoints(b.Hitpoints);
+
+		this.addTraits();
+		return array(8, 50);
 	}
 	
-	function TypeToInfoNonHuman( _entity , _returnViable = false )
+
+/////////////////////////////////////////////////////////
+	
+	function TypeToInfo( _entity , _returnViable = false )
 	{	
 		local _type = _entity.getType();
 		
@@ -205,11 +248,12 @@ if (!("CharmedUtilities" in ::Const))
 		{
 			return ::Const.CharmedUnits.getRequirements(_type);
 		}
-		
+
 		local ret = {
 			Type = _type,
 			Entity = _entity
 		};
+
 		::Const.CharmedUnits.addBasicData(ret, _entity);
 
 		switch (_type)
@@ -436,11 +480,39 @@ if (!("CharmedUtilities" in ::Const))
 		return ret;
 	}
 	
+	function removeAllHumanSprites( _entity, _exclude = null, _removeDefaultSprites = false )
+	{
+		_exclude = _exclude != null ? _exclude : [];
+
+		foreach (id in ::Const.CharmedUtilities.SpritesToRemove)
+		{
+			if (_exclude.find(id) == null)
+		    {
+		    	_entity.removeSprite(id);
+		    }
+		}
+
+		if (!_removeDefaultSprites)
+		{
+			return;
+		}
+
+		foreach (id in ::Const.CharmedUtilities.DefaultSprites)
+		{
+		    _entity.removeSprite(id);
+		}
+
+		if (_entity.getMoraleState() != ::Const.MoraleState.Ignore)
+		{
+			_entity.removeSprite("morale");
+		}
+	}
 };
 
 ::Const.CharmedUtilities.BackgroundTypeToCopy <- [
+	"Crusader",
 	"Combat",
-	"ConvertedCultist",
+	"Druid",
 	"Educated",
 	"Noble",
 	"Lowborn",

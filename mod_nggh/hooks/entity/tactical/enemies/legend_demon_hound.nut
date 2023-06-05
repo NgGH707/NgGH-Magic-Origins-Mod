@@ -25,11 +25,13 @@
 
 			local loot;
 
+			/*
 			if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		    {
 		    	loot = ::new("scripts/items/armor_upgrades/named/nggh_mod_named_bone_platings_upgrade");
 		    }
 		    else
+		    */
 		    {
 		    	loot = ::new("scripts/items/legend_armor/armor_upgrades/nggh_mod_named_bone_platings_legend_upgrade");
 		    }

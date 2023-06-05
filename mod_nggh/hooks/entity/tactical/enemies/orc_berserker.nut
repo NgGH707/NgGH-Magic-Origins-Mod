@@ -11,12 +11,9 @@
 		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Body));
 		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Head));
 
-		local roll = ::MSU.Array.rand([
-			"orc_berserker_light",
-			"orc_berserker_medium",
-			""
-		]);
+		local roll = ::MSU.Array.rand(["","orc_berserker_light","orc_berserker_medium"]);
 
+		/*
 		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
 		{
 			if (roll.len() != 0)
@@ -30,6 +27,7 @@
 			}
 		}
 		else
+		*/
 		{
 			if (roll.len() != 0)
 			{

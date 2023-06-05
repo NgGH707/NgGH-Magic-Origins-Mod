@@ -356,7 +356,7 @@ this.nggh_mod_hyena_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		body_blood.Visible = false;
 		this.getSprite("status_rooted").Scale = 0.54;
 		this.setSpriteOffset("status_rooted", ::createVec(0, 0));
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 
 		if (!_isFrenzied)
 		{

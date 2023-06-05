@@ -548,7 +548,7 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 	function setStartValuesEx( _isElite = false , _parameter_1 = null , _parameter_2 = null , _parameter_3 = null )
 	{
 		local type = ::Const.EntityType.Kraken;
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 
 		this.getSkills().add(::new("scripts/skills/traits/player_character_trait"));
 		this.setTitle(::MSU.Array.rand(::Const.Strings.KrakenTitlesOnly));

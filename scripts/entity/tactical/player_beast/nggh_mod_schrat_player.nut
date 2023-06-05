@@ -371,7 +371,7 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		this.setSpriteOffset("status_rooted", ::createVec(0, 0));
 		this.setSpriteOffset("status_stunned", ::createVec(0, 10));
 		this.setSpriteOffset("arrow", ::createVec(0, 10));
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 
 		this.setScenarioValues(type, _isElite);
 	}

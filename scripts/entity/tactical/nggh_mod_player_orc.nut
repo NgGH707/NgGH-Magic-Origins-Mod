@@ -587,6 +587,7 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 		}
 		*/
 		
+		this.getBackground().onfillTalentsValues(this.getTalents());
 		this.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
 
 		if (_setName)
@@ -601,11 +602,6 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 		else if (::Math.rand(1, 100) <= 1)
 		{
 			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscChampion, 6);
-		}
-
-		if (::Math.rand(1, 100) <= 5)
-		{
-			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscFairGame, 2);
 		}
 
 		if (!this.m.Skills.hasSkill("trait.intensive_training_trait"))
@@ -665,7 +661,7 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 
 		// update the properties
 		this.m.CurrentProperties = clone this.m.BaseProperties;
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 
 		if (_addUniqueTrait)
 		{
@@ -1300,10 +1296,12 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 
 			return ::Const.Items.NotForOrcArmorList.find(_item.getID()) == null;
 		}
+		/*
 		else if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue() && _item.isItemType(::Const.Items.ItemType.Helmet))
 		{
 			return ::Const.Items.NotForOrcHelmetList.find(_item.getID()) == null;
 		}
+		*/
 
 		return true;
 	}

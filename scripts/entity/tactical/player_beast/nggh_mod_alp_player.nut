@@ -432,7 +432,7 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 		
 		this.getSprite("status_rooted").Scale = 0.55;
 		this.setSpriteOffset("status_rooted", ::createVec(0, 10));
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 
 		if (_assignEquipment > 2)
 		{
@@ -449,16 +449,6 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 		}
 
 		this.setScenarioValues(type, _isElite);
-	}
-
-	function setScenarioValues( _type, _isElite = false, _randomizedTalents = false, _setName = false )
-	{
-		this.nggh_mod_player_beast.setScenarioValues(_type, _isElite, _randomizedTalents, _setName);
-
-		if (!::Nggh_MagicConcept.IsOPMode && _type == ::Const.EntityType.LegendDemonAlp && this.getBaseProperties().Initiative > 900)
-		{
-			this.getBaseProperties().Initiative -= 925;
-		}
 	}
 	
 	function assignMeleeEquipment()

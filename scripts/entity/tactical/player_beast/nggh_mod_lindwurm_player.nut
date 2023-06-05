@@ -544,25 +544,9 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		this.setSpriteOffset("status_rooted", ::createVec(0, 15));
 		this.setSpriteOffset("status_stunned", ::createVec(-5, 30));
 		this.setSpriteOffset("arrow", ::createVec(-5, 30));
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 		
 		this.setScenarioValues(type, _isElite);
-	}
-
-	function setScenarioValues( _type, _isElite = false, _randomizedTalents = false, _setName = false )
-	{
-		this.nggh_mod_player_beast.setScenarioValues(_type, _isElite, _randomizedTalents, _setName);
-
-		if (this.m.Skills.hasSkill("racial.champion"))
-		{
-			this.m.Skills.add(::new("scripts/skills/traits/fearless_trait"));
-
-			// a bit bias for the green scalie, especially the alpha one OwO
-			if (_type == ::Const.EntityType.Lindwurm)
-			{
-				this.m.BaseProperties.ActionPoints = 8;
-			}
-		}
 	}
 
 	function getPossibleSprites( _layer )

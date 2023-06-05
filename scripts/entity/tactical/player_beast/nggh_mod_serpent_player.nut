@@ -315,7 +315,7 @@ this.nggh_mod_serpent_player <- ::inherit("scripts/entity/tactical/nggh_mod_play
 		this.setSpriteOffset("status_rooted", ::createVec(-10, 20));
 		this.setSpriteOffset("status_stunned", ::createVec(-35, 20));
 		this.setSpriteOffset("arrow", ::createVec(0, 20));
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 
 		this.setScenarioValues(type, _isElite);
 	}

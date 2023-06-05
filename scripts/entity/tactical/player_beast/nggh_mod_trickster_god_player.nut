@@ -273,7 +273,7 @@ this.nggh_mod_trickster_god_player <- ::inherit("scripts/entity/tactical/nggh_mo
 		local b = this.m.BaseProperties;
 		local type = ::Const.EntityType.TricksterGod;
 		b.setValues(::Const.Tactical.Actor.TricksterGod);
-		this.addDefaultBackground(type);
+		this.addDefaultBackground(type, _isElite);
 		
 		this.setScenarioValues(type, _isElite);
 	}
