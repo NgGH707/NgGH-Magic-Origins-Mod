@@ -17,7 +17,7 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 // change witch hunter strength rating
 ::Const.World.Spawn.Troops.LegendPeasantWitchHunter.Strength = 30;
 
-// new tactical effects
+// new spawnlist
 ::Const.World.Spawn.Nggh_WitchHunter <- {
 	Name = "WitchHunter",
 	IsDynamic = true,
@@ -30,8 +30,8 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 	Fixed = [
 		{
 			Weight = 100 
-			Type = ::Const.World.Spawn.Troops.Inquisitor,
-			Cost = 40
+			Type = ::Const.World.Spawn.Troops.LegendPeasantWitchHunter,
+			Cost = 0
 		}
 	],
 	Troops = [
@@ -54,7 +54,7 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 			Types = [
 				{
 					Type = ::Const.World.Spawn.Troops.LegendPeasantWitchHunter,
-					Cost = 15
+					Cost = 18
 				}
 			]
 		},
@@ -119,7 +119,7 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 			Types = [
 				{
 					Type = ::Const.World.Spawn.Troops.LegendPeasantWitchHunter,
-					Cost = 15
+					Cost = 18
 				}
 			]
 		},

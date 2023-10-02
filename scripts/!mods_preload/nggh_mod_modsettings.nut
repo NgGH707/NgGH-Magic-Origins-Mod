@@ -5,6 +5,7 @@
 	::Nggh_MagicConcept.IsCosmeticEnable <- true;
 	::Nggh_MagicConcept.IsAbleToCharmInArena <- false;
 	::Nggh_MagicConcept.IsNoKrakenVsKraken <- false;
+	::Nggh_MagicConcept.ChanceToHireHexe <- 5;
 	::Nggh_MagicConcept.HexeOriginRitual <- {
 		IsLoseLevelWhenFail = true,
 		UnluckyChance = 5,
@@ -119,6 +120,25 @@
 		::logInfo("After change \'Skip Kraken vs Kraken\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.IsNoKrakenVsKraken = this.getValue();
 	});
+	local hiringHexeChance = page.addStringSetting("hiring_hexe_chance", ::Nggh_MagicConcept.ChanceToHireHexe.tostring(), "Recruit Hexe Event Chance (%)");
+	hiringHexeChance.setDescription("The chance to meet an event where you have the option to recruit the hexe to your party while doing the \'Protect Firstborn From Witches\' Contract. The chance is double for legendary contract, playing \'Hexe\' origin can triple the chance. [color=" + ::Const.UI.Color.NegativeValue + "]Only inputs an integer number. Words or symbols are not allowed.[/color]");
+	hiringHexeChance.setPersistence(true);
+	hiringHexeChance.addAfterChangeCallback(function (_oldValue)
+	{
+		if (this.getValue() == _oldValue) return;
+		local ret = tools.processIntegerInput(this.getValue(), _oldValue);
+
+		if (!ret.Result)
+		{
+			this.set(_oldValue);
+		}
+
+		::logInfo("After change \'Recruit Hexe Event Chance\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
+	    ::Nggh_MagicConcept.ChanceToHireHexe = ret.Value;
+	});
+	local maxHexeNum = page.addRangeSetting("hired_hexe_num_max", 1, 0, 10, 1, "Max Number of Recruited Hexen per Campaign");
+	maxHexeNum.setDescription("The maximum number of recruited hexen in your current roster (excluding the \'Elder Hexe\' backgound). As long as you haven't reach the maximun number, you can meet the recruitment event. Playing \'Hexe\' origin allows you to have 3 times more than usual.");
+	maxHexeNum.setPersistence(true);
 
 	// 1-divider
 	page.addDivider("divider_1");
@@ -145,7 +165,7 @@
 		::logInfo("After change \'Hexe Origin Ritual - Cooldown\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.HexeOriginRitual.Cooldown = this.getValue();
 	});
-	local modFactor = page.addStringSetting("ritual_factor", "" + ::Nggh_MagicConcept.HexeOriginRitual.Mult + "", "Modifying Factor");
+	local modFactor = page.addStringSetting("ritual_factor", "" + ::Nggh_MagicConcept.HexeOriginRitual.Mult + "", "Standard Modifier");
 	modFactor.setDescription("An important factor to determine the offerings value. The higher it is, the more you have to sacrifice for the event. [color=" + ::Const.UI.Color.NegativeValue + "]Only inputs a postive float or integer number. Words or symbols are not allowed.[/color].\n\nExamples: \n• \'1.1\' is valid.\n• \'-1.1\' is invalid.\n• \'1\' is valid");
 	modFactor.setPersistence(true);
 	modFactor.addAfterChangeCallback(function (_oldValue)

@@ -197,7 +197,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 
 		this.getFlags().set("has_eaten", false);
 		this.m.IsBroughtInBattle = true;
-	} 
+	}
 
 	function onCombatFinished()
 	{
@@ -213,6 +213,11 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 
 	function checkHunger()
 	{
+		if (this.getSize() == 1) 
+		{
+			return true;
+		}
+
 		if (this.onFeastingLeftoverCorpses())
 		{
 			this.improveMood(0.5, "Had a great meal");

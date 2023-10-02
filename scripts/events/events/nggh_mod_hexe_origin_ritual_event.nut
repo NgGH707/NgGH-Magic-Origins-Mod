@@ -848,17 +848,17 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		if (r <= 30)
 		{
 			this.m.ChampionChance = 0;
-			this.m.DifficultyMult = ::Math.rand(70, 85) * 0.01;
+			this.m.DifficultyMult = ::Math.rand(60, 65) * 0.01;
 		}
 		else if (r <= 80)
 		{
 			this.m.ChampionChance = 1;
-			this.m.DifficultyMult = ::Math.rand(95, 105) * 0.01;
+			this.m.DifficultyMult = ::Math.rand(85, 95) * 0.01;
 		}
 		else
 		{
 			this.m.ChampionChance = 4;
-			this.m.DifficultyMult = ::Math.rand(115, 135) * 0.01;
+			this.m.DifficultyMult = ::Math.rand(110, 130) * 0.01;
 		}
 
 		this.m.ChampionChance += this.getAdditionalChampionChance();

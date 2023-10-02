@@ -203,7 +203,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		}
 	}
 	
-	function onUpdateHiringRoster( _roster )
+	function onUpdateHiringRoster( _roster, _settlement = null )
 	{
 		local bros = _roster.getAll();
 		local garbage = [];

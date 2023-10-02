@@ -297,6 +297,13 @@ if (!("Goblin" in ::Const))
 	//"perk_ptr_family_pride",
 ];
 
+foreach (def in ::Const.Perks.PerkDefObjects)
+{
+	if (def.ID.find("_favoured_") == null) continue;
+	
+	::Const.NoCopyPerks.push(def.ID);
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ::Const.LuckyRuneChanceModifier <- 8;

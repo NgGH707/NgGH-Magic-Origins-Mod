@@ -229,18 +229,12 @@ this.nggh_mod_spit_acid_skill <- ::inherit("scripts/skills/skill", {
 
 	function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )
 	{
-		if (_skill == this)
-		{
-			_hitInfo.InjuryThresholdMult *= 0.5;
-		}
-	}
-
-	function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )
-	{
 		if (_targetEntity == null || _skill != this)
 		{
 			return;
 		}
+
+		_hitInfo.InjuryThresholdMult *= 0.5;
 
 		if (_hitInfo.BodyPart == ::Const.BodyPart.Body && _targetEntity.getFlags().has("body_immune_to_acid") && _targetEntity.getArmor(::Const.BodyPart.Body) > 0)
 		{
@@ -282,7 +276,7 @@ this.nggh_mod_spit_acid_skill <- ::inherit("scripts/skills/skill", {
 			return;
 		}
 
-		::Tactical.EventLog.log("The acidic blood splashes to " + ::Const.UI.getColorizedEntityName(_targetEntity) "\'s face");
+		::Tactical.EventLog.log("The acidic blood splashes to " + ::Const.UI.getColorizedEntityName(_targetEntity) + "\'s face");
 		_targetEntity.getSkills().add(::new("scripts/skills/effects/nggh_mod_blind_effect"));
 	}
 

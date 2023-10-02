@@ -10,6 +10,7 @@
 		{
 			this.m.IsMeleeWitchHunter = true;
 			this.m.AIAgent = ::new("scripts/ai/tactical/agents/bounty_hunter_melee_agent");
+			this.m.AIAgent.getProperties().PreferCarefulEngage = true;
 			this.m.AIAgent.setActor(this);
 		}
 	}

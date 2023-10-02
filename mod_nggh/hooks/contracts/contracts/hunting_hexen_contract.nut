@@ -29,6 +29,7 @@
 							++count;
 						}
 					}
+
 					return count;
 				};
 				state.end = function()
@@ -39,7 +40,11 @@
 
 					if (::World.Assets.getOrigin().getID() == "scenario.hexe")
 					{
-						if (r <= 20)
+						if (hexeCount < ::Nggh_MagicConcept.Mod.ModSettings.getSetting("hired_hexe_num_max").getValue() * 3 && r <= ::Nggh_MagicConcept.ChanceToHireHexe * 3)
+						{
+							this.Flags.set("IsHiringHexe", true);
+						}
+						else if (r <= 20)
 						{
 							this.Flags.set("IsSpiderQueen", true);
 						}
@@ -51,14 +56,14 @@
 						{
 							this.Flags.set("IsSinisterDeal", true);
 						}
-						else if (hexeCount < 3)
-						{
-						    this.Flags.set("IsHiringHexe", true);
-						}
 					}
 					else
 					{
-						if (r <= 15)
+						if (hexeCount < ::Nggh_MagicConcept.Mod.ModSettings.getSetting("hired_hexe_num_max").getValue() && r <= ::Nggh_MagicConcept.ChanceToHireHexe)
+						{
+							this.Flags.set("IsHiringHexe", true);
+						}
+						else if (r <= 15)
 						{
 							this.Flags.set("IsSpiderQueen", true);
 						}
@@ -73,10 +78,6 @@
 						else if (r <= 55)
 						{
 							this.Flags.set("IsSinisterDeal", true);
-						}
-						else if (r <= 65 && hexeCount < 1)
-						{
-						    this.Flags.set("IsHiringHexe", true);
 						}
 					}
 

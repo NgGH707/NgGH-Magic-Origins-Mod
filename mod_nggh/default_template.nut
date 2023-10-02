@@ -1,3 +1,4 @@
+// the full table
 local defaultTemplate =
 {
 	StatMod = { Hitpoints = [0, 0], Bravery = [-10, -5], Stamina = [0, 0], MeleeSkill = [-5, -5], RangedSkill = [0, 0], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-25, -25] },
@@ -6,7 +7,7 @@ local defaultTemplate =
 	Requirements = ["NggHCharmEnemyGhoul"],
 	Script = "player_beast/nggh_mod_ghoul_player",
 	Background = "barbarian_background",
-	PerkTree = "NachoTree", 
+	PerkTree = "NachoTree",
 	Difficulty = 15,
 
 	Custom =  {
@@ -19,7 +20,7 @@ local defaultTemplate =
 		Names = "NachoNames",
 	},
 	
-	// all functions below will use '.call(background)' 
+	// all functions below will use '.call(background)'
 	function onUpdate( _properties ) {}
 
 	function onAdded() {}
@@ -39,4 +40,20 @@ local defaultTemplate =
 	function onSetup() {}
 
 	function addTooltip( _tooltips ) {}
+};
+
+
+// example
+// entry for necromancer entity type
+local Necromancer = {
+	StatMod = { Hitpoints = [0, 0], Bravery = [-10, -20], Stamina = [0, 0], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
+	Skills = [],
+	Perks = ["LegendRaiseUndead"],
+	Requirements = ["NggHCharmWords"],
+	Background = "legend_necromancer_background",
+	Difficulty = 33,
+
+	function onBuildPerkTree() {
+		this.addPerkGroup(::Const.Perks[::MSU.Array.rand(["ZombieMagicTree", "SkeletonMagicTree", "VampireMagicTree"])].Tree);
+	}
 };

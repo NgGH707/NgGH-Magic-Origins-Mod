@@ -313,7 +313,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 
 			local mb = troopMbMap[key];
 
-			for( local i = 0; i != troop.Num; i = ++i )
+			for( local i = 0; i != troop.Num; ++i )
 			{
 				::Const.World.Common.addTroop(party, troop, false, this.m.ChampionChance + mb);
 			}
@@ -349,17 +349,17 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 		if (r <= 30)
 		{
 			this.m.ChampionChance = 0;
-			this.m.DifficultyMult = ::Math.rand(75, 90) * 0.01;
+			this.m.DifficultyMult = ::Math.rand(65, 70) * 0.01;
 		}
 		else if (r <= 80)
 		{
 			this.m.ChampionChance = 1;
-			this.m.DifficultyMult = ::Math.rand(100, 115) * 0.01;
+			this.m.DifficultyMult = ::Math.rand(90, 105) * 0.01;
 		}
 		else
 		{
 			this.m.ChampionChance = 4;
-			this.m.DifficultyMult = ::Math.rand(125, 140) * 0.01;
+			this.m.DifficultyMult = ::Math.rand(115, 130) * 0.01;
 		}
 
 		this.m.ChampionChance += this.getAdditionalChampionChance();
@@ -393,9 +393,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 
 	function calcResourceBoost()
 	{
-		local defaultBoost = 25;
-		local dayModifier = ::Math.min(::World.getTime().Days / 5, 50);
-		return defaultBoost + dayModifier;
+		return 25 + ::Math.min(::World.getTime().Days / 5, 50);
 	}
 
 });
