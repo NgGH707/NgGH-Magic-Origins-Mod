@@ -400,9 +400,7 @@ this.nggh_mod_alp_teleport_skill <- ::inherit("scripts/skills/skill", {
 		}
 
 		if (_entity.getSkills().hasSkill("perk.afterimage"))
-		{
 			_entity.getSkills().add(::new("scripts/skills/effects/nggh_mod_afterimage_effect"));
-		}
 	}
 
 	function onFadeIn( _tag )

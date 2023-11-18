@@ -397,6 +397,9 @@ this.nggh_mod_alp_shadow_teleport_skill <- ::inherit("scripts/skills/skill", {
 		{
 			_tag.OnFadeIn(_tag);
 		}
+
+		if (_entity.getSkills().hasSkill("perk.afterimage"))
+			_entity.getSkills().add(::new("scripts/skills/effects/nggh_mod_afterimage_effect"));
 	}
 
 	function onFadeIn( _tag )

@@ -343,8 +343,6 @@
 		}
 
 		if (_entity.getSkills().hasSkill("perk.afterimage"))
-		{
 			_entity.getSkills().add(::new("scripts/skills/effects/nggh_mod_afterimage_effect"));
-		}
 	}
 });
