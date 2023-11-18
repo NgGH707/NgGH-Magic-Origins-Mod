@@ -373,7 +373,7 @@
 ::Const.Strings.PerkDescription.NggHGoblinMountedCharge <- "\'Use the great weight and speed of the mount to charge forward.\'"
 															+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 																+ "\n• Reduces the amount of tile you need to move to build up a full power mounted charge."
-																+ "\n• Improves the bonuses from [color=" + ::Const.UI.Color.NegativeValue + "]Mounted Charge[/color] effect up to [color=" + ::Const.UI.Color.PositiveValue + "]125%[/color] of the original bonuses.";
+																+ "\n• Increases the bonuses from [color=" + ::Const.UI.Color.NegativeValue + "]Mounted Charge[/color] effect by [color=" + ::Const.UI.Color.PositiveValue + "]+25%[/color] of the original bonuses.";
 // ghost
 ::Const.Strings.PerkDescription.NggHGhostGhastlyTouch <- "\'My touch is both fast and deadly!!!\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Ghastly Touch[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Costs [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] less AP.\n• Gains an additional [color=" + ::Const.UI.Color.DamageValue + "]0[/color] - [color=" + ::Const.UI.Color.DamageValue + "]5[/color] Attack Damage.\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+5%[/color] hit chance.";
 ::Const.Strings.PerkDescription.NggHGhostSpectralBody <- "\'Like a shapeless moving shadow, You can hardly hit it.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Makes any incoming melee attacks has [color=" + ::Const.UI.Color.PositiveValue + "]-10%[/color] chance to hit you.\n• Grants a complete immunity to all ranged attacks.";
