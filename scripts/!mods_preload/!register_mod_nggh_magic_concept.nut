@@ -26,21 +26,12 @@
 	::Is_PlanYourPerks_Exist <- ::mods_getRegisteredMod("mod_plan_perks") != null;
 	::Is_AccessoryCompanions_Exist <- ::mods_getRegisteredMod("mod_AC") != null;
 
-	// will probably put these to a callback after the new UI is connected
-	::Nggh_MagicConcept.PerkTreeBuilder <- ::new("scripts/mods/perk_tree_builder");
-	::Nggh_MagicConcept.TalentFiller <- ::new("scripts/mods/talent_filler");
-
 	// set up mod settings 
 	::Nggh_MagicConcept.mod_settings();
 	::Nggh_MagicConcept.secret_contents();
 
 	// load hook files
 	::include("mod_nggh/load.nut");
-
-	// register JS and CSS
-	::mods_registerJS("nggh_hooks/character_screen_paperdoll_module.js");
-	::mods_registerJS("nggh_hooks/turnsequencebar_module.js");
-	::mods_registerCSS("nggh_hooks/turnsequencebar_module.css");
 	
 	//::nggh_processingEntries();
 	//::nggh_overwriteEntries();

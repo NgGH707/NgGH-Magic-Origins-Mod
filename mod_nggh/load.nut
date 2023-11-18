@@ -21,7 +21,12 @@
 ::include("mod_nggh/config/perk_tree_templates.nut")
 
 // update the perk tooltips
-::Const.Perks.updatePerkGroupTooltips()
+::Const.Perks.updatePerkGroupTooltips();
+
+foreach (file in ::IO.enumerateFiles("mod_nggh/register"))
+{
+	::include(file);
+}
 
 // load the hooks
 ::include("mod_nggh/hook_helper.nut")
