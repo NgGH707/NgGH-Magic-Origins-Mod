@@ -243,16 +243,12 @@ this.mount_manager <- {
 	function clearFlags()
 	{
 		if (this.m.Actor == null || this.m.Actor.isNull())
-		{
 			return;
-		}
 
 		this.m.Actor.getFlags().set("isRider", false);
 
 		if (this.m.MountType == null)
-		{
 			return;
-		}
 
 		foreach ( _f in ::Const.GoblinRiderMounts[this.m.MountType].Flags ) 
 		{
@@ -288,9 +284,7 @@ this.mount_manager <- {
 			} 
 
 			if (!_s.isType(::Const.SkillType.Active))
-			{
 				quirkNames.push(_s.getName());
-			} 
 
 			this.m.Actor.getSkills().add(_s);
 		    this.m.Skills.push(_s);
@@ -301,9 +295,7 @@ this.mount_manager <- {
 			foreach( i, quirk in this.m.Mount.getQuirks() )
 			{
 				if (::Const.ExcludedQuirks.find(quirk) != null)
-				{
 					continue;
-				}
 
 				local _q = ::new(quirk);
 				_q.m.IsSerialized = false;
@@ -325,9 +317,7 @@ this.mount_manager <- {
 		}
 
 		if (quirkNames.len() != 0) 
-		{
 			this.m.RiderSkill.addQuirks(quirkNames);
-		}
 	}
 
 	function clearSkills()
@@ -342,10 +332,8 @@ this.mount_manager <- {
 		{
 		    local _s = this.m.Actor.getSkills().getSkillByID(skill.getID());
 
-		    if (_s != null && _s.getItem() != null && _s.getItem().getInstanceID() == skill.getItem().getInstanceID())
-		    {
+		    if (_s == null || (_s.getItem() != null && !_s.getItem().isNull() && _s.getItem().getInstanceID() == skill.getItem().getInstanceID()))
 		    	_s.removeSelf();
-		    }
 		}
 
 		this.m.Skills = [];
@@ -361,9 +349,7 @@ this.mount_manager <- {
 	function updateInjuryLayer()
 	{
 		if (!this.isMounted())
-		{
 			return;
-		}
 
 		local percentage = this.getHitpointsPct();
 		local mount_injury = this.m.Actor.getSprite("mount_injury");
@@ -388,9 +374,7 @@ this.mount_manager <- {
 	function updateAppearance()
 	{
 		if (this.m.Actor == null || this.m.Actor.isNull())
-		{
 			return;
-		}
 
 		local _actor = this.getActor();
 		local flip = !_actor.isAlliedWithPlayer();
@@ -511,26 +495,18 @@ this.mount_manager <- {
 	function onAccessoryEquip( _item )
 	{
 		if (this.m.Actor == null || this.m.Actor.isNull())
-		{
 			return;
-		}
 
 		if (!this.m.Actor.isAbleToMount())
-		{
 			return;
-		}
 
 		local id = _item.getID();
 
 		if (this.getExcludedMount().find(id) != null)
-		{
 			return;
-		}
 
 		if (::Const.GoblinRider.ID.find(id) == null)
-		{
 			return;
-		}
 
 		this.setMount(_item);
 		this.setMountType(::Const.GoblinRider.getMountType(_item));
@@ -570,24 +546,16 @@ this.mount_manager <- {
 		local rider = this.m.Actor;
 
 		if (!rider.isAlive() || !rider.isPlacedOnMap())
-		{
 			return 0;
-		}
 
 		if (_hitInfo.DamageRegular == 0 && _hitInfo.DamageArmor == 0)
-		{
 			return 0;
-		}
 
 		if (typeof rider == "instance")
-		{
 			rider = rider.get();
-		}
 
 		if (typeof _attacker == "instance")
-		{
 			_attacker = _attacker.get();
-		}
 
 		if (_attacker != null && _attacker.isAlive() && _attacker.isPlayerControlled() && !rider.isPlayerControlled())
 		{
@@ -597,9 +565,7 @@ this.mount_manager <- {
 		}
 
 		if (rider.m.Skills.hasSkill("perk.steel_brow"))
-		{
 			_hitInfo.BodyDamageMult = 1.0;
-		}
 		
 		local p = rider.getSkills().buildPropertiesForBeingHit(_attacker, _skill, _hitInfo);
 		rider.getItems().onBeforeDamageReceived(_attacker, _skill, _hitInfo, p);
@@ -607,9 +573,7 @@ this.mount_manager <- {
 		_hitInfo.BodyDamageMult = 1.0;
 
 		if (_skill != null)
-		{
 			dmgMult = dmgMult * (_skill.isRanged() ? p.DamageReceivedRangedMult : p.DamageReceivedMeleeMult);
-		}
 
 		_hitInfo.DamageRegular -= p.DamageRegularReduction;
 		_hitInfo.DamageArmor -= p.DamageArmorReduction;
@@ -795,16 +759,12 @@ this.mount_manager <- {
 	function killMount( _killer, _skill, _fatalityType )
 	{
 		if (_killer != null && !_killer.isAlive())
-		{
 			_killer = null;
-		}
 
 		local rider = this.m.Actor;
 
 		if (typeof rider == "instance")
-		{
 			rider = rider.get();
-		}
 
 		local myTile = rider.isPlacedOnMap() ? rider.getTile() : null;
 		local tile = rider.findTileToSpawnCorpse(_killer);
@@ -812,9 +772,7 @@ this.mount_manager <- {
 		this.spawnDeadMount( _killer, _skill, tile, _fatalityType);
 
 		if (!::Tactical.State.isFleeing() && _killer != null)
-		{
 			_killer.onActorKilled(rider, tile, _skill);
-		}
 
 		if (!::Tactical.State.isFleeing() && myTile != null)
 		{
@@ -823,9 +781,7 @@ this.mount_manager <- {
 				foreach( a in i )
 				{
 					if (a.getID() != rider.getID())
-					{
 						a.onOtherActorDeath(_killer, rider, _skill);
-					}
 				}
 			}
 		}
@@ -835,13 +791,9 @@ this.mount_manager <- {
 			if (::Tactical.State.getStrategicProperties() != null && ::Tactical.State.getStrategicProperties().IsArenaMode)
 			{
 				if (_killer == null)
-				{
 					::Sound.play(::Const.Sound.ArenaFlee[::Math.rand(0, ::Const.Sound.ArenaFlee.len() - 1)], ::Const.Sound.Volume.Tactical * ::Const.Sound.Volume.Arena);
-				}
 				else
-				{
 					::Sound.play(::Const.Sound.ArenaKill[::Math.rand(0, ::Const.Sound.ArenaKill.len() - 1)], ::Const.Sound.Volume.Tactical * ::Const.Sound.Volume.Arena);
-				}
 			}
 		}
 
@@ -852,24 +804,18 @@ this.mount_manager <- {
 				rider.getSkills().add(::new("scripts/skills/effects/dazed_effect"));
 
 				if (!rider.isHiddenToPlayer())
-				{
 					::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(rider) + " is dazed for one turn due to falling from your mount");
-				}
 			}
 			else
 			{
 				rider.getSkills().add(::new("scripts/skills/effects/staggered_effect"));
 
 				if (!rider.isHiddenToPlayer())
-				{
 					::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(rider) + " is staggered for one turn due to falling from your mount");
-				}
 			}
 
 			if (rider.getCurrentProperties().IsAffectedByDyingAllies)
-			{
 				rider.worsenMood(0.5, "My mount, [color=#1e468f]" + this.m.Mount.getName() + "[/color] died in battle");
-			}
 		}
 
 		if (this.m.Mount != null && !this.m.Mount.isNull())
@@ -879,13 +825,9 @@ this.mount_manager <- {
 			if (this.m.Actor != null)
 			{
 				if (this.m.Mount.getCurrentSlotType() == ::Const.ItemSlot.Bag)
-				{
 					this.m.Actor.getItems().removeFromBag(this.m.Mount.get());
-				}
 				else
-				{
 					this.m.Actor.getItems().unequip(this.m.Mount.get());
-				}
 			}
 		}
 	}
@@ -893,9 +835,7 @@ this.mount_manager <- {
 	function spawnDeadMount( _killer, _skill, _tile, _fatalityType )
 	{
 		if (_tile == null)
-		{
 			return;
-		}
 		
 		local isSpider = this.getMountType() == ::Const.GoblinRider.Mounts.Spider;
 		local appearance = this.getAppearance();
@@ -1006,9 +946,7 @@ this.mount_manager <- {
 		this.m.IsUpdating = true;
 
 		if (!this.isMounted())
-		{
 			return;
-		}
 
 		local e = this.m.Mount.m.Entity;
 
@@ -1023,9 +961,7 @@ this.mount_manager <- {
 			b.ArmorMax = attr.ArmorMax;
 
 			if (armor != null)
-			{
 				armor.setArmor(this.m.Armor.Condition);
-			}
 
 			e.m.CurrentProperties = clone b;
 			e.getSkills().update();
@@ -1039,9 +975,7 @@ this.mount_manager <- {
 		this.m.IsUpdating = true;
 
 		if (!this.isMounted())
-		{
 			return;
-		}
 
 		local e = this.m.Mount.m.Entity;
 
@@ -1082,9 +1016,7 @@ this.mount_manager <- {
 		local key = ::Const.GoblinRiderMounts[this.m.MountType].Attributes;
 
 		if (_attr == null)
-		{
 			_attr = ::Const.Tactical.Actor[key];
-		}
 
 		this.setAttributes(_attr);
 		this.m.Attributes.HitpointsMax = this.m.Attributes.Hitpoints;
@@ -1128,9 +1060,7 @@ this.mount_manager <- {
 			local healthAdded = ::Math.min(healthMissing, ::Math.floor(this.getHitpointsMax() * 0.1));
 
 			if (healthAdded <= 0)
-			{
 				return;
-			}
 
 			this.setHitpoints(this.getHitpoints() + healthAdded);
 				
@@ -1149,9 +1079,7 @@ this.mount_manager <- {
 		if (this.isMounted())
 		{
 			if (this.m.Skills.len() == 0)
-			{
 				this.addSkills();
-			}
 
 			this.applyingAttributes();
 
@@ -1222,9 +1150,7 @@ this.mount_manager <- {
 		if (this.isMounted())
 		{
 			if (this.m.Skills.len() == 0)
-			{
 				this.addSkills();
-			}
 
 			if (::Is_AccessoryCompanions_Exist)
 			{

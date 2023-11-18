@@ -8,12 +8,10 @@
 		this.m.Icon = "skills/active_109.png";
 		this.m.IconDisabled = "skills/active_109_sw.png";
 	};
-	obj.onAdded <- function()
-	{	
+	obj.onAfterUpdate <- function( _properties )
+	{
 		if (this.getContainer().getActor().isPlayerControlled())
-		{
-			this.m.ActionPointCost = 5;
-		}
+			this.m.ActionPointCost -= 1;
 	};
 	obj.getTooltip <- function()
 	{

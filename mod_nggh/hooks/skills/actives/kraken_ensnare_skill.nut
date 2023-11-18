@@ -4,14 +4,10 @@
 	obj.onVerifyTarget = function( _originTile, _targetTile )
 	{
 		if (!ws_onVerifyTarget(_originTile, _targetTile))
-		{
 			return false;
-		}
 
 		if (_targetTile.getEntity().getFlags().has("kraken_tentacle"))
-		{
 			return false;
-		}
 
 		return true;
 	}

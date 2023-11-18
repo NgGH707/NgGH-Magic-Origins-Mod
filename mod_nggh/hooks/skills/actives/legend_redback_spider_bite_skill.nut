@@ -16,11 +16,8 @@
 		local actor = this.getContainer().getActor();
 
 		if (!actor.isPlayerControlled() || actor.isSummoned())
-		{
 			return;
-		}
 
-		this.m.ActionPointCost = 5;
 		this.m.DirectDamageMult += 0.1;
 	};
 	obj.getTooltip <- function()
@@ -29,6 +26,11 @@
 	};
 	obj.onAfterUpdate <- function( _properties )
 	{
+		local actor = this.getContainer().getActor();
+
+		if (!actor.isSummoned() && actor.isPlayerControlled())
+			this.m.ActionPointCost -= 1;
+
 		this.m.FatigueCostMult = this.getContainer().hasSkill("perk.spider_bite") ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
 	};
 });

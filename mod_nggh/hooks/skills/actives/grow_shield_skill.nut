@@ -51,9 +51,8 @@
 			actor.getSprite("shield_icon").fadeIn(1500);
 
 			if (isSpecialized)
-			{
 				actor.getSkills().add(::new("scripts/skills/effects/shieldwall_effect"));
-			}
+				
 		}, null);
 	};
 });

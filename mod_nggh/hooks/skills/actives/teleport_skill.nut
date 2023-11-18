@@ -12,16 +12,22 @@
 	obj.onAdded <- function()
 	{
 		if (this.getContainer().getActor().isPlayerControlled())
-		{
 			this.m.IsVisibleTileNeeded = true;
-			this.m.ActionPointCost = 4;
-			this.m.MinRange = 1;
-			this.m.MaxRange = 15;
-		}
 	};
 	obj.onUpdate <- function( _properties )
 	{
 		_properties.Vision += 7;
+	};
+	obj.onAfterUpdate <- function( _properties )
+	{
+		local actor = this.getContainer().getActor();
+
+		if (actor.isPlayerControlled()) {
+			this.m.ActionPointCost += 1;
+			this.m.MaxRange -= 15;
+		}
+
+		this.m.FatigueCostMult = this.getContainer().hasSkill("perk.spider_bite") ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
 	};
 	obj.getTooltip = function()
 	{

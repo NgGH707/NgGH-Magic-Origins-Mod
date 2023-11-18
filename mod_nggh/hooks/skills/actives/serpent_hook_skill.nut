@@ -67,14 +67,10 @@
 	obj.getHitchance <- function( _targetEntity )
 	{
 		if (!_targetEntity.isAttackable() && !_targetEntity.isRock() && !_targetEntity.isTree() && !_targetEntity.isBush() && !_targetEntity.isSupplies())
-		{
 			return 0;
-		}
 
 		if (this.isImprovedDrag() && _targetEntity.getCurrentProperties().IsImmuneToKnockBackAndGrab)
-		{
 			return 50;
-		}
 
 		return 100;
 	};
@@ -108,28 +104,20 @@
 	obj.onVerifyTarget = function( _originTile, _targetTile )
 	{
 		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
-		{
 			return false;
-		}
 
 		local target = _targetTile.getEntity();
 
 		if (target.getCurrentProperties().IsRooted)
-		{
 			return false;
-		}
 
 		if (target.getCurrentProperties().IsImmuneToKnockBackAndGrab)
 		{
 			if (!target.isAlliedWith(this.getContainer().getActor()))
-			{
 				return false;
-			}
 
 			if (!this.isImprovedDrag())
-			{
 				return false;
-			}
 		}
 
 		return this.getPulledToTile(_originTile, _targetTile) != null;
@@ -137,17 +125,14 @@
 	obj.isViableTarget <- function( _user, _target )
 	{
 		if (_target.isAlliedWith(_user))
-		{
 			return true;
-		}
 
 		if (_target.isNonCombatant())
-		{
 			return false;
-		}
 
 		return [
 			::Const.EntityType.Mortar,
+			::Const.EntityType.GreenskinCatapult,
 			::Const.EntityType.Ghost,
 			::Const.EntityType.SkeletonPhylactery,
 			::Const.EntityType.SkeletonLichMirrorImage,
@@ -186,14 +171,10 @@
 		}
 
 		if (pullToTile == null)
-		{
 			return false;
-		}
 
 		if (!_user.isHiddenToPlayer() && pullToTile.IsVisibleForPlayer)
-		{
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_user) + " drags in " + ::Const.UI.getColorizedEntityName(_targetTile.getEntity()));
-		}
 
 		if (!_user.isHiddenToPlayer() || !target.isHiddenToPlayer())
 		{
@@ -266,9 +247,7 @@
 			target.getSkills().add(::new("scripts/skills/effects/staggered_effect"));
 			
 			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
-			{
 				::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_user) + " has staggered " + ::Const.UI.getColorizedEntityName(target) + " for one turn");
-			}
 		}
 
 		return true;
@@ -301,9 +280,7 @@
 	obj.onAfterDone = function( _data )
 	{
 		if (!_data.Target.isAlive() || _data.Target.isDying())
-		{
 			return;
-		}
 
 		if (_data.User.getCurrentProperties().IsSpecializedInShields && !_data.Target.isAlliedWith(_data.User))
 		{

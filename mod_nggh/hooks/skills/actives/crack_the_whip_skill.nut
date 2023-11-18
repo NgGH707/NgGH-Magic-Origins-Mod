@@ -59,52 +59,39 @@
 	obj.isUsable = function()
 	{
 		if (this.m.IsUsed)
-		{
 			return false;
-		}
 
-		if (!this.skill.isUsable() || this.getContainer().getActor().getTile().hasZoneOfControlOtherThan(this.getContainer().getActor().getAlliedFactions()))
-		{
+		if (!this.skill.isUsable() || this.getContainer().getActor().isEngagedInMelee())
 			return false;
-		}
 		
 		if (this.getContainer().getActor().isPlayerControlled())
-		{
 			return true;
-		}
 
 		foreach( a in ::Tactical.Entities.getInstancesOfFaction(this.getContainer().getActor().getFaction()) )
 		{
 			if (a.getType() == ::Const.EntityType.BarbarianUnhold || a.getType() == ::Const.EntityType.BarbarianUnholdFrost)
-			{
 				return true;
-			}
 		}
 
 		return false;
 	};
 	obj.onUse = function( _user, _targetTile )
 	{
-		local myTile = _user.getTile();
 		foreach( a in ::Tactical.Entities.getInstancesOfFaction(_user.getFaction()) )
 		{
 			a.getSkills().removeByID("effects.sleeping");
-			
-			if ((a.getType() != ::Const.EntityType.BarbarianUnhold && a.getType() != ::Const.EntityType.BarbarianUnholdFrost) || !::isKindOf(a, "nggh_mod_player_beast"))
-			{
-				continue;
-			}
-			
+
 			if (_user.isPlayerControlled())
 			{
 				if (a.getMoraleState() < ::Const.MoraleState.Steady)
-				{
 					a.setMoraleState(::Const.MoraleState.Steady);
-				}
 				
 				this.spawnIcon("status_effect_106", a.getTile());
 				continue;
 			}
+			
+			if ((a.getType() != ::Const.EntityType.BarbarianUnhold && a.getType() != ::Const.EntityType.BarbarianUnholdFrost) || !::isKindOf(a, "nggh_mod_player_beast"))
+				continue;
 			
 			a.setWhipped(true);
 			this.spawnIcon("status_effect_106", a.getTile());

@@ -50,9 +50,7 @@
 		foreach( a in ::Tactical.Entities.getAlliedActors(_user.getFaction(), _user.getTile(), this.getMaxRange()) )
 		{
 			if (a.getID() == _user.getID())
-			{
 				continue;
-			}
 			
 			a.getSkills().removeByID("effects.sleeping");
 			this.raiseMorale(a);

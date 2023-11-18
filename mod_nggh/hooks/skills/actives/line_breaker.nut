@@ -14,9 +14,7 @@
 		local AI = this.getContainer().getActor().getAIAgent();
 
 		if (AI.getID() == ::Const.AI.Agent.ID.Player)
-		{
 			return;
-		}
 
 		AI.addBehavior(::new("scripts/ai/tactical/behaviors/ai_line_breaker"));
 	};

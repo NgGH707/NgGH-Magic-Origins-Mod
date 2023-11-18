@@ -6,9 +6,7 @@
 		local ret = ws_onUse(_user, _targetTile);
 
 		if (ret && _user.isMounted())
-		{
 			_user.getMount().onDismountPet();
-		}
 
 		return ret;
 	}

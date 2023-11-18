@@ -10,46 +10,38 @@
 	obj.getTooltip <- function()
 	{
 		local ret = this.skill.getDefaultUtilityTooltip();
-		ret.push({
-			id = 7,
-			type = "text",
-			icon = "ui/icons/vision.png",
-			text = "Has a range of [color=" +  ::Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
-		});
-		ret.push({
-			id = 8,
-			type = "text",
-			icon = "ui/icons/special.png",
-			text = "Puts target to [color=" +  ::Const.UI.Color.PositiveValue + "]Sleep[/color]"
-		});
+		ret.extend([
+			{
+				id = 7,
+				type = "text",
+				icon = "ui/icons/vision.png",
+				text = "Has a range of [color=" +  ::Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+			},
+			{
+				id = 8,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Puts target to [color=" +  ::Const.UI.Color.PositiveValue + "]Sleep[/color]"
+			}
+		]);
 
 		return ret;
-	};
-	obj.onAdded <- function()
-	{
-		if (this.getContainer().getActor().isPlayerControlled())
-		{
-			this.m.FatigueCostMult = 2.0;
-		}
 	};
 	obj.onAfterUpdate <- function( _properties )
 	{
 		if (this.getContainer().hasSkill("perk.mastery_sleep"))
-		{
 			this.m.ActionPointCost -= 1;
-		}
+
+		if (this.getContainer().getActor().isPlayerControlled())
+			this.m.FatigueCostMult = 2.0;
 	};
 	obj.isViableTarget <- function( _user, _target )
 	{
 		if (_target.getCurrentProperties().MoraleCheckBraveryMult[ ::Const.MoraleCheckType.MentalAttack] >= 1000.0)
-		{
 			return false;
-		}
 
 		if (_target.getFlags().has("alp"))
-		{
 			return false;
-		}
 
 		return [
 			::Const.EntityType.Alp,
@@ -91,9 +83,7 @@
 			difficulty -= 35 * bonus + (hasMastery ? ::Math.max(1, ::Math.floor(_user.getBravery() * 0.1)) : 0);
 
 			if (_user.isPlayerControlled())
-			{
 				difficulty += 25;
-			}
 
 			if (target.checkMorale(0, difficulty, ::Const.MoraleCheckType.MentalAttack))
 			{
@@ -121,16 +111,12 @@
 	obj.getHitchance <- function( _targetEntity )
 	{
 		if (_targetEntity.getMoraleState() == ::Const.MoraleState.Ignore)
-		{
 			return 100;
-		}
 
 		local _user = this.getContainer().getActor();
 
 		if (!this.isViableTarget(_user, _targetEntity))
-		{
 			return 0;
-		}
 
 		local _targetTile = _targetEntity.getTile();
 		local _distance = _user.getTile().getDistanceTo(_targetTile);
@@ -144,16 +130,12 @@
 		_difficulty -= 35 * bonus + (this.getContainer().hasSkill("perk.mastery_sleep") ? ::Math.max(1, ::Math.floor(properties.getBravery() * 0.1)) : 0);
 		
 		if (_user.isPlayerControlled())
-		{
 			_difficulty += 25;
-		}
 
 		_difficulty *= defenderProperties.MoraleEffectMult;
 
 		if (bravery > 500)
-		{
 			return 0;
-		}
 
 		local numOpponentsAdjacent = 0;
 		local numAlliesAdjacent = 0;
@@ -189,9 +171,7 @@
 		chance = ::Math.min(95, ::Math.floor(chance));
 
 		if (chance <= 0)
-		{
 			return 100;
-		}
 
 		return 100 - chance;
 	};
@@ -203,9 +183,7 @@
 		local targetEntity = _targetTile.IsOccupiedByActor ? _targetTile.getEntity() : null;
 		
 		if (targetEntity == null)
-		{
 			return ret;
-		}
 
 		local green = function ( _text )
 		{

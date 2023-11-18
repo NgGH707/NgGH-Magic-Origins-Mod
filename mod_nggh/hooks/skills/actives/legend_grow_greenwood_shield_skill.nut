@@ -14,9 +14,7 @@
 	obj.onAdded <- function()
 	{
 		if (!::Nggh_MagicConcept.IsOPMode && this.getContainer().getActor().isPlayerControlled())
-		{
 			this.m.FatigueCost = 50;
-		}
 	}
 	obj.getTooltip <- function()
 	{
@@ -58,9 +56,8 @@
 			actor.getSprite("shield_icon").fadeIn(1500);
 
 			if (isSpecialized)
-			{
 				actor.getSkills().add(::new("scripts/skills/effects/shieldwall_effect"));
-			}
+				
 		}, null);
 	};
 });

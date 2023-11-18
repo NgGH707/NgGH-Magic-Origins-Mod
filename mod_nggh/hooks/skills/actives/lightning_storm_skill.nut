@@ -71,18 +71,14 @@
 					}
 
 					if (next)
-					{
 						--y;
-					}
 
 					next = !next;
 				}
 			}
 
 			if (_targetTile.IsEmpty || _targetTile.IsOccupiedByActor)
-			{
 				ret.push(_targetTile);
-			}
 
 			if (SW_tile != null)
 			{
@@ -102,9 +98,7 @@
 					}
 
 					if (next)
-					{
 						++y;
-					}
 
 					next = !next;
 				}
@@ -134,18 +128,14 @@
 					}
 
 					if (!next)
-					{
 						++y;
-					}
 
 					next = !next;
 				}
 			}
 
 			if (_targetTile.IsEmpty || _targetTile.IsOccupiedByActor)
-			{
 				ret.push(_targetTile);
-			}
 
 			if (SE_tile != null)
 			{
@@ -165,13 +155,12 @@
 					}
 
 					if (!next)
-					{
 						--y;
-					}
 
 					next = !next;
 				}
 			}
+
 			break;	
 		}
 
@@ -237,9 +226,7 @@
 		_tag.m.AffectedTiles = [];
 
 		if (_tag.m.HasCooldownAfterImpact)
-		{
 			_tag.m.Cooldown = 1;
-		}
 
 		::Tactical.Entities.getFlags().set("LightningStrikesActive", ::Math.max(0, ::Tactical.Entities.getFlags().getAsInt("LightningStrikesActive") - 1));
 	};

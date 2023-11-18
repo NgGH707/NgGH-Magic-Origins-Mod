@@ -29,15 +29,8 @@
 	obj.onVerifyTarget <- function( _originTile, _targetTile )
 	{
 		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
-		{
 			return false;
-		}
 
-		if (_targetTile.getEntity().getFlags().has("undead"))
-		{
-			return false;
-		}
-
-		return true;
+		return !_targetTile.getEntity().getFlags().has("undead");
 	}
 });

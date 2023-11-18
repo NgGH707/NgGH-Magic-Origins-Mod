@@ -10,13 +10,13 @@
 		this.m.Order = ::Const.SkillOrder.UtilityTargeted + 1;
 		this.m.MaxRange = 4;
 	};
-	obj.onAdded <- function()
+	obj.onAfterUpdate <- function( _properties )
 	{
-		if (this.getContainer().getActor().isPlayerControlled())
-		{
-			this.m.FatigueCost = 30;
-			this.m.ActionPointCost = 4;
-		}
+		if (!this.getContainer().getActor().isPlayerControlled())
+			return;
+
+		this.m.ActionPointCost += 1;
+		this.m.FatigueCostMult *= 2.0;
 	};
 	obj.getTooltip <- function()
 	{
@@ -87,31 +87,24 @@
 			foreach( a in i )
 			{
 				if (a.getID() == _tag.User.getID())
-				{
 					continue;
-				}
 
 				local dis = a.getTile().getDistanceTo(mytile);
 
 				if (!::Nggh_MagicConcept.IsOPMode && dis > 4)
-				{
 					continue;
-				} 
 
 				if (a.getFaction() == f)
 				{
 					local difficulty = 10 + bonus - ::Math.pow(dis, ::Const.Morale.EnemyKilledDistancePow);
 
 					if (a.getMoraleState() == ::Const.MoraleState.Fleeing)
-					{
 						a.checkMorale(::Const.MoraleState.Wavering - ::Const.MoraleState.Fleeing, difficulty);
-					}
 					else
-					{
 						a.checkMorale(1, difficulty);
-					}
 
-					if (a.getFaction() != ::Const.Faction.Player) a.setFatigue(a.getFatigue() - 20);
+					if (a.getFaction() != ::Const.Faction.Player) 
+						a.setFatigue(a.getFatigue() - 20);
 				}
 				else if (a.getFaction() == ::Const.Faction.PlayerAnimals && isPlayer)
 				{

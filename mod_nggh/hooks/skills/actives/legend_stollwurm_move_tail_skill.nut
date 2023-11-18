@@ -11,15 +11,9 @@
 		this.m.IconDisabled = "skills/active_149_sw.png";
 		this.m.Overlay = "active_149";
 	};
-	obj.onAdded <- function()
-	{	
-		if (!::Nggh_MagicConcept.IsOPMode && this.getContainer().getActor().isPlayerControlled())
-		{
-			this.m.ActionPointCost = 5;
-		}
-	};
 	obj.getTooltip <- function()
 	{
 		return this.getDefaultUtilityTooltip();
 	};
+	
 });

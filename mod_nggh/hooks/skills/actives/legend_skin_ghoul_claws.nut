@@ -39,9 +39,7 @@
 	obj.onUpdate = function( _properties )
 	{
 		if (!this.isHidden())
-		{
 			ws_onUpdate(_properties);
-		}
 	};
 	obj.onAfterUpdate <- function( _properties )
 	{
@@ -50,9 +48,7 @@
 	obj.onBeforeUse <- function( _user , _targetTile )
 	{
 		if (!_user.getFlags().has("luft"))
-		{
 			return;
-		}
 		
 		::Nggh_MagicConcept.spawnQuote("luft_claw_quote_" + ::Math.rand(1, 5), _user.getTile());
 	};

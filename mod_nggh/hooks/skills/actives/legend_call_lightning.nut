@@ -53,9 +53,7 @@
 		{
 			// spinkle a bit rng with 2 rand XD
 			if (::Math.rand(1, 100) > ::Math.rand(15, 25))
-			{
 				continue;
-			}
 
 			::Time.scheduleEvent(::TimeUnit.Real, count * 30, function ( _data )
 			{

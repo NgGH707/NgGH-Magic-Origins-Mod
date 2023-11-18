@@ -18,9 +18,7 @@
 	obj.isIgnoredAsAOO <- function()
 	{
 		if (!this.m.IsRestrained)
-		{
 			return this.m.IsIgnoredAsAOO;
-		}
 
 		return !this.getContainer().getActor().isArmedWithRangedWeapon();
 	};
@@ -42,8 +40,7 @@
 	};
 	obj.onAdded <- function()
 	{
-		this.m.ActionPointCost = this.getContainer().getActor().isPlayerControlled() ? 4 : 6;
-		this.m.FatigueCost = this.getContainer().getActor().isPlayerControlled() ? 10 : 20;
+		
 	};
 	obj.getTooltip <- function()
 	{
@@ -54,9 +51,15 @@
 	obj.onUpdate = function( _properties )
 	{
 		if (!this.m.IsRestrained)
-		{
 			ws_onUpdate(_properties);
-		}
+	};
+	obj.onAfterUpdate <- function( _properties )
+	{
+		if (!this.getContainer().getActor().isPlayerControlled())
+			return;
+
+		this.m.ActionPointCost += 2;
+		this.m.FatigueCostMult *= 2.0;
 	};
 
 	local ws_onUse = obj.onUse;

@@ -20,9 +20,7 @@
 	obj.isIgnoredAsAOO <- function()
 	{
 		if (!this.m.IsRestrained)
-		{
 			return this.m.IsIgnoredAsAOO;
-		}
 
 		return !this.getContainer().getActor().isArmedWithRangedWeapon();
 	};
@@ -80,9 +78,7 @@
 			}
 			
 			if (this.canDoubleGrip())
-			{
 				_properties.DamageTotalMult /= 1.25;
-			}
 		}
 	};
 	obj.onUpdate = function( _properties ) {};

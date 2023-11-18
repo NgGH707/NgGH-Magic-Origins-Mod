@@ -16,16 +16,12 @@
 	obj.onVerifyTarget = function( _originTile, _targetTile )
 	{
 		if (!ws_onVerifyTarget(_originTile, _targetTile))
-		{
 			return false;
-		}
 
 		local target = _targetTile.getEntity();
 
 		if (target.isAlliedWith(this.getContainer().getActor()) && !target.getSkills().hasSkill("effects.ghost_possessed"))
-		{
 			return false;
-		}
 
 		return true;
 	};

@@ -51,35 +51,25 @@
 		this.m.FatigueCostMult = _properties.IsSpecializedInThrowing ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
 
 		if (_properties.IsSpecializedInThrowing)
-		{
 			this.m.ActionPointCost -= 1;
-		}
 	};
+	local onKnockedDown = obj.onKnockedDown;
 	obj.onKnockedDown = function( _entity, _tag )
 	{
-		if (_tag.Skill.m.SoundOnHit.len() != 0)
-		{
-			::Sound.play(::MSU.Array.rand(_tag.Skill.m.SoundOnHit), ::Const.Sound.Volume.Skill, _entity.getPos());
-		}
-
 		local isSpecialized = _tag.Skill.isUpgraded();
 
-		if (_tag.HitInfo.DamageRegular != 0)
-		{
-			if (isSpecialized)
-			{
-				_tag.HitInfo.DamageRegular *= 2;
-			}
+		if (_tag.HitInfo.DamageRegular != 0 && isSpecialized)
+			_tag.HitInfo.DamageRegular *= 2;
 
-			_entity.onDamageReceived(_tag.Attacker, _tag.Skill, _tag.HitInfo);
+		onKnockedDown(_entity, _tag);
+
+		if (_tag.HitInfo.DamageRegular == 0)
+			return;
+
+		if (typeof _tag.Attacker == "instance" && _tag.Attacker.isNull() || !_tag.Attacker.isAlive() || _tag.Attacker.isDying())
+			return;
 			
-			if (typeof _tag.Attacker == "instance" && _tag.Attacker.isNull() || !_tag.Attacker.isAlive() || _tag.Attacker.isDying())
-			{
-				return;
-			}
-			
-			_tag.Skill.getContainer().onTargetHit(_tag.Skill, _entity, _tag.HitInfo.BodyPart, _tag.HitInfo.DamageRegular, 0);
-		}
+		_tag.Skill.getContainer().onTargetHit(_tag.Skill, _entity, _tag.HitInfo.BodyPart, _tag.HitInfo.DamageRegular, 0);
 
 		if (isSpecialized && _entity.isAlive() && !_entity.isDying() && !_entity.getCurrentProperties().IsImmuneToDaze)
 		{

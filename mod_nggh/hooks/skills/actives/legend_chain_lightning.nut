@@ -25,13 +25,13 @@
 			::Sound.play(::MSU.Array.rand(this.m.SoundOnLightning), ::Const.Sound.Volume.Skill * 2.0, _user.getPos());
 		}
 
-		local data = {
+		this.applyEffect({
 			Skill = this,
 			User = _user,
 			TargetTile = targetTile,
 			Target = target
-		};
-		this.applyEffect(data, 100);
+		}, 100);
+		
 		local potentialTiles = this.searchTiles(targetTile, myTile);
 		local potentialTargets = this.searchTargets(_user , potentialTiles, selectedTargets);
 
@@ -47,13 +47,13 @@
 			targetTile = ::MSU.Array.rand(potentialTiles)
 		}
 
-		local data = {
+		this.applyEffect({
 			Skill = this,
 			User = _user,
 			TargetTile = targetTile,
 			Target = target
-		};
-		this.applyEffect(data, 350);
+		}, 350);
+
 		potentialTiles = this.searchTiles(targetTile, myTile);
 		potentialTargets= this.searchTargets(_user , potentialTiles, selectedTargets);
 
@@ -69,13 +69,12 @@
 			targetTile = ::MSU.Array.rand(potentialTiles)
 		}
 
-		local data = {
+		this.applyEffect({
 			Skill = this,
 			User = _user,
 			TargetTile = targetTile,
 			Target = target
-		};
-		this.applyEffect(data, 550);
+		}, 550);
 		return true;
 	}
 	obj.searchTiles <- function( _tile, _originTile )

@@ -1,7 +1,5 @@
 ::mods_hookExactClass("skills/actives/charge", function ( obj )
 {
-	obj.m.rawdelete("IsSpent");
-
 	local ws_create = obj.create;
 	obj.create = function()
 	{
@@ -25,24 +23,12 @@
 		AI.m.Properties.EngageRangeMax = 2;
 		AI.m.Properties.EngageRangeIdeal = 2;
 	};
+	local getTooltip = obj.getTooltip;
 	obj.getTooltip = function()
 	{
-		return [
-			{
-				id = 1,
-				type = "title",
-				text = this.getName()
-			},
-			{
-				id = 2,
-				type = "description",
-				text = this.getDescription()
-			},
-			{
-				id = 3,
-				type = "text",
-				text = this.getCostString()
-			},
+		local ret = getTooltip();
+
+		ret.extend([
 			{
 				id = 7,
 				type = "text",
@@ -55,48 +41,12 @@
 				icon = "ui/icons/special.png",
 				text = "Can cause [color=" + ::Const.UI.Color.NegativeValue + "]Stun[/color]"
 			}
-		];
+		])
+
+		return ret;
 	};
 	obj.isUsable = function()
 	{
-		return !::Tactical.isActive() || this.skill.isUsable() && !this.getContainer().getActor().getTile().hasZoneOfControlOtherThan(this.getContainer().getActor().getAlliedFactions());
-	};
-	obj.onTurnStart = function() {};
-	obj.onUse = function( _user, _targetTile )
-	{
-		local tag = {
-			Skill = this,
-			User = _user,
-			OldTile = _user.getTile(),
-			TargetTile = _targetTile,
-			OnRepelled = this.onRepelled
-		};
-
-		if (tag.OldTile.IsVisibleForPlayer || _targetTile.IsVisibleForPlayer)
-		{
-			local myPos = _user.getPos();
-			local targetPos = _targetTile.Pos;
-			local distance = tag.OldTile.getDistanceTo(_targetTile);
-			local Dx = (targetPos.X - myPos.X) / distance;
-			local Dy = (targetPos.Y - myPos.Y) / distance;
-
-			for( local i = 0; i < distance; ++i )
-			{
-				local x = myPos.X + Dx * i;
-				local y = myPos.Y + Dy * i;
-				local tile = ::Tactical.worldToTile(::createVec(x, y));
-
-				if (::Tactical.isValidTile(tile.X, tile.Y) && ::Const.Tactical.DustParticles.len() != 0)
-				{
-					for( local i = 0; i < ::Const.Tactical.DustParticles.len(); i = ++i )
-					{
-						::Tactical.spawnParticleEffect(false, ::Const.Tactical.DustParticles[i].Brushes, ::Tactical.getTile(tile), ::Const.Tactical.DustParticles[i].Delay, ::Const.Tactical.DustParticles[i].Quantity * 0.5, ::Const.Tactical.DustParticles[i].LifeTimeQuantity * 0.5, ::Const.Tactical.DustParticles[i].SpawnRate, ::Const.Tactical.DustParticles[i].Stages);
-					}
-				}
-			}
-		}
-
-		::Tactical.getNavigator().teleport(_user, _targetTile, this.onTeleportDone, tag, false, 2.0);
-		return true;
+		return !::Tactical.isActive() || this.skill.isUsable() && !this.getContainer().getActor().isEngagedInMelee();
 	};
 });
