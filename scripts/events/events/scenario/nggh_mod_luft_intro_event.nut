@@ -422,34 +422,8 @@ this.nggh_mod_luft_intro_event <- ::inherit("scripts/events/event", {
 					break;
 				
 				case "Wuxiangjinxing":
-					local item;
-					if (!::Is_AccessoryCompanions_Exist)
-					{
-						item = ::new("scripts/items/accessory/wolf_item");
-					}
-					else 
-					{
-						item = ::new("scripts/items/accessory/wardog_item");
-						item.setType(::Const.Companions.TypeList.Nacho);
-						item.updateCompanion();
-					}
-
-					_event.m.Luft.m.PerkPoints += 1;
-					_event.m.Luft.getItems().equip(item);
-					this.List.extend([
-						{
-							id = 10,
-							icon = "ui/items/" + item.getIcon(),
-							text = _event.m.Luft.getName() + " gets " + item.getName() + " as pet"
-						},
-						{
-							id = 10,
-							icon = "ui/icons/perks",
-							text = _event.m.Luft.getName() + " gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] perk point"
-						}
-					]);
-
-					::World.getTemporaryRoster().clear();
+					def = ::Const.Perks.PerkDefObjects[::Const.Perks.PerkDefs.LegendPackleader];
+					::World.Assets.getOrigin().addScenarioPerk(_event.m.Luft.getBackground(), ::Const.Perks.PerkDefs.LegendPackleader, 5);
 					break;
 				}
 
