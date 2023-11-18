@@ -60,6 +60,12 @@ this.nggh_mod_spit_acid_skill <- ::inherit("scripts/skills/skill", {
 		this.m.ChanceDisembowel = 0;
 		this.m.ChanceSmash = 33;
 	}
+
+	function onAdded()
+	{
+		this.m.DamageType.clear();
+		this.m.DamageType.add(::Const.Damage.DamageType.Burning);
+	}
 	
 	function getTooltip()
 	{
@@ -97,44 +103,11 @@ this.nggh_mod_spit_acid_skill <- ::inherit("scripts/skills/skill", {
 				id = 6,
 				type = "text",
 				icon = "ui/tooltips/wanring.png",
-				text = "[color=" + ::Const.UI.Color.DamageValue + "]You are at low health level[/color]."
+				text = "[color=" + ::Const.UI.Color.DamageValue + "]Your health is low[/color]."
 			});
 		}
 
 		return ret;
-	}
-
-	function applyAcid( _user, _target )
-	{
-		if (_target.getFlags().has("lindwurm"))
-		{
-			return;
-		}
-
-		local ret = this.attackEntity(_user, _target);
-
-		if (!_target.isAlive() || _target.isDying())
-		{
-			return;
-		}
-
-		if ((_target.getFlags().has("body_immune_to_acid") && _target.getArmor(::Const.BodyPart.Body) > 0) && (_target.getFlags().has("head_immune_to_acid") && _target.getArmor(::Const.BodyPart.Head) > 0))
-		{
-			return;
-		}
-
-		local poison = _target.getSkills().getSkillByID("effects.acid");
-
-		if (poison == null)
-		{
-			_target.getSkills().add(::new("scripts/skills/effects/acid_effect"));
-		}
-		else
-		{
-			poison.resetTime();
-		}
-
-		this.spawnIcon("status_effect_78", _target.getTile());
 	}
 
 	function isUsable()
@@ -142,11 +115,22 @@ this.nggh_mod_spit_acid_skill <- ::inherit("scripts/skills/skill", {
 		return this.skill.isUsable() && this.getContainer().getActor().getHitpoints() >= this.m.HpCost * 3;
 	}
 
+	function hasLinwurmArmor( _target, _bodyPart )
+	{
+		if (_bodyPart == ::Const.BodyPart.Body && !_target.getFlags().has("body_immune_to_acid"))
+			return false;
+
+		if (_bodyPart != ::Const.BodyPart.Head && !_target.getFlags().has("head_immune_to_acid"))
+			return false
+
+		return _bodyPart < 2 && _target.getArmor(_bodyPart) > 0;
+	}
+
 	function onUse( _user, _targetTile )
 	{
 		local tag = {
 			User = _user,
-			TargetTile = _targetTile
+			TargetTile = _targetTile,
 		};
 
 		_user.setHitpoints(_user.getHitpoints() - this.m.HpCost);
@@ -158,91 +142,63 @@ this.nggh_mod_spit_acid_skill <- ::inherit("scripts/skills/skill", {
 			d = d > 5 ? d - 6 : d;
 
 			if (_user.getTile().hasNextTile(d))
-			{
 				::Tactical.getShaker().shake(_user, _user.getTile().getNextTile(d), 6);
-			}
 
-			::Time.scheduleEvent(::TimeUnit.Virtual, 500, this.onApplyAcid.bindenv(this), tag);
+			::Time.scheduleEvent(::TimeUnit.Virtual, 500, this.onDelayedEffect.bindenv(this), tag);
 			return true;
 		}
-		else
-		{
-			return this.onApplyAcid(tag);
-		}
+		
+		this.onDelayedEffect(tag);
+		return true;
 	}
 
-	function onApplyAcid( _tag )
+	function onDelayedEffect( _tag )
 	{
-		local targetEntity = _tag.TargetTile.getEntity();
 		this.getContainer().setBusy(false);
-		this.applyAcid(_tag.User, targetEntity);
-		_tag.User.spawnBloodPool(_tag.TargetTile, ::Math.rand(::Const.Combat.BloodPoolsAtDeathMin, ::Const.Combat.BloodPoolsAtDeathMax));
+		this.onApplyAcid(_tag.User, _tag.TargetTile);
 
-		for( local i = 0; i < 6; i = ++i )
+		for( local i = 0; i < 6; ++i )
 		{
 			if (!_tag.TargetTile.hasNextTile(i))
-			{
-			}
-			else
-			{
-				local nextTile = _tag.TargetTile.getNextTile(i);
+				continue;
 
-				if (::Math.rand(1, 100) > 45)
-				{
-				}
-				else if (nextTile.Level > _tag.TargetTile.Level)
-				{
-				}
-				else if (!nextTile.IsOccupiedByActor)
-				{
-					for( local i = 0; i < ::Const.Tactical.AcidParticles.len(); ++i )
-					{
-						::Tactical.spawnParticleEffect(true, ::Const.Tactical.AcidParticles[i].Brushes, nextTile, ::Const.Tactical.AcidParticles[i].Delay, ::Const.Tactical.AcidParticles[i].Quantity, ::Const.Tactical.AcidParticles[i].LifeTimeQuantity, ::Const.Tactical.AcidParticles[i].SpawnRate, ::Const.Tactical.AcidParticles[i].Stages);
-					}
-				}
-				else
-				{
-					local entity = nextTile.getEntity();
-					this.applyAcid(_tag.User, entity);
-					_tag.User.spawnBloodPool(_tag.TargetTile, ::Math.rand(::Const.Combat.BloodPoolsAtDeathMin - 1, ::Const.Combat.BloodPoolsAtDeathMax - 2));
-				}
-			}
+			if (::Math.rand(1, 100) > 45)
+				continue;
+
+			local nextTile = _tag.TargetTile.getNextTile(i);
+			
+			if (nextTile.Level > _tag.TargetTile.Level)
+				continue;
+			
+			this.onApplyAcid(_tag.User, nextTile);
 		}
 	}
 
-	function onTargetSelected( _targetTile )
+	function onApplyAcid( _user, _tile )
 	{
-		::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);
-		
-		for( local i = 0; i < 6; i = ++i )
-		{
-			if (!_targetTile.hasNextTile(i))
+		if (_tile.IsEmpty || !_tile.IsOccupiedByActor) {
+			for( local i = 0; i < ::Const.Tactical.AcidParticles.len(); ++i )
 			{
+				::Tactical.spawnParticleEffect(true, ::Const.Tactical.AcidParticles[i].Brushes, _tile, ::Const.Tactical.AcidParticles[i].Delay, ::Const.Tactical.AcidParticles[i].Quantity, ::Const.Tactical.AcidParticles[i].LifeTimeQuantity, ::Const.Tactical.AcidParticles[i].SpawnRate, ::Const.Tactical.AcidParticles[i].Stages);
 			}
-			else
-			{
-				local tile = _targetTile.getNextTile(i);
-				::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, tile, tile.Pos.X, tile.Pos.Y);	
-			}
+			return;
 		}
+
+		if (_tile.getEntity().getFlags().has("lindwurm")
+			return;
+		
+		_user.spawnBloodPool(_tile, ::Math.rand(::Const.Combat.BloodPoolsAtDeathMin, ::Const.Combat.BloodPoolsAtDeathMax));
+		this.attackEntity(_user, _tile.getEntity());
 	}
 
 	function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )
 	{
 		if (_targetEntity == null || _skill != this)
-		{
 			return;
-		}
 
 		_hitInfo.InjuryThresholdMult *= 0.5;
 
-		if (_hitInfo.BodyPart == ::Const.BodyPart.Body && _targetEntity.getFlags().has("body_immune_to_acid") && _targetEntity.getArmor(::Const.BodyPart.Body) > 0)
-		{
-			_hitInfo.DamageRegular *= 0.25;
-			_hitInfo.DamageArmor = 0;
-		}
-
-		if (_hitInfo.BodyPart == ::Const.BodyPart.Head && _targetEntity.getFlags().has("head_immune_to_acid") && _targetEntity.getArmor(::Const.BodyPart.Head) > 0)
+		if ((_hitInfo.BodyPart == ::Const.BodyPart.Body && _targetEntity.getFlags().has("body_immune_to_acid") && _targetEntity.getArmor(::Const.BodyPart.Body) > 0) || (_hitInfo.BodyPart == ::Const.BodyPart.Head && _targetEntity.getFlags().has("head_immune_to_acid") && _targetEntity.getArmor(::Const.BodyPart.Head) > 0))
 		{
 			_hitInfo.DamageRegular *= 0.25;
 			_hitInfo.DamageArmor = 0;
@@ -252,29 +208,25 @@ this.nggh_mod_spit_acid_skill <- ::inherit("scripts/skills/skill", {
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
 		if (_skill != this)
-		{
 			return;
-		}
-
-		if (_damageInflictedHitpoints == 0)
-		{
-			return;
-		}
-
-		if (_bodyPart != ::Const.BodyPart.Head)
-		{
-			return;
-		}
 
 		if (_targetEntity == null || _targetEntity.isDying() || !_targetEntity.isAlive())
-		{
 			return;
-		}
 
-		if (_targetEntity.getFlags().has("head_immune_to_acid") && _targetEntity.getArmor(::Const.BodyPart.Head) > 0)
-		{
+		if (this.hasLinwurmArmor(_targetEntity, _bodyPart))
 			return;
-		}
+		
+		local poison = _targetEntity.getSkills().getSkillByID("effects.acid");
+
+		if (poison == null)
+			_targetEntity.getSkills().add(::new("scripts/skills/effects/acid_effect"));
+		else
+			poison.resetTime();
+
+		this.spawnIcon("status_effect_78", _targetEntity.getTile());
+
+		if (_damageInflictedHitpoints == 0 || _bodyPart == ::Const.BodyPart.Head)
+			return;
 
 		::Tactical.EventLog.log("The acidic blood splashes to " + ::Const.UI.getColorizedEntityName(_targetEntity) + "\'s face");
 		_targetEntity.getSkills().add(::new("scripts/skills/effects/nggh_mod_blind_effect"));
@@ -292,9 +244,21 @@ this.nggh_mod_spit_acid_skill <- ::inherit("scripts/skills/skill", {
 			_properties.HitChance[::Const.BodyPart.Body] += 5;
 
 			if (_targetEntity != null && _targetEntity.getFlags().has("lindwurm"))
-			{
 				_properties.DamageTotalMult = 0.0; 
-			}
+		}
+	}
+
+	function onTargetSelected( _targetTile )
+	{
+		::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);
+		
+		for( local i = 0; i < 6; ++i )
+		{
+			if (!_targetTile.hasNextTile(i))
+				continue;
+
+			local tile = _targetTile.getNextTile(i);
+			::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, tile, tile.Pos.X, tile.Pos.Y);	
 		}
 	}
 
