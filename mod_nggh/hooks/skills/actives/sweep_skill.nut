@@ -57,17 +57,6 @@
 			}
 		}
 	};
-
-	local ws_onUpdate = obj.onUpdate;
-	obj.onUpdate = function( _properties )
-	{
-		ws_onUpdate(_properties);
-
-		if (!::Nggh_MagicConcept.IsOPMode && this.getContainer().getActor().isPlayerControlled())
-		{
-			_properties.DamageRegularMax -= 10;
-		}
-	};
 	obj.onAfterUpdate <- function( _properties )
 	{
 		this.m.FatigueCostMult = _properties.IsSpecializedInFists ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
@@ -103,8 +92,6 @@
 		_properties.DamageRegularMax += mods.Max;
 
 		if (mods.HasTraining)
-		{
-			_properties.DamageArmorMult += 0.1;
-		}
+			_properties.DamageArmorMult += 0.15;
 	};
 });
