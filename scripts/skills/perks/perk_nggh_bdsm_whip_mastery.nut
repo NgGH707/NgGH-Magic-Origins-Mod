@@ -1,5 +1,12 @@
 this.perk_nggh_bdsm_whip_mastery <- ::inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		AffectedSkills = [
+			"actives.disarm",
+			"actives.legend_ninetails_disarm",
+			"actives.legend_flaggelate",
+			"actives.whip"
+		],
+	},
 	function create()
 	{
 		this.m.ID = "perk.bdsm_whip_mastery";
@@ -17,6 +24,17 @@ this.perk_nggh_bdsm_whip_mastery <- ::inherit("scripts/skills/skill", {
 	{
 		_properties.IsSpecializedInCleavers = true;
 		_properties.IsSpecializedInWhips = true;
+ 	}
+
+ 	function onAfterUpdate( _properties )
+ 	{
+ 		foreach (id in this.m.AffectedSkills)
+ 		{
+ 			local skill = this.getContainer().getSkillByID(id);
+
+ 			if (skill != null)
+ 				skill.m.ActionPointCost -= 1;
+ 		}
  	}
 
  	function onAnySkillUsed( _skill, _targetEntity, _properties )

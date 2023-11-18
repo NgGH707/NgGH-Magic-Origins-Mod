@@ -23,13 +23,13 @@ this.perk_nggh_bdsm_bondage <- ::inherit("scripts/skills/skill", {
 		{
 		case "actives.whip":
 		case "actives.legend_flaggelate":
-			_properties.MeleeDamageMult *= 1.23;
-			_properties.DamageDirectAdd += 0.15;
+			_properties.MeleeDamageMult *= 1.25;
+			_properties.DamageDirectAdd += 0.33;
 			break;
 
 		case "actives.disarm":
 		case "actives.legend_ninetails_disarm":
-			_properties.MeleeSkill += 10;
+			_properties.MeleeSkill += 12;
 			break;
 		}
 	}

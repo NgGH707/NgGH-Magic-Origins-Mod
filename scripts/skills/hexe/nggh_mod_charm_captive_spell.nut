@@ -131,31 +131,23 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 	function onVerifyTarget( _originTile, _targetTile )
 	{
 		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
-		{
 			return false;
-		}
 		
 		local _target = _targetTile.getEntity();
 		local simp = _target.getSkills().getSkillByID("effects.simp");
 
 	    if (simp != null)
-		{
 			return false;
-		}
 
 		local charm = _target.getSkills().getSkillByID("effects.charmed");
 
 		if (charm != null)
 		{
 			if (charm.m.Master == null)
-			{
 				return false;
-			}
 
 			if (charm.m.Master.getContainer() != null && charm.m.Master.getContainer().getActor().getID() != this.getContainer().getActor().getID())
-			{
 				return false;
-			}
 		}
 
 		return _target.getFlags().getAsInt("charm_attempt") < this.m.MaxAttempt;
@@ -164,29 +156,19 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 	function isViableTarget( _user, _target )
 	{
 		if (_target.getMoraleState() == ::Const.MoraleState.Ignore)
-		{
 			return false;
-		}
 
 		if (_target.getCurrentProperties().MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack] >= 1000.0)
-		{
 			return false;
-		}
 		
 		if (_target.getType() == ::Const.EntityType.Hexe || _target.getType() == ::Const.EntityType.LegendHexeLeader)
-		{
 			return false;
-		}
 		
 		if (_target.isNonCombatant())
-		{
 			return false;
-		}
 
 		if (_target.getSkills().hasSkill("effects.ghost_possessed"))
-		{
 			return false;
-		}
 		
 		return this.checkRequirement(_target);
 	}
@@ -194,9 +176,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 	function onAfterUpdate( _properties )
 	{
 		if (this.getContainer().hasSkill("perk.fortified_mind"))
-		{
 			this.m.FatigueCostMult = ::Const.Combat.WeaponSpecFatigueMult;
-		}
 	}
 
 	function onUse( _user, _targetTile )
@@ -222,16 +202,12 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			if (roll > chance)
 			{
 				if (!_user.isHiddenToPlayer() && !target.isHiddenToPlayer())
-				{
 					::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(target) + " resists being charmed thanks to his resolve (Chance: " + chance + ", Rolled: " + roll + ")");
-				}
 				
 				if (chance == 0)
-				{
 					return;
-				}
 				
-				target.getFlags().increment("charm_attempt");
+				this.incrementCharmFlag(target);
 				return;
 			}
 
@@ -246,20 +222,50 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			*/
 
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(target) + " has been captive by your charm (Chance: " + chance + ", Rolled: " + roll + ")");
+			
 			if (this.charm(_user, target) != null)
-			{
 				::Tactical.Entities.getFlags().increment("CharmedCount");
-			}
+
 		}.bindenv(this), this);
+	}
+
+	// fuck you lindwurm for your bullshit
+	function incrementCharmFlag( _targetEntity )
+	{
+		local isLindwurm = _targetEntity.getFlags().has("lindwurm");
+
+		if (isLindwurm)
+		{
+			if (::MSU.isKindOf(_targetEntity, "lindwurm_tail") || ::MSU.isKindOf(_targetEntity, "legend_stollwurm_tail"))
+				_targetEntity.m.Body.getFlags().increment("charm_attempt");
+			else
+				_targetEntity.m.Tail.getFlags().increment("charm_attempt");
+		}
+
+		_targetEntity.getFlags().increment("charm_attempt");
 	}
 	
 	function charm( _user, _targetEntity )
 	{
 		local isLindwurm = _targetEntity.getFlags().has("lindwurm");
 
-		if (isLindwurm && ("Body" in _targetEntity.m))
+		if (isLindwurm)
 		{
-			_targetEntity = _targetEntity.m.Body;
+			local tail;
+
+			if (::MSU.isKindOf(_targetEntity, "lindwurm_tail") || ::MSU.isKindOf(_targetEntity, "legend_stollwurm_tail"))
+			{
+				tail = _targetEntity;
+				_targetEntity = _targetEntity.m.Body;
+			}
+			else
+			{
+				tail = _targetEntity.m.Tail;
+			}
+
+			::Tactical.TurnSequenceBar.removeEntity(tail);
+			tail.m.IsActingEachTurn = false;
+			tail.m.IsNonCombatant = true;
 		}
 		
 		local data = ::Const.CharmedUtilities.TypeToInfo(_targetEntity);
@@ -301,14 +307,10 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 	function getHitchance( _targetEntity )
 	{
 		if (!this.isViableTarget(this.getContainer().getActor(), _targetEntity))
-		{
 			return 0;
-		}
 
 		if (this.m.Count - ::Tactical.Entities.getFlags().getAsInt("CharmedCount") <= 0)
-		{
 			return 0;
-		}
 
 		local _user = this.getContainer().getActor();
 		local myTile = this.getContainer().getActor().getTile();
@@ -319,7 +321,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		
 		local bonus = _targetEntity.getTile().getDistanceTo(myTile) == 1 ? 10 : 0;
 		bonus += (_targetEntity.getSkills().hasSkill("effects.charmed") ? 15 : 0) + _targetEntity.getFlags().getAsInt("charm_attempt") * 4;
-		bonus += this.getContainer().hasSkill("perk.bdsm_bondage") && _targetEntity.getCurrentProperties().IsRooted ? 10 : 0;
+		bonus += this.getContainer().hasSkill("perk.bdsm_bondage") && _targetEntity.getCurrentProperties().IsRooted ? 7 : 0;
 		bonus += this.getContainer().hasSkill("perk.bdsm_whip_love") ? ::Math.min(20, _targetEntity.getFlags().getAsInt("whipped") * 4) : 0;
 		bonus += this.getBonus();
 		local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
@@ -327,9 +329,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		local isFullHP = _targetEntity.getHitpoints() == _targetEntity.getHitpointsMax();
 
 		if (resist >= 500 && isFullHP)
-		{
 			return 0;
-		}
 
 		local hpMod = 0;
 
@@ -416,9 +416,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			local skill = this.getContainer().getSkillByID(id);
 			
 			if (skill != null)
-			{
 				bonus += skill.getBonus();
-			}
 		}
 		
 		return bonus;
@@ -432,25 +430,19 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		local targetEntity = _targetTile.IsOccupiedByActor ? _targetTile.getEntity() : null;
 		
 		if (targetEntity == null)
-		{
 			return ret;
-		}
 
 		local green = function ( _text )
 		{
 			if (!_text)
-			{
 				return "";
-			}
 
 			return "[color=" + ::Const.UI.Color.PositiveValue + "]" + _text + "[/color]";
 		};
 		local red = function ( _text )
 		{
 			if (!_text)
-			{
 				return "";
-			}
 
 			return "[color=" + ::Const.UI.Color.NegativeValue + "]" + _text + "[/color]";
 		};

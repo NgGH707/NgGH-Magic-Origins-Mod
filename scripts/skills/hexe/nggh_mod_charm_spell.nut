@@ -403,7 +403,7 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 		local CasterPower = resolve + res;
 		
 		local bonus = this.getBonus() + (_targetEntity.getTile().getDistanceTo(myTile) == 1 ? 5 : 0); // ::Const.HexeOrigin.Magic.CountDebuff(_targetEntity) * 3
-		bonus += this.getContainer().hasSkill("perk.bdsm_bondage") && _targetEntity.getCurrentProperties().IsRooted ? 10 : 0;
+		bonus += this.getContainer().hasSkill("perk.bdsm_bondage") && _targetEntity.getCurrentProperties().IsRooted ? 7 : 0;
 		bonus += this.getContainer().hasSkill("perk.bdsm_whip_love") ? ::Math.min(20, _targetEntity.getFlags().getAsInt("whipped") * 4) : 0;
 		bonus += _targetEntity.getFlags().getAsInt("charm_fail") * 2;
 		local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);

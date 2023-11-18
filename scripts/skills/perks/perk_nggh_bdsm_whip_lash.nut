@@ -1,5 +1,9 @@
 this.perk_nggh_bdsm_whip_lash <- ::inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		MeleeSkillMult = 0.2,
+		MeleeDamageMult = 0.15,
+		DamageDirectAddMult = 0.06,
+	},
 	function create()
 	{
 		this.m.ID = "perk.bdsm_whip_lash";
@@ -23,7 +27,7 @@ this.perk_nggh_bdsm_whip_lash <- ::inherit("scripts/skills/skill", {
 	{
 		if (!this.isEquippedWithWhip()) return;
 
-		_properties.MeleeSkill += ::Math.round(this.getContainer().getActor().getInitiative() * 0.15);
+		_properties.MeleeSkill += ::Math.round(this.getContainer().getActor().getInitiative() * this.m.MeleeSkillMult);
  	}
 
  	function onAnySkillUsed( _skill, _targetEntity, _properties )
@@ -33,8 +37,8 @@ this.perk_nggh_bdsm_whip_lash <- ::inherit("scripts/skills/skill", {
 		if (_targetEntity == null) return;
 			
 		local d = this.getContainer().getActor().getTile().getDistanceTo(_targetEntity.getTile()) - 1;
-		_properties.MeleeDamageMult *= 1.0 + (0.12 * d);
-		_properties.DamageDirectAdd += 0.06 * d;
+		_properties.MeleeDamageMult *= 1.0 + (this.m.MeleeDamageMult * d);
+		_properties.DamageDirectAdd += this.m.DamageDirectAddMult * d;
 	}
 
 });

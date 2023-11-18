@@ -23,7 +23,7 @@ this.nggh_mod_hexe_whip <- ::inherit("scripts/skills/skill", {
 		this.m.IsAttack = false;
 		this.m.IsVisibleTileNeeded = true;
 		this.m.ActionPointCost = 4;
-		this.m.FatigueCost = 13;
+		this.m.FatigueCost = 15;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
 	}
@@ -96,9 +96,7 @@ this.nggh_mod_hexe_whip <- ::inherit("scripts/skills/skill", {
 		local main = this.getContainer().getActor().getMainhandItem();
 
 		if (main == null || !main.isWeaponType(::Const.Items.WeaponType.Whip))
-		{
 			return null;
-		}
 
 		return main;
 	}
@@ -132,9 +130,7 @@ this.nggh_mod_hexe_whip <- ::inherit("scripts/skills/skill", {
 	function onVerifyTarget( _originTile, _targetTile )
 	{
 		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
-		{
 			return false;
-		}
 
 		return _targetTile.getEntity().getSkills().hasSkill("effects.simp");
 	}
@@ -152,18 +148,14 @@ this.nggh_mod_hexe_whip <- ::inherit("scripts/skills/skill", {
 		t.onDamageReceived(_user, this, hitInfo);
 
 		if (upgraded)
-		{
 			_user.checkMorale(1, 9000);
-		}
 
 		if (t.isAlive() && !t.isDying())
 		{
 			local n = t.getSkills().getSkillByID("effects.simp").getSimpLevel();
 
 			if (upgraded)
-			{
-				n += 5;
-			}
+				n += 3;
 
 			t.getSkills().removeByID("effects.charmed");
 			t.getSkills().removeByID("effects.legend_intensely_charmed");
@@ -187,9 +179,7 @@ this.nggh_mod_hexe_whip <- ::inherit("scripts/skills/skill", {
 			}
 
 			if (t.getMoraleState() < ::Const.MoraleState.Steady)
-			{
 				t.setMoraleState(::Const.MoraleState.Steady);
-			}
 		}
 
 		return true;
