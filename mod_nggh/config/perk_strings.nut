@@ -115,37 +115,191 @@
 
 //-------------
 // description
-::Const.Strings.PerkDescription.NggHCharmEnemySpider <- "\'The creepy crawlies in the depth of the forest, they would be suited to be your servants and soldiers.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]\n• Allows you to permanently charm Webknecht.\n• Satisfies one of two conditions to permanently charm Redback Spider.\n• Grants [color=" + ::Const.UI.Color.PositiveValue + "]Immunity[/color] to be rooted by nets, webs or grasping vines.";
-::Const.Strings.PerkDescription.NggHCharmEnemyDirewolf <- "\'Who wouldn\'t want to own a 5 feet tall pet dog. Nothing could be better than seeing them mauling fools who dare to make an enemy of you.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]\n• Allows you to permanently charm Direwolf, Hyena, Bear.\n• Satisfies one of two conditions to permanently charm White Direwolf.\n• Initiative is increased by [color=" + ::Const.UI.Color.PositiveValue + "]8%[/color] and builds up [color=" + ::Const.UI.Color.PositiveValue + "]2[/color] less Fatigue for each tile travelled.";
-::Const.Strings.PerkDescription.NggHCharmEnemyAlp <- "\'Dream eater or nightmare caller, such creatures should be servants for a beauty likes you.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Allows you to permanently charm Alp.\n• Satisfies one of two conditions to permanently charm Demon Alp.\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+15[/color] Resolve at morale checks against fear, panic or mind control effects.\n• [color=" + ::Const.UI.Color.NegativeValue + "]Sleep[/color] skill gains [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] chance to put a target to sleep.";
-::Const.Strings.PerkDescription.NggHCharmEnemyGhoul <- "\'Hungry monkeys or big fricking starving gorillas are probably nice exotic pets.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Allows you to permanently charm Nachzehrer.\n• Satisfies one of two conditions to permanently charm Skin Ghoul.\n• Hitpoints are increased by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color].\n• Initiative is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].";
-::Const.Strings.PerkDescription.NggHCharmEnemyUnhold <- "\'Giants that can even dwarf the tallest orc. You would want mighty creatures as them to be your bodyguards.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Allows you to permanently charm Unhold, Frost Unhold, Swamp Unhold, Armored Unhold.\n• Satisfies one of two conditions to permanently charm Rock Unhold.\n• Max Fatigue is increased by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color].\n• Hitpoints are increased by [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color].";
-::Const.Strings.PerkDescription.NggHCharmEnemySchrat <- "\'Sentient ancient trees that are seen as guardian of the forest. Having them as your guardians should be more appropriate!\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Allows you to permanently charm Schrat.\n• Satisfies one of two conditions to permanently charm Heartwood Schrat.\n• Melee Defense and Ranged Defense are increased by [color=" + ::Const.UI.Color.PositiveValue + "]5[/color] points.\n• Damage taken is reduced by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color]. Does not affect damage from mental attacks or status effects.";
-::Const.Strings.PerkDescription.NggHCharmEnemyLindwurm <- "Some say they are giant serpents, some call them as dragons. All to describe certain fearsome beasts that have acidic blood and a towering body. Imagine of having one under your command. \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Allows you to permanently charm Lindwurm.\n• Satisfies one of two conditions to permanently charm Stollwurm.\n• Reduces the Resolve of any opponent engaged in melee by the amount equals to [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color] of your current Resolve.";
-::Const.Strings.PerkDescription.NggHCharmEnemyOrk <- "\'Warriors with physical strength that no human can match. Such brute strength should be used to fight for your causes.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Allows you to permanently charm Orc Berserker, Orc Warrior, Orc Elite.\n• Satisfies one of two conditions to permanently charm Orc Warlord and Orc Behemoth.\n• Your Initiative is reduced only by [color=" + ::Const.UI.Color.PositiveValue + "]50%[/color] of your accumulated Fatigue, instead of all of it.";
-::Const.Strings.PerkDescription.NggHCharmEnemyGoblin <- "\'Goblins might be small and weak but they have tons of trick up their sleeves. Such cunning creatures are good for certain dirty jobs.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Allows you to permanently charm Goblin Overseer and Goblin Shaman.\n• Grants [color=" + ::Const.UI.Color.PositiveValue + "]Immunity[/color] to being overwhelmed.\n• Ranged Defense is increased by [color=" + ::Const.UI.Color.PositiveValue + "]10[/color] points.";
+::Const.Strings.PerkDescription.NggHCharmEnemySpider <- "\'The creepy crawlies in the depth of the forest, they would be suited to be your servants and soldiers.\'"
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+															+ "\n• Allows you to permanently charm Webknecht."
+															+ "\n• Satisfies one of two conditions to permanently charm Redback Spider."
+															+ "\n• Grants [color=" + ::Const.UI.Color.PositiveValue + "]Immunity[/color] to be rooted by nets, webs or grasping vines.";
 
-::Const.Strings.PerkDescription.NggHCharmBasic <- "\'Learn the basic of how to steal other\'s heart. First lesson, with a good pair of ripe and juicy pears, men will fall for your charm.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain an additional [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color] chance to charm.\n• Grants [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] barter skill, increasing sell prices, reducing buy prices and increasing pay for delivery contracts.";
-::Const.Strings.PerkDescription.NggHCharmWords <- "\'Enchanted words that can wake up any sleeping snake down below.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• [color=" + ::Const.UI.Color.PositiveValue + "]Expands[/color] your charm capability to affect stronger humans, such as Knight, Sergent, Officer, Nomad Leader, Bandit Leader, Barbarian Chosen, etc.\n• Resolve is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].\n• Max Fatigue is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].";
-::Const.Strings.PerkDescription.NggHCharmAppearance <- "\'A gorgeous appearance that no men can resist. How can such beauty exist?\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Allows you to charm Swordmaster, Blade Dancer, Master Archer, Desert Stalker, Hedge Knight, Nomad Executioner, Barbarian King and Bandit Warlord.\n• Increases the duration of [color=" + ::Const.UI.Color.NegativeValue + "]Charmed[/color] effect by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] turn. The bonus duration can not be reduced by [color=" + ::Const.UI.Color.NegativeValue + "]Resilient[/color] perk.";
-::Const.Strings.PerkDescription.NggHCharmSpec <- "\'Master the art of capturing other\'s heart. Don\'t you want a dommy mommy? C\'mere! Let mommy comfort you!\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain an additional [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color] to charm.\n• Allows you to permanently charm Champion enemies.\n• Satisfies the last condition to permanently charm Orc Warlord, Orc Behemoth and Legendary beasts.";
-::Const.Strings.PerkDescription.NggHCharmNudist <- "\'Real slut doesn\'t need cloth.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n\n Gains the below effects while not wearing both armour and a helmet:\n• Gains another stack of nimble.\n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain an additional [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color] to charm.";
+::Const.Strings.PerkDescription.NggHCharmEnemyDirewolf <- "\'Who wouldn\'t want to own a 5 feet tall pet dog. Nothing could be better than seeing them mauling fools who dare to make an enemy of you.\'"
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]\n• Allows you to permanently charm Direwolf, Hyena, Bear."
+															+ "\n• Satisfies one of two conditions to permanently charm White Direwolf."
+															+ "\n• Initiative is increased by [color=" + ::Const.UI.Color.PositiveValue + "]8%[/color] and builds up [color=" + ::Const.UI.Color.PositiveValue + "]2[/color] less Fatigue for each tile travelled.";
 
-::Const.Strings.PerkDescription.NggHHexHexer <- "\'You have no idea how much power a hexer has over their curses.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n\n When attacking a target affected by [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] effect, apply the effects below: \n• Attack Damage is increased by [color=" + ::Const.UI.Color.PositiveValue + "]33%[/color].\n• Hit chance is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].";
-::Const.Strings.PerkDescription.NggHHexMastery <- "\'Master the art of hexing, your ability to curse someone has never been this good before.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue.\n• Reduces the AP cost by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color], if you have [color=" + ::Const.UI.Color.NegativeValue + "]Protected by a Hex[/color] effect.\n• Experience Gain is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].";
-::Const.Strings.PerkDescription.NggHHexSharePain <- "\'No one should be in pain alone!\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Inflicts an additional [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] effect to another random enemy within your vision.\n• Once per round, damage from all sources (except from [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] effect) inflicted on one of your hexed target will also be inflicted on the other hexed targets, yourself is excluded.";
-::Const.Strings.PerkDescription.NggHHexSuffering <- "\'A curse that brings a greater suffer! Let them take on your burden.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] active skill is upgraded into [color=" + ::Const.UI.Color.NegativeValue + "]Hex of Suffering[/color].\n• Hitpoints are increased by [color=" + ::Const.UI.Color.PositiveValue + "]18%[/color]. \n\n[color=" + ::Const.UI.Color.Passive + "][u]Hex of Suffering effects:[/u][/color] \n• Transfers certain types of negative status effect ([color=" + ::Const.UI.Color.NegativeValue + "]Bleeding[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Dazed[/color], etc) to a hexed victim \n\n[color=" + ::Const.UI.Color.NegativeValue + "]You can learn one perk in this perk group and only one, no more[/color]";
-::Const.Strings.PerkDescription.NggHHexWeakening <- "\'A curse that can cause one to be weak and old.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] active skill is upgraded into [color=" + ::Const.UI.Color.NegativeValue + "]Hex of Weakening[/color].\n• Fatigue Recovery per turn is increased by [color=" + ::Const.UI.Color.PositiveValue + "]14%[/color]. \n\n[color=" + ::Const.UI.Color.Passive + "][u]Hex of Weakening effects:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]-40%[/color] Attack Damage\n• [color=" + ::Const.UI.Color.NegativeValue + "]-33%[/color] Max Fatigue\n• [color=" + ::Const.UI.Color.NegativeValue + "]-5[/color] Fatigue Recovery per turn \n\n[color=" + ::Const.UI.Color.NegativeValue + "]You can learn one perk in this perk group and only one, no more[/color]";
-::Const.Strings.PerkDescription.NggHHexVulnerability <- "\'A curse that causes new wounds to become more severe than usual.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] active skill is upgraded into [color=" + ::Const.UI.Color.NegativeValue + "]Hex of Vulnerability[/color].\n• Damage Taken to Hitpoints is reduced by [color=" + ::Const.UI.Color.PositiveValue + "]5[/color] points.\n• Damage Taken to Armor is reduced by [color=" + ::Const.UI.Color.PositiveValue + "]15[/color] points. \n\n[color=" + ::Const.UI.Color.Passive + "][u]Hex of Vulnerability effects:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]+15%[/color] Damage Taken\n• [color=" + ::Const.UI.Color.NegativeValue + "]-25%[/color] Initiative \n\n[color=" + ::Const.UI.Color.NegativeValue + "]You can learn one perk in this perk group and only one, no more[/color]";
-::Const.Strings.PerkDescription.NggHHexMisfortune <- "\'A curse that brings bad luck.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] active skill is upgraded into [color=" + ::Const.UI.Color.NegativeValue + "]Hex of Misfortune[/color].\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] chance to have any attacker require two successful attack rolls in order to hit.\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] chance to have any negative morale check require two successful rolls in order to affect you. \n\n[color=" + ::Const.UI.Color.Passive + "][u]Hex of Misfortune effects:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]-12%[/color] of total Hit Chance\n• [color=" + ::Const.UI.Color.NegativeValue + "]-10%[/color] of total Dodge Chance \n\n[color=" + ::Const.UI.Color.NegativeValue + "]You can learn one perk in this perk group and only one, no more[/color]";
+::Const.Strings.PerkDescription.NggHCharmEnemyAlp <- "\'Dream eater or nightmare caller, such creatures should be servants for a beauty likes you.\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+														+ "\n• Allows you to permanently charm Alp."
+														+ "\n• Satisfies one of two conditions to permanently charm Demon Alp."
+														+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+15[/color] Resolve at morale checks against fear, panic or mind control effects."
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Sleep[/color] skill gains [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] chance to put a target to sleep.";
 
-::Const.Strings.PerkDescription.NggH_BDSM_WhipLash <- "\'It\'s so fast, you can hear the cracking sound from a far. How can anyone dodge this?\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n\n Gains the below effects while equipped with a whip:\n• Gains Melee Skill equal to [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color] of your current Initiative.\n• [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] active skill gains [color=" + ::Const.UI.Color.PositiveValue + "]+12%[/color] Attack Damage and [color=" + ::Const.UI.Color.PositiveValue + "]+6%[/color] Armor Penetration for each tile between you and the target.";
-::Const.Strings.PerkDescription.NggH_BDSM_WhipMastery <- "\'Master whips to hit where it hurts the most.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• This perk is also treated as [color=" + ::Const.UI.Color.NegativeValue + "]Cleaver Mastery[/color].\n• [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Flaggelate[/color] active skills gain [color=" + ::Const.UI.Color.PositiveValue + "]+5%[/color] Attack Damage for each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Bleeding[/color] effect on the target.\n• Whip weapon skills have their AP cost reduced by [color=" + ::Const.UI.Color.NegativeValue + "]1[/color].";
-::Const.Strings.PerkDescription.NggH_BDSM_MaskOn <- "\'Dear! Is it it kinky to put on a mask?\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+5%[/color] Resolve for each point of pentalty to vision your helmet has.\n• Reduces the fatigue cost of your whip weapon skills equal to the pentalty to vision your helmet has.";
-::Const.Strings.PerkDescription.NggH_BDSM_Bondage <- "\'Trust me, dear! We\'ll have a fun time.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n\nApplies the below effects when using a valid skill to target an enemy trapped in net, vines or web: \n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] chance to charm.\n• [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Flaggelate[/color] active skills gain [color=" + ::Const.UI.Color.PositiveValue + "]+25%[/color] Attack Damage and [color=" + ::Const.UI.Color.PositiveValue + "]+15%[/color] Armor Penetration.\n• [color=" + ::Const.UI.Color.NegativeValue + "]Disarm[/color] active skill gains [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] chance to hit.";
-::Const.Strings.PerkDescription.NggH_BDSM_WhipPunish <- "\'Do as mommy said or you will be whipped.\' \n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color] \n• Gains [color=" + ::Const.UI.Color.NegativeValue + "]Crack the Whip[/color] active skill while equipped with a whip.\n• Costs 4 AP and builds 13 Fatigue.\n• Has a range of [color=" + ::Const.UI.Color.PositiveValue + "]3[/color] tiles.\n• Inflicts [color=" + ::Const.UI.Color.DamageValue + "]2[/color] - [color=" + ::Const.UI.Color.DamageValue + "]5[/color] damage that ignores armor to the target.\n• Gives the targeted simp the [color=" + ::Const.UI.Color.NegativeValue + "]Whipped[/color] status effect, increasing many of their stats for 2 rounds.\n• Resets the morale of the targeted simp to \'Steady\' if currently below.";
-::Const.Strings.PerkDescription.NggH_BDSM_WhipLove <- "\'It\'s not abuse if they love it.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Every time your [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] or [color=" + ::Const.UI.Color.NegativeValue + "]Flaggelate[/color] active skill successfully lands a hit, put a \"whipped\" counter on that target.\n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain [color=" + ::Const.UI.Color.PositiveValue + "]+4%[/color] chance to charm for each \"whipped\" counter on that target [b](max: 20%)[/b].\n• [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Flaggelate[/color] active skills gain additional Attack Damage equal to [color=" + ::Const.UI.Color.PositiveValue + "]12%[/color] of current Resolve [b](max: 30)[/b].";
-::Const.Strings.PerkDescription.NggH_BDSM_DommyMommy <- "\'Have I told you to stop? Don\'t stop till i say so. Now clean my feet properly.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Gains [color=" + ::Const.UI.Color.NegativeValue + "]Fearsome[/color] perk for free.\n• [color=" + ::Const.UI.Color.NegativeValue + "]Crack the Whip[/color] skill also improves your morale.\n• The bonuses of [color=" + ::Const.UI.Color.NegativeValue + "]Whipped[/color] effect from [color=" + ::Const.UI.Color.NegativeValue + "]Crack A Whip[/color] skill are increased by [color=" + ::Const.UI.Color.PositiveValue + "]5[/color] points.";
+::Const.Strings.PerkDescription.NggHCharmEnemyGhoul <- "\'Hungry monkeys or big fricking starving gorillas are probably nice exotic pets.\'"
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+															+ "\n• Allows you to permanently charm Nachzehrer."
+															+ "\n• Satisfies one of two conditions to permanently charm Skin Ghoul."
+															+ "\n• Hitpoints are increased by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color]."
+															+ "\n• Initiative is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].";
+
+::Const.Strings.PerkDescription.NggHCharmEnemyUnhold <- "\'Giants that can even dwarf the tallest orc. You would want mighty creatures as them to be your bodyguards.\'"
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+															+ "\n• Allows you to permanently charm Unhold, Frost Unhold, Swamp Unhold, Armored Unhold."
+															+ "\n• Satisfies one of two conditions to permanently charm Rock Unhold."
+															+ "\n• Max Fatigue is increased by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color]."
+															+ "\n• Hitpoints are increased by [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color].";
+
+::Const.Strings.PerkDescription.NggHCharmEnemySchrat <- "\'Sentient ancient trees that are seen as guardian of the forest. Having them as your guardians should be more appropriate!\'" 
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+															+ "\n• Allows you to permanently charm Schrat."
+															+ "\n• Satisfies one of two conditions to permanently charm Heartwood Schrat."
+															+ "\n• Melee Defense and Ranged Defense are increased by [color=" + ::Const.UI.Color.PositiveValue + "]5[/color] points."
+															+ "\n• Damage taken is reduced by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color]. Does not affect damage from mental attacks or status effects.";
+
+::Const.Strings.PerkDescription.NggHCharmEnemyLindwurm <- "\'Some say they are giant serpents, some call them as dragons. All to describe certain fearsome beasts that have acidic blood and a towering body. Imagine of having one under your command.\'"
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+															+ "\n• Allows you to permanently charm Lindwurm."
+															+ "\n• Satisfies one of two conditions to permanently charm Stollwurm."
+															+ "\n• Reduces the Resolve of any opponent engaged in melee by the amount equals to [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color] of your current Resolve.";
+
+::Const.Strings.PerkDescription.NggHCharmEnemyOrk <- "\'Warriors with physical strength that no human can match. Such brute strength should be used to fight for your causes.\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]" 
+														+ "\n• Allows you to permanently charm Orc Berserker, Orc Warrior, Orc Elite." 
+														+ "\n• Satisfies one of two conditions to permanently charm Orc Warlord and Orc Behemoth." 
+														+ "\n• Your Initiative is reduced only by [color=" + ::Const.UI.Color.PositiveValue + "]50%[/color] of your accumulated Fatigue, instead of all of it.";
+
+::Const.Strings.PerkDescription.NggHCharmEnemyGoblin <- "\'Goblins might be small and weak but they have tons of trick up their sleeves. Such cunning creatures are good for certain jobs.\'"
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+															+ "\n• Allows you to permanently charm Goblin Overseer and Goblin Shaman."
+															+ "\n• Grants [color=" + ::Const.UI.Color.PositiveValue + "]Immunity[/color] to being overwhelmed."
+															+ "\n• Ranged Defense is increased by [color=" + ::Const.UI.Color.PositiveValue + "]10[/color] points.";
+
+::Const.Strings.PerkDescription.NggHCharmBasic <- "\'Learn the basic of how to steal other\'s heart. First lesson, with a good pair of ripe and juicy pears, men will fall for your charm.\'"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+													+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain an additional [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color] chance to charm."
+													+ "\n• Grants [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] barter skill, increasing sell prices, reducing buy prices and increasing pay for delivery contracts.";
+
+::Const.Strings.PerkDescription.NggHCharmWords <- "\'Enchanted words that can wake up any sleeping snake down below.\'"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+													+ "\n• [color=" + ::Const.UI.Color.PositiveValue + "]Expands[/color] your charm capability to affect stronger humans, such as Knight, Sergent, Officer, Nomad Leader, Bandit Leader, Barbarian Chosen, etc."
+													+ "\n• Resolve is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color]."
+													+ "\n• Max Fatigue is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].";
+
+::Const.Strings.PerkDescription.NggHCharmAppearance <- "\'A gorgeous appearance that no men can resist. How can such beauty exist?\'"
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+															+ "\n• Allows you to charm Swordmaster, Blade Dancer, Master Archer, Desert Stalker, Hedge Knight, Nomad Executioner, Barbarian King and Bandit Warlord."
+															+ "\n• Increases the duration of [color=" + ::Const.UI.Color.NegativeValue + "]Charmed[/color] effect by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] turn. The bonus duration can not be reduced by [color=" + ::Const.UI.Color.NegativeValue + "]Resilient[/color] perk.";
+
+::Const.Strings.PerkDescription.NggHCharmSpec <- "\'Master the art of capturing other\'s heart. Don\'t you want a dommy mommy? C\'mere! Let mommy comfort you!\'"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+													+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain an additional [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color] to charm."
+													+ "\n• Allows you to permanently charm Champion enemies.\n• Satisfies the last condition to permanently charm Orc Warlord, Orc Behemoth and Legendary beasts.";
+
+::Const.Strings.PerkDescription.NggHCharmNudist <- "\'Real slut doesn\'t need cloth.\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+													+ "\n\n Gains the below effects while not wearing both armour and a helmet:"
+														+ "\n• Gains another stack of nimble."
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain an additional [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color] to charm.";
+
+::Const.Strings.PerkDescription.NggHHexHexer <- "\'You have no idea how much power a hexer has over their curses.\'"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+												+ "\n\n When attacking a target affected by [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] effect, apply the effects below:"
+													+ "\n• Attack Damage is increased by [color=" + ::Const.UI.Color.PositiveValue + "]33%[/color]."
+													+ "\n• Hit chance is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].";
+
+::Const.Strings.PerkDescription.NggHHexMastery <- "\'Master the art of hexing, your ability to curse someone has never been this good before.\'"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color]"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+													+ "\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue."
+													+ "\n• Reduces the AP cost by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color], if you have [color=" + ::Const.UI.Color.NegativeValue + "]Protected by a Hex[/color] effect."
+													+ "\n• Experience Gain is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].";
+
+::Const.Strings.PerkDescription.NggHHexSharePain <- "\'No one should be in pain alone!\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color]"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+														+ "\n• Inflicts an additional [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] effect to another random enemy within your vision."
+														+ "\n• Once per round, damage from all sources (except from [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] effect) inflicted on one of your hexed target will also be inflicted on the other hexed targets, yourself is excluded.";
+
+::Const.Strings.PerkDescription.NggHHexSuffering <- "\'A curse that brings a greater suffer! Let them take on your burden.\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] active skill is upgraded into [color=" + ::Const.UI.Color.NegativeValue + "]Hex of Suffering[/color]."
+														+ "\n• Hitpoints are increased by [color=" + ::Const.UI.Color.PositiveValue + "]18%[/color]."
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Hex of Suffering effects:[/u][/color]"
+														+ "\n• Transfers certain types of negative status effect ([color=" + ::Const.UI.Color.NegativeValue + "]Bleeding[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Dazed[/color], etc) to a hexed victim"
+													+ "\n\n[color=" + ::Const.UI.Color.NegativeValue + "]You can learn one perk in this perk group and only one, no more[/color]";
+
+::Const.Strings.PerkDescription.NggHHexWeakening <- "\'A curse that can cause one to be weak and old.\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] active skill is upgraded into [color=" + ::Const.UI.Color.NegativeValue + "]Hex of Weakening[/color]."
+														+ "\n• Fatigue Recovery per turn is increased by [color=" + ::Const.UI.Color.PositiveValue + "]14%[/color]."
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Hex of Weakening effects:[/u][/color]"
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]-40%[/color] Attack Damage"
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]-33%[/color] Max Fatigue"
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]-5[/color] Fatigue Recovery per turn"
+													+ "\n\n[color=" + ::Const.UI.Color.NegativeValue + "]You can learn one perk in this perk group and only one, no more[/color]";
+
+::Const.Strings.PerkDescription.NggHHexVulnerability <- "\'A curse that causes new wounds to become more severe than usual.\'"
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+															+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] active skill is upgraded into [color=" + ::Const.UI.Color.NegativeValue + "]Hex of Vulnerability[/color]."
+															+ "\n• Damage Taken to Hitpoints is reduced by [color=" + ::Const.UI.Color.PositiveValue + "]5[/color] points."
+															+ "\n• Damage Taken to Armor is reduced by [color=" + ::Const.UI.Color.PositiveValue + "]15[/color] points."
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Hex of Vulnerability effects:[/u][/color]"
+															+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]+15%[/color] Damage Taken"
+															+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]-25%[/color] Initiative"
+														+ "\n\n[color=" + ::Const.UI.Color.NegativeValue + "]You can learn one perk in this perk group and only one, no more[/color]";
+
+::Const.Strings.PerkDescription.NggHHexMisfortune <- "\'A curse that brings bad luck.\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] active skill is upgraded into [color=" + ::Const.UI.Color.NegativeValue + "]Hex of Misfortune[/color]."
+														+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] chance to have any attacker require two successful attack rolls in order to hit."
+														+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] chance to have any negative morale check require two successful rolls in order to affect you."
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Hex of Misfortune effects:[/u][/color]"
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]-12%[/color] of total Hit Chance"
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]-10%[/color] of total Dodge Chance"
+													+ "\n\n[color=" + ::Const.UI.Color.NegativeValue + "]You can learn one perk in this perk group and only one, no more[/color]";
+
+::Const.Strings.PerkDescription.NggH_BDSM_WhipLash <- "\'It\'s so fast, you can hear the cracking sound from a far. How can anyone dodge this?\'" 
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]" 
+													+ "\n\n Gains the below effects while equipped with a whip:" 
+														+ "\n• Gains Melee Skill equal to [color=" + ::Const.UI.Color.PositiveValue + "]20%[/color] of your current Initiative."
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] active skill gains [color=" + ::Const.UI.Color.PositiveValue + "]+15%[/color] Attack Damage and [color=" + ::Const.UI.Color.PositiveValue + "]+6%[/color] Armor Penetration for each tile between you and the target.";
+
+::Const.Strings.PerkDescription.NggH_BDSM_WhipMastery <- "\'Master whips to hit where it hurts the most.\'" 
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]" 
+															+ "\n• This perk is also treated as [color=" + ::Const.UI.Color.NegativeValue + "]Cleaver Mastery[/color]." 
+															+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Flaggelate[/color] active skills gain [color=" + ::Const.UI.Color.PositiveValue + "]+5%[/color] Attack Damage for each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Bleeding[/color] effect on the target." 
+															+ "\n• Whip weapon skills have their AP cost reduced by [color=" + ::Const.UI.Color.NegativeValue + "]1[/color].";
+
+::Const.Strings.PerkDescription.NggH_BDSM_MaskOn <- "\'Dear! Is it kinky to put on a mask?\'" 
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+													+ "\n\n Gains the below effects while equipped with a headgear that gives atleast [color=" + ::Const.UI.Color.NegativeValue + "]-1[/color] to Vision:" 
+														+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+3%[/color] Resolve for each perk in this perk group that you have learnt (this perk is included)." 
+														+ "\n• Reduces the fatigue cost of your whip weapon skills equal to number of perks in this perk group that you have learnt (this perk is included).";
+
+::Const.Strings.PerkDescription.NggH_BDSM_Bondage <- "\'Trust me, dear! We\'ll have a fun time.\'" 
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+													+ "\n\nApplies the below effects when using a valid skill to target an enemy trapped in net, vines or web: " 
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain [color=" + ::Const.UI.Color.PositiveValue + "]+7%[/color] chance to charm." 
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Flaggelate[/color] active skills gain [color=" + ::Const.UI.Color.PositiveValue + "]+25%[/color] Attack Damage and [color=" + ::Const.UI.Color.PositiveValue + "]+25%[/color] Armor Penetration." 
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Disarm[/color] active skill gains [color=" + ::Const.UI.Color.PositiveValue + "]+12%[/color] chance to hit.";
+
+::Const.Strings.PerkDescription.NggH_BDSM_WhipPunish <- "\'Do as mommy said or you will be whipped.\'" 
+														+"\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]" 
+															+ "\n• Gains [color=" + ::Const.UI.Color.NegativeValue + "]Crack the Whip[/color] active skill while equipped with a whip." 
+															+ "\n• Costs 4 AP and builds 15 Fatigue.\n• Has a range of [color=" + ::Const.UI.Color.PositiveValue + "]3[/color] tiles." 
+															+ "\n• Inflicts [color=" + ::Const.UI.Color.DamageValue + "]2[/color] - [color=" + ::Const.UI.Color.DamageValue + "]5[/color] damage that ignores armor to the target." 
+															+ "\n• Gives the targeted simp the [color=" + ::Const.UI.Color.NegativeValue + "]Whipped[/color] status effect, increasing many of their stats for 2 rounds." 
+															+ "\n• Resets the morale of the targeted simp to \'Steady\' if currently below.";
+
+::Const.Strings.PerkDescription.NggH_BDSM_WhipLove <- "\'It\'s not abuse if they love it.\'" 
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] " 
+														+ "\n• Every time your [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] or [color=" + ::Const.UI.Color.NegativeValue + "]Flaggelate[/color] active skills successfully land a hit, put a \"whipped\" counter on that target." 
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain [color=" + ::Const.UI.Color.PositiveValue + "]+4%[/color] chance to charm for each \"whipped\" counter on that target [b](max: 20%)[/b]."
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Flaggelate[/color] active skills gain additional Attack Damage equal to [color=" + ::Const.UI.Color.PositiveValue + "]12%[/color] of current Resolve [b](max: 30)[/b].";
+
+::Const.Strings.PerkDescription.NggH_BDSM_DommyMommy <- "\'Have I told you to stop? Don\'t stop till i say so. Now clean my feet properly with your mouth.\'" 
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] " 
+															+ "\n• Gains [color=" + ::Const.UI.Color.NegativeValue + "]Fearsome[/color] perk for free." 
+															+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Crack the Whip[/color] skill also improves your morale." 
+															+ "\n• The bonuses of [color=" + ::Const.UI.Color.NegativeValue + "]Whipped[/color] effect from [color=" + ::Const.UI.Color.NegativeValue + "]Crack A Whip[/color] skill are increased by [color=" + ::Const.UI.Color.PositiveValue + "]3[/color] points.";
 
 ::Const.Strings.PerkDescription.NggHLuftPattingSpec <- "\'Master the art of petting head. No head can be left without being petted.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]Petting[/color] skill builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue.\n• [color=" + ::Const.UI.Color.NegativeValue + "]Petting[/color] skill deals [color=" + ::Const.UI.Color.PositiveValue + "]50%[/color] more damage.\n• [color=" + ::Const.UI.Color.NegativeValue + "]Petting[/color] skill has a [color=" + ::Const.UI.Color.PositiveValue + "]50%[/color] chance to distract the target.";
 ::Const.Strings.PerkDescription.NggHLuftUnholyFruits <- "\'Luft has learnt how to use his two unholy fruits for certain purposes.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain an additional [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color] to charm.\n• Grants [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] barter skill, increasing sell prices, reducing buy prices and increasing pay for delivery contracts.";
@@ -215,7 +369,11 @@
 ::Const.Strings.PerkDescription.NggHGoblinMountTraining <- "\'Learn how to ride a mount.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Gains the ability to mount on Wardogs, Warhounds and Wolves.";
 ::Const.Strings.PerkDescription.NggHGoblinMountedArchery <- "\'Learn the proper ways to use ranged weapon while riding mount.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n\n  Gains the effects below while you are riding a mount: \n• Removes the Ranged Damage penalty.\n• Reduces the Ranged Skill penalty from [color=" + ::Const.UI.Color.NegativeValue + "]-35%[/color] down to [color=" + ::Const.UI.Color.PositiveValue + "]-15%[/color]. \n• Throwing weapons gains additional damage if you have [color=" + ::Const.UI.Color.NegativeValue + "]Mounted Charge[/color] effect.";
 ::Const.Strings.PerkDescription.LegendHorseLiberty = "\'Through extensive roundpenning training, the mount gains trust in the movements of the rider.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n\n  Gains the effects below while you are riding a mount: \n• Increases Resolve by [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color].\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue for each tile travelled"; 
-::Const.Strings.PerkDescription.NggHGoblinMountedCharge <- "\'Use the great weight and speed of the mount to charge forward.\' \n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color] \n• Costs 0 AP and builds 15 Fatigue.\n• Your first mounted charge attack may [color=" + ::Const.UI.Color.PositiveValue + "]Knock Back[/color], [color=" + ::Const.UI.Color.PositiveValue + "]Stagger[/color] or [color=" + ::Const.UI.Color.PositiveValue + "]Daze[/color] the target on hit.\n• Improves the bonus from [color=" + ::Const.UI.Color.NegativeValue + "]Mounted Charge[/color] effect up to [color=" + ::Const.UI.Color.PositiveValue + "]150%[/color] of the original bonus.";
+
+::Const.Strings.PerkDescription.NggHGoblinMountedCharge <- "\'Use the great weight and speed of the mount to charge forward.\'"
+															+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+																+ "\n• Reduces the amount of tile you need to move to build up a full power mounted charge."
+																+ "\n• Improves the bonuses from [color=" + ::Const.UI.Color.NegativeValue + "]Mounted Charge[/color] effect up to [color=" + ::Const.UI.Color.PositiveValue + "]125%[/color] of the original bonuses.";
 // ghost
 ::Const.Strings.PerkDescription.NggHGhostGhastlyTouch <- "\'My touch is both fast and deadly!!!\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Ghastly Touch[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Costs [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] less AP.\n• Gains an additional [color=" + ::Const.UI.Color.DamageValue + "]0[/color] - [color=" + ::Const.UI.Color.DamageValue + "]5[/color] Attack Damage.\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+5%[/color] hit chance.";
 ::Const.Strings.PerkDescription.NggHGhostSpectralBody <- "\'Like a shapeless moving shadow, You can hardly hit it.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Makes any incoming melee attacks has [color=" + ::Const.UI.Color.PositiveValue + "]-10%[/color] chance to hit you.\n• Grants a complete immunity to all ranged attacks.";
