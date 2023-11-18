@@ -184,7 +184,7 @@ this.nggh_mod_spit_acid_skill <- ::inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (_tile.getEntity().getFlags().has("lindwurm")
+		if (_tile.getEntity().getFlags().has("lindwurm"))
 			return;
 		
 		_user.spawnBloodPool(_tile, ::Math.rand(::Const.Combat.BloodPoolsAtDeathMin, ::Const.Combat.BloodPoolsAtDeathMax));

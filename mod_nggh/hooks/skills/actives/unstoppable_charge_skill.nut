@@ -54,7 +54,7 @@
 	};
 	obj.isUsable = function()
 	{
-		return !::Tactical.isActive() || this.skill.isUsable() && !this.getContainer().getActor().isEngagedInMelee());
+		return !::Tactical.isActive() || this.skill.isUsable() && !this.getContainer().getActor().isEngagedInMelee();
 	};
 	obj.onTurnStart = function() {};
 });

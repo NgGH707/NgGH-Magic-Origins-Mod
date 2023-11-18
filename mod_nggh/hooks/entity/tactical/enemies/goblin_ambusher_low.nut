@@ -13,8 +13,8 @@
 			this.m.Items.equip(::new("scripts/items/armor/greenskins/goblin_skirmisher_armor"));
 			this.m.Items.equip(::new("scripts/items/helmets/greenskins/goblin_skirmisher_helmet"));
 		}
-		*/
 		else
+		*/
 		{
 			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_goblin_skirmisher_armor"));
 			this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_skirmisher_helmet"));

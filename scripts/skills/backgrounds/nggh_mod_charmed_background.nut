@@ -320,7 +320,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		local data = this.getCharmDataByID(this.m.CharmID);
 		local perks = [];
 
-		if (actor.getFlags().has("nggh_character")) perks.extend(.getSignaturePerks());
+		if (actor.getFlags().has("nggh_character")) perks.extend(actor.getSignaturePerks());
 
 		if (("Perks" in data) && typeof data.Perks == "array") perks.extend(data.Perks);
 
