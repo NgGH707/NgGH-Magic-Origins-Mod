@@ -106,36 +106,21 @@
 
 		this.m.Cooldown = ::Math.max(0, this.m.Cooldown - 1);
 	};
+	local onVerifyTarget = obj.onVerifyTarget;
 	obj.onVerifyTarget = function( _originTile, _targetTile )
 	{
+		if (!this.getContainer().getActor().isPlayerControlled())
+			return onVerifyTarget(_originTile, _targetTile) && this.checkCanBeSwallow(_targetTile.getEntity());
+
 		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
-		{
 			return false;
-		}
 
 		local target = _targetTile.getEntity();
 		
 		if (target.getSkills().hasSkill("racial.champion") || target.getFlags().has("IsPlayerCharacter"))
-		{
 			return false;
-		}
-
-		if (::Tactical.Entities.getInstancesOfFaction(::Const.Faction.Player).len() == 1 && !this.getContainer().getActor().isPlayerControlled())
-		{
-			return false;
-		}
 		
-		if (target.getCurrentProperties().IsImmuneToKnockBackAndGrab)
-		{
-			return false;
-		}
-		
-		if (!this.checkCanBeSwallow(target))
-		{
-			return false;
-		}
-
-		return true;
+		return this.checkCanBeSwallow(target) && !target.getCurrentProperties().IsImmuneToKnockBackAndGrab;
 	};
 	obj.onBeforeUse <- function( _user , _targetTile )
 	{
@@ -146,68 +131,47 @@
 		
 		::Nggh_MagicConcept.spawnQuote("luft_swallow_quote_" + ::Math.rand(1, 4), _user.getTile());
 	};
+	local onUse = obj.onUse;
 	obj.onUse = function( _user, _targetTile )
 	{
 		local target = _targetTile.getEntity();
 
 		if (typeof target == "instance")
-		{
 			target = target.get();
-		}
 
-		if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
-		{
-			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_user) + " devours " + ::Const.UI.getColorizedEntityName(target));
-		}
-
-		local skills = target.getSkills();
-		skills.removeByID("effects.shieldwall");
-		skills.removeByID("effects.spearwall");
-		skills.removeByID("effects.riposte");
-		skills.removeByID("effects.legend_vala_chant_disharmony_effect");
-		skills.removeByID("effects.legend_vala_chant_fury_effect");
-		skills.removeByID("effects.legend_vala_chant_senses_effect");
-		skills.removeByID("effects.legend_vala_currently_chanting");
-		skills.removeByID("effects.legend_vala_in_trance");
-
-		if (target.getMoraleState() != ::Const.MoraleState.Ignore)
-		{
-			target.setMoraleState(::Const.MoraleState.Breaking);
-		}
-		
-		::Tactical.getTemporaryRoster().add(target);
-		::Tactical.TurnSequenceBar.removeEntity(target);
-		this.m.SwallowedEntity = target;
-		this.m.SwallowedEntity.getFlags().set("Devoured", true);
+		if (target.getType() != ::Const.EntityType.Serpent)
+			::Tactical.getTemporaryRoster().add(target);
+			
+		target.setHitpoints(::Math.max(5, target.getHitpoints() - ::Math.rand(10, 20)));
+		target.m.IsActingImmediately = false;
 
 		if (!::Tactical.State.isAutoRetreat() && !target.isPlayerControlled())
-		{
 			::Tactical.Entities.setLastCombatResult(::Const.Tactical.CombatResult.EnemyDestroyed);
-		}
 
-		target.removeFromMap();
-		_user.getSprite("body").setBrush("bust_ghoulskin_body_04");
-		_user.getSprite("injury").setBrush("bust_ghoul_04_injured");
-		_user.getSprite("head").setBrush("bust_ghoulskin_04_head_0" + _user.m.Head);
-		_user.m.Sound[::Const.Sound.ActorEvent.Death] = _user.m.Sound[::Const.Sound.ActorEvent.Other2];
-		local effect = ::new("scripts/skills/effects/swallowed_whole_effect");
-		effect.setName(target.getName());
-		effect.setLink(this);
-		_user.getSkills().add(effect);
+		local ret = onUse(_user, _targetTile);
+		local effect = this.getSkills().getSkillByID("effects.swallowed_whole");
 
-		if (this.m.SoundOnHit.len() != 0)
+		if (effect == null)
 		{
-			::Sound.play(::MSU.Array.rand(this.m.SoundOnHit), ::Const.Sound.Volume.Skill, _user.getPos());
+			foreach (skill in this.getContainer().m.SkillsToAdd)
+			{
+				if (skill.getID() != "effects.swallowed_whole")
+					continue;
+
+				effect = skill;
+				break;
+			}
 		}
+
+		if (effect != null)
+			effect.setLink(this);
 
 		local skill = this.getContainer().getSkillByID("actives.nacho_vomit");
 
 		if (skill != null)
-		{
 			skill.setCooldown();
-		}
 
-		return true;
+		return ret;
 	};
 	obj.onSwallow <- function( _user )
 	{
@@ -230,9 +194,7 @@
 		{
 			//this.m.SwallowedEntity.getItems().dropAll(actor.getTile(), actor, false);
 			if (!this.m.IsArena && this.m.SwallowedEntity.m.WorldTroop != null && ("Party" in this.m.SwallowedEntity.m.WorldTroop) && this.m.SwallowedEntity.m.WorldTroop.Party != null)
-			{
 				this.m.SwallowedEntity.m.WorldTroop.Party.removeTroop(this.m.SwallowedEntity.m.WorldTroop);
-			}
 			
 			this.onSwallow(actor);
 		}
@@ -244,30 +206,19 @@
 	obj.checkCanBeSwallow <- function( _entity )
 	{
 		if (_entity.getFlags().has("ghoul") || _entity.getFlags().has("sand_golem"))
-		{
 			return _entity.getSize() < 3;
-		}
 
 		local type = _entity.getType();
 
 		if (type == ::Const.EntityType.Player)
 		{
 			if (_entity.getFlags().has("Type"))
-			{
 				type = _entity.getFlags().get("Type");
-			}
 			else
-			{
 				return true;
-			}
 		}
-		
-		if (::Const.SwallowWholeInvalidTargets.find(type) != null)
-		{
-			return false;
-		}
-		
-		return true;
+
+		return ::Const.SwallowWholeInvalidTargets.find(type) == null;
 	};
 	obj.onAfterUpdate <- function( _properties )
 	{

@@ -10,9 +10,7 @@
 	obj.onAfterDeath = function(_tile)
 	{
 		if (this.m.Size < 3)
-		{
 			return;
-		}
 
 		local skill;
 		foreach (id in [
@@ -23,34 +21,24 @@
 			skill = this.getSkills().getSkillByID(id)
 
 			if (skill != null)
-			{
 				break;
-			}
 		}
 
 		if (skill == null)
-		{
 			return;
-		}
 
 		if (skill.getSwallowedEntity() == null)
-		{
 			return;
-		}
 
 		if (::Tactical.Entities.isCombatFinished())
-		{
 			return;
-		}
 
 		local e = skill.getSwallowedEntity();
 		::Tactical.addEntityToMap(e, _tile.Coords.X, _tile.Coords.Y);
 		e.getFlags().set("Devoured", false);
 
-		if (!e.isPlayerControlled() && e.getType() != ::Const.EntityType.Serpent)
-		{
+		if (e.getType() != ::Const.EntityType.Serpent)
 			::Tactical.getTemporaryRoster().remove(e);
-		}
 
 		::Tactical.TurnSequenceBar.addEntity(e);
 
@@ -60,6 +48,8 @@
 			slime.setBrush("bust_slime");
 			slime.Visible = true;
 		}
+
+		skill.m.SwallowedEntity = null;
 	}
 
 	local onInit = obj.onInit;
