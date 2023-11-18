@@ -110,17 +110,11 @@ if (!("CharmedUtilities" in ::Const))
 		}
 
 		if (::Const.Goblin.Variants.find(_data.Type) != null)
-		{
 			_background.m.Race = 1;
-		}
 		else if (::Const.Orc.Variants.find(_data.Type) != null)
-		{
 			_background.m.Race = 2;
-		}
 		else if (!_data.IsHuman)
-		{
 			_background.m.Race = 3;
-		}
 		
 		_background.m.Names = names != null ? names : [];
 		_background.m.Name = "Charmed " + ::Const.Strings.EntityName[_data.Type];
@@ -137,9 +131,7 @@ if (!("CharmedUtilities" in ::Const))
 		_background.setAppearance();
 
 		if (!_isFromScenario && actor.getFlags().has("nggh_character"))
-		{
 			actor.setScenarioValues(this.m.CharmID, this.m.TempData.IsMiniboss, true, this.m.Names.len() == 0);
-		}
 
 		_background.addBonusAttributes(attributes);
 		_background.pickCurrentLevel();
@@ -157,13 +149,9 @@ if (!("CharmedUtilities" in ::Const))
 		if (this.isHuman()) 
 		{
 			if (this.m.TempData != null && this.m.TempData.IsMiniboss)
-			{
 				this.getContainer().add(::new("scripts/skills/racial/champion_racial"));
-			}
 			else if (::Math.rand(1, 100) <= 1)
-			{
 				this.addPerk(::Const.Perks.PerkDefs.NggHMiscChampion, 6);
-			}
 		}
 
 		if (("onSetup" in data) && typeof data.onSetup == "function") data.onSetup.call(this);

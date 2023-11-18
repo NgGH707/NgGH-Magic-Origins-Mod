@@ -33,7 +33,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		this.m.BloodType = ::Const.BloodType.Red;
 		this.m.BloodSplatterOffset = ::createVec(-10, 15);
 		this.m.DecapitateSplatterOffset = ::createVec(20, -20);
-		this.m.SignaturePerks = ["QuickHands", "Pathfinder"];
+		this.m.SignaturePerks = ["Pathfinder"];
 		this.m.Sound[::Const.Sound.ActorEvent.NoDamageReceived] = [
 			"sounds/enemies/goblin_idle_03.wav",
 			"sounds/enemies/goblin_idle_04.wav",

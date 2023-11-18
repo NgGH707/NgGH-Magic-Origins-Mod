@@ -5,6 +5,8 @@ this.mount_manager <- {
 		MountType = null,
 		RiderSkill = null,
 		ShakeLayers = null,
+		OldActionPointCosts = null,
+		OldFatigueCosts = null,
 		ExcludedMount = [],
 		Skills = [],
 		Armor = {
@@ -520,6 +522,10 @@ this.mount_manager <- {
 		this.m.Actor.m.Sound[::Const.Sound.ActorEvent.Other2] = ::Const.GoblinRiderMounts[this.m.MountType].SoundsOther2;
 		this.m.Actor.m.Sound[::Const.Sound.ActorEvent.Idle] = ::Const.GoblinRiderMounts[this.m.MountType].SoundsIdle;
 		this.m.Actor.m.Sound[::Const.Sound.ActorEvent.Move] = ::Const.GoblinRider.SoundsMove;
+		
+		this.m.OldActionPointCosts = this.m.Actor.m.ActionPointCosts;
+		this.m.OldFatigueCosts =   this.m.Actor.m.FatigueCosts;
+
 		this.addFlags();
 		this.addSkills();
 		this.addSpritesAndArmor(_item);
@@ -534,6 +540,18 @@ this.mount_manager <- {
 			this.m.Actor.m.Sound[::Const.Sound.ActorEvent.Other2] = this.m.Appearance.OldSounds[1];
 			this.m.Actor.m.Sound[::Const.Sound.ActorEvent.Idle] = this.m.Appearance.OldSounds[2];
 			this.m.Actor.m.Sound[::Const.Sound.ActorEvent.Move] = this.m.Appearance.OldSounds[3];
+		}
+
+		if (this.m.OldActionPointCosts != null)
+		{
+			this.m.Actor.m.ActionPointCosts = this.m.OldActionPointCosts;
+			this.m.OldActionPointCosts = null;
+		}
+
+		if (this.m.OldFatigueCosts != null)
+		{
+			this.m.Actor.m.FatigueCosts = this.m.OldFatigueCosts;
+			this.m.OldActionPointCosts = null;
 		}
 
 		this.onUnequip();

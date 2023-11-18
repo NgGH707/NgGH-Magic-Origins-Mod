@@ -512,7 +512,7 @@ if (!("CharmedUnits" in ::Const))
 		{
 			StatMod = { Hitpoints = [0, 0], Bravery = [-11, -10], Stamina = [-10, 0], MeleeSkill = [-7, -5], RangedSkill = [-12, -9], MeleeDefense = [-5, -3], RangedDefense = [-10, -5], Initiative = [-32, -29] },
 			Skills = ["racial/goblin_ambusher_racial"],
-			Perks = ["Bullseye"],
+			Perks = ["QuickHands"],
 			Requirements = [],
 			Script = "nggh_mod_player_goblin",
 			PerkTree = "GoblinAmbusher",
@@ -583,6 +583,7 @@ if (!("CharmedUnits" in ::Const))
 		{
 			StatMod = { Hitpoints = [0, 0], Bravery = [-5, 0], Stamina = [-20, -20], MeleeSkill = [-17, -15], RangedSkill = [-15, -14], MeleeDefense = [-5, -5], RangedDefense = [-10, -10], Initiative = [-25, -23] },
 			Skills = ["perks/perk_captain", "actives/goblin_whip"],
+			Perks = ["LegendBackToBasics"],
 			Requirements = ["NggHCharmEnemyGoblin"],
 			Script = "nggh_mod_player_goblin",
 			PerkTree = "GoblinLeader",
@@ -647,7 +648,7 @@ if (!("CharmedUnits" in ::Const))
 	//GoblinWolfrider = 43,
 		{
 			StatMod = { Hitpoints = [-20, -20], Bravery = [-15, -15], Stamina = [-55, -55], MeleeSkill = [-13, -13], RangedSkill = [-1, 1], MeleeDefense = [0, 0], RangedDefense = [-5, -5], Initiative = [-23, -27] },
-			Perks = ["NggHGoblinMountTraining"],
+			Perks = ["NggHGoblinMountTraining", "QuickHands"],
 			Requirements = [],
 			Script = "nggh_mod_player_goblin",
 			PerkTree = "GoblinWolfrider",
@@ -663,19 +664,25 @@ if (!("CharmedUnits" in ::Const))
 				Names = "GoblinNames",
 			},
 
+			function onBuildAttributes( _properties ) {
+				_properties.ActionPoints = 9;
+			}
+
 			function onBuildPerkTree() {
 				if (::Is_PTR_Exist) this.addPerkGroup(::Const.Perks.RaiderProfessionTree.Tree);
 
 				if (::Math.rand(1, 100) <= 25) this.addPerk(::Const.Perks.PerkDefs.LegendBigGameHunter, 6);
-			},
+
+				this.addPerkGroup(::Const.Perks.NggH_GoblinMountTree.Tree);
+			}
 
 			function onSetAppearance( _playerEntity, _enemyEntity ) {
 				if (::Math.rand(1, 100) <= 50) this.m.Titles.extend(::Const.Strings.GoblinTitles);
-			},
+			}
 
 			function onfillTalentsValues( _talents ) {
 				if (_talents[::Const.Attributes.MeleeDefense] < 3 && _talents[::Const.Attributes.MeleeDefense] > 0) _talents[::Const.Attributes.MeleeSkill] += 1;
-			},
+			}
 
 			function onAddEquipment() {
 				this.getContainer().getActor().getItems().equip(::new("scripts/items/accessory/wolf_item"));

@@ -331,7 +331,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 
 		if (("onBuildPerkTree" in data) && typeof data.onBuildPerkTree == "function") data.onBuildPerkTree.call(this);
 
-		if (::Math.rand(1, 100) <= 5) this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscFairGame, 2);
+		if (::Math.rand(1, 100) <= 5) this.addPerk(::Const.Perks.PerkDefs.NggHMiscFairGame, 2);
 	}
 
 	function onfillTalentsValues( _talents )
@@ -384,12 +384,12 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 					_properties.Armor[1] = ::Math.floor(_properties.Armor[1] * 0.75);
 				}
 			}
-			
-			if (this.isGoblin() || this.isHuman())
-			{
-				_properties.ActionPoints = 9;
-				_properties.FatigueRecoveryRate = ::Math.min(18, _properties.FatigueRecoveryRate);
-			}
+		}
+
+		if (this.isGoblin() || this.isHuman())
+		{
+			_properties.ActionPoints = 9;
+			_properties.FatigueRecoveryRate = ::Math.min(18, _properties.FatigueRecoveryRate);
 		}
 
 		if (("onBuildAttributes" in data) && typeof data.onBuildAttributes == "function")

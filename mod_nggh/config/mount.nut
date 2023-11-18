@@ -194,15 +194,8 @@
 
 	function updateMountArmor( _item , _appearance, _armor )
 	{
-		if (typeof _item == "instance")
-		{
-			_item = _item.get();
-		}
-
-		if (!::isKindOf(_item, "accessory_dog"))
-		{
+		if (!::MSU.isKindOf(_item, "accessory_dog"))
 			return;
-		}
 
 		local index;
 		local script = _item.m.ArmorScript;
@@ -364,7 +357,7 @@
 	//0 - Wardog
 	{
 		Attributes = "Wardog",
-		Skills = [/*"actives/wardog_bite", "perks/perk_pathfinder"*/],
+		Skills = ["actives/wardog_bite", /*"perks/perk_pathfinder"*/],
 		Strength = 1.1,
 		Flags = [],
 		Sprite = [
@@ -398,7 +391,7 @@
 	//1 - Hound
 	{
 		Attributes = "Warhound",
-		Skills = [/*"actives/warhound_bite"*/],
+		Skills = ["actives/warhound_bite"],
 		Strength = 1.15,
 		Flags = [],
 		Sprite = [
@@ -432,7 +425,7 @@
 	//2 - Wolf
 	{
 		Attributes = "WarWolf",
-		Skills = [/*"actives/wolf_bite",*/ "perks/perk_pathfinder"],
+		Skills = ["actives/wolf_bite", /*"perks/perk_pathfinder"*/],
 		Strength = 1.2,
 		Flags = [],
 		Sprite = [
@@ -470,7 +463,7 @@
 	//3 - WhiteWolf
 	{
 		Attributes = "LegendWhiteWarwolf",
-		Skills = [/*"actives/werewolf_bite",*/ "actives/rotation", "perks/perk_pathfinder"],
+		Skills = ["actives/werewolf_bite", "actives/rotation", /*"perks/perk_pathfinder"*/],
 		Strength = 1.5,
 		Flags = ["frenzy"],
 		Sprite = [
@@ -508,7 +501,7 @@
 	//4 - Direwolf
 	{
 		Attributes = "Direwolf",
-		Skills = [/*"actives/werewolf_bite", "perks/perk_pathfinder"*/],
+		Skills = ["actives/werewolf_bite", /*"perks/perk_pathfinder"*/],
 		Strength = 1.25,
 		Flags = [],
 		Sprite = [
@@ -557,7 +550,7 @@
 	//5 - DirewolfFrenzied
 	{
 		Attributes = "FrenziedDirewolf",
-		Skills = [/*"actives/werewolf_bite", "perks/perk_pathfinder"*/],
+		Skills = ["actives/werewolf_bite", /*"perks/perk_pathfinder"*/],
 		Strength = 1.30,
 		Flags = ["frenzy"],
 		Sprite = [
@@ -606,7 +599,7 @@
 	//6 - Hyena
 	{
 		Attributes = "Hyena",
-		Skills = [/*"actives/hyena_bite_skill", "perks/perk_pathfinder"*/],
+		Skills = ["actives/hyena_bite_skill", /*"perks/perk_pathfinder"*/],
 		Strength = 1.25,
 		Flags = [],
 		Sprite = [
@@ -654,7 +647,7 @@
 	//7 - HyenaFrenzied
 	{
 		Attributes = "FrenziedHyena",
-		Skills = [/*"actives/hyena_bite_skill", "perks/perk_pathfinder"*/],
+		Skills = ["actives/hyena_bite_skill", /*"perks/perk_pathfinder"*/],
 		Strength = 1.30,
 		Flags = ["frenzy"],
 		Sprite = [
