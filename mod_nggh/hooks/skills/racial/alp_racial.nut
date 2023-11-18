@@ -91,13 +91,11 @@
 		local actor = this.getContainer().getActor();
 
 		if (_damageHitpoints >= actor.getHitpoints())
-		{
 			return;
-		}
 		
 		::Sound.play(::MSU.Array.rand(this.m.SoundOnUse), ::Const.Sound.Volume.Skill);
 		::Time.scheduleEvent(::TimeUnit.Virtual, 30, this.teleport.bindenv(this), {
-			Faction = this.getContainer().getActor().getFaction(),
+			Faction = actor.getFaction(),
 		});
 	};
 	obj.onDeath = function( _fatalityType )
@@ -113,26 +111,24 @@
 		{
 			local skill = a.getSkills().getSkillByID("actives.alp_teleport");
 
-			if (skill != null && a.isAlive() && a.getHitpoints() > 0)
-			{
-				if (!a.getFlags().get("auto_teleport"))
-				{
-					continue;
-				}
+			if (skill == null || !a.isAlive() || a.getHitpoints() <= 0)
+				continue;
 
-				if (!a.getAIAgent().hasKnownOpponent())
-				{
-					local strategy = a.getAIAgent().getStrategy().update();
-					do
-					{
-					}
-					while (!resume strategy);
-				}
-				
-				local b = a.getAIAgent().getBehavior(::Const.AI.Behavior.ID.AlpTeleport);
-				b.onEvaluate(a);
-				b.onExecute(a);
+			if (!a.getFlags().get("auto_teleport"))
+				continue;
+			
+			local b = a.getAIAgent().getBehavior(::Const.AI.Behavior.ID.AlpTeleport);
+
+			if (b == null)
+				continue;
+
+			if (!a.getAIAgent().hasKnownOpponent())
+			{
+				while (!resume a.getAIAgent().getStrategy().update()) {}
 			}
+
+			b.onEvaluate(a);
+			b.onExecute(a);
 		}
 	};
 });
