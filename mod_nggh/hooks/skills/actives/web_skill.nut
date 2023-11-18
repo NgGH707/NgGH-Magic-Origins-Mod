@@ -33,9 +33,7 @@
 	obj.onVerifyTarget = function( _originTile, _targetTile )
 	{
 		if (!ws_onVerifyTarget(_originTile, _targetTile))
-		{
 			return false;
-		}
 
 		return !_targetTile.getEntity().getCurrentProperties().IsImmuneToRoot;
 	};
@@ -50,10 +48,20 @@
 		{
 			local breakFree = _targetTile.getEntity().getSkills().getSkillByID("actives.break_free");
 
-			if (breakFree != null)
+			if (breakFree == null)
 			{
-				breakFree.setChanceBonus(specialization.getPenalty());
+				foreach (skill in _targetTile.getEntity().getSkills().m.SkillsToAdd)
+				{
+					if (skill.getID() != "actives.break_free")
+						continue;
+
+					breakFree = skill;
+					break;
+				}
 			}
+
+			if (breakFree != null)
+				breakFree.setChanceBonus(specialization.getPenalty());
 
 			this.m.Cooldown = 0;
 		}
