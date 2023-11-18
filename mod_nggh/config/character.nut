@@ -3,6 +3,7 @@
 ::Const.CharacterProperties.IsSpecializedInHex <- false;
 ::Const.CharacterProperties.IsSpecializedInWhips <- false;
 ::Const.CharacterProperties.IsSpecializedInMagic <- false;
+::Const.CharacterProperties.IsSpecializedInMountedCharge <- false;
 /* new character properties
 ::Const.CharacterProperties.IsHasMagicTraining <- false;
 ::Const.CharacterProperties.MagicalPower <- 1.0;

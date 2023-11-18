@@ -13,26 +13,13 @@ this.perk_nggh_goblin_mounted_charge <- ::inherit("scripts/skills/skill", {
 		this.m.IsHidden = false;
 	}
 
-	function onAdded()
-	{
-		if (!this.getContainer().hasSkill("actives.nggh_mounted_charge"))
-		{
-			this.getContainer().add(::new("scripts/skills/actives/nggh_mod_mounted_charge"));
-		}
-	}
-
 	function onUpdate( _properties )
     {
-        if (this.getContainer().getActor().isMounted())
-        {
-        	_properties.TargetAttractionMult *= 1.1;
-        }
-    }
+    	_properties.IsSpecializedInMountedCharge = true;
 
-	function onRemoved()
-	{
-		this.getContainer().removeByID("actives.nggh_mounted_charge");
-	}
+        if (this.getContainer().getActor().isMounted())
+        	_properties.TargetAttractionMult *= 1.1;
+    }
 
 });
 

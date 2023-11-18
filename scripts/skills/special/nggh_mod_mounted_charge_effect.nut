@@ -1,10 +1,10 @@
 this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 	m = {
 		Stacks = 0,
-		BaseBonusMeleeSkill = 3,
+		BaseBonusMeleeSkill = 4,
 		BaseBonusDamage = 0.12,
-		BaseBonusDirectDamage = 0.03,
-		IsUpgraded = false
+		BaseBonusDirectDamage = 0.04,
+		Requirement = 3,
 	},
 	function create()
 	{
@@ -40,9 +40,10 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 
 		if (this.m.Stacks >= 0)
 		{
-			local meleeSkill = this.m.BaseBonusMeleeSkill * this.m.Stacks;
-			local meleeDamage = this.m.BaseBonusDamage * 100 * this.m.Stacks;
-			local damgeDirect = this.m.BaseBonusDirectDamage * 100 * this.m.Stacks; 
+			local mult = this.getContainer().getActor().getCurrentProperties().IsSpecializedInMountedCharge ? 1.25 : 1.0;
+			local meleeSkill = ::Math.round(this.m.BaseBonusMeleeSkill * mult * this.m.Stacks);
+			local meleeDamage = ::Math.round(this.m.BaseBonusDamage * mult * 100 * this.m.Stacks);
+			local damgeDirect = ::Math.round(this.m.BaseBonusDirectDamage * mult * 100 * this.m.Stacks); 
 
 			ret.extend([
 				{
@@ -66,7 +67,7 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 			]);
 		}
 
-		if (this.m.Stacks >= 3)
+		if (this.m.Stacks >= this.m.Requirement)
 		{
 			ret.extend([
 				{
@@ -97,23 +98,6 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 		this.m.Stacks = -1;
 	}
 
-	function resetAll()
-	{
-		this.resetCounter();
-		this.m.BaseBonusMeleeSkill = 3;
-		this.m.BaseBonusDamage = 0.12;
-		this.m.BaseBonusDirectDamage = 0.03;
-		this.m.IsUpgraded = false;
-	}
-
-	function setImproveChargeEffect()
-	{
-		this.m.BaseBonusMeleeSkill = 6;
-		this.m.BaseBonusDamage = 0.18;
-		this.m.BaseBonusDirectDamage = 0.05;
-		this.m.IsUpgraded = true;
-	}
-
 	function onMovementStarted( _tile, _numTiles )
 	{
 		//this.m.Stacks = _numTiles;
@@ -141,60 +125,38 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 
 	function onTurnEnd()
 	{
-		this.resetAll();
+		this.resetCounter();
 	}
 
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
-		if (this.m.IsUpgraded)
-		{
-			if (_targetEntity.isAlive() || !_targetEntity.isDying())
-			{
-				if (_targetEntity.isNonCombatant() || _targetEntity.getCurrentProperties().IsImmuneToKnockBackAndGrab)
-				{
-					this.applyEffect(_targetEntity);
-				}
-				else
-				{
-					this.onKnockingBack(_targetEntity);
-				}
-			}
-			else
-			{
-				::Time.scheduleEvent(::TimeUnit.Virtual, 250, this.onFollow, {
-					Attacker = this.getContainer().getActor(),
-					Skill = this,
-					Tile = knockToTile,
-				});
-			}
-		}
+		if (_skill == null || !_skill.isAttack())
+			return;
 
-		this.resetAll();
+		if (_targetEntity.isAlive() || !_targetEntity.isDying() && this.m.Stacks >= this.m.Requirement)
+			this.applyEffect(_targetEntity);
+
+		this.resetCounter();
 		this.getContainer().getActor().setDirty(true);
 	}
 
 	function onTargetMissed( _skill, _targetEntity )
 	{
-		this.resetAll();
-		this.getContainer().getActor().setDirty(true);
-	}
+		if (_skill == null || !_skill.isAttack())
+			return;
 
-	function onUpdate( _properties )
-	{
-		if (this.m.Stacks >= 3)
-		{
-			_properties.AdditionalActionPointCost -= 1;
-			_properties.FatigueEffectMult *= 0.75;
-		}
+		this.resetCounter();
+		this.getContainer().getActor().setDirty(true);
 	}
 
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
-		if (_skill.isAttack() && !_skill.isRanged() && this.m.Stacks > 0)
+		if (_skill != null && _skill.isAttack() && !_skill.isRanged() && this.m.Stacks > 0)
 		{
-			_properties.MeleeSkill += this.m.Stacks * this.m.BaseBonusMeleeSkill;
-			_properties.MeleeDamageMult *= 1.0 + this.m.Stacks * this.m.BaseBonusDamage;
-			_properties.DamageDirectMult *= 1.0 + this.m.Stacks * this.m.BaseBonusDirectDamage;
+			local mult = _properties.IsSpecializedInMountedCharge ? 1.25 : 1.0;
+			_properties.MeleeSkill += ::Math.round(this.m.Stacks * mult * this.m.BaseBonusMeleeSkill);
+			_properties.MeleeDamageMult *= 1.0 + this.m.Stacks * mult * this.m.BaseBonusDamage;
+			_properties.DamageDirectMult *= 1.0 + this.m.Stacks * mult * this.m.BaseBonusDirectDamage;
 
 			/*
 			if (_targetEntity != null)
@@ -212,50 +174,21 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 		}
 	}
 
-	function findTileToKnockBackTo( _userTile, _targetTile )
+	function onAfterUpdate( _properties )
 	{
-		local dir = _userTile.getDirectionTo(_targetTile);
+		this.resetField("Requirement");
+		this.m.Requirement = _properties.IsSpecializedInMountedCharge ? 3 : 2;
 
-		if (_targetTile.hasNextTile(dir))
+		if (this.m.Stacks >= this.m.Requirement)
 		{
-			local knockToTile = _targetTile.getNextTile(dir);
-
-			if (knockToTile.IsEmpty && ::Math.abs(knockToTile.Level - _userTile.Level) <= 1)
-			{
-				return knockToTile;
-			}
+			_properties.AdditionalActionPointCost -= 1;
+			_properties.FatigueEffectMult *= 0.75;
 		}
-
-		local altdir = dir - 1 >= 0 ? dir - 1 : 5;
-
-		if (_targetTile.hasNextTile(altdir))
-		{
-			local knockToTile = _targetTile.getNextTile(altdir);
-
-			if (knockToTile.IsEmpty && ::Math.abs(knockToTile.Level - _userTile.Level) <= 1)
-			{
-				return knockToTile;
-			}
-		}
-
-		altdir = dir + 1 <= 5 ? dir + 1 : 0;
-
-		if (_targetTile.hasNextTile(altdir))
-		{
-			local knockToTile = _targetTile.getNextTile(altdir);
-
-			if (knockToTile.IsEmpty && ::Math.abs(knockToTile.Level - _userTile.Level) <= 1)
-			{
-				return knockToTile;
-			}
-		}
-
-		return null;
 	}
 
-	function applyEffect( _targetEntity, _isKnockBack = false )
+	function applyEffect( _targetEntity )
 	{
-		if (_targetEntity.getCurrentProperties().IsImmuneToDaze || _isKnockBack)
+		if (_targetEntity.getCurrentProperties().IsImmuneToDaze)
 		{
 			_targetEntity.getSkills().add(::new("scripts/skills/effects/staggered_effect"));
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_targetEntity) + " is staggered for one turn");
@@ -264,85 +197,6 @@ this.nggh_mod_mounted_charge_effect <- ::inherit("scripts/skills/skill", {
 		{
 			_targetEntity.getSkills().add(::new("scripts/skills/effects/dazed_effect"));
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_targetEntity) + " is dazed for one turn");
-		}
-	}
-
-	function onKnockingBack( _targetEntity )
-	{
-		local user = this.getContainer().getActor();
-		local knockToTile = this.findTileToKnockBackTo(user.getTile(), _targetEntity.getTile());
-
-		if (knockToTile == null)
-		{
-			this.applyEffect(_targetEntity);
-			return;
-		}
-
-		if (!user.isHiddenToPlayer() && (_targetEntity.getTile().IsVisibleForPlayer || knockToTile.IsVisibleForPlayer))
-		{
-			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(user) + " has knocked back " + ::Const.UI.getColorizedEntityName(_targetEntity));
-		}
-
-		this.applyEffect(_targetEntity, true);
-		local skills = _targetEntity.getSkills();
-		skills.removeByID("effects.shieldwall");
-		skills.removeByID("effects.spearwall");
-		skills.removeByID("effects.riposte");
-
-		_targetEntity.setCurrentMovementType(::Const.Tactical.MovementType.Involuntary);
-		local damage = ::Math.max(0, ::Math.abs(knockToTile.Level - _targetEntity.getTile().Level) - 1) * ::Const.Combat.FallingDamage;
-		if (damage == 0)
-		{
-			::Tactical.getNavigator().teleport(_targetEntity, knockToTile, this.onMoveForward, {
-				Attacker = user,
-				Skill = this,
-				Tile = knockToTile,
-			}, true, 2.0);
-		}
-		else
-		{
-			local p = user.getCurrentProperties();
-			local tag = {
-				Attacker = user,
-				Skill = this,
-				HitInfo = clone ::Const.Tactical.HitInfo
-				Tile = knockToTile,
-			};
-			tag.HitInfo.DamageRegular = damage;
-			tag.HitInfo.DamageDirect = 1.0;
-			tag.HitInfo.BodyPart = ::Const.BodyPart.Body;
-			tag.HitInfo.BodyDamageMult = 1.0;
-			tag.HitInfo.FatalityChanceMult = 1.0;
-			::Tactical.getNavigator().teleport(_targetEntity, knockToTile, this.onKnockedDown, tag, true);
-		}
-	}
-
-	function onKnockedDown( _entity, _tag )
-	{
-		if (_tag.Skill.m.SoundOnHit.len() != 0)
-		{
-			::Sound.play(::MSU.Array.rand(_tag.Skill.m.SoundOnHit), ::Const.Sound.Volume.Skill, _entity.getPos());
-		}
-
-		if (_tag.HitInfo.DamageRegular != 0)
-		{
-			_entity.onDamageReceived(_tag.Attacker, _tag.Skill, _tag.HitInfo);
-		}
-
-		_tag.Skill.onMoveForward(_entity, _tag);
-	}
-
-	function onMoveForward( _entity, _tag )
-	{
-		::Time.scheduleEvent(::TimeUnit.Virtual, 250, _tag.Skill.onFollow, _tag);
-	}
-
-	function onFollow( _tag )
-	{
-		if (!_tag.Tile.IsEmpty)
-		{	
-			_tag.Attacker.setCurrentMovementType(::Const.Tactical.MovementType.Default);
-			::Tactical.getNavigator().teleport(_tag.Attacker, _tag.Tile, null, null, false, 3.0);
 		}
 	}
 
