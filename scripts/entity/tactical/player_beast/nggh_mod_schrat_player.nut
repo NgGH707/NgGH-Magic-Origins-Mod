@@ -180,7 +180,9 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 
 				for( local i = 0; i < n; ++i )
 				{
-					if (::Math.rand(1, 100) <= 40)
+					local r = ::Math.rand(1, 100);
+
+					if (r <= 40)
 					{
 						::new("scripts/items/misc/" + (this.isGreenWood() ? "legend_ancient_green_wood_item" : "ancient_wood_item")).drop(_tile);
 					}
