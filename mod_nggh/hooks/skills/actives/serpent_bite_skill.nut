@@ -28,7 +28,8 @@
 	};
 	obj.onAfterUpdate <- function( _properties )
 	{
-		this.m.MaxRange = _properties.IsSpecializedInShields ? 2 : 1;
+		if (_properties.IsSpecializedInShields)
+			this.m.MaxRange += 1;
 		
 		if (_properties.IsSpecializedInPolearms)
 		{
@@ -48,7 +49,7 @@
 	    	if (d > 1)
 	    	{
 	    		_properties.MeleeSkill -= 7 * (d - 1);
-	    		_properties.MeleeDamageMult *= 0.8;
+	    		_properties.MeleeDamageMult *= 0.85;
 	    	}
 	    }
 	}
