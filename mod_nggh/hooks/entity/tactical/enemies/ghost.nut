@@ -6,14 +6,13 @@
 		ws_onInit();
 		this.m.Skills.add(::new("scripts/skills/actives/nggh_mod_ghost_possess"));
 	};
+
+	local makeMiniboss = obj.makeMiniboss;
 	obj.makeMiniboss <- function()
 	{
-		if (!this.actor.makeMiniboss())
-		{
+		if (!makeMiniboss())
 			return false;
-		}
 
-		this.getSprite("miniboss").setBrush("bust_miniboss"); 
 		this.m.Skills.add(::new("scripts/skills/perks/perk_footwork"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_rotation"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
@@ -41,13 +40,9 @@
 		if (::Is_PTR_Exist)
 		{
 			if (::Math.rand(1, 100) <= 50)
-			{
 				this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_menacing"));
-			}
 			else
-			{
 				this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_bully"));
-			}
 		}
 
 		local scream = this.m.Skills.getSkillByID("actives.horrific_scream");
@@ -65,9 +60,7 @@
 		if (this.m.IsMiniboss)
 		{
 			if (_tile == null)
-			{
 				_tile = this.getTile();
-			}
 
 			local type = ::Math.rand(20, 100);
 			local loot;

@@ -9,9 +9,7 @@
 	obj.makeMiniboss <- function()
 	{
 		if (!this.actor.makeMiniboss())
-		{
 			return false;
-		}
 
 		this.getSprite("miniboss").setBrush("bust_miniboss"); 
 		this.m.Skills.add(::new("scripts/skills/perks/perk_footwork"));
@@ -24,9 +22,7 @@
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_ghost_vanish"));
 
 		if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
-		{
 			this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_ghost_soul_eater"));
-		}
 
 		local NineLives = this.m.Skills.getSkillByID("perk.nine_lives");
 		
@@ -41,17 +37,19 @@
 		if (::Is_PTR_Exist)
 		{
 			if (::Math.rand(1, 100) <= 50)
-			{
 				this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_menacing"));
-			}
 			else
-			{
 				this.m.Skills.add(::new("scripts/skills/perks/perk_ptr_bully"));
-			}
 		}
 
 		local possess = this.m.Skills.getSkillByID("actives.ghost_possess");
-		if (possess != null) possess.m.MaxRange = 4;
+
+		if (possess != null) 
+			possess.m.MaxRange = 4;
+
+		this.m.ActionPoints = 12;
+		this.m.BaseProperties.ActionPoints = 12;
+		this.m.Skills.update();
 		return true;
 	};
 
