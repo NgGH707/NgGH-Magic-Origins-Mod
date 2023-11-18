@@ -53,7 +53,7 @@
 			});
 		}
 		
-		if (this.getContainer().hasSkill("effects.swallowed_whole"))
+		if (!::Nggh_MagicConcept.IsOPMode && this.getContainer().hasSkill("effects.swallowed_whole"))
 		{
 			ret.push({
 				id = 4,
@@ -91,24 +91,16 @@
 	obj.isUsable <- function()
 	{
 		if (!this.skill.isUsable())
-		{
 			return false;
-		}
 
 		if (!this.getContainer().getActor().isPlayerControlled())
-		{
 			return true;
-		}
 
-		if (this.getContainer().hasSkill("effects.swallowed_whole"))
-		{
+		if (!::Nggh_MagicConcept.IsOPMode && this.getContainer().hasSkill("effects.swallowed_whole"))
 			return false;
-		}
 
 		if (this.hasCorpseNearby())
-		{
 			return true;
-		}
 		
 		return this.getCorpseInBag().len() > 0;
 	};
@@ -136,9 +128,7 @@
 				injury.removeSelf();
 
 				if (!::Nggh_MagicConcept.IsOPMode)
-				{
 					break;
-				}
 			}
 
 			actor.onUpdateInjuryLayer();
@@ -149,9 +139,7 @@
 		}
 
 		if (_effect.getContainer().hasSkill("perk.nacho_eat"))
-		{
 			_effect.getContainer().add(::new("scripts/skills/effects/nggh_mod_nacho_eat_effect"));
-		}
 	};
 	obj.onBeforeUse <- function( _user , _targetTile )
 	{
@@ -162,62 +150,11 @@
 		
 		::Nggh_MagicConcept.spawnQuote("luft_eat_quote_" + ::Math.rand(1, 5), _user.getTile());
 	};
+	local onUse = obj.onUse;
 	obj.onUse = function( _user, _targetTile )
 	{
-		_targetTile = _user.getTile();
-
-		if (_targetTile.IsVisibleForPlayer)
-		{
-			if (::Const.Tactical.GruesomeFeastParticles.len() != 0)
-			{
-				for( local i = 0; i < ::Const.Tactical.GruesomeFeastParticles.len(); i = ++i )
-				{
-					::Tactical.spawnParticleEffect(false, ::Const.Tactical.GruesomeFeastParticles[i].Brushes, _targetTile, ::Const.Tactical.GruesomeFeastParticles[i].Delay, ::Const.Tactical.GruesomeFeastParticles[i].Quantity, ::Const.Tactical.GruesomeFeastParticles[i].LifeTimeQuantity, ::Const.Tactical.GruesomeFeastParticles[i].SpawnRate, ::Const.Tactical.GruesomeFeastParticles[i].Stages);
-				}
-			}
-
-			if (_user.isDiscovered() && (!_user.isHiddenToPlayer() || _targetTile.IsVisibleForPlayer))
-		
-			{
-				::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_user) + " feasts on a corpse");
-			}
-		}
-
-		if (this.hasCorpseNearby())
-		{
-			if (!_user.isHiddenToPlayer())
-			{
-				::Time.scheduleEvent(::TimeUnit.Virtual, 500, this.onRemoveCorpse, _targetTile);
-			}
-			else
-			{
-				this.onRemoveCorpse(_targetTile);
-			}
-		}
-		else
-		{
-			//this.getCorpseInBag()[0].removeSelf();
-		}
-
-		this.spawnBloodbath(_targetTile);
-		local effect = _user.getSkills().getSkillByID("effects.gruesome_feast");
-		
-		if (effect == null)
-		{
-			this.getContainer().add(::new("scripts/skills/effects/gruesome_feast_effect"));
-		}
-		
+		onUse(_user, _targetTile);
 		_user.getFlags().set("has_eaten", true);
-
-		if (!_user.isHiddenToPlayer())
-		{
-			::Time.scheduleEvent(::TimeUnit.Virtual, 500, this.onFeasted.bindenv(this), effect);
-		}
-		else
-		{
-			this.onFeasted(effect);
-		}
-
 		return true;
 	}
 });
