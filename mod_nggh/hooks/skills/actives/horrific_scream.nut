@@ -29,8 +29,9 @@
 		local ret = ws_onUse(_user, _targetTile);
 
 		// make champion geist more dangerous with their scream
-		if (_user.m.IsMiniboss)
+		if (_user.getSkills().hasSkill("racial.champion"))
 		{
+			_targetTile.getEntity().checkMorale(-1, -15, ::Const.MoraleCheckType.MentalAttack);
 			_targetTile.getEntity().checkMorale(-1, -25, ::Const.MoraleCheckType.MentalAttack);
 			_targetTile.getEntity().checkMorale(-1, -35, ::Const.MoraleCheckType.MentalAttack);
 		}
