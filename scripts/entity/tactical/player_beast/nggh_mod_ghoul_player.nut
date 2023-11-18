@@ -191,9 +191,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		this.nggh_mod_player_beast.onCombatStart();
 		
 		if (this.getSize() <= 1)
-		{
 			return;
-		}
 
 		this.getFlags().set("has_eaten", false);
 		this.m.IsBroughtInBattle = true;
@@ -204,9 +202,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		this.nggh_mod_player_beast.onCombatFinished();
 		
 		if (this.m.IsBroughtInBattle && !this.checkHunger())
-		{
 			this.setSize(::Math.max(1, this.getSize() - 1));
-		}
 
 		this.m.IsBroughtInBattle = false;
 	}
@@ -214,9 +210,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 	function checkHunger()
 	{
 		if (this.getSize() == 1) 
-		{
 			return true;
-		}
 
 		if (this.onFeastingLeftoverCorpses())
 		{
@@ -235,9 +229,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		local perk = this.getSkills().getSkillByID("perk.nacho_scavenger");
 
 		if (perk == null)
-		{
 			return hasEaten;
-		}
 
 		if (hasEaten)
 		{
@@ -385,26 +377,26 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 	function onAfterDeath( _tile )
 	{
 		if (this.m.Size < 3)
-		{
 			return null;
-		}
 
-		local skill = this.getSkills().getSkillByID("actives.swallow_whole");
+		local skill;
+
+		foreach (id in [
+			"actives.swallow_whole",
+			"actives.legend_skin_ghoul_swallow_whole"
+		])
+		{
+			skill = this.getSkills().getSkillByID(id)
+
+			if (skill != null)
+				break;
+		}
 
 		if (skill == null)
-		{
-			skill = this.getSkills().getSkillByID("actives.legend_skin_ghoul_swallow_whole");
-			
-			if (skill == null)
-			{
-				return null;
-			}
-		}
+			return null;
 		
 		if (skill.getSwallowedEntity() == null)
-		{
 			return null;
-		}
 
 		local e = skill.getSwallowedEntity();
 		e.setIsAlive(true);
@@ -412,10 +404,8 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		e.getFlags().set("Devoured", false);
 		
 		// serpents are weird so i have to make an exception 
-		if (!e.isPlayerControlled() && e.getType() != ::Const.EntityType.Serpent)
-		{
+		if (e.getType() != ::Const.EntityType.Serpent)
 			::Tactical.getTemporaryRoster().remove(e);
-		}
 
 		::Tactical.TurnSequenceBar.addEntity(e);
 		
@@ -427,6 +417,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 			slime.Visible = true;
 		}
 
+		skill.m.SwallowedEntity = null;
 		return e;
 	}
 	
@@ -818,8 +809,6 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		this.nggh_mod_player_beast.onDeserialize(_in);
 		this.m.Size = _in.readU8();
 		this.m.IsLoadingSaveData = false;
-
-		this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHNachoScavenger, 6);
 	}
 
 });
