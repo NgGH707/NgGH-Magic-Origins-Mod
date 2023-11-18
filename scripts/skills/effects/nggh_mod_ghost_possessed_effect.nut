@@ -37,9 +37,7 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 	function getName()
 	{
 		if (this.m.Possessor != null)
-		{
 			return this.m.Name + " by " + ::Const.UI.getColorizedEntityName(this.m.Possessor);
-		}
 
 		return this.skill.getName();
 	}
@@ -87,18 +85,14 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 			local tile = this.findTileToSpawnGhost();
 
 			if (tile == null)
-			{
 				tile = this.findTileToSpawnGhost(this.m.LastTile);
-			}
 
 			if (tile != null && !::Tactical.Entities.isCombatFinished())
 			{
-				local info = {
+				this.onSpawnGhost({
 					Tile = tile,
 					Self = this
-				};
-
-				this.onSpawnGhost(info);
+				});
 
 				/*if (tile.IsVisibleForPlayer)
 				{
@@ -126,7 +120,7 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 			actor.setAIAgent(this.m.OriginalAgent);
 		}
 
-		actor.setMoraleState(::Math.rand(1, 100) <= 33 ? ::Const.MoraleState.Fleeing : ::Const.MoraleState.Breaking);
+		actor.setMoraleState(::Math.rand(1, 100) <= 67 ? ::Const.MoraleState.Fleeing : ::Const.MoraleState.Breaking);
 		actor.setFaction(this.m.OriginalFaction);
 		actor.getSprite("socket").setBrush(this.m.OriginalSocket);
 		actor.getFlags().set("Charmed", false);
@@ -141,9 +135,7 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 		::Tactical.addEntityToMap(this.m.Possessor, _tile.Coords.X, _tile.Coords.Y);
 
 		if (!_skill.m.Possessor.getType() != ::Const.EntityType.Player && _skill.m.Possessor.getType() != ::Const.EntityType.Serpent)
-		{
 			::Tactical.getTemporaryRoster().remove(_skill.m.Possessor);
-		}
 
 		::Tactical.TurnSequenceBar.addEntity(_skill.m.Possessor);
 
@@ -156,9 +148,7 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 				local e = ::Tactical.getEntityByID(_skill.m.AttackerID);
 
 				if (e != null)
-				{
 					attacker = e;
-				}
 			}
 
 			::Time.scheduleEvent(::TimeUnit.Virtual, 100, function ( _e )
@@ -166,13 +156,9 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 				local poison = _skill.m.Possessor.getSkills().getSkillByID("effects.holy_water");
 
 				if (poison == null)
-				{
 					_skill.m.Possessor.getSkills().add(::new("scripts/skills/effects/holy_water_effect"));
-				}
 				else
-				{
 					poison.resetTime();
-				}
 			}.bindenv(_skill), _skill);
 		}
 	}
@@ -237,7 +223,7 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 		actor.checkMorale(10, 9000);
 		actor.setDirty(true);
 		this.m.IsActivated = true;
-		this.m.TurnsLeft = this.m.IsEnhanced ? 5 : 3;
+		this.m.TurnsLeft = this.m.IsEnhanced ? 6 : 4;
 		this.spawnIcon(this.m.Overlay, actor.getTile());
 	}
 
@@ -248,13 +234,9 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 		if (--this.m.TurnsLeft <= 0)
 		{
 			if (!this.m.IsActivated)
-			{
 				this.onPossess();
-			}
 			else
-			{
 				this.removeSelf();
-			}
 		}
 	}
 
@@ -278,17 +260,13 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 		}
 
 		if (!this.m.IsActivated && actor.getMoraleState() == ::Const.MoraleState.Fleeing)
-		{
 			actor.setActionPoints(0);
-		}
 	}
 
 	function findTileToSpawnGhost( _tile = null )
 	{
 		if (_tile == null)
-		{
 			_tile = this.getContainer().getActor().getTile();
-		}
 
 		::Sound.play("sounds/enemies/horrific_scream_01.wav", ::Const.Sound.Volume.Skill * 1.2, _tile.Pos);
 
@@ -296,24 +274,18 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 			TargetTile = _tile,
 			Destinations = []
 		};
-		::Tactical.queryTilesInRange(_tile, 2, 5, false, [], this.onQueryTiles, result);
+
+		::Tactical.queryTilesInRange(_tile, 2, 5, false, [], function(_tile, _tag) {
+			if (!_tile.IsEmpty)
+				return;
+
+			_tag.Destinations.push(_tile);
+		}, result);
 
 		if (result.Destinations.len() == 0)
-		{
 			return null;
-		};
 
 		return ::MSU.Array.rand(result.Destinations);
-	}
-
-	function onQueryTiles( _tile, _tag )
-	{
-		if (!_tile.IsEmpty)
-		{
-			return;
-		}
-
-		_tag.Destinations.push(_tile);
 	}
 
 	function onCombatFinished()
@@ -321,9 +293,7 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 		this.m.IsBattleEnd = true;
 
 		if (::Tactical.Entities.getInstancesNum(::Const.Faction.Player) == 0)
-		{
 			this.getContainer().getActor().kill(null, null, ::Const.FatalityType.Suicide);
-		}
 
 		this.skill.onCombatFinished();
 	}
@@ -344,7 +314,7 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 
 	function onDamageReceived( _attacker, _damageHitpoints, _damageArmor )
 	{
-		if (this.m.IsActivated && _damageHitpoints >= ::Const.Combat.InjuryMinDamage && ::Math.rand(1, 100) <= 25)
+		if (this.m.IsActivated && _damageHitpoints >= ::Const.Combat.InjuryMinDamage && ::Math.rand(1, 100) <= 15)
 		{
 			this.removeSelf();
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(this.m.Possessor) + " has been banished out of " + ::Const.UI.getColorizedEntityName(this.getContainer().getActor()) + "\'s body");
@@ -358,8 +328,8 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 
 		if (this.m.IsActivated)
 		{
+			_properties.Bravery += 200;
 			_properties.Initiative += 25;
-			_properties.Bravery += 50;
 			_properties.MeleeSkill += 10;
 			_properties.RangedSkill += 10;
 			_properties.MeleeDefense += 10;
@@ -368,22 +338,21 @@ this.nggh_mod_ghost_possessed_effect <- ::inherit("scripts/skills/skill", {
 			return;
 		}
 		
-		_properties.TargetAttractionMult *= 0.25;
-		_properties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack] += 25;
 		_properties.MeleeSkill -= 10;
 		_properties.RangedSkill -= 10;
 		_properties.MeleeDefense += 10;
 		_properties.RangedDefense += 10;
+		_properties.TargetAttractionMult *= 0.25;
+		_properties.IsAbleToUseWeaponSkills = false;
+		_properties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack] += 25;
 	}
 
 	function onOtherActorDeath( _killer, _victim, _skill, _deathTile, _corpseTile, _fatalityType )
 	{
 		if (!this.m.IsActivated)
 		{
-			if (::Tactical.Entities.getHostilesNum() <= 2)
-			{
+			if (::Tactical.Entities.getHostilesNum() <= 3)
 				this.onPossess();
-			}
 		}
 		else
 		{
