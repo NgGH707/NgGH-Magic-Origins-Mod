@@ -423,22 +423,18 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			_maxTraits -= this.m.IsGuaranteed.len();
 
 			foreach(trait in this.m.IsGuaranteed)
-			{
 				traits.push(::new("scripts/skills/traits/" + trait));
-			}
 		}
 
 		this.m.Excluded.extend(this.getContainer().getActor().getExcludedTraits());
 		this.getContainer().getActor().pickTraits(traits, _maxTraits);
 
-		for( local i = 1; i < traits.len(); +i )
+		for( local i = 1; i < traits.len(); ++i )
 		{
 			this.getContainer().add(traits[i]);
 
 			if (traits[i].getContainer() != null)
-			{
 				traits[i].addTitle();
-			}
 		}
 	}
 
@@ -580,9 +576,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			for( local i = 0; i != ::Const.CharmedUtilities.BackgroundTypeToCopy.len(); ++i )
 			{
 				if (_in.readBool())
-				{
 					this.addBackgroundType(::Const.BackgroundType[::Const.CharmedUtilities.BackgroundTypeToCopy[i]]);
-				}
 			}
 		}
 
