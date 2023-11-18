@@ -1,5 +1,6 @@
 ::mods_hookExactClass("skills/actives/nightmare_skill", function ( obj )
 {
+	obj.m.BaseDamage <- 25;
 	obj.m.ConvertRate <- 0.15;
 
 	local ws_create = obj.create;
@@ -49,22 +50,27 @@
 		this.m.FatigueCostMult = _properties.IsSpecializedInMagic ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
 		this.m.ConvertRate = _properties.IsSpecializedInMagic ? 0.30 : 0.15;
 	};
-	obj.getDamage = function( _actor , _properties = null )
+	obj.getDamage = function( _actor, _attackerProperties = null, _defenderProperties = null )
 	{
-		if (_properties == null)
-		{
-			_properties = _actor.getCurrentProperties();
-		}
+		if (_defenderProperties == null)
+			_defenderProperties = _actor.getCurrentProperties();
 
-		local mult = this.getContainer().hasSkill("perk.after_wake") ? ::Math.rand(85, 95) * 0.01 : 1.0;
-		return ::Math.max(5, 25 - ::Math.floor(_properties.getBravery() * mult * 0.25));
+		local mult = this.getContainer().hasSkill("perk.after_wake") ? 0.9 : 1.0;
+		local damage = this.m.BaseDamage + this.getAdditionalDamage(_attackerProperties);
+		local loss = ::Math.floor((_defenderProperties.getBravery() + _defenderProperties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack]) * mult * 0.25)
+		local min = ::Math.round(damage * 0.2);
+
+		return {
+			Result = ::Math.max(min, damage - loss),
+			Expected = damage,
+			Loss = loss,
+			Min = min
+		};
 	};	
 	obj.getAdditionalDamage <- function( _properties = null )
 	{
 		if (_properties == null)
-		{
 			_properties = this.getContainer().getActor().getCurrentProperties();
-		}
 		
 		return ::Math.floor((_properties.getBravery() + _properties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack]) * this.m.ConvertRate);
 	};
@@ -73,18 +79,14 @@
 	obj.isUsable = function()
 	{
 		if (this.getContainer().getActor().isPlayerControlled())
-		{
 			return this.skill.isUsable();
-		}
 
 		return ws_isUsable();
 	};
 	obj.onVerifyTarget = function( _originTile, _targetTile )
 	{
 		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
-		{
 			return false;
-		}
 		
 		return _targetTile.getEntity().getSkills().getSkillByID("effects.sleeping") != null;
 	};
@@ -96,9 +98,8 @@
 		local properties = this.getContainer().buildPropertiesForUse(this, target);
 		local defenderProperties = target.getSkills().buildPropertiesForDefense(user, this);
 
-		local damage = this.getDamage(target, defenderProperties);
-		local bonus_damage = this.getAdditionalDamage(properties);
-		local total_damage = ::Math.rand(damage + bonus_damage, damage + bonus_damage + 5) * properties.DamageDirectMult * (1.0 + properties.DamageDirectAdd) * properties.DamageTotalMult;
+		local damage = this.getDamage(target, properties, defenderProperties);
+		local total_damage = ::Math.rand(damage.Result, damage.Result + 5) * properties.DamageDirectMult * (1.0 + properties.DamageDirectAdd) * properties.DamageTotalMult;
 		local hitInfo = clone ::Const.Tactical.HitInfo;
 		hitInfo.DamageRegular = total_damage;
 		hitInfo.DamageDirect = 1.0;
@@ -114,20 +115,16 @@
 		if (_skill == this)
 		{
 			local add = this.getAdditionalDamage(_properties);
-			_properties.DamageRegularMin = 10 + add;
-			_properties.DamageRegularMax = 30 + add;
-			_properties.DamageArmorMult = 0;
+			_properties.DamageRegularMin = this.m.BaseDamage + add - 5;
+			_properties.DamageRegularMax = this.m.BaseDamage + add + 5;
+			_properties.DamageArmorMult = 0.0;
 			_properties.IsIgnoringArmorOnAttack = true;
 			
 			if (!::Nggh_MagicConcept.IsOPMode)
-			{
 				_properties.MeleeDamageMult /= ::Const.AlpWeaponDamageMod;
-			}
 
 			if (this.getContainer().getActor().isDoubleGrippingWeapon())
-			{
 				_properties.MeleeDamageMult /= 1.25;
-			}
 		}
 	}
 	obj.getHitFactors <- function( _targetTile )
@@ -138,9 +135,7 @@
 		local targetEntity = _targetTile.IsOccupiedByActor ? _targetTile.getEntity() : null;
 		
 		if (targetEntity == null)
-		{
 			return ret;
-		}
 
 		local _targetEntity = targetEntity;
 		local _user = this.getContainer().getActor();
@@ -150,10 +145,9 @@
 		local defMod = defenderProperties.DamageReceivedTotalMult * defenderProperties.DamageReceivedDirectMult;
 
 		local expectedDamage = this.getDamage(_targetEntity, defenderProperties);
-		local bonusDamage = this.getAdditionalDamage(properties);
-		local lossDamage = 25 - expectedDamage;
-		local totaldamage = ::Math.floor((expectedDamage + bonusDamage) * damMod * defMod);
-		local totaldamageMax = ::Math.floor((expectedDamage + bonusDamage + 5) * damMod * defMod);
+		local bonusDamage = expectedDamage.Expected - this.m.BaseDamage;
+		local totaldamage = ::Math.floor((expectedDamage.Result) * damMod * defMod);
+		local totaldamageMax = ::Math.floor((expectedDamage.Result + bonusDamage + 5) * damMod * defMod);
 
 		ret.extend([
 			{
@@ -180,7 +174,7 @@
 
 		return ret;
 
-		// cringe stuffs, but i haven't wanted to remove yet
+		// cringe stuffs, but i haven't decided to completele remove yet
 		ret.push({
 			icon = "ui/icons/special.png",
 			text = "[color=#0b0084]Damage modidiers[/color]:"
