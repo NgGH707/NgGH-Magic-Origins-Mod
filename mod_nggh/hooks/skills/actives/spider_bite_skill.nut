@@ -11,26 +11,20 @@
 		this.m.InjuriesOnBody = ::Const.Injury.CuttingAndPiercingBody;
 		this.m.InjuriesOnHead = ::Const.Injury.CuttingAndPiercingHead;
 	};
-	obj.onAdded <- function()
-	{
-		local actor = this.getContainer().getActor();
-
-		if (!actor.isPlayerControlled() || actor.isSummoned())
-		{
-			return;
-		}
-
-		
-		this.m.DirectDamageMult += 0.1;
-	};
 	obj.getTooltip <- function()
 	{
 		return this.getDefaultTooltip();
 	};
 	obj.onAfterUpdate <- function( _properties )
 	{
-		if (!actor.isSummoned() && actor.isPlayerControlled())
+		this.resetField("DirectDamageMult");
+
+		local actor = this.getContainer().getActor();
+
+		if (!actor.isSummoned() && actor.isPlayerControlled()) {
 			this.m.ActionPointCost -= 1;
+			this.m.DirectDamageMult += 0.1;
+		}
 
 		this.m.FatigueCostMult = this.getContainer().hasSkill("perk.spider_bite") ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
 	};

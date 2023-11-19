@@ -108,9 +108,7 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 		];
 		
 		if (this.getContainer() == null || this.getContainer().getActor() == null)
-		{
 			return ret;
-		}
 
 		ret.extend(::Const.CharmedUtilities.getTooltip(this.getContainer().getActor()));
 		ret.extend(this.getAttributesTooltip());
@@ -153,9 +151,7 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 			this.getContainer().add(traits[i]);
 
 			if (traits[i].getContainer() != null)
-			{
 				traits[i].addTitle();
-			}
 		}
 	}
 	
@@ -171,14 +167,10 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 	function buildPerkTree()
 	{
 		if (this.m.PerkTree != null)
-		{
 			return ::Const.DefaultChangeAttributes;
-		}
 
 		if (!this.m.IsOnDeserializing)
-		{
 			this.m.CustomPerkTree = ::Nggh_MagicConcept.PerkTreeBuilder.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), false, false, true);
-		}
 
 		local pT = ::Const.Perks.BuildCustomPerkTree(this.m.CustomPerkTree);
 		this.m.PerkTree = pT.Tree;
@@ -191,6 +183,10 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 		}
 
 		return ::Const.DefaultChangeAttributes;
+	}
+
+	function onfillTalentsValues( _talents )
+	{
 	}
 	
 	function onNewDay()

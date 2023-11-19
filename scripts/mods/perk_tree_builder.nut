@@ -5,13 +5,12 @@ this.perk_tree_builder <- {
 		BattleHeartChance = 5,
 	},
 	
-	function fillWithRandomPerk( _type , _skillsContainer , _addWeaponPerks = false , _hasAoE = false , _isSpecial = false, _removeNimble = false )
+	function fillWithRandomPerk( _tree , _skillsContainer , _addWeaponPerks = false , _hasAoE = false , _isSpecial = false, _removeNimble = false )
 	{
-		local _tree = ::Const.CharmedUnits.getPerkTree(_type);
 		local currentPerksPerkRow = [];
 		local excludedPerks = [];
 
-		if (_tree == null)
+		if (_tree == null || typeof _tree != "array")
 		{
 			_tree = [];
 
