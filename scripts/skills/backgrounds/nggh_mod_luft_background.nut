@@ -482,9 +482,7 @@ this.nggh_mod_luft_background <- ::inherit("scripts/skills/backgrounds/character
 		local a = this.character_background.buildPerkTree();
 
 		if (!this.m.IsDeserializing)
-		{
 			this.onFinishingPerkTree();
-		}
 
 		return a;
 	}

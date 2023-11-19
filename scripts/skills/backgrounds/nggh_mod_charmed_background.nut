@@ -278,17 +278,17 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 	function buildPerkTree()
 	{
 		if (this.m.PerkTree != null)
-		{
 			return ::Const.DefaultChangeAttributes;
-		}
 		
 		if (!this.isBeast())
 		{
-			if (!this.m.IsOnDeserializing && this.m.TempData != null) this.onBeforeBuildPerkTree();
+			if (!this.m.IsOnDeserializing && this.m.TempData != null) 
+				this.onBeforeBuildPerkTree();
 			
 			local ret = this.character_background.buildPerkTree();
 			
-			if (!this.m.IsOnDeserializing) this.onBuildPerkTree();
+			if (!this.m.IsOnDeserializing) 
+				this.onBuildPerkTree();
 
 			return ret;
 		}
@@ -298,7 +298,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			local isHumaniod = ::Const.HumanoidBeast.find(this.m.CharmID) != null;
 			local hasAoE = ::Const.BeastHasAoE.find(this.m.CharmID) != null;
 			local removeNimble = ::Const.BeastNeverHasNimble.find(this.m.CharmID) != null;
-			this.m.CustomPerkTree = ::Nggh_MagicConcept.PerkTreeBuilder.fillWithRandomPerk(this.m.CharmID, this.getContainer(), isHumaniod, hasAoE, removeNimble);
+			this.m.CustomPerkTree = ::Nggh_MagicConcept.PerkTreeBuilder.fillWithRandomPerk(::Const.CharmedUnits.getPerkTree(this.m.CharmID), this.getContainer(), isHumaniod, hasAoE, removeNimble);
 			this.onBeforeBuildPerkTree();
 		}
 
@@ -307,9 +307,11 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		this.m.PerkTree = pT.Tree;
 		this.m.PerkTreeMap = pT.Map;
 
-		if (origin != null) this.World.Assets.getOrigin().onBuildPerkTree(this);
+		if (origin != null) 
+			this.World.Assets.getOrigin().onBuildPerkTree(this);
 
-		if (!this.m.IsOnDeserializing) this.onBuildPerkTree();
+		if (!this.m.IsOnDeserializing) 
+			this.onBuildPerkTree();
 
 		return ::Const.DefaultChangeAttributes;
 	}
@@ -426,7 +428,9 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 				traits.push(::new("scripts/skills/traits/" + trait));
 		}
 
-		this.m.Excluded.extend(this.getContainer().getActor().getExcludedTraits());
+		if (this.getContainer().getActor().getFlags().has("nggh_character"))
+			this.m.Excluded.extend(this.getContainer().getActor().getExcludedTraits());
+			
 		this.getContainer().getActor().pickTraits(traits, _maxTraits);
 
 		for( local i = 1; i < traits.len(); ++i )
