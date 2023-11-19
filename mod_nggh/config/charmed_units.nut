@@ -2443,7 +2443,7 @@ if (!("CharmedUnits" in ::Const))
 			Perks = ["LegendSpecialistMilitiaSkill", "LegendSpecialistMilitiaDamage"],
 			Background = "militia_background",
 			Difficulty = 5,
-		}
+		},
 
 	//FreeCompanySlayer = 155,
 		{
@@ -2451,7 +2451,7 @@ if (!("CharmedUnits" in ::Const))
 			Perks = ["LegendBigGameHunter"],
 			Background = "beast_hunter_background",
 			Difficulty = 5,
-		}
+		},
 
 	//FreeCompanyFootman = 156,
 		{
@@ -2459,7 +2459,7 @@ if (!("CharmedUnits" in ::Const))
 			Perks = ["BattleForged"],
 			Background = "legend_noble_shield",
 			Difficulty = 5,
-		}
+		},
 
 	//FreeCompanyArcher = 157,
 		{
@@ -2467,7 +2467,7 @@ if (!("CharmedUnits" in ::Const))
 			Perks = ["Bullseye", "Anticipation"],
 			Background = "hunter_background",
 			Difficulty = 5,
-		}
+		},
 
 	//FreeCompanyCrossbow = 158,
 		{
@@ -2475,7 +2475,7 @@ if (!("CharmedUnits" in ::Const))
 			Perks = ["Ballistics", "Anticipation"],
 			Background = "legend_nightwatch_background",
 			Difficulty = 5,
-		}
+		},
 
 	//FreeCompanyLongbow = 159,
 		{
@@ -2484,7 +2484,7 @@ if (!("CharmedUnits" in ::Const))
 			Requirements = ["NggHCharmWords"],
 			Background = "hunter_background",
 			Difficulty = 25,
-		}
+		},
 
 	//FreeCompanyBillman = 160,
 		{
@@ -2493,7 +2493,7 @@ if (!("CharmedUnits" in ::Const))
 			Requirements = ["NggHCharmWords"],
 			Background = "beast_hunter_background",
 			Difficulty = 25,
-		}
+		},
 
 	//FreeCompanyPikeman = 161,
 		{
@@ -2501,7 +2501,7 @@ if (!("CharmedUnits" in ::Const))
 			Perks = ["Backstabber"],
 			Background = "beast_hunter_background",
 			Difficulty = 13,
-		}
+		},
 
 	//FreeCompanyInfantry = 162,
 		{
@@ -2510,7 +2510,7 @@ if (!("CharmedUnits" in ::Const))
 			Requirements = ["NggHCharmWords"],
 			Background = "legend_noble_shield",
 			Difficulty = 36,
-		}
+		},
 
 	//FreeCompanyLeader = 163,
 		{
@@ -2519,7 +2519,7 @@ if (!("CharmedUnits" in ::Const))
 			Requirements = ["NggHCharmWords"],
 			Background = "orc_slayer_background",
 			Difficulty = 37,
-		}
+		},
 
 	//FreeCompanyLeaderLow = 164,
 		{
@@ -2528,7 +2528,87 @@ if (!("CharmedUnits" in ::Const))
 			Requirements = ["NggHCharmWords"],
 			Background = "orc_slayer_background",
 			Difficulty = 25,
-		}
+		},
+
+	//Oathbringer = 165,
+		{
+			StatMod = { Hitpoints = [-50, -30], Bravery = [-30, -20], Stamina = [-15, -15], MeleeSkill = [-25, -25], RangedSkill = [0, 0], MeleeDefense = [-15, -10], RangedDefense = [-12, -8], Initiative = [-15, -5] },
+			Perks = ["DevastatingStrikes", "SteelBrow", "Brawny"],
+			Requirements = ["NggHCharmAppearance"],
+			Background = "paladin_background",
+			Difficulty = 70,
+
+			Custom =  {
+				ExcludedTalents = [3,5,7],
+			},
+
+			function onBuildPerkTree() {
+				if (::Is_PTR_Exist) {
+					this.addPerkGroup(::Const.Perks.SoldierProfessionTree.Tree);
+					this.addPerkGroup(::Const.Perks.TwoHandedTree.Tree);
+					this.addPerk(::Const.Perks.PerkDefs.PTRManOfSteel, 6);
+				} 
+				
+				this.addPerkGroup(::Const.Perks.IndestructibleTree.Tree);
+			},
+
+			function onSetAppearance( _playerEntity, _enemyEntity ) {
+				this.m.Titles = [];
+				this.m.Titles.extend(::Const.Strings.HedgeKnightTitles);
+			},
+
+			function onfillTalentsValues( _talents ) {
+				_talents[::Const.Attributes.Hitpoints] = 3;
+			}
+		},
+
+	//SatoManhunterRanged = 166,
+		{
+			StatMod = { Hitpoints = [-10, -5], Bravery = [0, 0], Stamina = [-10, -0], MeleeSkill = [0, 0], RangedSkill = [-5, -0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-10, -5] },
+			Perks = ["Bullseye", "Anticipation"],
+			Background = "nomad_background",
+			Difficulty = 5,
+		},
+
+	//SatoManhunterVeteranRanged = 167,
+		{
+			StatMod = { Hitpoints = [-10, -5], Bravery = [0, 0], Stamina = [-10, -0], MeleeSkill = [0, 0], RangedSkill = [-5, -0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [-10, -5] },
+			Perks = ["HeadHunter", "Anticipation"],
+			Requirements = ["NggHCharmWords"],
+			Background = "nomad_background",
+			Difficulty = 25,
+		},
+
+	//LegendNobleGuard = 168,
+		{
+			StatMod = { Hitpoints = [-75, -100], Bravery = [-15, -15], Stamina = [-10, -15], MeleeSkill = [-10, -12], RangedSkill = [-10, -10], MeleeDefense = [-15, -25], RangedDefense = [-15, -25], Initiative = [-5, -10] },
+			Perks = ["Rotation", "LegendBackToBasics"],
+			Background = "legend_noble_shield",
+			Difficulty = 35,
+
+			function onfillTalentsValues( _talents ) {
+				if (_talents[::Const.Attributes.MeleeDefense] < 2) _talents[::Const.Attributes.MeleeDefense] += 1;
+			},
+		},
+
+	//LegendManAtArms = 169,
+		{
+			StatMod = { Hitpoints = [-75, -100], Bravery = [-25, -35], Stamina = [-20, -30], MeleeSkill = [-10, -12], RangedSkill = [-10, -10], MeleeDefense = [-15, -25], RangedDefense = [-15, -25], Initiative = [-10, -10] },
+			Perks = ["Rotation", "ShieldExpert", "LegendBackToBasics"],
+			Background = "legend_man_at_arms_background",
+			Difficulty = 45,
+
+			function onfillTalentsValues( _talents ) {
+				if (_talents[::Const.Attributes.MeleeDefense] < 2) _talents[::Const.Attributes.MeleeDefense] += 1;
+			},
+		},
+
+	//LegendCaravanPolearm = 170,
+		{
+			StatMod = { Hitpoints = [-2, 2], Bravery = [-2, 2], Stamina = [-2, 2], MeleeSkill = [-2, 2], RangedSkill = [-2, 2], MeleeDefense = [-2, 2], RangedDefense = [-2, 2], Initiative = [-2, 2] },
+			Background = "caravan_hand_background",
+			Difficulty = 0,
+		},
 	],
 
 	// Database for new entries registered by ::nggh_registerCharmedEntries(_array)
@@ -2540,9 +2620,7 @@ if (!("CharmedUnits" in ::Const))
 	function getIndex( _index )
 	{
 		if (_index < 0 || _index > this.Data.len() - 1)
-		{
 			return null;
-		}
 
 		return _index;
 	}
@@ -2552,16 +2630,12 @@ if (!("CharmedUnits" in ::Const))
 		local find = this.getIndex(_type);
 
 		if (find != null)
-		{
 			return this.Data[find];
-		}
 
 		find = ::nggh_findThisInArray(_type, this.CustomEntries, "Type");
 
 		if (find != null)
-		{
 			return this.CustomEntries[find];
-		}
 
 		return null;
 	}
@@ -2571,16 +2645,12 @@ if (!("CharmedUnits" in ::Const))
 		local find = ::nggh_findThisInArray(_type, this.CustomEntries, "Type");
 
 		if (find != null && this.CustomEntries[find].rawin("Icon"))
-		{
 			return this.CustomEntries[find].Icon;
-		}
 
 		find = this.getIndex(_type);
 
 		if (find != null && ::isThisBackgroundIconExist("background_charmed_" + _type + ".png"))
-		{
 			return "background_charmed_" + _type + ".png";
-		}
 
 		return "background_charmed_unknown.png";
 	}
@@ -2588,89 +2658,61 @@ if (!("CharmedUnits" in ::Const))
 	function addBasicData( _data , _entity = null )
 	{
 		if (typeof _data != "table" || !("Type" in _data))
-		{
 			return;
-		}
 
 		local index = _data.Type;
 		local isHuman = _entity != null ? _entity.getFlags().has("human") : this.isHuman(index);
 
 		if (!("Script" in _data))
-		{
 			_data.Script <- this.getScript(index);
-		}
 
 		if (!("Background" in _data))
-		{
 			_data.Background <- this.getBackground(index);
-		}
 
 		if (!("Requirements" in _data))
-		{
 			_data.Requirements <- this.getRequirements(index, isHuman);
-		}
 
 		if (!("IsHuman" in _data))
-		{
 			_data.IsHuman <- isHuman;
-		}
 	}
 
 	function addAdditionalData( _data , _entity = null )
 	{
 		if (typeof _data != "table" || !("Type" in _data))
-		{
 			return _data;
-		}
 
 		if (("Entity" in _data) && _entity == null)
-		{
 			_entity = _data.Entity;
-		}
 		else if (_entity != null)
-		{
 			_data.Entity = _entity;
-		}
 
 		if (!("IsMiniboss" in _data))
-		{
 			_data.IsMiniboss <- _entity == null ? false : _entity.getSkills().hasSkill("racial.champion");
-		}
 
 		if (_entity == null)
-		{
 			return _data;
-		}
 
 		if (!("Items" in _data))
-		{
 			_data.Items <- _entity.getItems();
-		}
 
 		if (!("Stats" in _data))
-		{
 			_data.Stats <- _entity.getBaseProperties();
-		}
 
 		if (!("Appearance" in _data))
-		{
 			_data.Appearance <- this.getAppearance(_entity);
-		}
 
 		return _data;
 	}
 
 	function isHuman( _type )
 	{
-		return this.getScript() != null;
+		return this.getScript(_type) == null;
 	}
 
 	function isKeyExist( _key, _data )
 	{
 		if (_data == null || !(_key in _data) || _data[_key] == null)
-		{
 			return false;
-		}
 
 		return true;
 	}
@@ -2680,9 +2722,7 @@ if (!("CharmedUnits" in ::Const))
 		local database = this.getData(_type);
 
 		if (!this.isKeyExist(_key, database))
-		{
 			return _defaultReturnValue;
-		}
 
 		switch(typeof database[_key])
 		{
@@ -2755,11 +2795,11 @@ if (!("CharmedUnits" in ::Const))
 		::logInfo("Processing sprites need to be copied...");
 		foreach (id in ::Const.CharmedUtilities.SpritesToClone)
 		{
-		    if (_entity.hasSprite(id))
-		    {
-		    	ret.push(id);
-		    	::logInfo("Sprite " + ret.len() + ": " + id);
-		    }
+		    if (!_entity.hasSprite(id))
+		    	continue;
+
+		    ret.push(id);
+		    ::logInfo("Sprite " + ret.len() + ": " + id);
 		}
 
 		return ret;
@@ -2779,9 +2819,7 @@ foreach (directory in ::IO.enumerateFiles(prefix))
 	local find = _directory.find(prefix);
 
 	if (find != null)
-	{
 		_directory = _directory.slice(find, prefix.len());
-	}
 
 	return ::Const.CharmedUnits.BackgroundIcons.find(_directory) != null;
 };
