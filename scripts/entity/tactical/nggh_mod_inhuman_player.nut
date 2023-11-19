@@ -262,12 +262,14 @@ this.nggh_mod_inhuman_player <- ::inherit("scripts/entity/tactical/player", {
 		background.setTempDataByType(_type, _isElite);
 		this.m.Skills.add(background);
 
+		/*
 		if (::Const.Goblin.Variants.find(_type) != null)
 			background.m.Race = 1;
 		else if (::Const.Orc.Variants.find(_type) != null)
 			background.m.Race = 2;
 		else
 			background.m.Race = 3;
+		*/
 		
 		::Const.CharmedUtilities.setup(background, true);
 

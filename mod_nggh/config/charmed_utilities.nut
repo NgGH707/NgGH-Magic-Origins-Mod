@@ -36,9 +36,7 @@ if (!("CharmedUtilities" in ::Const))
 	function processingCharmedBackground( _data, _background )
 	{
 		if (_data == null || typeof _data != "table")
-		{
 			return;
-		}
 
 		local names;
 		local lastNames;
@@ -131,7 +129,7 @@ if (!("CharmedUtilities" in ::Const))
 		_background.setAppearance();
 
 		if (!_isFromScenario && actor.getFlags().has("nggh_character"))
-			actor.setScenarioValues(this.m.CharmID, this.m.TempData.IsMiniboss, true, this.m.Names.len() == 0);
+			actor.setScenarioValues(_background.m.CharmID, _background.m.TempData.IsMiniboss, true, _background.m.Names.len() == 0);
 
 		_background.addBonusAttributes(attributes);
 		_background.pickCurrentLevel();
@@ -233,9 +231,7 @@ if (!("CharmedUtilities" in ::Const))
 		local _type = _entity.getType();
 		
 		if (_returnViable)
-		{
 			return ::Const.CharmedUnits.getRequirements(_type);
-		}
 
 		local ret = {
 			Type = _type,

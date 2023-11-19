@@ -5,19 +5,32 @@ this.perk_tree_builder <- {
 		BattleHeartChance = 5,
 	},
 	
-	function fillWithRandomPerk( _tree , _skillsContainer , _addWeaponPerks = false , _hasAoE = false , _isSpecial = false, _removeNimble = false )
+	function fillWithRandomPerk( _type , _skillsContainer , _addWeaponPerks = false , _hasAoE = false , _isSpecial = false, _removeNimble = false )
 	{
+		local _tree = ::Const.CharmedUnits.getPerkTree(_type);
 		local currentPerksPerkRow = [];
 		local excludedPerks = [];
 
-		foreach ( _row in _tree )
+		if (_tree == null)
 		{
-			foreach ( _perkDef in _row )
-			{
-				excludedPerks.push(_perkDef);
-			}
+			_tree = [];
 
-			currentPerksPerkRow.push(_row.len());
+			for (local i = 0; i < 7; ++i)
+			{
+				_tree.push([]);
+			}
+		}
+		else
+		{
+			foreach ( _row in _tree )
+			{
+				foreach ( _perkDef in _row )
+				{
+					excludedPerks.push(_perkDef);
+				}
+
+				currentPerksPerkRow.push(_row.len());
+			}
 		}
 
 		local maxPerksPerRow = [8, 7, 6, 9, 6, 6, 5, 0, 0, 0, 0, 0, 0, 0];

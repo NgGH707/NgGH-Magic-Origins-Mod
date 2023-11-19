@@ -44,7 +44,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 
 	function setTempDataByType( _type, _isElite = false )
 	{
-		local ret = {Type = _type, Entity = null};
+		local ret = {Type = _type, Entity = null, IsHuman = false};
 
 		if (_isElite) ret.IsMiniboss <- true;
 
