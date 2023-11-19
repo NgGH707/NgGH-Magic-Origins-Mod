@@ -12,9 +12,7 @@
 	{
 		// make cosmetic item to lose next to no durability
 		if (this.m.IsCosplaying)
-		{
 			_damage = 1;
-		}
 
 		ws_onDamageReceived(_damage, _fatalityType, _slotType, _attacker);
 	}
@@ -25,35 +23,25 @@
 		ws_onActorDied(_onTile);
 
 		if (this.m.Actor == null || this.m.Actor.isNull())
-		{
 			return;
-		}
 
 		if (this.m.Actor.getFlags().has("can_mount"))
-		{
 			this.m.Actor.getMount().onActorDied(_onTile);
-		}
 	}
 
 	local ws_equip = obj.equip;
 	obj.equip = function ( _item )
 	{
 		if (_item == null)
-		{
 			return false;
-		}
 
 		if (!this.getActor().isAbleToEquip(_item))
-		{
 			return false;
-		}
 
 		local ret = ws_equip(_item);
 
 		if (ret)
-		{
-			this.getActor().onAfterEquip(_item)
-		}
+			this.getActor().onAfterEquip(_item);
 
 		return ret;
 	};
@@ -62,23 +50,17 @@
 	obj.unequip = function ( _item )
 	{
 		if (_item == null || _item == -1)
-		{
 			return false;
-		}
 
 		local hasActor = this.getActor() != null && !this.getActor().isNull();
 
 		if (hasActor && !this.getActor().isAbleToUnequip(_item))
-		{
 			return false;
-		}
 
 		local ret = ws_unequip(_item);
 
 		if (ret && hasActor)
-		{
-			this.getActor().onAfterUnequip(_item)
-		}
+			this.getActor().onAfterUnequip(_item);
 
 		return ret;
 	};

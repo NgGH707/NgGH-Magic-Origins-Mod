@@ -97,6 +97,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		this.m.Mount.setActor(this);
 		this.m.Mount.addExcludedMount("accessory.spider");
 		this.m.Mount.addExcludedMount("accessory.tempo_spider");
+		this.m.Flags.add("can_mount");
 		this.m.Flags.add("goblin");
 	}
 
@@ -470,13 +471,9 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		local offset;
 		
 		if (this.isMounted())
-		{
 		    offset = ::createVec(::Const.GoblinRiderMounts[this.m.Mount.getMountType()].Sprite[0][0], ::Const.GoblinRiderMounts[this.m.Mount.getMountType()].Sprite[0][1]);
-		}
 		else
-		{
 			offset = ::createVec(0, 0);
-		}
 		
 		this.setSpriteOffset("background", offset);
 		this.setSpriteOffset("quiver", offset);
@@ -531,6 +528,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		local flip = this.isAlliedWithPlayer();
 		this.getSprite("armor").setHorizontalFlipping(this.m.IsWearingGoblinArmor ? flip : !flip);
 		this.getSprite("helmet").setHorizontalFlipping(this.m.IsWearingGoblinHelmet ? flip : !flip);
+		this.m.Items.updateAppearance();
 	}
 
 	function resetRenderEffects()
@@ -1081,9 +1079,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		}
 
 		if (update)
-		{
 			this.onAdjustingArmorSprites();
-		}
 	}
 
 	function onAfterUnequip( _item )

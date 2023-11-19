@@ -149,6 +149,7 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 		this.m.Mount = ::new("scripts/mods/mount_manager");
 		this.m.Mount.setActor(this);
 		this.m.Flags.add("regen_armor");
+		this.m.Flags.add("can_mount");
 		this.m.Flags.add("egg");
 
 		// can't equip most things
