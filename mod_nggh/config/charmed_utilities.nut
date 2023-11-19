@@ -231,7 +231,7 @@ if (!("CharmedUtilities" in ::Const))
 		local _type = _entity.getType();
 		
 		if (_returnViable)
-			return ::Const.CharmedUnits.getRequirements(_type);
+			return ::Const.CharmedUnits.getRequirements(_type, _entity.getFlags().has("human"));
 
 		local ret = {
 			Type = _type,

@@ -769,19 +769,13 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 		local requirements = ::Const.CharmedUtilities.TypeToInfo(_targetEntity, true);
 		
 		if (requirements == null || typeof requirements != "array")
-		{
 			return _isForToolTips ? ["Can\'t be charmed"] : false;
-		}
 		
 		if (_targetEntity.getSkills().hasSkill("racial.champion") && requirements.find("NggHCharmSpec") == null)
-		{
 			requirements.push("NggHCharmSpec");
-		}
 		
 		if (requirements.len() == 0)
-		{
 			return _isForToolTips ? [] : true;
-		}
 
 		local failToMeet = [];
 		
@@ -790,14 +784,10 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			local def = ::Const.Perks.PerkDefObjects[::Const.Perks.PerkDefs[_const]];
 
 			if (this.getContainer().hasSkill(def.ID))
-			{
 				continue;
-			}
 
 			if (!_isForToolTips)
-			{
 				return false;
-			}
 
 			failToMeet.push(def.Name);
 		}
