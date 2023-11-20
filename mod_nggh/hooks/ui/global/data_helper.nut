@@ -44,22 +44,16 @@
 			}
 
 			if (i == ::Const.ItemSlot.Offhand && hasTwoHandBlockedSlot)
-			{
 				continue;
-			}
 
 			if (_items.getData()[i][0] != -1)
-			{
 				continue;
-			}
 
 			blocked.push(i);
 		}
 
 		if (blocked.len() > 0)
-		{
 			_target.BlockedSlots <- blocked;
-		}
 	}
 
 	if (::Is_PlanYourPerks_Exist && ("addPlannedPerksToUIData" in obj))

@@ -124,7 +124,7 @@ if (!("CharmedUtilities" in ::Const))
 		local actor = _background.getContainer().getActor();
 		actor.m.Background = _background;
 		actor.m.StarWeights = this.buildAttributes.call(_background, null, null);
-		_background.onfillTalentsValues(actor.getTalents());
+		_background.onfillTalentsValues(actor);
 		local attributes = _background.buildPerkTree();
 		_background.setAppearance();
 

@@ -163,9 +163,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			actor.setName(this.m.Names[0]);
 
 			if (this.m.Titles.len() != 0)
-			{
 				actor.setTitle(this.m.Titles[0]);
-			}
 		}
 
 		if (entity != null && this.m.TempData != null && ("Appearance" in this.m.TempData) && this.m.TempData.Appearance != null && typeof this.m.TempData.Appearance == "array")
@@ -175,28 +173,20 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			actor.copySpritesFrom(entity, this.m.TempData.Appearance);
 
 			if (("onSetAppearance" in data) && typeof data.onSetAppearance == "function")
-			{
 				data.onSetAppearance.call(this, actor, entity);
-			}
 
 			if (this.isOrc())
 			{
 				if (actor.getSprite("body_rage").HasBrush)
-				{
 					actor.updateRageVisuals(0);
-				}
 				else 
-				{
 				    actor.getSprite("body_rage").Visible = false;
-				}
 			}
 			
 			if (this.isHuman())
 			{
 				if (entity.m.Surcoat != null)
-				{
 					actor.m.Surcoat = entity.m.Surcoat;
-				}
 				
 				if (entity.getEthnicity() != 0)
 				{
@@ -218,24 +208,25 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		{
 			local name = ::MSU.Array.rand(this.m.Names);
 
-			if (this.m.LastNames != 0) name += " " +  ::MSU.Array.rand(this.m.LastNames);
+			if (this.m.LastNames != 0) 
+				name += " " +  ::MSU.Array.rand(this.m.LastNames);
 
 			actor.setName(name);
 		}
 
 		if (actor.getTitle().len() == 0 && this.m.Titles.len() != 0)
-		{
 			actor.setTitle(::MSU.Array.rand(this.m.Titles));
-		}
 	}
 
 	function pickCurrentLevel()
 	{
 		local r = ::Math.rand(1, 3);
 
-		if (r == 1) r += this.calculateAdditionalRecruitmentLevels();
+		if (r == 1) 
+			r += this.calculateAdditionalRecruitmentLevels();
 
-		if (::World.getTime().Days >= 150) r += 1;
+		if (::World.getTime().Days >= 150) 
+			r += 1;
 
 		r = ::Math.min(7, r);
 		this.getContainer().getActor().m.PerkPoints = r - 1;
@@ -243,9 +234,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		this.getContainer().getActor().m.LevelUps = r - 1;
 		
 		if (r > 1)
-		{
 			this.getContainer().getActor().m.XP = ::Const.LevelXP[r - 1];
-		}
 	}
 
 	function onBeforeBuildPerkTree()
@@ -336,26 +325,29 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		if (::Math.rand(1, 100) <= 5) this.addPerk(::Const.Perks.PerkDefs.NggHMiscFairGame, 2);
 	}
 
-	function onfillTalentsValues( _talents )
+	function onfillTalentsValues( _actor )
 	{
-		if (_talents.len() == 0) return;
-
-		local actor = this.getContainer().getActor();
 		local data = this.getCharmDataByID(this.m.CharmID);
 
 		if (this.isHuman())
 		{
-			actor.fillTalentValues(3);
+			if (_actor.m.Talents.len() == 0)
+				_actor.m.Talents.resize(::Const.Attributes.COUNT, 0);
 
-			if (("onfillTalentsValues" in data) && typeof data.onfillTalentsValues == "function") data.onfillTalentsValues.call(this, actor.getTalents());
+			_actor.fillTalentValues(3);
+
+			if (("onfillTalentsValues" in data) && typeof data.onfillTalentsValues == "function") data.onfillTalentsValues.call(this, _actor.getTalents());
 
 			this.getContainer().add(::new("scripts/skills/traits/intensive_training_trait"));
-			actor.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
-			actor.getFlags().set("Type", this.m.CharmID);
+			_actor.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
+			_actor.getFlags().set("Type", this.m.CharmID);
 			return;
 		}
+
+		if (_actor.m.Talents.len() == 0)
+			return;
 		
-		if (("onfillTalentsValues" in data) && typeof data.onfillTalentsValues == "function") data.onfillTalentsValues.call(this, _talents);
+		if (("onfillTalentsValues" in data) && typeof data.onfillTalentsValues == "function") data.onfillTalentsValues.call(this, _actor.getTalents());
 	}
 
 	function onBuildAttributes( _properties )
@@ -363,9 +355,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		local data = this.getCharmDataByID(this.m.CharmID);
 
 		if (this.m.TempData != null && ("Stats" in this.m.TempData) && this.m.TempData.Stats != null)
-		{
 			_properties.setValues(this.m.TempData.Stats);
-		}
 
 		if (!::Nggh_MagicConcept.IsOPMode)
 		{
@@ -395,9 +385,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		}
 
 		if (("onBuildAttributes" in data) && typeof data.onBuildAttributes == "function")
-		{
 			data.onBuildAttributes.call(this, _properties);
-		}
 
 		return _properties;
 	}
