@@ -185,7 +185,7 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 		return ::Const.DefaultChangeAttributes;
 	}
 
-	function onfillTalentsValues( _talents )
+	function onfillTalentsValues( _actor )
 	{
 	}
 	

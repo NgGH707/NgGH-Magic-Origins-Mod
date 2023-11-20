@@ -587,7 +587,7 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 		}
 		*/
 		
-		this.getBackground().onfillTalentsValues(this.getTalents());
+		this.getBackground().onfillTalentsValues(this);
 		this.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
 
 		if (_setName)

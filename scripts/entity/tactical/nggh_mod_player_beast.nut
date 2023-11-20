@@ -254,7 +254,7 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 		}
 		*/
 		
-		this.getBackground().onfillTalentsValues(this.getTalents());
+		this.getBackground().onfillTalentsValues(this);
 		this.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
 
 		if (_setName)

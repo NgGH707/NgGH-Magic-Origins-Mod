@@ -603,7 +603,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		}
 		*/
 		
-		this.getBackground().onfillTalentsValues(this.getTalents());
+		this.getBackground().onfillTalentsValues(this);
 		this.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
 
 		if (_setName)
