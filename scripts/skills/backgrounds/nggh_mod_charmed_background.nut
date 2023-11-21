@@ -90,9 +90,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 	function onChangeAttributes()
 	{
 		if (this.m.AttMods == null || ::Nggh_MagicConcept.IsOPMode)
-		{
 			return ::Const.DefaultChangeAttributes;
-		}
 
 		return this.m.AttMods;
 	}
@@ -103,7 +101,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 
 		this.character_background.onUpdate(_properties);
 
-		if (("onUpdate" in data) && typeof data.onUpdate == "function") data.onUpdate.call(this, _properties);
+		if (data != null && ("onUpdate" in data) && typeof data.onUpdate == "function") data.onUpdate.call(this, _properties);
 	}
 
 	function onAdded()
@@ -116,14 +114,12 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			this.m.AlignmentMax = ::Const.LegendMod.Alignment.Merciless;
 		}
 
-		if (("Skills" in data) && data.Skills != null && data.Skills.len() != 0)
+		if (data != null && ("Skills" in data) && data.Skills != null && data.Skills.len() != 0)
 		{
 			foreach ( script in data.Skills )
 			{
 				if (script.len() == 0)
-				{
 					continue;
-				}
 
 				local skill = ::new("scripts/skills/" + script);
 				skill.m.IsSerialized = false;
@@ -131,13 +127,13 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			}
 		}
 		
-		this.m.AttMods = ::nggh_deepCopy(data.StatMod);
+		if (data != null) this.m.AttMods = ::nggh_deepCopy(data.StatMod);
 
 		if (!this.isHuman()) this.addBackgroundType(::Const.BackgroundType.Combat);
 
-		if (!this.m.IsSavingModifier && ("Custom" in data) && typeof data.Custom == "table" && ("BgModifiers" in data.Custom) && data.Custom.BgModifiers != null) this.m.Modifiers = ::nggh_deepCopy(data.Custom.BgModifiers);
+		if (!this.m.IsSavingModifier && data != null && ("Custom" in data) && typeof data.Custom == "table" && ("BgModifiers" in data.Custom) && data.Custom.BgModifiers != null) this.m.Modifiers = ::nggh_deepCopy(data.Custom.BgModifiers);
 
-		if (("onAdded" in data) && typeof data.onAdded == "function") data.onAdded.call(this);
+		if (data != null && ("onAdded" in data) && typeof data.onAdded == "function") data.onAdded.call(this);
 
 		this.character_background.onAdded();
 	}
@@ -149,7 +145,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		
 		if (this.m.TempData != null && ("Items" in this.m.TempData) && this.m.TempData.Items != null) this.m.TempData.Items.transferTo(items);
 		
-		if (("onAddEquipment" in data) && typeof data.onAddEquipment == "function") data.onAddEquipment.call(this);
+		if (data != null && ("onAddEquipment" in data) && typeof data.onAddEquipment == "function") data.onAddEquipment.call(this);
 	}
 
 	function setAppearance()
@@ -172,7 +168,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			::logInfo("Copying sprites to a new charmed slave container...");
 			actor.copySpritesFrom(entity, this.m.TempData.Appearance);
 
-			if (("onSetAppearance" in data) && typeof data.onSetAppearance == "function")
+			if (data != null && ("onSetAppearance" in data) && typeof data.onSetAppearance == "function")
 				data.onSetAppearance.call(this, actor, entity);
 
 			if (this.isOrc())
@@ -239,18 +235,18 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 
 	function onBeforeBuildPerkTree()
 	{
-		local data = this.getCharmDataByID(this.m.CharmID);
+		local perkTree = ::Const.CharmedUnits.getPerkTree(this.m.CharmID);
 
-		if (("PerkTree" in data) && data.PerkTree != null)
+		if (perkTree != null)
 		{
-			switch (typeof data.PerkTree)
+			switch (typeof perkTree)
 			{
 			case "array":
-				this.m.CustomPerkTree = ::nggh_deepCopy(data.PerkTree);
+				this.m.CustomPerkTree = perkTree;
 				break;
 
 			case "table":
-				this.m.PerkTreeDynamic = ::nggh_deepCopy(data.PerkTree);
+				this.m.PerkTreeDynamic = perkTree;
 				break;
 			}
 		}
@@ -261,7 +257,9 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			delete this.m.PerkTreeDynamic.WeightMultipliers;
 		}
 		
-		if (("onBeforeBuildPerkTree" in data) && typeof data.onBeforeBuildPerkTree == "function") data.onBeforeBuildPerkTree.call(this);
+		local data = this.getCharmDataByID(this.m.CharmID);
+
+		if (data != null && ("onBeforeBuildPerkTree" in data) && typeof data.onBeforeBuildPerkTree == "function") data.onBeforeBuildPerkTree.call(this);
 	}
 	
 	function buildPerkTree()
@@ -284,11 +282,11 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		
 		if (!this.m.IsOnDeserializing && this.m.TempData != null)
 		{
+			this.onBeforeBuildPerkTree();
 			local isHumaniod = ::Const.HumanoidBeast.find(this.m.CharmID) != null;
 			local hasAoE = ::Const.BeastHasAoE.find(this.m.CharmID) != null;
 			local removeNimble = ::Const.BeastNeverHasNimble.find(this.m.CharmID) != null;
-			this.m.CustomPerkTree = ::Nggh_MagicConcept.PerkTreeBuilder.fillWithRandomPerk(::Const.CharmedUnits.getPerkTree(this.m.CharmID), this.getContainer(), isHumaniod, hasAoE, removeNimble);
-			this.onBeforeBuildPerkTree();
+			this.m.CustomPerkTree = ::Nggh_MagicConcept.PerkTreeBuilder.fillWithRandomPerk(this.m.CustomPerkTree, this.getContainer(), isHumaniod, hasAoE, removeNimble);
 		}
 
 		local origin = this.World.Assets.getOrigin();
@@ -313,14 +311,14 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 
 		if (actor.getFlags().has("nggh_character")) perks.extend(actor.getSignaturePerks());
 
-		if (("Perks" in data) && typeof data.Perks == "array") perks.extend(data.Perks);
+		if (data != null && ("Perks" in data) && typeof data.Perks == "array") perks.extend(data.Perks);
 
 		foreach (i, Const in perks )
 		{
 			::World.Assets.getOrigin().addScenarioPerk(this, ::Const.Perks.PerkDefs[Const], i);
 		}
 
-		if (("onBuildPerkTree" in data) && typeof data.onBuildPerkTree == "function") data.onBuildPerkTree.call(this);
+		if (data != null && ("onBuildPerkTree" in data) && typeof data.onBuildPerkTree == "function") data.onBuildPerkTree.call(this);
 
 		if (::Math.rand(1, 100) <= 5) this.addPerk(::Const.Perks.PerkDefs.NggHMiscFairGame, 2);
 	}
@@ -336,7 +334,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 
 			_actor.fillTalentValues(3);
 
-			if (("onfillTalentsValues" in data) && typeof data.onfillTalentsValues == "function") data.onfillTalentsValues.call(this, _actor.getTalents());
+			if (data != null && ("onfillTalentsValues" in data) && typeof data.onfillTalentsValues == "function") data.onfillTalentsValues.call(this, _actor.getTalents());
 
 			this.getContainer().add(::new("scripts/skills/traits/intensive_training_trait"));
 			_actor.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
@@ -347,7 +345,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		if (_actor.m.Talents.len() == 0)
 			return;
 		
-		if (("onfillTalentsValues" in data) && typeof data.onfillTalentsValues == "function") data.onfillTalentsValues.call(this, _actor.getTalents());
+		if (data != null && ("onfillTalentsValues" in data) && typeof data.onfillTalentsValues == "function") data.onfillTalentsValues.call(this, _actor.getTalents());
 	}
 
 	function onBuildAttributes( _properties )
@@ -384,7 +382,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			_properties.FatigueRecoveryRate = ::Math.min(18, _properties.FatigueRecoveryRate);
 		}
 
-		if (("onBuildAttributes" in data) && typeof data.onBuildAttributes == "function")
+		if (data != null && ("onBuildAttributes" in data) && typeof data.onBuildAttributes == "function")
 			data.onBuildAttributes.call(this, _properties);
 
 		return _properties;
@@ -470,7 +468,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		local actor = this.getContainer().getActor();
 		local data = this.getCharmDataByID(this.m.CharmID);
 
-		if (("addTooltip" in data) && typeof data.addTooltip == "function") data.addTooltip.call(this, ret);
+		if (data != null && ("addTooltip" in data) && typeof data.addTooltip == "function") data.addTooltip.call(this, ret);
 		
 		ret.extend(::Const.CharmedUtilities.getTooltip(actor));
 		ret.extend(this.getAttributesTooltip());

@@ -2583,6 +2583,7 @@ if (!("CharmedUnits" in ::Const))
 		{
 			StatMod = { Hitpoints = [-75, -100], Bravery = [-15, -15], Stamina = [-10, -15], MeleeSkill = [-10, -12], RangedSkill = [-10, -10], MeleeDefense = [-15, -25], RangedDefense = [-15, -25], Initiative = [-5, -10] },
 			Perks = ["Rotation", "LegendBackToBasics"],
+			Requirements = ["NggHCharmWords"],
 			Background = "legend_noble_shield",
 			Difficulty = 35,
 
@@ -2595,6 +2596,7 @@ if (!("CharmedUnits" in ::Const))
 		{
 			StatMod = { Hitpoints = [-75, -100], Bravery = [-25, -35], Stamina = [-20, -30], MeleeSkill = [-10, -12], RangedSkill = [-10, -10], MeleeDefense = [-15, -25], RangedDefense = [-15, -25], Initiative = [-10, -10] },
 			Perks = ["Rotation", "ShieldExpert", "LegendBackToBasics"],
+			Requirements = ["NggHCharmWords"],
 			Background = "legend_man_at_arms_background",
 			Difficulty = 45,
 
@@ -2706,7 +2708,7 @@ if (!("CharmedUnits" in ::Const))
 
 	function isHuman( _type )
 	{
-		return this.getScript(_type) == null;
+		return this.getScript(_type) == "player";
 	}
 
 	function isKeyExist( _key, _data )
@@ -2733,8 +2735,6 @@ if (!("CharmedUnits" in ::Const))
 		default:
 			return database[_key];
 		}
-
-		return null;
 	}
 
 	function getScript( _type )

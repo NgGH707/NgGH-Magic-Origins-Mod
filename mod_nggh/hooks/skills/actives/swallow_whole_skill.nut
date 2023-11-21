@@ -106,6 +106,7 @@
 
 		this.m.Cooldown = ::Math.max(0, this.m.Cooldown - 1);
 	};
+	local onVerifyTarget = obj.onVerifyTarget;
 	obj.onVerifyTarget = function( _originTile, _targetTile )
 	{
 		if (!this.getContainer().getActor().isPlayerControlled())
