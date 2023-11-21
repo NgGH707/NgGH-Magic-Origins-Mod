@@ -772,9 +772,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		local faction = this.m.Town.getFactionOfType(::Const.FactionType.Settlement);
 		
 		if (faction == null)
-		{
 			faction = ::World.FactionManager.getFaction(this.m.Town.getFaction());
-		}
 		
 		local party = faction.spawnEntity(_tile, "Witch Hunters", false, null, 0);
 		local template = ::Const.World.Common.buildDynamicTroopList(::Const.World.Spawn.Nggh_WitchHunter, this.getResources());
@@ -797,7 +795,6 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		party.getLoot().Ammo = ::Math.rand(0, 30);
 		
 		// have to manually add the additional champion from the event 
-		foreach( troop in template.Troops )
 		{
 			local key = "Enemy" + troop.Type.ID;
 			if (!(key in troopMbMap))
@@ -833,17 +830,11 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		local r;
 
 		if (::World.getTime().Days < 20)
-		{
 			r = ::Math.rand(1, 30);
-		}
 		else if (::World.getTime().Days < 40)
-		{
 			r = ::Math.rand(1, 80);
-		}
 		else
-		{
 			r = ::Math.rand(1, 100);
-		}
 
 		if (r <= 30)
 		{
@@ -858,7 +849,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		else
 		{
 			this.m.ChampionChance = 4;
-			this.m.DifficultyMult = ::Math.rand(110, 130) * 0.01;
+			this.m.DifficultyMult = ::Math.rand(105, 125) * 0.01;
 		}
 
 		this.m.ChampionChance += this.getAdditionalChampionChance();
@@ -867,17 +858,11 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 	function getAdditionalChampionChance()
 	{
 		if (::World.getTime().Days < 50)
-		{
 			return 0;
-		}
 		else if (::World.getTime().Days < 90)
-		{
 			return 1;
-		}
 		else
-		{
 			return 3;
-		}
 	}
 
 	function getScaledDifficultyMult()
@@ -890,7 +875,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 	function calcResourceBoost()
 	{
 		local defaultBoost = -10;
-		local dayModifier = ::Math.min(::World.getTime().Days / 5, 30);
+		local dayModifier = ::Math.min(::World.getTime().Days / 6, 30);
 		return defaultBoost + dayModifier;
 	}
 

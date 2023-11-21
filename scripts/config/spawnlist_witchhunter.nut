@@ -54,7 +54,7 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 			Types = [
 				{
 					Type = ::Const.World.Spawn.Troops.LegendPeasantWitchHunter,
-					Cost = 18
+					Cost = 20
 				}
 			]
 		},
@@ -63,7 +63,7 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 			Types = [
 				{
 					Type = ::Const.World.Spawn.Troops.MercenaryRanged,
-					Cost = 22
+					Cost = 20
 				},
 				{
 					MaxCount = 2,
@@ -157,14 +157,25 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 			]
 		},
 		{
-			Weight = 5,
+			Weight = 4,
+			MinR = 100,
 			Types = [
 				{
-					Type = ::Const.World.Spawn.Troops.Greatsword,
-					Cost = 30
+					Type = ::Const.World.Spawn.Troops.LegendNobleGuard,
+					Cost = 60
 				}
 			]
 		},
+		{
+			Weight = 1,
+			MinR = 220,
+			Types = [
+				{
+					Type = ::Const.World.Spawn.Troops.LegendManAtArms,
+					Cost = 100
+				}
+			]
+		}
 		{
 			Weight = 3,
 			MinR = 150,
