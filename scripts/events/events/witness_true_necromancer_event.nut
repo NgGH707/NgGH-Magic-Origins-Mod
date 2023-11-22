@@ -109,7 +109,7 @@ this.witness_true_necromancer_event <- this.inherit("scripts/events/event", {
 						{
 							id = 4 + i,
 							icon = "ui/items/" + item.getIcon(),
-							text = item.getName()
+							text = item.getName() + " (" + (::MSU.isKindOf(item, "weapon") ? item.m.Categories : "Shield") + ")"
 						},
 						{
 							id = 1,
