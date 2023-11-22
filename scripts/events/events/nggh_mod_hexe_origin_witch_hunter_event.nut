@@ -279,9 +279,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 		local faction = this.m.Town.getFactionOfType(::Const.FactionType.Settlement);
 		
 		if (faction == null)
-		{
 			faction = ::World.FactionManager.getFaction(this.m.Town.getFaction());
-		}
 
 		local party = faction.spawnEntity(_tile, "Witch Hunters", false, null, 0);
 		local template = ::Const.World.Common.buildDynamicTroopList(::Const.World.Spawn.Nggh_WitchHunter, this.getResources());
@@ -306,11 +304,10 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 		foreach( troop in template.Troops )
 		{
 			local key = "Enemy" + troop.Type.ID;
-			if (!(key in troopMbMap))
-			{
-				troopMbMap[key] <- ::Const.LegendMod.GetFavEnemyBossChance(troop.Type.ID);
-			}
 
+			if (!(key in troopMbMap))
+				troopMbMap[key] <- ::Const.LegendMod.GetFavEnemyBossChance(troop.Type.ID);
+			
 			local mb = troopMbMap[key];
 
 			for( local i = 0; i != troop.Num; ++i )

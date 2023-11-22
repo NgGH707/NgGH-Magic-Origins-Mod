@@ -794,13 +794,13 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		party.getLoot().Medicine = ::Math.rand(0, 5);
 		party.getLoot().Ammo = ::Math.rand(0, 30);
 		
-		// have to manually add the additional champion from the event 
+		// have to manually add the additional champion from the event
+		foreach( troop in template.Troops )
 		{
 			local key = "Enemy" + troop.Type.ID;
+
 			if (!(key in troopMbMap))
-			{
 				troopMbMap[key] <- ::Const.LegendMod.GetFavEnemyBossChance(troop.Type.ID);
-			}
 
 			local mb = troopMbMap[key];
 
