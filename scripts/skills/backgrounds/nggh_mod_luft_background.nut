@@ -453,6 +453,10 @@ this.nggh_mod_luft_background <- ::inherit("scripts/skills/backgrounds/character
 		this.onSetAppearance();
 	}
 
+	function onfillTalentsValues( _actor )
+	{
+	}
+
 	function onNewDay()
 	{
 		local name = this.getContainer().getActor().getNameOnly();
