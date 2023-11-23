@@ -63,7 +63,7 @@
 			if (breakFree != null)
 				breakFree.setChanceBonus(specialization.getPenalty());
 
-			this.m.Cooldown = 0;
+			this.m.Cooldown = 1;
 		}
 
 		return ret;

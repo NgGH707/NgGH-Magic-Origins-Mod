@@ -149,7 +149,7 @@
 			::Tactical.Entities.setLastCombatResult(::Const.Tactical.CombatResult.EnemyDestroyed);
 
 		local ret = onUse(_user, _targetTile);
-		local effect = this.getSkills().getSkillByID("effects.swallowed_whole");
+		local effect = this.getContainer().getSkillByID("effects.swallowed_whole");
 
 		if (effect == null)
 		{
