@@ -69,7 +69,6 @@
 		local poison = ::new("scripts/skills/effects/spider_poison_effect");
 		poison.m.IsSuperPoison = isSpecialized;
 		poison.m.TurnsLeft = isSpecialized ? 2 : 3;
-		poison.setDamage(isSpecialized ? 10 : 5);
 		poison.setActorID(this.getContainer().getActor().getID());
 		_targetEntity.getSkills().add(poison);
 	};
