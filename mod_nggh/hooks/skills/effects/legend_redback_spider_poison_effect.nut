@@ -1,7 +1,16 @@
 ::mods_hookExactClass("skills/effects/legend_redback_spider_poison_effect", function(obj) 
 {
 	obj.m.ActorID <- null;
+	obj.m.IsSuperPoison <- false;
 	
+	obj.onUpdate <- function( _properties )
+	{
+		if (!this.m.IsSuperPoison)
+			return;
+
+		_properties.IsWeakenByPoison = true;
+		_properties.FatigueEffectMult *= 1.05;
+	};
 	obj.setActorID <- function( _id )
 	{
    		this.m.ActorID = _id;

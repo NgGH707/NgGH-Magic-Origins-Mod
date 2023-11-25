@@ -1,5 +1,6 @@
 
 ::Const.CharacterProperties.IsStealthy <- false;
+::Const.CharacterProperties.IsWeakenByPoison <- false;
 ::Const.CharacterProperties.IsSpecializedInHex <- false;
 ::Const.CharacterProperties.IsSpecializedInWhips <- false;
 ::Const.CharacterProperties.IsSpecializedInMagic <- false;

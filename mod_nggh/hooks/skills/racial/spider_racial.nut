@@ -44,59 +44,34 @@
 	};
 	obj.onTargetHit = function( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
-		if (_targetEntity.getCurrentProperties().IsImmuneToPoison)
-		{
+		if (!_targetEntity.isAlive() || _targetEntity.isDying())
 			return;
-		}
+
+		if (_targetEntity.getCurrentProperties().IsImmuneToPoison)
+			return;
 		
 		if (_damageInflictedHitpoints < ::Const.Combat.PoisonEffectMinDamage || _targetEntity.getHitpoints() <= 0)
-		{
 			return;
-		}
-
-		if (!_targetEntity.isAlive() || _targetEntity.isDying())
-		{
-			return;
-		}
 
 		if (_targetEntity.getFlags().has("undead"))
-		{
 			return;
-		}
 
 		if (!_targetEntity.isHiddenToPlayer())
 		{
 			if (this.m.SoundOnUse.len() != 0)
-			{
 				::Sound.play(::MSU.Array.rand(this.m.SoundOnUse), ::Const.Sound.Volume.RacialEffect * 1.5, _targetEntity.getPos());
-			}
 
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_targetEntity) + " is poisoned");
 		}
 
 		this.spawnIcon("status_effect_54", _targetEntity.getTile());
 		local isSpecialized = this.getContainer().getActor().getCurrentProperties().IsSpecializedInDaggers;
-		local poison = _targetEntity.getSkills().getSkillByID("effects.spider_poison");
-
-		if (poison == null)
-		{
-			local effect = ::new("scripts/skills/effects/spider_poison_effect");
-			effect.m.TurnsLeft = isSpecialized ? 2 : 3;
-			effect.setDamage(isSpecialized ? 10 : 5);
-			effect.setActorID(this.getContainer().getActor().getID());
-			_targetEntity.getSkills().add(effect);
-		}
-		else
-		{
-			poison.resetTime();
-			poison.setActorID(this.getContainer().getActor().getID());
-			
-			if (isSpecialized)
-			{
-				poison.m.Count += 1;
-				poison.m.TurnsLeft = 2;
-			}
-		}
+		local poison = ::new("scripts/skills/effects/spider_poison_effect");
+		poison.m.IsSuperPoison = isSpecialized;
+		poison.m.TurnsLeft = isSpecialized ? 2 : 3;
+		poison.setDamage(isSpecialized ? 10 : 5);
+		poison.setActorID(this.getContainer().getActor().getID());
+		_targetEntity.getSkills().add(poison);
 	};
 	obj.onUpdate = function( _properties )
 	{
@@ -109,12 +84,15 @@
 		if (_targetEntity == null) return;
 		
 		if (_targetEntity.getCurrentProperties().IsRooted)
-		{
 			_properties.DamageDirectMult *= 2.0;
-		}
 		else if (_targetEntity.getCurrentProperties().IsStunned)
-		{
-			_properties.DamageDirectMult *= 1.33;
-		}
+			_properties.DamageDirectMult *= 1.5;
+
+		if (!_properties.IsSpecializedInDaggers || !_targetEntity.getCurrentProperties().IsWeakenByPoison)
+			return;
+
+		local n = _targetEntity.getSkills().getNumOfSkill("effects.spider_poison") + _targetEntity.getSkills().getNumOfSkill("effects.legend_redback_spider_poison");
+		_properties.DamageRegularMult *= 1.0 + 0.02 * n;
+		_properties.DamageDirectMult *= 1.15;
 	};
 });
