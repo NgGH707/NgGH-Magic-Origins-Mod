@@ -321,7 +321,7 @@
 ::Const.Strings.PerkDescription.NggHSpiderVenom <- "\'An even more deadly venom, your poor victim would surely die faster.\'"
 													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color] effect inflicted by your bite lasts for 1 more turn."
-														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Redback Poisoned[/color] effect inflicted by your bite deals double the damage and makes it more potent as the target get bitten more.";
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Redback Poisoned[/color] effect inflicted by your bite deals double the damage and makes it more potent as the target get bitten more."
 														+ "\n• Each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Redback Poisoned[/color] effects increases the affected target\'s fatigue usage by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color]."
 														+ "\n• Increases the Attack Damage of [color=" + ::Const.UI.Color.NegativeValue + "]Webknecht Bite[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Redback Webknecht Bite[/color] skills by [color=" + ::Const.UI.Color.PositiveValue + "]2%[/color] for each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Redback Poisoned[/color] effects on affected target."
 

@@ -170,9 +170,7 @@ this.nggh_mod_spider_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 	function playSound( _type, _volume, _pitch = 1.0 )
 	{
 		if (_type == ::Const.Sound.ActorEvent.Move && ::Math.rand(1, 100) <= 33)
-		{
 			return;
-		}
 
 		this.nggh_mod_player_beast.playSound(_type, _volume, _pitch);
 	}

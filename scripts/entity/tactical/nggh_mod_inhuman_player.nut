@@ -70,20 +70,15 @@ this.nggh_mod_inhuman_player <- ::inherit("scripts/entity/tactical/player", {
 
 	function restoreArmor()
 	{
-		local b = this.m.BaseProperties;
-		local c = this.m.CurrentProperties;
-		
-		for ( local i = 0; i < 2; i = i + 1 )
+		for ( local i = 0; i < 2; ++i )
 		{
-			local add = ::Math.min(5, b.ArmorMax[i] - b.Armor[i]);
+			local add = ::Math.min(5, this.m.BaseProperties.ArmorMax[i] - this.m.BaseProperties.Armor[i]);
 			
 			if (add == 0)
-			{
 				continue;
-			}
 			
-			b.Armor[i] += add;
-			c.Armor[i] += add;
+			this.m.BaseProperties.Armor[i] += add;
+			this.m.CurrentProperties.Armor[i] += add;
 		}
 	}
 
@@ -98,9 +93,7 @@ this.nggh_mod_inhuman_player <- ::inherit("scripts/entity/tactical/player", {
 	function onFactionChanged()
 	{
 		if (this.m.IsOnInitiating)
-		{
 			return;
-		}
 
 		this.actor.onFactionChanged();
 		this.onAfterFactionChanged();
@@ -157,13 +150,9 @@ this.nggh_mod_inhuman_player <- ::inherit("scripts/entity/tactical/player", {
 			local ht = this.getDaysWounded();
 
 			if (ht == 0)
-			{
 				tooltip.remove(find);
-			}
 			else
-			{
 				tooltip[find].text = "Light Wounds (" + ht + " day" + (ht > 1 ? "s" : "") + ")";
-			}
 		}
 
 		return tooltip;
