@@ -111,6 +111,9 @@
 		::logInfo("After change \'Charm In Arena\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.IsAbleToCharmInArena = this.getValue();
 	});
+	local canBetray = page.addBooleanSetting("can_betray", true, "Simp No More");
+	canBetray.setDescription("Determines whether simps will betray you if the right conditions is met.");
+	canBetray.setPersistence(true);
 	local kraken = page.addBooleanSetting("kraken_vs_kraken", ::Nggh_MagicConcept.IsNoKrakenVsKraken, "Skip Kraken vs Kraken");
 	kraken.setDescription("If checked, allows you to skip the kraken vs kraken fight at the start of [color=" + ::Const.UI.Color.NegativeValue + "]Beast of Beasts[/color] origin.");
 	kraken.setPersistence(true);

@@ -43,15 +43,16 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 
 	function loseSimpLevel()
 	{
+		if (!::Nggh_MagicConcept.Mod.ModSettings.getSetting("can_betray").getValue() && this.getSimpLevel() == 1)
+			return;
+
 		this.setSimpLevel(this.m.SimpLevel - 1);
 	}
 
 	function getName()
 	{
 		if (this.isMutiny())
-		{
 			return "Simp No More";
-		}
 
 		return this.m.Name + " (lv. " + this.m.SimpLevel + ")";
 	}
@@ -133,10 +134,8 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		local table = {};
 
 		if (_level == null)
-		{
 			_level = this.getSimpLevel();
-		}
-
+		
 		for (local i = 1; i <= _level; ++i)
 		{
 			this.fillBonusTable(table, _value, ::Const.Simp.Bonuses[i], _forTooltips);
@@ -145,9 +144,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		foreach (array in ::Const.Simp.SpecialBonuses)
 		{
 			if (_level < array[3])
-			{
 				continue;
-			}
 
 			this.fillBonusTable(table, _value, array, _forTooltips);
 		}
@@ -162,27 +159,24 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		if (_table.rawin(_key))
 		{
 			_table[_key].Value += _value;
+			return;
 		}
-		else
-		{
-			_table.rawset(_key, {
-				Value = _value,
-			});
+		
+		_table.rawset(_key, {
+			Value = _value,
+		});
 
-			if (_forTooltips)
-			{
-				_table[_key].Name <- _array[1];
-				_table[_key].Icon <- _array[2];
-			}
+		if (_forTooltips)
+		{
+			_table[_key].Name <- _array[1];
+			_table[_key].Icon <- _array[2];
 		}
 	}
 
 	function resetToDefault()
 	{
 		if (this.m.SimpLevel != 0)
-		{
 			return;
-		}
 
 		this.m.SimpLevel = 0;
 		this.m.IsMutiny = false;
@@ -199,19 +193,13 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 	function onTurnEnd()
 	{
 		if (this.getSimpLevel() > 0)
-		{
 			return;
-		}
 
 		if (this.isMutiny())
-		{
 			return;
-		}
 
-		if (::Math.rand(1, 100) > this.m.MutinyChance)
-		{
+		if (!::Nggh_MagicConcept.Mod.ModSettings.getSetting("can_betray").getValue() || ::Math.rand(1, 100) > this.m.MutinyChance)
 			return;
-		}
 
 		local actor = this.getContainer().getActor().get();
 		this.spawnIcon("status_effect_106", actor.getTile());
@@ -231,9 +219,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		local actor = this.getContainer().getActor();
 
 		if (this.m.OldAIAgent != null)
-		{
 			actor.setAIAgent(this.m.OldAIAgent);
-		}
 
 		actor.getFlags().set("Charmed", false);
 		actor.setFaction(::Const.Faction.Player);
@@ -250,6 +236,9 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 
 	function onCombatStarted()
 	{
+		if (!::Nggh_MagicConcept.Mod.ModSettings.getSetting("can_betray").getValue() && this.getSimpLevel() == 0)
+			this.setSimpLevel(1);
+
 		this.m.MutinyChance = ::World.Flags.get("isExposed") ? ::Math.rand(10, 20) : ::Math.rand(2, 5);
 	}
 
@@ -258,9 +247,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		this.skill.onCombatFinished();
 
 		if (!this.isMutiny())
-		{
 			return;
-		}
 
 		if (::Tactical.Entities.getInstancesNum(::Const.Faction.Player) == 0)
 		{
