@@ -16,31 +16,21 @@ this.perk_nggh_serpent_venom <- ::inherit("scripts/skills/skill", {
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
 		if (_skill == null || _skill.getID() != "actives.serpent_bite")
-		{
 			return;
-		}
 
 		if (!_targetEntity.isAlive())
-		{
 			return;
-		}
 		
 		if (_targetEntity.getCurrentProperties().IsImmuneToPoison || _targetEntity.getHitpoints() <= 0 || _damageInflictedHitpoints <= ::Const.Combat.PoisonEffectMinDamage)
-		{
 			return;
-		}
 
 		if (_targetEntity.getFlags().has("undead"))
-		{
 			return;
-		}
 
 		if (!_targetEntity.isHiddenToPlayer())
 		{
 			if (this.m.SoundOnUse.len() != 0)
-			{
 				::Sound.play(::MSU.Array.rand(this.m.SoundOnUse), ::Const.Sound.Volume.RacialEffect * 1.5, _targetEntity.getPos());
-			}
 
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_targetEntity) + " is poisoned");
 		}
@@ -50,11 +40,12 @@ this.perk_nggh_serpent_venom <- ::inherit("scripts/skills/skill", {
 
 		if (poison == null)
 		{
-			local effect = this.new("scripts/skills/effects/spider_poison_effect");
-			effect.setDamage(20);
-			effect.setActorID(id);
-			effect.m.TurnsLeft = 1;
-			_targetEntity.getSkills().add(effect);
+			local poison = this.new("scripts/skills/effects/spider_poison_effect");
+			poison.m.IsStacking = false;
+			poison.setDamage(20);
+			poison.setActorID(id);
+			poison.m.TurnsLeft = 1;
+			_targetEntity.getSkills().add(poison);
 			return;
 		}
 		
@@ -63,6 +54,7 @@ this.perk_nggh_serpent_venom <- ::inherit("scripts/skills/skill", {
 		if (poison.getDamage() < 20)
 		{
 			poison.setDamage(20);
+			poison.m.IsStacking = false;
 			poison.m.TurnsLeft = 1;
 		}
 	}
