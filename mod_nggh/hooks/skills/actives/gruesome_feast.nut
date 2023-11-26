@@ -121,7 +121,7 @@
 		{
 			_effect.addFeastStack();
 			_effect.getContainer().update();
-			actor.setHitpoints(::Math.min(actor.getHitpoints() + this.m.HP_Gain, actor.getHitpointsMax()));
+			actor.setHitpoints(::Math.min(actor.getHitpoints() + (::Nggh_MagicConcept.IsOPMode ? 200 : 100), actor.getHitpointsMax()));
 
 			foreach ( injury in _effect.getContainer().getAllSkillsOfType(::Const.SkillType.Injury) )
 			{
