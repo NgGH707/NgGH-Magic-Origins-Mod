@@ -863,8 +863,7 @@ if (!("CharmedUnits" in ::Const))
 
 			function onSetAppearance( _playerEntity, _enemyEntity ) {
 				if (_enemyEntity.getSprite("head_frenzy").HasBrush) {
-					local head_frenzy = _playerEntity.getSprite("head_frenzy");
-					head_frenzy.setBrush(_playerEntity.getSprite("head").getBrush().Name + "_frenzy");
+					_playerEntity.getSprite("head_frenzy").setBrush(_playerEntity.getSprite("head").getBrush().Name + "_frenzy");
 					_playerEntity.getFlags().add("frenzy");
 				}
 				else {
@@ -1006,7 +1005,7 @@ if (!("CharmedUnits" in ::Const))
 			},
 
 			function onSetAppearance( _playerEntity, _enemyEntity ) {
-				_playerEntity.setSize(entity.m.Size);
+				_playerEntity.setSize(_enemyEntity.m.Size);
 			},
 
 			function onfillTalentsValues( _talents ) {
@@ -1368,12 +1367,10 @@ if (!("CharmedUnits" in ::Const))
 			},
 
 			function onSetAppearance( _playerEntity, _enemyEntity ) {
-				if (_enemyEntity.m.IsHigh) {
+				if (_enemyEntity.m.IsHigh)
 					_playerEntity.getFlags().add("frenzy");
-				}
-				else {
+				else
 					this.addPerk(::Const.Perks.PerkDefs.NggHWolfRabies, 6);
-				}
 			},
 
 			function onfillTalentsValues( _talents ) {
@@ -1977,7 +1974,7 @@ if (!("CharmedUnits" in ::Const))
 			},
 
 			function onSetAppearance( _playerEntity, _enemyEntity ) {
-				_playerEntity.setSize(entity.m.Size);
+				_playerEntity.setSize(_enemyEntity.m.Size);
 			},
 
 			function onfillTalentsValues( _talents ) {
