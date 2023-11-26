@@ -4,7 +4,7 @@ this.nggh_mod_unhold_hand_to_hand <- ::inherit("scripts/skills/skill", {
 	{
 		this.m.ID = "actives.unhold_hand_to_hand";
 		this.m.Name = "Hand-to-Hand Attack";
-		this.m.Description = "Let them fly! Use your limbs to inflict damage on your enemy. Damage depends on training.";
+		this.m.Description = "Use your limbs to inflict damage on your enemy. Damage depends on training.";
 		this.m.KilledString = "Smashed";
 		this.m.Icon = "skills/active_112.png";
 		this.m.IconDisabled = "skills/active_112_sw.png";
@@ -31,7 +31,7 @@ this.nggh_mod_unhold_hand_to_hand <- ::inherit("scripts/skills/skill", {
 		this.m.InjuriesOnBody = ::Const.Injury.BluntBody;
 		this.m.InjuriesOnHead = ::Const.Injury.BluntHead;
 		this.m.DirectDamageMult = 0.1;
-		this.m.ActionPointCost = 6;
+		this.m.ActionPointCost = 5;
 		this.m.FatigueCost = 18;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 1;
@@ -44,33 +44,34 @@ this.nggh_mod_unhold_hand_to_hand <- ::inherit("scripts/skills/skill", {
 	{
 		local ret = {
 			Min = 0,
-			Max = 10,
+			Max = 25,
 			HasTraining = false
 		};
 		local actor = this.getContainer().getActor();
 
 		if (actor.getSkills().hasSkill("perk.legend_unarmed_training"))
 		{
-			local average = actor.getHitpoints() * 0.03;
+			local average = actor.getHitpoints() * 0.05;
 
 			ret.Min += average;
 			ret.Max += average;
 			ret.HasTraining = true;
 		}
 
-		ret.Min = ::Math.max(10, ::Math.floor(ret.Min));
-		ret.Max = ::Math.max(15, ::Math.floor(ret.Max));
+		ret.Min = ::Math.min(50, ::Math.max(0, ::Math.floor(ret.Min)));
+		ret.Max = ::Math.min(100, ::Math.max(25, ::Math.floor(ret.Max)));
 		return ret;
 	}
 
 	function getTooltip()
 	{
 		local ret = this.getDefaultTooltip();
+
 		ret.push({
 			id = 6,
 			type = "text",
 			icon = "ui/icons/hitchance.png",
-			text = "Has [color=" + ::Const.UI.Color.NegativeValue + "]50%[/color] to knock back target"
+			text = "Has [color=" + ::Const.UI.Color.NegativeValue + "]100%[/color] to stagger target"
 		});
 
 		return ret;
@@ -79,18 +80,14 @@ this.nggh_mod_unhold_hand_to_hand <- ::inherit("scripts/skills/skill", {
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
 		if (_skill != this)
-		{
 			return;
-		}
 
 		local mods = this.getMods();
 		_properties.DamageRegularMin += mods.Min;
 		_properties.DamageRegularMax += mods.Max;
 
 		if (!mods.HasTraining)
-		{
 			_properties.DamageArmorMult = 0.5;
-		}
 	}
 
 	function onAfterUpdate( _properties )
@@ -105,14 +102,10 @@ this.nggh_mod_unhold_hand_to_hand <- ::inherit("scripts/skills/skill", {
 		local success = this.attackEntity(_user, target);
 
 		if (!_user.isAlive() || _user.isDying())
-		{
 			return success;
-		}
 
 		if (success && _targetTile.IsOccupiedByActor && target.isAlive() && !target.isDying())
-		{
 			this.applyEffectToTarget(_user, target);
-		}
 
 		return success;
 	}
@@ -120,14 +113,12 @@ this.nggh_mod_unhold_hand_to_hand <- ::inherit("scripts/skills/skill", {
 	function applyEffectToTarget( _user, _target )
 	{
 		if (_target.isNonCombatant())
-		{
 			return;
-		}
 
 		local _targetTile = _target.getTile();
-		local roll = ::Math.rand(1, 4);
-
-		if (roll <= 2 && !_target.getCurrentProperties().IsImmuneToKnockBackAndGrab && !_target.getCurrentProperties().IsRooted)
+		//local roll = ::Math.rand(1, 4);
+		// dont want to remove it, might change it in the future
+		if (false) // roll <= 2 && !_target.getCurrentProperties().IsImmuneToKnockBackAndGrab && !_target.getCurrentProperties().IsRooted)
 		{
 			local knockToTile = this.findTileToKnockBackTo(_user.getTile(), _targetTile);
 
@@ -168,14 +159,12 @@ this.nggh_mod_unhold_hand_to_hand <- ::inherit("scripts/skills/skill", {
 				::Tactical.getNavigator().teleport(_target, knockToTile, this.onKnockedDown, tag, true);
 			}
 		}
-		else if (roll == 1)
+		else
 		{
 			_target.getSkills().add(::new("scripts/skills/effects/staggered_effect"));
 
 			if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
-			{
 				::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_user) + " has staggered " + ::Const.UI.getColorizedEntityName(_target) + " for one turn");
-			}
 		}
 	}
 
