@@ -67,14 +67,7 @@
 
 			_properties.DamageRegularMin += 30;
 			_properties.DamageRegularMax += 50;
-			_properties.DamageArmorMult *= 0.7;
-
-			if (_properties.IsSpecializedInSwords && !this.m.IsRestrained)
-			{
-				_properties.DamageRegularMin += 10;
-				_properties.DamageRegularMax += 10;
-				_properties.DamageArmorMult += 0.1;
-			}
+			_properties.DamageArmorMult *= 0.75;
 
 			if (this.m.IsFrenzied && this.m.IsRestrained)
 				_properties.DamageTotalMult *= 1.25;

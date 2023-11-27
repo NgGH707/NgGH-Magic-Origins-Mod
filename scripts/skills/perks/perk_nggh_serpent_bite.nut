@@ -7,7 +7,7 @@ this.perk_nggh_serpent_bite <- ::inherit("scripts/skills/skill", {
 		this.m.Description = ::Const.Strings.PerkDescription.NggHSerpentBite;
 		this.m.Icon = "ui/perks/perk_serpent_bite.png";
 		this.m.Type = ::Const.SkillType.Perk;
-		this.m.Order = ::Const.SkillOrder.Perk;
+		this.m.Order = ::Const.SkillOrder.Last;
 		this.m.IsActive = false;
 		this.m.IsStacking = false;
 		this.m.IsHidden = false;
@@ -16,6 +16,9 @@ this.perk_nggh_serpent_bite <- ::inherit("scripts/skills/skill", {
 	function onUpdate( _properties )
 	{
 		_properties.IsSpecializedInPolearms = true;
+		_properties.DamageRegularMin += 8;
+		_properties.DamageRegularMax += 15;
+		_properties.DamageArmorMult += 0.15;
 	}
 
 });

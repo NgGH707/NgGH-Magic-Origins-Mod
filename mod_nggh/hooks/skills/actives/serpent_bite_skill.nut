@@ -4,7 +4,7 @@
 	obj.create = function()
 	{
 		ws_create();
-		this.m.Description = "A bite from a giant snake can be a little painful.";
+		this.m.Description = "A bite from a giant snake can be painful for a \"little\" bit.";
 		this.m.KilledString = "Bitten to bits";
 		this.m.Icon = "skills/active_196.png";
 		this.m.IconDisabled = "skills/active_196_sw.png";
@@ -32,12 +32,7 @@
 			this.m.MaxRange += 1;
 		
 		if (_properties.IsSpecializedInPolearms)
-		{
-			_properties.DamageRegularMin += 8;
-			_properties.DamageRegularMax += 15;
-			_properties.DamageArmorMult += 0.10;
 			this.m.ActionPointCost -= 1;
-		}
 	};
 	obj.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
 	{
@@ -46,11 +41,11 @@
 	    	local d = this.getContainer().getActor().getTile().getDistanceTo(_targetEntity.getTile());
 
 	    	// deal less damage when is not in melee range
-	    	if (d > 1)
-	    	{
-	    		_properties.MeleeSkill -= 7 * (d - 1);
-	    		_properties.MeleeDamageMult *= 0.85;
-	    	}
+	    	if (d <= 1)
+	    		return;
+	    	
+    		_properties.MeleeSkill -= 7 * (d - 1);
+    		_properties.MeleeDamageMult *= 0.85;
 	    }
 	}
 });

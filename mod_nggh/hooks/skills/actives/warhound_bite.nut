@@ -70,13 +70,6 @@
 			_properties.DamageRegularMax += 40;
 			_properties.DamageArmorMult *= 0.4;
 			
-			if (_properties.IsSpecializedInSwords && !this.m.IsRestrained)
-			{
-				_properties.DamageRegularMin += 10;
-				_properties.DamageRegularMax += 10;
-				_properties.DamageArmorMult *= 1.1;
-			}
-			
 			if (this.canDoubleGrip())
 				_properties.DamageTotalMult /= 1.25;
 		}

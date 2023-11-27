@@ -72,10 +72,6 @@
 	{
 		if (_skill == this && this.m.IsRestrained)
 		{
-			_properties.DamageRegularMin += 45;
-			_properties.DamageRegularMax += 75;
-			_properties.DamageArmorMult += 0.8;
-
 			local items = this.getContainer().getActor().getItems();
 			local mhand = items.getItemAtSlot(::Const.ItemSlot.Mainhand);
 
@@ -86,11 +82,13 @@
 				_properties.DamageArmorMult /= mhand.m.ArmorDamageMult;
 				_properties.DamageDirectAdd -= mhand.m.DirectDamageAdd;
 			}
+
+			_properties.DamageRegularMin += 45;
+			_properties.DamageRegularMax += 75;
+			_properties.DamageArmorMult *= 1.0;
 			
 			if (this.canDoubleGrip())
-			{
 				_properties.DamageTotalMult /= 1.25;
-			}
 		}
 	};
 });

@@ -112,24 +112,13 @@
 
 			_properties.DamageRegularMin += 20;
 			_properties.DamageRegularMax += 35;
-			_properties.DamageArmorMult *= 1.0;
-
-			if (_properties.IsSpecializedInCleavers && !this.m.IsRestrained)
-			{
-				_properties.DamageRegularMin += 10;
-				_properties.DamageRegularMax += 10;
-				_properties.DamageArmorMult += 0.1;
-			}
+			_properties.DamageArmorMult *= 0.7;
 
 			if (this.m.IsFrenzied && this.m.IsRestrained)
-			{
 				_properties.DamageTotalMult *= 1.25;
-			}
 
 			if (this.canDoubleGrip())
-			{
 				_properties.DamageTotalMult /= 1.25;
-			}
 		}
 	};
 	obj.onUpdate = function( _properties ) {};

@@ -1,6 +1,6 @@
 this.perk_nggh_wolf_thick_hide <- ::inherit("scripts/skills/skill", {
 	m = {
-		BonusArmor = 60
+		BonusArmor = 70
 	},
 	function create()
 	{
@@ -18,9 +18,7 @@ this.perk_nggh_wolf_thick_hide <- ::inherit("scripts/skills/skill", {
 	function onAdded()
 	{
 		if (!this.m.IsNew)
-		{
 			return;
-		}
 
 		local b = this.getContainer().getActor().getBaseProperties();
 		b.Armor[0] += this.m.BonusArmor;
