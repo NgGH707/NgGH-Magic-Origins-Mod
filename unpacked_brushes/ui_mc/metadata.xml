@@ -98,6 +98,8 @@
 
   <sprite id="charge_perk_mini" offsetY="35" ic="FF2E326F" img="skills\mini\charge_perk_mini.png" />
   
+  <sprite id="perk_simp_bodyguard" ic="FF2E326F" img="skills\perk_simp_bodyguard.png" />
+  <sprite id="perk_simp_bodyguard_mini" offsetY="35" ic="FF2E326F" img="skills\mini\perk_simp_bodyguard_mini.png" />
   <sprite id="perk_madden_active" ic="FF2E326F" img="skills\perk_madden_active.png" />
   <sprite id="perk_madden" ic="FF2E326F" img="skills\perk_madden.png" />
   <sprite id="perk_madden_mini" offsetY="35" ic="FF2E326F" img="skills\mini\perk_madden_mini.png" />
