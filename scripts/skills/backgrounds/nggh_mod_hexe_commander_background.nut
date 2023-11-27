@@ -81,27 +81,29 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 			[ // 3
 				::Const.Perks.PerkDefs.Nimble,
 				::Const.Perks.PerkDefs.FortifiedMind,
+				::Const.Perks.PerkDefs.Rebound,
 				::Const.Perks.PerkDefs.InspiringPresence,
-				::Const.Perks.PerkDefs.LegendTrueBeliever,
 				::Const.Perks.PerkDefs.LegendValaInscribeShield,
 				::Const.Perks.PerkDefs.LegendHerbcraft,
 				::Const.Perks.PerkDefs.LegendPotionBrewer,
-				
 			],
 			[ // 4
 				::Const.Perks.PerkDefs.LegendClarity,
+				::Const.Perks.PerkDefs.Duelist,
 				::Const.Perks.PerkDefs.LegendValaInscribeWeapon,
 				::Const.Perks.PerkDefs.LegendDistantVisions,
 				::Const.Perks.PerkDefs.LegendTerrifyingVisage,
 			],
 			[ // 5
-				::Const.Perks.PerkDefs.LegendValaInscriptionMastery,	
+				::Const.Perks.PerkDefs.LegendValaInscriptionMastery,
 				::Const.Perks.PerkDefs.LegendValaInscribeHelmet,
 				::Const.Perks.PerkDefs.LegendValaInscribeArmor,
 				::Const.Perks.PerkDefs.LegendMindOverBody,
+				::Const.Perks.PerkDefs.Berserk,
 			],
 			[ // 6
 				::Const.Perks.PerkDefs.PerfectFocus,
+				::Const.Perks.PerkDefs.KillingFrenzy,
 			],
 			[],
 			[],
@@ -115,14 +117,10 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [::Const.Perks.MediumArmorTree, ::Const.Perks.PhilosophyMagicTree, ::Const.Perks.ChefClassTree,::Const.Perks.HealerClassTree]);
 
 		if (::Math.rand(1, 100) >= 95)
-		{
 			this.m.CustomPerkTree[2].push(::Const.Perks.PerkDefs.NggHMiscFairGame);
-		}
 
 		if (::Math.rand(1, 100) == 100)
-		{
 			this.m.CustomPerkTree[6].push(::Const.Perks.PerkDefs.NggHMiscChampion);
-		}
 
 		if (this.m.IsHavingWhipTree) return;
 		
@@ -159,9 +157,7 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		local list = [::Const.Perks.HexeHexTree,::Const.Perks.HexeSpecializedHexTree];
 
 		if (this.m.IsHavingWhipTree)
-		{
 			list.push(::Const.Perks.Hexe_BDSM_Tree);
-		}
 
 		list.extend([::Const.Perks.HexeBasicTree,::Const.Perks.HexeBeastCharmTree,::Const.Perks.HexeBeastCharmAdvancedTree]);
 
@@ -231,11 +227,12 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 
 		if (this.m.IsHavingWhipTree)
 		{
+			_properties.Hitpoints += 10;
 			_properties.Bravery = ::Math.rand(42, 52);
 			_properties.Stamina = ::Math.rand(83, 96);
-			_properties.MeleeSkill = ::Math.rand(50, 60);
+			_properties.MeleeSkill = ::Math.rand(50, 62);
 			_properties.RangedSkill = ::Math.rand(40, 45);
-			_properties.MeleeDefense = ::Math.rand(2, 9);
+			_properties.MeleeDefense = ::Math.rand(2, 10);
 			_properties.Initiative = ::Math.rand(95, 115);
 		}
 		else
@@ -254,16 +251,12 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		local items = this.getContainer().getActor().getItems();
 
 		if (this.m.IsHavingWhipTree)
-		{
 			items.equip(::new("scripts/items/weapons/" + (::Math.rand(1, 100) <= 33 ? "barbarians/thorned_whip" : "battle_whip")));
-		}
 		else
-		{
 			items.equip(::new("scripts/items/weapons/greenskins/goblin_staff"));
-		}
 
-		items.equip(::Const.World.Common.pickArmor([[1, "thick_dark_tunic"]]));
-		items.equip(::Const.World.Common.pickHelmet([[1, "dark_cowl"],[1, "hood"],[1, ""]]));
+		items.equip(::Const.World.Common.pickArmor([[1, "ragged_dark_surcoat"],[1, "thick_dark_tunic"]]));
+		items.equip(::Const.World.Common.pickHelmet([[1, "witchhunter_hat"],[2, "dark_cowl"],[1, "hood"],[1, ""]]));
 	}
 
 	function onCombatStarted()
@@ -439,9 +432,7 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 
 		// witch can shred hair a lot XD
 		if (stash.getNumberOfEmptySlots() > 0 && ::Math.rand(1, 100) <= 10)
-		{
 			stash.add(::new("scripts/items/misc/" + (::Math.rand(1, 3) == 3 ? "legend_witch_leader_hair_item" : "witch_hair_item")));
-		}
 
 		// check for the ritual event
 		::logInfo("Hexe Origin Ritual - Checking the conditions");
