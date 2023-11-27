@@ -6,7 +6,7 @@ this.nggh_mod_named_lindwurm_scales_legend_upgrade <- ::inherit("scripts/items/l
 	{
 		this.legend_named_armor_upgrade.create();
 		this.m.ID = "legend_named_armor_upgrade.lindwurm_scales";
-		this.m.Type = ::Const.Items.ArmorUpgrades.Attachment;
+		this.m.Type = ::Const.Items.ArmorUpgrades.Cloak;
 		this.m.Name = "Lindwurm Scale Cloak";
 		this.m.Description = "A cloak made out of the scales of a Lindwurm. Not only is it a rare and impressive trophy, it also offers additional protection and is untouchable by corroding Lindwurm blood.";
 		this.m.ArmorDescription = "A cloak made out of Lindwurm scales is worn over this armor for additional protection, including from the corrosive effects of Lindwurm blood.";

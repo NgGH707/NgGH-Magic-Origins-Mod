@@ -6,7 +6,7 @@ this.nggh_mod_named_serpent_skin_legend_upgrade <- ::inherit("scripts/items/lege
 	{
 		this.legend_named_armor_upgrade.create();
 		this.m.ID = "legend_named_armor_upgrade.serpent_skin";
-		this.m.Type = ::Const.Items.ArmorUpgrades.Attachment;
+		this.m.Type = ::Const.Items.ArmorUpgrades.Cloak;
 		this.m.Name = "Serpent Skin Mantle";
 		this.m.Description = "A mantle crafted from the thin and shimmering scales of desert serpents, especially resistant to heat and flames.";
 		this.m.ArmorDescription = "A mantle of serpent skin has been attached to this armor, which makes it more resistant to heat and flames.";

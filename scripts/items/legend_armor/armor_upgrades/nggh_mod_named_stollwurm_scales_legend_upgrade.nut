@@ -6,7 +6,7 @@ this.nggh_mod_named_stollwurm_scales_legend_upgrade <- ::inherit("scripts/items/
 	{
 		this.legend_named_armor_upgrade.create();
 		this.m.ID = "legend_armor_upgrade.legend_stollwurm_scales";
-		this.m.Type = ::Const.Items.ArmorUpgrades.Attachment;
+		this.m.Type = ::Const.Items.ArmorUpgrades.Cloak;
 		this.m.Name = "Stollwurm Scale Cloak";
 		this.m.Description = "A cloak made out of the scales of a Stollwurm. Not only is it a rare and impressive trophy, it also offers additional protection";
 		this.m.ArmorDescription = "A cloak made out of Stollwurm scales is worn over this armor for additional protection.";
