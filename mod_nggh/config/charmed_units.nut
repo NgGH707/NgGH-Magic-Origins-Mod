@@ -2688,6 +2688,9 @@ if (!("CharmedUnits" in ::Const))
 		if (!("IsMiniboss" in _data))
 			_data.IsMiniboss <- _entity == null ? false : _entity.getSkills().hasSkill("racial.champion");
 
+		if (!("Custom" in _data))
+			_data.Custom <- this.getCustom(_data.Type);
+
 		if (_entity == null)
 			return _data;
 
@@ -2746,7 +2749,7 @@ if (!("CharmedUnits" in ::Const))
 	
 	function getStatMod( _type )
 	{
-		return this.getDataByKey(_type, "StatMod", { Hitpoints = [-5, -5], Bravery = [-5, -5], Stamina = [-5, -5], MeleeSkill = [-5, -5], RangedSkill = [-5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-5, -5] }, true);
+		return this.getDataByKey(_type, "StatMod", { Hitpoints = [-5, -5], Bravery = [-5, -5], Stamina = [-5, -5], MeleeSkill = [-5, -5], RangedSkill = [-5, -5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [-5, -5] });
 	}
 
 	function getBackground( _type )

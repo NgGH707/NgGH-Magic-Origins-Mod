@@ -40,6 +40,7 @@ if (!("CharmedUtilities" in ::Const))
 
 		local names;
 		local lastNames;
+		local alreadyGotName = false;
 
 		if (("Background" in _data) && _data.Background != null)
 		{
@@ -62,12 +63,10 @@ if (!("CharmedUtilities" in ::Const))
 			}
 
 			if ("PerkGroupMultipliers" in bg.m)
-			{
 				_background.m.PerkGroupMultipliers = bg.m.PerkGroupMultipliers;
-			}
 		}
-			
-		if (_data.Entity != null && _data.Entity.getName() != ::Const.Strings.EntityName[_data.Type])
+		
+		if (_data.Entity != null && _data.Entity.getName().find(::Const.Strings.EntityName[_data.Type]) == null)
 		{
 			_background.m.HasFixedName = true;
 			_background.m.Titles = [_data.Entity.getTitle()];
@@ -81,30 +80,20 @@ if (!("CharmedUtilities" in ::Const))
 		if (("Custom" in _data) && typeof _data.Custom == "table" && _data.Custom.len() != 0)
 		{
 			if ("ID" in _data.Custom)
-			{
 				_background.m.ID = _data.Custom.ID;
-			}
 
 			if ("ExcludedTalents" in _data.Custom)
 			{
 				if (_data.Custom.ExcludedTalents.len() == ::Const.Attributes.COUNT)
-				{
 					_background.addBackgroundType(::Const.BackgroundType.Untalented);
-				}
 				else
-				{
 					_background.m.ExcludedTalents.extend(_data.Custom.ExcludedTalents);
-				}
 			}
 
 			if (("Names" in _data.Custom) && typeof _data.Custom.Names == "string" && (_data.Custom.Names in ::Const.Strings))
-			{
 				names.extend(::Const.Strings[_data.Custom.Names]);
-			}
 			else
-			{
 				names.extend(::Const.Strings.CharacterNames);
-			}
 		}
 
 		if (::Const.Goblin.Variants.find(_data.Type) != null)
