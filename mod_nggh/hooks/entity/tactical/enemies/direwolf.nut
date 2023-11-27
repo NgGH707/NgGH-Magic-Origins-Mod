@@ -25,11 +25,22 @@
 		b.MeleeSkill += 15;
 		b.MeleeDefense += 10;
 		b.Bravery += 15;
+
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_wolf_bite"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_wolf_thick_hide"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_wolf_enrage"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
 		this.m.Skills.add(::new("scripts/skills/actives/line_breaker"));
+
+		if (!::Tactical.State.isScenarioMode())
+		{
+			if (::World.getTime().Days >= 75)
+				this.m.Skills.add(::new("scripts/skills/perks/perk_overwhelm"));
+
+			if (::World.getTime().Days >= 100)
+				this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
+		}
+
 		return true;
 	}
 });

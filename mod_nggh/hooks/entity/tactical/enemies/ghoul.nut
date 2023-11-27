@@ -75,9 +75,7 @@
 	obj.makeMiniboss <- function()
 	{
 		if (!this.actor.makeMiniboss())
-		{
 			return false;
-		}
 
 		local b = this.m.BaseProperties;
 		b.MeleeSkill += 10;
@@ -87,6 +85,16 @@
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_nacho_frenzy"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_devastating_strikes"));
 		this.m.Skills.add(::new("scripts/skills/actives/charge"));
+
+		if (!::Tactical.State.isScenarioMode())
+		{
+			if (::World.getTime().Days >= 75)
+				this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
+
+			if (::World.getTime().Days >= 125)
+				this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
+		}
+
 		return true;
 	}
 });

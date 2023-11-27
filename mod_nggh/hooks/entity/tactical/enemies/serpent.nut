@@ -19,9 +19,7 @@
 	obj.makeMiniboss <- function()
 	{
 		if (!this.actor.makeMiniboss())
-		{
 			return false;
-		}
 
 		local b = this.m.BaseProperties;
 		b.ActionPoints += 1;
@@ -33,6 +31,16 @@
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_serpent_drag"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_serpent_giant"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
+
+		if (!::Tactical.State.isScenarioMode())
+		{
+			if (::World.getTime().Days >= 75)
+				this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
+
+			if (::World.getTime().Days >= 125)
+				this.m.Skills.add(::new("scripts/skills/perks/perk_legend_ubernimble"));
+		}
+
 		this.setHitpointsPct(1.0);
 		return true;
 	}

@@ -22,9 +22,7 @@
 	obj.makeMiniboss <- function()
 	{
 		if (!this.actor.makeMiniboss())
-		{
 			return false;
-		}
 
 		this.m.BaseProperties.ActionPoints = 8;
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_lindwurm_body"));
@@ -37,6 +35,9 @@
 			this.m.Tail.m.Skills.add(::new("scripts/skills/perks/perk_nggh_lindwurm_body"));
 			this.m.Tail.m.Skills.add(::new("scripts/skills/perks/perk_bloody_harvest"));
 		}
+
+		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 150)
+			this.m.Skills.add(::new("scripts/skills/perks/perk_colossus"));
 
 		return true;
 	}
