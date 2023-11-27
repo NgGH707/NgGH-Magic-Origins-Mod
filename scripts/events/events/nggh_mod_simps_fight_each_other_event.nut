@@ -8,7 +8,7 @@ this.nggh_mod_simps_fight_each_other_event <- ::inherit("scripts/events/event", 
 	{
 		this.m.ID = "event.simps_fight_each_other";
 		this.m.Title = "During camp...";
-		this.m.Cooldown = 31.0 * ::World.getTime().SecondsPerDay;
+		this.m.Cooldown = 25.0 * ::World.getTime().SecondsPerDay;
 		this.m.Screens.push({
 			ID = "A",
 			Text = "[img]gfx/ui/events/event_06.png[/img]A series of shouting followed by a loud noise likes some drunkard fighting in a tarven. At first you , %hexe%, pay no heed for such thing but as a few minutes past, you doubt this ruckus will end anytime soon or atleast there will be no death. You leave your tent to see that what is going on. %randomsimp1% and %randomsimp2% are fighting. A scene looks nothing but ferocious animals figthing for domination or so as you think. Some people try to intervene and fail, some are watching with great interest.%SPEECH_ON%What is the meaning of this? Stop this maddness right away, you morons!%SPEECH_OFF%Everyone quitely look at your direction, %randomsimp1% and %randomsimp2% stop fighting then stare at you with a look of children going to be scolded. The two start to explain the reason the fight, you keep on a stern look while listening to what they have to say. You silent think:%SPEECH_ON%These fools fight just because of that. Who is more adored by me? Such simple mind, no wonder why they fall for my charm so easily. What should i do now? Name one of them to end this?%SPEECH_OFF%%hexe% smiles.",
