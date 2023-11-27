@@ -179,14 +179,18 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 	
 	function onHiredByScenario( _bro )
 	{
-		if ([
-			"background.eunuch",
+		if (_bro.getBackground().getID() == "background.eunuch") {
+			_bro.worsenMood(5.0, "Horrified by knowing the true nature of this company");
+			return;
+		}
+
+		if (!_bro.getSkills().hasSkill("effects.simp") && [
 			"background.hexe",
 			"background.hexe_commander",
-		].find(_bro.getBackground().getID()) == null)
+		].find(_bro.getBackground().getID()) == null) {
+			_bro.getBackground().addPerkGroup(::Const.Perks.NggH_SimpTree.Tree);
 			_bro.getSkills().add(::new("scripts/skills/hexe/nggh_mod_fake_charmed_effect"));
-		else if (_bro.getBackground().getID() == "background.eunuch")
-			_bro.worsenMood(5.0, "Horrified by knowing the true nature of this company");
+		}
 	}
 	
 	function onUpdateHiringRoster( _roster, _settlement = null )
@@ -878,6 +882,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			{
 				starter.setStartValuesEx(::Const.CharacterBackgrounds);
 				starter.improveMood(1.0, "Still alive to serve the mistress");
+				starter.getBackground().addPerkGroup(::Const.Perks.NggH_SimpTree.Tree);
 			}
 			else 
 			{

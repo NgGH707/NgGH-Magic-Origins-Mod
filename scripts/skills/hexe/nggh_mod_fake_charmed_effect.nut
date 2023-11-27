@@ -34,6 +34,7 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 	function setSimpLevel( _lv )
 	{
 		this.m.SimpLevel = ::Math.max(0, ::Math.min(::Const.Simp.MaximumLevel, _lv));
+		this.checkSimp();
 	}
 
 	function gainSimpLevel()
@@ -43,10 +44,11 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 
 	function loseSimpLevel()
 	{
-		if (!::Nggh_MagicConcept.Mod.ModSettings.getSetting("can_betray").getValue() && this.getSimpLevel() == 1)
-			return;
+		if (!this.canLowerSimpLevel())
+			return false;
 
 		this.setSimpLevel(this.m.SimpLevel - 1);
+		return true;
 	}
 
 	function getName()
@@ -106,6 +108,17 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 		}
 
 		return ret;
+	}
+
+	function canLowerSimpLevel()
+	{
+		if (this.getSimpLevel() > 1)
+			return true;
+
+		if (!::Nggh_MagicConcept.Mod.ModSettings.getSetting("can_betray").getValue())
+			return false;
+
+		return !this.getContainer().hasSkill(::Const.Perks.PerkDefObjects[::Const.Perks.PerkDefs.NggH_Simp_UndyingLove].ID);
 	}
 
 	function onUpdate( _properties )
@@ -188,6 +201,19 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 			this.getContainer().getActor().getAIAgent().setActor(this.getContainer().getActor());
 			this.m.OldAIAgent = null;
 		}
+	}
+
+	function checkSimp()
+	{
+		if (this.getSimpLevel() < 10)
+			return;
+
+		local perk = this.getContainer().getSkillByID(::Const.Perks.PerkDefObjects[::Const.Perks.PerkDefs.NggH_Simp_NoFoodOnlyLove].ID);
+	
+		if (perk == null)
+			return;
+
+		perk.refund();
 	}
 
 	function onTurnEnd()

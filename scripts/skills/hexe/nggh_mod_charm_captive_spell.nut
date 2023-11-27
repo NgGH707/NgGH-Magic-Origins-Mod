@@ -836,9 +836,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 					local charm = c.getSkills().getSkillByID("effects.charmed_captive");
 
 					if (charm != null && !charm.isGarbage())
-					{
 						charm.onCombatFinished();
-					}
 				}
 			}
 		}

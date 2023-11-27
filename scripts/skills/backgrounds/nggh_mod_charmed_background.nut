@@ -313,6 +313,8 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 
 		if (data != null && ("Perks" in data) && typeof data.Perks == "array") perks.extend(data.Perks);
 
+		this.addPerkGroup(::Const.Perks.NggH_SimpTree.Tree);
+
 		foreach (i, Const in perks )
 		{
 			::World.Assets.getOrigin().addScenarioPerk(this, ::Const.Perks.PerkDefs[Const], i);
