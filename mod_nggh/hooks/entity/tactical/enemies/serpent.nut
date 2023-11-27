@@ -7,17 +7,13 @@
 		local chance = 15;
 
 		if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
-		{
 			chance = 115;
-		}
 
-		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 100)
-		{
-			chance = ::Math.min(100, chance + ::Math.max(5, ::World.getTime().Days - 100));
-		}
+		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 50)
+			chance = ::Math.min(100, chance + ::Math.max(5, ::World.getTime().Days - 50));
 
-		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHSerpentBite, ::Const.Perks.PerkDefs.NggHSerpentVenom], chance - 15);
-		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHSerpentDrag, ::Const.Perks.PerkDefs.NggHSerpentGiant], chance);
+		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHSerpentBite, ::Const.Perks.PerkDefs.NggHSerpentVenom], chance - 25);
+		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHSerpentDrag, ::Const.Perks.PerkDefs.NggHSerpentGiant], chance - 35);
 	}
 
 	obj.makeMiniboss <- function()
