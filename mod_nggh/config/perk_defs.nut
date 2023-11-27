@@ -869,5 +869,43 @@
 		Const = "NggH_BDSM_DommyMommy"
 	},
 
+// simp
+	{
+		ID = "perk.simp_no_food_only_love",
+		Script = "scripts/skills/perks/perk_nggh_simp_no_food_only_love",
+		Name = ::Const.Strings.PerkName.NggH_Simp_NoFoodOnlyLove,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Simp_NoFoodOnlyLove,
+		Icon = "ui/perks/perk_simp_no_food_only_love.png",
+		IconDisabled = "ui/perks/perk_simp_no_food_only_love_sw.png",
+		Const = "NggH_Simp_NoFoodOnlyLove"
+	},
+	{
+		ID = "perk.simp_bodyguard",
+		Script = "scripts/skills/perks/perk_nggh_simp_bodyguard",
+		Name = ::Const.Strings.PerkName.NggH_Simp_Bodyguard,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Simp_Bodyguard,
+		Icon = "ui/perks/perk_simp_bodyguard.png",
+		IconDisabled = "ui/perks/perk_simp_bodyguard_sw.png",
+		Const = "NggH_Simp_Bodyguard"
+	},
+	{
+		ID = "perk.simp_undying_love",
+		Script = "scripts/skills/perks/perk_nggh_simp_undying_love",
+		Name = ::Const.Strings.PerkName.NggH_Simp_UndyingLove,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Simp_UndyingLove,
+		Icon = "ui/perks/perk_simp_undying_love.png",
+		IconDisabled = "ui/perks/perk_simp_undying_love_sw.png",
+		Const = "NggH_Simp_UndyingLove"
+	},
+	{
+		ID = "perk.simp_level_up",
+		Script = "scripts/skills/perks/perk_nggh_simp_level_up",
+		Name = ::Const.Strings.PerkName.NggH_Simp_LevelUp,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Simp_LevelUp,
+		Icon = "ui/perks/perk_simp_level_up.png",
+		IconDisabled = "ui/perks/perk_simp_level_up_sw.png",
+		Const = "NggH_Simp_LevelUp"
+	},
+
 ]);
 

@@ -172,6 +172,28 @@
 ];
 ////////////////////////////////////////////////////
 
+::Const.Perks.NggH_SimpTree <- {
+	ID = "Simp",
+	Name = "Simp",
+	Descriptions = ["Nuh uh! You\'re a simp."],
+	Tree = [
+		[],
+		[
+			::Const.Perks.PerkDefs.NggH_Simp_NoFoodOnlyLove,
+		],
+		[],
+		[
+			::Const.Perks.PerkDefs.NggH_Simp_UndyingLove,
+		],
+		[
+			::Const.Perks.PerkDefs.NggH_Simp_Bodyguard,
+		],
+		[],
+		[
+			::Const.Perks.PerkDefs.NggH_Simp_LevelUp
+		],
+	]
+};
 
 ::Const.Perks.NggH_MiscTree <- {
 	ID = "Misc",
