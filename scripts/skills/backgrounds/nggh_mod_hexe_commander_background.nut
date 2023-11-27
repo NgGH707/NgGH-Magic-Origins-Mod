@@ -44,6 +44,25 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 				::Const.Attributes.RangedSkill,
 				::Const.Attributes.RangedDefense
 			];
+
+			this.m.Excluded = [
+				"trait.dumb",
+				"trait.superstitious",
+				"trait.fear_beasts",
+				"trait.craven",
+				"trait.legend_fear_dark",
+				"trait.night_blind",
+				"trait.sureshot",
+				"trait.steady_hands"
+				"trait.tiny",
+			];
+		}
+		else
+		{
+			this.m.Excluded.extend([
+				"trait.firm",
+				"trait.bloodthirsty"
+			]);
 		}
 
 		this.m.CustomPerkTree = this.getDefaultCustomPerkTree();

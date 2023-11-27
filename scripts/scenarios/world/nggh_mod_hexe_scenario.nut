@@ -40,9 +40,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			//0:eggs - 1:spider - 2:redback - 3:wolf - 4:white wolf - 5:hyena - 6:serpent - 7:unhold - 8:ghoul - 9:alp - 10:goblin - 11:orc - 12:human - 13:ijirok - 14:lindwurm - 15:schrat - 16:bear - 17:circus
 
 			if (::Const.HexeOrigin.SeedsStartWithWhip.find(forced_start_ID) != null)
-			{
 				::Nggh_MagicConcept.ForceWhipPerk = true;
-			}
 
 			local hexe = roster.create("scripts/entity/tactical/player");
 			hexe.setStartValuesEx(["nggh_mod_hexe_commander_background"]);
@@ -117,9 +115,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			randomVillage = ::World.EntityManager.getSettlements()[i];
 
 			if (!randomVillage.isMilitary() && !randomVillage.isIsolatedFromRoads() && randomVillage.getSize() == 1)
-			{
 				break;
-			}
 		}
 
 		local randomVillageTile = randomVillage.getTile();
@@ -132,34 +128,28 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			local y = ::Math.rand(::Math.max(2, randomVillageTile.SquareCoords.Y - 4), ::Math.min(::Const.World.Settings.SizeY - 2, randomVillageTile.SquareCoords.Y + 4));
 
 			if (!::World.isValidTileSquare(x, y))
-			{
-			}
-			else
-			{
-				local tile = ::World.getTileSquare(x, y);
+				continue;
+			
+			local tile = ::World.getTileSquare(x, y);
 
-				if (tile.Type == ::Const.World.TerrainType.Ocean || tile.Type == ::Const.World.TerrainType.Shore || tile.IsOccupied)
-				{
-				}
-				else if (tile.getDistanceTo(randomVillageTile) <= 1)
-				{
-				}
-				else if (tile.Type != ::Const.World.TerrainType.Plains && tile.Type != ::Const.World.TerrainType.Steppe && tile.Type != ::Const.World.TerrainType.Tundra && tile.Type != ::Const.World.TerrainType.Snow)
-				{
-				}
-				else
-				{
-					local path = ::World.getNavigator().findPath(tile, randomVillageTile, navSettings, 0);
+			if (tile.Type == ::Const.World.TerrainType.Ocean || tile.Type == ::Const.World.TerrainType.Shore || tile.IsOccupied)
+				continue;
 
-					if (!path.isEmpty())
-					{
-						randomVillageTile = tile;
-						break;
-					}
-				}
+			if (tile.getDistanceTo(randomVillageTile) <= 1)
+				continue;
+
+			if (tile.Type != ::Const.World.TerrainType.Plains && tile.Type != ::Const.World.TerrainType.Steppe && tile.Type != ::Const.World.TerrainType.Tundra && tile.Type != ::Const.World.TerrainType.Snow)
+				continue;
+
+			local path = ::World.getNavigator().findPath(tile, randomVillageTile, navSettings, 0);
+
+			if (!path.isEmpty())
+			{
+				randomVillageTile = tile;
+				break;
 			}
 		}
-		while (1);
+		while(true);
 		
 		local eventID = this.m.IsLuftAdventure ? "event.luft_scenario_intro" : "event.hexe_intro_event";
 		::World.State.m.Player = ::World.spawnEntity("scripts/entity/world/player_party", randomVillageTile.Coords.X, randomVillageTile.Coords.Y);
@@ -194,13 +184,9 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			"background.hexe",
 			"background.hexe_commander",
 		].find(_bro.getBackground().getID()) == null)
-		{
 			_bro.getSkills().add(::new("scripts/skills/hexe/nggh_mod_fake_charmed_effect"));
-		}
 		else if (_bro.getBackground().getID() == "background.eunuch")
-		{
 			_bro.worsenMood(5.0, "Horrified by knowing the true nature of this company");
-		}
 	}
 	
 	function onUpdateHiringRoster( _roster, _settlement = null )
@@ -211,19 +197,13 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		foreach( i, bro in bros )
 		{
 			if (::Const.WitchHaters.find(bro.getBackground().m.ID) != null)
-			{
 				garbage.push(bro);
-			}
 			
 			if (bro.getSkills().hasSkill("trait.bright"))
-			{
 				bro.getSkills().removeByID("trait.bright");
-			}
 			
 			if (!bro.getSkills().hasSkill("trait.dumb") && ::Math.rand(1, 100) <= 25)
-			{
 				bro.getSkills().add(::new("scripts/skills/traits/dumb_trait"));
-			}
 		}
 		
 		foreach( g in garbage )
@@ -237,9 +217,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		foreach( bro in ::World.getPlayerRoster().getAll() )
 		{
 			if (bro.getFlags().get("IsPlayerCharacter"))
-			{
 				return true;
-			}
 		}
 
 		return false;
@@ -257,9 +235,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		foreach ( p in possibleName ) 
 		{
 			if(_name.find(p) != null)
-			{
 				return true;
-			}
 		}
 
 		return false;
@@ -281,9 +257,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			    foreach (p in possibleName) 
 			    {
 			        if (_inputName.find(p) != null)
-			    	{
 			    		return i;
-			    	}
 			    }
 		    }
 		}
@@ -293,16 +267,12 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		foreach (i, string in ::Const.HexeOrigin.SeedKeywords)
 		{
 			if (string.len() > length)
-			{
 				return null;
-			}
 
 			local keyword = string.len() == length ? _inputSeed : _inputSeed.slice(0, string.len());
 			
 			if (keyword == string)
-			{
 				return i;
-			}
 		}
 		
 		return null;
@@ -852,9 +822,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 	function setupRandomStart( _credits = 0 , _declare = true )
 	{
 		if (_declare)
-		{
 			::logInfo("Your starting party would be: RANDOM");
-		}
 		
 		local c = 2;
 
@@ -867,9 +835,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			c = ::Math.rand(5, 7)
 
 			if (c >= 7)
-			{
 				c = ::Math.rand(5, 7);
-			}
 		}
 
 		::logInfo("Your party budget: " + c + " credits");
@@ -925,9 +891,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			starter.onHired();
 
 			if (!this.m.IsLuftAdventure)
-			{
 				starter.addHeavyInjury();
-			}
 		}
 	}
 
@@ -936,9 +900,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		foreach(trait in _bro.getSkills().getAllSkillsOfType(::Const.SkillType.Trait))
 		{
 			if (trait.isType(::Const.SkillType.Background))
-			{
 				continue;
-			}
 
 			trait.removeSelf();
 		}

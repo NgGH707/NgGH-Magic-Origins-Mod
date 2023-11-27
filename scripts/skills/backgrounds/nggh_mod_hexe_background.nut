@@ -20,6 +20,7 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 			"trait.huge",
 			"trait.heavy",
 			"trait.aggressive",
+			"trait.legend_fear_dark"
 		];
 		
 		this.m.ExcludedTalents = [
@@ -586,9 +587,8 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 	function setAppearance()
 	{
 		if (this.m.HairColors == null)
-		{
 			return;
-		}
+
 
 		local actor = this.getContainer().getActor();
 
@@ -630,9 +630,7 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 		local a = this.character_background.buildPerkTree();
 
 		if (!this.m.IsDeserializing)
-		{
 			this.onFinishingPerkTree();
-		}
 
 		return a;
 	}
