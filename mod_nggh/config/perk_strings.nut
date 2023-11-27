@@ -332,18 +332,66 @@
 													+ "\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue."
 													+ "\n• Reduces the cooldown to [color=" + ::Const.UI.Color.NegativeValue + "]1[/color] turn.";
 
-::Const.Strings.PerkDescription.NggHSerpentBite <- "\'Lightning attack that can deliver a more powerful bite.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Bite[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Only costs [color=" + ::Const.UI.Color.PositiveValue + "]4[/color] AP.\n• Attack Damage is increased by [color=" + ::Const.UI.Color.DamageValue + "]8[/color]-[color=" + ::Const.UI.Color.DamageValue + "]15[/color] points.\n• Effectiveness vs. Armor is increased by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color].";
-::Const.Strings.PerkDescription.NggHSerpentDrag <- "\'With strong muscles, any prey can easily be disable in this unbreakable constriction.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Drag[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue.\n• Increases maximum range by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] tile.\n• Now also deals up to [color=" + ::Const.UI.Color.DamageValue + "]10[/color] armor piercing damage.";
-::Const.Strings.PerkDescription.NggHSerpentVenom <- "\'Evolve to gain a venom gland to poison your prey. Deadly but doesn\'t persist long.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Bite[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Inflicts an additional [color=" + ::Const.UI.Color.DamageValue + "]20[/color] poison damage per turn.\n• The [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color] effect inflicted by this perk only lasts for 1 turn.";
-::Const.Strings.PerkDescription.NggHSerpentGiant <- "\'What could be more terrifying than a big snake? A gigantic snake!\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Drag[/color] skill has a chance to [color=" + ::Const.UI.Color.PositiveValue + "]Disarm[/color] its dragged target based on current Melee skill.\n• [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Drag[/color] skill allows you to drag allies with immunity to Knock back and Grab.\n• [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Bite[/color] skill has its attack range increased by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color].";
+::Const.Strings.PerkDescription.NggHSerpentBite <- "\'Lightning-fast attack that can deliver more powerful bite.\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Bite[/color]"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+														+ "\n• Only costs [color=" + ::Const.UI.Color.PositiveValue + "]4[/color] AP."
+														+ "\n• Attack Damage is increased by [color=" + ::Const.UI.Color.DamageValue + "]8[/color]-[color=" + ::Const.UI.Color.DamageValue + "]15[/color] points."
+														+ "\n• Effectiveness vs. Armor is increased by [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color].";
+
+::Const.Strings.PerkDescription.NggHSerpentDrag <- "\'With strong muscles, any prey can easily be disable in this unbreakable constriction.\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Drag[/color]"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+														+ "\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue."
+														+ "\n• Increases maximum range by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] tile."
+														+ "\n• Now also deals up to [color=" + ::Const.UI.Color.DamageValue + "]10[/color] armor piercing damage.";
+
+::Const.Strings.PerkDescription.NggHSerpentVenom <- "\'Evolve to gain a venom gland to poison your prey. Deadly but doesn\'t persist long.\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Bite[/color]"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+														+ "\n• Inflicts an additional [color=" + ::Const.UI.Color.DamageValue + "]20[/color] poison damage per turn."
+														+ "\n• The [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color] effect inflicted by this perk only lasts for 1 turn.";
+
+::Const.Strings.PerkDescription.NggHSerpentGiant <- "\'What could be more terrifying than a big snake? A gigantic snake!\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Drag[/color] skill has a chance to [color=" + ::Const.UI.Color.PositiveValue + "]Disarm[/color] its dragged target based on current Melee skill."
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Drag[/color] skill allows you to drag allies with immunity to Knock back and Grab."
+														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Bite[/color] skill has its attack range increased by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color].";
 
 // hyena
-::Const.Strings.PerkDescription.NggHHyenaBite <- "\'Razor sharp fangs that are capable of creating gruesome bleeding wounds.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Hyena Bite[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue.\n• Attack Damage is increased by [color=" + ::Const.UI.Color.DamageValue + "]10[/color] points.\n• Effectiveness vs. Armor is increased by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color].\n• Bleeding damage inflicted by bites is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5[/color] points.";
+::Const.Strings.PerkDescription.NggHHyenaBite <- "\'Razor sharp fangs that are capable of creating gruesome bleeding wounds.\'"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Hyena Bite[/color]"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+													+ "\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue."
+													+ "\n• Attack Damage is increased by [color=" + ::Const.UI.Color.DamageValue + "]30[/color] points."
+													+ "\n• Effectiveness vs. Armor is increased by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color]."
+													+ "\n• Bleeding damage inflicted by bites is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5[/color] points.";
 // wolf
-::Const.Strings.PerkDescription.NggHWolfBite <- "\'Powerful jaw muscles and tough fangs to help crush armor and tear flesh apart.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Direwolf Bite[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue.\n• Attack Damage is increased by [color=" + ::Const.UI.Color.DamageValue + "]10[/color] points.\n• Effectiveness vs. Armor is increased by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color].";
-::Const.Strings.PerkDescription.NggHWolfThickHide <- "\'Thick and tough fur that can stop attacks from causing severe injury.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Takes [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color] less damage to armor.\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]60[/color] points of natural armor to both head and body armors.";
-::Const.Strings.PerkDescription.NggHWolfEnrage <- "\'Fast and furious attacks that leave your overwhelmed victim no way to escape or fight back.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n\n  Gains effect below for each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Overwhelmed[/color] effect on your target: \n• Hit chance is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].\n• Attack Damage is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].\n• Gains an additional [color=" + ::Const.UI.Color.PositiveValue + "]+2%[/color] of any damage ignores armor.";
-::Const.Strings.PerkDescription.NggHWolfRabies <- "\'Your puppy has rabies. That is not good, right? Do not pet it!\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Attack Damage is increased by [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color].\n• Melee Skill is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5[/color] points.\n• Hitpoints are increased by [color=" + ::Const.UI.Color.PositiveValue + "]20[/color] points.\n• Resolve is increased by [color=" + ::Const.UI.Color.PositiveValue + "]20[/color] points.";
+::Const.Strings.PerkDescription.NggHWolfBite <- "\'Powerful jaw muscles and tough fangs to crush armor and tear flesh apart.\'"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Direwolf Bite[/color]"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+													+ "\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue."
+													+ "\n• Attack Damage is increased by [color=" + ::Const.UI.Color.DamageValue + "]10[/color] points."
+													+ "\n• Effectiveness vs. Armor is increased by [color=" + ::Const.UI.Color.PositiveValue + "]35%[/color].";
+
+::Const.Strings.PerkDescription.NggHWolfThickHide <- "\'Thick and tough fur that can stop attacks from causing severe injury.\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+														+ "\n• Takes [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color] less damage to armor."
+														+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]75[/color] points of natural armor to both head and body armor rating.";
+
+::Const.Strings.PerkDescription.NggHWolfEnrage <- "\'Fast and furious attacks that leave your overwhelmed victim no way to escape or fight back.\'"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+												+ "\n\nGains effect below for each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Overwhelmed[/color] effect on your target:"
+													+ "\n• Hit chance is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color]."
+													+ "\n• Attack Damage is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color]."
+													+ "\n• Gains an additional [color=" + ::Const.UI.Color.PositiveValue + "]+2%[/color] of any damage ignores armor.";
+
+::Const.Strings.PerkDescription.NggHWolfRabies <- "\'Your puppy has rabies. That is not good, right? Do not pet it!\'"
+												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+													+ "\n• Attack Damage is increased by [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color]."
+													+ "\n• Melee Skill is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5[/color] points."
+													+ "\n• Hitpoints are increased by [color=" + ::Const.UI.Color.PositiveValue + "]20[/color] points."
+													+ "\n• Resolve is increased by [color=" + ::Const.UI.Color.PositiveValue + "]20[/color] points.";
 
 ::Const.Strings.PerkDescription.NggHAlpNightmareSpec <- "\'Feed on the nightmare and terror of your victim to restore your own vitality.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Nightmare[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue.\n• Gains additional damage equal to [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color] of current Resolve.\n• Restores your Hitpoints up to [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] of the damage dealt.";
 ::Const.Strings.PerkDescription.NggHAlpSleepSpec <- "\'Master your ability to put your prey in a long lasting sleep.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Sleep[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Increases the chance to put a target to sleep by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color] of current Resolve.\n• Increases the duration of [color=" + ::Const.UI.Color.NegativeValue + "]Sleeping[/color] effect by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] turn.\n• Reduces the AP cost by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color].";
