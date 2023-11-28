@@ -1967,10 +1967,10 @@ if (!("CharmedUnits" in ::Const))
 			function onBuildAttributes( _properties ) {
 				if (::Nggh_MagicConcept.IsOPMode) return;
 				
-				_properties.ArmorMax[0] = 160;
-				_properties.ArmorMax[1] = 160;
-				_properties.Armor[0] = ::Math.floor(_properties.Armor[0] / 3 * 2);
-				_properties.Armor[1] = ::Math.floor(_properties.Armor[1] / 3 * 2);
+				_properties.ArmorMax[0] = 120;
+				_properties.ArmorMax[1] = 120;
+				_properties.Armor[0] = ::Math.floor(_properties.Armor[0] / 2);
+				_properties.Armor[1] = ::Math.floor(_properties.Armor[1] / 2);
 			},
 
 			function onSetAppearance( _playerEntity, _enemyEntity ) {

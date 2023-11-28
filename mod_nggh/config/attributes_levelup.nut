@@ -251,7 +251,7 @@ if (!("Nggh_AttributesLevelUp" in ::Const))
 
 ::Const.Nggh_AttributesLevelUp.Spider <- [
 	{
-		Min = 3,
+		Min = 2,
 		Max = 4
 	},
 	{
