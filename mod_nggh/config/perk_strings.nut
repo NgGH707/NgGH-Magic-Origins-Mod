@@ -205,13 +205,13 @@
 
 ::Const.Strings.PerkDescription.NggHCharmNudist <- "\'Real slut doesn\'t need cloth.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\n Gains the below effects while not wearing both armour and a helmet:"
+	+ "\nGains the below effects while not wearing both armour and a helmet:\n"
 		+ "\n• Gains another stack of nimble."
 		+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain an additional [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color] to charm.";
 // hexe hex
 ::Const.Strings.PerkDescription.NggHHexHexer <- "\'You have no idea how much power a hexer has over their curses.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\n When attacking a target affected by [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] effect, apply the effects below:"
+	+ "\nWhen attacking a target affected by [color=" + ::Const.UI.Color.NegativeValue + "]Hex[/color] effect, apply the effects below:\n"
 		+ "\n• Attack Damage is increased by [color=" + ::Const.UI.Color.PositiveValue + "]33%[/color]."
 		+ "\n• Hit chance is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color].";
 
@@ -268,7 +268,7 @@
 // hexe bdsm
 ::Const.Strings.PerkDescription.NggH_BDSM_WhipLash <- "\'It\'s so fast, you can hear the cracking sound from a far. How can anyone dodge this?\'" 
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]" 
-	+ "\n\n Gains the below effects while equipped with a whip:" 
+	+ "\nGains the below effects while equipped with a whip:\n" 
 		+ "\n• Gains Melee Skill equal to [color=" + ::Const.UI.Color.PositiveValue + "]20%[/color] of your current Initiative."
 		+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] active skill gains [color=" + ::Const.UI.Color.PositiveValue + "]+15%[/color] Attack Damage and [color=" + ::Const.UI.Color.PositiveValue + "]+6%[/color] Armor Penetration for each tile between you and the target.";
 
@@ -280,13 +280,13 @@
 
 ::Const.Strings.PerkDescription.NggH_BDSM_MaskOn <- "\'Dear! Is it kinky to put on a mask?\'" 
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\n Gains the below effects while equipped with a headgear that gives atleast [color=" + ::Const.UI.Color.NegativeValue + "]-1[/color] to Vision:" 
+	+ "\nGains the below effects while equipped with a headgear that gives atleast [color=" + ::Const.UI.Color.NegativeValue + "]-1[/color] to Vision:\n" 
 		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+3%[/color] Resolve for each perk in this perk group that you have learnt (this perk is included)." 
 		+ "\n• Reduces the fatigue cost of your whip weapon skills equal to number of perks in this perk group that you have learnt (this perk is included).";
 
 ::Const.Strings.PerkDescription.NggH_BDSM_Bondage <- "\'Trust me, dear! We\'ll have a fun time.\'" 
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\nApplies the below effects when using a valid skill to target an enemy trapped in net, vines or web: " 
+	+ "\nApplies the below effects when using a valid skill to target an enemy trapped in net, vines or web:\n" 
 		+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Charm[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] skills gain [color=" + ::Const.UI.Color.PositiveValue + "]+7%[/color] chance to charm." 
 		+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Whip[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Flaggelate[/color] active skills gain [color=" + ::Const.UI.Color.PositiveValue + "]+25%[/color] Attack Damage and [color=" + ::Const.UI.Color.PositiveValue + "]+25%[/color] Armor Penetration." 
 		+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Disarm[/color] active skill gains [color=" + ::Const.UI.Color.PositiveValue + "]+12%[/color] chance to hit.";
@@ -424,7 +424,7 @@
 
 ::Const.Strings.PerkDescription.NggHWolfEnrage <- "\'Fast and furious attacks that leave your overwhelmed victim no way to escape or fight back.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\nGains effect below for each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Overwhelmed[/color] effect on your target:"
+	+ "\nGains effect below for each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Overwhelmed[/color] effect on your target:\n"
 		+ "\n• Hit chance is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color]."
 		+ "\n• Attack Damage is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color]."
 		+ "\n• Gains an additional [color=" + ::Const.UI.Color.PositiveValue + "]+2%[/color] of any damage ignores armor.";
@@ -459,7 +459,7 @@
 
 ::Const.Strings.PerkDescription.NggHAlpAfterimage <- "\'Become more annoying than ever.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\nAfter teleporting by any mean, applies the below effect:"
+	+ "\nAfter teleporting by any mean, applies the below effect:\n"
 		+ "\n• Grants [color=" + ::Const.UI.Color.NegativeValue + "]Afterimage[/color] effect that gives [color=" + ::Const.UI.Color.PositiveValue + "]+15[/color] Melee Defense and Ranged Defense and lasts till the start of your next turn."
 		+ "\n• Additional stack of [color=" + ::Const.UI.Color.NegativeValue + "]Afterimage[/color] effect only gives [color=" + ::Const.UI.Color.PositiveValue + "]+5[/color] Melee Defense and Ranged Defense."; 
 
@@ -509,7 +509,7 @@
 
 ::Const.Strings.PerkDescription.NggHNachoEat <- "\'Eat and be strong! Ooga booga!\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\nApplies the effects below for each time [color=" + ::Const.UI.Color.NegativeValue + "]Gruesome Feast[/color] skill is used:"
+	+ "\nApplies the effects below for each time [color=" + ::Const.UI.Color.NegativeValue + "]Gruesome Feast[/color] skill is used:\n"
 		+ "\n• Attack Damage is increased by [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color]."
 		+ "\n• Fatigue Recovery per turn is increased by [color=" + ::Const.UI.Color.PositiveValue + "]5[/color] points."
 		+ "\n• Resolve is increased by [color=" + ::Const.UI.Color.PositiveValue + "]10[/color] points."
@@ -536,7 +536,7 @@
 
 ::Const.Strings.PerkDescription.NggHNachoBigTummy <- "\'A bigger belly means a bigger defensive bonus.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\nGains the effects below as long as you have [color=" + ::Const.UI.Color.NegativeValue + "]Devour[/color] effect:"
+	+ "\nGains the effects below as long as you have [color=" + ::Const.UI.Color.NegativeValue + "]Devour[/color] effect:\n"
 		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+25%[/color] Resolve."
 		+ "\n• Reduces damage taken by [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color]. Does not affect damage from mental attacks or status effects.";
 
@@ -663,14 +663,14 @@
 
 ::Const.Strings.PerkDescription.NggHGoblinMountedArchery <- "\'Learn the proper ways to use ranged weapon while riding mount.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\nGains the effects below while you are riding a mount:"
+	+ "\nGains the effects below while you are riding a mount:\n"
 		+ "\n• Removes the Ranged Damage penalty."
 		+ "\n• Reduces the Ranged Skill penalty from [color=" + ::Const.UI.Color.NegativeValue + "]-35%[/color] down to [color=" + ::Const.UI.Color.PositiveValue + "]-15%[/color]."
 		+ "\n• Throwing weapons gains additional damage if you have [color=" + ::Const.UI.Color.NegativeValue + "]Mounted Charge[/color] effect.";
 
 ::Const.Strings.PerkDescription.LegendHorseLiberty = "\'Through extensive roundpenning training, the mount gains trust in the movements of the rider.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\n  Gains the effects below while you are riding a mount:"
+	+ "\nGains the effects below while you are riding a mount:\n"
 		+ "\n• Increases Resolve by [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color]."
 		+ "\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue for each tile travelled"; 
 
@@ -721,7 +721,7 @@
 
 ::Const.Strings.PerkDescription.NggHMiscNighttime <- "Nighttime is your time.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\nGains [color=" + ::Const.UI.Color.NegativeValue + "]Nocturnal[/color] effect which has these effects:"
+	+ "\nGains [color=" + ::Const.UI.Color.NegativeValue + "]Nocturnal[/color] effect which has these effects:\n"
 		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+5%[/color] Attack Damage."
 		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] Melee Defense."
 		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] Ranged Defense."
@@ -735,14 +735,14 @@
 // simp
 ::Const.Strings.PerkDescription.NggH_Simp_NoFoodOnlyLove <- "\'I can never have enough of it.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\nApplies the below effects while having at least [color=" + ::Const.UI.Color.NegativeValue + "]Simp (lv. 1)[/color]:"
+	+ "\nApplies the below effects while having at least [color=" + ::Const.UI.Color.NegativeValue + "]Simp (lv. 1)[/color]:\n"
 		+ "\n• Reduces the experience gained from battle by [color=" + ::Const.UI.Color.NegativeValue + "]50%[/color]."
 		+ "\n• Reduces the food consumption down to [color=" + ::Const.UI.Color.PositiveValue + "]0[/color]."
 		+ "\n• Refunds the spent perk point when this character reaches [color=" + ::Const.UI.Color.NegativeValue + "]Simp (lv. 10)[/color].";
 
 ::Const.Strings.PerkDescription.NggH_Simp_Bodyguard <- "\'Proud to be the shield of my one true love.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-	+ "\n\nApplies the below effects while being within 3 tiles of distance of any [color=" + ::Const.UI.Color.NegativeValue + "]Elder Hexe[/color] or [color=" + ::Const.UI.Color.NegativeValue + "]Hexe[/color] background:"
+	+ "\nApplies the below effects while being within 3 tiles of distance of any [color=" + ::Const.UI.Color.NegativeValue + "]Elder Hexe[/color] or [color=" + ::Const.UI.Color.NegativeValue + "]Hexe[/color] background:\n"
 		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]x%[/color] bonus to Melee Skill, Ranged Skill, Melee Defense, Ranged Defense, Resolve."
 		+ "\n• The [color=" + ::Const.UI.Color.PositiveValue + "]x[/color] is equal to [color=" + ::Const.UI.Color.NegativeValue + "](3 + Simp Level)[/color]"
 
