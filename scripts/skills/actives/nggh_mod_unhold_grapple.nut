@@ -244,7 +244,7 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 				Count = this.m.SmackCount
 			};
 
-			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_user) + " grabs " + ::Const.UI.getColorizedEntityName(target) + " and starts thrashing wildly around (Chance: " + toHit + ", Rolled: " + roll + ")");
+			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_user) + " grabs " + ::Const.UI.getColorizedEntityName(target) + " and starts thrashing wildly around (Chance: " + toHit + ", Rolled: " + rolled + ")");
 
 			if (!_user.isHiddenToPlayer() || _targetTile.IsVisibleForPlayer)
 				::Time.scheduleEvent(::TimeUnit.Virtual, this.m.Delay, this.onPerformAttack.bindenv(this), tag);

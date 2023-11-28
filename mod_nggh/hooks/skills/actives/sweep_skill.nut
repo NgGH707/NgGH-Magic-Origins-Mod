@@ -67,7 +67,7 @@
 		{
 			onUpdate(_properties);
 
-			if (!::Nggh_MagicConcept.IsOPMode && :: this.getContainer().getActor().isPlayerControlled()) 
+			if (!::Nggh_MagicConcept.IsOPMode && this.getContainer().getActor().isPlayerControlled()) 
 			{
 				_properties.DamageRegularMin -= 5;
 				_properties.DamageRegularMax -= 15;
