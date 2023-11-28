@@ -9,6 +9,7 @@ this.nggh_mod_inhuman_player <- ::inherit("scripts/entity/tactical/player", {
 
 		// dumb shit to go around the fucking setFaction in player.nut
 		IsOnInitiating = false,
+		IsInventoryLocked = false,
 	},
 	function getVariant()
 	{
@@ -277,7 +278,7 @@ this.nggh_mod_inhuman_player <- ::inherit("scripts/entity/tactical/player", {
 
 	function isAbleToUnequip( _item )
 	{
-		return true;
+		return !this.m.IsInventoryLocked;
 	}
 
 	function onAfterEquip( _item )

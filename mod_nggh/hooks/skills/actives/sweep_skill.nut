@@ -40,9 +40,7 @@
 			local nextTile = ownTile.getNextTile(nextDir);
 
 			if (::Math.abs(nextTile.Level - ownTile.Level) <= 1)
-			{
 				::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, nextTile, nextTile.Pos.X, nextTile.Pos.Y);
-			}
 		}
 
 		nextDir = nextDir - 1 >= 0 ? nextDir - 1 : ::Const.Direction.COUNT - 1;
@@ -52,46 +50,28 @@
 			local nextTile = ownTile.getNextTile(nextDir);
 
 			if (::Math.abs(nextTile.Level - ownTile.Level) <= 1)
-			{
 				::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, nextTile, nextTile.Pos.X, nextTile.Pos.Y);
-			}
 		}
 	};
 	obj.onAfterUpdate <- function( _properties )
 	{
 		this.m.FatigueCostMult = _properties.IsSpecializedInFists ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
 	};
-	obj.getMods <- function()
+	local onUpdate = obj.onUpdate;
+	obj.onUpdate = function( _properties )
 	{
-		local ret = {
-			Min = 0,
-			Max = 0,
-			HasTraining = false
-		};
-		local actor = this.getContainer().getActor();
+		local main = this.getContainer().getActor().getMainhandItem();
+		this.m.IsHidden = !::MSU.isNull(main);
 
-		if (actor.getSkills().hasSkill("perk.legend_unarmed_training"))
+		if (!this.m.IsHidden)
 		{
-			local average = actor.getHitpoints() * 0.05;
-
-			ret.Min += average;
-			ret.Max += average;
-			ret.HasTraining = true;
+			onUpdate(_properties);
+			return;
 		}
 
-		ret.Min = ::Math.max(0, ::Math.floor(ret.Min));
-		ret.Max = ::Math.max(0, ::Math.floor(ret.Max));
-		return ret;
-	};
-	obj.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
-	{
-		if (_skill != this) return;
-
-		local mods = this.getMods();
-		_properties.DamageRegularMin += mods.Min;
-		_properties.DamageRegularMax += mods.Max;
-
-		if (mods.HasTraining)
-			_properties.DamageArmorMult += 0.15;
+		if (main.isItemType(::Const.Items.ItemType.OneHanded))
+			_properties.DamageTotalMult *= 1.5;
+		else
+			_properties.DamageTotalMult *= 1.25;
 	};
 });

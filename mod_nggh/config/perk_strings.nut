@@ -79,7 +79,10 @@
 ::Const.Strings.PerkName.NggHNachoBigTummy <- "Big Tummy";
 ::Const.Strings.PerkName.NggHNachoScavenger <- "Scavenger";
 
+::Const.Strings.PerkName.NggH_Unhold_Grapple <- "Grappling";
 ::Const.Strings.PerkName.NggH_Unhold_UnarmedAttack <- "Hand-to-Hand Attack";
+::Const.Strings.PerkName.NggH_Unhold_UnarmedTraining <- "Unarmed Training";
+::Const.Strings.PerkName.NggH_Unhold_SpecFists <- "Unarmed Mastery";
 ::Const.Strings.PerkName.NggH_Unhold_Fling <- "Forceful Throw";
 
 ::Const.Strings.PerkName.NggHSchratShield <- "Grow Shield Mastery";
@@ -423,8 +426,37 @@
 ::Const.Strings.PerkDescription.NggHNachoBigTummy <- "\'A bigger belly means a bigger defensive bonus.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n\n  Gains the effects below as long as you have [color=" + ::Const.UI.Color.NegativeValue + "]Devour[/color] effect: \n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+25%[/color] Resolve.\n• Reduces damage taken by [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color]. Does not affect damage from mental attacks or status effects.";
 ::Const.Strings.PerkDescription.NggHNachoScavenger <- "\'A feast after work! Don\'t mind if i do.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Feasts on leftovers corpses after participating in a battle, and if you do, gains [color=" + ::Const.UI.Color.NegativeValue + "]Well Fed[/color] effect. \n\n[color=" + ::Const.UI.Color.Passive + "][u]Well Fed effect:[/u][/color] \n• [color=" + ::Const.UI.Color.NegativeValue + "]+25%[/color] to one of these attribute (Max Action Point, Max Fatigue, Resolve, Initiative, Melee Skill, Melee Defense, Melee Damage, Experience Gain)\n• [color=" + ::Const.UI.Color.PositiveValue + "]-25%[/color] Daily Food Consumption \n• Lasts for a battle";
 
-::Const.Strings.PerkDescription.NggH_Unhold_UnarmedAttack <- "\'Learn the basic about Hand-to-Hand combat.\' \n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color] \n• Costs 5 AP and builds 18 Fatigue.\n• A simple single target attack skill.\n• Has a [color=" + ::Const.UI.Color.NegativeValue + "]100%[/color] chance to stagger on hit.";
-::Const.Strings.PerkDescription.NggH_Unhold_Fling <- "\'When the throw can go to the moon.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Fling Back[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue.\n• Costs only [color=" + ::Const.UI.Color.PositiveValue + "]3[/color] AP to use.\n• Applies [color=" + ::Const.UI.Color.NegativeValue + "]Dazed[/color] effect on hit.";
+::Const.Strings.PerkDescription.NggH_Unhold_Grapple <- "\'Grab your opponent and manhandle them to the ground.\'"
+														+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
+															+ "\n• Costs 5 AP and builds 35 Fatigue."
+															+ "\n• To target has [color=" + ::Const.UI.Color.NegativeValue + "]Immunity to Grab and Knockback[/color], inflicting fatigue and grappling that target for 2 turns with a chance of disarming them";
+															+ "\n• To target does not have [color=" + ::Const.UI.Color.NegativeValue + "]Immunity to Grab and Knockback[/color], flailing that target around 3 times and dealing damage based on their armor rating";
+															+ "\n• Can also be used to uproot trees or lift boulder."
+
+::Const.Strings.PerkDescription.NggH_Unhold_UnarmedAttack <- "\'Learn the basic of Hand-to-Hand combat.\'"
+															+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
+																+ "\n• Costs 5 AP and builds 20 Fatigue."
+																+ "\n• A simple single target attack skill."
+																+ "\n• Has a [color=" + ::Const.UI.Color.NegativeValue + "]100%[/color] chance to stagger on hit.";
+
+::Const.Strings.PerkDescription.NggH_Unhold_UnarmedTraining <- "\'Focusing on technique, form and stances has given you greater control over your unarmed strikes.\'"
+																+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+																	+ "\n• Increases the damage [b](max: 75)[/b] of your [color=" + ::Const.UI.Color.NegativeValue + "]Hand to Hand[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Sweeping Strike[/color] skills equal to [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color] of your current Hitpoints."
+																	+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Grapple[/color] skill has a [color=" + ::Const.UI.Color.NegativeValue + "]25%[/color] chance to distract on hit."
+
+::Const.Strings.PerkDescription.NggH_Unhold_SpecFists <- "\'Master the martial arts of unarmed combat.\'"
+														+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+															+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Hand to Hand[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Grapple[/color], and [color=" + ::Const.UI.Color.NegativeValue + "]Sweeping Strike[/color] skills build up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue."
+															+ "\n• Increases chance to hit for [color=" + ::Const.UI.Color.NegativeValue + "]Hand to Hand[/color] skill by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color]."
+															+ "\n• Increases fatigue damage for [color=" + ::Const.UI.Color.NegativeValue + "]Hand to Hand[/color] skill."
+															+ "\n• Increases chance to hit and chance to disarm for [color=" + ::Const.UI.Color.NegativeValue + "]Grapple[/color] skill."
+
+::Const.Strings.PerkDescription.NggH_Unhold_Fling <- "\'When the throw can go to the moon.\'"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Fling Back[/color]"
+													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+														+ "\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue."
+														+ "\n• Costs only [color=" + ::Const.UI.Color.PositiveValue + "]3[/color] AP to use."
+														+ "\n• Applies [color=" + ::Const.UI.Color.NegativeValue + "]Dazed[/color] effect on hit.";
 
 ::Const.Strings.PerkDescription.NggHSchratShield <- "\'Experience and instinct have given you a better understanding on how to grow and use shield more efficient.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Grow Shield[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Grow Greenwood Shield[/color] \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue.\n• Grants [color=" + ::Const.UI.Color.NegativeValue + "]Shieldwall[/color] effect on use.";
 ::Const.Strings.PerkDescription.NggHSchratSapling <- "\'Life-filled broken body part can easily be reborned into an intelligent Sapling.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Increases the chance to spawn Sapling after taking a hit by [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color].\n• Saplings can be controlled directly by player.";

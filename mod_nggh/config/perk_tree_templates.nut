@@ -508,17 +508,17 @@ if (!("PerksCharmedUnit" in ::Const))
 	],
 	[
 		::Const.Perks.PerkDefs.NggH_Unhold_UnarmedAttack,
-		::Const.Perks.PerkDefs.LegendGrapple,
+		::Const.Perks.PerkDefs.NggH_Unhold_Grapple,
 		::Const.Perks.PerkDefs.HoldOut,
 		::Const.Perks.PerkDefs.SteelBrow,
 	],
 	[
-		::Const.Perks.PerkDefs.LegendUnarmedTraining,
+		::Const.Perks.PerkDefs.NggH_Unhold_UnarmedTraining,
 		::Const.Perks.PerkDefs.LegendSmackdown,
 	],
 	[
 		::Const.Perks.PerkDefs.BloodyHarvest,
-		::Const.Perks.PerkDefs.LegendSpecFists,
+		::Const.Perks.PerkDefs.NggH_Unhold_SpecFists,
 		::Const.Perks.PerkDefs.NggH_Unhold_Fling,
 		::Const.Perks.PerkDefs.NggHMiscLineBreaker,
 	],

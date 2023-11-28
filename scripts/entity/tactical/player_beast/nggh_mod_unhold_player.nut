@@ -18,16 +18,11 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 	function getStrengthMult()
 	{
 		if (this.isBear())
-		{
 			return 1.75;
-		}
-		
-		if (this.isRockUnhold())
-		{
+		else if (this.isRockUnhold())
 			return 7.0;
-		}
-		
-		return 2.67;
+		else
+			return 2.67;
 	}
 
 	function getHitpointsPerVeteranLevel()
@@ -42,8 +37,7 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 
 	function restoreArmor()
 	{
-		if (this.isBear())
-		{
+		if (this.isBear()) {
 			this.nggh_mod_player_beast.restoreArmor();
 			return;
 		}
@@ -56,9 +50,7 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 			local add = ::Math.min(50, b.ArmorMax[i] - b.Armor[i]);
 			
 			if (add == 0)
-			{
 				continue;
-			}
 			
 			b.Armor[i] += add;
 			c.Armor[i] += add;
@@ -149,9 +141,7 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 	function playSound( _type, _volume, _pitch = 1.0 )
 	{
 		if (_type == ::Const.Sound.ActorEvent.Move && ::Math.rand(1, 100) <= 50)
-		{
 			return;
-		}
 
 		this.nggh_mod_player_beast.playSound(_type, _volume, _pitch);
 	}
@@ -262,9 +252,7 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 			::Tactical.Entities.addCorpse(_tile);
 
 			if (_fatalityType != ::Const.FatalityType.Unconscious)
-			{
 				return;
-			}
 
 			local isBear = this.isBear();
 			local isRockUnhold = this.isRockUnhold();
@@ -284,13 +272,9 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 				local r = ::Math.rand(1, 100);
 
 				if (r <= 20)
-				{
 					::new("scripts/items/misc/unhold_heart_item").drop(_tile);
-				}
 				else if (r <= 60)
-				{
 					::new("scripts/items/misc/" + (isRockUnhold ? "legend_rock_unhold_bones_item" : "unhold_bones_item")).drop(_tile);
-				}
 				else
 				{
 					switch(true)
@@ -325,9 +309,7 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (a == "helmet")
-			{
 				continue;
-			}
 
 			this.getSprite(a).setHorizontalFlipping(!flip);
 		}
@@ -491,9 +473,7 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (a == "helmet")
-			{
 				continue;
-			}
 
 			this.setSpriteOffset(a, v);
 			this.getSprite(a).Scale = s;
@@ -523,6 +503,35 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		}
 
 		return this.nggh_mod_player_beast.isAbleToEquip(_item);
+	}
+	
+	/*
+	function onAfterEquip( _item )
+	{
+		if (_item.getSlotType() == ::Const.ItemSlot.Offhand || _item.getSlotType() == ::Const.ItemSlot.Mainhand)
+			this.m.IsInventoryLocked = true;
+	}
+	*/
+
+	function onAfterUnequip( _item )
+	{
+		switch(_item.getSlotType())
+		{
+		case ::Const.ItemSlot.Offhand:
+			this.getItems().getData()[::Const.ItemSlot.Offhand][0] = -1;
+			break;
+
+		case ::Const.ItemSlot.Mainhand:
+			this.getItems().getData()[::Const.ItemSlot.Mainhand][0] = -1;
+
+			if (_item.isItemType(::Const.Items.ItemType.TwoHanded))
+				this.getItems().getData()[::Const.ItemSlot.Offhand][0] = -1;
+
+			break;
+
+		default:
+			return;
+		}
 	}
 
 	function canEnterBarber()

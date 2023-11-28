@@ -918,5 +918,34 @@
 		Const = "NggH_Spider_ToughCarapace",
 	},
 
+// unhold
+	{
+		ID = "perk.unhold_grapple",
+		Script = "scripts/skills/perks/perk_nggh_unhold_grapple",
+		Name = ::Const.Strings.PerkName.NggH_Unhold_Grapple,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Unhold_Grapple,
+		Icon = "ui/perks/grapple_circle.png",
+		IconDisabled = "ui/perks/grapple_circle_bw.png",
+		Const = "NggH_Unhold_Grapple"
+	},
+	{
+		ID = "perk.unhold_unarmed_training",
+		Script = "scripts/skills/perks/perk_nggh_unhold_unarmed_training",
+		Name = ::Const.Strings.PerkName.NggH_Unhold_UnarmedTraining,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Unhold_UnarmedTraining,
+		Icon = "ui/perks/unarmed_training.png",
+		IconDisabled = "ui/perks/unarmed_training_bw.png",
+		Const = "NggH_Unhold_UnarmedTraining"
+	},
+	{
+		ID = "perk.unhold_mastery_fist",
+		Script = "scripts/skills/perks/perk_nggh_unhold_mastery_fist",
+		Name = ::Const.Strings.PerkName.NggH_Unhold_SpecFists,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Unhold_SpecFists,
+		Icon = "ui/perks/unarmed_mastery_circle.png",
+		IconDisabled = "ui/perks/unarmed_mastery_circle_bw.png",
+		Const = "NggH_Unhold_SpecFists"
+	},
+
 ]);
 
