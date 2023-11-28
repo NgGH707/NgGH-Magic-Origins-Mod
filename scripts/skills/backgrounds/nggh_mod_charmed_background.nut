@@ -198,13 +198,14 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			actor.onUpdateInjuryLayer();
 		}
 
-		if (this.m.HasFixedName) return;
+		if (this.m.HasFixedName) 
+			return;
 
 		if (this.m.Names.len() != 0)
 		{
 			local name = ::MSU.Array.rand(this.m.Names);
 
-			if (this.m.LastNames != 0) 
+			if (this.m.LastNames.len() != 0) 
 				name += " " +  ::MSU.Array.rand(this.m.LastNames);
 
 			actor.setName(name);
