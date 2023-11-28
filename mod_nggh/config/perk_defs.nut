@@ -1,5 +1,5 @@
 
-::Const.Perks.PerkDefObjects[::Const.Perks.PerkDefs.NggH_Simp_UndyingLove].Tooltip = ::Const.Strings.PerkDescription.LegendHorseLiberty;
+::Const.Perks.PerkDefObjects[::Const.Perks.PerkDefs.LegendHorseLiberty].Tooltip = ::Const.Strings.PerkDescription.LegendHorseLiberty;
 
 ::Const.Perks.addPerkDefObjects([
 // hexe

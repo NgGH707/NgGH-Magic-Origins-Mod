@@ -737,7 +737,7 @@
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 	+ "\n\nApplies the below effects while having at least [color=" + ::Const.UI.Color.NegativeValue + "]Simp (lv. 1)[/color]:"
 		+ "\n• Reduces the experience gained from battle by [color=" + ::Const.UI.Color.NegativeValue + "]50%[/color]."
-		+ "\n• Reduces the food consumption down to [color=" + ::Const.UI.Color.PositiveValue + "]0[/color].";
+		+ "\n• Reduces the food consumption down to [color=" + ::Const.UI.Color.PositiveValue + "]0[/color]."
 		+ "\n• Refunds the spent perk point when this character reaches [color=" + ::Const.UI.Color.NegativeValue + "]Simp (lv. 10)[/color].";
 
 ::Const.Strings.PerkDescription.NggH_Simp_Bodyguard <- "\'Proud to be the shield of my one true love.\'"
@@ -749,7 +749,7 @@
 ::Const.Strings.PerkDescription.NggH_Simp_UndyingLove <- "\'Love is blind, and it is not a good thing in this case.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Upon learning this perk, immediately gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] Simp Level."
-		+ "\n• Simp level can never be reduced lower than [color=" + ::Const.UI.Color.NegativeValue + "]1[/color].";
+		+ "\n• Simp level can never be reduced lower than [color=" + ::Const.UI.Color.NegativeValue + "]1[/color]."
 		+ "\n• Always start combat at [color=" + ::Const.UI.Color.PositiveValue + "]Confident[/color] morale if placed near any [color=" + ::Const.UI.Color.NegativeValue + "]Elder Hexe[/color] or [color=" + ::Const.UI.Color.NegativeValue + "]Hexe[/color] backgrounds.";
 
 ::Const.Strings.PerkDescription.NggH_Simp_LevelUp <- "\'The vicious cycle of a simp continues. Only the most foolish... i meant the strongest simp can stay.\'"
