@@ -3,8 +3,8 @@ this.perk_nggh_spider_bite <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.spider_bite";
-		this.m.Name = ::Const.Strings.PerkName.NggHSpiderBite;
-		this.m.Description = ::Const.Strings.PerkDescription.NggHSpiderBite;
+		this.m.Name = ::Const.Strings.PerkName.NggH_Spider_Bite;
+		this.m.Description = ::Const.Strings.PerkDescription.NggH_Spider_Bite;
 		this.m.Icon = "ui/perks/perk_spider_bite.png";
 		this.m.Type = ::Const.SkillType.Perk;
 		this.m.Order = ::Const.SkillOrder.Perk;
@@ -23,16 +23,12 @@ this.perk_nggh_spider_bite <- ::inherit("scripts/skills/skill", {
 	function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )
 	{
 		if (::Math.rand(1, 100) > 25)
-		{
 			return;
-		}
 		
 		local DamDirect = 1.0;
 		
 		if (_hitInfo.DamageDirect > _skill.m.DirectDamageMult)
-		{
 			DamDirect += _hitInfo.DamageDirect - _skill.m.DirectDamageMult;
-		}
 		
 		_hitInfo.DamageArmor = 0;
 		_hitInfo.DamageDirect = DamDirect;

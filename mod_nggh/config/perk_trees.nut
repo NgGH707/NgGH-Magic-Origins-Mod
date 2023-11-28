@@ -471,14 +471,16 @@
 		[],
 		[],
 		[
-			::Const.Perks.PerkDefs.NggHSpiderVenom,
-		],
-		[],
-		[
-			::Const.Perks.PerkDefs.NggHSpiderWeb,
+			::Const.Perks.PerkDefs.NggH_Spider_Venom,
 		],
 		[
-			::Const.Perks.PerkDefs.NggHSpiderBite,
+			::Const.Perks.PerkDefs.NggH_Spider_Web,
+		],
+		[
+			::Const.Perks.PerkDefs.NggH_Spider_ToughCarapace,
+		],
+		[
+			::Const.Perks.PerkDefs.NggH_Spider_Bite,
 		],
 	]
 };

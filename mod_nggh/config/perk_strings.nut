@@ -43,9 +43,10 @@
 ::Const.Strings.PerkName.NggHEggNaturalSelection <- "Natural Selection";
 ::Const.Strings.PerkName.NggHEggAttachSpider <- "I Need an Uber";
 
-::Const.Strings.PerkName.NggHSpiderBite <- "Puncturing Bite";
-::Const.Strings.PerkName.NggHSpiderVenom <- "Poison Mastery";
-::Const.Strings.PerkName.NggHSpiderWeb <- "Weave Web Mastery";
+::Const.Strings.PerkName.NggH_Spider_Bite <- "Puncturing Bite";
+::Const.Strings.PerkName.NggH_Spider_Venom <- "Poison Mastery";
+::Const.Strings.PerkName.NggH_Spider_Web <- "Weave Web Mastery";
+::Const.Strings.PerkName.NggH_Spider_ToughCarapace <- "Harden Carapace";
 
 ::Const.Strings.PerkName.NggHSerpentBite <- "Gorge";
 ::Const.Strings.PerkName.NggHSerpentDrag <- "Constricting Grip";
@@ -316,26 +317,31 @@
 ::Const.Strings.PerkDescription.NggHEggNaturalSelection <- "\'Let nature do their work.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Hatched spiderlings have higher raw stats than those hatched before them.";
 ::Const.Strings.PerkDescription.NggHEggAttachSpider <- "\'It is sad when you do not have legs. Wishing for a pairs of leg would be asking too much. Well!!! At least you can ask your spider friends or from your own offsprings for an Uber ride.\' \n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color] \n• Gains the ability to mount on Spiders or certain creatures such as Wardogs, Warhounds, Wolves.";
 
-::Const.Strings.PerkDescription.NggHSpiderBite <- "\'Strong spider bite that is capable of puncturing the toughest and sturdiest armor.\'"
+::Const.Strings.PerkDescription.NggH_Spider_Bite <- "\'Strong spider bite that is capable of puncturing the toughest and sturdiest armor.\'"
 												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Webknecht Bite[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Redback Webknecht Bite[/color]"
 													+ "\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue."
 													+ "\n• Gains [color=" + ::Const.UI.Color.DamageValue + "]1[/color]-[color=" + ::Const.UI.Color.DamageValue + "]5[/color] Attack Damage."
 													+ "\n• Gains an additional [color=" + ::Const.UI.Color.PositiveValue + "]+15%[/color] of any damage ignores armor."
 													+ "\n• Has [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] chance to become a puncturing attack that completely ignores armor.";
 
-::Const.Strings.PerkDescription.NggHSpiderVenom <- "\'An even more deadly venom, your poor victim would surely die faster.\'"
+::Const.Strings.PerkDescription.NggH_Spider_Venom <- "\'An even more deadly venom, your poor victim would surely die faster.\'"
 													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color] effect inflicted by your bite lasts for 1 more turn."
 														+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Redback Poisoned[/color] effect inflicted by your bite deals double the damage and makes it more potent as the target get bitten more."
 														+ "\n• Each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Redback Poisoned[/color] effects increases the affected target\'s fatigue usage by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color]."
 														+ "\n• Increases the Attack Damage of [color=" + ::Const.UI.Color.NegativeValue + "]Webknecht Bite[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Redback Webknecht Bite[/color] skills by [color=" + ::Const.UI.Color.PositiveValue + "]2%[/color] for each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Redback Poisoned[/color] effects on affected target."
 
-::Const.Strings.PerkDescription.NggHSpiderWeb <- "\'Master the ability to weave and create web so you can make the strongest web with little effort.\'"
+::Const.Strings.PerkDescription.NggH_Spider_Web <- "\'Master the ability to weave and create web so you can make the strongest web with little effort.\'"
 												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Weave Web[/color]"
 												+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 													+ "\n• The less accumulated Fatigue you have the harder for the enemy to break free from your web."
 													+ "\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue."
 													+ "\n• Reduces the cooldown to [color=" + ::Const.UI.Color.NegativeValue + "]1[/color] turn.";
+
+::Const.Strings.PerkDescription.NggH_Spider_ToughCarapace <- "\'Better than any plate armor.\'"
+															+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+																+ "\n• Takes [color=" + ::Const.UI.Color.PositiveValue + "]50%[/color] less damage to armor."
+																+ "\n• Reduces damage ignoring armor by [color=" + ::Const.UI.Color.PositiveValue + "]50%[/color]";
 
 ::Const.Strings.PerkDescription.NggHSerpentBite <- "\'Lightning-fast attack that can deliver more powerful bite.\'"
 													+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Bite[/color]"

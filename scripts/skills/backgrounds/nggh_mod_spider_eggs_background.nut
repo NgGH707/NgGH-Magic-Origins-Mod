@@ -43,11 +43,11 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 				::Const.Perks.PerkDefs.NggHNachoFrenzy,
 			],
 			[
-				::Const.Perks.PerkDefs.NggHSpiderVenom,
+				::Const.Perks.PerkDefs.NggH_Spider_Venom,
 			],
 			[],
 			[
-				::Const.Perks.PerkDefs.NggHSpiderBite, 
+				::Const.Perks.PerkDefs.NggH_Spider_Bite, 
 			],
 			[],
 			[],

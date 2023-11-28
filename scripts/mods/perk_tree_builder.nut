@@ -32,7 +32,7 @@ this.perk_tree_builder <- {
 			}
 		}
 
-		local maxPerksPerRow = [8, 7, 6, 9, 6, 6, 5, 0, 0, 0, 0, 0, 0, 0];
+		local maxPerksPerRow = [8, 7, 6, 9, 7, 6, 6, 0, 0, 0, 0, 0, 0, 0];
 		local tools = {};
 		tools.hasPerk <- function( _perk , _excluded )
 		{

@@ -56,9 +56,7 @@ this.nggh_mod_spider_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		this.setSpriteOffset("status_rooted_back", ::createVec(7, 10 - 10.0 * (1.0 - _s)));
 
 		if (_update)
-		{
 			this.setDirty(true);
-		}
 	}
 	
 	function create()
@@ -68,7 +66,7 @@ this.nggh_mod_spider_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		this.m.BloodSplatterOffset = ::createVec(0, 0);
 		this.m.DecapitateSplatterOffset = ::createVec(20, -15);
 		this.m.DecapitateBloodAmount = 1.0;
-		this.m.SignaturePerks = ["Pathfinder", "FastAdaption", "Footwork", "LegendPoisonImmunity"];
+		this.m.SignaturePerks = ["Pathfinder", "Footwork", "LegendPoisonImmunity"];
 		this.m.ExcludedTraits = ::Const.Nggh_ExcludedTraits.Spider;
 		this.m.AttributesLevelUp = ::Const.Nggh_AttributesLevelUp.Spider;
 		this.m.BonusHealthRecoverMult = 0.75;

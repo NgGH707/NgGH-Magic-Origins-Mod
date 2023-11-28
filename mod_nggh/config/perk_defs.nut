@@ -276,29 +276,29 @@
 	{
 		ID = "perk.spider_bite",
 		Script = "scripts/skills/perks/perk_nggh_spider_bite",
-		Name = ::Const.Strings.PerkName.NggHSpiderBite,
-		Tooltip = ::Const.Strings.PerkDescription.NggHSpiderBite,
+		Name = ::Const.Strings.PerkName.NggH_Spider_Bite,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Spider_Bite,
 		Icon = "ui/perks/perk_spider_bite.png",
 		IconDisabled = "ui/perks/perk_spider_bite_sw.png",
-		Const = "NggHSpiderBite",
+		Const = "NggH_Spider_Bite",
 	},
 	{
 		ID = "perk.spider_venom",
 		Script = "scripts/skills/perks/perk_nggh_spider_venom",
-		Name = ::Const.Strings.PerkName.NggHSpiderVenom,
-		Tooltip = ::Const.Strings.PerkDescription.NggHSpiderVenom,
+		Name = ::Const.Strings.PerkName.NggH_Spider_Venom,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Spider_Venom,
 		Icon = "ui/perks/perk_venomous.png",
 		IconDisabled = "ui/perks/perk_venomous_sw.png",
-		Const = "NggHSpiderVenom",
+		Const = "NggH_Spider_Venom",
 	},
 	{
 		ID = "perk.spider_web",
 		Script = "scripts/skills/perks/perk_nggh_spider_web",
-		Name = ::Const.Strings.PerkName.NggHSpiderWeb,
-		Tooltip = ::Const.Strings.PerkDescription.NggHSpiderWeb,
+		Name = ::Const.Strings.PerkName.NggH_Spider_Web,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Spider_Web,
 		Icon = "ui/perks/perk_spider_web.png",
 		IconDisabled = "ui/perks/perk_spider_web_sw.png",
-		Const = "NggHSpiderWeb",
+		Const = "NggH_Spider_Web",
 	},
 
 // serpent
@@ -905,6 +905,17 @@
 		Icon = "ui/perks/perk_simp_level_up.png",
 		IconDisabled = "ui/perks/perk_simp_level_up_sw.png",
 		Const = "NggH_Simp_LevelUp"
+	},
+
+// spider
+	{
+		ID = "perk.spider_tough_carapace",
+		Script = "scripts/skills/perks/perk_nggh_spider_tough_carapace",
+		Name = ::Const.Strings.PerkName.NggH_Spider_ToughCarapace,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Spider_ToughCarapace,
+		Icon = "ui/perks/perk_spider_tough_carapace.png",
+		IconDisabled = "ui/perks/perk_spider_tough_carapace_sw.png",
+		Const = "NggH_Spider_ToughCarapace",
 	},
 
 ]);

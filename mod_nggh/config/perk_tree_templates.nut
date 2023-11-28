@@ -473,24 +473,26 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.Rotation,
 	],
 	[
-		::Const.Perks.PerkDefs.NggHSpiderVenom,
+		::Const.Perks.PerkDefs.NggH_Spider_Venom,
+		::Const.Perks.PerkDefs.LegendPoisonImmunity,
 		::Const.Perks.PerkDefs.InspiringPresence,
 		::Const.Perks.PerkDefs.Nimble,
 	],
 	[
+		::Const.Perks.PerkDefs.NggH_Spider_Web,
 		::Const.Perks.PerkDefs.PushTheAdvantage,
 		::Const.Perks.PerkDefs.Underdog,
 		::Const.Perks.PerkDefs.DevastatingStrikes,
 		
 	],
 	[
-		::Const.Perks.PerkDefs.NggHSpiderWeb,
+		::Const.Perks.PerkDefs.NggH_Spider_ToughCarapace,
+		::Const.Perks.PerkDefs.BattleForged,
 		::Const.Perks.PerkDefs.LegendGruesomeFeast,
 		::Const.Perks.PerkDefs.KillingFrenzy,
-		::Const.Perks.PerkDefs.BattleForged,
 	],
 	[
-		::Const.Perks.PerkDefs.NggHSpiderBite,
+		::Const.Perks.PerkDefs.NggH_Spider_Bite,
 		::Const.Perks.PerkDefs.LegendFreedomOfMovement,
 	],
 	[],

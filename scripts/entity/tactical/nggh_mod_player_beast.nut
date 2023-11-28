@@ -27,9 +27,7 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (!this.hasSprite(a))
-			{
 				continue;
-			}
 
 			this.getSprite(a).setHorizontalFlipping(flip);
 		}
@@ -52,9 +50,7 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 	function addDefaultStatusSprites()
 	{
 		if (!this.hasSprite("dirt"))
-		{
 			this.addSprite("dirt");
-		}
 		
 		this.nggh_mod_inhuman_player.addDefaultStatusSprites();
 	}
@@ -258,23 +254,15 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 		this.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
 
 		if (_setName)
-		{
 			this.setName(::Const.Strings.EntityName[_type]);
-		}
 
 		if (_isElite || (!_randomizedTalents && ::Math.rand(1, 100) == 1))
-		{
 			this.m.Skills.add(::new("scripts/skills/racial/champion_racial"));
-		}
 		else if (::Math.rand(1, 100) <= 1)
-		{
 			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscChampion, 6);
-		}
 
 		if (!this.m.Skills.hasSkill("trait.intensive_training_trait"))
-		{
 			this.m.Skills.add(::new("scripts/skills/traits/intensive_training_trait"));
-		}
 
 		this.getFlags().set("Type", _type);
 		this.updateVariant();
@@ -330,17 +318,11 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 			for( local j = 0; j < _amount; ++j )
 			{
 				if (_minOnly)
-				{
 					this.m.Attributes[i].insert(0, this.m.AttributesLevelUp[i].Min);
-				}
 				else if (_maxOnly)
-				{
 					this.m.Attributes[i].insert(0, this.m.AttributesLevelUp[i].Max);
-				}
 				else
-				{
 					this.m.Attributes[i].insert(0, ::Math.rand(this.m.AttributesLevelUp[i].Min + (this.m.Talents[i] == 3 ? 2 : this.m.Talents[i]), this.m.AttributesLevelUp[i].Max + (this.m.Talents[i] == 3 ? 1 : 0)));
-				}
 			}
 		}
 	}
@@ -368,9 +350,7 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 			for( local i = 0; i != ::Const.Attributes.COUNT; ++i )
 			{
 				if (this.m.Attributes[i].len() != 0) 
-				{
 					continue;
-				}
 
 				if (i == ::Const.Attributes.Hitpoints)
 				{
@@ -397,14 +377,10 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 	function isAbleToEquip( _item )
 	{
 		if (_item.isItemType(::Const.Items.ItemType.Armor) && ::Const.Items.NotForHumanArmorList.find(_item.getID()) != null)
-		{
 			return false;	
-		}
 
 		if (_item.isItemType(::Const.Items.ItemType.Helmet) && ::Const.Items.NotForHumanHelmetList.find(_item.getID()) != null)
-		{
 			return false;
-		}
 
 		return true;
 	}
