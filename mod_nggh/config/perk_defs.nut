@@ -542,20 +542,20 @@
 	{
 		ID = "perk.unhold_hand_to_hand",
 		Script = "scripts/skills/perks/perk_nggh_unhold_hand_to_hand",
-		Name = ::Const.Strings.PerkName.NggHUnholdUnarmedAttack,
-		Tooltip = ::Const.Strings.PerkDescription.NggHUnholdUnarmedAttack,
+		Name = ::Const.Strings.PerkName.NggH_Unhold_UnarmedAttack,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Unhold_UnarmedAttack,
 		Icon = "ui/perks/perk_unhold_hand_to_hand.png",
 		IconDisabled = "ui/perks/perk_unhold_hand_to_hand_sw.png",
-		Const = "NggHUnholdUnarmedAttack"
+		Const = "NggH_Unhold_UnarmedAttack"
 	},
 	{
 		ID = "perk.unhold_fling",
 		Script = "scripts/skills/perks/perk_nggh_unhold_fling",
-		Name = ::Const.Strings.PerkName.NggHUnholdFling,
-		Tooltip = ::Const.Strings.PerkDescription.NggHUnholdFling,
+		Name = ::Const.Strings.PerkName.NggH_Unhold_Fling,
+		Tooltip = ::Const.Strings.PerkDescription.NggH_Unhold_Fling,
 		Icon = "ui/perks/perk_unhold_fling.png",
 		IconDisabled = "ui/perks/perk_unhold_fling_sw.png",
-		Const = "NggHUnholdFling"
+		Const = "NggH_Unhold_Fling"
 	},
 
 // schrat

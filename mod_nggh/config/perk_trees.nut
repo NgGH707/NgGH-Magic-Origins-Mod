@@ -492,11 +492,11 @@
 	Tree = [
 		[],
 		[
-			::Const.Perks.PerkDefs.NggHUnholdUnarmedAttack,
+			::Const.Perks.PerkDefs.NggH_Unhold_UnarmedAttack,
 		],
 		[],
 		[
-			::Const.Perks.PerkDefs.NggHUnholdFling,
+			::Const.Perks.PerkDefs.NggH_Unhold_Fling,
 			::Const.Perks.PerkDefs.NggHMiscLineBreaker,
 		],
 		[],

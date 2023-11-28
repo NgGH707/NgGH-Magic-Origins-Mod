@@ -3,8 +3,8 @@ this.perk_nggh_unhold_fling <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		this.m.ID = "perk.unhold_fling";
-		this.m.Name = ::Const.Strings.PerkName.NggHUnholdFling;
-		this.m.Description = ::Const.Strings.PerkDescription.NggHUnholdFling;
+		this.m.Name = ::Const.Strings.PerkName.NggH_Unhold_Fling;
+		this.m.Description = ::Const.Strings.PerkDescription.NggH_Unhold_Fling;
 		this.m.Icon = "ui/perks/perk_unhold_fling.png";
 		this.m.Type = ::Const.SkillType.Perk;
 		this.m.Order = ::Const.SkillOrder.Perk;
