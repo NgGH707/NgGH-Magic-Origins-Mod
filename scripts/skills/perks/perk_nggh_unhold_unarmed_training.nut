@@ -37,10 +37,5 @@ this.perk_nggh_unhold_unarmed_training <- ::inherit("scripts/skills/skill", {
 		_properties.DamageRegularMax += damage;
 	}
 
-	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
-	{
-
-	}
-
 });
 
