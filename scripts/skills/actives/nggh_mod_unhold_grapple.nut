@@ -177,12 +177,12 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
 			return false;
 
-		if (_targetTile.isEmpty)
+		if (_targetTile.IsEmpty)
 			return false;
 
 		local target = _targetTile.getEntity();
 
-		if (!::MSU.isNull(target))
+		if (::MSU.isNull(target))
 			return false;
 
 		if (!_targetTile.IsOccupiedByActor)
@@ -198,7 +198,7 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 
 	function onUse( _user, _targetTile )
 	{
-		if (_targetTile.isEmpty)
+		if (_targetTile.IsEmpty)
 			return false;
 
 		local target = _targetTile.getEntity();
