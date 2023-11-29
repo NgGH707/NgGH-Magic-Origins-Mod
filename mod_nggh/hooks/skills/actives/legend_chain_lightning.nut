@@ -12,7 +12,7 @@
 		//this.m.IsRequireStaff = true;
 		this.m.IsUsingHitchance = false;
 		this.m.ActionPointCost = 6;
-		this.m.FatigueCost = 25;
+		this.m.FatigueCost = 28;
 		this.m.MinRange = 2;
 		this.m.MaxRange = 5;
 	}
