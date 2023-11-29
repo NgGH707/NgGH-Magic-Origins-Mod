@@ -1,7 +1,7 @@
 this.perk_nggh_unhold_unarmed_training <- ::inherit("scripts/skills/skill", {
 	m = {
 		DamageCap = 75,
-		ConvertRate = 0.04,
+		ConvertRate = 0.03,
 		AffectedSkills = [
 			"actives.unhold_hand_to_hand",
 			"actives.sweep_zoc",

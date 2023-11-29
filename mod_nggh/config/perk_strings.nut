@@ -563,7 +563,7 @@
 
 ::Const.Strings.PerkDescription.NggH_Unhold_UnarmedTraining <- "\'Focusing on technique, form and stances has given you greater control over your unarmed strikes.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-		+ "\n• Increases the damage [b](max: 75)[/b] of your [color=" + ::Const.UI.Color.NegativeValue + "]Hand to Hand[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Sweeping Strike[/color] skills equal to [color=" + ::Const.UI.Color.PositiveValue + "]4%[/color] of your current Hitpoints."
+		+ "\n• Increases the damage [b](max: 75)[/b] of your [color=" + ::Const.UI.Color.NegativeValue + "]Hand to Hand[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Sweeping Strike[/color] skills equal to [color=" + ::Const.UI.Color.PositiveValue + "]3%[/color] of your current Hitpoints."
 		+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Grapple[/color] skill has a [color=" + ::Const.UI.Color.NegativeValue + "]25%[/color] chance to distract on hit."
 
 ::Const.Strings.PerkDescription.NggH_Unhold_SpecFists <- "\'Master the martial arts of unarmed combat.\'"
