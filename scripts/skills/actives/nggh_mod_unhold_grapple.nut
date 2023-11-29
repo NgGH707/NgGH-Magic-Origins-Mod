@@ -78,12 +78,20 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 			});
 		}
 
-		ret.push({
-			id = 6,
-			type = "text",
-			icon = "ui/icons/special.png",
-			text = "Deals damage to target doesn\'t have [color=" + ::Const.UI.Color.NegativeValue + "]Immunity To Knock Back and Grab[/color] instead of Grapple"
-		});
+		ret.extend([
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Deals damage to target doesn\'t have [color=" + ::Const.UI.Color.NegativeValue + "]Immunity To Knock Back and Grab[/color] instead of Grapple"
+			},
+			{
+				id = 6,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Can uproot trees or lift rocks"
+			},
+		]);
 
 		return ret;
 	}
@@ -97,19 +105,22 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 		if (main != null)
 			_user.getItems().unequip(main);
 
-		local choice = ["orc_wooden_club"];
+		local weapon = ::new("scripts/items/weapons/greenskins/" + ::MSU.Array.rand(["orc_wooden_club", "legend_bough"]));
 
-		if (_user.getOffhandItem() == null)
-			choice.push("legend_bough");
+		if (weapon.isWeaponType(::Const.Items.ItemType.TwoHanded)) {
 
-		local weapon = ::new("scripts/items/weapons/greenskins/" + ::MSU.Array.rand(choice));
-		weapon.setCondition(::Math.rand(8, 15));
+			local off = _user.getOffhandItem();
 
-		if (weapon.isWeaponType(::Const.Items.ItemType.TwoHanded))
+			if (off != null)
+				_user.getItems().unequip(off);
+
 			_user.getItems().getData()[::Const.ItemSlot.Offhand][0] = null;
+		}
 
 		_user.getItems().getData()[::Const.ItemSlot.Mainhand][0] = null;
-		return _user.getItems().equip(weapon);
+		local ret = _user.getItems().equip(weapon);
+		weapon.setCondition(::Math.rand(8, 15) * 0.1);
+		return ret;
 	}
 
 	function equipRock( _user )
@@ -127,7 +138,7 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 			_user.getItems().unequip(off);
 
 		_user.getItems().getData()[::Const.ItemSlot.Offhand][0] = null;
-		return _user.getItems().equip(::new("scripts/items/weapons/nggh_mod_unhold_throw_rock"));
+		return _user.getItems().equip(::new("scripts/items/weapons/nggh_mod_picked_up_rock"));
 	}
 
 	function grabOnObject( _user, _object )
@@ -281,7 +292,7 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 		};
 
 		this.processDamageCalculation(target, properties, defenderProperties, tag.HitInfo);
-		::Tactical.getNavigator().teleport(target, flingToTile, this.onKnockedDown.bindenv(this), tag, true);
+		::Tactical.getNavigator().teleport(target, _tag.TileToKnock, this.onKnockedDown.bindenv(this), tag, true);
 	}
 
 	function onKnockedDown( _entity, _tag )
@@ -294,7 +305,7 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 		if (typeof _tag.User == "instance" && _tag.User.isNull() || !_tag.User.isAlive() || _tag.User.isDying())
 			return;
 		
-		_tag.Container.onTargetHit(this, _entity, _tag.HitInfo.BodyPart, _tag.HitInfo.DamageRegular, 0);
+		this.getContainer().onTargetHit(this, _entity, _tag.HitInfo.BodyPart, _tag.HitInfo.DamageRegular, 0);
 		
 		if (_entity.isAlive() || !_entity.isDying())
 		{
