@@ -60,9 +60,7 @@ this.nggh_mod_cosmetic <- ::inherit("scripts/skills/skill", {
 	function isHidden()
 	{
 		if (!::Nggh_MagicConcept.IsCosmeticEnable)
-		{
 			return true;
-		}
 
 		local actor = this.getContainer().getActor();
 		return actor.getHeadItem() == null && actor.getBodyItem() == null;
@@ -71,18 +69,14 @@ this.nggh_mod_cosmetic <- ::inherit("scripts/skills/skill", {
 	function onAfterUpdate( _properties )
 	{
 		if (!::Nggh_MagicConcept.IsCosmeticEnable)
-		{
 			return;
-		}
 
 		local actor = this.getContainer().getActor();
 		local h = actor.getHeadItem();
 		local a = actor.getBodyItem();
 
 		if (h == null && a == null)
-		{
 			return;
-		}
 
 		local staminaMult = 1.0;
 		local armor = 0;
@@ -91,9 +85,7 @@ this.nggh_mod_cosmetic <- ::inherit("scripts/skills/skill", {
 		local vision = 0
 
 		if (this.getContainer().hasSkill("perk.brawny"))
-		{
 			staminaMult = 0.7;
-		}
 
 		if (h != null)
 		{

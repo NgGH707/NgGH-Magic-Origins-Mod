@@ -68,7 +68,7 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 				},
 			]);
 		}
-		else 
+		else
 		{
 			ret.push({
 				id = 6,
@@ -107,7 +107,7 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 
 		local weapon = ::new("scripts/items/weapons/greenskins/" + ::MSU.Array.rand(["orc_wooden_club", "legend_bough"]));
 
-		if (weapon.isWeaponType(::Const.Items.ItemType.TwoHanded)) {
+		if (weapon.isItemType(::Const.Items.ItemType.TwoHanded)) {
 
 			local off = _user.getOffhandItem();
 
@@ -119,7 +119,7 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 
 		_user.getItems().getData()[::Const.ItemSlot.Mainhand][0] = null;
 		local ret = _user.getItems().equip(weapon);
-		weapon.setCondition(::Math.rand(8, 15) * 0.1);
+		weapon.setCondition(::Math.rand(8, 15) * 1.0);
 		return ret;
 	}
 
@@ -129,7 +129,7 @@ this.nggh_mod_unhold_grapple <- this.inherit("scripts/skills/skill", {
 
 		local main = _user.getMainhandItem();
 
-		if (main != null && main.isWeaponType(::Const.Items.ItemType.TwoHanded))
+		if (main != null && main.isItemType(::Const.Items.ItemType.TwoHanded))
 			_user.getItems().unequip(main);
 
 		local off = _user.getOffhandItem();
