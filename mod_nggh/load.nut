@@ -1,6 +1,7 @@
 // these files need to be loaded in a specific order
 ::include("mod_nggh/config/names.nut")
 ::include("mod_nggh/config/config.nut")
+::include("mod_nggh/config/champions.nut")
 ::include("mod_nggh/config/projectiles.nut")
 ::include("mod_nggh/config/ai.nut")
 ::include("mod_nggh/config/character.nut")
