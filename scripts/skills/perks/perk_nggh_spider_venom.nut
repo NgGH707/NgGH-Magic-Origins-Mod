@@ -1,5 +1,8 @@
 this.perk_nggh_spider_venom <- ::inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		DefaultBonus = 0.1,
+		ExtraBonus = 0.15
+	},
 	function create()
 	{
 		this.m.ID = "perk.spider_venom";
@@ -16,6 +19,22 @@ this.perk_nggh_spider_venom <- ::inherit("scripts/skills/skill", {
 	function onUpdate( _properties )
 	{
 		_properties.IsSpecializedInDaggers = true;
+	}
+
+	function onAnySkillUsed( _skill, _targetEntity, _properties )
+	{
+		if (_skill == null || !_skill.isAttack() || _targetEntity == null)
+			return;
+		
+		if (!_targetEntity.getFlags().has("undead"))
+			return;
+
+		local mult = 1.0 + this.m.DefaultBonus;
+
+		if (_targetEntity.getCurrentProperties().IsRooted)
+			mult += this.m.ExtraBonus;
+		
+		_properties.DamageTotalMult *= mult;
 	}
 
 });

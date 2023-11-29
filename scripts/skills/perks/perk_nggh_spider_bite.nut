@@ -22,7 +22,7 @@ this.perk_nggh_spider_bite <- ::inherit("scripts/skills/skill", {
 	
 	function onBeforeTargetHit( _skill, _targetEntity, _hitInfo )
 	{
-		if (::Math.rand(1, 100) > 25)
+		if (_skill == null || ::Math.rand(1, 100) > 25)
 			return;
 		
 		local DamDirect = 1.0;
