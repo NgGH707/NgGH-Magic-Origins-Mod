@@ -24,6 +24,7 @@
 
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_bite"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_web"));
+		this.m.Skills.add(::new("scripts/skills/perks/perk_push_the_advantage"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_dodge"));
 		return true;
