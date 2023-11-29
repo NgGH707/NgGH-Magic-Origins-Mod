@@ -9,7 +9,7 @@
 		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 150)
 			chance = ::Math.min(100, chance + ::Math.max(10, ::World.getTime().Days - 150));
 
-		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggH_Spider_Web], chance - 25);
+		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggH_Spider_Web, ::Const.Perks.PerkDefs.NggH_Spider_ToughCarapace], chance - 25);
 
 		if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
 			chance = 110;
@@ -28,6 +28,7 @@
 		b.MeleeSkill += 15;
 		b.MeleeDefense += 15;
 		b.RangedDefense += 15;
+		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_tough_carapace"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_venom"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_bite"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_dodge"));
