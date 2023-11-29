@@ -12,7 +12,7 @@ this.nggh_mod_direwolf_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 
 	function getStrengthMult()
 	{
-		return this.isWhiteWolf() ? 3.5 : 1.2;
+		return this.isWhiteWolf() ? 3.5 : 1.0;
 	}
 
 	function getHitpointsPerVeteranLevel()

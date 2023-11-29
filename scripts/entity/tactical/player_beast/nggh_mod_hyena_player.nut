@@ -7,7 +7,7 @@ this.nggh_mod_hyena_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 	
 	function getStrengthMult()
 	{
-		return this.isHigh() ? 1.2 : 1.1;
+		return this.isHigh() ? 1.1 : 1.0;
 	}
 
 	function getHitpointsPerVeteranLevel()

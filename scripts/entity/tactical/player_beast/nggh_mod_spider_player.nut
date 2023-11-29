@@ -22,7 +22,7 @@ this.nggh_mod_spider_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 
 	function getStrengthMult()
 	{
-		return this.isRedback() ? 2.5 : 1.1;
+		return this.isRedback() ? 2.05 : 0.85;
 	}
 
 	function getHitpointsPerVeteranLevel()
