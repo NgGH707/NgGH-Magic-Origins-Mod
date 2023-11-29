@@ -137,6 +137,10 @@ if (!("HexeOrigin" in ::Const))
 		//22
 		"SHADOW",
 		"DEMON"
+	],
+	[
+		// 23
+		"KNIGHT"
 	]
 ];
 ::Const.HexeOrigin.SeedKeywords <- [
@@ -163,6 +167,7 @@ if (!("HexeOrigin" in ::Const))
 	"BER",   //20
 	"HEX",   //21
 	"DEM",   //22
+	"KNI",   //23
 ];
 ::Const.HexeOrigin.StartingRollNames <- [
 	"EGGS",
@@ -187,7 +192,8 @@ if (!("HexeOrigin" in ::Const))
 	"AMOURANTH TWITCH",
 	"BERSERK",
 	"HEXEN COVEN",
-	"DEMON ALP"
+	"DEMON ALP",
+	"HEDGE KNIGHT"
 ];
 ::Const.HexeOrigin.SeedsStartWithWhip <- [
 	12,
@@ -343,25 +349,19 @@ if (!("HexeOrigin" in ::Const))
 		foreach ( a in NormalDebuffs )
 		{
 			if (skills.hasSkill("effects." + a))
-			{
 				++ret;
-			}
 		}
 		
 		foreach ( b in InitiativeDebuffs )
 		{
 			if (skills.hasSkill("effects." + b))
-			{
 				++ret;
-			}
 		}
 		
 		foreach ( c in ImmoblieDebuffs )
 		{
 			if (skills.hasSkill("effects." + c))
-			{
 				++ret;
-			}
 		}
 		
 		foreach ( d in StackableDebuffs )

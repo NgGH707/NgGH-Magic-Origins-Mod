@@ -808,6 +808,44 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			_hexe.setHitpoints(1.0);
 			break;
 
+		case 23:
+			// a knight in shinny armor
+			local knight = roster.create("scripts/entity/tactical/player");
+			knight.setStartValuesEx(["hedge_knight_background"], true, 1);
+			knight.improveMood(1.0, "Still alive to serve my princess");
+			knight.getBackground().addPerkGroup(::Const.Perks.NggH_SimpTree.Tree);
+			knight.getSkills().removeByID("trait.disloyal");
+			knight.getSkills().removeByID("trait.greedy");
+			/*
+			local background = ::new("scripts/skills/backgrounds/nggh_mod_charmed_background");
+			background.setTempData({
+				Type = _type,
+				Entity = null,
+				IsHuman = true,
+				IsMiniboss = ::Math.rand(1, 100) == 100
+			});
+			// remove old background
+			knight.getSkills().removeByID(knight.getBackground().getID());
+			// add new one
+			knight.getSkills().add(background);
+			::Const.CharmedUtilities.setup(background, true);
+			background.buildDescription();
+			*/
+			knight.setPlaceInFormation(3);
+			knight.onHired();
+
+			// have to give her something beatiful to wear, but first have to undress her
+			_hexe.getItems().unequip(_hexe.getBodyItem());
+			_hexe.getItems().unequip(_hexe.getHeadItem());
+			// a nice dress
+			local armor = ::Const.World.Common.pickArmor([[1, "beautiful_robe"]]);
+			armor.setUpgrade(::new("scripts/items/legend_armor/armor_upgrades/unhold_fur_upgrade"));
+			_hexe.getItems().equip(armor);
+			// a nice headress
+			_hexe.getItems().equip(::Const.World.Common.pickHelmet([[1, "legend_southern_cloth_headress"]]));
+			_hexe.setTitle("the Runaway Princess");
+			break;
+
 		default:
 			for( local i = 0; i < 3; ++i )
 			{
