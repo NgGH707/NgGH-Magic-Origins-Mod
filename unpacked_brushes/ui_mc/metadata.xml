@@ -41,7 +41,7 @@
   <sprite id="bust_captive_charm" offsetY="35" ic="FF1D21BE" width="184" height="222" img="effects\bust_charm.png" left="-21" right="25" top="31" bottom="77" />
   <sprite id="eathen_spike" ic="FF294A7A" img="effects\eathen_spike.png" left="-20" right="21" />
 
-  <sprite id="icon_mod_rock" offsetY="35" ic="FF323743" width="130" height="142" img="icons\icon_mod_rock.png" left="10" right="70" top="-65" bottom="-5" />
+  <sprite id="icon_mod_rock" offsetY="35" ic="FF323743" width="130" height="142" img="icons\icon_mod_rock.png" left="10" right="62" top="-59" bottom="-7" />
 
   <sprite id="projectile_mod_rock" rotSpeed="800" ic="FF436E61" img="effects\projectile_mod_rock.png" />
 

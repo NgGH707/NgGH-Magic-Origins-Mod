@@ -76,9 +76,10 @@
 			return;
 		}
 
-		if (main.isItemType(::Const.Items.ItemType.OneHanded))
-			_properties.DamageTotalMult *= 1.5;
-		else
-			_properties.DamageTotalMult *= 1.25;
+		_properties.DamageRegularMin += 10;
+		_properties.DamageRegularMax += 20;
+
+		if (main.isItemType(::Const.Items.ItemType.TwoHanded))
+			_properties.DamageRegularMax += 5;
 	};
 });

@@ -1,28 +1,30 @@
-this.nggh_mod_unhold_throw_rock <- this.inherit("scripts/skills/skill", {
+this.nggh_mod_unhold_throw_rock <- ::inherit("scripts/skills/skill", {
 	m = {
-		AdditionalAccuracy = 20,
+		AdditionalAccuracy = 10,
 		AdditionalHitChance = -10
 	},
 	function create()
 	{
-		this.m.ID = "actives.unhold_throw_rock";
+		this.m.ID = "actives.throw_balls";
 		this.m.Name = "Throw Rock";
-		this.m.Description = "Hurl a rock at a target. Can not be used while engaged in melee.";
+		this.m.Description = "Hurl a huge rock at a target. Goodluck blocking it with a shield! Can not be used while engaged in melee.";
 		this.m.KilledString = "Smashed";
 		this.m.Icon = "skills/active_12.png";
 		this.m.IconDisabled = "skills/active_12_sw.png";
 		this.m.Overlay = "active_12";
 		this.m.SoundOnUse = [
-			"sounds/combat/dlc4/sling_use_01.wav",
-			"sounds/combat/dlc4/sling_use_02.wav",
-			"sounds/combat/dlc4/sling_use_03.wav",
-			"sounds/combat/dlc4/sling_use_04.wav"
+			"sounds/enemies/dlc6/sand_golem_throw_01.wav",
+			"sounds/enemies/dlc6/sand_golem_throw_02.wav",
+			"sounds/enemies/dlc6/sand_golem_throw_03.wav",
+			"sounds/enemies/dlc6/sand_golem_throw_04.wav",
+			"sounds/enemies/dlc6/sand_golem_throw_05.wav",
+			"sounds/enemies/dlc6/sand_golem_throw_06.wav"
 		];
 		this.m.SoundOnHit = [
-			"sounds/combat/dlc4/sling_hit_01.wav",
-			"sounds/combat/dlc4/sling_hit_02.wav",
-			"sounds/combat/dlc4/sling_hit_03.wav",
-			"sounds/combat/dlc4/sling_hit_04.wav"
+			"sounds/enemies/dlc6/sand_golem_throw_hit_01.wav",
+			"sounds/enemies/dlc6/sand_golem_throw_hit_02.wav",
+			"sounds/enemies/dlc6/sand_golem_throw_hit_03.wav",
+			"sounds/enemies/dlc6/sand_golem_throw_hit_04.wav"
 		];
 		this.m.SoundOnHitShield = [
 			"sounds/combat/dlc4/sling_shield_hit_01.wav",
@@ -52,6 +54,7 @@ this.nggh_mod_unhold_throw_rock <- this.inherit("scripts/skills/skill", {
 		this.m.IsShowingProjectile = true;
 		this.m.IsWeaponSkill = true;
 		this.m.IsDoingForwardMove = false;
+		this.m.IsShieldRelevant = false;
 		this.m.InjuriesOnBody = ::Const.Injury.BluntBody;
 		this.m.InjuriesOnHead = ::Const.Injury.BluntHead;
 		this.m.DirectDamageMult = 0.35;
@@ -73,20 +76,32 @@ this.nggh_mod_unhold_throw_rock <- this.inherit("scripts/skills/skill", {
 	{
 		local ret = this.getRangedTooltip(this.getDefaultTooltip());
 
-		ret.push({
-			id = 7,
-			type = "text",
-			icon = "ui/icons/special.png",
-			text = "Has a [color=" + this.Const.UI.Color.NegativeValue + "]100%[/color] chance to stagger a target on a hit"
-		});
+		ret.extend([
+			{
+				id = 7,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Ignores the bonus to Melee Defense granted by shields"
+			}
+		]);
 
-		if (this.Tactical.isActive() && this.getContainer().getActor().getTile().hasZoneOfControlOtherThan(this.getContainer().getActor().getAlliedFactions()))
+		if (!this.getContainer().hasSkill("actives.sweep"))
+		{
+			ret.push({
+				id = 7,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "[color=" + ::Const.UI.Color.NegativeValue + "]Stop user from using any other weapon skill[/color]"
+			});
+		}
+
+		if (::Tactical.isActive() && this.getContainer().getActor().isEngagedInMelee())
 		{
 			ret.push({
 				id = 9,
 				type = "text",
 				icon = "ui/tooltips/warning.png",
-				text = "[color=" + this.Const.UI.Color.NegativeValue + "]Can not be used because this character is engaged in melee[/color]"
+				text = "[color=" + ::Const.UI.Color.NegativeValue + "]Can not be used because this character is engaged in melee[/color]"
 			});
 		}
 
@@ -95,7 +110,13 @@ this.nggh_mod_unhold_throw_rock <- this.inherit("scripts/skills/skill", {
 
 	function isUsable()
 	{
-		return !this.Tactical.isActive() || !this.getContainer().getActor().isEngagedInMelee();
+		if (!::Tactical.isActive())
+			return true;
+
+		if (this.getContainer().getActor().isEngagedInMelee())
+			return false;
+
+		return this.m.IsUsable && this.getContainer().getActor().getCurrentProperties().IsAbleToUseSkills && !this.isHidden() && !(this.getContainer().getActor().getSkills().hasSkill("trait.oath_of_honor") && (this.m.IsWeaponSkill && this.m.IsRanged || this.m.IsOffensiveToolSkill));
 	}
 
 	function getAmmo()
@@ -129,14 +150,22 @@ this.nggh_mod_unhold_throw_rock <- this.inherit("scripts/skills/skill", {
 		if (!_user.isHiddenToPlayer() || _targetTile.IsVisibleForPlayer)
 		{
 			this.getContainer().setBusy(true);
-			this.Time.scheduleEvent(this.TimeUnit.Virtual, this.m.Delay, this.onPerformAttack, {
+			local d = _user.getTile().getDirectionTo(_targetTile) + 3;
+
+			if (d > 5) d -= 6;
+
+			// making a throwing stance
+			if (_user.getTile().hasNextTile(d))
+				::Tactical.getShaker().shake(_user, _user.getTile().getNextTile(d), 6);
+
+			::Time.scheduleEvent(::TimeUnit.Virtual, this.m.Delay, this.onPerformAttack, {
 				Skill = this,
 				User = _user,
 				TargetTile = _targetTile
 			});
 
 			if (!_user.isPlayerControlled() && _targetTile.getEntity().isPlayerControlled())
-				_user.getTile().addVisibilityForFaction(this.Const.Faction.Player);
+				_user.getTile().addVisibilityForFaction(::Const.Faction.Player);
 
 			return true;
 		}
@@ -154,15 +183,39 @@ this.nggh_mod_unhold_throw_rock <- this.inherit("scripts/skills/skill", {
 		return ret;
 	}
 
+	function onAfterUpdate( _properties )
+	{
+		if (this.getContainer().hasSkill("actives.sweep"))
+		{
+			// recoup the initiative loss
+			_properties.Initiative += 20 * _properties.FatigueToInitiativeRate;
+			return;
+		}
+
+		// i don't want a non-unhold can throw giant rock while being able to use weapon skills
+		_properties.IsAbleToUseWeaponSkills = false;
+	}
+
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
 		if (_skill == this)
 		{
 			_properties.RangedSkill += this.m.AdditionalAccuracy;
 			_properties.HitChanceAdditionalWithEachTile += this.m.AdditionalHitChance;
+
+			if (!this.getContainer().hasSkill("actives.sweep"))
+				return;
+
+			if (this.getContainer().getActor().getMainhandItem() != null)
+				return;	
+
+			_properties.DamageRegularMin -= 30;
+			_properties.DamageRegularMax -= 60;
+			_properties.DamageArmorMult /= 0.8;
 		}
 	}
 
+	/*
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
 		if (_skill != this || !_targetEntity.isAlive() || _targetEntity.isDying())
@@ -173,6 +226,7 @@ this.nggh_mod_unhold_throw_rock <- this.inherit("scripts/skills/skill", {
 		if (!this.getContainer().getActor().isHiddenToPlayer() && _targetEntity.getTile().IsVisibleForPlayer)
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(this.getContainer().getActor()) + " has staggered " + ::Const.UI.getColorizedEntityName(_targetEntity) + " for one turn");
 	}
+	*/
 
 });
 
