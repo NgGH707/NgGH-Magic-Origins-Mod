@@ -31,7 +31,7 @@ this.nggh_mod_named_serpent_skin_legend_upgrade <- ::inherit("scripts/items/lege
 	function randomizeValues()
 	{
 		this.m.StaminaModifier = ::Math.min(0, this.m.StaminaModifier + ::Math.rand(0, 2));
-		this.m.Condition = ::Math.floor(this.m.Condition * ::Math.rand(115, 133) * 0.01) * 1.0;
+		this.m.Condition = ::Math.floor(this.m.ConditionMax * ::Math.rand(115, 150) * 0.01) * 1.0;
 		this.m.ConditionMax = this.m.Condition;
 	}
 
@@ -80,9 +80,7 @@ this.nggh_mod_named_serpent_skin_legend_upgrade <- ::inherit("scripts/items/lege
 		local c = this.m.Armor.getContainer();
 
 		if (c != null && c.getActor() != null && !c.getActor().isNull())
-		{
 			c.getActor().getSkills().add(::new("scripts/skills/items/firearms_resistance_skill"));
-		}
 	}
 
 	function onUnequip()
@@ -90,9 +88,7 @@ this.nggh_mod_named_serpent_skin_legend_upgrade <- ::inherit("scripts/items/lege
 		local c = this.m.Armor.getContainer();
 
 		if (c != null && c.getActor() != null && !c.getActor().isNull())
-		{
 			c.getActor().getSkills().removeByID("items.firearms_resistance");
-		}
 		
 		this.legend_named_armor_upgrade.onUnequip();
 	}

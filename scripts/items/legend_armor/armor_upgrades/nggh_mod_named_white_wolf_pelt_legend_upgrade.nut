@@ -31,7 +31,7 @@ this.nggh_mod_named_white_wolf_pelt_legend_upgrade <- ::inherit("scripts/items/l
 
 	function randomizeValues()
 	{
-		this.m.SpecialValue = ::Math.min(30, ::Math.floor(this.m.SpecialValue * ::Math.rand(115, 140) * 0.01));
+		this.m.SpecialValue = ::Math.min(30, ::Math.floor(this.m.SpecialValue * ::Math.rand(120, 150) * 0.01));
 		this.m.StaminaModifier = ::Math.min(0, this.m.StaminaModifier + ::Math.rand(0, 2));
 		this.m.Condition = ::Math.floor(this.m.Condition * ::Math.rand(115, 133) * 0.01) * 1.0;
 		this.m.ConditionMax = this.m.Condition;

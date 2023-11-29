@@ -30,9 +30,9 @@ this.nggh_mod_named_unhold_fur_legend_upgrade <- ::inherit("scripts/items/legend
 
 	function randomizeValues()
 	{
-		this.m.SpecialValue = ::Math.min(30, ::Math.floor(this.m.SpecialValue * ::Math.rand(115, 140) * 0.01));
+		this.m.SpecialValue = ::Math.min(30, ::Math.floor(this.m.SpecialValue * ::Math.rand(120, 150) * 0.01));
 		this.m.StaminaModifier = ::Math.min(0, this.m.StaminaModifier + ::Math.rand(0, 2));
-		this.m.Condition = ::Math.floor(this.m.Condition * ::Math.rand(115, 133) * 0.01) * 1.0;
+		this.m.Condition = ::Math.floor(this.m.Condition * ::Math.rand(115, 150) * 0.01) * 1.0;
 		this.m.ConditionMax = this.m.Condition;
 	}
 
@@ -78,9 +78,7 @@ this.nggh_mod_named_unhold_fur_legend_upgrade <- ::inherit("scripts/items/legend
 	function onBeforeDamageReceived( _attacker, _skill, _hitInfo, _properties )
 	{
 		if (_hitInfo.BodyPart != ::Const.BodyPart.Body)
-		{
-			return
-		}
+			return;
 
 		_properties.DamageReceivedRangedMult *= 1.0 - this.m.SpecialValue * 0.01;
 	}

@@ -80,9 +80,7 @@ this.nggh_mod_named_lindwurm_scales_legend_upgrade <- ::inherit("scripts/items/l
 		local c = this.m.Armor.getContainer();
 
 		if (c != null && c.getActor() != null && !c.getActor().isNull())
-		{
 			c.getActor().getFlags().add("body_immune_to_acid");
-		}
 	}
 
 	function onUnequip()
@@ -90,9 +88,8 @@ this.nggh_mod_named_lindwurm_scales_legend_upgrade <- ::inherit("scripts/items/l
 		local c = this.m.Armor.getContainer();
 
 		if (c != null && c.getActor() != null && !c.getActor().isNull())
-		{
 			c.getActor().getFlags().remove("body_immune_to_acid");
-		}
+		
 		this.legend_named_armor_upgrade.onUnequip();
 	}
 });

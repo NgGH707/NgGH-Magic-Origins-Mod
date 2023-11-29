@@ -33,7 +33,10 @@ this.nggh_mod_named_bone_platings_legend_upgrade <- ::inherit("scripts/items/leg
 	{
 		this.m.SpecialValue = ::Math.rand(1, 100) <= 50 ? ::Math.rand(1, 3) : ::Math.rand(1, 2);
 		this.m.StaminaModifier = ::Math.min(0, this.m.StaminaModifier + ::Math.rand(0, 1));
-		this.m.Condition = ::Math.floor(this.m.Condition * ::Math.rand(115, 133) * 0.01) * 1.0;
+
+		local max = this.m.SpecialValue >= 2 ? 133 : 200;
+		local min = this.m.SpecialValue >= 2 ? 115 : 150;
+		this.m.Condition = ::Math.floor(this.m.Condition * ::Math.rand(min, max) * 0.01) * 1.0;
 		this.m.ConditionMax = this.m.Condition;
 	}
 

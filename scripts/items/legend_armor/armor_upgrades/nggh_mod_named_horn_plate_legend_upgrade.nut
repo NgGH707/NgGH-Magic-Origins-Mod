@@ -22,18 +22,18 @@ this.nggh_mod_named_horn_plate_legend_upgrade <- ::inherit("scripts/items/legend
 		this.m.SpriteCorpseFront = null;
 		this.m.SpriteCorpseBack = "upgrade_22_back_dead";
 		this.m.Value = 1200;
-		this.m.Condition = 10;
-		this.m.ConditionMax = 10;
-		this.m.ConditionModifier = 10;
+		this.m.Condition = 25;
+		this.m.ConditionMax = 25;
+		this.m.ConditionModifier = 25;
 		this.m.StaminaModifier = -1;
 		this.randomizeValues();
 	}
 
 	function randomizeValues()
 	{
-		this.m.SpecialValue = ::Math.min(30, ::Math.floor(this.m.SpecialValue * ::Math.rand(115, 140) * 0.01));
+		this.m.SpecialValue = ::Math.min(30, ::Math.floor(this.m.SpecialValue * ::Math.rand(120, 145) * 0.01));
 		this.m.StaminaModifier = ::Math.min(0, this.m.StaminaModifier + ::Math.rand(0, 2));
-		this.m.Condition = ::Math.floor(this.m.Condition * ::Math.rand(115, 133) * 0.01) * 1.0;
+		this.m.Condition = ::Math.floor(this.m.Condition * ::Math.rand(115, 150) * 0.01) * 1.0;
 		this.m.ConditionMax = this.m.Condition;
 	}
 
@@ -79,9 +79,7 @@ this.nggh_mod_named_horn_plate_legend_upgrade <- ::inherit("scripts/items/legend
 	function onBeforeDamageReceived( _attacker, _skill, _hitInfo, _properties )
 	{
 		if (_hitInfo.BodyPart != ::Const.BodyPart.Body)
-		{
 			return;
-		}
 
 		_properties.DamageReceivedMeleeMult *= 1.0 - this.m.SpecialValue * 0.01;
 	}
