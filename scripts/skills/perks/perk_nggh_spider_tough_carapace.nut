@@ -25,7 +25,7 @@ this.perk_nggh_spider_tough_carapace <- ::inherit("scripts/skills/skill", {
 			return;
 		
 		_properties.DamageReceivedArmorMult *= 0.5;
-		_properties.DamageReceivedDirectMult *= 0.5;
+		_properties.DamageReceivedDirectMult *= 0.67;
 	}
 
 });

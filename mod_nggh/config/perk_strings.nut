@@ -363,7 +363,7 @@
 		+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Redback Poisoned[/color] effect inflicted by your bite deals double the damage and makes it more potent as the target get bitten more."
 		+ "\n• Each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Redback Poisoned[/color] effects increases the affected target\'s fatigue usage by [color=" + ::Const.UI.Color.PositiveValue + "]5%[/color]."
 		+ "\n• Increases the Attack Damage of [color=" + ::Const.UI.Color.NegativeValue + "]Webknecht Bite[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Redback Webknecht Bite[/color] skills by [color=" + ::Const.UI.Color.PositiveValue + "]2%[/color] for each stack of [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Redback Poisoned[/color] effects on affected target."
-		+ "\n• Against the undead, deals [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color] more damage, but if they are trapped in net, vines or web then the bonus is increased to [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] instead.";
+		+ "\n• Against the undead, deals [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color] more damage."; //, but if they are trapped in net, vines or web then the bonus is increased to [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] instead.";
 
 ::Const.Strings.PerkDescription.NggH_Spider_Web <- "\'Master the ability to weave and create web so you can make the strongest web with little effort.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Weave Web[/color]"
@@ -375,7 +375,7 @@
 ::Const.Strings.PerkDescription.NggH_Spider_ToughCarapace <- "\'Better than any plate armor.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Takes [color=" + ::Const.UI.Color.PositiveValue + "]50%[/color] less damage to armor."
-		+ "\n• Reduces damage ignoring armor by [color=" + ::Const.UI.Color.PositiveValue + "]50%[/color]";
+		+ "\n• Reduces damage ignoring armor by [color=" + ::Const.UI.Color.PositiveValue + "]33%[/color]";
 // serpent
 ::Const.Strings.PerkDescription.NggHSerpentBite <- "\'Lightning-fast attack that can deliver more powerful bite.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Bite[/color]"
@@ -756,6 +756,6 @@
 ::Const.Strings.PerkDescription.NggH_Simp_LevelUp <- "\'The vicious cycle of a simp continues. Only the most foolish... i meant the strongest simp can stay.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Upon learning this perk, immediately gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] Simp Level."
-		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] Simp Level for every [color=" + ::Const.UI.Color.NegativeValue + "]2[/color] levels.";
+		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] Simp Level for every [color=" + ::Const.UI.Color.NegativeValue + "]2[/color] levels after learning this perk.";
 
 

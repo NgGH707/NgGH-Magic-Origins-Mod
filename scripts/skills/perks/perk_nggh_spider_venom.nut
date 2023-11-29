@@ -1,7 +1,6 @@
 this.perk_nggh_spider_venom <- ::inherit("scripts/skills/skill", {
 	m = {
-		DefaultBonus = 0.1,
-		ExtraBonus = 0.15
+		DefaultBonus = 1.1,
 	},
 	function create()
 	{
@@ -28,13 +27,8 @@ this.perk_nggh_spider_venom <- ::inherit("scripts/skills/skill", {
 		
 		if (!_targetEntity.getFlags().has("undead"))
 			return;
-
-		local mult = 1.0 + this.m.DefaultBonus;
-
-		if (_targetEntity.getCurrentProperties().IsRooted)
-			mult += this.m.ExtraBonus;
 		
-		_properties.DamageTotalMult *= mult;
+		_properties.DamageTotalMult *= this.m.DefaultBonus;
 	}
 
 });
