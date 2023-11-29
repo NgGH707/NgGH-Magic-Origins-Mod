@@ -7,7 +7,7 @@ this.perk_nggh_wolf_enrage <- ::inherit("scripts/skills/skill", {
 		this.m.Description = ::Const.Strings.PerkDescription.NggHWolfEnrage;
 		this.m.Icon = "ui/perks/perk_enrage_wolf.png";
 		this.m.Type = ::Const.SkillType.Perk;
-		this.m.Order = ::Const.SkillOrder.Perk;
+		this.m.Order = ::Const.SkillOrder.Last;
 		this.m.IsActive = false;
 		this.m.IsStacking = false;
 		this.m.IsHidden = false;
@@ -15,27 +15,19 @@ this.perk_nggh_wolf_enrage <- ::inherit("scripts/skills/skill", {
 
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
-		if (_skill == null)
-		{
+		if (_skill == null || !_skill.isAttack() || _targetEntity == null)
 			return;
-		}
-		
-		if (_targetEntity == null)
-		{
-			return;
-		}
 		
 		local overwhelm = _targetEntity.getSkills().getSkillByID("effects.overwhelmed");
 		
 		if (overwhelm == null)
-		{
 			return;
-		}
 		
 		local num = overwhelm.m.Count;
 		_properties.MeleeSkill += num * 5;
 		_properties.DamageDirectAdd += num * 0.02;
 		_properties.DamageTotalMult += num * 0.05;
 	}
+
 });
 
