@@ -816,6 +816,11 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			knight.getBackground().addPerkGroup(::Const.Perks.NggH_SimpTree.Tree);
 			knight.getSkills().removeByID("trait.disloyal");
 			knight.getSkills().removeByID("trait.greedy");
+			// now add the cool stuffs
+			local e = ::new("scripts/skills/hexe/nggh_mod_fake_charmed_effect");
+			e.setSimpLevel(::Math.rand(3, 5));
+			knight.getSkills().add(e);
+			knight.getSkills().add(::new("scripts/skills/traits/loyal_trait"));
 			/*
 			local background = ::new("scripts/skills/backgrounds/nggh_mod_charmed_background");
 			background.setTempData({
@@ -831,7 +836,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			::Const.CharmedUtilities.setup(background, true);
 			background.buildDescription();
 			*/
-			knight.setPlaceInFormation(3);
+			knight.setPlaceInFormation(4);
 			knight.onHired();
 
 			// have to give her something beatiful to wear, but first have to undress her
@@ -839,7 +844,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			_hexe.getItems().unequip(_hexe.getHeadItem());
 			// a nice dress
 			local armor = ::Const.World.Common.pickArmor([[1, "beautiful_robe"]]);
-			armor.setUpgrade(::new("scripts/items/legend_armor/armor_upgrades/unhold_fur_upgrade"));
+			armor.setUpgrade(::new("scripts/items/legend_armor/armor_upgrades/legend_unhold_fur_upgrade"));
 			_hexe.getItems().equip(armor);
 			// a nice headress
 			_hexe.getItems().equip(::Const.World.Common.pickHelmet([[1, "legend_southern_cloth_headress"]]));

@@ -205,6 +205,9 @@ this.nggh_mod_fake_charmed_effect <- ::inherit("scripts/skills/skill", {
 
 	function checkSimp()
 	{
+		if (::MSU.isNull(this.getContainer()));
+			return;
+
 		if (this.getSimpLevel() < 10)
 			return;
 
