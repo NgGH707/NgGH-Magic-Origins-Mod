@@ -842,6 +842,14 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			// have to give her something beatiful to wear, but first have to undress her
 			_hexe.getItems().unequip(_hexe.getBodyItem());
 			_hexe.getItems().unequip(_hexe.getHeadItem());
+			// a nice staff
+			local main = _hexe.getMainhandItem();
+			_hexe.getItems().unequip(main);
+
+			if (main != null)
+				_hexe.getItems().addToBag(main);
+
+			_hexe.getItems().equip(::new("scripts/items/weapons/legend_mystic_staff"));
 			// a nice dress
 			local armor = ::Const.World.Common.pickArmor([[1, "beautiful_robe"]]);
 			armor.setUpgrade(::new("scripts/items/legend_armor/armor_upgrades/legend_unhold_fur_upgrade"));

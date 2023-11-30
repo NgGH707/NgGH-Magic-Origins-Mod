@@ -15,9 +15,6 @@ this.perk_nggh_spider_tough_carapace <- ::inherit("scripts/skills/skill", {
 	
 	function onBeforeDamageReceived( _attacker, _skill, _hitInfo, _properties )
 	{
-		if (!this.getContainer().getActor().has("nggh_character"))
-			return;
-
 		if (_attacker != null && _attacker.getID() == this.getContainer().getActor().getID())
 			return;
 
