@@ -50,7 +50,7 @@
 		this.resetField("BaseDamage");
 		this.resetField("ConvertRate");
 		return this.skill.softReset();
-	}
+	};
 	obj.onAfterUpdate <- function( _properties )
 	{
 		if (!_properties.IsSpecializedInMagic)

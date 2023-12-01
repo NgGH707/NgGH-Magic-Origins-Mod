@@ -11,15 +11,6 @@
 		this.m.InjuriesOnBody = ::Const.Injury.CuttingAndPiercingBody;
 		this.m.InjuriesOnHead = ::Const.Injury.CuttingAndPiercingHead;
 	};
-	obj.onAdded <- function()
-	{
-		local actor = this.getContainer().getActor();
-
-		if (!actor.isPlayerControlled() || actor.isSummoned())
-			return;
-
-		this.m.DirectDamageMult += 0.1;
-	};
 	obj.getTooltip <- function()
 	{
 		return this.getDefaultTooltip();

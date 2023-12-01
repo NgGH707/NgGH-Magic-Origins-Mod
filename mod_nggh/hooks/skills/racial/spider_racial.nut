@@ -90,6 +90,5 @@
 
 		local n = _targetEntity.getSkills().getNumOfSkill("effects.spider_poison") + _targetEntity.getSkills().getNumOfSkill("effects.legend_redback_spider_poison");
 		_properties.DamageRegularMult *= 1.0 + 0.02 * n;
-		_properties.DamageDirectMult *= 1.1;
 	};
 });

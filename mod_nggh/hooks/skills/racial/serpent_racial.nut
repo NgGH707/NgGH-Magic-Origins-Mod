@@ -56,17 +56,14 @@
 
 		if (!actor.isPlacedOnMap()) return;
 
-		if (!actor.m.IsActingEachTurn) return;
-
 		if (this.m.IsPlayer)
 		{
 			if (!actor.getTile().hasZoneOfOccupationOtherThan(actor.getAlliedFactions())) return;
 
 			_properties.InitiativeForTurnOrderAdditional += 15;
+			return;
 		}
-		else
-		{
-			ws_onUpdate(_properties);
-		}
+		
+		ws_onUpdate(_properties);
 	};
 });

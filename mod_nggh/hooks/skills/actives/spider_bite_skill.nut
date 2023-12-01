@@ -17,14 +17,10 @@
 	};
 	obj.onAfterUpdate <- function( _properties )
 	{
-		this.resetField("DirectDamageMult");
-
 		local actor = this.getContainer().getActor();
 
-		if (!actor.isSummoned() && actor.isPlayerControlled()) {
+		if (!actor.isSummoned() && actor.isPlayerControlled())
 			this.m.ActionPointCost -= 1;
-			this.m.DirectDamageMult += 0.1;
-		}
 
 		this.m.FatigueCostMult = this.getContainer().hasSkill("perk.spider_bite") ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
 	};
