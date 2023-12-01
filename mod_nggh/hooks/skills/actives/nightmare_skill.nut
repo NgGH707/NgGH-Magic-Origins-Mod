@@ -1,7 +1,7 @@
 ::mods_hookExactClass("skills/actives/nightmare_skill", function ( obj )
 {
 	obj.m.BaseDamage <- 25;
-	obj.m.ConvertRate <- 0.15;
+	obj.m.ConvertRate <- 0.05;
 
 	local ws_create = obj.create;
 	obj.create = function()
@@ -45,10 +45,19 @@
 		
 		return ret;
 	};
+	obj.softReset <- function()
+	{
+		this.resetField("BaseDamage");
+		this.resetField("ConvertRate");
+		return this.skill.softReset();
+	}
 	obj.onAfterUpdate <- function( _properties )
 	{
-		this.m.FatigueCostMult = _properties.IsSpecializedInMagic ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
-		this.m.ConvertRate = _properties.IsSpecializedInMagic ? 0.30 : 0.15;
+		if (!_properties.IsSpecializedInMagic)
+			return;
+
+		this.m.FatigueCostMult *= ::Const.Combat.WeaponSpecFatigueMult;
+		this.m.ConvertRate += 0.15;
 	};
 	obj.getDamage = function( _actor, _attackerProperties = null, _defenderProperties = null )
 	{
@@ -57,8 +66,8 @@
 
 		local mult = this.getContainer().hasSkill("perk.after_wake") ? 0.9 : 1.0;
 		local damage = this.m.BaseDamage + this.getAdditionalDamage(_attackerProperties);
-		local loss = ::Math.floor((_defenderProperties.getBravery() + _defenderProperties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack]) * mult * 0.25)
-		local min = ::Math.round(damage * 0.2);
+		local loss = ::Math.floor((_defenderProperties.getBravery() + _defenderProperties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack] * _defenderProperties.MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack]) * mult * 0.25);
+		local min = ::Math.max(5, ::Math.round(damage * 0.2));
 
 		return {
 			Result = ::Math.max(min, damage - loss),
@@ -71,8 +80,13 @@
 	{
 		if (_properties == null)
 			_properties = this.getContainer().getActor().getCurrentProperties();
-		
-		return ::Math.floor((_properties.getBravery() + _properties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack]) * this.m.ConvertRate);
+
+		local mult = _properties.MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack];
+
+		if (mult >= 1000.0)
+			mult = 2.0;
+
+		return ::Math.floor((_properties.getBravery() + _properties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack] * mult) * this.m.ConvertRate);
 	};
 
 	local ws_isUsable = obj.isUsable;
@@ -99,7 +113,7 @@
 		local defenderProperties = target.getSkills().buildPropertiesForDefense(user, this);
 
 		local damage = this.getDamage(target, properties, defenderProperties);
-		local total_damage = ::Math.rand(damage.Result, damage.Result + 5) * properties.DamageDirectMult * (1.0 + properties.DamageDirectAdd) * properties.DamageTotalMult;
+		local total_damage = ::Math.rand(::Math.max(5, damage.Result - 5), damage.Result) * properties.DamageTotalMult;
 		local hitInfo = clone ::Const.Tactical.HitInfo;
 		hitInfo.DamageRegular = total_damage;
 		hitInfo.DamageDirect = 1.0;
@@ -116,7 +130,7 @@
 		{
 			local add = this.getAdditionalDamage(_properties);
 			_properties.DamageRegularMin = this.m.BaseDamage + add - 5;
-			_properties.DamageRegularMax = this.m.BaseDamage + add + 5;
+			_properties.DamageRegularMax = this.m.BaseDamage + add;
 			_properties.DamageArmorMult = 0.0;
 			_properties.IsIgnoringArmorOnAttack = true;
 			
@@ -141,13 +155,13 @@
 		local _user = this.getContainer().getActor();
 		local properties = this.getContainer().buildPropertiesForUse(this, _targetEntity);
 		local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
-		local damMod = properties.DamageDirectMult * (1.0 + properties.DamageDirectAdd) * properties.DamageTotalMult;
-		local defMod = defenderProperties.DamageReceivedTotalMult * defenderProperties.DamageReceivedDirectMult;
+		//local damMod = properties.DamageTotalMult;
+		//local defMod = defenderProperties.DamageReceivedTotalMult * defenderProperties.DamageReceivedDirectMult;
 
 		local expectedDamage = this.getDamage(_targetEntity, defenderProperties);
 		local bonusDamage = expectedDamage.Expected - this.m.BaseDamage;
-		local totaldamage = ::Math.floor((expectedDamage.Result) * damMod * defMod);
-		local totaldamageMax = ::Math.floor((expectedDamage.Result + bonusDamage + 5) * damMod * defMod);
+		local totaldamage = ::Math.max(5, expectedDamage.Result - 5); //::Math.floor((expectedDamage.Result) * damMod * defMod);
+		local totaldamageMax = expectedDamage.Result;//::Math.floor((expectedDamage.Result + bonusDamage) * damMod * defMod);
 
 		ret.extend([
 			{

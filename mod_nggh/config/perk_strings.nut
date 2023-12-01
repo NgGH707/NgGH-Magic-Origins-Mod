@@ -756,6 +756,4 @@
 ::Const.Strings.PerkDescription.NggH_Simp_LevelUp <- "\'The vicious cycle of a simp continues. Only the most foolish... i meant the strongest simp can stay.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Upon learning this perk, immediately gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] Simp Level."
-		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] Simp Level for every [color=" + ::Const.UI.Color.NegativeValue + "]2[/color] levels after learning this perk.";
-
-
+		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] Simp Level for every [color=" + ::Const.UI.Color.NegativeValue + "]2[/color] levels you gain in the future after learning this perk.";

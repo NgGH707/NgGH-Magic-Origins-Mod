@@ -1,3 +1,8 @@
+
+return;
+
+::logWarning("Nggh_MagicConcept - You shouldn\'t see this message in your log")
+
 ::mods_hookExactClass("entity/tactical/enemies/flying_skull", function ( obj )
 {
 	obj.onActorKilled <- function( _actor, _tile, _skill )

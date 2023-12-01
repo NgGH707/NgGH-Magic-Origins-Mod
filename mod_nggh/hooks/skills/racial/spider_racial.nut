@@ -32,7 +32,7 @@
 				id = 8,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Inflicts [color=" + ::Const.UI.Color.DamageValue + "]" + (isSpecialized ? 10 : 5) + "[/color] poison damage per turn, for " + (isSpecialized ? 2 : 3) + " turns"
+				text = "Inflicts [color=" + ::Const.UI.Color.DamageValue + "]5[/color] poison damage per turn, for " + (isSpecialized ? 3 : 4) + " turns"
 			},
 			{
 				id = 9,
@@ -47,13 +47,10 @@
 		if (!_targetEntity.isAlive() || _targetEntity.isDying())
 			return;
 
-		if (_targetEntity.getCurrentProperties().IsImmuneToPoison)
+		if (_targetEntity.getCurrentProperties().IsImmuneToPoison || _targetEntity.getFlags().has("undead"))
 			return;
 		
 		if (_damageInflictedHitpoints < ::Const.Combat.PoisonEffectMinDamage || _targetEntity.getHitpoints() <= 0)
-			return;
-
-		if (_targetEntity.getFlags().has("undead"))
 			return;
 
 		if (!_targetEntity.isHiddenToPlayer())
@@ -65,12 +62,13 @@
 		}
 
 		this.spawnIcon("status_effect_54", _targetEntity.getTile());
-		local isSpecialized = this.getContainer().getActor().getCurrentProperties().IsSpecializedInDaggers;
 		local poison = ::new("scripts/skills/effects/spider_poison_effect");
-		poison.m.IsSuperPoison = isSpecialized;
-		poison.m.TurnsLeft = isSpecialized ? 2 : 3;
+		poison.m.IsSuperPoison = this.getContainer().getActor().getCurrentProperties().IsSpecializedInDaggers;
 		poison.setActorID(this.getContainer().getActor().getID());
 		_targetEntity.getSkills().add(poison);
+
+		if (poison.m.IsSuperPoison)
+			poison.m.TurnsLeft += 1;
 	};
 	obj.onUpdate = function( _properties )
 	{
@@ -92,6 +90,6 @@
 
 		local n = _targetEntity.getSkills().getNumOfSkill("effects.spider_poison") + _targetEntity.getSkills().getNumOfSkill("effects.legend_redback_spider_poison");
 		_properties.DamageRegularMult *= 1.0 + 0.02 * n;
-		_properties.DamageDirectMult *= 1.15;
+		_properties.DamageDirectMult *= 1.1;
 	};
 });
