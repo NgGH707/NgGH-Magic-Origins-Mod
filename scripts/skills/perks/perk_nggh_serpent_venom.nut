@@ -36,16 +36,15 @@ this.perk_nggh_serpent_venom <- ::inherit("scripts/skills/skill", {
 		}
 
 		local poison = _targetEntity.getSkills().getSkillByID("effects.spider_poison");
-		local id = this.getContainer().getActor().getID();
 
 		if (poison == null)
 		{
-			local poison = this.new("scripts/skills/effects/spider_poison_effect");
+			poison = ::new("scripts/skills/effects/spider_poison_effect");
 			poison.m.IsStacking = false;
 			poison.setDamage(20);
-			poison.setActorID(id);
-			poison.m.TurnsLeft = 1;
+			poison.setActorID(this.getContainer().getActor().getID());
 			_targetEntity.getSkills().add(poison);
+			poison.m.TurnsLeft = 1;
 			return;
 		}
 		
