@@ -50,8 +50,8 @@ this.nggh_mod_named_ghoul_trophy_item <- ::inherit("scripts/items/accessory/name
 	{
 		this.nggh_mod_named_accessory.onDeserialize(_in);
 
-		if (this.m.DamageMult > 1.08)
-			this.m.DamageMult = 1.08;
+		if (this.m.DamageMult > 1.1)
+			this.m.DamageMult = 1.1;
 	}
 
 });

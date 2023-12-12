@@ -198,7 +198,7 @@ this.nggh_mod_named_accessory <- ::inherit("scripts/items/accessory/accessory", 
 		{
 			available.push(function ( _i )
 			{
-				_i.m.DamageMult = 1.0 + ::Math.round((_i.m.DamageMult - 1.0) * ::Math.rand(100, 150)) * 0.01;
+				_i.m.DamageMult = 1.0 + ::Math.round((_i.m.DamageMult - 1.0) * ::Math.rand(120, 200)) * 0.01;
 			});
 		}
 
@@ -206,7 +206,7 @@ this.nggh_mod_named_accessory <- ::inherit("scripts/items/accessory/accessory", 
 		{
 			available.push(function ( _i )
 			{
-				_i.m.ArmorDamageMult = 1.0 + ::Math.round((_i.m.ArmorDamageMult - 1.0) * ::Math.rand(100, 150)) * 0.01;
+				_i.m.ArmorDamageMult = 1.0 + ::Math.round((_i.m.ArmorDamageMult - 1.0) * ::Math.rand(120, 200)) * 0.01;
 			});
 		}
 
