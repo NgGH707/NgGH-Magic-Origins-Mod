@@ -14,7 +14,7 @@ this.nggh_mod_named_alp_trophy_item <- ::inherit("scripts/items/accessory/named/
 		this.m.Sprite = "alp_trophy";
 		this.m.IsDroppedAsLoot = true;
 		this.m.ShowOnCharacter = true;
-		this.m.Value = 4000;
+		this.m.Value = 2500;
 	}
 
 	function getTooltip()

@@ -13,7 +13,7 @@ this.nggh_mod_named_ghoul_trophy_item <- ::inherit("scripts/items/accessory/name
 		this.m.Sprite = "nachzehrer_trophy";
 		this.m.IsDroppedAsLoot = true;
 		this.m.ShowOnCharacter = true;
-		this.m.Value = 3500;
+		this.m.Value = 2500;
 	}
 
 	function getTooltip()
@@ -44,6 +44,14 @@ this.nggh_mod_named_ghoul_trophy_item <- ::inherit("scripts/items/accessory/name
 	{
 		this.nggh_mod_named_accessory.onUpdateProperties(_properties);
 		_properties.Threat += 3;
+	}
+
+	function onDeserialize( _in )
+	{
+		this.nggh_mod_named_accessory.onDeserialize(_in);
+
+		if (this.m.DamageMult > 1.08)
+			this.m.DamageMult = 1.08;
 	}
 
 });
