@@ -1,6 +1,6 @@
 this.perk_nggh_wolf_thick_hide <- ::inherit("scripts/skills/skill", {
 	m = {
-		BonusArmor = 70
+		BonusArmor = 75
 	},
 	function create()
 	{
@@ -20,16 +20,26 @@ this.perk_nggh_wolf_thick_hide <- ::inherit("scripts/skills/skill", {
 		if (!this.m.IsNew)
 			return;
 
+		this.m.IsNew = false;
+		local actor = this.getContainer().getActor();
+
+		if (::MSU.isKindOf(actor, "player") && !actor.getFlags().has("nggh_character"))
+			return;
+
 		local b = this.getContainer().getActor().getBaseProperties();
 		b.Armor[0] += this.m.BonusArmor;
 		b.ArmorMax[0] += this.m.BonusArmor;
 		b.Armor[1] += this.m.BonusArmor;
 		b.ArmorMax[1] += this.m.BonusArmor;
-		this.m.IsNew = false;
 	}
 
 	function onRemoved()
 	{
+		local actor = this.getContainer().getActor();
+
+		if (::MSU.isKindOf(actor, "player") && !actor.getFlags().has("nggh_character"))
+			return;
+
 		local b = this.getContainer().getActor().getBaseProperties();
 		b.Armor[0] = ::Math.max(0, b.Armor[0] - this.m.BonusArmor);
 		b.ArmorMax[0] = ::Math.max(0, b.ArmorMax[0] - this.m.BonusArmor);
