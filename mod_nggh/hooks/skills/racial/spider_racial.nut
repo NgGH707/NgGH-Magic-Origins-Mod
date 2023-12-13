@@ -17,6 +17,11 @@
 	obj.getTooltip <- function()
 	{
 		local isSpecialized = this.getContainer().getActor().getCurrentProperties().IsSpecializedInDaggers;
+		local poison = 5;
+
+		if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
+			poison *= 2;
+
 		return [
 			{
 				id = 1,
@@ -32,7 +37,7 @@
 				id = 8,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Inflicts [color=" + ::Const.UI.Color.DamageValue + "]5[/color] poison damage per turn, for " + (isSpecialized ? 3 : 4) + " turns"
+				text = "Inflicts [color=" + ::Const.UI.Color.DamageValue + "]" + poison + "[/color] poison damage per turn, for " + (isSpecialized ? 3 : 4) + " turns"
 			},
 			{
 				id = 9,

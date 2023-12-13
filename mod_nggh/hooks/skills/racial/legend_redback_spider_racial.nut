@@ -95,7 +95,6 @@
 		if (poison == null)
 		{
 			local effect = ::new("scripts/skills/effects/legend_redback_spider_poison_effect");
-			effect.setDamage(properties.IsSpecializedInDaggers ? effect.getDamage() * 2 : 1);
 			effect.setActorID(this.getContainer().getActor().getID());
 			effect.m.IsSuperPoison = properties.IsSpecializedInDaggers;
 			_targetEntity.getSkills().add(effect);
@@ -104,9 +103,9 @@
 		
 		poison.resetTime();
 		poison.setActorID(this.getContainer().getActor().getID());
-		
-		if (properties.IsSpecializedInDaggers && ::Math.rand(1, 100) <= 50)
-			poison.setDamage(poison.getDamage() + 1);
+
+		if (properties.IsSpecializedInDaggers)
+			poison.m.IsSuperPoison = true;
 	};
 	obj.onUpdate = function( _properties )
 	{

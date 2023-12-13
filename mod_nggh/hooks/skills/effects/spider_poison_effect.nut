@@ -34,7 +34,7 @@
 			hitInfo.FatalityChanceMult = 0.0;
 
 			if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
-				hitInfo.DamageRegular *= 1.25;
+				hitInfo.DamageRegular *= 2.0;
 
 			if (this.m.ActorID != null)
 			{
