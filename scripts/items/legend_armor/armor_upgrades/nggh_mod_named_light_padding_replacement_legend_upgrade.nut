@@ -23,16 +23,16 @@ this.nggh_mod_named_light_padding_replacement_legend_upgrade <- ::inherit("scrip
 		this.m.SpriteCorpseFront = null;
 		this.m.SpriteCorpseBack = "upgrade_05_back_dead";
 		this.m.Value = 5000;
-		this.m.Condition = 5;
-		this.m.ConditionMax = 5;
-		this.m.ConditionModifier = 5;
+		this.m.Condition = 10;
+		this.m.ConditionMax = 10;
+		this.m.ConditionModifier = 10;
 		this.m.StaminaModifier = 0;
 		this.randomizeValues();
 	}
 
 	function randomizeValues()
 	{
-		this.m.SpecialValue = ::Math.min(55, ::Math.floor(this.m.SpecialValue * ::Math.rand(110, 130) * 0.01));
+		this.m.SpecialValue = ::Math.min(55, ::Math.floor(this.m.SpecialValue * ::Math.rand(105, 130) * 0.01));
 		this.m.StaminaModifier = ::Math.min(0, this.m.StaminaModifier + ::Math.rand(0, 2));
 		this.m.Condition = ::Math.floor(this.m.Condition * ::Math.rand(115, 133) * 0.01) * 1.0;
 		this.m.ConditionMax = this.m.Condition;
