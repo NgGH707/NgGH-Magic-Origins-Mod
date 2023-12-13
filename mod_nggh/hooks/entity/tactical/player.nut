@@ -20,16 +20,20 @@
 	}
 	*/
 
-	local ws_isReallyKilled = obj.isReallyKilled;
+	local getDailyFood = obj.getDailyFood;
+	obj.getDailyFood = function()
+	{
+		return ::Math.max(0, getDailyFood());
+	}
+
+	local isReallyKilled = obj.isReallyKilled;
 	obj.isReallyKilled = function( _fatalityType )
 	{
 		local simp = this.getSkills().getSkillByID("effects.simp");
 
 		if (simp != null && simp.isMutiny())
-		{
 			return true;
-		}
 
-		return ws_isReallyKilled(_fatalityType);
+		return isReallyKilled(_fatalityType);
 	}
 });
