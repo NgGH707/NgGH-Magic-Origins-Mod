@@ -757,3 +757,13 @@
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Upon learning this perk, immediately gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] Simp Level."
 		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] Simp Level for every [color=" + ::Const.UI.Color.NegativeValue + "]2[/color] levels you gain in the future after learning this perk.";
+
+// add more 
+::Const.Strings.PerkDescription.LegendLithe = "Medium armor provides a sweet spot between movement and protection."
+	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+	+ "\n\n[color=" + ::Const.UI.Color.NegativeValue + "][u]Humans and Humanoids:[/u][/color]"
+		+ "\n• Requiring this character to have equipment with the combined weight of head and body armor is between [color=" + ::Const.UI.Color.NegativeValue + "]25[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]35[/color]"
+		+ "\n• All incoming damage to your Armor and Hitpoints is reduced by [color=" + ::Const.UI.Color.PositiveValue + "]30%[/color]."
+		+ "\n• Outside the weight range above, the bonus drops exponentially. As your armor takes damage, the bonus drops slowly to half its maximum value."
+	+ "\n\n[color=" + ::Const.UI.Color.NegativeValue + "][u]Other characters:[/u][/color]"
+		+ "\n• Takes [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less damage from most sources.";
