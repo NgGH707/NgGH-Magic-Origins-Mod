@@ -1,6 +1,8 @@
 // changed tooltip
 ::Const.Perks.PerkDefObjects[::Const.Perks.PerkDefs.LegendHorseLiberty].Tooltip = ::Const.Strings.PerkDescription.LegendHorseLiberty;
-::Const.Perks.PerkDefObjects[::Const.Perks.PerkDefs.LegendLithe].Tooltip = ::Const.Strings.PerkDescription.LegendLithe;
+
+if (!::Is_PTR_Exist)
+	::Const.Perks.PerkDefObjects[::Const.Perks.PerkDefs.LegendLithe].Tooltip = ::Const.Strings.PerkDescription.LegendLithe;
 
 ::Const.Perks.addPerkDefObjects([
 // hexe
