@@ -2004,7 +2004,7 @@ if (!("CharmedUnits" in ::Const))
 			Perks = ["Footwork"],
 			Requirements = ["NggHCharmEnemyAlp", "NggHCharmSpec"],
 			Script = "player_beast/nggh_mod_alp_player",
-			PerkTree = "AlpTree", 
+			PerkTree = "DemonAlpTree", 
 			Difficulty = 0,
 
 			Custom =  {
