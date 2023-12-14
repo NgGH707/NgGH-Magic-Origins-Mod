@@ -84,5 +84,19 @@ this.nggh_mod_named_horn_plate_legend_upgrade <- ::inherit("scripts/items/legend
 		_properties.DamageReceivedMeleeMult *= 1.0 - this.m.SpecialValue * 0.01;
 	}
 
+	function onSerialize( _out )
+	{
+		_out.writeI16(this.m.SpecialValue);
+		this.legend_named_armor_upgrade.onSerialize(_out);
+	}
+
+	function onDeserialize( _in )
+	{
+		if (::Nggh_MagicConcept.Mod.Serialization.isSavedVersionAtLeast("3.0.0-beta.76", _in.getMetaData()))
+			this.m.SpecialValue = _in.readI16();
+	
+		this.legend_named_armor_upgrade.onDeserialize(_in);
+	}
+
 });
 

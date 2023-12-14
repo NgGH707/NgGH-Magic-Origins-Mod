@@ -79,7 +79,7 @@ this.nggh_mod_named_serpent_skin_legend_upgrade <- ::inherit("scripts/items/lege
 		this.legend_named_armor_upgrade.onEquip();
 		local c = this.m.Armor.getContainer();
 
-		if (c != null && c.getActor() != null && !c.getActor().isNull())
+		if (!::MSU.isNull(c) && !::MSU.isNull(c.getActor()))
 			c.getActor().getSkills().add(::new("scripts/skills/items/firearms_resistance_skill"));
 	}
 
@@ -87,7 +87,7 @@ this.nggh_mod_named_serpent_skin_legend_upgrade <- ::inherit("scripts/items/lege
 	{
 		local c = this.m.Armor.getContainer();
 
-		if (c != null && c.getActor() != null && !c.getActor().isNull())
+		if (!::MSU.isNull(c) && !::MSU.isNull(c.getActor()))
 			c.getActor().getSkills().removeByID("items.firearms_resistance");
 		
 		this.legend_named_armor_upgrade.onUnequip();

@@ -89,5 +89,19 @@ this.nggh_mod_named_light_padding_replacement_legend_upgrade <- ::inherit("scrip
 		this.legend_armor_upgrade.onUnequip();
 	}
 
+	function onSerialize( _out )
+	{
+		_out.writeI16(this.m.SpecialValue);
+		this.legend_named_armor_upgrade.onSerialize(_out);
+	}
+
+	function onDeserialize( _in )
+	{
+		if (::Nggh_MagicConcept.Mod.Serialization.isSavedVersionAtLeast("3.0.0-beta.76", _in.getMetaData()))
+			this.m.SpecialValue = _in.readI16();
+	
+		this.legend_named_armor_upgrade.onDeserialize(_in);
+	}
+
 });
 

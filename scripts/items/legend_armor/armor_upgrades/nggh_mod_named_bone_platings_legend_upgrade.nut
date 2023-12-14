@@ -85,5 +85,21 @@ this.nggh_mod_named_bone_platings_legend_upgrade <- ::inherit("scripts/items/leg
 		bone_plating.setCount(this.m.SpecialValue);
 		this.addSkill(bone_plating);
 	}
+
+	function onSerialize( _out )
+	{
+		_out.writeI16(this.m.SpecialValue);
+		this.legend_named_armor_upgrade.onSerialize(_out);
+	}
+
+	function onDeserialize( _in )
+	{
+		if (::Nggh_MagicConcept.Mod.Serialization.isSavedVersionAtLeast("3.0.0-beta.76", _in.getMetaData()))
+			this.m.SpecialValue = _in.readI16();
+	
+		this.legend_named_armor_upgrade.onDeserialize(_in);
+	}
+
+
 });
 

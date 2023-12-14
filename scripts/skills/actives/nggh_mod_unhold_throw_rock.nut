@@ -137,11 +137,6 @@ this.nggh_mod_unhold_throw_rock <- ::inherit("scripts/skills/skill", {
 			item.consumeAmmo();
 	}
 
-	function onAfterUpdate( _properties )
-	{
-		this.m.FatigueCostMult = _properties.IsSpecializedInThrowing ? this.Const.Combat.WeaponSpecFatigueMult : 1.0;
-	}
-
 	function onUse( _user, _targetTile )
 	{
 		if (_user.getFlags().has("nggh_character"))
@@ -185,6 +180,8 @@ this.nggh_mod_unhold_throw_rock <- ::inherit("scripts/skills/skill", {
 
 	function onAfterUpdate( _properties )
 	{
+		this.m.FatigueCostMult = _properties.IsSpecializedInThrowing ? this.Const.Combat.WeaponSpecFatigueMult : 1.0;
+		
 		if (this.getContainer().hasSkill("actives.sweep"))
 		{
 			// recoup the initiative loss

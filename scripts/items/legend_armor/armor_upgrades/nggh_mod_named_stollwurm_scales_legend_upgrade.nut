@@ -86,20 +86,17 @@ this.nggh_mod_named_stollwurm_scales_legend_upgrade <- ::inherit("scripts/items/
 		this.legend_named_armor_upgrade.onEquip();
 		local c = this.m.Armor.getContainer();
 
-		if (c != null && c.getActor() != null && !c.getActor().isNull())
-		{
+		if (!::MSU.isNull(c) && !::MSU.isNull(c.getActor()))
 			c.getActor().getFlags().add("body_immune_to_acid");
-		}
 	}
 
 	function onUnequip()
 	{
 		local c = this.m.Armor.getContainer();
 
-		if (c != null && c.getActor() != null && !c.getActor().isNull())
-		{
+		if (!::MSU.isNull(c) && !::MSU.isNull(c.getActor()))
 			c.getActor().getFlags().remove("body_immune_to_acid");
-		}
+
 		this.legend_named_armor_upgrade.onUnequip();
 	}
 });
