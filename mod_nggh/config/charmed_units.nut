@@ -2347,7 +2347,7 @@ if (!("CharmedUnits" in ::Const))
 		{
 			StatMod = { Hitpoints = [-125, -125], Bravery = [0, 0], Stamina = [-150, -150], MeleeSkill = [0, 0], RangedSkill = [0, 0], MeleeDefense = [0, 0], RangedDefense = [0, 0], Initiative = [0, 0] },
 			Skills = ["actives/legend_bear_bite", "actives/legend_bear_claws", "actives/unstoppable_charge_skill"],
-			Perks = ["Stalwart", "LegendComposure", "LegendGrapple"],
+			Perks = ["Stalwart", "LegendComposure"],
 			Requirements = ["NggHCharmEnemyDirewolf"],
 			Script = "player_beast/nggh_mod_unhold_player",
 			PerkTree = "BearTree", 
