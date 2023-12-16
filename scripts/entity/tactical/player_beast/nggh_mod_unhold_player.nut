@@ -459,16 +459,10 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 	
 	function onAdjustingSprite( _appearance )
 	{
-		local s = 1.05;
-		local v = ::createVec(30, 20);
-		local offset = ::createVec(20, 10);
-
-		if (this.isBear())
-		{
-			s = 1.3;
-			v = ::createVec(0, -4);
-			offset = ::createVec(0, 0);
-		}
+		local isBear = this.isBear();
+		local s = isBear ? 1.3 : 1.05;
+		local v = isBear ? ::createVec(23, 17) : ::createVec(30, 20);
+		local offset = isBear ? ::createVec(-5, 13) : ::createVec(20, 10);
 
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
