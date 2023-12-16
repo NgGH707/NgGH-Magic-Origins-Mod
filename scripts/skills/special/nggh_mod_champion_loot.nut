@@ -176,8 +176,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	    	this.m.BonusXP += 50;
 	        this.m.LootScript.extend([
 	        	[1, ["misc/heart_of_the_forest_item"]],
-	        	[1, ["loot/ancient_amber_item"]],
-	        	[1, ["shields/special/craftable_schrat_shield"]]
+	        	[1, ["shields/named/mod_nggh_named_schrat_shield"]]
 	        ]);
 	        break;
 
@@ -186,7 +185,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	        this.m.LootScript.extend([
 	        	[1, ["misc/heart_of_the_forest_item"]],
 	        	[1, ["misc/legend_ancient_green_wood_item"]],
-	        	[1, ["shields/special/legend_craftable_greenwood_schrat_shield"]]
+	        	[1, ["shields/named/mod_nggh_named_schrat_shield"]]
 	        ]);
 	        break;
 
