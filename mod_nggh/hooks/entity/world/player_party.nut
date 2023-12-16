@@ -18,7 +18,7 @@
 		}
 
 		local broScale = 1.0;
-		local zombieSummonLevel = 0, skeletonSummonLevel = 0 count = 0;
+		local zombieSummonLevel = 0, skeletonSummonLevel = 0, count = 0;
 
 		if (::World.Assets.getOrigin().getID() == "scenario.militia")
 			broScale = 0.66;
