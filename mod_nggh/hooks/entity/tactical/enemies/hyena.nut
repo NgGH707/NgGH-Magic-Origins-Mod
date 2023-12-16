@@ -23,13 +23,13 @@
 
 		local b = this.m.BaseProperties;
 		b.ActionPoints += 2;
-		b.MeleeSkill += 15;
+		b.MeleeSkill += 10;
 		b.MeleeDefense += 10;
 		b.Bravery += 25;
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_hyena_bite"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_wolf_thick_hide"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_wolf_enrage"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
+		//this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
 		this.m.Skills.add(::new("scripts/skills/actives/line_breaker"));
 
 		if (!::Tactical.State.isScenarioMode())

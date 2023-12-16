@@ -24,8 +24,8 @@
 		local b = this.m.BaseProperties;
 		b.ActionPoints += 1;
 		b.Hitpoints += 25;
-		b.MeleeSkill += 20;
-		b.MeleeDefense += 15;
+		b.MeleeSkill += 10;
+		b.MeleeDefense += 5;
 		b.RangedDefense += 15;
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_serpent_bite"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_serpent_drag"));
@@ -34,10 +34,10 @@
 
 		if (!::Tactical.State.isScenarioMode())
 		{
-			if (::World.getTime().Days >= 75)
+			if (::World.getTime().Days >= 100)
 				this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
 
-			if (::World.getTime().Days >= 125)
+			if (::World.getTime().Days >= 200)
 				this.m.Skills.add(::new("scripts/skills/perks/perk_legend_ubernimble"));
 		}
 

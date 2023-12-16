@@ -1,11 +1,13 @@
 ::mods_hookExactClass("entity/tactical/enemies/legend_rock_unhold", function (obj) 
 {
+	/*
 	local assignRandomEquipment = obj.assignRandomEquipment;
 	obj.assignRandomEquipment = function()
 	{
 		this.getItems().equip(::new("scripts/items/weapons/nggh_mod_picked_up_rock"));
 		assignRandomEquipment();
 	}
+	*/
 
 	obj.makeMiniboss <- function()
 	{

@@ -1978,7 +1978,7 @@ if (!("CharmedUnits" in ::Const))
 			},
 
 			function onfillTalentsValues( _talents ) {
-				_talents[::Const.Attributes.MeleeDefense] == 3;
+				if (_talents[::Const.Attributes.MeleeDefense] < 2) _talents[::Const.Attributes.MeleeDefense] == 2;
 
 				if (_talents[::Const.Attributes.RangedDefense] < 2) _talents[::Const.Attributes.RangedDefense] += 1;
 			},

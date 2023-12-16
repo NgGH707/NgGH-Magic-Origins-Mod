@@ -30,7 +30,7 @@
 			return false;
 
 		local b = this.m.BaseProperties;
-		b.MeleeDefense += 15;
+		b.MeleeDefense += 10;
 		b.RangedDefense += 15;
 		b.DamageReceivedRegularMult *= 0.85;
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_alp_nightmare_mastery"));
@@ -39,10 +39,10 @@
 
 		if (!::Tactical.State.isScenarioMode())
 		{
-			if (::World.getTime().Days >= 100)
+			if (::World.getTime().Days >= 125)
 				this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
 
-			if (::World.getTime().Days >= 175)
+			if (::World.getTime().Days >= 250)
 				this.m.Skills.add(::new("scripts/skills/perks/perk_fortified_mind"));
 		}
 

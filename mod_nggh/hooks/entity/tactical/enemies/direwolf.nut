@@ -22,7 +22,7 @@
 			return false;
 		
 		local b = this.m.BaseProperties;
-		b.MeleeSkill += 15;
+		b.MeleeSkill += 10;
 		b.MeleeDefense += 10;
 		b.Bravery += 15;
 
@@ -34,10 +34,10 @@
 
 		if (!::Tactical.State.isScenarioMode())
 		{
-			if (::World.getTime().Days >= 75)
+			if (::World.getTime().Days >= 100)
 				this.m.Skills.add(::new("scripts/skills/perks/perk_overwhelm"));
 
-			if (::World.getTime().Days >= 100)
+			if (::World.getTime().Days >= 150)
 				this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
 		}
 

@@ -15,7 +15,6 @@
 
 		this.m.Skills.add(::new("scripts/skills/perks/perk_footwork"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_rotation"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_fortified_mind"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_legend_terrifying_visage"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_underdog"));

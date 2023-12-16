@@ -7,14 +7,10 @@
 		local chance = 25;
 
 		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 170)
-		{
 			chance = ::Math.min(100, chance + ::Math.max(10, ::World.getTime().Days - 170));
-		}
 
 		if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
-		{
 			chance = 75;
-		}
 
 		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHLindwurmAcid, ::Const.Perks.PerkDefs.NggHLindwurmBody], chance);
 	}

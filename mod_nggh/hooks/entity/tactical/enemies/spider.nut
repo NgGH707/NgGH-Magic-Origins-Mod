@@ -24,10 +24,10 @@
 
 		local b = this.m.BaseProperties;
 		b.ActionPoints += 1;
-		b.Hitpoints += 50;
-		b.MeleeSkill += 15;
-		b.MeleeDefense += 15;
-		b.RangedDefense += 15;
+		b.Hitpoints += 40;
+		b.MeleeSkill += 10;
+		b.MeleeDefense += 10;
+		b.RangedDefense += 10;
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_tough_carapace"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_venom"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_bite"));
@@ -36,10 +36,10 @@
 
 		if (!::Tactical.State.isScenarioMode())
 		{
-			if (::World.getTime().Days >= 50)
+			if (::World.getTime().Days >= 75)
 				this.m.Skills.add(::new("scripts/skills/perks/perk_push_the_advantage"));
 
-			if (::World.getTime().Days >= 75)
+			if (::World.getTime().Days >= 150)
 				this.m.Skills.add(::new("scripts/skills/perks/perk_legend_ubernimble"));
 		}
 

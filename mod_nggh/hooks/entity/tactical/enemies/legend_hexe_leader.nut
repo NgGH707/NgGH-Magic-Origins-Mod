@@ -3,9 +3,7 @@
 	obj.getNachoAppearance <- function()
 	{
 		if (!::World.Flags.get("IsLuftAdventure"))
-		{
 			return null;
-		}
 
 		local r = ::Math.rand(1, 4);
 		local noDress = ::Math.rand(1, 2) == 1;
@@ -18,9 +16,7 @@
 	obj.setCharming = function( _f )
 	{
 		if (_f == this.m.IsCharming)
-		{
 			return;
-		}
 
 		this.m.IsCharming = _f;
 		local t = 300;
@@ -185,21 +181,15 @@
 	obj.makeMiniboss <- function()
 	{
 		if (!this.actor.makeMiniboss())
-		{
 			return false;
-		}
 
 		local b = this.m.BaseProperties;
 		
 		if (b.getMeleeSkill() < 60)
-		{
 			b.MeleeSkill = 60;
-		}
 
 		if (b.getRangedSkill() < 75)
-		{
 			b.RangedSkill = 75;
-		}
 
 		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Mainhand));
 		this.m.Items.equip(::new("scripts/items/weapons/named/nggh_mod_named_staff"));

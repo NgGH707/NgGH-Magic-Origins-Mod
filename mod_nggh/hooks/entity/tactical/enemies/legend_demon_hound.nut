@@ -19,9 +19,7 @@
 		if (this.m.IsMiniboss)
 		{
 			if (_tile == null)
-			{
 				_tile = this.getTile();
-			}
 
 			local loot;
 
@@ -48,7 +46,7 @@
 		local b = this.m.BaseProperties;
 		this.m.XP = ::Const.Tactical.Actor.LegendWhiteDirewolf.XP;
 		b.setValues(::Const.Tactical.Actor.LegendWhiteDirewolf);
-		b.Hitpoints = 500;
+		b.Hitpoints = 400;
 		b.DamageRegularMult = 1.15;
 
 		this.m.ActionPoints = b.ActionPoints;

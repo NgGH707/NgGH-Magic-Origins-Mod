@@ -59,14 +59,10 @@
 		local chance = 25;
 
 		if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
-		{
 			chance = 100;
-		}
 
 		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 125)
-		{
 			chance = ::Math.min(100, chance + ::Math.max(10, ::World.getTime().Days - 200));
-		}
 
 		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHNacho, ::Const.Perks.PerkDefs.NggHNachoEat, ::Const.Perks.PerkDefs.NggHNachoFrenzy, ::Const.Perks.PerkDefs.NggHNachoBigTummy], chance);
 	}
@@ -74,17 +70,14 @@
 	obj.makeMiniboss <- function()
 	{
 		if (!this.actor.makeMiniboss())
-		{
 			return false;
-		}
 
 		local b = this.m.BaseProperties;
-		b.MeleeSkill += 10;
-		b.MeleeDefense += 10;
+		b.MeleeSkill += 5;
 		b.RangedDefense += 5;
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_nacho"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_nacho_frenzy"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_devastating_strikes"));
+		this.m.Skills.add(::new("scripts/skills/perks/perk_sundering_strikes"));
 		this.m.Skills.add(::new("scripts/skills/actives/charge"));
 		return true;
 	}
