@@ -19,7 +19,7 @@
 	obj.setupEntity = function( _e, _t )
 	{
 		ws_setupEntity(_e, _t);
-		local isChanged = false;
+		local update = false;
 
 		if (::Nggh_MagicConcept.RandomizedStatsMode.IsEnabled && !_e.isNonCombatant() && ::Math.rand(1, 100) <= ::Nggh_MagicConcept.RandomizedStatsMode.Chance)
 		{
@@ -30,17 +30,14 @@
 				b[key] = ::Math.ceil(b[key] * ::Math.rand(this.m.RandomizedFactor.Min, this.m.RandomizedFactor.Max) * 0.01);
 			}
 
-			isChanged = true;
+			update = true;
 		}
 
 		_e.getItems().onCombatStarted();
 		_e.getSkills().onCombatStarted();
-		_e.getSkills().update();
 
-		if (isChanged)
-		{
+		if (update)
 			_e.setHitpointsPct(1.0);
-		}
 	}
 
 	obj.calculateRandomizedStatsScaling <- function()

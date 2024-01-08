@@ -203,10 +203,13 @@ this.nggh_mod_unhold_throw_rock <- ::inherit("scripts/skills/skill", {
 			if (!this.getContainer().hasSkill("actives.sweep"))
 				return;
 
+			_properties.DamageRegularMin += 10;
+			_properties.DamageRegularMax += 10;
+
 			if (this.getContainer().getActor().getMainhandItem() != null)
 				return;	
 
-			_properties.DamageRegularMin -= 30;
+			_properties.DamageRegularMin -= 20;
 			_properties.DamageRegularMax -= 60;
 			_properties.DamageArmorMult /= 0.8;
 		}

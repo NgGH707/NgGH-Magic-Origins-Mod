@@ -22,15 +22,19 @@
 		if (!this.actor.makeMiniboss())
 			return false;
 
+		this.m.BaseProperties.MeleeDefense += 5;
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_tough_carapace"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_web"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_push_the_advantage"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));	
 
-		if (::Math.rand(1, 10) <= 5)
-			this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_bite"));
-		else
-			this.m.Skills.add(::new("scripts/skills/perks/perk_dodge"));
+		if (!this.getSkills().hasSkill("perk.spider_bite"))
+		{
+			if (::Math.rand(1, 10) <= 5)
+				this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_bite"));
+			else
+				this.m.Skills.add(::new("scripts/skills/perks/perk_dodge"));
+		}
 
 		return true;
 	}
