@@ -328,9 +328,7 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 	function getNachoAppearance()
 	{
 		if (!::World.Flags.get("IsLuftAdventure"))
-		{
 			return null;
-		}
 
 		local r = ::Math.rand(1, 4);
 		local ret = [];
@@ -342,9 +340,7 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 	function setCharming( _f )
 	{
 		if (_f == this.m.IsCharming)
-		{
 			return;
-		}
 		
 		this.m.IsCharming = _f;
 		local t = 300;
@@ -353,9 +349,7 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 		local nudist = actor.getSkills().getSkillByID("perk.charm_nudist")
 
 		if (nudist != null)
-		{
 			isNude = nudist.getBonus() != 0;
-		}
 
 		if (this.m.IsCharming)
 		{
@@ -464,7 +458,8 @@ this.nggh_mod_hexe_background <- ::inherit("scripts/skills/backgrounds/character
 			}.bindenv(this), actor.get());
 		}
 
-		::Const.HexeOrigin.Magic.SpawnCharmParticleEffect(actor.getTile());
+		if (::Tactical.isActive() && actor.isPlacedOnMap())
+			::Const.HexeOrigin.Magic.SpawnCharmParticleEffect(actor.getTile());
 	}
 	
 	function onAllSpritesHidden( _isHidden = true )

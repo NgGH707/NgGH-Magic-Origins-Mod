@@ -113,13 +113,9 @@ this.nggh_mod_charmed_effect <- ::inherit("scripts/skills/effects/charmed_effect
 		local hasMaster = this.m.Master != null && !this.m.Master.isNull();
 
 		if (hasMaster)
-		{
 			this.m.Master.setCooldown(1);
-		}
 		else
-		{
 			this.m.Master = null;
-		}
 
 		if (hasMaster && (this.m.IsSuicide || this.m.IsDead))
 		{
@@ -149,9 +145,7 @@ this.nggh_mod_charmed_effect <- ::inherit("scripts/skills/effects/charmed_effect
 		local troop = actor.getWorldTroop();
 
 		if (troop != null && ("Party" in troop) && troop.Party != null && !troop.Party.isNull())
-		{
 			troop.Party.removeTroop(troop);
-		}
 
 		this.charmed_effect.onCombatFinished();
 	}

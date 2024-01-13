@@ -28,8 +28,7 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 	
 	function removeSlave( _entityID )
 	{
-		local i = this.m.SlavesID.find(_entityID);
-		local e;
+		local e, i = this.m.SlavesID.find(_entityID);
 
 		if (i != null)
 		{
@@ -38,9 +37,7 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 		}
 
 		if (this.isAlive())
-		{
 			this.updateCharm();
-		}
 
 		return e;
 	}
