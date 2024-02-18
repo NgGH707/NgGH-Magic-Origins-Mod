@@ -22,8 +22,7 @@
 	{
 		ws_onEquip();
 		
-		local actor = this.getContainer().getActor();
-		this.m.IsDroppedAsLoot = actor != null && !actor.isNull() && actor.isPlayerControlled();
+		this.m.IsDroppedAsLoot = !::MSU.isNull(this.getContainer()) && !::MSU.isNull(this.getContainer().getActor()) && this.getContainer().getActor().isPlayerControlled();
 	}
 
 	obj.onUnequip <- function()
@@ -31,19 +30,13 @@
 		local actor = this.getContainer().getActor();
 
 		if (actor == null)
-		{
 			return;
-		}
 
 		if (actor.hasSprite("background"))
-		{
 			actor.getSprite("background").resetBrush();
-		}
 
 		if (actor.hasSprite("shaft"))
-		{
 			actor.getSprite("shaft").resetBrush();
-		}
 
 		actor.setDirty(true);
 		this.weapon.onUnequip();
@@ -76,9 +69,7 @@
 		}
 		
 		if (nobleName.len() == 0)
-		{
 			nobleName = "House Whatever";
-		}
 		
 		this.m.Name = "Battle Standard of " + nobleName;
 		this.updateVariant();
