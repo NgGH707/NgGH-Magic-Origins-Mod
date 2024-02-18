@@ -22,10 +22,7 @@
 	{
 		ws_onActorDied(_onTile);
 
-		if (this.m.Actor == null || this.m.Actor.isNull())
-			return;
-
-		if (this.m.Actor.getFlags().has("can_mount"))
+		if (!::MSU.isNull(this.m.Actor) && this.m.Actor.isMounted()))
 			this.m.Actor.getMount().onActorDied(_onTile);
 	}
 
@@ -35,7 +32,7 @@
 		if (_item == null)
 			return false;
 
-		if (!this.getActor().isAbleToEquip(_item))
+		if (::MSU.isNull(this.m.Actor) || !this.getActor().isAbleToEquip(_item))
 			return false;
 
 		local ret = ws_equip(_item);
@@ -52,14 +49,12 @@
 		if (_item == null || _item == -1)
 			return false;
 
-		local hasActor = this.getActor() != null && !this.getActor().isNull();
-
-		if (hasActor && !this.getActor().isAbleToUnequip(_item))
+		if (::MSU.isNull(this.m.Actor) || !this.getActor().isAbleToUnequip(_item))
 			return false;
 
 		local ret = ws_unequip(_item);
 
-		if (ret && hasActor)
+		if (ret)
 			this.getActor().onAfterUnequip(_item);
 
 		return ret;
