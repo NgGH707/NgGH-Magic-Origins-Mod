@@ -43,7 +43,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 		this.m.IsSpecial = true;
 		this.m.Screens.push({
 			ID = "A",
-			Text = "[img]gfx/ui/events/event_36.png[/img]%hexe% finishes her preparation for the offerings. Her servants also stand in line, all that is left is a chant to start off the ritual./n/nWhile speaking the unholy lines, a gust of pure blackness would engulf you and your thralls. It happens so quick, the offerings have already disappeared into the black void. And then a whisper could be heard from behind you %SPEECH_ON%Your offerings please me...%SPEECH_OFF%%hexe% let out a sigh of relief. So this is what must be done every week... Is such a price worth eternal beauty and power?",
+			Text = "[img]gfx/ui/events/event_36.png[/img]%hexe% finishes her preparation for the offerings. Her servants also stand in line, all that is left is a chant to start off the ritual.\n\nWhile speaking the unholy lines, a gust of pure blackness would engulf you and your thralls. It happens so quick, the offerings have already disappeared into the black void. And then a whisper could be heard from behind you %SPEECH_ON%Your offerings please me...%SPEECH_OFF%%hexe% let out a sigh of relief. So this is what must be done every week... Is such a price worth eternal beauty and power?",
 			Image = "",
 			List = [],
 			Characters = [],

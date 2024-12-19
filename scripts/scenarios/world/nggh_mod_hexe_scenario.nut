@@ -38,9 +38,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		{
 			local forced_start_ID = this.isForceSeed(seed, name);
 			//0:eggs - 1:spider - 2:redback - 3:wolf - 4:white wolf - 5:hyena - 6:serpent - 7:unhold - 8:ghoul - 9:alp - 10:goblin - 11:orc - 12:human - 13:ijirok - 14:lindwurm - 15:schrat - 16:bear - 17:circus
-
-			if (::Const.HexeOrigin.SeedsStartWithWhip.find(forced_start_ID) != null)
-				::Nggh_MagicConcept.ForceWhipPerk = true;
+			::Nggh_MagicConcept.ForceWhipPerk = ::Const.HexeOrigin.SeedsStartWithWhip.find(forced_start_ID) != null;
 
 			local hexe = roster.create("scripts/entity/tactical/player");
 			hexe.setStartValuesEx(["nggh_mod_hexe_commander_background"]);
@@ -65,6 +63,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			}
 			else
 			{
+				// should be impossible lol
 				if (forced_start_ID == null)
 				{
 					::logError("forceSeed = null");
@@ -256,7 +255,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			    possibleName.push(" " + name + " ");
 			    possibleName.push(name + " ");
 			    possibleName.push(" " + name);
-			    possibleName.push(name);
+			    //possibleName.push(name);
 
 			    foreach (p in possibleName) 
 			    {
@@ -418,7 +417,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			beast.setPlaceInFormation(4);
 			beast.setHitpointsPct(::Math.rand(40, 65) * 0.01);
 			beast.onHired();
-			_hexe.setTitle("the Empress");
+			_hexe.setTitle("the Little Mistress");
 			break;
 			
 		case 8:
@@ -460,7 +459,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 				goblin.onHired();
 			}
 			
-			_hexe.setTitle("the Rose");
+			_hexe.setTitle("the Thorny Rose");
 			break;
 			
 		case 11:
@@ -474,7 +473,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 				orc.onHired();
 			}
 			
-			_hexe.setTitle("the Warrior Queen");
+			_hexe.setTitle("the Mighty Maiden");
 			break;
 			
 		case 12:
@@ -620,7 +619,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			goblin.addLightInjury();
 			goblin.onHired();
 
-			_hexe.setTitle("Queen of Greenskin");
+			_hexe.setTitle("the Dominator");
 			break;
 
 		case 19:
@@ -796,7 +795,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 				}
 			}
 			
-			_hexe.setTitle("the Demon Countess");
+			_hexe.setTitle("the Daemon Countess");
 			_hexe.getItems().equip(::new("scripts/items/weapons/barbarians/claw_club"));
 			_hexe.getItems().equip(::Const.World.Common.pickArmor([[3, "oriental/vizier_gear"]]));
 			_hexe.getItems().equip(::Const.World.Common.pickHelmet([[1, "cultist_leather_hood"]]));

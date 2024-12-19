@@ -144,9 +144,7 @@
 		local ret = tools.processIntegerInput(this.getValue(), _oldValue);
 
 		if (!ret.Result)
-		{
 			this.set(_oldValue);
-		}
 
 		::logInfo("After change \'Recruit Hexe Event Chance\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.ChanceToHireHexe = ret.Value;

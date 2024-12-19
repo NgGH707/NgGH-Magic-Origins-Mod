@@ -112,15 +112,13 @@ this.nggh_mod_alp_teleport_skill <- ::inherit("scripts/skills/skill", {
 
 		if (_user.getTile().IsVisibleForPlayer)
 		{
-			local specialEffect = _user.isPlayerControlled() ? "alp_effect_body_player" : "alp_effect_body";
-			
 			local effect = {
 				Delay = 0,
 				Quantity = 12,
 				LifeTimeQuantity = 12,
 				SpawnRate = 100,
 				Brushes = [
-					specialEffect
+					"alp_effect_body"
 				],
 				Stages = [
 					{
@@ -204,15 +202,13 @@ this.nggh_mod_alp_teleport_skill <- ::inherit("scripts/skills/skill", {
 	{
 		if (!_entity.isHiddenToPlayer())
 		{
-			local specialEffect = _entity.isPlayerControlled() ? "alp_effect_body_player" : "alp_effect_body";
-			
 			local effect1 = {
 				Delay = 0,
 				Quantity = 4,
 				LifeTimeQuantity = 4,
 				SpawnRate = 100,
 				Brushes = [
-					specialEffect
+					"alp_effect_body"
 				],
 				Stages = [
 					{
@@ -273,7 +269,7 @@ this.nggh_mod_alp_teleport_skill <- ::inherit("scripts/skills/skill", {
 				LifeTimeQuantity = 4,
 				SpawnRate = 100,
 				Brushes = [
-					specialEffect
+					"alp_effect_body"
 				],
 				Stages = [
 					{
@@ -334,7 +330,7 @@ this.nggh_mod_alp_teleport_skill <- ::inherit("scripts/skills/skill", {
 				LifeTimeQuantity = 4,
 				SpawnRate = 100,
 				Brushes = [
-					specialEffect
+					"alp_effect_body"
 				],
 				Stages = [
 					{
@@ -398,9 +394,6 @@ this.nggh_mod_alp_teleport_skill <- ::inherit("scripts/skills/skill", {
 		{
 			_tag.OnFadeIn(_tag);
 		}
-
-		if (_entity.getSkills().hasSkill("perk.afterimage"))
-			_entity.getSkills().add(::new("scripts/skills/effects/nggh_mod_afterimage_effect"));
 	}
 
 	function onFadeIn( _tag )

@@ -12,22 +12,16 @@
 				state.countHexe <- function()
 				{
 					if (::Const.GoodMoralReputaions.find(::World.Assets.getMoralReputationAsText()) != null)
-					{
-						return 5;
-					}
-
+						return 999;
+					
 					if (::Const.GoodOrigins.find(::World.Assets.getOrigin().getID()) != null)
-					{
-						return 5;
-					}
+						return 999;
 					
 					local count = 0;
 					foreach( bro in ::World.getPlayerRoster().getAll() )
 					{
 						if (bro.getFlags().has("isBonus") && bro.getSkills().hasSkill("background.hexe"))
-						{
 							++count;
-						}
 					}
 
 					return count;
@@ -41,44 +35,26 @@
 					if (::World.Assets.getOrigin().getID() == "scenario.hexe")
 					{
 						if (hexeCount < ::Nggh_MagicConcept.Mod.ModSettings.getSetting("hired_hexe_num_max").getValue() * 3 && r <= ::Nggh_MagicConcept.ChanceToHireHexe * 3)
-						{
 							this.Flags.set("IsHiringHexe", true);
-						}
 						else if (r <= 20)
-						{
 							this.Flags.set("IsSpiderQueen", true);
-						}
 						else if (r <= 37)
-						{
 							this.Flags.set("IsEnchantedVillager", true);
-						}
 						else if (r <= 60)
-						{
 							this.Flags.set("IsSinisterDeal", true);
-						}
 					}
 					else
 					{
 						if (hexeCount < ::Nggh_MagicConcept.Mod.ModSettings.getSetting("hired_hexe_num_max").getValue() && r <= ::Nggh_MagicConcept.ChanceToHireHexe)
-						{
 							this.Flags.set("IsHiringHexe", true);
-						}
 						else if (r <= 15)
-						{
 							this.Flags.set("IsSpiderQueen", true);
-						}
 						else if (r <= 35)
-						{
 							this.Flags.set("IsCurse", true);
-						}
 						else if (r <= 45)
-						{
 							this.Flags.set("IsEnchantedVillager", true);
-						}
 						else if (r <= 55)
-						{
 							this.Flags.set("IsSinisterDeal", true);
-						}
 					}
 
 					this.Flags.set("StartTime", ::Time.getVirtualTimeF());
@@ -98,9 +74,7 @@
 				state.update = function()
 				{
 					if (!this.Contract.isPlayerNear(this.Contract.getHome(), 600))
-					{
 						this.Flags.set("IsFail2", true);
-					}
 
 					if (this.Flags.has("IsFail1") || ::World.getGuestRoster().getSize() == 0)
 					{
@@ -121,15 +95,11 @@
 							foreach( bro in ::World.getPlayerRoster().getAll() )
 							{
 								if (bro.getSkills().hasSkill("trait.superstitious"))
-								{
 									candidates.push(bro);
-								}
 							}
 
 							if (candidates.len() == 0)
-							{
 								this.Contract.setScreen("Success");
-							}
 							else
 							{
 								this.Contract.m.Dude = ::MSU.Array.rand(candidates);
@@ -137,34 +107,22 @@
 							}
 						}
 						else if (this.Flags.get("IsEnchantedVillager"))
-						{
 							this.Contract.setScreen("EnchantedVillager");
-						}
 						else
-						{
 							this.Contract.setScreen("Success");
-						}
 
 						::World.Contracts.showActiveContract();
 					}
 					else if (this.Flags.get("StartTime") + this.Flags.get("Delay") <= ::Time.getVirtualTimeF())
 					{
 						if (this.Flags.get("IsHiringHexe") && ::World.getPlayerRoster().getSize() < ::World.Assets.getBrothersMax())
-						{
 							this.Contract.setScreen("HiringHexe");
-						}
 						else if (this.Flags.get("IsSpiderQueen"))
-						{
 							this.Contract.setScreen("SpiderQueen");
-						}
 						else if (this.Flags.get("IsSinisterDeal") && ::World.Assets.getStash().hasEmptySlot())
-						{
 							this.Contract.setScreen("SinisterDeal");
-						}
 						else
-						{
 							this.Contract.setScreen("Encounter");
-						}
 
 						::World.Contracts.showActiveContract();
 					}

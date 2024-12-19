@@ -170,23 +170,23 @@ if (!("HexeOrigin" in ::Const))
 	"KNI",   //23
 ];
 ::Const.HexeOrigin.StartingRollNames <- [
-	"EGGS",
-	"SPIDER",
-	"REDBACK SPIDER",
-	"WOLF",
-	"WHITE DIREWOLF"
-	"HYENA",
-	"SERPENT",
-	"UNHOLD",
-	"GHOUL",
-	"ALP",
-	"GOBLIN",
-	"ORC",
-	"HUMAN",
-	"IJIROK",
-	"LINDWURM",
-	"SCHRAT",
-	"BEAR",
+	"EGGS", //0
+	"SPIDER", //1
+	"REDBACK SPIDER", //2
+	"WOLF", //3
+	"WHITE DIREWOLF" //4
+	"HYENA", //5
+	"SERPENT", //6
+	"UNHOLD", //7
+	"GHOUL", //8
+	"ALP", //9
+	"GOBLIN", //10
+	"ORC", //11
+	"HUMAN", //12
+	"IJIROK", //13
+	"LINDWURM", //14
+	"SCHRAT", //15
+	"BEAR", //16
 	"CIRCUS",
 	"GREENSKINS",
 	"AMOURANTH TWITCH",
