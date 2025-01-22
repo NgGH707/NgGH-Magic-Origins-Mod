@@ -1,58 +1,70 @@
-::mods_hookExactClass("skills/effects/legend_hidden_effect", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/effects/legend_hidden_effect", function(q) 
 {
-	obj.onAdded = function()
+	q.onAdded = @(__original) function()
 	{
-		local actor = this.getContainer().getActor();
-		if (actor.getTile().IsVisibleForPlayer)
-		{
-			if (::Const.Tactical.HideParticles.len() != 0)
-			{
-				for( local i = 0; i < ::Const.Tactical.HideParticles.len(); i = ++i )
+		local actor = getContainer().getActor();
+
+		if (!actor.getFlags().has("human")) {
+			if (actor.getTile().IsVisibleForPlayer) {
+				for( local i = 0; i < ::Const.Tactical.HideParticles.len(); ++i )
 				{
 					::Tactical.spawnParticleEffect(false, ::Const.Tactical.HideParticles[i].Brushes, actor.getTile(), ::Const.Tactical.HideParticles[i].Delay, ::Const.Tactical.HideParticles[i].Quantity, ::Const.Tactical.HideParticles[i].LifeTimeQuantity, ::Const.Tactical.HideParticles[i].SpawnRate, ::Const.Tactical.HideParticles[i].Stages);
 				}
 			}
+
+			actor.setBrushAlpha(10);
+			actor.setHidden(true);
+			actor.setDirty(true);
+			return;
 		}
 
-		actor.setBrushAlpha(10);
-
-		if (actor.getFlags().has("human"))
-		{
-			actor.getSprite("hair").Visible = false;
-			actor.getSprite("beard").Visible = false;
-		}
-
-		actor.setHidden(true);
-		actor.setDirty(true);
+		__original();
 	}
-	obj.onUpdate = function( _properties )
+
+	q.onRemoved = @(__original) function()
 	{
-		local actor = this.getContainer().getActor();
-		if (actor.getSkills().hasSkill("perk.legend_assassinate"))
-		{
-			_properties.DamageRegularMin *= 1.5;
-			_properties.DamageRegularMax *= 1.5;
+		local actor = getContainer().getActor();
 
-			if (actor.getSkills().hasSkill("background.legend_assassin") || actor.getSkills().hasSkill("background.assassin") || actor.getSkills().hasSkill("background.assassin_southern"))
-			{
-			_properties.DamageRegularMax *= 1.5;
+		if (!actor.getFlags().has("human")) {
+			actor.setHidden(false);
+			actor.setBrushAlpha(255);
+
+			foreach (i in actor.getItems().getAllItems())
+				i.updateAppearance();
+
+			if (actor.getTile().IsVisibleForPlayer) {
+				for( local i = 0; i < ::Const.Tactical.HideParticles.len(); ++i )
+				{
+					::Tactical.spawnParticleEffect(false, ::Const.Tactical.HideParticles[i].Brushes, actor.getTile(), ::Const.Tactical.HideParticles[i].Delay, ::Const.Tactical.HideParticles[i].Quantity, ::Const.Tactical.HideParticles[i].LifeTimeQuantity, ::Const.Tactical.HideParticles[i].SpawnRate, ::Const.Tactical.HideParticles[i].Stages);
+				}
 			}
-			if (actor.getSkills().hasSkill("bbackground.legend_commander_assassin"))
-			{
-			_properties.DamageRegularMax *= 2.0;
-			}
+			return;
 		}
 
-		_properties.TargetAttractionMult *= 0.5;
-		actor.setBrushAlpha(10);
-		
-		if (actor.getFlags().has("human"))
-		{
-			actor.getSprite("hair").Visible = false;
-			actor.getSprite("beard").Visible = false;
+		__original();
+	}
+
+	q.onUpdate = @(__original) function( _properties )
+	{
+		local actor = getContainer().getActor();
+
+		if (!actor.getFlags().has("human")) {
+			if (actor.getSkills().hasSkill("perk.legend_assassinate")) {
+				_properties.DamageRegularMin *= 1.5;
+				_properties.DamageRegularMax *= 1.5;
+
+				if (actor.getSkills().hasSkill("background.legend_assassin") || actor.getSkills().hasSkill("background.assassin") || actor.getSkills().hasSkill("background.assassin_southern"))
+					_properties.DamageRegularMax *= 1.5;
+				if (actor.getSkills().hasSkill("bbackground.legend_commander_assassin"))
+					_properties.DamageRegularMax *= 2.0;
+			}
+
+			_properties.TargetAttractionMult *= 0.5;
+			actor.setBrushAlpha(10);
+			actor.setHidden(true);
+			return;
 		}
 
-		actor.setHidden(true);
-		actor.setDirty(true);
+		__original(_properties);
 	}
 });

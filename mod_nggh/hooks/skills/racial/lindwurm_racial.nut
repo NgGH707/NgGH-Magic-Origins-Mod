@@ -1,31 +1,31 @@
-::mods_hookExactClass("skills/racial/lindwurm_racial", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/racial/lindwurm_racial", function(q) 
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Name = "Acidic Blood";
-		this.m.Description = "This beast has one of the most dangerous blood, it can easily dissolve most kinds of armor.";
-		this.m.Icon = "skills/status_effect_78.png";
-		this.m.IconMini = "status_effect_78_mini";
-		this.m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.First;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = false;
-	};
-	obj.getTooltip <- function()
+		__original();
+		m.Name = "Acidic Blood";
+		m.Description = "This beast has one of the most dangerous blood, it can easily dissolve most kinds of armor.";
+		m.Icon = "skills/status_effect_78.png";
+		m.IconMini = "status_effect_78_mini";
+		m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.First;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = false;
+	}
+
+	q.getTooltip <- function()
 	{
 		return [
 			{
 				id = 1,
 				type = "title",
-				text = this.getName()
+				text = getName()
 			},
 			{
 				id = 2,
 				type = "description",
-				text = this.getDescription()
+				text = getDescription()
 			},
 			{
 				id = 10,
@@ -35,4 +35,5 @@
 			}
 		];
 	}
+	
 });

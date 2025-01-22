@@ -1,13 +1,12 @@
 /* set up the base in skill
-::mods_hookBaseClass("skills/skill", function(obj)
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/skill", function(q)
 {
-	obj = obj[obj.SuperName];
-	obj.m.IsRequireStaff <- false;
-	obj.m.IsMagicSkill <- false;
-	obj.m.MagicPointsCost <- 0;
+	q.m.IsRequireStaff <- false;
+	q.m.IsMagicSkill <- false;
+	q.m.MagicPointsCost <- 0;
 
-	local ws_isUsable = obj.isUsable;
-	obj.isUsable = function()
+	local ws_isUsable = q.isUsable;
+	q.isUsable = function()
 	{
 		if (this.isMagicSkill())
 		{
@@ -19,8 +18,8 @@
 		return ws_isUsable();
 	}
 
-	local ws_onVerifyTarget = obj.onVerifyTarget;
-	obj.onVerifyTarget = function( _originTile, _targetTile )
+	local ws_onVerifyTarget = q.onVerifyTarget;
+	q.onVerifyTarget = function( _originTile, _targetTile )
 	{
 		if (!ws_onVerifyTarget(_originTile, _targetTile))
 		{
@@ -35,8 +34,8 @@
 		return true;
 	}
 
-	local ws_isAffordable = obj.isAffordable;
-	obj.isAffordable = function()
+	local ws_isAffordable = q.isAffordable;
+	q.isAffordable = function()
 	{
 		if (this.isMagicSkill() && this.getContainer().getActor().isAbleToUseMagic() && !this.isAffordableBasedOnMP())
 		{
@@ -46,8 +45,8 @@
 		return ws_isAffordable();
 	}
 
-	local ws_isAffordablePreview = obj.isAffordablePreview;
-	obj.isAffordablePreview = function()
+	local ws_isAffordablePreview = q.isAffordablePreview;
+	q.isAffordablePreview = function()
 	{
 		if (this.isMagicSkill() && this.getContainer().getActor().isAbleToUseMagic() && this.getMagicPointsCost() > this.getContainer().getActor().getPreviewMagicPoints())
 		{
@@ -57,8 +56,8 @@
 		return ws_isAffordablePreview();
 	}
 
-	local ws_getCostString = obj.getCostString;
-	obj.getCostString = function()
+	local ws_getCostString = q.getCostString;
+	q.getCostString = function()
 	{
 		if (this.isMagicSkill() && this.getContainer().getActor().isAbleToUseMagic())
 		{
@@ -68,8 +67,8 @@
 		return ws_getCostString();
 	}
 
-	local ws_getFatigueCost = obj.getFatigueCost;
-	obj.getFatigueCost = function()
+	local ws_getFatigueCost = q.getFatigueCost;
+	q.getFatigueCost = function()
 	{
 		if (this.isMagicSkill() && this.getContainer().getActor().isAbleToUseMagic())
 		{
@@ -79,27 +78,27 @@
 		return ws_getFatigueCost();
 	}
 
-	obj.isMagicSkill <- function()
+	q.isMagicSkill <- function()
 	{
 		return this.m.IsMagicSkill;
 	}
 
-	obj.isRequireStaff <- function()
+	q.isRequireStaff <- function()
 	{
 		return this.m.IsRequireStaff;
 	}
 
-	obj.getMagicPointsCost <- function()
+	q.getMagicPointsCost <- function()
 	{
 		return this.m.MagicPointsCost;
 	}
 
-	obj.isAffordableBasedOnMP <- function()
+	q.isAffordableBasedOnMP <- function()
 	{
 		return this.getMagicPointsCost() <= this.getContainer().getActor().getMagicPoints();
 	}
 
-	obj.isAffordableBasedOnMPPreview <- function()
+	q.isAffordableBasedOnMPPreview <- function()
 	{
 		if (this.getContainer().getActor().getPreviewSkillID() == this.getID())
 		{
@@ -109,13 +108,13 @@
 		return this.getMagicPointsCost() <= this.getContainer().getActor().getPreviewMagicPoints()
 	}
 
-	obj.isActorArmedWithStaff <- function()
+	q.isActorArmedWithStaff <- function()
 	{
 		local mainhand = this.getContainer().getActor().getMainhandItem();
 		return mainhand != null && mainhand.isWeaponType(::Const.Items.WeaponType.Staff | ::Const.Items.WeaponType.MagicStaff);
 	}
 
-	obj.factoringMagicalElements <- function( _targetEntity, _properties )
+	q.factoringMagicalElements <- function( _targetEntity, _properties )
 	{
 		local c = _targetEntity.getCurrentProperties();
 
@@ -136,7 +135,7 @@
 		_properties.DamageTotalMult *= _properties.MagicalPower;
 	}
 
-	obj.removeBonusesFromWeapon <- function( _properties )
+	q.removeBonusesFromWeapon <- function( _properties )
 	{
 		local actor = this.getContainer().getActor();
 		local main = actor.getMainhandItem();
@@ -156,8 +155,8 @@
 		}
 	}
 
-	local ws_use = obj.use;
-	obj.use = function( _targetTile, _forFree = false )
+	local ws_use = q.use;
+	q.use = function( _targetTile, _forFree = false )
 	{
 		local ret = ws_use(_targetTile, _forFree);
 		local user = this.getContainer().getActor();

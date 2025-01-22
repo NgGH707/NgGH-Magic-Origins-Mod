@@ -1,37 +1,31 @@
-::mods_hookExactClass("entity/tactical/enemies/kraken", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/kraken", function ( q )
 {
-	obj.makeMiniboss <- function()
+	q.makeMiniboss <- function()
 	{
-		if (!this.actor.makeMiniboss())
-		{
+		if (!actor.makeMiniboss())
 			return false;
-		}
 
-		foreach( i, t in this.m.Tentacles )
+		foreach( i, t in m.Tentacles )
 		{
-			if (!t.isNull() && !t.isDying() && t.isAlive())
-			{
+			if (!::MSU.isNull(t) && !t.isDying() && t.isAlive()) {
 				t.makeMiniboss();
 				t.getSprite("miniboss").setBrush("bust_miniboss"); 
 			}
 		}
 	}
 
-	local ws_onInit = obj.onInit;
-	obj.onInit = function()
+	q.onInit = @(__original) function()
 	{
-		ws_onInit();
-		this.m.IsEnraged = ::World.Flags.get("IsKrakenOrigin");
+		__original();
+		m.IsEnraged = ::World.Flags.get("IsKrakenOrigin");
 
-		if (this.m.IsEnraged)
-		{
-			foreach( t in this.m.Tentacles )
+		if (m.IsEnraged) {
+			foreach( t in m.Tentacles )
 			{
 				if (!t.isNull())
-				{
 					t.setMode(1);
-				}
 			}
 		}
 	}
+	
 });

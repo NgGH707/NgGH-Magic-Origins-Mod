@@ -1,9 +1,10 @@
-::mods_hookExactClass("ai/tactical/behaviors/ai_attack_default", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/ai/tactical/behaviors/ai_attack_default", function ( q )
 {
-	obj.m.PossibleSkills.extend([
+	q.m.PossibleSkills.extend([
 		"actives.unhold_hand_to_hand",
 		"actives.spit_acid",
 		"actives.mind_break",
-		"actives.death",
+		//"actives.death",
 	]);
+
 });

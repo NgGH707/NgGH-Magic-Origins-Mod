@@ -1,9 +1,8 @@
-::mods_hookExactClass("entity/tactical/enemies/schrat", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/schrat", function(q) 
 {
-	local onInit = obj.onInit;
-	obj.onInit = function()
+	q.onInit = @(__original) function()
 	{
-		onInit();
+		__original();
 		local chance = 25;
 
 		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 150)
@@ -15,27 +14,25 @@
 		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHSchratShield, ::Const.Perks.PerkDefs.NggHSchratUproot, ::Const.Perks.PerkDefs.NggHSchratUprootAoE], chance);
 	}
 
-	if (!("makeMiniboss" in obj))
-	{
-		obj.makeMiniboss <- function()
+	if (!q.contains("makeMiniboss")) {
+		q.makeMiniboss <- function()
 		{
-			if (!this.actor.makeMiniboss())
+			if (!actor.makeMiniboss())
 				return false;
 
-			this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_schrat_grow_shield"));
-			this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_schrat_uproot_aoe"));
+			getSkills().add(::new("scripts/skills/perks/perk_nggh_schrat_grow_shield"));
+			getSkills().add(::new("scripts/skills/perks/perk_nggh_schrat_uproot_aoe"));
 			return true;
 		}
 	}
-	else
-	{
+	else {
 		obj.makeMiniboss = function()
 		{
-			if (!this.actor.makeMiniboss())
+			if (!actor.makeMiniboss())
 				return false;
 
-			this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_schrat_grow_shield"));
-			this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_schrat_uproot_aoe"));
+			getSkills().add(::new("scripts/skills/perks/perk_nggh_schrat_grow_shield"));
+			getSkills().add(::new("scripts/skills/perks/perk_nggh_schrat_uproot_aoe"));
 			return true;
 		}
 	}

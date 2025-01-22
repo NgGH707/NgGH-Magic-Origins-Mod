@@ -1,71 +1,72 @@
-::mods_hookExactClass("skills/racial/schrat_racial", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/racial/schrat_racial", function(q) 
 {
 	//obj.m.DamRec <- 0.3;
-	obj.m.IsPlayer <- false;
-	obj.m.Script <- "enemies/schrat_small";
+	q.m.IsPlayer <- false;
+	q.m.HPThresholdToProc <- 0.1;
+	q.m.ChanceToSpawn <- 25;
+	q.m.Script <- "enemies/schrat_small";
 
-	obj.getDamageRec <- function()
+	q.getDamageRec <- function()
 	{
-		return !this.m.IsPlayer || ::Nggh_MagicConcept.IsOPMode ? 0.3 : 0.8;
+		return !m.IsPlayer || !::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue() ? 0.3 : 0.8;
 	}
 
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Name = "Living Wood";
-		this.m.Description = "As guardians of the forest, a Schrat has an incredibly resilient wooden body. Any part of its broken body part could grow into a living schrat too.";
-		this.m.Icon = "skills/status_effect_86.png";
-		this.m.IconMini = "status_effect_86_mini";
-		this.m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.First + 1;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = false;
-		//this.m.DamRec = ::Nggh_MagicConcept.IsOPMode ? 0.3 : 0.8;
-	};
-	obj.onAdded <- function()
-	{
-		this.m.IsPlayer = this.getContainer().getActor().isPlayerControlled();
+		__original();
+		m.Name = "Living Wood";
+		m.Description = "As guardians of the forest, a Schrat has an incredibly resilient wooden body. Any part of its broken body part could grow into a living schrat too.";
+		m.Icon = "skills/status_effect_86.png";
+		m.IconMini = "status_effect_86_mini";
+		m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.First + 1;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = false;
+		//m.DamRec = !::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue() ? 0.3 : 0.8;
+	}
 
-		if (!this.m.IsPlayer) return;
-		
-		this.m.Script = "minions/nggh_mod_schrat_small_minion";
-	};
-	obj.getTooltip <- function()
+	q.onAdded <- function()
 	{
-		local actor = this.getContainer().getActor();
-		local isSpecialized = this.getContainer().hasSkill("perk.sapling");
-		local hp = ::Math.floor(actor.getHitpointsMax() * 0.1);
-		local chance = 25 + (isSpecialized ? 10 : 0);
-		local ret = [
+		m.IsPlayer = ::MSU.isKindOf(getContainer().getActor(), "player");
+
+		if (m.IsPlayer)
+			m.Script = "minions/nggh_mod_schrat_small_minion";
+	}
+
+	q.getTooltip <- function()
+	{
+		local actor = getContainer().getActor();
+		local perk = getContainer().getSkillByID("perk.sapling");
+		local chance = m.ChanceToSpawn + (perk != null ? perk.getBonus() : 0);
+		return [
 			{
 				id = 1,
 				type = "title",
-				text = this.getName()
+				text = getName()
 			},
 			{
 				id = 2,
 				type = "description",
-				text = this.getDescription()
+				text = getDescription()
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/sturdiness.png",
-				text = "Takes [color=" + ::Const.UI.Color.PositiveValue + "]" + ((1 - this.getDamageRec()) * 100) + "%[/color] less damage if has a shield equipped"
+				text = "Takes [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.round((1.0 - getDamageRec()) * 100) + "%[/color] less damage if has a shield equipped"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Has [color=" + ::Const.UI.Color.PositiveValue + "]" + chance + "%[/color] to spawn a Sapling when taking at least [color=" + ::Const.UI.Color.PositiveValue + "]" + hp + "[/color] damage"
+				text = "Has a [color=" + ::Const.UI.Color.PositiveValue + "]" + chance + "%[/color] to spawn a Sapling after taking at least [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.floor(actor.getHitpointsMax() * m.HPThresholdToProc) + "[/color] hitpoint damage"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]Resistant[/color] against Ranged or Piercing Damage"
+				text = "Is [color=" + ::Const.UI.Color.PositiveValue + "]resistant[/color] against ranged or piercing Damage"
 			},
 			{
 				id = 10,
@@ -76,62 +77,48 @@
 		];
 
 		return ret;
-	};
-	local ws_isHidden = obj.isHidden;
-	obj.isHidden = function()
-	{
-		if (!::Tactical.isActive())
-		{
-			return false;
-		}
+	}
 
-		return ws_isHidden();
-	};
-	obj.onUpdate = function( _properties )
+	q.isHidden = @(__original) function()
 	{
-		if (this.getContainer().getActor().isArmedWithShield())
-		{
-			_properties.DamageReceivedTotalMult *= this.getDamageRec();
-		}
-	};
-	obj.onDamageReceived = function( _attacker, _damageHitpoints, _damageArmor )
-	{
-		local actor = this.getContainer().getActor();
-		local isPlayer = actor.isPlayerControlled();
-		local isSpecialized = this.getContainer().hasSkill("perk.sapling");
+		return !::Tactical.isActive() ? false : __original();
+	}
 
-		if (_damageHitpoints >= actor.getHitpointsMax() * 0.1)
-		{
+	q.onUpdate = @() function( _properties )
+	{
+		if (getContainer().getActor().isArmedWithShield())
+			_properties.DamageReceivedTotalMult *= getDamageRec();
+	}
+
+	q.onDamageReceived = @() function( _attacker, _damageHitpoints, _damageArmor )
+	{
+		local actor = getContainer().getActor();
+
+		if (_damageHitpoints >= actor.getHitpointsMax() * m.HPThresholdToProc) {
 			local candidates = [];
 			local myTile = actor.getTile();
 
 			for( local i = 0; i < 6; ++i )
 			{
 				if (!myTile.hasNextTile(i))
-				{
-				}
-				else
-				{
-					local nextTile = myTile.getNextTile(i);
+					continue;
 
-					if (nextTile.IsEmpty && ::Math.abs(myTile.Level - nextTile.Level) <= 1)
-					{
-						candidates.push(nextTile);
-					}
-				}
+				local nextTile = myTile.getNextTile(i);
+
+				if (nextTile.IsEmpty && ::Math.abs(myTile.Level - nextTile.Level) <= 1)
+					candidates.push(nextTile);
 			}
 
-			local bonus = isSpecialized ? 10 : 0;
+			if (candidates.len() != 0) {
+				local perk = getContainer().getSkillByID("perk.sapling");
+				local bonus = perk != null ? perk.getBonus() : 0;
 
-			if (candidates.len() != 0)
-			{
-				if (isPlayer && ::Math.rand(1, 100) > 25 + bonus) return;
+				if (m.IsPlayer && ::Math.rand(1, 100) > m.ChanceToSpawn + bonus) return;
 
-				local sapling = ::Tactical.spawnEntity("scripts/entity/tactical/" + this.m.Script, ::MSU.Array.rand(candidates).Coords);
-				sapling.setFaction(isPlayer ? ::Const.Faction.PlayerAnimals : actor.getFaction());
+				local sapling = ::Tactical.spawnEntity("scripts/entity/tactical/" + m.Script, ::MSU.Array.rand(candidates).Coords);
+				sapling.setFaction(m.IsPlayer ? ::Const.Faction.PlayerAnimals : actor.getFaction());
 
-				if (isPlayer && isSpecialized)
-				{
+				if (m.IsPlayer && perk) {
 					sapling.setMaster(actor);
 					sapling.makeControllable();
 				}

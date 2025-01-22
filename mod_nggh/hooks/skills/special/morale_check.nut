@@ -1,12 +1,10 @@
-::mods_hookExactClass("skills/special/morale_check", function(obj)
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/special/morale_check", function(q)
 {
-	obj.onAdded <- function()
+	q.onAdded <- function()
 	{
-		local AI = this.getContainer().getActor().getAIAgent();
+		local AI = getContainer().getActor().getAIAgent();
 
 		if (AI != null && AI.getID() != ::Const.AI.Agent.ID.Player)
-		{
 			AI.addBehavior(::new("scripts/ai/tactical/behaviors/ai_wake_up_ally"));
-		}
 	}
 });

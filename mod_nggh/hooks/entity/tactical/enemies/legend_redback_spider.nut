@@ -1,9 +1,8 @@
-::mods_hookExactClass("entity/tactical/enemies/legend_redback_spider", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/legend_redback_spider", function(q) 
 {
-	local onInit = obj.onInit;
-	obj.onInit = function()
+	q.onInit = @(__original) function()
 	{
-		onInit();
+		__original();
 		local chance = 25;
 
 		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 140)
@@ -17,25 +16,25 @@
 		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggH_Spider_Venom], chance - 10);
 	}
 
-	obj.makeMiniboss <- function()
+	q.makeMiniboss <- function()
 	{
-		if (!this.actor.makeMiniboss())
+		if (!actor.makeMiniboss())
 			return false;
 
-		this.m.BaseProperties.MeleeDefense += 5;
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_tough_carapace"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_web"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_push_the_advantage"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));	
+		m.BaseProperties.MeleeDefense += 5;
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_spider_tough_carapace"));
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_spider_web"));
+		getSkills().add(::new("scripts/skills/perks/perk_push_the_advantage"));
+		getSkills().add(::new("scripts/skills/perks/perk_fearsome"));	
 
-		if (!this.getSkills().hasSkill("perk.spider_bite"))
-		{
+		if (!getSkills().hasSkill("perk.spider_bite")) {
 			if (::Math.rand(1, 10) <= 5)
-				this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_spider_bite"));
+				getSkills().add(::new("scripts/skills/perks/perk_nggh_spider_bite"));
 			else
-				this.m.Skills.add(::new("scripts/skills/perks/perk_dodge"));
+				getSkills().add(::new("scripts/skills/perks/perk_dodge"));
 		}
 
 		return true;
 	}
+	
 });

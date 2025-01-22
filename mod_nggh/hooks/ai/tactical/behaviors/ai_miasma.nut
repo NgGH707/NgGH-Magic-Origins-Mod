@@ -1,4 +1,4 @@
-::mods_hookExactClass("ai/tactical/behaviors/ai_miasma", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/ai/tactical/behaviors/ai_miasma", function(q) 
 {
-	obj.m.PossibleSkills.push("actives.legend_miasma");
+	q.m.PossibleSkills.push("actives.legend_miasma");
 });

@@ -1,69 +1,66 @@
-::mods_hookExactClass("skills/racial/serpent_racial", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/racial/serpent_racial", function(q) 
 {
-	obj.m.IsPlayer <- false;
+	q.m.IsPlayer <- false;
 
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Name = "Tough Scales";
-		this.m.Description = "Serpents have tough scales that protect them from high heat and can also deflect firearm shots, making them quite resistant to those kinds of attack.";
-		this.m.Icon = "skills/status_effect_113.png";
-		this.m.IconMini = "status_effect_113_mini";
-		this.m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.First + 1;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = false;
-	};
-	obj.onAdded <- function()
-	{
-		this.m.IsPlayer = this.getContainer().getActor().isPlayerControlled();
+		__original();
+		m.Name = "Tough Scales";
+		m.Description = "Serpents have tough scales that protect them from high heat and can also deflect firearm shots, making them quite resistant to those kinds of attack.";
+		m.Icon = "skills/status_effect_113.png";
+		m.IconMini = "status_effect_113_mini";
+		m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.First + 1;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = false;
 	}
-	obj.getTooltip <- function()
+
+	q.onAdded <- function()
+	{
+		m.IsPlayer = ::MSU.isKindOf(getContainer().getActor(), "player");
+	}
+
+	q.getTooltip <- function()
 	{
 		return [
 			{
 				id = 1,
 				type = "title",
-				text = this.getName()
+				text = getName()
 			},
 			{
 				id = 2,
 				type = "description",
-				text = this.getDescription()
+				text = getDescription()
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/initiative.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+15[/color] Initiative For Turn Order while engaging in melee"
+				text = "While engaging in melee, [color=" + ::Const.UI.Color.PositiveValue + "]+15[/color] Initiative to Turn Order"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/sturdiness.png",
-				text = "Takes [color=" + ::Const.UI.Color.PositiveValue + "]33%[/color] less Burning Damage"
+				text = "Takes [color=" + ::Const.UI.Color.PositiveValue + "]33%[/color] less burning damage"
 			}
 		];
-	};
-	local ws_onUpdate = obj.onUpdate;
-	obj.onUpdate = function( _properties )
+	}
+
+	q.onUpdate = @(__original) function( _properties )
 	{
-		local actor = this.getContainer().getActor();
+		if (!::Tactical.isActive()) 
+			return;
 
-		if (!::Tactical.isActive()) return;
-
-		if (!actor.isPlacedOnMap()) return;
-
-		if (this.m.IsPlayer)
-		{
-			if (!actor.getTile().hasZoneOfOccupationOtherThan(actor.getAlliedFactions())) return;
-
-			_properties.InitiativeForTurnOrderAdditional += 15;
+		if (!m.IsPlayer) {
+			__original(_properties);
 			return;
 		}
-		
-		ws_onUpdate(_properties);
-	};
+
+		if (!getContainer().getActor().isEngagedInMelee())
+			_properties.InitiativeForTurnOrderAdditional += 15;
+	}
+
 });

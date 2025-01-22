@@ -1,13 +1,10 @@
-::mods_hookExactClass("skills/traits/fat_trait", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/traits/fat_trait", function ( q )
 {
-	local ws_onAdded = obj.onAdded;
-	obj.onAdded <- function()
+	q.onAdded = @(__original) function()
 	{
-		if (!this.getContainer().getActor().getFlags().has("human"))
-		{
+		if (!getContainer().getActor().getFlags().has("human"))
 			return;
-		}
 		
-		ws_onAdded();
+		__original();
 	}
 });

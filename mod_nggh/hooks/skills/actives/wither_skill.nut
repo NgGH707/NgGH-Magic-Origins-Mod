@@ -1,36 +1,35 @@
-::mods_hookExactClass("skills/actives/wither_skill", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/wither_skill", function(q) 
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "Wither a target for three turns, reducing their damage, fatigue and initiative by [color=" + this.Const.UI.Color.NegativeValue + "]-30%[/color]. The effect is weaken by 10% each turn";
-		this.m.IconDisabled = "skills/active_217_sw.png";
-	};
-	obj.getTooltip <- function()
+		__original();
+		m.Description = "Wither a target for three turns, reducing their damage, fatigue and initiative by [color=" + ::Const.UI.Color.NegativeValue + "]-30%[/color]. The effect is weaken by 10% each turn";
+		m.IconDisabled = "skills/active_217_sw.png";
+	}
+
+	q.getTooltip <- function()
 	{
-		local ret = this.getDefaultUtilityTooltip();
+		local ret = getDefaultUtilityTooltip();
 		ret.extend([
 			{
 				id = 7,
 				type = "text",
 				icon = "ui/icons/vision.png",
-				text = "Has a range of [color=" +  ::Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+				text = "Has a range of [color=" +  ::Const.UI.Color.PositiveValue + "]" + getMaxRange() + "[/color] tiles"
 			},
 			{
 				id = 7,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Only affect living beings"
+				text = "Only affects living beings"
 			},
 		]);
 		return ret;
-	};
-	obj.onVerifyTarget <- function( _originTile, _targetTile )
-	{
-		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
-			return false;
-
-		return !_targetTile.getEntity().getFlags().has("undead");
 	}
+
+	q.onVerifyTarget <- function( _originTile, _targetTile )
+	{
+		return skill.onVerifyTarget(_originTile, _targetTile) && !_targetTile.getEntity().getFlags().has("undead");
+	}
+	
 });

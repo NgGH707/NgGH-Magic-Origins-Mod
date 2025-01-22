@@ -1,17 +1,15 @@
-::mods_hookExactClass("skills/perks/perk_pathfinder", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/perks/perk_pathfinder", function(q) 
 {
-	local ws_onUpdate = obj.onUpdate;
-	obj.onUpdate = function( _properties )
+	q.onUpdate = @(__original) function( _properties )
 	{
-		local actor = this.getContainer().getActor();
+		local actor = getContainer().getActor();
 
-		if (actor.isMounted())
-		{
+		if (actor.isMounted()) {
 			actor.m.LevelActionPointCost = 0;
 			actor.m.LevelFatigueCost = 2;
 			return;
 		}
 		
-		ws_onUpdate(_properties);
+		__original(_properties);
 	}
 });

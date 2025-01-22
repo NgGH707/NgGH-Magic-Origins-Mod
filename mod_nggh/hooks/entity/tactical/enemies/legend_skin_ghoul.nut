@@ -1,15 +1,14 @@
-::mods_hookExactClass("entity/tactical/enemies/legend_skin_ghoul", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/legend_skin_ghoul", function(q) 
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Flags.add("ghoul");
+		__original();
+		m.Flags.add("ghoul");
 	}
 	
-	obj.onAfterDeath = function(_tile)
+	q.onAfterDeath = @() function(_tile)
 	{
-		if (this.m.Size < 3)
+		if (m.Size < 3)
 			return;
 
 		local skill;
@@ -18,7 +17,7 @@
 			"actives.legend_skin_ghoul_swallow_whole"
 		])
 		{
-			skill = this.getSkills().getSkillByID(id)
+			skill = getSkills().getSkillByID(id)
 
 			if (skill != null)
 				break;
@@ -27,7 +26,7 @@
 		if (skill == null)
 			return;
 
-		if (skill.getSwallowedEntity() == null)
+		if (::MSU.isNull(skill.getSwallowedEntity()))
 			return;
 
 		if (::Tactical.Entities.isCombatFinished())
@@ -42,8 +41,7 @@
 
 		::Tactical.TurnSequenceBar.addEntity(e);
 
-		if (e.hasSprite("dirt"))
-		{
+		if (e.hasSprite("dirt")) {
 			local slime = e.getSprite("dirt");
 			slime.setBrush("bust_slime");
 			slime.Visible = true;
@@ -52,10 +50,9 @@
 		skill.m.SwallowedEntity = null;
 	}
 
-	local onInit = obj.onInit;
-	obj.onInit = function()
+	q.onInit = @(__original) function()
 	{
-		onInit();
+		__original();
 		local chance = 25;
 
 		if (("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getCombatDifficulty() == ::Const.Difficulty.Legendary)
@@ -67,18 +64,19 @@
 		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHNacho, ::Const.Perks.PerkDefs.NggHNachoEat, ::Const.Perks.PerkDefs.NggHNachoFrenzy, ::Const.Perks.PerkDefs.NggHNachoBigTummy], chance);
 	}
 
-	obj.makeMiniboss <- function()
+	q.makeMiniboss <- function()
 	{
-		if (!this.actor.makeMiniboss())
+		if (!actor.makeMiniboss())
 			return false;
 
-		local b = this.m.BaseProperties;
+		local b = m.BaseProperties;
 		b.MeleeSkill += 5;
 		b.RangedDefense += 5;
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_nacho"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_nacho_frenzy"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_sundering_strikes"));
-		this.m.Skills.add(::new("scripts/skills/actives/charge"));
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_nacho"));
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_nacho_frenzy"));
+		getSkills().add(::new("scripts/skills/perks/perk_sundering_strikes"));
+		getSkills().add(::new("scripts/skills/actives/charge"));
 		return true;
 	}
+	
 });

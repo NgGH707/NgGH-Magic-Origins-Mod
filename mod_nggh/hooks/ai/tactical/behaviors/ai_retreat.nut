@@ -1,6 +1,6 @@
-::mods_hookExactClass("ai/tactical/behaviors/ai_retreat", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/ai/tactical/behaviors/ai_retreat", function ( q )
 {
-	obj.onEvaluate = function( _entity )
+	q.onEvaluate = @() function( _entity )
 	{
 		// Function is a generator.
 		this.m.TargetTile = null;
@@ -117,5 +117,6 @@
 		}
 
 		return ::Const.AI.Behavior.Score.Retreat * score;
-	};
+	}
+	
 });

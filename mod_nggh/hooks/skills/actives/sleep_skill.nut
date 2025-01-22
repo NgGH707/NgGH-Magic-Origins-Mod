@@ -1,4 +1,4 @@
-::mods_hookExactClass("skills/actives/sleep_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/sleep_skill", function ( obj )
 {
 	local ws_create = obj.create;
 	obj.create = function()
@@ -104,7 +104,6 @@
 			local sleep =  ::new("scripts/skills/effects/sleeping_effect");
 			target.getFlags().set("resist_sleep", 0);
 			target.getSkills().add(sleep);
-			sleep.m.TurnsLeft += hasMastery ? 1 : 0;
 		}
 	};
 	// a rough estimated of the chance to put target to sleep, may not 100% accurate

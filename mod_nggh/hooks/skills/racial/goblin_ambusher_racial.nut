@@ -1,67 +1,64 @@
-::mods_hookExactClass("skills/racial/goblin_ambusher_racial", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/racial/goblin_ambusher_racial", function(q) 
 {
 	//obj.m.Chance <- 0;
-	obj.m.IsPlayer <- false;
+	q.m.IsPlayer <- false;
 
-	obj.getChance <- function()
+	q.getChance <- function()
 	{
-		return !this.m.IsPlayer || ::Nggh_MagicConcept.IsOPMode ? 100 : 35;
+		return !m.IsPlayer || !::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue() ? 100 : 35;
 	}
 
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Name = "Poisonous Weapon";
-		this.m.Description = "Goblins love using poison to weaken their prey and enemy. Instead of killing its victim this poison will instead slow them down, prevent them from getting away.";
-		this.m.Icon = "skills/status_effect_00.png";
-		this.m.IconMini = "status_effect_54_mini";
-		//this.m.Chance = ::Nggh_MagicConcept.IsOPMode ? 100 : 35;
-		this.m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.First + 1;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = false;
-	};
-	obj.onAdded <- function()
-	{
-		this.m.IsPlayer = this.getContainer().getActor().isPlayerControlled();
+		__original();
+		m.Name = "Poisonous Weapon";
+		m.Description = "Goblins love using poison to weaken their prey and enemy. Instead of killing its victim, this poison will instead slow them down, prevent them from getting away.";
+		m.Icon = "skills/status_effect_00.png";
+		m.IconMini = "status_effect_54_mini";
+		//m.Chance = !::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue() ? 100 : 35;
+		m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.First + 1;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = false;
 	}
-	obj.getTooltip <- function()
+
+	q.onAdded <- function()
+	{
+		m.IsPlayer = ::MSU.isKindOf(getContainer().getActor(), "player");
+	}
+
+	q.getTooltip <- function()
 	{
 		return [
 			{
 				id = 1,
 				type = "title",
-				text = this.getName()
+				text = getName()
 			},
 			{
 				id = 2,
 				type = "description",
-				text = this.getDescription()
+				text = getDescription()
 			},
 			{
 				id = 8,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Has [color=" + ::Const.UI.Color.PositiveValue + "]" + this.getChance() + "%[/color] to inflicts [color=" + ::Const.UI.Color.DamageValue + "]Goblin Poisoned[/color] effect on each attack"
+				text = "Has a [color=" + ::Const.UI.Color.PositiveValue + "]" + getChance() + "%[/color] to inflicts [color=" + ::Const.UI.Color.DamageValue + "]Goblin Poisoned[/color] effect on each weapon attack"
 			}
 		];
-	};
+	}
 
-	local ws_onTargetHit = obj.onTargetHit;
-	obj.onTargetHit = function( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
+	q.onTargetHit = @(__original) function( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
 		if (_skill == null || !_skill.m.IsWeaponSkill)
-		{
 			return;
-		}
 
-		if (!::Nggh_MagicConcept.IsOPMode && this.getContainer().getActor().isPlayerControlled() && ::Math.rand(1, 100) > this.getChance())
-		{
+		if (::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue() && m.IsPlayer && ::Math.rand(1, 100) > getChance())
 			return;
-		}
 
-		ws_onTargetHit(_skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor);
-	};
+		__original(_skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor);
+	}
+
 });

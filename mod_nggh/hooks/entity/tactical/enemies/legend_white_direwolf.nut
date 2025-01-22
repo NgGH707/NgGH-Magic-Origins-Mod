@@ -1,9 +1,8 @@
-::mods_hookExactClass("entity/tactical/enemies/legend_white_direwolf", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/legend_white_direwolf", function(q) 
 {
-	local onInit = obj.onInit;
-	obj.onInit = function()
+	q.onInit = @(__original) function()
 	{
-		onInit();
+		__original();
 		local chance = 25;
 
 		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 100)
@@ -15,15 +14,16 @@
 		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHWolfBite, ::Const.Perks.PerkDefs.NggHWolfThickHide, ::Const.Perks.PerkDefs.NggHWolfEnrage], chance);
 	}
 
-	obj.makeMiniboss <- function()
+	q.makeMiniboss <- function()
 	{
-		if (!this.actor.makeMiniboss())
+		if (!actor.makeMiniboss())
 			return false;
 
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_wolf_bite"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_wolf_thick_hide"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_wolf_enrage"));
-		this.m.Skills.add(::new("scripts/skills/actives/line_breaker"));
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_wolf_bite"));
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_wolf_thick_hide"));
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_wolf_enrage"));
+		getSkills().add(::new("scripts/skills/actives/line_breaker"));
 		return true;
 	}
+	
 });

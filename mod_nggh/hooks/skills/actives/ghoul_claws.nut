@@ -1,20 +1,21 @@
-::mods_hookExactClass("skills/actives/ghoul_claws", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/ghoul_claws", function ( q )
 {
-	obj.getTooltip = function()
+	q.getTooltip = @() function()
 	{
-		return this.getDefaultTooltip();
-	};
-	obj.onBeforeUse <- function( _user , _targetTile )
+		return getDefaultTooltip();
+	}
+
+	q.use <- function( _targetTile, _forFree = false )
 	{
-		if (!_user.getFlags().has("luft"))
-		{
-			return;
-		}
+		if (!getContainer().getActor().getFlags().has("luft"))
+			::Nggh_MagicConcept.spawnQuote("luft_claw_quote_" + ::Math.rand(1, 5), getContainer().getActor().getTile());
 		
-		::Nggh_MagicConcept.spawnQuote("luft_claw_quote_" + ::Math.rand(1, 5), _user.getTile());
-	};
-	obj.onAfterUpdate <- function( _properties )
+		return skill.use(_targetTile, _forFree);
+	}
+
+	q.onAfterUpdate <- function( _properties )
 	{
 		this.m.FatigueCostMult = _properties.IsSpecializedInShields ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
 	}
+	
 });

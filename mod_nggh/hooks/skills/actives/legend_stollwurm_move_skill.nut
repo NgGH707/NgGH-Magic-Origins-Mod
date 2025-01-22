@@ -1,16 +1,16 @@
-::mods_hookExactClass("skills/actives/legend_stollwurm_move_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/legend_stollwurm_move_skill", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "Digging your way through the underground to reach you destination.";
-		this.m.Icon = "skills/active_149.png";
-		this.m.IconDisabled = "skills/active_149_sw.png";
-		this.m.Overlay = "active_149";
-	};
-	obj.onAdded <- function()
+		__original();
+		m.Description = "Digging your way through the underground to reach you destination.";
+		m.Icon = "skills/active_149.png";
+		m.IconDisabled = "skills/active_149_sw.png";
+		m.Overlay = "active_149";
+	}
+
+	q.onAdded <- function()
 	{
-		this.m.IsVisibleTileNeeded = this.getContainer().getActor().isPlayerControlled();
-	};
+		m.IsVisibleTileNeeded = ::MSU.isKindOf(getContainer().getActor(), "player");
+	}
 });

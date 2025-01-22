@@ -1,12 +1,12 @@
-::mods_hookExactClass("items/weapons/greenskins/goblin_staff", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/items/weapons/greenskins/goblin_staff", function(q) 
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
+		__original();
 		setWeaponType(::Const.Items.WeaponType.Staff | ::Const.Items.WeaponType.MagicStaff)
-	};
-	obj.onEquip = function()
+	}
+
+	q.onEquip = function()
 	{
 		weapon.onEquip();
 		local skill = ::new("scripts/skills/actives/legend_staff_bash");
@@ -21,5 +21,6 @@
 
 		if (::Is_PTR_Exist)
 			addSkill(::new("scripts/skills/actives/ptr_staff_sweep_skill"));
-	};
+	}
+	
 });

@@ -1,14 +1,12 @@
-::mods_hookExactClass("contracts/contracts/hunting_hexen_contract", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/contracts/contracts/hunting_hexen_contract", function(q) 
 {
-	local ws_createStates = obj.createStates;
-	obj.createStates = function()
+	q.createStates = @(__original) function()
 	{
-		ws_createStates();
+		__original();
 
-		foreach(i, state in this.m.States)
+		foreach(i, state in m.States)
 		{
-			if (state.ID == "Offer")
-			{
+			if (state.ID == "Offer") {
 				state.countHexe <- function()
 				{
 					if (::Const.GoodMoralReputaions.find(::World.Assets.getMoralReputationAsText()) != null)
@@ -135,14 +133,13 @@
 				}
 			}
 		}
-	};
+	}
 
-	local ws_createScreens = obj.createScreens;
-	obj.createScreens = function()
+	q.createScreens = @(__original)function()
 	{
-		ws_createScreens();
+		__original();
 
-		foreach(i, screen in this.m.Screens)
+		foreach(i, screen in m.Screens)
 		{
 			if (screen.ID == "SinisterDeal")
 			{
@@ -293,5 +290,5 @@
 			}
 		});
 
-	};
+	}
 });

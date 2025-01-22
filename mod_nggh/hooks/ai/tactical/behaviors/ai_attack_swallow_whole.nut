@@ -1,9 +1,9 @@
 //fix strange behavior of enemy nacho with the modded skill
-::mods_hookExactClass("ai/tactical/behaviors/ai_attack_swallow_whole", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/ai/tactical/behaviors/ai_attack_swallow_whole", function ( q )
 {
-	obj.m.PossibleSkills.push("actives.legend_skin_ghoul_swallow_whole");
+	q.m.PossibleSkills.push("actives.legend_skin_ghoul_swallow_whole");
 	
-	obj.onEvaluate <- function( _entity )
+	q.onEvaluate = @() function( _entity )
 	{
 		this.m.TargetTile = null;
 		this.m.Skill = null;
@@ -68,9 +68,9 @@
 		this.m.TargetTile = bestTarget.Target.getTile();
 		score = score * bestTarget.Score;
 		return ::Const.AI.Behavior.Score.SwallowWhole * score;
-	};
+	}
 	
-	obj.getBestTarget = function( _entity, _skill, _targets )
+	q.getBestTarget = @() function( _entity, _skill, _targets )
 	{
 		local bestTarget;
 		local bestScore = 0.0;

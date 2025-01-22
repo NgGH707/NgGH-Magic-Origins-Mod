@@ -1,11 +1,10 @@
-::mods_hookExactClass("contracts/contracts/legend_hunting_coven_leader_contract", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/contracts/contracts/legend_hunting_coven_leader_contract", function(q) 
 {
-	local ws_createStates = obj.createStates;
-	obj.createStates = function()
+	q.createStates = @(__original) function()
 	{
-		ws_createStates();
+		__original();
 
-		foreach(i, state in this.m.States)
+		foreach(i, state in m.States)
 		{
 			if (state.ID == "Offer")
 			{
@@ -137,12 +136,11 @@
 				}
 			}
 		}
-	};
+	}
 
-	local ws_createScreens = obj.createScreens;
-	obj.createScreens = function()
+	q.createScreens = @(__original) function()
 	{
-		ws_createScreens();
+		__original();
 
 		foreach(i, screen in this.m.Screens)
 		{
@@ -298,19 +296,17 @@
 
 		});
 
-	};
+	}
 
-	local ws_onIsValid = obj.onIsValid;
-	obj.onIsValid = function()
+	q.onIsValid = @(__original) function()
 	{
 		foreach( bro in ::World.getPlayerRoster().getAll() )
 		{
 			if (bro.getLevel() >= 20 && bro.getSkills().hasSkill("perk.mastery_charm"))
-			{
 				return true;
-			}
 		}
 
-		return ws_onIsValid();
-	};
+		return __original();
+	}
+	
 });

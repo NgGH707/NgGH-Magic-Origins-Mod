@@ -1,14 +1,15 @@
-::mods_hookExactClass("skills/actives/sweep_zoc_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/sweep_zoc_skill", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Order = ::Const.SkillOrder.OffensiveTargeted - 10;
-		this.m.IsHidden = true;
-	};
-	obj.isUsable <- function()
+		__original();
+		m.Order = ::Const.SkillOrder.OffensiveTargeted - 10;
+		m.IsHidden = true;
+	}
+
+	q.isUsable <- function()
 	{
-		return this.m.IsUsable && ::MSU.isNull(this.getContainer().getActor().getMainhandItem()) && this.getContainer().getActor().getCurrentProperties().IsAbleToUseSkills;
-	};
+		return m.IsUsable && ::MSU.isNull(getContainer().getActor().getMainhandItem()) && getContainer().getActor().getCurrentProperties().IsAbleToUseSkills;
+	}
+
 });

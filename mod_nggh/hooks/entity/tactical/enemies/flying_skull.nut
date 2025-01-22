@@ -1,11 +1,11 @@
 
 return;
 
-::logWarning("Nggh_MagicConcept - You shouldn\'t see this message in your log")
+::logWarning("Nggh_MagicConcept - You shouldn\'t see this message in your log");
 
-::mods_hookExactClass("entity/tactical/enemies/flying_skull", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/flying_skull", function ( q )
 {
-	obj.onActorKilled <- function( _actor, _tile, _skill )
+	q.onActorKilled <- function( _actor, _tile, _skill )
 	{
 		this.actor.onActorKilled(_actor, _tile, _skill);
 
@@ -20,13 +20,15 @@ return;
 			}
 		}
 	}
-	obj.addMoreHP <- function( _master )
+
+	q.addMoreHP <- function( _master )
 	{
 		this.m.BaseProperties.Hitpoints += (_master.getLevel() - 1) * 2;
 		this.m.Skills.update();
 		this.setHitpointsPct(1.0);
 	}
-	obj.onExplode <- function()
+
+	q.onExplode <- function()
 	{
 		local myTile = this.getTile();
 		local skill = this.getSkills().getSkillByID("actives.explode");
@@ -73,8 +75,9 @@ return;
 				}
 			}
 		}
-	};
-	obj.onDeath = function( _killer, _skill, _tile, _fatalityType )
+	}
+
+	q.onDeath = function( _killer, _skill, _tile, _fatalityType )
 	{
 		local myTile = this.getTile();
 
@@ -154,10 +157,11 @@ return;
 
 		this.actor.onDeath(_killer, _skill, _tile, _fatalityType);
 	}
-	local ws_onInit = obj.onInit;
-	obj.onInit = function()
+
+	q.onInit = @(__original) function()
 	{
-		ws_onInit();
+		__original();
 		this.m.Skills.add(::new("scripts/skills/racial/skeleton_racial"));
-	};
+	}
+	
 })

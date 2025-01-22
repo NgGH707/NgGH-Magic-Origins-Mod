@@ -1,7 +1,6 @@
-::mods_hookExactClass("skills/perks/perk_ptr_pointy_end", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/perks/perk_ptr_pointy_end", function ( q )
 {
-	obj.onAdded <- function()
-	{
+	q.onAdded <- function() {
 		::Nggh_MagicConcept.HooksHelper.autoEnableForBeasts(this);
-	};
+	}
 });

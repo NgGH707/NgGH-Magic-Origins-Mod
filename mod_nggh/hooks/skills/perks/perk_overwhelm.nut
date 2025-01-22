@@ -1,24 +1,18 @@
-::mods_hookExactClass("skills/perks/perk_overwhelm", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/perks/perk_overwhelm", function(q) 
 {
-	local ws_onTargetHit = obj.onTargetHit;
-	obj.onTargetHit = function( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
+	q.onTargetHit = @(__original) function( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
 		if (_targetEntity != null && _targetEntity.isAlive() && !_targetEntity.isDying() && _targetEntity.getCurrentProperties().IsImmuneToOverwhelm)
-		{
 			return;
-		}
 
-		ws_onTargetHit(_skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor);
-	};
+		__original(_skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor);
+	}
 
-	local ws_onTargetMissed = obj.onTargetMissed;
-	obj.onTargetMissed = function( _skill, _targetEntity )
+	q.onTargetMissed = @(__original) function( _skill, _targetEntity )
 	{
 		if (_targetEntity != null && _targetEntity.isAlive() && !_targetEntity.isDying() && _targetEntity.getCurrentProperties().IsImmuneToOverwhelm)
-		{
 			return;
-		}
 
-		ws_onTargetMissed(_skill, _targetEntity);
+		__original(_skill, _targetEntity);
 	};
 });

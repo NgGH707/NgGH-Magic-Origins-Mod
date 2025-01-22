@@ -1,7 +1,7 @@
-::mods_hookExactClass("skills/actives/legend_hex_skill", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/legend_hex_skill", function(q) 
 {
-	obj.onAdded <- function()
+	q.onAdded <- function()
 	{
-		this.m.IsHidden = this.getContainer().getActor().getFlags().has("Hexe");
+		m.IsHidden = getContainer().getActor().getFlags().has("Hexe");
 	}
 });

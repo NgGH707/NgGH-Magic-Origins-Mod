@@ -1,9 +1,9 @@
 /*
-::mods_hookExactClass("skills/special/double_grip", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/special/double_grip", function(q) 
 {
-    obj.onAdded <- function()
+    q.onAdded <- function()
     {
-        this.getContainer().add(this.new("scripts/skills/actives/manning_siege_weapon_skill"));
+        getContainer().add(this.new("scripts/skills/actives/manning_siege_weapon_skill"));
     }
 });
 */

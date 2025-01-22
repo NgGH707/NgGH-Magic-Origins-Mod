@@ -1,58 +1,56 @@
-::mods_hookExactClass("skills/actives/grow_shield_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/grow_shield_skill", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create =  @(__original) function()
 	{
-		ws_create();
-		this.m.Name = "Grow Shield";
-		this.m.Description = "Regrow your bark, producing a protective shield";
-		this.m.Icon = "skills/active_121.png";
-		this.m.IconDisabled = "skills/active_121_sw.png";
-		this.m.Overlay = "active_121";
-		this.m.Order = ::Const.SkillOrder.NonTargeted + 1;
-	};
-	obj.getTooltip <- function()
+		__original();
+		m.Name = "Grow Shield";
+		m.Description = "Regrow your bark, producing a protective shield";
+		m.Icon = "skills/active_121.png";
+		m.IconDisabled = "skills/active_121_sw.png";
+		m.Overlay = "active_121";
+		m.Order = ::Const.SkillOrder.NonTargeted + 1;
+	}
+
+	q.getTooltip <- function()
 	{
-		local ret = this.skill.getDefaultUtilityTooltip();
-		local isSpecialized = this.getContainer().getActor().getCurrentProperties().IsSpecializedInHammers;
+		local ret = getDefaultUtilityTooltip();
 
 		ret.push({
 			id = 4,
 			type = "text",
 			icon = "/ui/icons/melee_defense.png",
-			text = "Grants a [color=" + ::Const.UI.Color.PositiveValue + "]+20[/color] Melee and Ranged Defense shield, with [color=" + ::Const.UI.Color.PositiveValue + "]32[/color] durability"
+			text = "Creates a [color=" + ::Const.UI.Color.PositiveValue + "]+20[/color] Melee and Ranged Defense shield, with [color=" + ::Const.UI.Color.PositiveValue + "]32[/color] durability"
 		});
 
-		if (isSpecialized)
-		{
+		if (getContainer().getActor().getCurrentProperties().IsSpecializedInHammers)
 			ret.push({
 				id = 10,
 				type = "text",
 				icon = "ui/icons/special.png",
 				text = "Gains [color=" + ::Const.UI.Color.PositiveValue + "]Shieldwall[/color] effect for free when growing a new shield"
 			});
-		}
-
-		return ret;
-	};
-	obj.onAfterUpdate <- function( _properties )
-	{
-		this.m.FatigueCostMult = _properties.IsSpecializedInHammers ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
-	};
-	obj.onUse = function( _user, _targetTile )
-	{
-		local actor = this.getContainer().getActor();
-		local isSpecialized = this.getContainer().hasSkill("perk.grow_shield");
 		
-		::Time.scheduleEvent(::TimeUnit.Virtual, 250, function ( _idk )
-		{
-			actor.getItems().equip(::new("scripts/items/shields/beasts/schrat_shield"));
-			actor.getSprite("shield_icon").Alpha = 0;
-			actor.getSprite("shield_icon").fadeIn(1500);
+		return ret;
+	}
 
-			if (isSpecialized)
-				actor.getSkills().add(::new("scripts/skills/effects/shieldwall_effect"));
-				
-		}, null);
-	};
+	q.onAfterUpdate <- function( _properties )
+	{
+		m.FatigueCostMult = _properties.IsSpecializedInHammers ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
+	}
+
+	q.onUse = @(__original) function( _user, _targetTile )
+	{
+		local ret = __original(_user, _targetTile);
+
+		if (_user.getCurrentProperties().IsSpecializedInHammers) {
+			::Time.scheduleEvent(::TimeUnit.Virtual, 2000, function ( _itsMe ) {
+				local shield = _itsMe.getOffhandItem();
+				if (shield != null && shield.isItemType(::Const.Items.ItemType.Shield))
+					_itsMe.getSkills().add(::new("scripts/skills/effects/shieldwall_effect"));
+			}, _user);
+		}
+		
+		return ret;
+	}
+	
 });

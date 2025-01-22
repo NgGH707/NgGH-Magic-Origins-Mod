@@ -1,36 +1,35 @@
-::mods_hookExactClass("skills/racial/alp_racial", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/racial/alp_racial", function(q) 
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Name = "Partly Exist In Dreams";
-		this.m.Description = "Has strong resistance against ranged or piercing attacks due to part of its real body only existing in a dream. It has the habbit to haunt and stalk its prey.";
-		this.m.Icon = "skills/status_effect_102.png";
-		this.m.IconMini = "status_effect_102_mini";
-		this.m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.First + 1;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = false;
-	};
-	obj.getTooltip <- function()
+		__original();
+		m.Name = "Partly Exist In Dreams";
+		m.Description = "Has strong resistance against ranged or piercing attacks due to part of its real body only existing in a dream. It has the habbit to haunt and stalk its prey.";
+		m.Icon = "skills/status_effect_102.png";
+		m.IconMini = "status_effect_102_mini";
+		m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.First + 1;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = false;
+	}
+
+	q.getTooltip <- function()
 	{
 		local ret = [
 			{
 				id = 1,
 				type = "title",
-				text = this.getName()
+				text = getName()
 			},
 			{
 				id = 2,
 				type = "description",
-				text = this.getDescription()
+				text = getDescription()
 			}
-		]
+		];
 
-		if (!::Nggh_MagicConcept.IsOPMode)
-		{
+		if (::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue()) {
 			ret.extend([
 				{
 					id = 6,
@@ -52,63 +51,48 @@
 				id = 8,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]Resistant[/color] against Piercing or Ranged Damage"
+				text = "Is [color=" + ::Const.UI.Color.PositiveValue + "]resistant[/color] against piercing or ranged damage"
 			},
 			{
 				id = 8,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "[color=" + ::Const.UI.Color.NegativeValue + "]Vulnerable[/color] against Fire Damage"
+				text = "Is [color=" + ::Const.UI.Color.NegativeValue + "]vulnerable[/color] against fire damage"
 			},
 			{
 				id = 9,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Causes allied Alps to teleport after taking damage"
+				text = "Causes allied \'Alps\' to teleport after taking damage"
 			}
 		]);
 
 		return ret;
-	};
-	obj.onAdded <- function()
-	{
-		if (!this.getContainer().getActor().isPlayerControlled()) return;
-		
-		this.getContainer().getActor().getAIAgent().addBehavior(::new("scripts/ai/tactical/behaviors/ai_alp_teleport"));
-	};
+	}
 
-	// nerf alp player
-	obj.onUpdate <- function( _properties )
+	q.onAdded <- function()
 	{
-		if (::Nggh_MagicConcept.IsOPMode) return;
+		if (::MSU.isKindOf(getContainer().getActor(), "player"))
+			getContainer().getActor().getAIAgent().addBehavior(::new("scripts/ai/tactical/behaviors/ai_alp_teleport"));
+	}
+
+	q.onUpdate <- function( _properties )
+	{
+		if (!::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue()) return; // nerf alp player as these doesn't do anything to npc alp
 
 		_properties.MeleeDamageMult *= ::Const.AlpWeaponDamageMod;
 		_properties.RangedDamageMult *= ::Const.AlpWeaponDamageMod;
 	}
 
-	obj.onDamageReceived = function( _attacker, _damageHitpoints, _damageArmor )
+	q.teleport = @() function( _tag )
 	{
-		local actor = this.getContainer().getActor();
-
-		if (_damageHitpoints >= actor.getHitpoints())
-			return;
-		
-		::Sound.play(::MSU.Array.rand(this.m.SoundOnUse), ::Const.Sound.Volume.Skill);
-		::Time.scheduleEvent(::TimeUnit.Virtual, 30, this.teleport.bindenv(this), {
-			Faction = actor.getFaction(),
-		});
-	};
-	obj.onDeath = function( _fatalityType )
-	{
-		::Sound.play(::MSU.Array.rand(this.m.SoundOnUse), ::Const.Sound.Volume.Skill);
-		::Time.scheduleEvent(::TimeUnit.Virtual, 30, this.teleport.bindenv(this), {
-			Faction = this.getContainer().getActor().getFaction(),
-		});
-	};
-	obj.teleport = function( _tag )
-	{
-		foreach( a in ::Tactical.Entities.getInstancesOfFaction(_tag.Faction) )
+		foreach( a in ::Tactical.Entities.getInstancesOfFaction(getContainer().getActor().getFaction()) )
 		{
+			local b = a.getAIAgent().getBehavior(::Const.AI.Behavior.ID.AlpTeleport);
+
+			if (b == null)
+				continue;
+
 			local skill = a.getSkills().getSkillByID("actives.alp_teleport");
 
 			if (skill == null || !a.isAlive() || a.getHitpoints() <= 0)
@@ -116,19 +100,10 @@
 
 			if (!a.getFlags().get("auto_teleport"))
 				continue;
-			
-			local b = a.getAIAgent().getBehavior(::Const.AI.Behavior.ID.AlpTeleport);
-
-			if (b == null)
-				continue;
-
-			if (!a.getAIAgent().hasKnownOpponent())
-			{
-				while (!resume a.getAIAgent().getStrategy().update()) {}
-			}
 
 			b.onEvaluate(a);
 			b.onExecute(a);
 		}
-	};
+	}
+
 });

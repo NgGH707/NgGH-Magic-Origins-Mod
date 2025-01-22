@@ -1,10 +1,5 @@
-::mods_hookExactClass("entity/tactical/player", function(obj)
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/player", function(q)
 {
-	obj.getPlannedPerks <- function()
-	{
-		return this.m.PlannedPerks;
-	}
-	
 	/*
 	local ws_onCombatStart = obj.onCombatStart;
 	obj.onCombatStart <- function()
@@ -20,20 +15,19 @@
 	}
 	*/
 
-	local getDailyFood = obj.getDailyFood;
-	obj.getDailyFood = function()
+	q.getDailyFood = @(__original) function()
 	{
-		return ::Math.max(0, getDailyFood());
+		return ::Math.max(0, __original());
 	}
 
-	local isReallyKilled = obj.isReallyKilled;
-	obj.isReallyKilled = function( _fatalityType )
+	q.isReallyKilled = @(__original) function( _fatalityType )
 	{
-		local simp = this.getSkills().getSkillByID("effects.simp");
+		local simp = getSkills().getSkillByID("effects.simp");
 
 		if (simp != null && simp.isMutiny())
 			return true;
 
-		return isReallyKilled(_fatalityType);
+		return __original(_fatalityType);
 	}
+	
 });

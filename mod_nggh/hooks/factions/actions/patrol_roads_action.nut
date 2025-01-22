@@ -1,22 +1,18 @@
-::mods_hookExactClass("factions/actions/patrol_roads_action", function(obj) {
-	local ws_onUpdate = obj.onUpdate;
-	obj.onUpdate = function( _faction )
+::Nggh_MagicConcept.HooksMod.hook("scripts/factions/actions/patrol_roads_action", function(q) {
+	q.onUpdate = @(__original) function( _faction )
 	{
-		ws_onUpdate(_faction);
+		__original(_faction);
 
-		if (this.m.Score > 0)
-		{
-			this.m.Score *= ::World.Flags.get("isExposed") ? 1.5 : 1.25;
-		}
+		if (m.Score > 0)
+			m.Score *= ::World.Flags.get("isExposed") ? 1.5 : 1.25;
 	}
 
-	local ws_onExecute = obj.onExecute;
-	obj.onExecute = function( _faction )
+	q.onExecute = @(__original) function( _faction )
 	{
 		/*
 		local canSpawnWitchHunterSettlements = [];
 
-		foreach (s in this.m.Settlements)
+		foreach (s in m.Settlements)
 		{
 			local faction = s.getFactionOfType(::Const.FactionType.Settlement);
 
@@ -29,34 +25,30 @@
 		}
 		*/
 
-		local chance = ::World.Flags.get("isExposed") ? 50 : 20;
-
-		if (::Math.rand(1, 100) > chance)
-		{
-			return ws_onExecute(_faction);
-		}
+		if (::Math.rand(1, 100) > (::World.Flags.get("isExposed") ? 50 : 25))
+			return __original(_faction);
 
 		local waypoints = [];
 
 		for( local i = 0; i != 3; ++i )
 		{
-			local idx = ::Math.rand(0, this.m.Settlements.len() - 1);
-			local wp = this.m.Settlements[idx];
-			this.m.Settlements.remove(idx);
+			local idx = ::Math.rand(0, m.Settlements.len() - 1);
+			local wp = m.Settlements[idx];
+			m.Settlements.remove(idx);
 			waypoints.push(wp);
 		}
 
 		local hasNoble = ::Math.rand(1, 100) <= 40;
-		local party = _faction.spawnEntity(waypoints[0].getTile(), waypoints[0].getName() + " " + (hasNoble ? "Inquisition Company" : "Witch Hunting Party"), hasNoble, hasNoble ? ::Const.World.Spawn.Nggh_WitchHunterAndNoble : ::Const.World.Spawn.Nggh_WitchHunter, ::Math.rand(150, 325) * this.getReputationToDifficultyLightMult());
-		party.setDescription(hasNoble ? "Professional soldiers in service to local lords." : "Professional witch hunters hired by local lords to deal with problematic cults or witches.");
+		local party = _faction.spawnEntity(waypoints[0].getTile(), waypoints[0].getName() + " " + (hasNoble ? "Inquisition Company" : "Witch Hunting Party"), hasNoble, hasNoble ? ::Const.World.Spawn.Nggh_WitchHunterAndNoble : ::Const.World.Spawn.Nggh_WitchHunter, ::Math.rand(150, 325) * getReputationToDifficultyLightMult());
+		party.setDescription(hasNoble ? "Professional soldiers in service to local lords." : "Professional witch hunters hired by local lords to deal with problematic cults and witch covens.");
 		party.setFootprintType(hasNoble ? ::Const.World.FootprintsType.Nobles : ::Const.World.FootprintsType.Militia);
 		party.setVisionRadius(::Const.World.Settings.Vision * 1.25);
 		party.getFlags().set("IsRandomlySpawned", true);
 		party.getFlags().set("WitchHunters", true);
 
 		// supply
-		party.getLoot().Money = ::Math.rand(50, 500);
-		party.getLoot().ArmorParts = ::Math.rand(0, 5);
+		party.getLoot().Money = ::Math.rand(150, 500);
+		party.getLoot().ArmorParts = ::Math.rand(0, 10);
 		party.getLoot().Medicine = ::Math.rand(0, 7);
 		party.getLoot().Ammo = ::Math.rand(0, 50);
 
@@ -65,8 +57,7 @@
 		party.addToInventory("supplies/dried_fruits_item");
 		
 		// party sent to hunt down player :3
-		if (::World.Flags.get("isExposed") && ::Math.rand(1, 100) <= ::Math.rand(5, 10))
-		{
+		if (::World.Flags.get("isExposed") && ::Math.rand(1, 100) <= ::Math.rand(5, 10)) {
 			party.setAttackableByAI(false);
 			party.setAlwaysAttackPlayer(true);
 			party.setUsingGlobalVision(true);
@@ -78,8 +69,7 @@
 			c.addOrder(attack);
 		}
 		// party sent to patrol
-		else
-		{
+		else {
 			local c = party.getController();
 			local move1 = ::new("scripts/ai/world/orders/move_order");
 			move1.setRoadsOnly(true);
@@ -103,7 +93,7 @@
 			c.addOrder(despawn);
 		}
 		
-		this.m.Cooldown = ::World.FactionManager.isGreaterEvil() || ::World.Flags.get("isExposed") ? 200.0 : 400.0;
+		m.Cooldown = ::World.FactionManager.isGreaterEvil() || ::World.Flags.get("isExposed") ? 200.0 : 400.0;
 		return true;
 	}
 

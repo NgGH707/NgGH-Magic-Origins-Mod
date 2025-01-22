@@ -1,20 +1,22 @@
-::mods_hookExactClass("skills/actives/move_tail_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/move_tail_skill", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "Move the tail closer to the body";
-		this.m.Icon = "skills/active_109.png";
-		this.m.IconDisabled = "skills/active_109_sw.png";
-	};
-	obj.onAfterUpdate <- function( _properties )
+		__original();
+		m.Description = "Move the tail closer to the body";
+		m.Icon = "skills/active_109.png";
+		m.IconDisabled = "skills/active_109_sw.png";
+	}
+
+	q.onAfterUpdate <- function( _properties )
 	{
-		if (this.getContainer().getActor().isPlayerControlled())
-			this.m.ActionPointCost -= 1;
-	};
-	obj.getTooltip <- function()
+		if (::MSU.isKindOf(getContainer().getActor(), "player"))
+			m.ActionPointCost -= 1;
+	}
+
+	q.getTooltip <- function()
 	{
-		return this.getDefaultUtilityTooltip();
-	};
+		return getDefaultUtilityTooltip();
+	}
+
 });

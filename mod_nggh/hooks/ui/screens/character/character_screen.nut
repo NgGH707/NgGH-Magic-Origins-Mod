@@ -1,65 +1,15 @@
-::mods_hookNewObject("ui/screens/character/character_screen", function( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/ui/screens/character/character_screen", function( q )
 {
-	local ws_general_onEquipStashItem = obj.general_onEquipStashItem;
-	obj.general_onEquipStashItem = function( _data )
-	{
-		local data = this.helper_queryStashItemData(_data);
-
-		if ("error" in data)
-		{
-			return data;
-		}
-
-		local targetItems = this.helper_queryEquipmentTargetItems(data.inventory, data.sourceItem);
-		local allowed = this.helper_isActionAllowed(data.entity, [
-			data.sourceItem,
-			targetItems.firstItem,
-			targetItems.secondItem
-		], false);
-
-		if (allowed != null)
-		{
-			return allowed;
-		}
-
-		if (!::Tactical.isActive() && data.sourceItem.isUsable() && data.sourceItem.isIndestructible())
-		{
-			if (data.sourceItem.onUse(data.inventory.getActor()))
-			{
-				data.stash.removeByIndex(data.sourceIndex);
-				data.inventory.getActor().getSkills().update();
-				local item = data.sourceItem.onUseIndestructibleItem();
-
-				if (item != null)
-				{
-					::World.Assets.getStash().insert(item, data.sourceIndex);
-				}
-
-				return ::UIDataHelper.convertStashAndEntityToUIData(data.entity, null, false, this.m.InventoryFilter);
-			}
-			else
-			{
-				return this.helper_convertErrorToUIData(::Const.CharacterScreen.ErrorCode.FailedToEquipStashItem);
-			}
-		}
-
-		return ws_general_onEquipStashItem(_data);
-	}
-
-	local ws_onDismissCharacter = obj.onDismissCharacter;
-	obj.onDismissCharacter = function( _data )
+	q.onDismissCharacter = @(__original) function( _data )
 	{
 		local bro = ::Tactical.getEntityByID(_data[0]);
 
-		if (bro != null && bro.getSkills().hasSkill("effects.simp"))
-		{
+		if (bro != null && bro.getSkills().hasSkill("effects.simp")) {
 			bro.getSkills().onDismiss();
 			::World.Statistics.getFlags().increment("BrosDismissed");
 
 			if (bro.getSkills().hasSkillOfType(::Const.SkillType.PermanentInjury))
-			{
 				::World.Statistics.getFlags().increment("BrosWithPermanentInjuryDismissed");
-			}
 
 			/*
 			if (bro.getLevel() >= 11 && !::World.Statistics.hasNews("dismiss_legend") && ::World.getPlayerRoster().getSize() > 1)
@@ -85,15 +35,14 @@
 			bro.getItems().transferToStash(::World.Assets.getStash());
 			::World.getPlayerRoster().remove(bro);
 			if (::World.State.getPlayer() != null)
-			{
 				::World.State.getPlayer().calculateModifiers();
-			}
-			this.loadData();
+			
+			loadData();
 			::World.State.updateTopbarAssets();
 		}
 		else
 		{
-			ws_onDismissCharacter(_data);
+			__original(_data);
 		}
 	}
 

@@ -1,4 +1,4 @@
-::mods_hookExactClass("ai/tactical/behaviors/ai_raise_undead", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/ai/tactical/behaviors/ai_raise_undead", function(q) 
 {
-	obj.m.PossibleSkills.push("actives.legend_raise_undead");
+	q.m.PossibleSkills.push("actives.legend_raise_undead");
 });

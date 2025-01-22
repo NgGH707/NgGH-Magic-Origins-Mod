@@ -11,7 +11,6 @@
 ::include("mod_nggh/config/hexe_origin.nut")
 ::include("mod_nggh/config/simp_levels.nut")
 ::include("mod_nggh/config/charmed_utilities.nut")
-::include("mod_nggh/config/charmed_units.nut")
 ::include("mod_nggh/config/excluded_traits.nut")
 ::include("mod_nggh/config/attributes_levelup.nut")
 ::include("mod_nggh/config/lucky_rune_loot_table.nut")

@@ -1,16 +1,11 @@
-::mods_hookExactClass("entity/tactical/legend_white_warwolf", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/legend_white_warwolf", function ( q )
 {
-	local ws_onDeath = obj.onDeath;
-	obj.onDeath = function( _killer, _skill, _tile, _fatalityType )
+	q.onDeath = @(__original) function( _killer, _skill, _tile, _fatalityType )
 	{
-		if (this.m.Item != null && !this.m.Item.isNull())
-		{
-			if (this.m.Item.getContainer() == null || this.m.Item.getContainer().isNull())
-			{
-				this.m.Item = null;
-			}
-		}
+		if (!::MSU.isNull(m.Item) && ::MSU.isNull(m.Item.getContainer()))
+			m.Item = null;
 
-		ws_onDeath(_killer, _skill, _tile, _fatalityType);
+		__original(_killer, _skill, _tile, _fatalityType);
 	}
+
 });

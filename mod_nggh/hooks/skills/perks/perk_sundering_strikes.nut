@@ -1,8 +1,7 @@
-::mods_hookExactClass("skills/perks/perk_sundering_strikes", function(o) {
-	local create = o.create;
-	o.create = function()
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/perks/perk_sundering_strikes", function(q) {
+	q.create = @(__original) function()
 	{
-		create();
-		this.m.Order = ::Const.SkillOrder.Last;
+		__original();
+		m.Order = ::Const.SkillOrder.Last;
 	}
 })

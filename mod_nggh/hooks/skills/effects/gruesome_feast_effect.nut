@@ -1,49 +1,58 @@
-::mods_hookExactClass("skills/effects/gruesome_feast_effect", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/effects/gruesome_feast_effect", function(q) 
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.m.IsPlayer <- false;
+
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.First + 1;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = false;
-		this.m.IsSerialized = true;
+		__original();
+		m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.First + 1;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = false;
+		m.IsSerialized = true;
 	}
-	obj.getDescription <- function()
+
+	q.onAdded <- function()
 	{
-		return "This character ate a fine meal and it helps this character grows up so fast.";
-	};
-	obj.getTooltip <- function()
+		m.IsPlayer = ::MSU.isKindOf(getContainer().getActor(), "player");
+	}
+
+	q.getDescription <- function()
+	{
+		return "This character ate a fine meal of a live prey.";
+	}
+
+	q.getTooltip <- function()
 	{
 		local ret = [
 			{
 				id = 1,
 				type = "title",
-				text = this.getName()
+				text = getName()
 			},
 			{
 				id = 2,
 				type = "description",
-				text = this.getDescription()
+				text = getDescription()
 			}
 		];
 
-		switch(this.getContainer().getActor().getSize())
+		switch(getContainer().getActor().getSize())
 		{
 		case 2:
-			ret.extend(this.getMidSizeTooltips());
+			ret.extend(getMidSizeTooltips());
 			break;
 
 		case 3:
-			ret.extend(this.getHugeSizeTooltips());
+			ret.extend(getHugeSizeTooltips());
 			break;
 		}
 		
 		return ret;
-	};
-	obj.getMidSizeTooltips <- function()
+	}
+
+	q.getMidSizeTooltips <- function()
 	{
 		return [
 			{
@@ -89,8 +98,9 @@
 				text = "[color=" + ::Const.UI.Color.NegativeValue + "]-15[/color] Initiative"
 			},
 		];
-	};
-	obj.getHugeSizeTooltips <- function()
+	}
+
+	q.getHugeSizeTooltips <- function()
 	{
 		return [
 			{
@@ -136,16 +146,14 @@
 				text = "[color=" + ::Const.UI.Color.NegativeValue + "]-25[/color] Initiative"
 			},
 		];
-	};
-	obj.onUpdate = function( _properties )
-	{
-		local size = this.getContainer().getActor().getSize();
-		local isPlayer = this.getContainer().getActor().isPlayerControlled();
-		local mainhand = this.getContainer().getActor().getMainhandItem();
-		this.m.IsHidden = size <= 1;
+	}
 
-		if (size == 2)
-		{
+	q.onUpdate = function( _properties )
+	{
+		local size = getContainer().getActor().getSize();
+		local mainhand = getContainer().getActor().getMainhandItem();
+
+		if (size == 2) {
 			_properties.Hitpoints += 120;
 			_properties.MeleeSkill += 10;
 			_properties.MeleeDefense += 6;
@@ -154,19 +162,16 @@
 			_properties.Initiative -= 10;
 			_properties.DailyFood += 1;
 
-			if (mainhand == null || mainhand.isItemType(::Const.Items.ItemType.TwoHanded) && !mainhand.isItemType(::Const.Items.ItemType.RangedWeapon))
-			{
+			if (mainhand == null || mainhand.isItemType(::Const.Items.ItemType.TwoHanded) && !mainhand.isItemType(::Const.Items.ItemType.RangedWeapon)) {
 				_properties.DamageRegularMin += 20;
 				_properties.DamageRegularMax += 25;
 			}
-			else
-			{
+			else {
 				_properties.DamageRegularMin += 10;
 				_properties.DamageRegularMax += 12;
 			}
 		}
-		else if (size == 3)
-		{
+		else if (size == 3) {
 			_properties.Hitpoints += 300;
 			_properties.MeleeSkill += 20;
 			_properties.MeleeDefense += 12;
@@ -175,22 +180,20 @@
 			_properties.Initiative -= 25;
 			_properties.DailyFood += 3;
 
-			if (mainhand == null || mainhand.isItemType(::Const.Items.ItemType.TwoHanded) && !mainhand.isItemType(::Const.Items.ItemType.RangedWeapon))
-			{
+			if (mainhand == null || mainhand.isItemType(::Const.Items.ItemType.TwoHanded) && !mainhand.isItemType(::Const.Items.ItemType.RangedWeapon)) {
 				_properties.DamageRegularMin += 40;
 				_properties.DamageRegularMax += 60;
 			}
-			else
-			{
+			else {
 				_properties.DamageRegularMin += 20;
 				_properties.DamageRegularMax += 30;
 			}
 			
-			if (!isPlayer)
-			{
-				this.getContainer().getActor().getAIAgent().getProperties().BehaviorMult[::Const.AI.Behavior.ID.Retreat] = 0.0;
-			}
+			if (!m.IsPlayer)
+				getContainer().getActor().getAIAgent().getProperties().BehaviorMult[::Const.AI.Behavior.ID.Retreat] = 0.0;
 		}
+
+		m.IsHidden = size <= 1;
 	}
 	
 });

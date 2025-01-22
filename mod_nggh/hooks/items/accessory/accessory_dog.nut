@@ -1,17 +1,12 @@
-::mods_hookExactClass("items/accessory/accessory_dog", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/items/accessory/accessory_dog", function(q) 
 {
-	local ws_onActorDied = obj.onActorDied;
-	obj.onActorDied = function( _onTile )
+	q.onActorDied = @(__original) function( _onTile )
 	{
-		local hasUnleash = this.isUnleashed();
-		local faction = this.getContainer().getActor().getFaction();
-		local notPlayer = faction != ::Const.Faction.Player;
+		local faction = getContainer().getActor().getFaction();
 
-		ws_onActorDied(_onTile);
+		__original(_onTile);
 
-		if (!hasUnleash && notPlayer && this.m.Entity != null)
-		{
-			this.m.Entity.setFaction(faction);
-		}
+		if (!isUnleashed() && faction != ::Const.Faction.Player && ::MSU.isNull(m.Entity != null))
+			m.Entity.setFaction(faction);
 	}
 });

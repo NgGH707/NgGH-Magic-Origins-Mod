@@ -1,26 +1,28 @@
-::mods_hookExactClass("skills/actives/root_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/root_skill", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "Unleash roots from the ground to ensnare your foes. Fatigue and AP costs reduced while raining and with staff mastery. ";
-		this.m.Icon = "skills/active_70.png";
-		this.m.IconDisabled = "skills/active_70_sw.png";
-	};
-	obj.onAdded <- function()
+		__original();
+		m.Description = "Unleash roots from the ground to ensnare your foes. Fatigue and AP costs reduced while raining and with staff mastery. ";
+		m.Icon = "skills/active_70.png";
+		m.IconDisabled = "skills/active_70_sw.png";
+	}
+
+	q.onAdded <- function()
 	{
-		this.m.FatigueCost = this.getContainer().getActor().isPlayerControlled() ? 20 : this.m.FatigueCost;
-	};
-	obj.getTooltip <- function()
+		if (::MSU.isKindOf(getContainer().getActor(), "player"))
+			setBaseValue("FatigueCost", 20);
+	}
+
+	q.getTooltip <- function()
 	{
-		local ret = this.skill.getDefaultUtilityTooltip();
+		local ret = getDefaultUtilityTooltip();
 		ret.extend([
 			{
 				id = 7,
 				type = "text",
 				icon = "ui/icons/vision.png",
-				text = "Has a range of [color=" + ::Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+				text = "Has a range of [color=" + ::Const.UI.Color.PositiveValue + "]" + getMaxRange() + "[/color] tiles"
 			},
 			{
 				id = 8,
@@ -36,21 +38,20 @@
 			}
 		]);
 		return ret;
-	};
-	obj.onTargetSelected <- function( _targetTile )
+	}
+
+	q.onTargetSelected <- function( _targetTile )
 	{
 		::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);
 		
-		for( local i = 0; i < 6; i = ++i )
+		for( local i = 0; i < 6; ++i )
 		{
 			if (!_targetTile.hasNextTile(i))
-			{
-			}
-			else
-			{
-				local tile = _targetTile.getNextTile(i);
-				::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, tile, tile.Pos.X, tile.Pos.Y);	
-			}
+				continue;
+
+			local tile = _targetTile.getNextTile(i);
+			::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, tile, tile.Pos.X, tile.Pos.Y);
 		}
-	};
+	}
+	
 });

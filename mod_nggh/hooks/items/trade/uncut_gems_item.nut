@@ -1,10 +1,9 @@
-::mods_hookExactClass("items/trade/uncut_gems_item", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/items/trade/uncut_gems_item", function(q) 
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.ItemType = this.m.ItemType | ::Const.Items.ItemType.Crafting;
+		__original();
+		m.ItemType = m.ItemType | ::Const.Items.ItemType.Crafting;
 	}
 
 });

@@ -1,163 +1,165 @@
-::mods_hookExactClass("entity/tactical/actor", function(obj)
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/actor", function(q)
 {
 	//obj.m.MagicPoints <- 0;
 	//obj.m.PreviewMagicPoints <- 0;
 	//obj.m.IsAbleToUseMagic <- false;
-	obj.m.PlannedPerks <- {};
+	q.m.PlannedPerks <- {};
 
 	//---------------------------------------
 	// extra stuff, not related to magic
-	obj.getPlannedPerks <- function()
+	q.getPlannedPerks <- function()
 	{
-		return this.m.PlannedPerks;
+		return m.PlannedPerks;
 	}
-	obj.isMounted <- function() 
+
+	q.isMounted <- function() 
 	{
 		return false;
 	}
-	obj.getBackground <- function() 
+
+	q.getBackground <- function() 
 	{
 		return null;
 	}
-	obj.getPerkPoints <- function() 
+
+	q.getPerkPoints <- function() 
 	{
 		return 0;
 	}
-	obj.getPerkPointsSpent <- function() 
+
+	q.getPerkPointsSpent <- function() 
 	{
 		return 0;
 	}
-	obj.getDaysWithCompany <- function() 
+
+	q.getDaysWithCompany <- function() 
 	{
 		return 0;
 	}
-	obj.getXP <- function()
+
+	q.getXP <- function()
 	{
-		return this.m.XP;
+		return m.XP;
 	}
-	obj.getXPForNextLevel <- function() 
+
+	q.getXPForNextLevel <- function() 
 	{
 		return 999999;
 	}
-	obj.getDailyCost <- function() 
+
+	q.getDailyCost <- function() 
 	{
 		return 0;
 	}
-	obj.getDaysWounded <- function() 
+
+	q.getDaysWounded <- function() 
 	{
 		return 0;
 	}
-	obj.getMoodState <- function() 
+
+	q.getMoodState <- function() 
 	{
 		return 3;
 	}
-	obj.getLevelUps <- function() 
+
+	q.getLevelUps <- function() 
 	{
 		return 0;
 	}
-	obj.isInReserves <- function() 
+
+	q.isInReserves <- function() 
 	{
 		return false;
 	}
-	obj.isStabled <- function() 
-	{
-		return false;
-	}
-	obj.getRiderID <- function() 
-	{
-		return "";
-	}
-	obj.getTalents <- function() 
+
+	q.getTalents <- function() 
 	{
 		return array(::Const.Attributes.COUNT, 0);
 	}
-	obj.isLeveled <- function() 
+
+	q.isLeveled <- function() 
 	{
 		return false;
 	}
-	obj.isGuest <- function() 
+
+	q.isGuest <- function() 
 	{
 		return true;
 	}
-	obj.getPlaceInFormation <- function() 
+
+	q.getPlaceInFormation <- function() 
 	{
 		return 21;
 	}
-	obj.getPercentOnKillOtherActorModifier <- function() 
-	{
-		return 1.0;
-	}
-	obj.getFlatOnKillOtherActorModifier <- function() 
-	{
-		return 1.0;
-	}
 
 	// for the modded item_container
-	obj.isAbleToEquip <- function(_item)
+	q.isAbleToEquip <- function( _item )
 	{
 		return true;
 	}
-	obj.isAbleToUnequip <- function(_item)
+
+	q.isAbleToUnequip <- function( _item )
 	{
 		return true;
 	}
-	obj.onAfterEquip <- function( _item )
-	{
-	}
-	obj.onAfterUnequip <- function( _item )
-	{
-	}
-	obj.onBeforeCombatStarted <- function()
+
+	q.onAfterEquip <- function( _item )
 	{
 	}
 
-	obj.getRosterTooltip <- function() 
+	q.onAfterUnequip <- function( _item )
+	{
+	}
+
+	q.onBeforeCombatStarted <- function()
+	{
+	}
+
+	q.getRosterTooltip <- function() 
 	{
 		return  [{
 			id = 1,
 			type = "title",
-			text = this.getName()
+			text = getName()
 		}];
 	}
-	obj.isPlayerControlled = function()
+
+	q.isPlayerControlled = @() function()
 	{
-		local f = this.getFaction();
-		return this.m.IsControlledByPlayer && (f == ::Const.Faction.Player || f == ::Const.Faction.PlayerAnimals);
+		local f = getFaction();
+		return m.IsControlledByPlayer && (f == ::Const.Faction.Player || f == ::Const.Faction.PlayerAnimals);
 	}
-	local ws_retreat = obj.retreat;
-	obj.retreat = function ()
+
+	q.retreat = @(__original) function()
 	{
-		local s = this.m.Skills.getSkillByID("effects.charmed_pet");
+		local s = getSkills().getSkillByID("effects.charmed_pet");
 
 		if (s != null)
-		{
 			s.onAddPetToLoot();
-		}
 
-		ws_retreat();
-	};
-	local ws_onFactionChanged = obj.onFactionChanged;
-	obj.onFactionChanged = function ()
+		__original();
+	}
+
+	q.onFactionChanged = @(__original) function()
 	{
-		ws_onFactionChanged();
+		__original();
 
-		local isGhoul = this.getType() == ::Const.EntityType.Ghoul || this.getType() == ::Const.EntityType.LegendSkinGhoul;
+		local isGhoul = getType() == ::Const.EntityType.Ghoul || getType() == ::Const.EntityType.LegendSkinGhoul;
 
-		if (isGhoul || (this.getType() != ::Const.EntityType.Player && !this.getFlags().has("human") && !this.getFlags().has("undead")))
+		if (isGhoul || (getType() != ::Const.EntityType.Player && !getFlags().has("human") && !getFlags().has("undead")))
 		{
-			local flip = this.isAlliedWithPlayer();
+			local flip = isAlliedWithPlayer();
 
 			foreach (id in ::Const.Sprites_onFactionChanged)
 			{
-				if (!this.hasSprite(id))
-				{
+				if (!hasSprite(id))
 					continue;
-				}
 
-				this.getSprite(id).setHorizontalFlipping(flip);
+				getSprite(id).setHorizontalFlipping(flip);
 			}
 		}
-	};
+	}
+
 	/*
 	local ws_onAttacked = obj.onAttacked
 	obj.onAttacked = function( _attacker )

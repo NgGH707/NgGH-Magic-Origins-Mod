@@ -1,16 +1,15 @@
 // alternative sprite so it doesn't look weird when your goblin player is mounted
-::mods_hookExactClass("items/weapons/greenskins/goblin_spiked_balls", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/items/weapons/greenskins/goblin_spiked_balls", function(q) 
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.ArmamentIcon = "icon_goblin_balls";
+		__original();
+		m.ArmamentIcon = "icon_goblin_balls";
 	}
 
-	obj.getTooltip <- function()
+	q.getTooltip <- function()
 	{
-		local result = this.weapon.getTooltip();
+		local result = weapon.getTooltip();
 
 		result.push({
 			id = 4,
@@ -21,4 +20,5 @@
 
 		return result;
 	}
+	
 });

@@ -1,56 +1,46 @@
-::mods_hookExactClass("skills/actives/wolf_bite", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/wolf_bite", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Name = "Wolf Bite";
-		this.m.Description = "Ripping off your enemy face with your powerful wolf jaw. Do poorly against armor.";
-		this.m.KilledString = "Mangled";
-		this.m.Icon = "skills/active_71.png";
-		this.m.IconDisabled = "skills/active_71_sw.png";
-	};
-	obj.isIgnoredAsAOO <- function()
-	{
-		if (!this.m.IsRestrained)
-			return this.m.IsIgnoredAsAOO;
+		__original();
+		m.Name = "Wolf Bite";
+		m.Description = "Ripping off your enemy face with your powerful wolf jaw. Do poorly against armor.";
+		m.KilledString = "Mangled";
+		m.Icon = "skills/active_71.png";
+		m.IconDisabled = "skills/active_71_sw.png";
+	}
 
-		return !this.getContainer().getActor().isArmedWithRangedWeapon();
-	};
-	obj.canDoubleGrip <- function()
+	q.isIgnoredAsAOO <- function()
 	{
-		return this.getContainer().getActor().isDoubleGrippingWeapon();
-	};
-	obj.getTooltip <- function()
+		return !m.IsRestrained ? m.IsIgnoredAsAOO : !getContainer().getActor().isArmedWithRangedWeapon();
+	}
+	
+	q.getTooltip <- function()
 	{
-		return this.getDefaultTooltip();
-	};
-	obj.onAfterUpdate <- function( _properties )
+		return getDefaultTooltip();
+	}
+
+	q.onAfterUpdate <- function( _properties )
 	{
-		this.m.FatigueCostMult = _properties.IsSpecializedInSwords ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
-	};
-	obj.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
+		m.FatigueCostMult = _properties.IsSpecializedInSwords ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
+	}
+
+	q.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
 	{
 		if (_skill == this)
 		{
-			local items = this.getContainer().getActor().getItems();
-			local mhand = items.getItemAtSlot(::Const.ItemSlot.Mainhand);
-
-			if (mhand != null)
-			{
-				_properties.DamageRegularMin -= mhand.m.RegularDamage;
-				_properties.DamageRegularMax -= mhand.m.RegularDamageMax;
-				_properties.DamageArmorMult /= mhand.m.ArmorDamageMult;
-				_properties.DamageDirectAdd -= mhand.m.DirectDamageAdd;
-			}
-
+			removeMainhandBonuses(_properties);
 			_properties.DamageRegularMin += 20;
 			_properties.DamageRegularMax += 40;
 			_properties.DamageArmorMult *= 0.4;
 			
-			if (this.canDoubleGrip())
+			if (getContainer().getActor().isDoubleGrippingWeapon())
 				_properties.DamageTotalMult /= 1.25;
 		}
-	};
-	obj.onUpdate = function( _properties ) {};
+	}
+
+	q.onUpdate = @() function( _properties ) 
+	{
+	}
+
 });

@@ -1,80 +1,72 @@
-::mods_hookExactClass("entity/tactical/enemies/hexe", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/hexe", function ( q )
 {
-	obj.getNachoAppearance <- function()
+	q.getNachoAppearance <- function()
 	{
 		if (!::World.Flags.get("IsLuftAdventure"))
 			return null;
 
-		local r = ::Math.rand(1, 4);
+		local ret = [], r = ::Math.rand(1, 4);
 		local noDress = ::Math.rand(1, 2) == 1;
-		local ret = [];
 		ret.push(r == 1 ? "bust_ghoulskin_head_01" : "bust_ghoulskin_0" + r + "_head_0" + ::Math.rand(1, 3));
 		ret.push((noDress ? "bust_boobas_ghoul_body_0" : "bust_boobas_ghoul_with_dress_0") + r);
 		return ret;
 	}
 
-	obj.setCharming = function( _f )
+	q.setCharming = function( _f )
 	{
-		if (_f == this.m.IsCharming)
+		if (_f == m.IsCharming)
 			return;
 
-		this.m.IsCharming = _f;
+		m.IsCharming = _f;
 		local t = 300;
 
-		if (this.m.IsCharming)
-		{
-			local a = this.getNachoAppearance();
-			local sprite;
+		if (m.IsCharming) {
+			local sprite, a = getNachoAppearance();
 
-			if (a != null)
-			{
-				sprite = this.getSprite("charm_body");
+			if (a != null) {
+				sprite = getSprite("charm_body");
 				sprite.setBrush(a[1]);
 				sprite.Visible = true;
 				sprite.fadeIn(t);
-				sprite = this.getSprite("charm_head");
+				sprite = getSprite("charm_head");
 				sprite.setBrush(a[0]);
 				sprite.Visible = true;
 				sprite.fadeIn(t);
-				sprite = this.getSprite("charm_armor");
+				sprite = getSprite("charm_armor");
 				sprite.resetBrush();
-				sprite = this.getSprite("charm_hair");
+				sprite = getSprite("charm_hair");
 				sprite.resetBrush();
 			}
-			else 
-			{
-				sprite = this.getSprite("charm_body");
+			else {
+				sprite = getSprite("charm_body");
 				sprite.setBrush("bust_hexen_charmed_body_01");
 				sprite.Visible = true;
 				sprite.fadeIn(t);
-				sprite = this.getSprite("charm_armor");
+				sprite = getSprite("charm_armor");
 				sprite.setBrush("bust_hexen_charmed_dress_0" + ::Math.rand(1, 3));
 				sprite.Visible = true;
 				sprite.fadeIn(t);
-				sprite = this.getSprite("charm_head");
+				sprite = getSprite("charm_head");
 				sprite.setBrush("bust_hexen_charmed_head_0" + ::Math.rand(1, 2));
 				sprite.Visible = true;
 				sprite.fadeIn(t);
-				sprite = this.getSprite("charm_hair");
+				sprite = getSprite("charm_hair");
 				sprite.setBrush("bust_hexen_charmed_hair_0" + ::Math.rand(1, 5));
 				sprite.Visible = true;
 				sprite.fadeIn(t);
 			}
 
-			sprite = this.getSprite("body");
+			sprite = getSprite("body");
 			sprite.fadeOutAndHide(t);
-			sprite = this.getSprite("head");
+			sprite = getSprite("head");
 			sprite.fadeOutAndHide(t);
-			sprite = this.getSprite("hair");
+			sprite = getSprite("hair");
 			sprite.fadeOutAndHide(t);
-			sprite = this.getSprite("injury");
+			sprite = getSprite("injury");
 			sprite.fadeOutAndHide(t);
-			::Time.scheduleEvent(::TimeUnit.Virtual, t + 100, function ( _e )
-			{
+			::Time.scheduleEvent(::TimeUnit.Virtual, t + 100, function ( _e ) {
 				if (!_e.isAlive())
-				{
 					return;
-				}
 
 				local sprite;
 				sprite = _e.getSprite("body");
@@ -88,35 +80,30 @@
 				_e.setDirty(true);
 			}, this);
 		}
-		else
-		{
-			local sprite;
-			sprite = this.getSprite("charm_body");
+		else {
+			local sprite = getSprite("charm_body");
 			sprite.fadeOutAndHide(t);
-			sprite = this.getSprite("charm_armor");
+			sprite = getSprite("charm_armor");
 			sprite.fadeOutAndHide(t);
-			sprite = this.getSprite("charm_head");
+			sprite = getSprite("charm_head");
 			sprite.fadeOutAndHide(t);
-			sprite = this.getSprite("charm_hair");
+			sprite = getSprite("charm_hair");
 			sprite.fadeOutAndHide(t);
-			sprite = this.getSprite("body");
+			sprite = getSprite("body");
 			sprite.Visible = true;
 			sprite.fadeIn(t);
-			sprite = this.getSprite("head");
+			sprite = getSprite("head");
 			sprite.Visible = true;
 			sprite.fadeIn(t);
-			sprite = this.getSprite("hair");
+			sprite = getSprite("hair");
 			sprite.Visible = true;
 			sprite.fadeIn(t);
-			sprite = this.getSprite("injury");
+			sprite = getSprite("injury");
 			sprite.fadeIn(t);
-			this.onUpdateInjuryLayer();
-			::Time.scheduleEvent(::TimeUnit.Virtual, t + 100, function ( _e )
-			{
+			onUpdateInjuryLayer();
+			::Time.scheduleEvent(::TimeUnit.Virtual, t + 100, function ( _e ) {
 				if (!_e.isAlive())
-				{
 					return;
-				}
 
 				local sprite;
 				sprite = _e.getSprite("charm_body");
@@ -176,14 +163,15 @@
 				}
 			]
 		};
-		::Tactical.spawnParticleEffect(false, effect.Brushes, this.getTile(), effect.Delay, effect.Quantity, effect.LifeTimeQuantity, effect.SpawnRate, effect.Stages, ::createVec(0, 40));
+		::Tactical.spawnParticleEffect(false, effect.Brushes, getTile(), effect.Delay, effect.Quantity, effect.LifeTimeQuantity, effect.SpawnRate, effect.Stages, ::createVec(0, 40));
 	}
-	obj.makeMiniboss <- function()
+
+	q.makeMiniboss <- function()
 	{
-		if (!this.actor.makeMiniboss())
+		if (!actor.makeMiniboss())
 			return false;
 
-		local b = this.m.BaseProperties;
+		local b = m.BaseProperties;
 
 		if (b.getMeleeSkill() < 40)
 			b.MeleeSkill = 40;
@@ -191,20 +179,20 @@
 		if (b.getRangedSkill() < 65)
 			b.RangedSkill = 65;
 
-		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Mainhand));
-		this.m.Items.equip(::new("scripts/items/weapons/named/nggh_mod_named_staff"));
-		this.m.Items.equip(::new("scripts/items/accessory/wolf_item"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
-		this.m.Skills.add(::new("scripts/skills/actives/legend_magic_missile"));
+		m.Items.unequip(m.Items.getItemAtSlot(::Const.ItemSlot.Mainhand));
+		m.Items.equip(::new("scripts/items/weapons/named/nggh_mod_named_staff"));
+		m.Items.equip(::new("scripts/items/accessory/wolf_item"));
+		getSkills().add(::new("scripts/skills/perks/perk_nimble"));
+		getSkills().add(::new("scripts/skills/actives/legend_magic_missile_skill"));
 
 		local rune = ::new("scripts/skills/rune_sigils/nggh_mod_RSH_shielding");
 		rune.m.IsForceEnabled = true;
 		rune.m.HitpointsThreshold = 100;
-		this.m.Skills.add(rune);
+		getSkills().add(rune);
 		rune.m.Hitpoints = 100;
 		rune.m.HitpointsMax = 150;
 
-		local AI = this.getAIAgent();
+		local AI = getAIAgent();
 		AI.addBehavior(::new("scripts/ai/tactical/behaviors/ai_attack_bow"));
 		AI.addBehavior(::new("scripts/ai/tactical/behaviors/ai_attack_throw_net"));
 		AI.addBehavior(::new("scripts/ai/tactical/behaviors/ai_miasma"));
@@ -213,8 +201,9 @@
 		local lightning = ::new("scripts/skills/actives/lightning_storm_skill");
 		lightning.m.ActionPointCost = 1;
 		lightning.m.Cooldown = 0;
-		this.m.Skills.add(lightning);
+		getSkills().add(lightning);
 		AI.addBehavior(::new("scripts/ai/tactical/behaviors/ai_lightning_storm"));
 		return true;
-	};
+	}
+	
 });

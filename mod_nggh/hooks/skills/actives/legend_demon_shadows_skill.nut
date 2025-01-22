@@ -1,78 +1,78 @@
-::mods_hookExactClass("skills/actives/legend_demon_shadows_skill", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/legend_demon_shadows_skill", function(q) 
 {
-	obj.m.Tiles <- [];
+	q.m.Tiles <- [];
 
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "Summon the hellfire to bring out the agony pain from your foe, fueling the juicy nightmare to the inferno.";
-		this.m.Icon = "skills/active_alp_hellfire.png";
-		this.m.IconDisabled = "skills/active_alp_hellfire_sw.png";
-		this.m.Overlay = "active_alp_hellfire";
-		this.m.Order = ::Const.SkillOrder.UtilityTargeted - 1;
-		this.m.IsAttack = true;
-		this.m.IsRanged = true;
-		this.m.InjuriesOnBody = ::Const.Injury.BurningBody;
-		this.m.InjuriesOnHead = ::Const.Injury.BurningHead;
-		this.m.DirectDamageMult = 0.35;
-		this.m.FatigueCost = 15;
-	};
-	obj.onAdded <- function()
+		__original();
+		m.Description = "Summon hellfire to bring out the agony from your foe, using the juicy nightmarish cry to fuel the inferno.";
+		m.Icon = "skills/active_alp_hellfire.png";
+		m.IconDisabled = "skills/active_alp_hellfire_sw.png";
+		m.Overlay = "active_alp_hellfire";
+		m.IsSerialized = true;
+		m.Order = ::Const.SkillOrder.UtilityTargeted - 1;
+		m.IsAttack = true;
+		m.IsRanged = true;
+		m.InjuriesOnBody = ::Const.Injury.BurningBody;
+		m.InjuriesOnHead = ::Const.Injury.BurningHead;
+		m.DirectDamageMult = 0.35;
+		m.FatigueCost = 15;
+	}
+
+	q.onAdded <- function()
 	{
-		if (this.getContainer().getActor().isPlayerControlled())
-		{
-			this.m.MaxRange = 8;
-			this.m.IsVisibleTileNeeded = true;
+		if (::MSU.isKindOf(getContainer().getActor(), "player")) {
+			setBaseValue("MaxRange", 8);
+			setBaseValue("IsVisibleTileNeeded", true);
+			m.IsVisibleTileNeeded = true;
 		}
-	};
-	obj.hasTile <- function( _id )
+	}
+
+	q.hasTile <- function( _id )
 	{
-		foreach (i, t in this.m.Tiles) 
+		foreach (i, t in m.Tiles) 
 		{
-		    if (t.ID == _id)
-		    {
-		    	return true;
-		    }
+		    if (t.ID == _id) return true;
 		}
 
 		return false;
-	};
-	obj.updateTiles <- function()
+	}
+
+	q.updateTiles <- function()
 	{
 		local new = [];
 
-		foreach ( t in this.m.Tiles )
+		foreach ( t in m.Tiles )
 		{
 			if (t.Properties.Effect != null && t.Properties.Effect.Type == "alp_hellfire")
-			{
 				new.push(t);
-			}
 		}
 
-		this.m.Tiles = new;
-	};
-	obj.removeAllTiles <- function()
+		m.Tiles = new;
+	}
+
+	q.removeAllTiles <- function()
 	{
-		foreach ( t in this.m.Tiles )
+		foreach ( t in m.Tiles )
 		{
 			if (t.Properties.Effect != null && t.Properties.Effect.Type == "alp_hellfire")
-			{
 				::Tactical.Entities.removeTileEffect(t);
-			}
 		}
-	};
-	obj.onUpdate <- function( _properties )
+	}
+
+	q.onUpdate <- function( _properties )
 	{
 		_properties.InitiativeForTurnOrderAdditional += 999;
-	};
-	obj.onAfterUpdate <- function( _properties )
+	}
+
+	q.onAfterUpdate <- function( _properties )
 	{
-		this.m.FatigueCostMult = this.getContainer().hasSkill("perk.control_flame") ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
-	};
-	obj.getTooltip <- function()
+		m.FatigueCostMult = getContainer().hasSkill("perk.control_flame") ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
+	}
+
+	q.getTooltip <- function()
 	{
-		local ret = this.getDefaultTooltip();
+		local ret = getDefaultTooltip();
 		ret.push({
 			id = 10,
 			type = "text",
@@ -80,48 +80,42 @@
 			text = "Brings hellfire to the earth"
 		});
 		return ret;
-	};
-	obj.onTurnStart <- function()
+	}
+
+	q.onTurnStart <- function()
 	{
-		this.updateTiles();
-	};
-	obj.onResumeTurn <- function()
+		updateTiles();
+	}
+
+	q.onResumeTurn <- function()
 	{
-		this.updateTiles();
-	};
-	obj.onDeath <- function( _fatalityType )
+		updateTiles();
+	}
+
+	q.onDeath <- function( _fatalityType )
 	{
-		this.removeAllTiles();
-	};
-	obj.onUse = function( _user, _targetTile )
+		removeAllTiles();
+	}
+
+	q.onUse = function( _user, _targetTile )
 	{
-		local targets = [];
-		local self = this;
-		local applyFire = self.onApplyFirefield;
-		local specialized_1 = this.getContainer().hasSkill("perk.hellish_flame");
-		local specialized_2 = this.getContainer().hasSkill("perk.control_flame");
-		local specialized_3 = this.getContainer().hasSkill("perk.fiece_flame");
+		local targets = [], self = this;
+		local specialized_1 = getContainer().hasSkill("perk.hellish_flame");
+		local specialized_2 = getContainer().hasSkill("perk.control_flame");
+		local specialized_3 = getContainer().hasSkill("perk.fiece_flame");
 		local time = specialized_3 ? 2 : 4;
+		targets.extend(::MSU.Tile.getNeighbors(_targetTile));
 		targets.push(_targetTile);
 
 		for( local i = 0; i != 6; ++i )
 		{
 			if (!_targetTile.hasNextTile(i))
-			{
-			}
-			else
-			{
-				local tile = _targetTile.getNextTile(i);
-				targets.push(tile);
-			}
+				continue;
+
+				targets.push(_targetTile.getNextTile(i));
 		}
 
-		local custom = {
-			Specialized_1 = specialized_1,
-			Specialized_2 = specialized_2,
-			Specialized_3 = specialized_3,
-			UserID = _user.getID(),
-		};
+		local custom = ;
 		local p = {
 			Type = "alp_hellfire",
 			Tooltip = "The inferno of nightmare, burns everything dare to go near it. Created by " + _user.getName(),
@@ -132,8 +126,13 @@
 			IsPositive = false,
 			Timeout = ::Time.getRound() + time,
 			IsByPlayer = _user.isPlayerControlled(),
-			Callback = applyFire,
-			Custom = custom,
+			Callback = self.onApplyFirefield,
+			Custom = {
+				Specialized_1 = specialized_1,
+				Specialized_2 = specialized_2,
+				Specialized_3 = specialized_3,
+				UserID = _user.getID(),
+			},
 			function Applicable( _a )
 			{
 				return _a;
@@ -142,17 +141,13 @@
 
 		foreach( tile in targets )
 		{
-			if (tile.Properties.Effect != null && tile.Properties.Effect.Type == "alp_hellfire")
-			{
+			if (tile.Properties.Effect != null && tile.Properties.Effect.Type == "alp_hellfire") {
 				tile.Properties.Effect = clone p;
 				tile.Properties.Effect.Timeout = ::Time.getRound() + (time * 0.5);
 			}
-			else
-			{
+			else {
 				if (tile.Properties.Effect != null)
-				{
 					::Tactical.Entities.removeTileEffect(tile);
-				}
 
 				tile.Properties.Effect = clone p;
 				local particles = [];
@@ -165,63 +160,45 @@
 				::Tactical.Entities.addTileEffect(tile, tile.Properties.Effect, particles);
 			}
 
-			if (!this.hasTile(tile.ID))
-			{
-				this.m.Tiles.push(tile);
-			}
+			if (!hasTile(tile.ID))
+				m.Tiles.push(tile);
 
 			if (specialized_1 && tile.IsOccupiedByActor)
-			{
-				this.onApplyFirefield(tile, tile.getEntity());
-			}
+				onApplyFirefield(tile, tile.getEntity());
 		}
 
 		return true;
-	};
-	obj.onApplyFirefield <- function( _tile, _entity )
+	}
+
+	q.onApplyFirefield <- function( _tile, _entity )
 	{
 		local data = _tile.Properties.Effect;
-		local custom = data.Custom;
-		local damage = ::Math.rand(15, 20);
-		local damageMult = 1.0;
-		local injuries = null;
+		local injuries, custom = data.Custom;
+		local damage = ::Math.rand(15, 20), damageMult = 1.0;
 		local attacker = ::Tactical.getEntityByID(custom.UserID);
 
-		if (attacker == null || !attacker.isAlive() || attacker.isDying())
-		{
+		if (::MSU.isNull(attacker) || !attacker.isAlive() || attacker.isDying())
 			attacker = null;
-		}
 
 		if (custom.Specialized_2 && _entity.getID() == custom.UserID)
-		{
 			return;
-		}
 
 		if (custom.Specialized_1)
-		{
 			damage += ::Math.rand(5, 12);
-		}
 
-		if (custom.Specialized_3)
-		{
+		if (custom.Specialized_3) {
 			damage += ::Math.rand(5, 20);
 			injuries = ::Const.Injury.Burning;
 		}
 
 		if (_entity.getCurrentProperties().IsImmuneToFire)
-		{
 			damageMult *= 0.33;
-		}
 
 		if (_entity.getSkills().hasSkill("items.firearms_resistance"))
-		{
-			damageMult *= 0.67;
-		}
+			damageMult *= 0.75;
 
 		if (_entity.getSkills().hasSkill("racial.serpent"))
-		{
-			damageMult *= 0.67;
-		}
+			damageMult *= 0.75;
 
 		if ([
 			::Const.EntityType.Schrat,
@@ -230,19 +207,15 @@
 			::Const.EntityType.LegendGreenwoodSchratSmall,
 		].find(_entity.getType()) != null || _entity.getFlags().has("isSmallSchrat") || _entity.getFlags().has("isSchrat"))
 		{
-			damageMult *= 2.0;
+			damageMult *= 2.5;
 		}
 
-		::Tactical.spawnIconEffect("fire_circle", _tile, ::Const.Tactical.Settings.SkillIconOffsetX, ::Const.Tactical.Settings.SkillIconOffsetY, ::Const.Tactical.Settings.SkillIconScale, ::Const.Tactical.Settings.SkillIconFadeInDuration, ::Const.Tactical.Settings.SkillIconStayDuration, ::Const.Tactical.Settings.SkillIconFadeOutDuration, ::Const.Tactical.Settings.SkillIconMovement);
-		local sounds = [
-			"sounds/combat/fire_01.wav",
-			"sounds/combat/fire_02.wav",
-			"sounds/combat/fire_03.wav",
-			"sounds/combat/fire_04.wav",
-			"sounds/combat/fire_05.wav",
-			"sounds/combat/fire_06.wav"
-		];
-		::Sound.play(::MSU.Array.rand(sounds), ::Const.Sound.Volume.Actor, _entity.getPos());
+		::Tactical.spawnIconEffect("status_effect_116", _tile, ::Const.Tactical.Settings.SkillIconOffsetX, ::Const.Tactical.Settings.SkillIconOffsetY, ::Const.Tactical.Settings.SkillIconScale, ::Const.Tactical.Settings.SkillIconFadeInDuration, ::Const.Tactical.Settings.SkillIconStayDuration, ::Const.Tactical.Settings.SkillIconFadeOutDuration, ::Const.Tactical.Settings.SkillIconMovement);
+		::Sound.play(::MSU.Array.rand([
+			"sounds/combat/dlc6/status_on_fire_01.wav",
+			"sounds/combat/dlc6/status_on_fire_02.wav",
+			"sounds/combat/dlc6/status_on_fire_03.wav"
+		]), ::Const.Sound.Volume.Actor, _entity.getPos());
 		local hitInfo = clone ::Const.Tactical.HitInfo;
 		hitInfo.DamageRegular = damage * damageMult;
 		hitInfo.DamageArmor = hitInfo.DamageRegular * 1.25;
@@ -251,56 +224,53 @@
 		hitInfo.BodyDamageMult = 1.0;
 		hitInfo.FatalityChanceMult = 0.0;
 		hitInfo.Injuries = injuries;
-		hitInfo.InjuryThresholdMult = 1.15;
 		hitInfo.IsPlayingArmorSound = false;
 		_entity.onDamageReceived(attacker, null, hitInfo);
-	};
-	obj.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
+	}
+
+	q.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
 	{
 		if (_skill == this)
 		{
-			local specialized_1 = this.getContainer().hasSkill("perk.hellish_flame");
-			local specialized_3 = this.getContainer().hasSkill("perk.fiece_flame");
 			_properties.DamageRegularMin = 15;
 			_properties.DamageRegularMax = 20;
 			_properties.DamageArmorMult = 1.25;
 			_properties.RangedDamageMult /= 0.9;
 
-			if (specialized_1)
-			{
+			if (getContainer().hasSkill("perk.hellish_flame")) {
 				_properties.DamageRegularMin += 5;
 				_properties.DamageRegularMax += 12;
 			}
 
-			if (specialized_3)
-			{
+			if (getContainer().hasSkill("perk.fiece_flame")) {
 				_properties.DamageRegularMin += 5;
 				_properties.DamageRegularMax += 20;
 			}
 		}
-	};
-	obj.onCombatStarted <- function()
+	}
+
+	q.onCombatStarted <- function()
 	{
-		this.m.Tiles = [];
-	};
-	obj.onCombatFinished <- function()
+		m.Tiles.clear();
+	}
+
+	q.onCombatFinished <- function()
 	{
-		this.m.Tiles = [];
-	};
-	obj.onTargetSelected <- function( _targetTile )
+		m.Tiles.clear();
+	}
+
+	q.onTargetSelected <- function( _targetTile )
 	{
 		::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);	
 
-		for( local i = 0; i < 6; i = ++i )
+		for( local i = 0; i < 6; ++i )
 		{
 			if (!_targetTile.hasNextTile(i))
-			{
-			}
-			else
-			{
-				local nextTile = _targetTile.getNextTile(i);
-				::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, nextTile, nextTile.Pos.X, nextTile.Pos.Y);	
-			}
+				continue;
+
+			local nextTile = _targetTile.getNextTile(i);
+			::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, nextTile, nextTile.Pos.X, nextTile.Pos.Y);	
 		}
-	};
+	}
+
 });

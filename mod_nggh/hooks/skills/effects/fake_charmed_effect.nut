@@ -1,27 +1,27 @@
-::mods_hookExactClass("skills/effects/fake_charmed_effect", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/effects/fake_charmed_effect", function(q) 
 {
-	obj.getName <- function()
+	q.getName <- function()
 	{
 		return "Simp";
 	}
 
-	obj.getDescription <- function()
+	q.getDescription <- function()
 	{
 		return "This character has been charmed by you. He no longer has any control over his actions and is a puppet that has no choice but to obey his e-girl overlord, your everyday simp no more no less.";
 	}
 
-	obj.getTooltip <- function()
+	q.getTooltip <- function()
 	{
 		return [
 			{
 				id = 1,
 				type = "title",
-				text = this.getName()
+				text = getName()
 			},
 			{
 				id = 2,
 				type = "description",
-				text = this.getDescription()
+				text = getDescription()
 			},
 			{
 				id = 10,

@@ -1,60 +1,53 @@
-::mods_hookExactClass("skills/actives/unstoppable_charge_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/unstoppable_charge_skill", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "Charge forward with unbeleivable speed and ram at enemy formation. Can cause knock back or stun. Can not be used in melee.";
-		this.m.Icon = "skills/active_110.png";
-		this.m.IconDisabled = "skills/active_110_sw.png";
-	};
-	obj.getTooltip = function()
+		__original();
+		m.Description = "Charge forward with unbeleivable speed and ram at enemy formation. Can cause knock back or stun. Can not be used in melee.";
+		m.Icon = "skills/active_110.png";
+		m.IconDisabled = "skills/active_110_sw.png";
+	}
+
+	q.getTooltip = function()
 	{
-		local ret = [
-			{
-				id = 1,
-				type = "title",
-				text = this.getName()
-			},
-			{
-				id = 2,
-				type = "description",
-				text = this.getDescription()
-			},
-			{
-				id = 3,
-				type = "text",
-				text = this.getCostString()
-			},
+		local ret = getDefaultUtilityTooltip();
+		ret.extend([
 			{
 				id = 6,
 				type = "text",
 				icon = "ui/icons/vision.png",
-				text = "Has a range of [color=" + ::Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+				text = "Has a range of [color=" + ::Const.UI.Color.PositiveValue + "]" + getMaxRange() + "[/color] tiles"
 			},
 			{
 				id = 7,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "May [color=" + ::Const.UI.Color.PositiveValue + "]Stun[/color] or [color=" + ::Const.UI.Color.PositiveValue + "]Knock Back[/color] to nearby foes"
+				text = "May inflict [color=" + ::Const.UI.Color.PositiveValue + "]Stun[/color] or cause [color=" + ::Const.UI.Color.PositiveValue + "]Knock Back[/color] to nearby foes"
 			}
-		];
+		]);
 		
-		if (::Tactical.isActive() && this.getContainer().getActor().isEngagedInMelee())
-		{
+		if (::Tactical.isActive() && getContainer().getActor().isEngagedInMelee())
 			ret.push({
 				id = 9,
 				type = "text",
 				icon = "ui/tooltips/warning.png",
-				text = "[color=" + ::Const.UI.Color.NegativeValue + "]Can not be used because this unhold is engaged in melee[/color]"
+				text = "[color=" + ::Const.UI.Color.NegativeValue + "]Can not be used because this character is engaged in melee[/color]"
 			});
-		}
+
+		if (m.IsSpent)
+			ret.push({
+				id = 9,
+				type = "text",
+				icon = "ui/tooltips/warning.png",
+				text = "[color=" + ::Const.UI.Color.NegativeValue + "]Can only be used once per turn[/color]"
+			});
 		
 		return ret;
-	};
-	obj.isUsable = function()
+	}
+
+	q.onCombatFinished = function() 
 	{
-		return !::Tactical.isActive() || this.skill.isUsable() && !this.getContainer().getActor().isEngagedInMelee();
-	};
-	obj.onTurnStart = function() {};
+		m.IsSpent = false;
+	}
+	
 });

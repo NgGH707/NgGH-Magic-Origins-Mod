@@ -1,24 +1,19 @@
-::mods_hookExactClass("skills/effects/charmed_effect", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/effects/charmed_effect", function(q) 
 {
+	q.m.IsSuicide <- false;
 	/*
 	obj.m.IsBodyguard <- false;
 	obj.m.IsTheLastEnemy <- false;
-	obj.m.IsSuicide <- false;
-
+	
 	obj.isTheLastEnemy <- function( _v )
 	{
 		this.m.IsTheLastEnemy = _v;
 	};
 	*/
-	obj.getName <- function()
+	q.getName <- function()
 	{
-		if (this.m.TurnsLeft == 0)
-		{
-			return this.m.Name;
-		}
-		
-		return this.m.Name + " (" + this.m.TurnsLeft + " turns left)";
-	};
+		return m.TurnsLeft == 0 ? m.Name : format("%s (%i %s left)", m.Name, m.TurnsLeft, m.TurnsLeft > 1 ? "turns" : "turn");
+	}
 
 	/*
 	local ws_onAdded = obj.onAdded;
@@ -81,9 +76,11 @@
 		}
 	};
 	*/
-	obj.onSuicide <- function()
+
+	q.onSuicide <- function()
 	{
-		this.m.IsSuicide = true;
-		actor.kill(null, null, ::Const.FatalityType.Suicide);
-	};
+		m.IsSuicide = true;
+		getContainer().getActor().kill(null, null, ::Const.FatalityType.Suicide);
+	}
+
 });

@@ -1,9 +1,8 @@
-::mods_hookNewObject("states/world/asset_manager", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/states/world/asset_manager", function ( q )
 {	
-	local ws_update = obj.update;
-	obj.update = function( _worldState )
+	q.update = @(__original) function( _worldState )
 	{
-		if (::World.getTime().Hours != this.m.LastHourUpdated)
+		if (::World.getTime().Hours != m.LastHourUpdated)
 		{
 			foreach( bro in ::World.getPlayerRoster().getAll() )
 			{
@@ -14,7 +13,7 @@
 
 				// certain characters can have better hp regeneration
 				if (bro.getHitpoints() < bro.getHitpointsMax() && bro.getFlags().has("bonus_regen") && bro.getBonusHealthRecoverMult() > 0.0)
-					bro.setHitpoints(::Math.minf(bro.getHitpointsMax(), bro.getHitpoints() + ::Math.ceil(::Const.World.Assets.HitpointsPerHour * bro.getBonusHealthRecoverMult() * ::Const.Difficulty.HealMult[::World.Assets.getEconomicDifficulty()] * this.m.HitpointsPerHourMult)));
+					bro.setHitpoints(::Math.minf(bro.getHitpointsMax(), bro.getHitpoints() + ::Math.ceil(::Const.World.Assets.HitpointsPerHour * bro.getBonusHealthRecoverMult() * ::Const.Difficulty.HealMult[::World.Assets.getEconomicDifficulty()] * m.HitpointsPerHourMult)));
 				
 				// for character with natural armor
 				if (bro.getFlags().has("regen_armor"))
@@ -22,14 +21,14 @@
 
 			}
 
-			if (::World.getTime().Hours % 4 == 0 && this.getOrigin().getID() == "scenario.hexe")
-				this.checkSuicide();
+			if (::World.getTime().Hours % 4 == 0 && getOrigin().getID() == "scenario.hexe")
+				checkSuicide();
 		}
 
-		ws_update(_worldState);
-	};
+		__original(_worldState);
+	}
 	
-	obj.checkSuicide <- function()
+	q.checkSuicide <- function()
 	{
 		if (!::World.Events.canFireEvent())
 			return;
@@ -55,29 +54,22 @@
 		{
 			local bro = ::MSU.Array.rand(deserters);
 
-			if (::World.getPlayerRoster().getSize() > 1)
-			{
-				local event = ::World.Events.getEvent("event.desertion");
-				event.setDeserter(bro);
-				::World.Events.fire("event.desertion", false);
-			}
-			else
-			{
+			if (::World.getPlayerRoster().getSize() <= 1) {
 				::World.State.showGameFinishScreen(false);
+			else {
+				::World.Events.getEvent("event.desertion").setDeserter(bro);
+				::World.Events.fire("event.desertion", false);
 			}
 		}
 		else if (candidates.len() != 0)
 		{
 			local bro = ::MSU.Array.rand(candidates);
 
-			if (::World.getPlayerRoster().getSize() > 1)
-			{
-				local event = ::World.Events.getEvent("event.suicide");
-				event.setSuicider(bro);
+			if (::World.getPlayerRoster().getSize() > 1) {
+				::World.Events.getEvent("event.suicide").setSuicider(bro);
 				::World.Events.fire("event.suicide", false);
 			}
-			else
-			{
+			else {
 				::World.State.showGameFinishScreen(false);
 			}
 		}

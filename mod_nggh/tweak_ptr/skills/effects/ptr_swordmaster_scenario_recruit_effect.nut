@@ -1,4 +1,4 @@
-::mods_hookExactClass("skills/effects/ptr_swordmaster_scenario_recruit_effect", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/effects/ptr_swordmaster_scenario_recruit_effect", function ( obj )
 {
 	local ws_evolve = obj.evolve;
 	obj.evolve = function()

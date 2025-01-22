@@ -1,35 +1,24 @@
-::mods_hookExactClass("skills/actives/crack_the_whip_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/crack_the_whip_skill", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "Whip the air, making an astonishing sound that reminding your beasts who is the boss here.";
-		this.m.Icon = "skills/active_162.png";
-		this.m.IconDisabled = "skills/active_162_sw.png";
-	};
-	obj.onAdded <- function()
+		__original();
+		m.Description = "Whip the air, making an astonishing sound that reminding your beasts who is the boss here.";
+		m.Icon = "skills/active_162.png";
+		m.IconDisabled = "skills/active_162_sw.png";
+	}
+
+	q.onAdded <- function()
 	{
-		this.m.FatigueCost = this.getContainer().getActor().isPlayerControlled() ? 15 : 10;
-	};
-	obj.getTooltip <- function()
+		if (::MSU.isKindOf(getContainer().getActor(), "player"))
+			setBaseValue("FatigueCost", 15);
+	}
+
+	q.getTooltip <- function()
 	{
-		local ret = [
-			{
-				id = 1,
-				type = "title",
-				text = this.getName()
-			},
-			{
-				id = 2,
-				type = "description",
-				text = this.getDescription()
-			},
-			{
-				id = 3,
-				type = "text",
-				text = this.getCostString()
-			},
+		local ret = getDefaultUtilityTooltip();
+
+		ret.extend([
 			{
 				id = 8,
 				type = "text",
@@ -40,64 +29,49 @@
 				id = 7,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Removes the Sleeping status effect of allies"
+				text = "Removes the Sleeping status effect of all allies"
 			}
-		];
+		]);
 		
-		if (this.m.IsUsed)
-		{
+		if (m.IsUsed)
 			ret.push({
 				id = 9,
 				type = "text",
 				icon = "ui/tooltips/warning.png",
 				text = "[color=" + ::Const.UI.Color.NegativeValue + "]Can only be used once per turn[/color]"
 			});
-		}
 
 		return ret;
-	};
-	obj.isUsable = function()
+	}
+
+	q.isUsable = @(__original) function()
 	{
-		if (this.m.IsUsed)
-			return false;
+		if (getContainer().getActor().isPlayerControlled())
+			return skill.isUsable() && !m.IsUsed && !getContainer().getActor().isEngagedInMelee();
 
-		if (!this.skill.isUsable() || this.getContainer().getActor().isEngagedInMelee())
-			return false;
-		
-		if (this.getContainer().getActor().isPlayerControlled())
-			return true;
+		return __original();
+	}
 
-		foreach( a in ::Tactical.Entities.getInstancesOfFaction(this.getContainer().getActor().getFaction()) )
-		{
-			if (a.getType() == ::Const.EntityType.BarbarianUnhold || a.getType() == ::Const.EntityType.BarbarianUnholdFrost)
-				return true;
-		}
-
-		return false;
-	};
-	obj.onUse = function( _user, _targetTile )
+	q.onUse = @(__original) function( _user, _targetTile )
 	{
+		local ret = __original(_user, _targetTile);
+
+		if (!_user.isPlayerControlled())
+			return ret;
+
 		foreach( a in ::Tactical.Entities.getInstancesOfFaction(_user.getFaction()) )
 		{
 			a.getSkills().removeByID("effects.sleeping");
 
-			if (_user.isPlayerControlled())
-			{
-				if (a.getMoraleState() < ::Const.MoraleState.Steady)
-					a.setMoraleState(::Const.MoraleState.Steady);
+			if (a.getType() == ::Const.EntityType.BarbarianUnhold || a.getType() == ::Const.EntityType.BarbarianUnholdFrost || !::MSU.isKindOf(a, "nggh_mod_player_beast"))
+				continue;
+
+			if (a.getMoraleState() < ::Const.MoraleState.Steady)
+				a.setMoraleState(::Const.MoraleState.Steady);
 				
-				this.spawnIcon("status_effect_106", a.getTile());
-				continue;
-			}
-			
-			if ((a.getType() != ::Const.EntityType.BarbarianUnhold && a.getType() != ::Const.EntityType.BarbarianUnholdFrost) || !::isKindOf(a, "nggh_mod_player_beast"))
-				continue;
-			
-			a.setWhipped(true);
-			this.spawnIcon("status_effect_106", a.getTile());
+			spawnIcon("status_effect_106", a.getTile());
 		}
 
-		this.m.IsUsed = true;
-		return true;
+		return ret;
 	};
 });

@@ -1,10 +1,10 @@
-::mods_hookExactClass("skills/injury/injury", function (obj)
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/injury/injury", function (q)
 {
-	local ws_showInjury = obj.showInjury;
-	obj.showInjury = function()
+	q.showInjury = @(__original) function()
 	{
-		if (!this.getContainer().getActor().getFlags().has("human")) return;
+		if (!getContainer().getActor().getFlags().has("human"))
+			return;
 
-		ws_showInjury();
+		__original();
 	};
 });

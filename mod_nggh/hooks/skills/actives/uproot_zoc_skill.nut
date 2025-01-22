@@ -1,13 +1,14 @@
-::mods_hookExactClass("skills/actives/uproot_zoc_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/uproot_zoc_skill", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.IsHidden = true;
-	};
-	obj.isUsable <- function()
+		__original();
+		m.IsHidden = true;
+	}
+
+	q.isUsable <- function()
 	{
-		return this.m.IsUsable && this.getContainer().getActor().getCurrentProperties().IsAbleToUseSkills;
-	};
+		return m.IsUsable && getContainer().getActor().getCurrentProperties().IsAbleToUseSkills;
+	}
+
 });

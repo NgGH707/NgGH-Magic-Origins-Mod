@@ -1,16 +1,14 @@
-::mods_hookExactClass("entity/tactical/enemies/alp", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/alp", function(q) 
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Flags.set("auto_teleport", true);
+		__original();
+		m.Flags.set("auto_teleport", true);
 	}
 
-	local onInit = obj.onInit;
-	obj.onInit = function()
+	q.onInit = @(__original) function()
 	{
-		onInit();
+		__original();
 		local chance = 15;
 
 		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 120)
@@ -24,21 +22,20 @@
 		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHAlpAfterWake], chance);
 	}
 
-	obj.makeMiniboss <- function()
+	q.makeMiniboss <- function()
 	{
-		if (!this.actor.makeMiniboss())
+		if (!actor.makeMiniboss())
 			return false;
 
-		local b = this.m.BaseProperties;
+		local b = m.BaseProperties;
 		b.MeleeDefense += 10;
 		b.RangedDefense += 15;
 		b.DamageReceivedRegularMult *= 0.85;
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_alp_nightmare_mastery"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_alp_sleep_mastery"));
-		this.getAIAgent().addBehavior(::new("scripts/ai/tactical/behaviors/ai_darkflight"));
+		m.Skills.add(::new("scripts/skills/perks/perk_nggh_alp_nightmare_mastery"));
+		m.Skills.add(::new("scripts/skills/perks/perk_nggh_alp_sleep_mastery"));
+		getAIAgent().addBehavior(::new("scripts/ai/tactical/behaviors/ai_darkflight"));
 
-		if (!::Tactical.State.isScenarioMode())
-		{
+		if (!::Tactical.State.isScenarioMode()) {
 			if (::World.getTime().Days >= 125)
 				this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
 

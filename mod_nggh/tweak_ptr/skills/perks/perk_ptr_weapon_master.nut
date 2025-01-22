@@ -1,10 +1,7 @@
-::mods_hookExactClass("skills/perks/perk_ptr_weapon_master", function ( obj )
-{
-	local ws_onUpdate = obj.onUpdate;
-	obj.onUpdate = function( _properties )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/perks/perk_ptr_weapon_master", function ( q ) {
+	q.onUpdate = @(__original) function( _properties )
 	{
-		if (!::MSU.isKindOf(this.getContainer().getActor(), "player"))
-		{
+		if (!::MSU.isKindOf(this.getContainer().getActor(), "player")) {
 			_properties.IsSpecializedInAxes = true;
 			_properties.IsSpecializedInMaces = true;
 			_properties.IsSpecializedInFlails = true;
@@ -17,6 +14,6 @@
 			return;
 		}
 
-		ws_onUpdate(_properties);
+		__original(_properties);
 	};
 });

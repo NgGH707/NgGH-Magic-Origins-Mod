@@ -1,81 +1,91 @@
-::mods_hookExactClass("skills/racial/legend_rock_unhold_racial", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/racial/legend_rock_unhold_racial", function(q) 
 {
 	//obj.m.RecoverMult <- 10;
-	obj.m.IsPlayer <- false;
+	q.m.IsPlayer <- false;
+	q.m.ApplicablePoison <- [
+		"spider_poison",
+		"legend_redback_spider_poison",
+		"legend_RSW_poison_effect",
+		"goblin_poison",
+		"legend_zombie_poison",
+		"legend_rat_poison",
+	];
 
-	obj.getRecoverMult <- function()
+	q.getRecoverMult <- function()
 	{
-		return (!this.m.IsPlayer || ::Nggh_MagicConcept.IsOPMode) ? 10 : 3;
+		return (!m.IsPlayer || !::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue()) ? 10 : 3;
 	}
 
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Name = "Rock Unhold Regeneration";
-		this.m.Description = "Unholds have unbelievable regeneration that no other creature can match. It can easily regrow a missing limb within hours. This one has an especially resilient skin like a set of armor.";
-		this.m.Icon = "skills/status_effect_79.png";
-		this.m.IconMini = "status_effect_79_mini";
-		//this.m.RecoverMult = ::Nggh_MagicConcept.IsOPMode ? 10 : 3;
-		this.m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.First + 1;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = false;
-	};
-	obj.onAdded <- function()
-	{
-		this.m.IsPlayer = this.getContainer().getActor().isPlayerControlled();
+		__original();
+		m.Name = "Rock Unhold Regeneration";
+		m.Description = "Unholds have unbelievable regeneration that no other creature can match. It can easily regrow a missing limb within hours. This one has an especially resilient skin like a set of armor.";
+		m.Icon = "skills/status_effect_79.png";
+		m.IconMini = "status_effect_79_mini";
+		//m.RecoverMult = !::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue() ? 10 : 3;
+		m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.First + 1;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = false;
 	}
-	obj.getTooltip <- function()
+
+	q.onAdded <- function()
+	{
+		m.IsPlayer = ::MSU.isKindOf(getContainer().getActor(), "player");
+	}
+
+	q.getTooltip <- function()
 	{
 		return [
 			{
 				id = 1,
 				type = "title",
-				text = this.getName()
+				text = getName()
 			},
 			{
 				id = 2,
 				type = "description",
-				text = this.getDescription()
+				text = getDescription()
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/armor_body.png",
-				text = "Regenerates [color=" + ::Const.UI.Color.PositiveValue + "]" + this.getRecoverMult() + "%[/color] of max armor"
+				text = "Regenerates [color=" + ::Const.UI.Color.PositiveValue + "]" + getRecoverMult() + "%[/color] of max armor per turn"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/days_wounded.png",
-				text = "Regenerates [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.floor(this.getRecoverMult() * 1.5) + "%[/color] of max health"
+				text = "Regenerates [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.floor(getRecoverMult() * 1.5) + "%[/color] of max health per turn"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/tooltips/negative.png",
-				text = "[color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color] effect stops health regeneration"
+				text = "Health regeneration is stopped while being under the effect of [color=" + ::Const.UI.Color.NegativeValue + "]Poisoned[/color]"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]Resistant[/color] against Piercing, Cutting or Burning Damage"
+				text = "Is [color=" + ::Const.UI.Color.PositiveValue + "]resistant[/color] against piercing, cutting or burning damage"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "[color=" + ::Const.UI.Color.NegativeValue + "]Vulnerable[/color] against Blunt Damage"
+				text = "Is [color=" + ::Const.UI.Color.NegativeValue + "]vulnerable[/color] against blunt damage"
 			}
 		];
-	};
-	obj.onTurnStart = function()
+	}
+
+	q.onTurnStart = @() function()
 	{
-		local actor = this.getContainer().getActor();
-		local mult = this.getRecoverMult() * 0.01;
+		local actor = getContainer().getActor();
+		local mult = getRecoverMult() * 0.01;
 		local b = actor.getBaseProperties();
 		local totalBodyArmor = b.ArmorMax[0];
 		local totalHeadArmor = b.ArmorMax[1];
@@ -91,49 +101,32 @@
 		local newHeadArmor = currentHeadArmor + addedHeadArmor;
 
 		if (addedBodyArmor <= 0 && addedHeadArmor <= 0)
-		{
 			return;
-		}
 		
-		foreach (string in [
-			"spider_poison_effect",
-			"legend_redback_spider_poison_effect",
-			"legend_RSW_poison_effect",
-			"goblin_poison",
-			"legend_zombie_poison",
-			"legend_rat_poison",
-		]) 
+		foreach (string in m.ApplicablePoison) 
 		{
 		    if (actor.getSkills().hasSkill("effects." + string))
-		    {
 		    	return;
-		    }
 		}
 		
 		actor.setArmor(::Const.BodyPart.Body, newBodyArmor);
 		actor.setArmor(::Const.BodyPart.Head, newHeadArmor);
 		actor.setDirty(true);
 
-		if (!actor.isHiddenToPlayer())
-		{
-			this.spawnIcon("status_effect_79", actor.getTile());
-
-			if (this.m.SoundOnUse.len() != 0)
-			{
-				::Sound.play(::MSU.Array.rand(this.m.SoundOnUse), ::Const.Sound.Volume.RacialEffect * 1.25, actor.getPos());
-			}
+		if (!actor.isHiddenToPlayer()) {
+			if (m.SoundOnUse.len() != 0)
+				::Sound.play(::MSU.Array.rand(m.SoundOnUse), ::Const.Sound.Volume.RacialEffect * 1.25, actor.getPos());
 
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(actor) + " regenerated " + addedBodyArmor + " points of body armor");
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(actor) + " regenerated " + addedHeadArmor + " points of head armor");
+			spawnIcon("status_effect_79", actor.getTile());
 		}
-	};
+	}
 
-	local ws_onUpdate = obj.onUpdate;
-	obj.onUpdate = function( _properties )
+	q.onUpdate = @(__original) function( _properties )
 	{
-		if (this.m.IsPlayer) return;
-
-		ws_onUpdate(_properties);
-	};
+		if (!m.IsPlayer)
+			__original(_properties);
+	}
 	
 });

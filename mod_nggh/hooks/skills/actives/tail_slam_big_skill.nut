@@ -1,25 +1,25 @@
-::mods_hookExactClass("skills/actives/tail_slam_big_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/tail_slam_big_skill", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Name = "Tail Thresh";
-		this.m.Description = "Skillfully using your tail to tresh all the targets around you, foe and friend alike, with a reckless round swing, of course you will not hit yourself. Has a chance to stun targets hit for one turn.";
-		this.m.KilledString = "Crushed";
-		this.m.Icon = "skills/active_108.png";
-		this.m.IconDisabled = "skills/active_108_sw.png";
-		this.m.Order = ::Const.SkillOrder.OffensiveTargeted + 2;
-	};
-	obj.getTooltip <- function()
+		__original();
+		m.Name = "Tail Thresh";
+		m.Description = "Use your tail to hit all the targets around you, foe and friend alike, with a reckless threshing around. Has a chance to stun targets hit for one turn.";
+		m.KilledString = "Crushed";
+		m.Icon = "skills/active_108.png";
+		m.IconDisabled = "skills/active_108_sw.png";
+		m.Order = ::Const.SkillOrder.OffensiveTargeted + 2;
+	}
+
+	q.getTooltip <- function()
 	{
-		local ret = this.getDefaultTooltip();
+		local ret = getDefaultTooltip();
 		ret.extend([
 			{
 				id = 7,
 				type = "text",
 				icon = "ui/icons/hitchance.png",
-				text = "Has [color=" + ::Const.UI.Color.NegativeValue + "]" + this.m.HitChanceBonus + "%[/color] chance to hit"
+				text = "Has [color=" + ::Const.UI.Color.NegativeValue + "]" + m.HitChanceBonus + "%[/color] chance to hit"
 			},
 			{
 				id = 8,
@@ -41,98 +41,75 @@
 			}
 		]);
 		return ret;
-	};
-	obj.onAfterUpdate <- function( _properties )
+	}
+
+	q.onAfterUpdate <- function( _properties )
 	{
-		this.m.FatigueCostMult = _properties.IsSpecializedInAxes ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
-	};
-	obj.onUse = function( _user, _targetTile )
+		m.FatigueCostMult = _properties.IsSpecializedInAxes ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
+	}
+
+	q.onUse = @() function( _user, _targetTile )
 	{
 		local ret = false;
 		local ownTile = this.getContainer().getActor().getTile();
 		local soundBackup = [];
-		this.m.TilesUsed = [];
-		this.spawnAttackEffect(ownTile, ::Const.Tactical.AttackEffectThresh);
+		m.TilesUsed = [];
+		spawnAttackEffect(ownTile, ::Const.Tactical.AttackEffectThresh);
 
 		for( local i = 5; i >= 0; --i )
 		{
 			if (!ownTile.hasNextTile(i))
-			{
-			}
-			else
-			{
-				local tile = ownTile.getNextTile(i);
-				local canbeHit = tile.IsOccupiedByActor && this.canBeHit(_user, tile.getEntity());
+				continue;
 
-				if (tile.IsOccupiedByActor && tile.getEntity().isAttackable() && ::Math.abs(tile.Level - ownTile.Level) <= 1 && canbeHit)
-				{
-					if (ret && soundBackup.len() == 0)
-					{
-						soundBackup = this.m.SoundOnHit;
-						this.m.SoundOnHit = [];
-					}
+			local tile = ownTile.getNextTile(i);
+			local canbeHit = tile.IsOccupiedByActor && canBeHit(_user, tile.getEntity());
 
-					local success = this.attackEntity(_user, tile.getEntity());
-
-					if (success && !tile.IsEmpty && tile.getEntity().isAlive() && !tile.getEntity().isDying() && canbeHit)
-					{
-						this.applyEffectToTarget(_user, tile.getEntity(), tile);
-					}
-
-					ret = success || ret;
-
-					if (!_user.isAlive() || _user.isDying())
-					{
-						break;
-					}
+			if (tile.IsOccupiedByActor && tile.getEntity().isAttackable() && ::Math.abs(tile.Level - ownTile.Level) <= 1 && canbeHit) {
+				if (ret && soundBackup.len() == 0) {
+					soundBackup = m.SoundOnHit;
+					m.SoundOnHit = [];
 				}
+
+				local success = attackEntity(_user, tile.getEntity());
+
+				if (success && !tile.IsEmpty && tile.getEntity().isAlive() && !tile.getEntity().isDying() && canbeHit)
+					applyEffectToTarget(_user, tile.getEntity(), tile);
+
+				ret = success || ret;
+
+				if (!_user.isAlive() || _user.isDying())
+					break;
 			}
 		}
 
-		if (ret && this.m.SoundOnHit.len() == 0)
-		{
-			this.m.SoundOnHit = soundBackup;
-		}
+		if (ret && m.SoundOnHit.len() == 0)
+			m.SoundOnHit = soundBackup;
 
-		this.m.TilesUsed = [];
+		m.TilesUsed = [];
 		return ret;
-	};
-	obj.canBeHit <- function( _user, _target )
+	}
+
+	q.canBeHit <- function( _user, _target )
 	{
-		local canBeHit = true;
-		local isAllied = _target.isAlliedWith(_user);
-		local isLindwurm = _target.getFlags().has("lindwurm");
-		
-		if (isLindwurm)
-		{
-			canBeHit = false;
-			
-			if (!isAllied)
-			{
-				canBeHit = true;
-			}
-		}
-		
-		return canBeHit;
-	};
-	obj.onTargetSelected <- function( _targetTile )
+		if (!_target.getFlags().has("lindwurm")) return true;
+		else if (!_target.isAlliedWith(_user)) return true;
+		else return false;
+	}
+
+	q.onTargetSelected <- function( _targetTile )
 	{
-		local ownTile = this.getContainer().getActor().getTile();
+		local ownTile = getContainer().getActor().getTile();
 
 		for( local i = 0; i != 6; ++i )
 		{
 			if (!ownTile.hasNextTile(i))
-			{
-			}
-			else
-			{
-				local tile = ownTile.getNextTile(i);
+				continue;
 
-				if (!tile.IsEmpty && tile.getEntity().isAttackable() && ::Math.abs(tile.Level - ownTile.Level) <= 1)
-				{
-					::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, tile, tile.Pos.X, tile.Pos.Y);
-				}
-			}
+			local tile = ownTile.getNextTile(i);
+
+			if (!tile.IsEmpty && tile.getEntity().isAttackable() && ::Math.abs(tile.Level - ownTile.Level) <= 1)
+				::Tactical.getHighlighter().addOverlayIcon(::Const.Tactical.Settings.AreaOfEffectIcon, tile, tile.Pos.X, tile.Pos.Y);
 		}
-	};
+	}
+
 });

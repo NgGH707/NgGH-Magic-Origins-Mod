@@ -1,34 +1,31 @@
-::mods_hookExactClass("skills/perks/perk_legend_ubernimble", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/perks/perk_legend_ubernimble", function(q) 
 {
-	obj.m.IsForceEnabled <- false;
+	q.m.IsForceEnabled <- false;
 
-	local ws_getTooltip = obj.getTooltip;
-	obj.getTooltip = function()
+	q.getTooltip = @(__original) function()
 	{
-		if (this.m.IsForceEnabled)
+		if (m.IsForceEnabled)
 		{
-			local tooltip = this.skill.getTooltip();
+			local tooltip = skill.getTooltip();
 			tooltip.push({
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Only receive [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.round(this.getChance() * 100) + "%[/color] of any damage to hitpoints from attacks"
+				text = "Only receive [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.round(getChance() * 100) + "%[/color] of any damage to hitpoints from attacks"
 			});
 			return tooltip;
 		}
 
-		return ws_getTooltip();
+		return __original();
 	}
 
-	local ws_onBeforeDamageReceived = obj.onBeforeDamageReceived;
-	obj.onBeforeDamageReceived = function( _attacker, _skill, _hitInfo, _properties )
+	q.onBeforeDamageReceived = @(__original) function( _attacker, _skill, _hitInfo, _properties )
 	{
-		if (this.m.IsForceEnabled)
-		{
-			_properties.DamageReceivedRegularMult *= this.getChance();
+		if (m.IsForceEnabled) {
+			_properties.DamageReceivedRegularMult *= getChance();
 			return;
 		}
 
-		ws_onBeforeDamageReceived(_attacker, _skill, _hitInfo, _properties);
+		__original(_attacker, _skill, _hitInfo, _properties);
 	}
 });

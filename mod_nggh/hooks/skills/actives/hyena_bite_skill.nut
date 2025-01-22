@@ -1,49 +1,47 @@
-::mods_hookExactClass("skills/actives/hyena_bite_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/hyena_bite_skill", function ( q )
 {
-	obj.m.IsRestrained <- false;
-	obj.m.IsSpent <- false;
-	obj.m.IsFrenzied <- false;
+	q.m.IsRestrained <- false;
+	q.m.IsSpent <- false;
+	q.m.IsFrenzied <- false;
 
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "Ripping off your enemy face with your powerful hyena jaw. Can easily cause bleeding.";
-		this.m.Icon = "skills/active_197.png";
-		this.m.IconDisabled = "skills/active_197_sw.png";
-	};
-	obj.setRestrained <- function( _f )
-	{
-		this.m.IsRestrained = _f;
-	};
-	obj.isIgnoredAsAOO <- function()
-	{
-		if (!this.m.IsRestrained)
-			return this.m.IsIgnoredAsAOO;
+		__original();
+		m.Description = "Ripping off your enemy face with your powerful hyena jaw. Can easily cause bleeding.";
+		m.Icon = "skills/active_197.png";
+		m.IconDisabled = "skills/active_197_sw.png";
+	}
 
-		return !this.getContainer().getActor().isArmedWithRangedWeapon();
-	};
-	obj.isUsable <- function()
+	q.setRestrained <- function( _f )
 	{
-		return this.skill.isUsable() && !this.m.IsSpent;
-	};
-	obj.onTurnStart <- function()
+		m.IsRestrained = _f;
+	}
+
+	q.isIgnoredAsAOO <- function()
 	{
-		this.m.IsSpent = false;
-	};
-	obj.onAdded <- function()
+		return !m.IsRestrained ? m.IsIgnoredAsAOO : !getContainer().getActor().isArmedWithRangedWeapon();
+	}
+
+	q.isUsable <- function()
 	{
-		this.m.IsFrenzied = this.getContainer().getActor().getFlags().has("frenzy");
-	};
-	obj.getTooltip <- function()
+		return skill.isUsable() && !m.IsSpent;
+	}
+
+	q.onTurnStart <- function()
 	{
-		local ret = this.getDefaultTooltip();
-		local actor = this.getContainer().getActor().get();
-		local isHigh = this.m.IsFrenzied || (("isHigh" in actor) && actor.isHigh());
-		local isSpecialized = this.getContainer().getActor().getCurrentProperties().IsSpecializedInCleavers;
-		local damage = 5;
-		if (isHigh) damage += 5;
-		if (isSpecialized) damage += 5;
+		m.IsSpent = false;
+	}
+
+	q.onAdded <- function()
+	{
+		m.IsFrenzied = getContainer().getActor().getFlags().has("frenzy");
+	}
+
+	q.getTooltip <- function()
+	{
+		local damage = 5, ret = getDefaultTooltip();
+		if (m.IsFrenzied || (::MSU.isIn("isHigh", getContainer().getActor(), true) && getContainer().getActor().isHigh())) damage += 5;
+		if (getContainer().getActor().getCurrentProperties().IsSpecializedInCleavers) damage += 5;
 		ret.push({
 			id = 8,
 			type = "text",
@@ -51,75 +49,53 @@
 			text = "Inflicts additional stacking [color=" + ::Const.UI.Color.DamageValue + "]" + damage + "[/color] bleeding damage per turn, for 2 turns"
 		});
 		return ret;
-	};
-	obj.canDoubleGrip <- function()
+	}
+
+	q.onAfterUpdate <- function( _properties )
 	{
-		return this.getContainer().getActor().isDoubleGrippingWeapon();
-	};
-	obj.onAfterUpdate <- function( _properties )
+		m.FatigueCostMult = _properties.IsSpecializedInCleavers ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
+	}
+
+	q.onUse = @(__original) function( _user, _targetTile )
 	{
-		this.m.FatigueCostMult = _properties.IsSpecializedInCleavers ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
-	};
-	obj.onUse = function( _user, _targetTile )
-	{
-		if (this.m.IsRestrained)
-		{
-			this.m.IsSpent = true;
-		}
+		if (m.IsRestrained)
+			m.IsSpent = true;
 
 		local target = _targetTile.getEntity();
 		local hp = target.getHitpoints();
-		local success = this.attackEntity(_user, _targetTile.getEntity());
+		local ret = __original(_user, _targetTile);
 
-		if (!_user.isAlive() || _user.isDying())
-		{
-			return;
-		}
-
-		if (success && target.isAlive() && !target.isDying() && !target.getCurrentProperties().IsImmuneToBleeding && hp - target.getHitpoints() >= ::Const.Combat.MinDamageToApplyBleeding)
-		{
-			_user = _user.get();
-			local isHigh = this.m.IsFrenzied || (("isHigh" in _user) && _user.isHigh());
-			local damage = isHigh ? 10 : 5;
-			damage = _user.getCurrentProperties().IsSpecializedInCleavers ? damage + 5 : damage;
+		if (_user.getCurrentProperties().IsSpecializedInCleavers && ret && target.isAlive() && !target.isDying() && !target.getCurrentProperties().IsImmuneToBleeding && hp - target.getHitpoints() >= ::Const.Combat.MinDamageToApplyBleeding) {
 			local effect = ::new("scripts/skills/effects/bleeding_effect");
-			effect.setDamage(damage);
-
-			if (_user.getFaction() == ::Const.Faction.Player)
-			{
-				effect.setActor(_user);
-			}
-
+			if (_user.getFaction() == ::Const.Faction.Player) effect.setActor(_user);
 			target.getSkills().add(effect);
 		}
 
-		return success;
-	};
-	obj.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
+		return ret;
+	}
+
+	q.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
 	{
 		if (_skill == this)
 		{
-			local items = this.getContainer().getActor().getItems();
-			local mhand = items.getItemAtSlot(::Const.ItemSlot.Mainhand);
-
-			if (mhand != null)
-			{
-				_properties.DamageRegularMin -= mhand.m.RegularDamage;
-				_properties.DamageRegularMax -= mhand.m.RegularDamageMax;
-				_properties.DamageArmorMult /= mhand.m.ArmorDamageMult;
-				_properties.DamageDirectAdd -= mhand.m.DirectDamageAdd;
-			}
-
+			removeMainhandBonuses(_properties);
 			_properties.DamageRegularMin += 20;
 			_properties.DamageRegularMax += 35;
 			_properties.DamageArmorMult *= 0.7;
 
-			if (this.m.IsFrenzied && this.m.IsRestrained)
+			if (m.IsFrenzied && m.IsRestrained)
 				_properties.DamageTotalMult *= 1.25;
 
-			if (this.canDoubleGrip())
+			if (getContainer().getActor().isDoubleGrippingWeapon())
 				_properties.DamageTotalMult /= 1.25;
 		}
-	};
-	obj.onUpdate = function( _properties ) {};
+	}
+
+	q.onUpdate = @(__original) function( _properties ) 
+	{
+		__original(_properties);
+
+		_properties.DamageRegularMin -= 20;
+		_properties.DamageRegularMax -= 35;
+	}
 });

@@ -1,76 +1,73 @@
-::mods_hookExactClass("skills/racial/champion_racial", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/racial/champion_racial", function(q) 
 {
 	//obj.m.Mult <- 1.0;
-	obj.m.GainHP <- false;
-	obj.m.IsPlayer <- false;
+	q.m.GainHP <- false;
+	q.m.IsPlayer <- false;
 
-	obj.getMult <- function()
+	q.getMult <- function()
 	{
-		return !this.m.IsPlayer || ::Nggh_MagicConcept.IsOPMode ? 1.0 : 0.67;
+		return !m.IsPlayer || !::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue() ? 1.0 : 0.67;
 	}
 
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "The toughest among the strongest. Who dares to challenge those like them?";
-		//this.m.Mult = ::Nggh_MagicConcept.IsOPMode ? 1.0 : 0.67;
-		this.m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.First + 1;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = false;
-	};
-	obj.onAdded <- function()
-	{
-		local actor = this.getContainer().getActor();
-		this.m.IsPlayer = actor.isPlayerControlled();
+		__original();
+		m.Description = "The toughest among the strongest. Who dares to challenge those like them?";
+		//m.Mult = !::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue() ? 1.0 : 0.67;
+		m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.First + 1;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = false;
+	}
 
-		if (actor.hasSprite("miniboss"))
-		{
+	q.onAdded <- function()
+	{
+		local actor = getContainer().getActor();
+		m.IsPlayer = actor.isPlayerControlled();
+
+		if (actor.hasSprite("miniboss")) {
 			actor.getSprite("miniboss").setBrush("bust_miniboss");
 			actor.setDirty(true);
 		}
 
-		if (this.m.IsPlayer)
-		{
+		if (!m.IsPlayer)
+			getContainer().add(::new("scripts/skills/special/nggh_mod_champion_loot"));  
+		else {
 			actor.m.IsMiniboss = true;
 			
-			if (::isKindOf(actor.get(), "spider_player") && actor.getSize() < 1.0)
-			{
-				this.getContainer().getActor().setSize(1.0);
-			}
+			if (::MSU.isKindOf(actor, "nggh_mod_spider_player") && actor.getSize() < 1.0)
+				getContainer().getActor().setSize(1.0);
 		}
-		else 
-		{
-			this.getContainer().add(::new("scripts/skills/special/nggh_mod_champion_loot"));    
-		}
-	};
-	obj.onRemoved <- function()
+	}
+
+	q.onRemoved <- function()
 	{
-		local actor = this.getContainer().getActor();
-		actor.getSprite("miniboss").Visible = false;
-		actor.setDirty(true);
-	};
-	obj.getTooltip <- function()
+		if (!getContainer().getActor().hasSprite("miniboss")) return;
+
+		getContainer().getActor().getSprite("miniboss").Visible = false;
+		getContainer().getActor().setDirty(true);
+	}
+
+	q.getTooltip <- function()
 	{
-		local mult = this.getMult();
+		local mult = getMult();
 		return [
 			{
 				id = 1,
 				type = "title",
-				text = this.getName()
+				text = getName()
 			},
 			{
 				id = 2,
 				type = "description",
-				text = this.getDescription()
+				text = getDescription()
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/health.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + ::Math.floor((this.m.GainHP ? 1.35 : 1) * 35 * mult) + "%[/color] Hitpoints"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + ::Math.floor((m.GainHP ? 1.35 : 1.0) * 35 * mult) + "%[/color] Hitpoints"
 			},
 			{
 				id = 10,
@@ -94,13 +91,13 @@
 				id = 10,
 				type = "text",
 				icon = "ui/icons/ranged_skill.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + ::Math.floor((this.m.GainHP ? 1 : 1.25) * 25 * mult) + "%[/color] Ranged Skill"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + ::Math.floor((m.GainHP ? 1.0 : 1.25) * 25 * mult) + "%[/color] Ranged Skill"
 			},
 			{
 				id = 10,
 				type = "text",
 				icon = "ui/icons/melee_defense.png",
-				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + ::Math.floor((this.m.GainHP ? 1 : 1.25) * 25 * mult) + "%[/color] Melee Defense"
+				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + ::Math.floor((m.GainHP ? 1.0 : 1.25) * 25 * mult) + "%[/color] Melee Defense"
 			},
 			{
 				id = 10,
@@ -121,10 +118,11 @@
 				text = "[color=" + ::Const.UI.Color.PositiveValue + "]+" + ::Math.floor(50 * mult) + "%[/color] Max Fatigue"
 			}
 		];
-	};
-	obj.onUpdate = function( _properties )
+	}
+
+	q.onUpdate = function( _properties )
 	{
-		local mult = this.getMult();
+		local mult = getMult();
 		_properties.DamageTotalMult *= 1.0 + (0.15 * mult);
 		_properties.BraveryMult *= 1.0 + (0.5 * mult);
 		_properties.StaminaMult *= 1.0 + (0.5 * mult);
@@ -135,23 +133,24 @@
 		_properties.RangedDefenseMult *= 1.0 + (0.25 * mult);
 		_properties.HitpointsMult *= 1.0 + (0.35 * mult);
 
-		this.m.GainHP = this.getContainer().getActor().getBaseProperties().MeleeDefense >= 20 || this.getContainer().getActor().getBaseProperties().RangedDefense >= 20 || this.getContainer().getActor().getBaseProperties().MeleeDefense >= 15 && this.getContainer().getActor().getBaseProperties().RangedDefense >= 15;
+		m.GainHP = getContainer().getActor().getBaseProperties().MeleeDefense >= 20 || getContainer().getActor().getBaseProperties().RangedDefense >= 20 || getContainer().getActor().getBaseProperties().MeleeDefense >= 15 && getContainer().getActor().getBaseProperties().RangedDefense >= 15;
 
-		if (this.m.GainHP)
-		{
+		if (m.GainHP) {
 			_properties.HitpointsMult *= 1.0 + (0.35 * mult);
 			return;
 		}
 		
 		_properties.MeleeDefenseMult *= 1.0 + (0.25 * mult);
 		_properties.RangedDefenseMult *= 1.0 + (0.25 * mult);
-	};
-	obj.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
+	}
+
+	q.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
 	{
 		if (_skill == null) return;
 		
 		if (_skill.getID() != "actives.spider_bite" && _skill.getID() != "actives.legend_redback_spider_bite") return;
 
 		_properties.DamageTotalMult *= 1.15; // a buff for champion spider
-	};
+	}
+	
 });

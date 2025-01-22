@@ -1,7 +1,7 @@
-::mods_hookExactClass("skills/perks/perk_ptr_deadly_precision", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/perks/perk_ptr_deadly_precision", function ( q )
 {
-	obj.onAdded <- function()
+	q.onAdded <- function()
 	{
 		::Nggh_MagicConcept.HooksHelper.autoEnableForBeasts(this);
-	};
+	}
 });

@@ -1,4 +1,4 @@
-::mods_hookExactClass("ai/tactical/behaviors/ai_attack_thresh", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/ai/tactical/behaviors/ai_attack_thresh", function ( q )
 {
-	obj.m.PossibleSkills.push("actives.uproot_aoe");
+	q.m.PossibleSkills.push("actives.uproot_aoe");
 });

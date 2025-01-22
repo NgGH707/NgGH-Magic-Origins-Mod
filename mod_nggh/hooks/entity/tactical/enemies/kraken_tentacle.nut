@@ -1,14 +1,13 @@
-::mods_hookExactClass("entity/tactical/enemies/kraken_tentacle", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/kraken_tentacle", function ( q )
 {
-	local ws_setParent = obj.setParent;
-	obj.setParent = function( _p )
+	q.setParent = @(__original) function( _p )
 	{
-		ws_setParent(_p);
+		__original(_p);
 
-		if (_p != null && _p.m.IsMiniboss)
-		{
-			this.makeMiniboss();
-			this.getSprite("miniboss").setBrush("bust_miniboss"); 
+		if (!::MSU.isNull(_p) && _p.m.IsMiniboss) {
+			makeMiniboss();
+			getSprite("miniboss").setBrush("bust_miniboss"); 
 		}
 	}
+	
 });

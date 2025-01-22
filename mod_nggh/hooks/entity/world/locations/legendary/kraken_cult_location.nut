@@ -1,24 +1,20 @@
-::mods_hookExactClass("entity/world/locations/legendary/kraken_cult_location", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/world/locations/legendary/kraken_cult_location", function ( q )
 {
-	local ws_onSpawned = obj.onSpawned;
-	obj.onSpawned = function()
+	q.onSpawned = @(__original) function()
 	{
-		ws_onSpawned();
+		__original();
 
-		if (::World.Flags.get("IsKrakenOrigin"))
-		{
-			local tilePos = this.getTile().Pos;
-			::World.uncoverFogOfWar(tilePos, 500.0);
-			::World.getCamera().setPos(tilePos);
-			::World.getCamera().Zoom = 1.0;
-         	::World.State.getPlayer().setPos(tilePos);
-          	::World.setPlayerPos(tilePos);
+		if (!::World.Flags.get("IsKrakenOrigin")) return;
+		
+		local tilePos = getTile().Pos;
+		::World.uncoverFogOfWar(tilePos, 500.0);
+		::World.getCamera().setPos(tilePos);
+		::World.getCamera().Zoom = 1.0;
+     	::World.State.getPlayer().setPos(tilePos);
+      	::World.setPlayerPos(tilePos);
 
-          	if (!::Nggh_MagicConcept.IsNoKrakenVsKraken)
-          	{
-          		::World.State.enterLocation(this);
-          	}
-		}
+      	if (!::Nggh_MagicConcept.Mod.ModSettings.getSetting("kraken_vs_kraken").getValue())
+      		::World.State.enterLocation(this);
 	}
 
 });

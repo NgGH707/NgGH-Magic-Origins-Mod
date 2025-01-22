@@ -1,6 +1,6 @@
-::mods_hookExactClass("ai/tactical/behaviors/ai_darkflight", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/ai/tactical/behaviors/ai_darkflight", function ( q )
 {
-	obj.m.PossibleSkills.extend([
+	q.m.PossibleSkills.extend([
 		"actives.alp_teleport",
 		"actives.legend_darkflight"
 	]);

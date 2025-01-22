@@ -1,39 +1,34 @@
-::mods_hookExactClass("skills/actives/nightmare_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/nightmare_skill", function ( q )
 {
-	obj.m.BaseDamage <- 25;
-	obj.m.ConvertRate <- 0.05;
+	q.m.BaseDamage <- 25;
+	q.m.ConvertRate <- 0.05;
 
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "Infuses a terrible nightmare that can damage the mind of your target.";
-		this.m.Icon = "skills/active_117.png";
-		this.m.IconDisabled = "skills/active_117_sw.png";
-		this.m.Overlay = "active_117";
-		this.m.Order = ::Const.SkillOrder.UtilityTargeted + 1;
-		this.m.DirectDamageMult = 1.0;
-		this.m.ActionPointCost = 4;
-		this.m.FatigueCost = 10;
-		this.m.MinRange = 1;
-		this.m.MaxRange = 2;
-		this.m.MaxLevelDifference = 4;
-	};
-	obj.getTooltip <- function()
+		__original();
+		m.Description = "Infuses a terrible nightmare that can damage the mind of your target.";
+		m.Icon = "skills/active_117.png";
+		m.IconDisabled = "skills/active_117_sw.png";
+		m.Overlay = "active_117";
+		m.Order = ::Const.SkillOrder.UtilityTargeted + 1;
+		m.IsIgnoringRiposte = true;
+	}
+
+	q.getTooltip <- function()
 	{
-		local ret = this.getDefaultTooltip();
+		local ret = getDefaultTooltip();
 		ret.extend([
 			{
 				id = 7,
 				type = "text",
 				icon = "ui/icons/vision.png",
-				text = "Has a range of [color=" + ::Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+				text = "Has a range of [color=" + ::Const.UI.Color.PositiveValue + "]" + getMaxRange() + "[/color] tiles"
 			},
 			{
 				id = 8,
 				type = "text",
 				icon = "ui/icons/bravery.png",
-				text = "Damage is increased equal to [color=" + ::Const.UI.Color.PositiveValue + "]" + (this.m.ConvertRate * 100) + "%[/color] of current Resolve"
+				text = "Damage is increased equal to [color=" + ::Const.UI.Color.PositiveValue + "]" + (m.ConvertRate * 100) + "%[/color] of current Resolve"
 			},
 			{
 				id = 8,
@@ -44,30 +39,26 @@
 		]);
 		
 		return ret;
-	};
-	obj.softReset <- function()
-	{
-		this.resetField("BaseDamage");
-		this.resetField("ConvertRate");
-		return this.skill.softReset();
-	};
-	obj.onAfterUpdate <- function( _properties )
-	{
-		if (!_properties.IsSpecializedInMagic)
-			return;
+	}
 
-		this.m.FatigueCostMult *= ::Const.Combat.WeaponSpecFatigueMult;
-		this.m.ConvertRate += 0.15;
-	};
-	obj.getDamage = function( _actor, _attackerProperties = null, _defenderProperties = null )
+	q.softReset <- function()
+	{
+		resetField("BaseDamage");
+		resetField("ConvertRate");
+		return skill.softReset();
+	}
+
+	q.getDamage = @() function( _actor, _attackerProperties = null, _defenderProperties = null )
 	{
 		if (_defenderProperties == null)
 			_defenderProperties = _actor.getCurrentProperties();
 
-		local mult = this.getContainer().hasSkill("perk.after_wake") ? 0.9 : 1.0;
-		local damage = this.m.BaseDamage + this.getAdditionalDamage(_attackerProperties);
+		local mult = 1.0;
+		local perk = getContainer().hasSkill("perk.after_wake");
+		if (perk != null) mult *= perk.getMult();
+		local damage = m.BaseDamage + getAdditionalDamage(_attackerProperties);
 		local loss = ::Math.floor((_defenderProperties.getBravery() + _defenderProperties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack] * _defenderProperties.MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack]) * mult * 0.25);
-		local min = ::Math.max(5, ::Math.round(damage * 0.2));
+		local min = ::Math.max(5, ::Math.round(damage * 0.15));
 
 		return {
 			Result = ::Math.max(min, damage - loss),
@@ -75,92 +66,79 @@
 			Loss = loss,
 			Min = min
 		};
-	};	
-	obj.getAdditionalDamage <- function( _properties = null )
+	}
+
+	q.getAdditionalDamage <- function( _properties = null )
 	{
 		if (_properties == null)
-			_properties = this.getContainer().getActor().getCurrentProperties();
+			_properties = getContainer().getActor().getCurrentProperties();
 
-		local mult = _properties.MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack];
+		local mult = ::Math.minf(2.0, _properties.MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack]);
+		return ::Math.floor((_properties.getBravery() + _properties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack] * mult) * m.ConvertRate);
+	}
 
-		if (mult >= 1000.0)
-			mult = 2.0;
-
-		return ::Math.floor((_properties.getBravery() + _properties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack] * mult) * this.m.ConvertRate);
-	};
-
-	local ws_isUsable = obj.isUsable;
-	obj.isUsable = function()
+	q.isUsable = @(__original) function()
 	{
-		if (this.getContainer().getActor().isPlayerControlled())
-			return this.skill.isUsable();
+		return getContainer().getActor().isPlayerControlled() ?  skill.isUsable() : __original();
+	}
 
-		return ws_isUsable();
-	};
-	obj.onVerifyTarget = function( _originTile, _targetTile )
+	q.onVerifyTarget = @() function( _originTile, _targetTile )
 	{
-		if (!this.skill.onVerifyTarget(_originTile, _targetTile))
-			return false;
-		
-		return _targetTile.getEntity().getSkills().getSkillByID("effects.sleeping") != null;
-	};
-	obj.onDelayedEffect = function( _tag )
+		return skill.onVerifyTarget(_originTile, _targetTile) && _targetTile.getEntity().getSkills().hasSkill("effects.sleeping");
+	}
+
+	q.onDelayedEffect = @() function( _tag )
 	{
-		local targetTile = _tag.TargetTile;
-		local user = _tag.User;
-		local target = targetTile.getEntity();
+		local target = _tag.TargetTile.getEntity();
 		local properties = this.getContainer().buildPropertiesForUse(this, target);
-		local defenderProperties = target.getSkills().buildPropertiesForDefense(user, this);
-
+		local defenderProperties = target.getSkills().buildPropertiesForDefense(_tag.User, this);
 		local damage = this.getDamage(target, properties, defenderProperties);
-		local total_damage = ::Math.rand(::Math.max(5, damage.Result - 5), damage.Result) * properties.DamageTotalMult;
+		local total_damage = ::Math.rand(::Math.max(5, damage.Result / 2), damage.Result) * properties.DamageTotalMult;
 		local hitInfo = clone ::Const.Tactical.HitInfo;
 		hitInfo.DamageRegular = total_damage;
 		hitInfo.DamageDirect = 1.0;
 		hitInfo.BodyPart = ::Const.BodyPart.Body;
 		hitInfo.BodyDamageMult = 1.0;
 		hitInfo.FatalityChanceMult = 0.0;
-		this.getContainer().onBeforeTargetHit(this, target, hitInfo);
-		target.onDamageReceived(user, this, hitInfo);
-		this.getContainer().onTargetHit(this, target, hitInfo.BodyPart, hitInfo.DamageInflictedHitpoints, hitInfo.DamageInflictedArmor);
-	};
-	obj.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
+		getContainer().onBeforeTargetHit(this, target, hitInfo);
+		target.onDamageReceived(_tag.User, this, hitInfo);
+		getContainer().onTargetHit(this, target, hitInfo.BodyPart, hitInfo.DamageInflictedHitpoints, hitInfo.DamageInflictedArmor);
+	}
+
+	q.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
 	{
 		if (_skill == this)
 		{
-			local add = this.getAdditionalDamage(_properties);
-			_properties.DamageRegularMin = this.m.BaseDamage + add - 5;
-			_properties.DamageRegularMax = this.m.BaseDamage + add;
+			local add = getAdditionalDamage(_properties);
+			_properties.DamageRegularMin = ::Math.max(5, (m.BaseDamage + add) / 2);
+			_properties.DamageRegularMax = ::Math.max(5, m.BaseDamage + add);
 			_properties.DamageArmorMult = 0.0;
 			_properties.IsIgnoringArmorOnAttack = true;
 			
-			if (!::Nggh_MagicConcept.IsOPMode)
+			if (::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue())
 				_properties.MeleeDamageMult /= ::Const.AlpWeaponDamageMod;
 
-			if (this.getContainer().getActor().isDoubleGrippingWeapon())
+			if (getContainer().getActor().isDoubleGrippingWeapon())
 				_properties.MeleeDamageMult /= 1.25;
 		}
 	}
-	obj.getHitFactors <- function( _targetTile )
+
+	q.getHitFactors <- function( _targetTile )
 	{
-		local ret = [];
-		local user = this.getContainer().getActor();
-		local myTile = user.getTile();
-		local targetEntity = _targetTile.IsOccupiedByActor ? _targetTile.getEntity() : null;
+		local ret = [], _user = getContainer().getActor();
+		local myTile = _user.getTile(), _targetEntity = _targetTile.IsOccupiedByActor ? _targetTile.getEntity() : null;
 		
-		if (targetEntity == null)
+		if (_targetEntity == null)
 			return ret;
 
-		local _targetEntity = targetEntity;
-		local _user = this.getContainer().getActor();
-		local properties = this.getContainer().buildPropertiesForUse(this, _targetEntity);
+		local properties = getContainer().buildPropertiesForUse(this, _targetEntity);
 		local defenderProperties = _targetEntity.getSkills().buildPropertiesForDefense(_user, this);
 		//local damMod = properties.DamageTotalMult;
 		//local defMod = defenderProperties.DamageReceivedTotalMult * defenderProperties.DamageReceivedDirectMult;
 
-		local expectedDamage = this.getDamage(_targetEntity, defenderProperties);
-		local bonusDamage = expectedDamage.Expected - this.m.BaseDamage;
-		local totaldamage = ::Math.max(5, expectedDamage.Result - 5); //::Math.floor((expectedDamage.Result) * damMod * defMod);
+		local expectedDamage = getDamage(_targetEntity, defenderProperties);
+		local bonusDamage = expectedDamage.Expected - m.BaseDamage;
+		local totaldamage = ::Math.max(5, expectedDamage.Result / 2); //::Math.floor((expectedDamage.Result) * damMod * defMod);
 		local totaldamageMax = expectedDamage.Result;//::Math.floor((expectedDamage.Result + bonusDamage) * damMod * defMod);
 
 		ret.extend([
@@ -174,16 +152,19 @@
 			},
 		]);
 
-		if (bonusDamage != 0)
-		{
+		if (bonusDamage != 0) {
 			ret.insert(0, {
 				icon = "ui/icons/bravery.png",
 				text = "Your resolve: [color=#0b0084]" + properties.getBravery() + "[/color]"
 			});
-			ret.push({
-				icon = "ui/icons/days_wounded.png",
-				text = "HP heals: [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.floor(totaldamage * 0.25) + "[/color] - [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.floor(totaldamageMax * 0.33) + "[/color]"
-			});
+
+			local perk = getContainer().getSkillByID("perk.mastery_nightmare");
+			if (perk != null) {
+				ret.push({
+					icon = "ui/icons/days_wounded.png",
+					text = "HP heals: [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.max(1, totaldamage * perk.m.HPDrainMin * 0.01) + "[/color] - [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.max(1, totaldamageMax * perk.m.HPDrainMax * 0.01) + "[/color]"
+				});
+			}
 		}
 
 		return ret;

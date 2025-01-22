@@ -1,29 +1,31 @@
-::mods_hookExactClass("skills/actives/legend_skin_ghoul_claws", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/legend_skin_ghoul_claws", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Order = ::Const.SkillOrder.OffensiveTargeted + 3;
-		this.m.IsIgnoredAsAOO = true;
-	};
-	obj.isHidden <- function()
+		__original();
+		m.Order = ::Const.SkillOrder.OffensiveTargeted + 3;
+		m.IsIgnoredAsAOO = true;
+	}
+
+	q.isHidden <- function()
 	{
-		return this.getContainer().getActor().getMainhandItem() != null && !this.getContainer().hasSkill("effects.disarmed") || this.skill.isHidden();
-	};
-	obj.onAdded <- function()
+		return getContainer().getActor().getMainhandItem() != null && !getContainer().hasSkill("effects.disarmed") || skill.isHidden();
+	}
+
+	q.onAdded <- function()
 	{
-		this.getContainer().add(::new("scripts/skills/actives/nggh_mod_ghoul_claws_zoc"));
-	};
-	obj.getTooltip = function()
+		getContainer().add(::new("scripts/skills/actives/nggh_mod_ghoul_claws_zoc"));
+	}
+
+	q.getTooltip = function()
 	{
-		local ret = this.getDefaultTooltip();
+		local ret = getDefaultTooltip();
 		ret.extend([
 			{
 				id = 7,
 				type = "text",
 				icon = "ui/icons/vision.png",
-				text = "Has a range of [color=" + ::Const.UI.Color.PositiveValue + "]" + this.getMaxRange() + "[/color] tiles"
+				text = "Has a range of [color=" + ::Const.UI.Color.PositiveValue + "]" + getMaxRange() + "[/color] tiles"
 			},
 			{
 				id = 6,
@@ -33,23 +35,24 @@
 			}
 		]);
 		return ret;
-	};
+	}
 
-	local ws_onUpdate = obj.onUpdate;
-	obj.onUpdate = function( _properties )
+	q.onUpdate = @(__original) function( _properties )
 	{
-		if (!this.isHidden())
-			ws_onUpdate(_properties);
-	};
-	obj.onAfterUpdate <- function( _properties )
+		if (!isHidden())
+			__original(_properties);
+	}
+
+	q.onAfterUpdate <- function( _properties )
 	{
-		this.m.FatigueCostMult = _properties.IsSpecializedInShields ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
-	};
-	obj.onBeforeUse <- function( _user , _targetTile )
+		m.FatigueCostMult = _properties.IsSpecializedInShields ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
+	}
+
+	q.use <- function( _targetTile, _forFree = false )
 	{
-		if (!_user.getFlags().has("luft"))
-			return;
-		
-		::Nggh_MagicConcept.spawnQuote("luft_claw_quote_" + ::Math.rand(1, 5), _user.getTile());
+		if (getContainer().getActor().getFlags().has("luft"))
+			::Nggh_MagicConcept.spawnQuote("luft_claw_quote_" + ::Math.rand(1, 5), getContainer().getActor().getTile());
+
+		return skill.use(_targetTile, _forFree);
 	};
 });

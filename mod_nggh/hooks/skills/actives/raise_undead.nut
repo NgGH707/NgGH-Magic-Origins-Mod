@@ -1,14 +1,14 @@
-::mods_hookExactClass("skills/actives/raise_undead", function(obj)
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/raise_undead", function(q)
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "Raise a corpse back to life as an undead, faithfully follows your bidding.";
-		this.m.IconDisabled = "skills/active_26_sw.png";
-	};
-	obj.getTooltip <- function()
+		__original();
+		m.Description = "Raise a corpse back to life as an undead, faithfully follows your bidding.";
+		m.IconDisabled = "skills/active_26_sw.png";
+	}
+
+	q.getTooltip <- function()
 	{
-		return this.getDefaultUtilityTooltip();
-	};
+		return getDefaultUtilityTooltip();
+	}
 });

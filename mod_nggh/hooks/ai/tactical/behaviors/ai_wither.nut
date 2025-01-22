@@ -1,4 +1,4 @@
-::mods_hookExactClass("ai/tactical/behaviors/ai_wither", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/ai/tactical/behaviors/ai_wither", function(q) 
 {
-	obj.m.PossibleSkills.push("actives.legend_wither");
+	q.m.PossibleSkills.push("actives.legend_wither");
 });

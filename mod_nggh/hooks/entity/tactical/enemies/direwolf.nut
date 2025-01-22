@@ -1,9 +1,8 @@
-::mods_hookExactClass("entity/tactical/enemies/direwolf", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/direwolf", function(q) 
 {
-	local onInit = obj.onInit;
-	obj.onInit = function()
+	q.onInit = @(__original) function()
 	{
-		onInit();
+		__original();
 		local chance = 25;
 
 		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 100)
@@ -16,29 +15,28 @@
 		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHWolfThickHide], chance - 20);
 	}
 
-	obj.makeMiniboss <- function()
+	q.makeMiniboss <- function()
 	{
-		if (!this.actor.makeMiniboss())
+		if (!actor.makeMiniboss())
 			return false;
 		
-		local b = this.m.BaseProperties;
+		local b = m.BaseProperties;
 		b.MeleeSkill += 10;
 		b.MeleeDefense += 10;
 		b.Bravery += 15;
 
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_wolf_bite"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_wolf_thick_hide"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_wolf_enrage"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_fearsome"));
-		this.m.Skills.add(::new("scripts/skills/actives/line_breaker"));
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_wolf_bite"));
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_wolf_thick_hide"));
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_wolf_enrage"));
+		getSkills().add(::new("scripts/skills/perks/perk_fearsome"));
+		getSkills().add(::new("scripts/skills/actives/line_breaker"));
 
-		if (!::Tactical.State.isScenarioMode())
-		{
+		if (!::Tactical.State.isScenarioMode()) {
 			if (::World.getTime().Days >= 100)
-				this.m.Skills.add(::new("scripts/skills/perks/perk_overwhelm"));
+				getSkills().add(::new("scripts/skills/perks/perk_overwhelm"));
 
 			if (::World.getTime().Days >= 150)
-				this.m.Skills.add(::new("scripts/skills/perks/perk_nimble"));
+				getSkills().add(::new("scripts/skills/perks/perk_nimble"));
 		}
 
 		return true;

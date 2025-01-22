@@ -1,43 +1,43 @@
-::mods_hookExactClass("skills/actives/throw_holy_water", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/throw_holy_water", function(q) 
 {
-	obj.m.AttackerID <- null;
+	q.m.AttackerID <- null;
 
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.IsAttack = false;
-	};
-	obj.onAdded <- function()
+		__original();
+		m.IsAttack = false;
+	}
+
+	q.onAdded <- function()
 	{
-		this.m.AttackerID = this.getContainer().getActor().getID();
-	};
-	local ws_onVerifyTarget = obj.onVerifyTarget;
-	obj.onVerifyTarget = function( _originTile, _targetTile )
+		m.AttackerID = getContainer().getActor().getID();
+	}
+
+	q.onVerifyTarget = @(__original) function( _originTile, _targetTile )
 	{
-		if (!ws_onVerifyTarget(_originTile, _targetTile))
+		if (!__original(_originTile, _targetTile))
 			return false;
 
 		local target = _targetTile.getEntity();
 
-		if (target.isAlliedWith(this.getContainer().getActor()) && !target.getSkills().hasSkill("effects.ghost_possessed"))
+		if (target.isAlliedWith(getContainer().getActor()) && !target.getSkills().hasSkill("effects.ghost_possessed"))
 			return false;
 
 		return true;
-	};
-	local ws_applyEffect = obj.applyEffect;
-	obj.applyEffect = function( _target )
+	}
+
+	q.applyEffect = @(__original) function( _target )
 	{
 		local possess = _target.getSkills().getSkillByID("effects.ghost_possessed");
 
-		if (possess != null)
-		{
-			possess.m.AttackerID = this.m.AttackerID;
+		if (possess != null) {
+			possess.m.AttackerID = m.AttackerID;
 			possess.setExorcised(true);
 			possess.removeSelf();
 			_target.getSkills().update();
 		}
 
-		ws_applyEffect(_target);
-	};
+		__original(_target);
+	}
+	
 });

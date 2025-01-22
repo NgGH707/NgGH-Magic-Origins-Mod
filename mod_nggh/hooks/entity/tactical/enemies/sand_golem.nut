@@ -1,9 +1,9 @@
-::mods_hookExactClass("entity/tactical/enemies/sand_golem", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/sand_golem", function(q) 
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Flags.add("sand_golem");
+		__original();
+		m.Flags.add("sand_golem");
 	}
+
 });

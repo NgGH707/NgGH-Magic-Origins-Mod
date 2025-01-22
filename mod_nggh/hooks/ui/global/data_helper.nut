@@ -1,10 +1,9 @@
 // set up the magic points preview system 
-::mods_hookNewObject("ui/global/data_helper", function(obj)
+::Nggh_MagicConcept.HooksMod.hook("scripts/ui/global/data_helper", function(q)
 {
-	local ws_addStatsToUIData = obj.addStatsToUIData;
-	obj.addStatsToUIData = function( _entity, _target )
+	q.addStatsToUIData = @(__original) function( _entity, _target )
 	{
-		ws_addStatsToUIData(_entity, _target);
+		__original(_entity, _target);
 
 		/*
 		if (_entity.isAbleToUseMagic())
@@ -14,8 +13,7 @@
 		}
 		*/
 
-		if (_entity.isMounted())
-		{
+		if (_entity.isMounted()) {
 			local mount = _entity.getMount();
 			_target.MountHitpoints <- mount.getHitpoints();
 			_target.MountHitpointsMax <- mount.getHitpointsMax();
@@ -27,18 +25,17 @@
 	}
 
 	// to show blocked equipment slots
-	local ws_convertPaperdollEquipmentToUIData = obj.convertPaperdollEquipmentToUIData;
-	obj.convertPaperdollEquipmentToUIData = function( _items, _target )
+	q.convertPaperdollEquipmentToUIData = @(__original) function( _items, _target )
 	{
-		ws_convertPaperdollEquipmentToUIData(_items, _target);
+		__original(_items, _target);
+
 		if (_items == null) return;
 		
 		local blocked = [];
 		local hasTwoHandBlockedSlot = false;
 		for (local i = ::Const.ItemSlot.Mainhand; i <= ::Const.ItemSlot.Ammo; ++i)
 		{
-			if (i == ::Const.ItemSlot.Mainhand && _items.getData()[i][0] != null && _items.getData()[i][0] != -1)
-			{
+			if (i == ::Const.ItemSlot.Mainhand && _items.getData()[i][0] != null && _items.getData()[i][0] != -1) {
 				hasTwoHandBlockedSlot = _items.getData()[i][0].getBlockedSlotType() != null;
 				continue;
 			}
@@ -56,18 +53,17 @@
 			_target.BlockedSlots <- blocked;
 	}
 
-	if (::Is_PlanYourPerks_Exist && ("addPlannedPerksToUIData" in obj))
-	{
-		local ws_addPlannedPerksToUIData = obj.addPlannedPerksToUIData;
-		obj.addPlannedPerksToUIData = function( _entity )
+	if (::Is_PlanYourPerks_Exist && q.contains("addPlannedPerksToUIData")) {
+		q.addPlannedPerksToUIData = @(__original) function( _entity )
 		{
-			local PlannedPerksDict = {}
 			//weird error
-			if (_entity.getPlannedPerks().len() == 0) return ws_addPlannedPerksToUIData(_entity)
-			foreach(key, value in _entity.getPlannedPerks()){
+			if (_entity.getPlannedPerks().len() == 0) return __original(_entity);
+			local PlannedPerksDict = {}
+			foreach(key, value in _entity.getPlannedPerks())
+			{
 				PlannedPerksDict[key] <- value
 			}
-			return PlannedPerksDict
+			return PlannedPerksDict;
 		}
 	}
 	

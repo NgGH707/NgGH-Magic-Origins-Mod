@@ -1,4 +1,4 @@
-::mods_hookExactClass("entity/tactical/enemies/legend_rock_unhold", function (obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/legend_rock_unhold", function (obj) 
 {
 	/*
 	local assignRandomEquipment = obj.assignRandomEquipment;
@@ -16,7 +16,7 @@
 
 	    this.m.Items.equip(::new("scripts/items/legend_armor/barbarians/nggh_mod_unhold_armor_heavy"));
 		this.m.Items.equip(::new("scripts/items/legend_helmets/barbarians/nggh_mod_unhold_helmet_heavy"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_vengeance"));
+		this.m.Skills.add(::new("scripts/skills/perks/perk_legend_vengeance"));
 		this.m.Skills.add(::new("scripts/skills/perks/perk_colossus"));
 		return true;
 	}

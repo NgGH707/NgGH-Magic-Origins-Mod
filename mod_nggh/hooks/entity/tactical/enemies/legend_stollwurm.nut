@@ -1,9 +1,8 @@
-::mods_hookExactClass("entity/tactical/enemies/legend_stollwurm", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/legend_stollwurm", function(q) 
 {
-	local onInit = obj.onInit;
-	obj.onInit = function()
+	q.onInit = @(__original) function()
 	{
-		onInit();
+		__original();
 		local chance = 10;
 
 		if (!::Tactical.State.isScenarioMode() && ::World.getTime().Days >= 200)
@@ -16,22 +15,21 @@
 		::Nggh_MagicConcept.HooksHelper.randomlyRollPerk(this, [::Const.Perks.PerkDefs.NggHLindwurmBody], chance + 15);
 	}
 
-	obj.makeMiniboss <- function()
+	q.makeMiniboss <- function()
 	{
-		if (!this.actor.makeMiniboss())
+		if (!actor.makeMiniboss())
 			return false;
 
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_lindwurm_acid"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_nggh_lindwurm_body"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_colossus"));
-		this.m.Skills.add(::new("scripts/skills/perks/perk_rebound"));
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_lindwurm_acid"));
+		getSkills().add(::new("scripts/skills/perks/perk_nggh_lindwurm_body"));
+		getSkills().add(::new("scripts/skills/perks/perk_colossus"));
+		getSkills().add(::new("scripts/skills/perks/perk_legend_rebound"));
 
-		if (this.m.Tail != null && !this.m.Tail.isNull())
-		{
-			this.m.Tail.makeMiniboss();
-			this.m.Tail.m.Skills.add(::new("scripts/skills/perks/perk_nggh_lindwurm_body"));
-			this.m.Tail.m.Skills.add(::new("scripts/skills/perks/perk_colossus"));
-			this.m.Tail.m.Skills.add(::new("scripts/skills/perks/perk_rebound"));
+		if (!::MSU.isNull(m.Tail)) {
+			m.Tail.makeMiniboss();
+			m.Tail.getSkills().add(::new("scripts/skills/perks/perk_nggh_lindwurm_body"));
+			m.Tail.getSkills().add(::new("scripts/skills/perks/perk_colossus"));
+			m.Tail.getSkills().add(::new("scripts/skills/perks/perk_legend_rebound"));
 		}
 
 		return true;

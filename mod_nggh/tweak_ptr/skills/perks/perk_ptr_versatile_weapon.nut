@@ -1,20 +1,17 @@
-::mods_hookExactClass("skills/perks/perk_ptr_versatile_weapon", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/perks/perk_ptr_versatile_weapon", function ( q )
 {
-	obj.m.IsForceEnabled <- false;
-	obj.onAdded <- function()
+	q.m.IsForceEnabled <- false;
+	q.onAdded <- function()
 	{
 		::Nggh_MagicConcept.HooksHelper.autoEnableForBeasts(this);
-	};
-	obj.onUpdate <- function( _properties )
+	}
+	q.onUpdate = @() function( _properties )
 	{
-		if (!this.m.IsForceEnabled)
-		{
+		if (!this.m.IsForceEnabled) {
 			local weapon = this.getContainer().getActor().getMainhandItem();
 
 			if (weapon == null || !weapon.isWeaponType(::Const.Items.WeaponType.Sword))
-			{
 				return;
-			}
 		}
 
 		_properties.MeleeDamageMult += this.m.Bonus;

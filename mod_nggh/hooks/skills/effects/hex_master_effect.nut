@@ -1,21 +1,16 @@
-::mods_hookExactClass("skills/effects/hex_master_effect", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/effects/hex_master_effect", function(q) 
 {
-	obj.onDamageReceived = function(_attacker,_damageHitpoints,_damageArmor)
-	{
-		if (this.m.Slave == null || this.m.Slave.isNull() || !this.m.Slave.isAlive())
-		{
-			this.removeSelf();
+	q.onDamageReceived = @() function(_attacker,_damageHitpoints,_damageArmor) {
+		if (::MSU.isNull(m.Slave) || !m.Slave.isAlive()) {
+			removeSelf();
 			return;
 		}
 
 		if (_damageHitpoints > 0)
-		{
-			this.m.Slave.applyDamage(_damageHitpoints, this.getContainer().getActor());
-		}
+			m.Slave.applyDamage(_damageHitpoints, getContainer().getActor());
 
-		if (this.m.Slave == null || this.m.Slave.isNull() || !this.m.Slave.isAlive())
-		{
-			this.removeSelf();
-		}
+		if (::MSU.isNull(m.Slave) || !m.Slave.isAlive()) {
+			removeSelf();
 	}
+
 });

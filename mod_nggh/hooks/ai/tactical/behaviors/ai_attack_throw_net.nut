@@ -1,6 +1,6 @@
-::mods_hookExactClass("ai/tactical/behaviors/ai_attack_throw_net", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/ai/tactical/behaviors/ai_attack_throw_net", function(q) 
 {
-	obj.m.PossibleSkills.extend([
-		"actives.mage_legend_magic_web_bolt",
+	q.m.PossibleSkills.extend([
+		"actives.legend_magic_web_bolt",
 	]);
 });

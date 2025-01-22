@@ -1,6 +1,6 @@
-::mods_hookExactClass("ai/tactical/behaviors/ai_warcry", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/ai/tactical/behaviors/ai_warcry", function ( q )
 {
-	obj.m.PossibleSkills.extend([
+	q.m.PossibleSkills.extend([
 		"actives.frenzy",
 		"actives.intimidate"
 	]);

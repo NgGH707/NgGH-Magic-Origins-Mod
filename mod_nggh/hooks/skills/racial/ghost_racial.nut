@@ -1,19 +1,19 @@
-::mods_hookExactClass("skills/racial/ghost_racial", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/racial/ghost_racial", function(q) 
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
-		this.m.Description = "This character doesn\'t have an actual body or a definite form. Making it extremely hard to land on a hit.";
-		this.m.Icon = "skills/racial_ghost.png";
-		this.m.IconMini = "racial_ghost_mini";
-		this.m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.First + 1;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = false;
-	};
-    obj.onUpdate <- function( _properties )
+		__original();
+		m.Description = "This character doesn\'t have an actual body or a definite form. Making it extremely hard to land on a hit.";
+		m.Icon = "skills/racial_ghost.png";
+		m.IconMini = "racial_ghost_mini";
+		m.Type = ::Const.SkillType.Racial | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.First + 1;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = false;
+	}
+
+    q.onUpdate <- function( _properties )
     {
 		_properties.IsImmuneToFire = true;
     	_properties.IsImmuneToBleeding = true;
@@ -30,4 +30,5 @@
 		_properties.IsMovable = false;
 		_properties.MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack] *= 1000.0;
     }
+    
 });

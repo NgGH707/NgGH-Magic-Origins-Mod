@@ -1,9 +1,8 @@
-::mods_hookNewObject("entity/tactical/tactical_entity_manager", function (obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/tactical_entity_manager", function(q) 
 {
-	obj.m.RandomizedFactor <- null;
+	q.m.RandomizedFactor <- null;
 
-	local ws_spawn = obj.spawn;
-	obj.spawn = function( _properties )
+	q.spawn = @(__original) function( _properties )
 	{
 		local all_players = _properties.IsUsingSetPlayers ? _properties.Players : ::World.getPlayerRoster().getAll();
 
@@ -12,22 +11,19 @@
 			p.onBeforeCombatStarted();
 		}
 
-		ws_spawn(_properties);
+		__original(_properties);
 	}
 
-	local ws_setupEntity = obj.setupEntity;
-	obj.setupEntity = function( _e, _t )
+	q.setupEntity = @(__original) function( _e, _t )
 	{
-		ws_setupEntity(_e, _t);
+		__original(_e, _t);
 		local update = false;
 
-		if (::Nggh_MagicConcept.RandomizedStatsMode.IsEnabled && !_e.isNonCombatant() && ::Math.rand(1, 100) <= ::Nggh_MagicConcept.RandomizedStatsMode.Chance)
-		{
+		if (::Nggh_MagicConcept.Mod.ModSettings.getSetting("randomize_stats_is_enabled").getValue() && !_e.isNonCombatant() && ::Math.rand(1, 100) <= ::Nggh_MagicConcept.RandomizedStatsMode.Chance) {
 			local b = _e.m.BaseProperties;
-			
 			foreach(key in ::Const.StatsToRandomized)
 			{
-				b[key] = ::Math.ceil(b[key] * ::Math.rand(this.m.RandomizedFactor.Min, this.m.RandomizedFactor.Max) * 0.01);
+				b[key] = ::Math.ceil(b[key] * ::Math.rand(m.RandomizedFactor.Min, m.RandomizedFactor.Max) * 0.01);
 			}
 
 			update = true;
@@ -40,10 +36,9 @@
 			_e.setHitpointsPct(1.0);
 	}
 
-	obj.calculateRandomizedStatsScaling <- function()
+	q.calculateRandomizedStatsScaling <- function()
 	{
-		local days = ::World.getTime().Days;
-		local ret = {
+		local days = ::World.getTime().Days, ret = {
 			Min = ::Nggh_MagicConcept.RandomizedStatsMode.Min,
 			Max = ::Nggh_MagicConcept.RandomizedStatsMode.Max,
 		};
@@ -71,6 +66,7 @@
 			ret.Max += 10;
 		}
 
-		this.m.RandomizedFactor = ret;
+		m.RandomizedFactor = ret;
 	}
+	
 });
