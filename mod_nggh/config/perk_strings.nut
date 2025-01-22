@@ -389,7 +389,7 @@
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue."
 		+ "\n• Increases maximum range by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] tile."
-		+ "\n• Now also deals up to [color=" + ::Const.UI.Color.DamageValue + "]10[/color] armor piercing damage.";
+		+ "\n• Now also deals up to [color=" + ::Const.UI.Color.DamageValue + "]15[/color] armor piercing damage.";
 
 ::Const.Strings.PerkDescription.NggHSerpentVenom <- "\'Evolve to gain a venom gland to poison your prey. Deadly but doesn\'t persist long.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Serpent Bite[/color]"
@@ -441,38 +441,37 @@
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Nightmare[/color]"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Builds up [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] less Fatigue."
-		+ "\n• Gains additional damage equal to [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color] of current Resolve."
+		+ "\n• Gains additional damage equal to [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color] of current Resolve."
 		+ "\n• Restores your Hitpoints up to [color=" + ::Const.UI.Color.PositiveValue + "]25%[/color] of the damage dealt.";
 
-::Const.Strings.PerkDescription.NggHAlpSleepSpec <- "\'Master your ability to put your prey in a long lasting sleep.\'"
+::Const.Strings.PerkDescription.NggHAlpSleepSpec <- "\'Master your ability to put your prey in to sleep easier.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Sleep[/color]"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Increases the chance to put a target to sleep by [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color] of current Resolve."
-		+ "\n• Increases the duration of [color=" + ::Const.UI.Color.NegativeValue + "]Sleeping[/color] effect by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] turn."
 		+ "\n• Reduces the AP cost by [color=" + ::Const.UI.Color.PositiveValue + "]1[/color].";
 
-::Const.Strings.PerkDescription.NggHAlpAfterWake <- "\'Preys wake up by nightmare are easy to break.\'"
+::Const.Strings.PerkDescription.NggHAlpAfterWake <- "\'Preys waken up by nightmare are easy to break.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Nightmare[/color]"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Ignores up to [color=" + ::Const.UI.Color.PositiveValue + "]10%[/color] of target Resolve."
 		+ "\n• Has a [color=" + ::Const.UI.Color.PositiveValue + "]33%[/color] chance to not wake up the target."
-		+ "\n• When [color=" + ::Const.UI.Color.NegativeValue + "]Sleeping[/color] effect wears off by attacks, causes a morale check.";
+		+ "\n• When [color=" + ::Const.UI.Color.NegativeValue + "]Sleeping[/color] effect wears off by your attacks, roll a negative morale check on that sleeping target.";
 
 ::Const.Strings.PerkDescription.NggHAlpAfterimage <- "\'Become more annoying than ever.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 	+ "\nAfter teleporting by any mean, applies the below effect:\n"
 		+ "\n• Grants [color=" + ::Const.UI.Color.NegativeValue + "]Afterimage[/color] effect that gives [color=" + ::Const.UI.Color.PositiveValue + "]+15[/color] Melee Defense and Ranged Defense and lasts till the start of your next turn."
-		+ "\n• Additional stack of [color=" + ::Const.UI.Color.NegativeValue + "]Afterimage[/color] effect only gives [color=" + ::Const.UI.Color.PositiveValue + "]+5[/color] Melee Defense and Ranged Defense."; 
+		+ "\n• Additional stacks of [color=" + ::Const.UI.Color.NegativeValue + "]Afterimage[/color] effect, each only gives [color=" + ::Const.UI.Color.PositiveValue + "]+5[/color] Melee Defense and Ranged Defense."; 
 
 ::Const.Strings.PerkDescription.NggHAlpLivingNightmare <- "\'What would be more terrifying than a nightmare? A nightmare outside of a dream.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Nightmare[/color]"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
-		+ "\n• Has a chance to spawn a living Nightmare upon killing an enemy."
-		+ "\n• The chance is depending on how many times you have used [color=" + ::Const.UI.Color.NegativeValue + "]Nightmare[/color] skill on the same target.";
+		+ "\n• Has a chance to spawn a living Nightmare upon landing a killing blow to an enemy."
+		+ "\n• The chance is based on how many times you used [color=" + ::Const.UI.Color.NegativeValue + "]Nightmare[/color] skill on that same target.";
 
 ::Const.Strings.PerkDescription.NggHAlpMindBreak <- "\'Definitely not some dirty shit from hentai.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 4 AP and builds 8 Fatigue."
+		+ "\n• Costs 4 AP and builds up 8 Fatigue."
 		+ "\n• Deals [color=" + ::Const.UI.Color.DamageValue + "]5[/color] - [color=" + ::Const.UI.Color.DamageValue + "]10[/color] armor ignoring damage."
 		+ "\n• Inflicts [color=" + ::Const.UI.Color.NegativeValue + "]Mind Broken[/color] effect which lowers affected target\'s Resolve by [color=" + ::Const.UI.Color.PositiveValue + "]5[/color] points."
 		+ "\n• [color=" + ::Const.UI.Color.NegativeValue + "]Mind Broken[/color] effect lasts up to 3 turns and can also be stacked.";
@@ -487,21 +486,21 @@
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Realm of Burning Nightmares[/color]"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Increases the fire damage by [color=" + ::Const.UI.Color.DamageValue + "]5[/color]-[color=" + ::Const.UI.Color.DamageValue + "]20[/color] points."
-		+ "\n• Fire damage may cause horrible burnt wounds."
+		+ "\n• Fire damage may cause horrible burned wounds."
 		+ "\n• Duration of flame is [color=" + ::Const.UI.Color.NegativeValue + "]halved[/color].";
 
-::Const.Strings.PerkDescription.NggHAlpHellishFlame <- "\'You might like Hell's Kitchen but i doubt you would like Hell Fire.\'"
+::Const.Strings.PerkDescription.NggHAlpHellishFlame <- "\'You might like Hell\'s Kitchen but i doubt you would like Hell Fire.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Affected Skills:[/u][/color] [color=" + ::Const.UI.Color.NegativeValue + "]Realm of Burning Nightmares[/color]"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Applies fire damage as soon as the skill is used."
 		+ "\n• Increases the fire damage by [color=" + ::Const.UI.Color.DamageValue + "]5[/color]-[color=" + ::Const.UI.Color.DamageValue + "]12[/color] points.";
 
-::Const.Strings.PerkDescription.NggHAlpShadowCopy <- "\'Two are better than one.\'"
+::Const.Strings.PerkDescription.NggHAlpShadowCopy <- "\'Two is better than one.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 7 AP and builds 30 Fatigue."
+		+ "\n• Costs 7 AP and builds up 45 Fatigue."
 		+ "\n• Allows you to engulf a huge area ([color=" + ::Const.UI.Color.PositiveValue + "]7[/color] tiles) with darkness that lasts for [color=" + ::Const.UI.Color.PositiveValue + "]3[/color] rounds."
-		+ "\n• Spawns a Nightmare monster if you have not controlled one already."
-		+ "\n• The darkness zone will keep respawning your Nightmare monster at the start of your turn after it was killed.";
+		+ "\n• Spawns a Nightmare monster within darkness tiles if you do not control one already."
+		+ "\n• Darkness tiles will keep respawning your Nightmare monster at the start of your turn after it was killed.";
 // nacho
 ::Const.Strings.PerkDescription.NggHNacho <- "Master your ghoulish abilities.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
@@ -518,7 +517,7 @@
 
 ::Const.Strings.PerkDescription.NggHNachoFrenzy <- "\'Thrist for blood.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 3 AP and builds 25 Fatigue."
+		+ "\n• Costs 3 AP and builds up 25 Fatigue."
 		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+15%[/color] Attack Damage."
 		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+15%[/color] Melee Skill."
 		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]+50%[/color] Initiative."
@@ -531,7 +530,7 @@
 
 ::Const.Strings.PerkDescription.NggHNachoVomit <- "\'Uwwwww owhwhwhwh!\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 6 AP and builds 15 Fatigue."
+		+ "\n• Costs 6 AP and builds up 15 Fatigue."
 		+ "\n• Allows your 'last meal' to make its way out of your stomache."
 		+ "\n• Can not use [color=" + ::Const.UI.Color.NegativeValue + "]Swallow Whole[/color] skill until your next turn after you have used this skill.";
 
@@ -551,14 +550,14 @@
 // unhold
 ::Const.Strings.PerkDescription.NggH_Unhold_Grapple <- "\'Grab your opponent and manhandle them to the ground.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 5 AP and builds 35 Fatigue."
+		+ "\n• Costs 5 AP and builds up 35 Fatigue."
 		+ "\n• To target has [color=" + ::Const.UI.Color.NegativeValue + "]Immunity to Grab and Knockback[/color], inflicting fatigue and grappling that target for 2 turns with a chance of disarming them"
 		+ "\n• To target does not have [color=" + ::Const.UI.Color.NegativeValue + "]Immunity to Grab and Knockback[/color], flailing that target around 3 times and dealing damage based on their armor rating"
 		+ "\n• Can also be used to uproot trees or lift boulder.";
 
 ::Const.Strings.PerkDescription.NggH_Unhold_UnarmedAttack <- "\'Learn the basic of Hand-to-Hand combat.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 5 AP and builds 20 Fatigue."
+		+ "\n• Costs 5 AP and builds up 20 Fatigue."
 		+ "\n• A simple single target attack skill."
 		+ "\n• Has a [color=" + ::Const.UI.Color.NegativeValue + "]100%[/color] chance to stagger on hit.";
 
@@ -601,21 +600,21 @@
 
 ::Const.Strings.PerkDescription.NggHSchratUprootAoE <- "\'A ground erupting attack, sending rock shrapnels everywhere.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 6 AP and builds 25 Fatigue."
+		+ "\n• Costs 6 AP and builds up 25 Fatigue."
 		+ "\n• Can hit up to 6 targets."
 		+ "\n• Has a [color=" + ::Const.UI.Color.PositiveValue + "]+10%[/color] chance to hit."
 		+ "\n• Removes all [color=" + ::Const.UI.Color.NegativeValue + "]Spearwall[/color], [color=" + ::Const.UI.Color.NegativeValue + "]Shieldwall[/color] and [color=" + ::Const.UI.Color.NegativeValue + "]Riposte[/color] effects of all adjacent entities.";
 // lindwurm
 ::Const.Strings.PerkDescription.NggHLindwurmAcid <- "\'Hmm yes! An acid spitting dragon.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 5 AP, 60 HP and builds 30 Fatigue."
+		+ "\n• Costs 5 AP, 60 HP and builds up 30 Fatigue."
 		+ "\n• Has a range of [color=" + ::Const.UI.Color.PositiveValue + "]3[/color] tiles."
 		+ "\n• Covers the target and may be anyone nearby in acidic blood, creating grievous burnt wounds, melting away any kind of armor."
 		+ "\n• May inflict [color=" + ::Const.UI.Color.NegativeValue + "]Blinded[/color] effect if the attack lands on the head.";
 
 ::Const.Strings.PerkDescription.NggHLindwurmIntimidate <- "\'Scare them with your huge c... I meant snake.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 7 AP and builds 36 Fatigue."
+		+ "\n• Costs 7 AP and builds up 36 Fatigue."
 		+ "\n• On use, causes a morale check on any enemy within 3 tiles radius."
 		+ "\n• Reduces up to [color=" + ::Const.UI.Color.PositiveValue + "]20%[/color] of Melee Skill, Ranged Skill, Melee Defense, Ranged Defense and Resolve of any enemy within 3 tiles radius."
 		+ "\n• This effect only lasts for [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] turn.";
@@ -649,7 +648,7 @@
 
 ::Const.Strings.PerkDescription.NggHKrakenSwing <- "\'What better use of your tentacles than swinging it around? ...! Stop! we do not talk about that.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 5 AP and builds 36 Fatigue."
+		+ "\n• Costs 5 AP and builds up 36 Fatigue."
 		+ "\n• Can hit up to 3 targets at once."
 		+ "\n• Only for your tentacles.";
 
@@ -698,7 +697,7 @@
 
 ::Const.Strings.PerkDescription.NggHGhostPhase <- "\'What do you think when you meet a ghost then seeing it passes through your body?\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 6 AP and builds 0 Fatigue."
+		+ "\n• Costs 6 AP and builds up 0 Fatigue."
 		+ "\n• Allows you to attack to up to 2 targets while also moving through those targets."
 		+ "\n• Deals armor ignoring damage.";
 
@@ -708,7 +707,7 @@
 // misc
 ::Const.Strings.PerkDescription.NggHMiscLineBreaker <- "\'Meat wall can not stop you, just break through it with brute force.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Active + "][u]Active:[/u][/color]"
-		+ "\n• Costs 4 AP and builds 30 Fatigue."
+		+ "\n• Costs 4 AP and builds up 30 Fatigue."
 		+ "\n• Allows you to break through enemy defensive line to reach those at the backline.";
 
 ::Const.Strings.PerkDescription.NggHMiscChampion <- "\'The toughest of the strongest of their kind.\'"

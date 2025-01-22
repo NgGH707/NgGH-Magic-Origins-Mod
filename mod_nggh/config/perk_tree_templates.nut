@@ -19,7 +19,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.Underdog,
 	],
 	[
-		::Const.Perks.PerkDefs.PushTheAdvantage,
+		::Const.Perks.PerkDefs.LegendPushTheAdvantage,
 		::Const.Perks.PerkDefs.NggHAlpAfterimage,
 		::Const.Perks.PerkDefs.NggHAlpSleepSpec,
 	],
@@ -29,7 +29,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.NggHAlpAfterWake,
 	],
 	[
-		::Const.Perks.PerkDefs.ReturnFavor,
+		::Const.Perks.PerkDefs.LegendReturnFavor,
 		::Const.Perks.PerkDefs.NggHAlpLivingNightmare,
 		::Const.Perks.PerkDefs.LegendMindOverBody,
 	],
@@ -58,7 +58,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.Underdog,
 	],
 	[
-		::Const.Perks.PerkDefs.PushTheAdvantage,
+		::Const.Perks.PerkDefs.LegendPushTheAdvantage,
 		::Const.Perks.PerkDefs.NggHAlpControlFlame,
 	],
 	[
@@ -68,7 +68,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.NggHMiscNighttime,
 	],
 	[
-		::Const.Perks.PerkDefs.ReturnFavor,
+		::Const.Perks.PerkDefs.LegendReturnFavor,
 		::Const.Perks.PerkDefs.NggHAlpShadowCopy,
 		::Const.Perks.PerkDefs.LegendMindOverBody,
 	],
@@ -213,7 +213,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.Berserk,
 		::Const.Perks.PerkDefs.LegendTerrifyingVisage,
 		::Const.Perks.PerkDefs.LegendSecondWind,
-		::Const.Perks.PerkDefs.LastStand,
+		::Const.Perks.PerkDefs.LegendLastStand,
 		::Const.Perks.PerkDefs.NggHWolfEnrage,
 	],
 	[
@@ -419,7 +419,7 @@ if (!("PerksCharmedUnit" in ::Const))
 	[
 		::Const.Perks.PerkDefs.LegendAlert,
 		::Const.Perks.PerkDefs.Pathfinder,
-		::Const.Perks.PerkDefs.BoondockBlade,
+		::Const.Perks.PerkDefs.LegendBoondockBlade,
 		::Const.Perks.PerkDefs.SunderingStrikes,
 	],
 	[
@@ -459,7 +459,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.FastAdaption,
 		::Const.Perks.PerkDefs.Pathfinder,
 		::Const.Perks.PerkDefs.Recover,
-		::Const.Perks.PerkDefs.BoondockBlade,
+		::Const.Perks.PerkDefs.LegendBoondockBlade,
 		::Const.Perks.PerkDefs.SunderingStrikes,
 	],
 	[
@@ -480,10 +480,9 @@ if (!("PerksCharmedUnit" in ::Const))
 	],
 	[
 		::Const.Perks.PerkDefs.NggH_Spider_Web,
-		::Const.Perks.PerkDefs.PushTheAdvantage,
+		::Const.Perks.PerkDefs.LegendPushTheAdvantage,
 		::Const.Perks.PerkDefs.Underdog,
 		::Const.Perks.PerkDefs.DevastatingStrikes,
-		
 	],
 	[
 		::Const.Perks.PerkDefs.NggH_Spider_ToughCarapace,
@@ -517,7 +516,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.LegendSmackdown,
 	],
 	[
-		::Const.Perks.PerkDefs.BloodyHarvest,
+		::Const.Perks.PerkDefs.LegendBloodyHarvest,
 		::Const.Perks.PerkDefs.NggH_Unhold_SpecFists,
 		::Const.Perks.PerkDefs.NggH_Unhold_Fling,
 		::Const.Perks.PerkDefs.NggHMiscLineBreaker,
@@ -527,7 +526,7 @@ if (!("PerksCharmedUnit" in ::Const))
 	],
 	[
 		::Const.Perks.PerkDefs.LegendGruesomeFeast,
-		::Const.Perks.PerkDefs.ReturnFavor,
+		::Const.Perks.PerkDefs.LegendReturnFavor,
 	],
 	[
 		::Const.Perks.PerkDefs.KillingFrenzy,
@@ -552,7 +551,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.LegendSmackdown,
 	],
 	[
-		::Const.Perks.PerkDefs.BloodyHarvest,
+		::Const.Perks.PerkDefs.LegendBloodyHarvest,
 	],
 	[
 		::Const.Perks.PerkDefs.LegendFullForce,
@@ -560,7 +559,7 @@ if (!("PerksCharmedUnit" in ::Const))
 	],
 	[
 		::Const.Perks.PerkDefs.LegendGruesomeFeast,
-		::Const.Perks.PerkDefs.ReturnFavor,
+		::Const.Perks.PerkDefs.LegendReturnFavor,
 		::Const.Perks.PerkDefs.Berserk,
 	],
 	[
@@ -602,7 +601,7 @@ if (!("PerksCharmedUnit" in ::Const))
 	[
 		::Const.Perks.PerkDefs.LegendTerrifyingVisage,
 		::Const.Perks.PerkDefs.LegendSecondWind,
-		::Const.Perks.PerkDefs.LastStand,
+		::Const.Perks.PerkDefs.LegendLastStand,
 		::Const.Perks.PerkDefs.InspiringPresence,
 		::Const.Perks.PerkDefs.NggHWolfEnrage,
 		::Const.Perks.PerkDefs.Fearsome,

@@ -59,16 +59,15 @@ this.nggh_mod_cosmetic <- ::inherit("scripts/skills/skill", {
 
 	function isHidden()
 	{
-		if (!::Nggh_MagicConcept.IsCosmeticEnable)
+		if (!::Nggh_MagicConcept.Mod.ModSettings.getSetting("cosmetic_helmet").getValue())
 			return true;
-
-		local actor = this.getContainer().getActor();
-		return actor.getHeadItem() == null && actor.getBodyItem() == null;
+			
+		return getContainer().getActor().getHeadItem() == null && getContainer().getActor().getBodyItem() == null;
 	}
 
 	function onAfterUpdate( _properties )
 	{
-		if (!::Nggh_MagicConcept.IsCosmeticEnable)
+		if (!::Nggh_MagicConcept.Mod.ModSettings.getSetting("cosmetic_helmet").getValue())
 			return;
 
 		local actor = this.getContainer().getActor();

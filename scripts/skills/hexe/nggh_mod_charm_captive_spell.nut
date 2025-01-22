@@ -86,7 +86,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			}
 		]);
 
-		if (!::Nggh_MagicConcept.IsAbleToCharmInArena && ::Tactical.isActive() && ("StrategicProperties" in ::Tactical.State.m) && ::Tactical.State.m.StrategicProperties != null && ::Tactical.State.m.StrategicProperties.IsArenaMode)
+		if (!::Nggh_MagicConcept.Mod.ModSettings.getSetting("arena_charm").getValue() && ::Tactical.isActive() && ("StrategicProperties" in ::Tactical.State.m) && ::Tactical.State.m.StrategicProperties != null && ::Tactical.State.m.StrategicProperties.IsArenaMode)
 		{
 			ret.push({
 				id = 99,
@@ -807,8 +807,7 @@ this.nggh_mod_charm_captive_spell <- ::inherit("scripts/skills/skill", {
 			return;
 		}
 
-		if (!::Nggh_MagicConcept.IsAbleToCharmInArena && ("StrategicProperties" in ::Tactical.State.m) && ::Tactical.State.m.StrategicProperties != null && ::Tactical.State.m.StrategicProperties.IsArenaMode)
-		{
+		if (!::Nggh_MagicConcept.Mod.ModSettings.getSetting("arena_charm").getValue() && ("StrategicProperties" in ::Tactical.State.m) && ::Tactical.State.m.StrategicProperties != null && ::Tactical.State.m.StrategicProperties.IsArenaMode) {
 			this.m.Count = 0;
 			return;
 		}

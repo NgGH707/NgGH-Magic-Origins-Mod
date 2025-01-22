@@ -239,7 +239,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 
 		local garbage = [];
 		local corpses = ::Tactical.Entities.getCorpses();
-		local hp = ::Nggh_MagicConcept.IsOPMode ? 100 : 25;
+		local hp = !::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue() ? 100 : 25;
 		local num = corpses.len() - 1;
 
 		for (local i = num; i >= 0; --i) 

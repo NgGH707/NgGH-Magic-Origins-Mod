@@ -201,7 +201,7 @@
 	Descriptions = ["Misc"],
 	Tree = [
 		[
-			::Const.Perks.PerkDefs.BoondockBlade,
+			::Const.Perks.PerkDefs.LegendBoondockBlade,
 			::Const.Perks.PerkDefs.NggHMiscDaytime
 		],
 		[],
@@ -466,7 +466,7 @@
 	Descriptions = ["spider"],
 	Tree = [
 		[
-			::Const.Perks.PerkDefs.BoondockBlade,
+			::Const.Perks.PerkDefs.LegendBoondockBlade,
 		],
 		[],
 		[],

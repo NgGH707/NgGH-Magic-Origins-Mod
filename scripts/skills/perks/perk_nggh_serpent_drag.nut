@@ -18,5 +18,15 @@ this.perk_nggh_serpent_drag <- ::inherit("scripts/skills/skill", {
 		_properties.IsSpecializedInThrowing = true;
 	}
 
+	function onAfterUpdate( _properties )
+	{
+		local skill = getContainer().getSkillByID("actives.serpent_hook");
+
+		if (skill == null) return;
+
+		skill.m.DragMinDamage += 5;
+		skill.m.DragMinDamage += 15;
+	}
+
 });
 

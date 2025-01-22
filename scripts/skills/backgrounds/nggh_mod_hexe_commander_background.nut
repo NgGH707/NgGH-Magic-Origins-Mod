@@ -456,7 +456,7 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		// check for the ritual event
 		::logInfo("Hexe Origin Ritual - Checking the conditions");
 
-		if (days < ::Nggh_MagicConcept.HexeOriginRitual.Cooldown)
+		if (days < ::Nggh_MagicConcept.Mod.ModSettings.getSetting("ritual_cooldown").getValue())
 		{
 			::logInfo("Hexe Origin Ritual - Days passed: " + days);
 			::World.Flags.increment("RitualTimer");

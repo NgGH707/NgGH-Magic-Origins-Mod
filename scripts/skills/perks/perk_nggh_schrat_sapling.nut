@@ -1,16 +1,23 @@
-this.perk_nggh_schrat_sapling <- ::inherit("scripts/skills/skill", {
-	m = {},
+perk_nggh_schrat_sapling <- ::inherit("scripts/skills/skill", {
+	m = {
+		Bonus = 10,
+	},
+	function getBonus()
+	{
+		return m.Bonus;
+	}
+
 	function create()
 	{
-		this.m.ID = "perk.sapling";
-		this.m.Name = ::Const.Strings.PerkName.NggHSchratSapling;
-		this.m.Description = ::Const.Strings.PerkDescription.NggHSchratSapling;
-		this.m.Icon = "ui/perks/perk_sapling.png";
-		this.m.Type = ::Const.SkillType.Perk;
-		this.m.Order = ::Const.SkillOrder.Perk;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = false;
+		m.ID = "perk.sapling";
+		m.Name = ::Const.Strings.PerkName.NggHSchratSapling;
+		m.Description = ::Const.Strings.PerkDescription.NggHSchratSapling;
+		m.Icon = "ui/perks/perk_sapling.png";
+		m.Type = ::Const.SkillType.Perk;
+		m.Order = ::Const.SkillOrder.Perk;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = false;
 	}
 
 });

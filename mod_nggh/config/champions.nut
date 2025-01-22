@@ -105,7 +105,7 @@
 // spider
 ::Const.World.Spawn.Troops.Spider.NameList <- ::Const.Strings.SpiderNames;
 ::Const.World.Spawn.Troops.Spider.TitleList <- null;
-::Const.World.Spawn.Troops.Spider.Variant = 2;
+::Const.World.Spawn.Troops.Spider.Variant = 1;
 
 ::Const.World.Spawn.Troops.LegendRedbackSpider.NameList <- ::Const.Strings.SpiderNames;
 ::Const.World.Spawn.Troops.LegendRedbackSpider.TitleList <- null;

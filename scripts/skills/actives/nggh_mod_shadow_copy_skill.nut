@@ -117,7 +117,7 @@ this.nggh_mod_shadow_copy_skill <- ::inherit("scripts/skills/skill", {
 		this.m.IsDoingForwardMove = false;
 		this.m.IsVisibleTileNeeded = false;
 		this.m.ActionPointCost = 7;
-		this.m.FatigueCost = 30;
+		this.m.FatigueCost = 45;
 		this.m.MinRange = 0;
 		this.m.MaxRange = 10;
 		this.m.MaxLevelDifference = 4;
@@ -345,16 +345,13 @@ this.nggh_mod_shadow_copy_skill <- ::inherit("scripts/skills/skill", {
 	{
 		::Tactical.getHighlighter().addOverlayIcon("mortar_target_02", _targetTile, _targetTile.Pos.X, _targetTile.Pos.Y);	
 
-		for( local i = 0; i < 6; i = ++i )
+		for( local i = 0; i < 6; ++i )
 		{
 			if (!_targetTile.hasNextTile(i))
-			{
-			}
-			else
-			{
-				local nextTile = _targetTile.getNextTile(i);
-				::Tactical.getHighlighter().addOverlayIcon("mortar_target_02", nextTile, nextTile.Pos.X, nextTile.Pos.Y);	
-			}
+				continue;
+
+			local nextTile = _targetTile.getNextTile(i);
+			::Tactical.getHighlighter().addOverlayIcon("mortar_target_02", nextTile, nextTile.Pos.X, nextTile.Pos.Y);	
 		}
 	}
 

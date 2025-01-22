@@ -214,7 +214,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 				_event.m.Hexe.worsenMood(3.0, "Cursed for not collecting enough offerings");
 				_event.m.Hexe.getSkills().add(effect);
 
-				if (::Nggh_MagicConcept.HexeOriginRitual.IsLoseLevelWhenFail)
+				if (::Nggh_MagicConcept.Mod.ModSettings.getSetting("ritual_lose_level").getValue())
 				{
 					foreach ( bro in ::World.getPlayerRoster().getAll() )
 					{

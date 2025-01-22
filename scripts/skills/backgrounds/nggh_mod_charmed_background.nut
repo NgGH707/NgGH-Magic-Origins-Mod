@@ -89,7 +89,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 
 	function onChangeAttributes()
 	{
-		if (this.m.AttMods == null || ::Nggh_MagicConcept.IsOPMode)
+		if (this.m.AttMods == null || !::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue())
 			return ::Const.DefaultChangeAttributes;
 
 		return this.m.AttMods;
@@ -358,7 +358,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		if (this.m.TempData != null && ("Stats" in this.m.TempData) && this.m.TempData.Stats != null)
 			_properties.setValues(this.m.TempData.Stats);
 
-		if (!::Nggh_MagicConcept.IsOPMode)
+		if (::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue())
 		{
 			if (!this.getContainer().hasSkill("trait.player"))
 			{

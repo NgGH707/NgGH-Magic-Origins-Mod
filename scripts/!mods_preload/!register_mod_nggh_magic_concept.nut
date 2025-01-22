@@ -1,14 +1,18 @@
 ::Nggh_MagicConcept <- {
 	ID = "mod_nggh_magic_concept",
-	Name = "NgGH Magic Concept",
+	Name = "NgGH\'s Magic Concept",
 	Version = "3.0.0-beta.76",
 	ForceWhipPerk = false,
 	Class = {},
 };
 
-::mods_registerMod(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, "NecrOwO\'s Forbidden Magic");
-::mods_queue(::Nggh_MagicConcept.ID, "mod_legends, mod_msu(>=1.2.4), >mod_legends_PTR", function()
-{
+::Nggh_MagicConcept.HooksMod <- ::Hooks.register(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, "NecrOwO\'s Forbidden Magic");
+
+// mods need to run this mod
+::Nggh_MagicConcept.HooksMod.require(["mod_msu >= 1.2.7", "mod_legends >= 19.0.0"]);
+
+// this queue is to load the mod
+::Nggh_MagicConcept.HooksMod.queue([">mod_msu", ">mod_legends"], function() {
 	// define mod class of this mod
 	::Nggh_MagicConcept.Mod <- ::MSU.Class.Mod(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, ::Nggh_MagicConcept.Name);
 
@@ -17,7 +21,7 @@
 	::Nggh_MagicConcept.Mod.Registry.setUpdateSource(::MSU.System.Registry.ModSourceDomain.GitHub);
 
 	// add NexusMods mod source (for an easy link)
-	::Nggh_MagicConcept.Mod.Registry.addModSource(::MSU.System.Registry.ModSourceDomain.NexusMods, "https://www.nexusmods.com/battlebrothers/mods/207");
+	//::Nggh_MagicConcept.Mod.Registry.addModSource(::MSU.System.Registry.ModSourceDomain.NexusMods, "https://www.nexusmods.com/battlebrothers/mods/207");
 	// nexus api is closed, so can't really check update from it
 	//::Nggh_MagicConcept.Mod.Registry.setUpdateSource(::MSU.System.Registry.ModSourceDomain.NexusMods);
 
@@ -32,9 +36,10 @@
 
 	// load hook files
 	::include("mod_nggh/load.nut");
-	
-	//::nggh_processingEntries();
-	//::nggh_overwriteEntries();
 });
 
-
+::Nggh_MagicConcept.HooksMod.queue([">mod_msu", ">mod_legends"], function() {
+	::include("mod_nggh/config/charmed_units.nut"); // read this last
+	//::nggh_processingEntries();
+	//::nggh_overwriteEntries();
+}, ::Hooks.QueueBucket.AfterHooks);

@@ -18,7 +18,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 
 	function getDescription()
 	{
-		return this.m.Description + "\n[color=#bcad8c]The Price For Beauty:[/color] Have to perform a ritual every " + ::Nggh_MagicConcept.HexeOriginRitual.Cooldown + " day(s) or face the consequences.\n[color=#bcad8c]Avatar:[/color] If your Hexe dies, the campaign ends.[/p]";
+		return this.m.Description + "\n[color=#bcad8c]The Price For Beauty:[/color] Have to perform a ritual every 7 day(s) or face the consequences.\n[color=#bcad8c]Avatar:[/color] If your Hexe dies, the campaign ends.[/p]";
 	}
 
 	function onSpawnAssets()

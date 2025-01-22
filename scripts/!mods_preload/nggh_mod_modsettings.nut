@@ -1,10 +1,6 @@
 ::Nggh_MagicConcept.mod_settings <- function ()
 {
 	// default value of settings
-	::Nggh_MagicConcept.IsOPMode <- false;
-	::Nggh_MagicConcept.IsCosmeticEnable <- true;
-	::Nggh_MagicConcept.IsAbleToCharmInArena <- false;
-	::Nggh_MagicConcept.IsNoKrakenVsKraken <- false;
 	::Nggh_MagicConcept.ChanceToHireHexe <- 5;
 	::Nggh_MagicConcept.HexeOriginRitual <- {
 		IsLoseLevelWhenFail = true,
@@ -86,37 +82,19 @@
 // 1-content
 
 	//- option
-	local OP_Mode = page.addBooleanSetting("balance_mode", !::Nggh_MagicConcept.IsOPMode, "Nerfed Inhuman Players");
+	local OP_Mode = page.addBooleanSetting("balance_mode", true, "Nerfed Inhuman Players");
 	OP_Mode.setDescription("Determines whether the charmed units you get have original or nerfed stats, it also affects the effect and efficiency of certain skills when those skills are used by player.");
 	OP_Mode.setPersistence(true);
-	OP_Mode.addAfterChangeCallback(function (_oldValue)
-	{
-		if (this.getValue() == _oldValue) return;
-		::logInfo("After change \'Nerfed Non-human Players\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
-	    ::Nggh_MagicConcept.IsOPMode = !this.getValue();
-	});
 
 	//- option
-	local cosmetic = page.addBooleanSetting("cosmetic_helmet", ::Nggh_MagicConcept.IsCosmeticEnable, "Cosmetic Helmet");
+	local cosmetic = page.addBooleanSetting("cosmetic_helmet", true, "Cosmetic Helmet");
 	cosmetic.setDescription("Determines whether a beast-type player can make use of helmets or not. If enable, helmets only have decorative purpose for beast-type players.")
 	cosmetic.setPersistence(true);
-	cosmetic.addAfterChangeCallback(function (_oldValue)
-	{
-		if (this.getValue() == _oldValue) return;
-		::logInfo("After change \'Cosmetic Helmet\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
-	    ::Nggh_MagicConcept.IsCosmeticEnable = this.getValue();
-	});
 
 	//- option
-	local arena = page.addBooleanSetting("arena_charm", ::Nggh_MagicConcept.IsAbleToCharmInArena, "Charm In Arena");
+	local arena = page.addBooleanSetting("arena_charm", false, "Charm In Arena");
 	arena.setDescription("Determines whether you can use [color=" + ::Const.UI.Color.NegativeValue + "]Captive Charm[/color] in the arena.");
 	arena.setPersistence(true);
-	arena.addAfterChangeCallback(function (_oldValue)
-	{
-		if (this.getValue() == _oldValue) return;
-		::logInfo("After change \'Charm In Arena\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
-	    ::Nggh_MagicConcept.IsAbleToCharmInArena = this.getValue();
-	});
 
 	//- option
 	local canBetray = page.addBooleanSetting("can_betray", true, "Simp No More");
@@ -124,15 +102,9 @@
 	canBetray.setPersistence(true);
 
 	//- option
-	local kraken = page.addBooleanSetting("kraken_vs_kraken", ::Nggh_MagicConcept.IsNoKrakenVsKraken, "Skip Kraken vs Kraken");
+	local kraken = page.addBooleanSetting("kraken_vs_kraken", false, "Skip Kraken vs Kraken");
 	kraken.setDescription("If checked, allows you to skip the kraken vs kraken fight at the start of [color=" + ::Const.UI.Color.NegativeValue + "]Beast of Beasts[/color] origin.");
 	kraken.setPersistence(true);
-	kraken.addAfterChangeCallback(function (_oldValue)
-	{
-		if (this.getValue() == _oldValue) return;
-		::logInfo("After change \'Skip Kraken vs Kraken\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
-	    ::Nggh_MagicConcept.IsNoKrakenVsKraken = this.getValue();
-	});
 
 	//- option
 	local hiringHexeChance = page.addStringSetting("hiring_hexe_chance", ::Nggh_MagicConcept.ChanceToHireHexe.tostring(), "Recruit Hexe Event Chance (%)");
@@ -164,26 +136,14 @@
 // 2-content
 
 	//- option
-	local loseLevel = page.addBooleanSetting("ritual_lose_level", ::Nggh_MagicConcept.HexeOriginRitual.IsLoseLevelWhenFail, "Is Lose Simp Level When Failing");
+	local loseLevel = page.addBooleanSetting("ritual_lose_level", true, "Is Lose Simp Level When Failing");
 	loseLevel.setDescription("If checked, when you fail this ritual event, all your charmed characters also lose [color=" + ::Const.UI.Color.NegativeValue + "]1[/color] simp level. This level loss has [color=" + ::Const.UI.Color.PositiveValue + "]60%[/color] to be reversed if you successfully perform the next ritual.")
 	loseLevel.setPersistence(true);
-	loseLevel.addAfterChangeCallback(function (_oldValue)
-	{
-		if (this.getValue() == _oldValue) return;
-		::logInfo("After change \'Is Lose Simp Level When Failing\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
-	    ::Nggh_MagicConcept.HexeOriginRitual.IsLoseLevelWhenFail = this.getValue();
-	});
 
 	//- option
-	local ritual = page.addRangeSetting("ritual_cooldown", ::Nggh_MagicConcept.HexeOriginRitual.Cooldown, 1, 30, 1, "Cooldown");
+	local ritual = page.addRangeSetting("ritual_cooldown", 7, 1, 30, 1, "Cooldown");
 	ritual.setDescription("Determines how many days till the next mandatory Hexe Origin Ritual comes up again.");
 	ritual.setPersistence(true);
-	ritual.addAfterChangeCallback(function (_oldValue)
-	{
-		if (this.getValue() == _oldValue) return;
-		::logInfo("After change \'Hexe Origin Ritual - Cooldown\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
-	    ::Nggh_MagicConcept.HexeOriginRitual.Cooldown = this.getValue();
-	});
 
 	//- option
 	local modFactor = page.addStringSetting("ritual_factor", "" + ::Nggh_MagicConcept.HexeOriginRitual.Mult + "", "Standard Modifier");
@@ -195,9 +155,7 @@
 		local ret = tools.processFloatInput(this.getValue(), _oldValue);
 
 		if (!ret.Result)
-		{
 			this.set(_oldValue);
-		}
 
 		::logInfo("After change \'Hexe Origin Ritual - Modifying Factor\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.HexeOriginRitual.Mult = ret.Value;
@@ -213,9 +171,7 @@
 		local ret = tools.processIntegerInput(this.getValue(), _oldValue);
 
 		if (!ret.Result)
-		{
 			this.set(_oldValue);
-		}
 
 		::logInfo("After change \'Hexe Origin Ritual - Randomized Factor Min\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.HexeOriginRitual.RandomizeMin = ret.Value;
@@ -231,9 +187,7 @@
 		local ret = tools.processIntegerInput(this.getValue(), _oldValue);
 
 		if (!ret.Result)
-		{
 			this.set(_oldValue);
-		}
 
 		::logInfo("After change \'Hexe Origin Ritual - Randomized Factor Max\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.HexeOriginRitual.RandomizeMax = ret.Value;
@@ -249,9 +203,7 @@
 		local ret = tools.processIntegerInput(this.getValue(), _oldValue);
 
 		if (!ret.Result)
-		{
 			this.set(_oldValue);
-		}
 
 		::logInfo("After change \'Hexe Origin Ritual - Unlucky Chance\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.HexeOriginRitual.UnluckyChance = ret.Value;
@@ -267,9 +219,7 @@
 		local ret = tools.processFloatInput(this.getValue(), _oldValue);
 
 		if (!ret.Result)
-		{
 			this.set(_oldValue);
-		}
 
 		::logInfo("After change \'Hexe Origin Ritual - Unlucky Sacrifice Multiplier\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.HexeOriginRitual.UnluckyMult = ret.Value;
@@ -284,15 +234,9 @@
 // 3-content
 
 	//- option
-	local enable = page.addBooleanSetting("randomize_stats_is_enabled", ::Nggh_MagicConcept.RandomizedStatsMode.IsEnabled, "Is Enabled");
+	local enable = page.addBooleanSetting("randomize_stats_is_enabled", true, "Is Enabled");
 	enable.setDescription("Turns [color=" + ::Const.UI.Color.PositiveValue + "]ON[/color]/[color=" + ::Const.UI.Color.NegativeValue + "]OFF[/color] this Randomized Stats system.");
 	enable.setPersistence(true);
-	enable.addAfterChangeCallback(function (_oldValue)
-	{
-		if (this.getValue() == _oldValue) return;
-		::logInfo("After change \'Randomized Stats - Is Enabled\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
-	    ::Nggh_MagicConcept.RandomizedStatsMode.IsEnabled = this.getValue();
-	});
 
 	//- option
 	local chance = page.addStringSetting("randomize_stats_chance", ::Nggh_MagicConcept.RandomizedStatsMode.Chance.tostring() , "Chance (%)");
@@ -304,9 +248,7 @@
 		local ret = tools.processIntegerInput(this.getValue(), _oldValue);
 
 		if (!ret.Result)
-		{
 			this.set(_oldValue);
-		}
 
 		::logInfo("After change \'Randomized Stats - Chance\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.RandomizedStatsMode.Chance = ret.Value;
@@ -322,9 +264,7 @@
 		local ret = tools.processIntegerInput(this.getValue(), _oldValue);
 
 		if (!ret.Result)
-		{
 			this.set(_oldValue);
-		}
 
 		::logInfo("After change \'Randomized Stats - Default Lower Limit\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.RandomizedStatsMode.Min = ret.Value;
@@ -340,9 +280,7 @@
 		local ret = tools.processIntegerInput(this.getValue(), _oldValue);
 
 		if (!ret.Result)
-		{
 			this.set(_oldValue);
-		}
 
 		::logInfo("After change \'Randomized Stats - Default Upper Limit\': Changed old value: " + _oldValue + " to new value: " + this.getValue());
 	    ::Nggh_MagicConcept.RandomizedStatsMode.Max = ret.Value;

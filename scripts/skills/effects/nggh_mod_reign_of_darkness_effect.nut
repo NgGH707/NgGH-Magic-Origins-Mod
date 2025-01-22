@@ -1,5 +1,7 @@
 this.nggh_mod_reign_of_darkness_effect <- ::inherit("scripts/skills/skill", {
-	m = {},
+	m = {
+		BonusDamageFromAlp = 1.25,
+	},
 	function create()
 	{
 		this.m.ID = "effects.reign_of_darkness";
@@ -67,17 +69,13 @@ this.nggh_mod_reign_of_darkness_effect <- ::inherit("scripts/skills/skill", {
 		local myTile = this.getContainer().getActor().getTile();
 
 		if (myTile.Properties.Effect == null || myTile.Properties.Effect.Timeout == ::Time.getRound() || myTile.Properties.Effect.Type != "shadows")
-		{
 			this.removeSelf();
-		}
 	}
 
 	function onMovementCompleted( _tile )
 	{
 		if (_tile.Properties.Effect == null || _tile.Properties.Effect.Type != "shadows")
-		{
 			this.removeSelf();
-		}
 	}
 
 	function onRemoved()
@@ -85,9 +83,7 @@ this.nggh_mod_reign_of_darkness_effect <- ::inherit("scripts/skills/skill", {
 		local actor = this.getContainer().getActor();
 
 		if (actor.hasSprite("status_stunned"))
-		{
 			actor.getSprite("status_stunned").Visible = false;
-		}
 
 		actor.setDirty(true);
 	}
@@ -98,8 +94,7 @@ this.nggh_mod_reign_of_darkness_effect <- ::inherit("scripts/skills/skill", {
 		_properties.BraveryMult *= 0.95;
 		_properties.InitiativeMult *= 0.9;
 
-		if (actor.hasSprite("status_stunned"))
-		{
+		if (actor.hasSprite("status_stunned")) {
 			actor.getSprite("status_stunned").setBrush("bust_nightmare");
 			actor.getSprite("status_stunned").Visible = true;
 			actor.setDirty(true);
@@ -108,25 +103,13 @@ this.nggh_mod_reign_of_darkness_effect <- ::inherit("scripts/skills/skill", {
 
 	function onBeforeDamageReceived( _attacker, _skill, _hitInfo, _properties )
 	{	
-		if (_skill == null)
-		{
+		if (_skill == null || ::MSU.isNull(_attacker))
 			return;
-		}
 
-		if (_attacker == null)
-		{
+		if (!_attacker.getFlags().has("shadow") && _skill.getID() != "actives.nightmare")
 			return;
-		}
-
-		if (_attacker.getFlags().has("shadow"))
-		{
-		}
-		else if (_skill.getID() != "actives.nightmare")
-		{
-			return;
-		}
 		
-		_properties.DamageReceivedRegularMult *= 1.25;
+		_properties.DamageReceivedRegularMult *= m.BonusDamageFromAlp;
 	}
 
 });
