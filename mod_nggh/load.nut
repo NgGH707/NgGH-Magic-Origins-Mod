@@ -4,7 +4,6 @@
 ::include("mod_nggh/config/champions.nut")
 ::include("mod_nggh/config/projectiles.nut")
 ::include("mod_nggh/config/ai.nut")
-::include("mod_nggh/config/character.nut")
 ::include("mod_nggh/config/corpse.nut")
 ::include("mod_nggh/config/mount.nut")
 ::include("mod_nggh/config/hex.nut")

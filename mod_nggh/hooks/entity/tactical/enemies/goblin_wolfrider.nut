@@ -17,7 +17,7 @@
 		return true;
 	}
 
-	q.spawnWolf = function( _info )
+	q.spawnWolf = @() function( _info )
 	{
 		::Sound.play(::MSU.Array.rand(this.m.Sound[::Const.Sound.ActorEvent.DamageReceived]), ::Const.Sound.Volume.Actor * this.m.SoundVolume[::Const.Sound.ActorEvent.Other1], _info.Tile.Pos, 1.0);
 		local entity = ::Tactical.spawnEntity("scripts/entity/tactical/enemies/wolf", _info.Tile.Coords.X, _info.Tile.Coords.Y);
@@ -37,7 +37,7 @@
 		}
 	}
 
-	q.spawnGoblin = function( _info )
+	q.spawnGoblin = @() function( _info )
 	{
 		::Sound.play(::MSU.Array.rand(this.m.Sound[::Const.Sound.ActorEvent.Other1]), ::Const.Sound.Volume.Actor * this.m.SoundVolume[::Const.Sound.ActorEvent.Other1], _info.Tile.Pos, 1.0);
 		local entity = ::Tactical.spawnEntity("scripts/entity/tactical/enemies/goblin_fighter", _info.Tile.Coords.X, _info.Tile.Coords.Y);

@@ -120,7 +120,7 @@
 		];
 	}
 
-	q.onUpdate = function( _properties )
+	q.onUpdate = @() function( _properties )
 	{
 		local mult = getMult();
 		_properties.DamageTotalMult *= 1.0 + (0.15 * mult);

@@ -1,4 +1,4 @@
-::Nggh_MagicConcept.HooksMod.hook("scripts/ui/screens/tactical/modules/turn_sequence_bar/turn_sequence_bar", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/ui/screens/tactical/modules/turn_sequence_bar/turn_sequence_bar", function(q) 
 {
 	q.removeEntity = @(__original) function( _entity )
 	{

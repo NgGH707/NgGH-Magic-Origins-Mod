@@ -97,7 +97,7 @@
 		removeAllTiles();
 	}
 
-	q.onUse = function( _user, _targetTile )
+	q.onUse = @() function( _user, _targetTile )
 	{
 		local targets = [], self = this;
 		local specialized_1 = getContainer().hasSkill("perk.hellish_flame");

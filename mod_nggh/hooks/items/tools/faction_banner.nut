@@ -81,7 +81,7 @@
 		return result;
 	}
 
-	q.getBuyPrice <- function()
+	q.getBuyPrice = @() function()
 	{
 		return 1000000;
 	}

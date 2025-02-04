@@ -1,4 +1,4 @@
-::Nggh_MagicConcept.HooksMod.hook("scripts/contracts/contracts/legend_hunting_greenwood_schrats_contract", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/contracts/contracts/legend_hunting_greenwood_schrats_contract", function ( q )
 {
 	q.onIsValid = @(__original) function()
 	{

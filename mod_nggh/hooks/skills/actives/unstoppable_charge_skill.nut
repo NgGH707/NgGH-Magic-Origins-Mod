@@ -8,9 +8,9 @@
 		m.IconDisabled = "skills/active_110_sw.png";
 	}
 
-	q.getTooltip = function()
+	q.getTooltip = @() function()
 	{
-		local ret = getDefaultUtilityTooltip();
+		local ret = this.getDefaultUtilityTooltip();
 		ret.extend([
 			{
 				id = 6,

@@ -1,6 +1,6 @@
 ::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/lightning_storm_skill", function(q) 
 {
-	q.getAffectedTiles = function( _targetTile )
+	q.getAffectedTiles = @() function( _targetTile )
 	{
 		local ret = [], size = ::Tactical.getMapSize(), styles = [1, 2, 3, 4];
 		local last_attack_style = ::Tactical.Entities.getFlags().getAsInt("LightningStrikesStyle");
@@ -127,7 +127,7 @@
 		return ret;
 	}
 
-	q.onImpact = function( _tag )
+	q.onImpact = @() function( _tag )
 	{
 		::Tactical.EventLog.log("Lightning strikes the battlefield");
 		::Tactical.getCamera().quake(::createVec(0, -1.0), 6.0, 0.16, 0.35);
@@ -182,7 +182,7 @@
 		::Tactical.Entities.getFlags().set("LightningStrikesActive", ::Math.max(0, ::Tactical.Entities.getFlags().getAsInt("LightningStrikesActive") - 1));
 	}
 
-	q.onAnySkillUsed = function( _skill, _targetEntity, _properties )
+	q.onAnySkillUsed = @() function( _skill, _targetEntity, _properties )
 	{
 		if (_skill == this) {
 			_properties.DamageRegularMin = 25;

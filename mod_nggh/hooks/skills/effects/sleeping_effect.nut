@@ -37,7 +37,7 @@
 		__original(_attacker, _skill, _hitInfo, _properties);
 	}
 
-	q.onDamageReceived = function( _attacker, _damageHitpoints, _damageArmor )
+	q.onDamageReceived = @() function( _attacker, _damageHitpoints, _damageArmor )
 	{
 		if (_damageHitpoints > 0 && !m.PreventWakeUp)
 			removeSelf();

@@ -3,7 +3,7 @@
 	q.m.NineLivesCount <- 1;
 	q.m.StillSurvive <- true;
 
-	q.isSpent = function()
+	q.isSpent = @() function()
 	{
 		return m.NineLivesCount <= 0;
 	}

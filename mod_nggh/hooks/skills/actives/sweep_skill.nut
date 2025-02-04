@@ -9,9 +9,9 @@
 		m.Overlay = "active_112";
 	}
 
-	q.getTooltip = function()
+	q.getTooltip = @() function()
 	{
-		local ret = getDefaultTooltip();
+		local ret = this.getDefaultTooltip();
 		ret.extend([
 			{
 				id = 6,

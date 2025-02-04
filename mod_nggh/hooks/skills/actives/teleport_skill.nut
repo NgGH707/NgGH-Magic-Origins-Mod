@@ -29,7 +29,7 @@
 		}
 	}
 
-	q.getTooltip = function()
+	q.getTooltip = @() function()
 	{
 		local ret = getDefaultUtilityTooltip();
 		ret.extend([

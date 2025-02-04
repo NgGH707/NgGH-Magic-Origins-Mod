@@ -1,6 +1,6 @@
 ::Nggh_MagicConcept.HooksMod.hook("scripts/contracts/contracts/legend_hunting_stollwurms_contract", function ( q )
 {
-	q.onIsValid = function()
+	q.onIsValid = @(__original) function()
 	{
 		foreach( bro in ::World.getPlayerRoster().getAll() )
 		{

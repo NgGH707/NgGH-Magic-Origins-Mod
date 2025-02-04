@@ -26,7 +26,7 @@
 		}
 	}
 	else {
-		obj.makeMiniboss = function()
+		q.makeMiniboss = function()
 		{
 			if (!actor.makeMiniboss())
 				return false;

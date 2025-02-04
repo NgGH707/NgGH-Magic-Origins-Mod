@@ -1,8 +1,8 @@
 ::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/skeleton_lich_mirror_image", function ( q )
 {
-	q.onInit = function()
+	q.onInit = @(__original) function()
 	{
-		ws_onInit();
+		__original();
 		m.Skills.add(::new("scripts/skills/actives/nggh_mod_ghost_possess"));
 	}
 

@@ -37,7 +37,7 @@
 		];
 	}
 
-	q.onUpdate = function( _properties )
+	q.onUpdate = @() function( _properties )
 	{	
 		if (::Tactical.isActive() && ::Time.getRound() <= 1)
 			_properties.InitiativeForTurnOrderAdditional += 100;

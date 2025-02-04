@@ -1,25 +1,23 @@
-this.nggh_mod_black_marsh_stew_blueprint <- ::inherit("scripts/crafting/food_blueprint", {
+this.nggh_mod_black_marsh_stew_blueprint <- ::inherit("scripts/crafting/legend_food_blueprint", {
 	m = {},
 	function create()
 	{
-		this.food_blueprint.create();
+		this.legend_food_blueprint.create();
 		this.m.ID = "blueprint.black_marsh_stew";
 		this.m.PreviewCraftable = ::new("scripts/items/supplies/black_marsh_stew_item");
-		local ingredients = [
+		this.init([
 			{
 				Script = "scripts/items/supplies/ground_grains_item",
 				Num = 1,
 			},
-		];
-		this.init(ingredients);
-		local skills = [
+		]);
+		this.initSkills([
 			{
 				Scripts = [
 					"scripts/skills/hexe/nggh_mod_hex_spell"
 				]
 			}
-		];
-		this.initSkills(skills);
+		]);
 	}
 
 	function onCraft( _stash )

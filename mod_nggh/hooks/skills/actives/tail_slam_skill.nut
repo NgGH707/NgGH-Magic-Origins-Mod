@@ -49,7 +49,7 @@
 		m.FatigueCostMult = _properties.IsSpecializedInAxes ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
 	}
 
-	q.onUse = function( _user, _targetTile )
+	q.onUse = @() function( _user, _targetTile )
 	{
 		m.TilesUsed = [];
 		spawnAttackEffect(_targetTile, ::Const.Tactical.AttackEffectSwing);

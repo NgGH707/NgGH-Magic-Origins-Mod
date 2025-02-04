@@ -10,7 +10,7 @@
 		m.Overlay = "active_122";
 	}
 
-	q.getTooltip = function()
+	q.getTooltip = @() function()
 	{
 		local ret = getDefaultTooltip();
 		ret.push({

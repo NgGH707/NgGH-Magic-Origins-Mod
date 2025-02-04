@@ -1,13 +1,13 @@
-::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/sleep_skill", function ( obj )
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/sleep_skill", function ( q )
 {
-	local ws_create = obj.create;
-	obj.create = function()
+	q.create = @(__original) function()
 	{
-		ws_create();
+		__original();
 		this.m.IconDisabled = "skills/active_116_sw.png";
 		this.m.Order =  ::Const.SkillOrder.UtilityTargeted + 2;
-	};
-	obj.getTooltip <- function()
+	}
+
+	q.getTooltip <- function()
 	{
 		local ret = this.skill.getDefaultUtilityTooltip();
 		ret.extend([
@@ -26,16 +26,18 @@
 		]);
 
 		return ret;
-	};
-	obj.onAfterUpdate <- function( _properties )
+	}
+
+	q.onAfterUpdate <- function( _properties )
 	{
 		if (this.getContainer().hasSkill("perk.mastery_sleep"))
 			this.m.ActionPointCost -= 1;
 
 		if (this.getContainer().getActor().isPlayerControlled())
 			this.m.FatigueCostMult = 2.0;
-	};
-	obj.isViableTarget <- function( _user, _target )
+	}
+
+	q.isViableTarget <- function( _user, _target )
 	{
 		if (_target.getCurrentProperties().MoraleCheckBraveryMult[ ::Const.MoraleCheckType.MentalAttack] >= 1000.0)
 			return false;
@@ -48,15 +50,15 @@
 			::Const.EntityType.AlpShadow,
 			::Const.EntityType.LegendDemonAlp,
 		].find(_target.getType()) == null;
-	};
-	obj.onDelayedEffect = function( _tag )
+	}
+
+	q.onDelayedEffect = @() function( _tag )
 	{
 		local targets = [];
 		local _targetTile = _tag.TargetTile;
 		local _user = _tag.User;
 
-		if (_targetTile.IsOccupiedByActor)
-		{
+		if (_targetTile.IsOccupiedByActor) {
 			local entity = _targetTile.getEntity();
 			targets.push(entity);
 		}
@@ -66,12 +68,9 @@
 
 		foreach( target in targets )
 		{
-			if (!this.isViableTarget(_user, target))
-			{
+			if (!this.isViableTarget(_user, target)) {
 				if (!_user.isHiddenToPlayer() && !target.isHiddenToPlayer())
-				{
 					::Tactical.EventLog.log( ::Const.UI.getColorizedEntityName(target) + " can not be put to sleep.");
-				}
 				
 				continue;
 			}
@@ -105,9 +104,10 @@
 			target.getFlags().set("resist_sleep", 0);
 			target.getSkills().add(sleep);
 		}
-	};
+	}
+
 	// a rough estimated of the chance to put target to sleep, may not 100% accurate
-	obj.getHitchance <- function( _targetEntity )
+	q.getHitchance <- function( _targetEntity )
 	{
 		if (_targetEntity.getMoraleState() == ::Const.MoraleState.Ignore)
 			return 100;
@@ -173,8 +173,9 @@
 			return 100;
 
 		return 100 - chance;
-	};
-	obj.getHitFactors <- function( _targetTile )
+	}
+
+	q.getHitFactors <- function( _targetTile )
 	{
 		local ret = [];
 		local user = this.getContainer().getActor();
@@ -398,5 +399,6 @@
 		}
 
 		return ret;
-	};
+	}
+
 });

@@ -1,4 +1,4 @@
-::Nggh_MagicConcept.HooksMod.hook("scripts/skills/traits/gift_of_people_trait", function (q)
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/traits/legend_gift_of_people_trait", function (q)
 {
 	q.m.Bonus <- 5;
 

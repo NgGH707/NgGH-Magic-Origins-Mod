@@ -11,7 +11,7 @@
 		m.Order = ::Const.SkillOrder.NonTargeted + 1;
 	}
 
-	q.getTooltip <- function()
+	q.getTooltip = @() function()
 	{
 		local ret = getDefaultUtilityTooltip();
 

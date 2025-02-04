@@ -1,6 +1,6 @@
 ::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/unhold_frost_armored", function (q) 
 {
-	q.assignRandomEquipment = function()
+	q.assignRandomEquipment = @() function()
 	{
 		unhold_frost.assignRandomEquipment();
 	    getItems().equip(::new("scripts/items/legend_armor/barbarians/nggh_mod_unhold_armor_heavy"));

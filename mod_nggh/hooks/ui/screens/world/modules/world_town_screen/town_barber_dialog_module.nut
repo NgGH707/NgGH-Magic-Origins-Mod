@@ -1,4 +1,4 @@
-::Nggh_MagicConcept.HooksMod.hook("scripts/ui/screens/world/modules/world_town_screen/town_barber_dialog_module", function(obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/ui/screens/world/modules/world_town_screen/town_barber_dialog_module", function(q) 
 {
 	q.queryRosterInformation = function()
 	{

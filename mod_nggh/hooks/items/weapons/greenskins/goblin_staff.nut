@@ -6,7 +6,7 @@
 		setWeaponType(::Const.Items.WeaponType.Staff | ::Const.Items.WeaponType.MagicStaff)
 	}
 
-	q.onEquip = function()
+	q.onEquip = @() function()
 	{
 		weapon.onEquip();
 		local skill = ::new("scripts/skills/actives/legend_staff_bash");

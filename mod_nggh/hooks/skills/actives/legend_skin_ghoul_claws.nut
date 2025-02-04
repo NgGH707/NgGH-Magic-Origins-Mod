@@ -17,9 +17,9 @@
 		getContainer().add(::new("scripts/skills/actives/nggh_mod_ghoul_claws_zoc"));
 	}
 
-	q.getTooltip = function()
+	q.getTooltip = @() function()
 	{
-		local ret = getDefaultTooltip();
+		local ret = this.getDefaultTooltip();
 		ret.extend([
 			{
 				id = 7,

@@ -21,7 +21,7 @@
 		return ret;
 	}
 
-	q.isUsable = function()
+	q.isUsable = @() function()
 	{
 		return skill.isUsable();
 	}

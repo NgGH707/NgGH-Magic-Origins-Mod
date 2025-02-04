@@ -1,8 +1,8 @@
-::Nggh_MagicConcept.HooksMod.hook("scripts/items/item", function(q) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/items/weapons/weapon", function(q) 
 {
-  	q.onEquipRuneSigil = @(__original) function()
+  	q.onEquipRuneSigil <- function()
 	{
-		__original();
+		item.onEquipRuneSigil();
 
 		switch(m.RuneVariant)
 		{
@@ -43,7 +43,7 @@
 		}
 	}
 
-	q.getRuneSigilTooltip = @(__original) function()
+	q.getRuneSigilTooltip <- function()
 	{
 		switch(m.RuneVariant)
 		{
@@ -72,12 +72,12 @@
 			return "This item has the power of the rune sigil of Night Vision:\nNot affected by [color=" + ::Const.UI.Color.PositiveValue + "]Nighttime[/color] effect";
 		}
 
-		return __original();
+		return item.getRuneSigilTooltip();
 	}
 
-	q.updateRuneSigilToken = @(__original) function()
+	q.updateRuneSigilToken <- function()
 	{
-		__original();
+		item.updateRuneSigilToken();
 
 		switch(m.RuneVariant)
 		{

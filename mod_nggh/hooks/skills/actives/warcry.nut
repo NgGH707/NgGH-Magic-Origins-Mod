@@ -60,7 +60,7 @@
 		return ret;
 	}
 
-	q.onDelayedEffect = function( _tag )
+	q.onDelayedEffect = @() function( _tag )
 	{
 		local f = _tag.User.getFaction(), p = _tag.User.getCurrentProperties(), mytile = _tag.User.getTile()
 		local bonus = p.Threat + ::Math.min(15, p.ThreatOnHit), isPlayer = _tag.User.getFaction() == ::Const.Faction.Player;

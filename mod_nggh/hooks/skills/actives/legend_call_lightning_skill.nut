@@ -18,7 +18,7 @@
 		return skill.isHidden();
 	}
 
-	q.getTooltip = function()
+	q.getTooltip = @() function()
 	{
 		local ret = getDefaultUtilityTooltip();
 		ret.extend([
@@ -38,7 +38,7 @@
 		return ret;
 	}
 
-	q.onUse = function( _user, _targetTile )
+	q.onUse = @() function( _user, _targetTile )
 	{
 		local count = 0;
 

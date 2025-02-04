@@ -32,7 +32,7 @@
 		m.IsSpent = false;
 	}
 
-	q.getTooltip <- function()
+	q.getTooltip = @() function()
 	{
 		return getDefaultTooltip();
 	}

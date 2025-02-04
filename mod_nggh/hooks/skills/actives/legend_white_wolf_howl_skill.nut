@@ -13,7 +13,7 @@
 		m.MaxRange = 4;
 	}
 
-	q.getTooltip = function()
+	q.getTooltip = @() function()
 	{
 		local ret = getDefaultUtilityTooltip();
 

@@ -148,7 +148,7 @@
 		];
 	}
 
-	q.onUpdate = function( _properties )
+	q.onUpdate = @() function( _properties )
 	{
 		local size = getContainer().getActor().getSize();
 		local mainhand = getContainer().getActor().getMainhandItem();

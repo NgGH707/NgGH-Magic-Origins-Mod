@@ -6,7 +6,7 @@
 		m.Flags.add("ghoul");
 	}
 
-	q.onAfterDeath = function(_tile)
+	q.onAfterDeath = @() function(_tile)
 	{
 		if (m.Size < 3)
 			return;
