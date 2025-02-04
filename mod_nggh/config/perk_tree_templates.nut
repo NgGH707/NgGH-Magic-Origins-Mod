@@ -298,7 +298,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.NggHWolfEnrage,
 	],
 	[
-		::Const.Perks.PerkDefs.LegendSlaughter,
+		::Const.Perks.PerkDefs.LegendSlaughterer,
 		::Const.Perks.PerkDefs.KillingFrenzy,
 		::Const.Perks.PerkDefs.BattleFlow,
 	],

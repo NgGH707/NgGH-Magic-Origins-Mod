@@ -1091,7 +1091,7 @@ foreach (def in ::Const.Perks.PerkDefObjects)
 	::Const.Perks.PerkDefs.LegendForcefulSwing,
 	::Const.Perks.PerkDefs.LegendPerfectFocus,
 	::Const.Perks.PerkDefs.Indomitable,
-	::Const.Perks.PerkDefs.LegendSlaughter,
+	::Const.Perks.PerkDefs.LegendSlaughterer,
 	::Const.Perks.PerkDefs.LegendFreedomOfMovement,
 	::Const.Perks.PerkDefs.LegendMuscularity,
 	::Const.Perks.PerkDefs.LegendLastStand,
