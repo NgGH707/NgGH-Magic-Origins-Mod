@@ -115,7 +115,7 @@
 				targets.push(_targetTile.getNextTile(i));
 		}
 
-		local custom = ;
+		local custom;
 		local p = {
 			Type = "alp_hellfire",
 			Tooltip = "The inferno of nightmare, burns everything dare to go near it. Created by " + _user.getName(),

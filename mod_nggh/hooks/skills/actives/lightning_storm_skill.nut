@@ -135,8 +135,7 @@
 
 		foreach( i, t in _tag.m.AffectedTiles )
 		{
-			::Time.scheduleEvent(::TimeUnit.Real, i * 30, function ( _data )
-			{
+			::Time.scheduleEvent(::TimeUnit.Real, i * 30, function ( _data ) {
 				for( local i = 0; i < ::Const.Tactical.LightningParticles.len(); i = ++i )
 				{
 					::Tactical.spawnParticleEffect(true, ::Const.Tactical.LightningParticles[i].Brushes, _data.Tile, ::Const.Tactical.LightningParticles[i].Delay, ::Const.Tactical.LightningParticles[i].Quantity, ::Const.Tactical.LightningParticles[i].LifeTimeQuantity, ::Const.Tactical.LightningParticles[i].SpawnRate, ::Const.Tactical.LightningParticles[i].Stages);
@@ -158,7 +157,7 @@
 					local isAllied = _data.User.isAlliedWith(target);
 
 					if ((_data.User.getID() == target.getID()) || (isLich && isAllied) || (isAllied && isHexe && isTargetHexe))
-						continue;
+						return;
 
 					local hitInfo = clone ::Const.Tactical.HitInfo;
 					hitInfo.DamageRegular = ::Math.rand(25, 50) * (isAllied ? 0.5 : 1.0);

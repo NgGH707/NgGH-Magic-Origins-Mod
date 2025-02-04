@@ -14,7 +14,7 @@
 	q.getTooltip <- function()
 	{
 		local i = ::Math.max(30, (1.0 - 0.01 * m.RageStacks) * 100);
-		return = [
+		return [
 			{
 				id = 1,
 				type = "title",
@@ -53,7 +53,7 @@
 				id = 9,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Takes [color=" + ::Const.UI.Color.PositiveValue + "]" + (100 - i) + "%[/color] less damage to Hitpoints"
+				text = "Takes [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Math.round(100 - i) + "%[/color] less damage to Hitpoints"
 			}
 		];
 	}

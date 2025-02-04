@@ -54,7 +54,7 @@
 		{
 			local bro = ::MSU.Array.rand(deserters);
 
-			if (::World.getPlayerRoster().getSize() <= 1) {
+			if (::World.getPlayerRoster().getSize() <= 1)
 				::World.State.showGameFinishScreen(false);
 			else {
 				::World.Events.getEvent("event.desertion").setDeserter(bro);

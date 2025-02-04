@@ -19,7 +19,7 @@
 	{
 		__original(_onTile);
 
-		if (!::MSU.isNull(m.Actor) && m.Actor.isMounted()))
+		if (!::MSU.isNull(m.Actor) && m.Actor.isMounted())
 			m.Actor.getMount().onActorDied(_onTile);
 	}
 

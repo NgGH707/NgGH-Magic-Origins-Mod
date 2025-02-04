@@ -30,6 +30,7 @@ if (!("CharmedUnits" in ::Const))
 
 		find = ::nggh_findThisInArray(_type, this.CustomEntries, "Type");
 		return find != null ? this.CustomEntries[find] : null;
+	}
 
 	function getBackgroundIcon( _type )
 	{

@@ -282,7 +282,7 @@
 
 		if (_data.User.getCurrentProperties().IsSpecializedInShields && !_data.Target.getCurrentProperties().IsImmuneToDisarm && !_data.Target.isAlliedWith(_data.User)) {
 			local perk = getContainer().getSkillByID("perk.serpent_giant");
-			local chance = ::Math.max(10, ::Math.floor(_data.User.getCurrentProperties().getMeleeSkill() * (perk != null : perk.getMult() : 1.0)));
+			local chance = ::Math.max(10, ::Math.floor(_data.User.getCurrentProperties().getMeleeSkill() * (perk != null ? perk.getMult() : 1.0)));
 			
 			if (::Math.rand(1, 100) <= chance){
 				_data.Target.getSkills().add(::new("scripts/skills/effects/disarmed_effect"));
