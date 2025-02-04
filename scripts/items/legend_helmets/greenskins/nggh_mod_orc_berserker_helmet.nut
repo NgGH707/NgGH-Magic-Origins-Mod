@@ -31,11 +31,6 @@ this.nggh_mod_orc_berserker_helmet <- ::inherit("scripts/items/legend_helmets/le
 
 	function getLootLayers()
 	{
-		if (::Nggh_MagicConcept.isHexeOrigin() && ::Math.rand(1, 100) <= 50)
-		{
-			return [this];
-		}
-
 		return [::new("scripts/items/legend_helmets/vanity/legend_helmet_orc_bones")];
 	}
 
@@ -45,9 +40,7 @@ this.nggh_mod_orc_berserker_helmet <- ::inherit("scripts/items/legend_helmets/le
 		local c = this.getContainer();
 
 		if (c != null && c.getActor() != null && !c.getActor().isNull())
-		{
 			c.getActor().getFlags().add("berserker_helmet");
-		}
 	}
 
 	function onUnequip()
@@ -55,9 +48,7 @@ this.nggh_mod_orc_berserker_helmet <- ::inherit("scripts/items/legend_helmets/le
 		local c = this.getContainer();
 
 		if (c != null && c.getActor() != null && !c.getActor().isNull())
-		{
 			c.getActor().getFlags().remove("berserker_helmet");
-		}
 
 		this.legend_helmet.onUnequip();
 	}
@@ -75,12 +66,9 @@ this.nggh_mod_orc_berserker_helmet <- ::inherit("scripts/items/legend_helmets/le
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return result;
-		}
-
+		
 		if (c.getActor().getFlags().has("berserker_armor"))
-		{
 			result.extend([
 				{
 					id = 11,
@@ -94,7 +82,6 @@ this.nggh_mod_orc_berserker_helmet <- ::inherit("scripts/items/legend_helmets/le
 					text = "Cannot be reduced to [color=" + ::Const.UI.Color.NegativeValue + "]" + ::Const.MoraleStateName[::Const.Orc.BerserkerArmorMoraleThreshold - 1] + "[/color] morale, only [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Const.MoraleStateName[::Const.Orc.BerserkerArmorMoraleThreshold] + "[/color]"
 				}
 			]);
-		}
 
 		return result;
 	}
@@ -105,14 +92,10 @@ this.nggh_mod_orc_berserker_helmet <- ::inherit("scripts/items/legend_helmets/le
 		local actor = this.getContainer().getActor();
 
 		if (!actor.getFlags().has("berserker_armor"))
-		{
 			return;
-		}
 
 		if (actor.getMoraleState() >= ::Const.Orc.BerserkerArmorMoraleThreshold)
-		{
 			return;
-		}
 
 		actor.setMoraleState(::Const.Orc.BerserkerArmorMoraleThreshold);
 		actor.setDirty(true);
@@ -124,9 +107,7 @@ this.nggh_mod_orc_berserker_helmet <- ::inherit("scripts/items/legend_helmets/le
 		local actor = this.getContainer().getActor();
 
 		if (actor.getMoraleState() == ::Const.MoraleState.Ignore)
-		{
 			return;
-		}
 
 		actor.setMoraleState(::Const.MoraleState.Confident);
 	}

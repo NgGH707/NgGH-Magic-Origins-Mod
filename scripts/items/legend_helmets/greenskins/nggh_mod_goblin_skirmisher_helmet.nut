@@ -31,11 +31,6 @@ this.nggh_mod_goblin_skirmisher_helmet <- ::inherit("scripts/items/legend_helmet
 
 	function getLootLayers()
 	{
-		if (::Nggh_MagicConcept.isHexeOrigin() && ::Math.rand(1, 100) <= 50)
-		{
-			return [this];
-		}
-		
 		return [::Const.World.Common.pickHelmet([[1, "legend_goblin_skirmisher_helmet"]])];
 	}
 
@@ -45,9 +40,7 @@ this.nggh_mod_goblin_skirmisher_helmet <- ::inherit("scripts/items/legend_helmet
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return;
-		}
 
 		c.getActor().getFlags().add("skirmisher_helmet");
 	}
@@ -57,9 +50,7 @@ this.nggh_mod_goblin_skirmisher_helmet <- ::inherit("scripts/items/legend_helmet
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return;
-		}
 
 		c.getActor().getFlags().remove("skirmisher_helmet");
 		this.legend_helmet.onUnequip();
@@ -78,12 +69,9 @@ this.nggh_mod_goblin_skirmisher_helmet <- ::inherit("scripts/items/legend_helmet
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return result;
-		}
 
 		if (c.getActor().getFlags().has("skirmisher_armor"))
-		{
 			result.extend([
 				{
 					id = 11,
@@ -109,7 +97,6 @@ this.nggh_mod_goblin_skirmisher_helmet <- ::inherit("scripts/items/legend_helmet
 					text = "Will always start combat inside a bush"
 				}
 			]);
-		}
 
 		return result;
 	}

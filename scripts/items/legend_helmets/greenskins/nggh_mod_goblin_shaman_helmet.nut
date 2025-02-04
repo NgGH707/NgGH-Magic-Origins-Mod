@@ -32,11 +32,6 @@ this.nggh_mod_goblin_shaman_helmet <- ::inherit("scripts/items/legend_helmets/le
 
 	function getLootLayers()
 	{
-		if (::Nggh_MagicConcept.isHexeOrigin() && ::Math.rand(1, 100) <= 50)
-		{
-			return [this];
-		}
-
 		return [::new("scripts/items/legend_helmets/vanity/legend_helmet_goblin_bones")];
 	}
 
@@ -46,16 +41,12 @@ this.nggh_mod_goblin_shaman_helmet <- ::inherit("scripts/items/legend_helmets/le
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return;
-		}
 
 		c.getActor().getFlags().add("shaman_helmet");
 
 		if (!c.getActor().getFlags().has("shaman_armor"))
-		{
 			return;
-		}
 
 		local perk = ::new("scripts/skills/perks/perk_legend_mind_over_body");
 		perk.m.IsSerialized = false;
@@ -67,18 +58,14 @@ this.nggh_mod_goblin_shaman_helmet <- ::inherit("scripts/items/legend_helmets/le
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return;
-		}
 
 		c.getActor().getFlags().remove("shaman_helmet");
 
 		local perk = c.getActor().getSkills().getSkillByID("perk.legend_mind_over_body");
 
 		if (perk != null && !perk.isSerialized())
-		{
 			c.getActor().getSkills().remove(perk);
-		}
 
 		this.legend_helmet.onUnequip();
 	}
@@ -96,12 +83,9 @@ this.nggh_mod_goblin_shaman_helmet <- ::inherit("scripts/items/legend_helmets/le
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return result;
-		}
 
 		if (c.getActor().getFlags().has("shaman_armor"))
-		{
 			result.extend([
 				{
 					id = 11,
@@ -115,7 +99,6 @@ this.nggh_mod_goblin_shaman_helmet <- ::inherit("scripts/items/legend_helmets/le
 					text = "Grants [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Const.Strings.PerkName.LegendMindOverBody + "[/color] perk"
 				}
 			]);
-		}
 
 		return result;
 	}

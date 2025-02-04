@@ -37,9 +37,7 @@ this.nggh_mod_orc_berserker_light_armor <- ::inherit("scripts/items/legend_armor
 		local c = this.getContainer();
 
 		if (c != null && c.getActor() != null && !c.getActor().isNull())
-		{
 			c.getActor().getFlags().add("berserker_armor");
-		}
 	}
 
 	function onUnequip()
@@ -47,9 +45,7 @@ this.nggh_mod_orc_berserker_light_armor <- ::inherit("scripts/items/legend_armor
 		local c = this.getContainer();
 
 		if (c != null && c.getActor() != null && !c.getActor().isNull())
-		{
 			c.getActor().getFlags().remove("berserker_armor");
-		}
 
 		this.legend_armor.onUnequip();
 	}
@@ -77,12 +73,9 @@ this.nggh_mod_orc_berserker_light_armor <- ::inherit("scripts/items/legend_armor
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return result;
-		}
 
 		if (c.getActor().getFlags().has("berserker_helmet"))
-		{
 			result.extend([
 				{
 					id = 11,
@@ -96,7 +89,6 @@ this.nggh_mod_orc_berserker_light_armor <- ::inherit("scripts/items/legend_armor
 					text = "Cannot be reduced to [color=" + ::Const.UI.Color.NegativeValue + "]" + ::Const.MoraleStateName[::Const.Orc.BerserkerArmorMoraleThreshold - 1] + "[/color] morale, only [color=" + ::Const.UI.Color.PositiveValue + "]" + ::Const.MoraleStateName[::Const.Orc.BerserkerArmorMoraleThreshold] + "[/color]"
 				}
 			]);
-		}
 
 		return result;
 	}

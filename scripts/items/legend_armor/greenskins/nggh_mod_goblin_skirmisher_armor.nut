@@ -38,9 +38,7 @@ this.nggh_mod_goblin_skirmisher_armor <- ::inherit("scripts/items/legend_armor/l
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return;
-		}
 
 		c.getActor().getFlags().add("skirmisher_armor");
 	}
@@ -50,9 +48,7 @@ this.nggh_mod_goblin_skirmisher_armor <- ::inherit("scripts/items/legend_armor/l
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return;
-		}
 
 		c.getActor().getFlags().remove("skirmisher_armor");
 		this.legend_armor.onUnequip();
@@ -71,9 +67,7 @@ this.nggh_mod_goblin_skirmisher_armor <- ::inherit("scripts/items/legend_armor/l
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return result;
-		}
 
 		if (c.getActor().getFlags().has("skirmisher_helmet"))
 		{
@@ -113,12 +107,8 @@ this.nggh_mod_goblin_skirmisher_armor <- ::inherit("scripts/items/legend_armor/l
 		_properties.RangedDefense += 5;
 		_properties.TargetAttractionMult *= 0.9;
 
-		local actor = this.getContainer().getActor();
-
-		if (!actor.getFlags().has("skirmisher_helmet"))
-		{
+		if (!this.getContainer().getActor().getFlags().has("skirmisher_helmet"))
 			return;
-		}
 
 		_properties.RangedSkill += 5;
 		_properties.RangedDefense += 5;
@@ -130,14 +120,10 @@ this.nggh_mod_goblin_skirmisher_armor <- ::inherit("scripts/items/legend_armor/l
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return;
-		}
 
 		if (!c.getActor().getFlags().has("skirmisher_armor") || !c.getActor().getFlags().has("skirmisher_helmet"))
-		{
 			return;
-		}
 
 		c.getActor().updateVisibility(c.getActor().getTile(), c.getActor().getCurrentProperties().getVision(), c.getActor().getFaction());
 	}
@@ -148,22 +134,16 @@ this.nggh_mod_goblin_skirmisher_armor <- ::inherit("scripts/items/legend_armor/l
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return;
-		}
 
 		if (!c.getActor().getFlags().has("skirmisher_armor") || !c.getActor().getFlags().has("skirmisher_helmet"))
-		{
 			return;
-		}
 
 		local actor = c.getActor();
 		local myTile = c.getActor().getTile();
 
 		if (!::Const.Goblin.SkirmisherArmorSpawnHiding(myTile))
-		{
 			return;
-		}
 
 		actor.updateVisibility(myTile, actor.getCurrentProperties().getVision(), actor.getFaction());
 		actor.getSkills().add(::new(::Const.Movement.HiddenStatusEffect));

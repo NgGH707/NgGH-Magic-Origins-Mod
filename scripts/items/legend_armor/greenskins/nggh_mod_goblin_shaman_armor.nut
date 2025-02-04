@@ -37,16 +37,12 @@ this.nggh_mod_goblin_shaman_armor <- ::inherit("scripts/items/legend_armor/legen
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return;
-		}
-
+		
 		c.getActor().getFlags().add("shaman_armor");
 		
 		if (!c.getActor().getFlags().has("shaman_helmet"))
-		{
 			return;
-		}
 
 		local perk = ::new("scripts/skills/perks/perk_legend_mind_over_body");
 		perk.m.IsSerialized = false;
@@ -58,18 +54,14 @@ this.nggh_mod_goblin_shaman_armor <- ::inherit("scripts/items/legend_armor/legen
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return;
-		}
 
 		c.getActor().getFlags().remove("shaman_armor");
 
 		local perk = c.getActor().getSkills().getSkillByID("perk.legend_mind_over_body");
 
 		if (perk != null && !perk.isSerialized())
-		{
 			c.getActor().getSkills().remove(perk);
-		}
 
 		this.legend_armor.onUnequip();
 	}
@@ -87,9 +79,7 @@ this.nggh_mod_goblin_shaman_armor <- ::inherit("scripts/items/legend_armor/legen
 		local c = this.getContainer();
 
 		if (c == null || c.getActor() == null || c.getActor().isNull())
-		{
 			return result;
-		}
 
 		if (c.getActor().getFlags().has("shaman_helmet"))
 		{

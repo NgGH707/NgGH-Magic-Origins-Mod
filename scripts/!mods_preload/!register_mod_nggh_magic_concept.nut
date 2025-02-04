@@ -26,9 +26,9 @@
 	//::Nggh_MagicConcept.Mod.Registry.setUpdateSource(::MSU.System.Registry.ModSourceDomain.NexusMods);
 
 	// important consts and objects
-	::Is_PTR_Exist <- ::mods_getRegisteredMod("mod_legends_PTR") != null;
-	::Is_PlanYourPerks_Exist <- ::mods_getRegisteredMod("mod_plan_perks") != null;
-	::Is_AccessoryCompanions_Exist <- ::mods_getRegisteredMod("mod_AC") != null;
+	::Is_PTR_Exist <- ::Hooks.hasMod("mod_legends_PTR");
+	::Is_PlanYourPerks_Exist <- ::Hooks.hasMod("mod_plan_perks");
+	::Is_AccessoryCompanions_Exist <- ::Hooks.hasMod("mod_AC");
 
 	// set up mod settings 
 	::Nggh_MagicConcept.mod_settings();
