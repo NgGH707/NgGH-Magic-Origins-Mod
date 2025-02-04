@@ -619,7 +619,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscChampion, 6);
 		}
 
-		this.getBackground().addPerk(::Const.Perks.PerkDefs.BoondockBlade, 0);
+		this.getBackground().addPerk(::Const.Perks.PerkDefs.LegendBoondockBlade, 0);
 
 		if (!this.m.Skills.hasSkill("trait.legend_intensive_training_trait"))
 			this.m.Skills.add(::new("scripts/skills/traits/legend_intensive_training_trait"));

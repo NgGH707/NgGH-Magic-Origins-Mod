@@ -43,7 +43,7 @@ this.nggh_mod_luft_background <- ::inherit("scripts/skills/backgrounds/character
 				::Const.Perks.PerkDefs.Dodge,
 				::Const.Perks.PerkDefs.SteelBrow,
 				::Const.Perks.PerkDefs.Gifted,
-				::Const.Perks.PerkDefs.Debilitate,
+				::Const.Perks.PerkDefs.LegendDebilitate,
 				::Const.Perks.PerkDefs.SunderingStrikes,
 				::Const.Perks.PerkDefs.Taunt,
 				::Const.Perks.PerkDefs.NggHNachoFrenzy,
@@ -53,7 +53,7 @@ this.nggh_mod_luft_background <- ::inherit("scripts/skills/backgrounds/character
 			[
 				// 2
 				::Const.Perks.PerkDefs.Anticipation,
-				::Const.Perks.PerkDefs.Sprint,
+				::Const.Perks.PerkDefs.LegendSprint,
 				::Const.Perks.PerkDefs.Footwork,
 				::Const.Perks.PerkDefs.Rotation,
 				::Const.Perks.PerkDefs.DevastatingStrikes,
@@ -67,7 +67,7 @@ this.nggh_mod_luft_background <- ::inherit("scripts/skills/backgrounds/character
 				::Const.Perks.PerkDefs.Underdog,
 				::Const.Perks.PerkDefs.LegendLeap,
 				::Const.Perks.PerkDefs.Fearsome,
-				::Const.Perks.PerkDefs.Inspire,
+				::Const.Perks.PerkDefs.LegendInspire,
 				::Const.Perks.PerkDefs.FortifiedMind,
 				::Const.Perks.PerkDefs.LegendMindOverBody,
 				::Const.Perks.PerkDefs.NggHNacho,
@@ -77,9 +77,9 @@ this.nggh_mod_luft_background <- ::inherit("scripts/skills/backgrounds/character
 			],
 			[
 				// 4
-				::Const.Perks.PerkDefs.PushTheAdvantage,
+				::Const.Perks.PerkDefs.LegendPushTheAdvantage,
 				::Const.Perks.PerkDefs.Steadfast,
-				::Const.Perks.PerkDefs.Rebound,
+				::Const.Perks.PerkDefs.LegendRebound,
 				::Const.Perks.PerkDefs.LoneWolf,
 				::Const.Perks.PerkDefs.NggHMiscLineBreaker,
 				::Const.Perks.PerkDefs.NggHNachoEat,
@@ -92,7 +92,7 @@ this.nggh_mod_luft_background <- ::inherit("scripts/skills/backgrounds/character
 				::Const.Perks.PerkDefs.LegendAssuredConquest,
 				::Const.Perks.PerkDefs.LegendTerrifyingVisage,
 				::Const.Perks.PerkDefs.Berserk,
-				::Const.Perks.PerkDefs.LastStand,
+				::Const.Perks.PerkDefs.LegendLastStand,
 				::Const.Perks.PerkDefs.Nimble,
 				::Const.Perks.PerkDefs.NggHNachoBigTummy,
 				::Const.Perks.PerkDefs.NggHCharmEnemyUnhold,
@@ -102,7 +102,7 @@ this.nggh_mod_luft_background <- ::inherit("scripts/skills/backgrounds/character
 				// 6
 				::Const.Perks.PerkDefs.Colossus,
 				::Const.Perks.PerkDefs.LegendMuscularity,
-				::Const.Perks.PerkDefs.PerfectFocus,
+				::Const.Perks.PerkDefs.LegendPerfectFocus,
 				::Const.Perks.PerkDefs.BattleFlow,
 				::Const.Perks.PerkDefs.Indomitable,
 				::Const.Perks.PerkDefs.NggHCharmSpec,

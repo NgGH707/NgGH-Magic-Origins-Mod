@@ -94,34 +94,34 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 				::Const.Perks.PerkDefs.Anticipation,
 				::Const.Perks.PerkDefs.Rotation,
 				::Const.Perks.PerkDefs.Footwork,
-				::Const.Perks.PerkDefs.Inspire,
+				::Const.Perks.PerkDefs.LegendInspire,
 				::Const.Perks.PerkDefs.LegendGatherer,
 			],
 			[ // 3
 				::Const.Perks.PerkDefs.Nimble,
 				::Const.Perks.PerkDefs.FortifiedMind,
-				::Const.Perks.PerkDefs.Rebound,
+				::Const.Perks.PerkDefs.LegendRebound,
 				::Const.Perks.PerkDefs.InspiringPresence,
-				::Const.Perks.PerkDefs.LegendValaInscribeShield,
+				//::Const.Perks.PerkDefs.LegendValaInscribeShield,
 				::Const.Perks.PerkDefs.LegendHerbcraft,
 				::Const.Perks.PerkDefs.LegendPotionBrewer,
 			],
 			[ // 4
 				::Const.Perks.PerkDefs.LegendClarity,
 				::Const.Perks.PerkDefs.Duelist,
-				::Const.Perks.PerkDefs.LegendValaInscribeWeapon,
+				//::Const.Perks.PerkDefs.LegendValaInscribeWeapon,
 				::Const.Perks.PerkDefs.LegendDistantVisions,
 				::Const.Perks.PerkDefs.LegendTerrifyingVisage,
 			],
 			[ // 5
-				::Const.Perks.PerkDefs.LegendValaInscriptionMastery,
-				::Const.Perks.PerkDefs.LegendValaInscribeHelmet,
-				::Const.Perks.PerkDefs.LegendValaInscribeArmor,
+				//::Const.Perks.PerkDefs.LegendValaInscriptionMastery,
+				//::Const.Perks.PerkDefs.LegendValaInscribeHelmet,
+				//::Const.Perks.PerkDefs.LegendValaInscribeArmor,
 				::Const.Perks.PerkDefs.LegendMindOverBody,
 				::Const.Perks.PerkDefs.Berserk,
 			],
 			[ // 6
-				::Const.Perks.PerkDefs.PerfectFocus,
+				::Const.Perks.PerkDefs.LegendPerfectFocus,
 				::Const.Perks.PerkDefs.KillingFrenzy,
 			],
 			[],
@@ -144,10 +144,10 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		if (this.m.IsHavingWhipTree) return;
 		
 		this.m.CustomPerkTree[0].extend([::Const.Perks.PerkDefs.Bullseye, ::Const.Perks.PerkDefs.LegendMagicMissile]);
-		this.m.CustomPerkTree[2].push(::Const.Perks.PerkDefs.Ballistics);
-		this.m.CustomPerkTree[3].push(::Const.Perks.PerkDefs.MageLegendMasteryMagicMissileFocus);
+		this.m.CustomPerkTree[2].push(::Const.Perks.PerkDefs.LegendBallistics);
+		this.m.CustomPerkTree[3].push(::Const.Perks.PerkDefs.LegendMagicMissileFocus);
 		this.m.CustomPerkTree[5].push(::Const.Perks.PerkDefs.LegendHeightenedReflexes);
-		this.m.CustomPerkTree[6].push(::Const.Perks.PerkDefs.MageLegendMasteryMagicMissileMastery);
+		this.m.CustomPerkTree[6].push(::Const.Perks.PerkDefs.LegendMagicMissileMastery);
 		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [::Const.Perks.StaffTree, ::Const.Perks.SlingTree]);
 	}
 
