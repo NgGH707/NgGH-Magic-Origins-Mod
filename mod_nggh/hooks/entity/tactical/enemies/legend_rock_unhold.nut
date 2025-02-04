@@ -1,4 +1,4 @@
-::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/legend_rock_unhold", function (obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/legend_rock_unhold", function (q) 
 {
 	/*
 	local assignRandomEquipment = obj.assignRandomEquipment;
@@ -9,7 +9,7 @@
 	}
 	*/
 
-	obj.makeMiniboss <- function()
+	q.makeMiniboss <- function()
 	{
 		if (!this.actor.makeMiniboss())
 			return false;

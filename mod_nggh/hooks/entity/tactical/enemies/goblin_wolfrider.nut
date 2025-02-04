@@ -1,35 +1,9 @@
-::mods_hookExactClass("entity/tactical/enemies/goblin_wolfrider", function (obj) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/goblin_wolfrider", function (q) 
 {
-	local ws_assignRandomEquipment = obj.assignRandomEquipment;
-    obj.assignRandomEquipment = function()
+	q.makeMiniboss <- function()
 	{
-		ws_assignRandomEquipment()
-		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Body));
-		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Head));
-
-		local armors = ["goblin_medium","goblin_medium","goblin_medium","goblin_heavy"];
-		local helmets = ["goblin_light","goblin_heavy"];
-
-		/*
-		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
-		{
-			this.m.Items.equip(::new("scripts/items/armor/greenskins/" + ::MSU.Array.rand(armors) + "_armor"));
-			this.m.Items.equip(::new("scripts/items/helmets/greenskins/" + ::MSU.Array.rand(helmets) + "_helmet"));
-		}
-		else
-		*/
-		{
-			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_" + ::MSU.Array.rand(armors) + "_armor"));
-			this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_" + ::MSU.Array.rand(helmets) + "_helmet"));
-		}
-	}
-
-	obj.makeMiniboss <- function()
-	{
-		if (!this.actor.makeMiniboss())
-		{
+		if (!actor.makeMiniboss())
 			return false;
-		}
 
 		this.getSprite("miniboss").setBrush("bust_miniboss");
 		this.m.Items.unequip(this.m.Items.getItemAtSlot(::Const.ItemSlot.Mainhand));
@@ -43,7 +17,7 @@
 		return true;
 	}
 
-	obj.spawnWolf = function( _info )
+	q.spawnWolf = function( _info )
 	{
 		::Sound.play(::MSU.Array.rand(this.m.Sound[::Const.Sound.ActorEvent.DamageReceived]), ::Const.Sound.Volume.Actor * this.m.SoundVolume[::Const.Sound.ActorEvent.Other1], _info.Tile.Pos, 1.0);
 		local entity = ::Tactical.spawnEntity("scripts/entity/tactical/enemies/wolf", _info.Tile.Coords.X, _info.Tile.Coords.Y);
@@ -63,7 +37,7 @@
 		}
 	}
 
-	obj.spawnGoblin = function( _info )
+	q.spawnGoblin = function( _info )
 	{
 		::Sound.play(::MSU.Array.rand(this.m.Sound[::Const.Sound.ActorEvent.Other1]), ::Const.Sound.Volume.Actor * this.m.SoundVolume[::Const.Sound.ActorEvent.Other1], _info.Tile.Pos, 1.0);
 		local entity = ::Tactical.spawnEntity("scripts/entity/tactical/enemies/goblin_fighter", _info.Tile.Coords.X, _info.Tile.Coords.Y);
@@ -94,4 +68,5 @@
 			entity.onUpdateInjuryLayer();
 		}
 	}
+	
 });
