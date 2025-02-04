@@ -76,15 +76,17 @@ this.nggh_mod_named_staff <- ::inherit("scripts/items/weapons/named/named_weapon
 	function onEquip()
 	{
 		this.named_weapon.onEquip();
-		local s = ::new("scripts/skills/actives/legend_staff_bash");
-		s.m.Icon = "skills/staff_bash_vala.png";
-		s.m.IconDisabled = "skills/staff_bash_vala_bw.png";
-		this.addSkill(s);
+		local skill = ::new("scripts/skills/actives/bash");
+		skill.m.IsStaffBash = true;
+		skill.m.Icon = "skills/staff_bash_vala.png";
+		skill.m.IconDisabled = "skills/staff_bash_vala_bw.png";
+		this.addSkill(skill);
 
-		local t = ::new("scripts/skills/actives/legend_staff_knock_out");
-		t.m.Icon = "skills/staff_knock_out_vala.png";
-		t.m.IconDisabled = "skills/staff_knock_out_vala_bw.png";
-		this.addSkill(t);
+		skill = ::new("scripts/skills/actives/knock_out");
+		skill.m.IsStaffKnockOut = true;
+		skill.m.Icon = "skills/staff_knock_out_vala.png";
+		skill.m.IconDisabled = "skills/staff_knock_out_vala_bw.png";
+		this.addSkill(skill);
 
 		if (::Is_PTR_Exist)
 		{

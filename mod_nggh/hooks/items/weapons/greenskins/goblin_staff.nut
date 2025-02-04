@@ -9,18 +9,17 @@
 	q.onEquip = @() function()
 	{
 		weapon.onEquip();
-		local skill = ::new("scripts/skills/actives/legend_staff_bash");
+		local skill = ::new("scripts/skills/actives/bash");
+		skill.m.IsStaffBash = true;
 		skill.m.FatigueCost = 10;
 		skill.m.MaxRange = 1;
 		addSkill(skill);
 
-		skill = ::new("scripts/skills/actives/legend_staff_knock_out");
+		skill = ::new("scripts/skills/actives/knock_out");
+		skill.m.IsStaffKnockOut = true;
 		skill.m.FatigueCost = 22;
 		skill.m.MaxRange = 1;
 		addSkill(skill);
-
-		if (::Is_PTR_Exist)
-			addSkill(::new("scripts/skills/actives/ptr_staff_sweep_skill"));
 	}
 	
 });
