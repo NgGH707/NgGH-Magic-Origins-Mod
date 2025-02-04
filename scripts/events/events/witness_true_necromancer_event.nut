@@ -241,13 +241,12 @@ this.witness_true_necromancer_event <- this.inherit("scripts/events/event", {
 
 	function onUpdateScore()
 	{
-		if (this.World.getTime().Days < 50)
+		if (::World.getTime().Days < 50)
 			return;
 		
-		local AllItems = this.World.Assets.getStash().getItems();
-		local hasNamed = 0;
+		local count = 0;
 		
-		foreach ( _item in AllItems )
+		foreach ( _item in ::World.Assets.getStash().getItems() )
 		{
 			if (_item == null)
 				continue;
@@ -256,21 +255,22 @@ this.witness_true_necromancer_event <- this.inherit("scripts/events/event", {
 				continue;
 			
 			if (_item.isItemType(this.Const.Items.ItemType.Weapon) || _item.isItemType(this.Const.Items.ItemType.Shield))
-				++hasNamed;
+				++count;
 		}
-		
-		if (hasNamed == 0)
-			return;
 
-		this.m.Score = 100 + 90 * hasNamed;
+		local score = 25 * count, diff = ::World.getTime().Days - ::World.Statistics.getFlags().getAsInt("MeetNamedTrader");
+
+		if (diff <= 30)
+			score = ::Math.max(0, score - 15 * diff);
+
+		this.m.Score = score;
 	}
 
 	function onPrepare()
 	{
-		local AllItems = this.World.Assets.getStash().getItems();
 		local NamedItems = [];
 		
-		foreach ( _item in AllItems )
+		foreach ( _item in ::World.Assets.getStash().getItems() )
 		{
 			if (_item == null)
 				continue;
@@ -355,6 +355,8 @@ this.witness_true_necromancer_event <- this.inherit("scripts/events/event", {
 			},
 		};
 		*/
+
+		::World.Statistics.getFlags().set("MeetNamedTrader", ::World.getTime().Days);
 	}
 
 	function onPrepareRewards()

@@ -77,7 +77,7 @@
 		*/
 	}
 
-	q.isUsable <- function()
+	q.isUsable = @() function()
 	{
 		if (!skill.isUsable())
 			return false;
