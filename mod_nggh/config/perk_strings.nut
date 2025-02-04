@@ -47,6 +47,8 @@
 ::Const.Strings.PerkName.NggH_Spider_Venom <- "Poison Mastery";
 ::Const.Strings.PerkName.NggH_Spider_Web <- "Weave Web Mastery";
 ::Const.Strings.PerkName.NggH_Spider_ToughCarapace <- "Harden Carapace";
+// basilisk
+::Const.Strings.PerkName.NggH_Basilisk_AimTheHead <- "Aim For The Head";
 // serpent
 ::Const.Strings.PerkName.NggHSerpentBite <- "Gorge";
 ::Const.Strings.PerkName.NggHSerpentDrag <- "Constricting Grip";
@@ -756,6 +758,13 @@
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Upon learning this perk, immediately gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] Simp Level."
 		+ "\n• Gains [color=" + ::Const.UI.Color.PositiveValue + "]1[/color] Simp Level for every [color=" + ::Const.UI.Color.NegativeValue + "]2[/color] levels you gain in the future after learning this perk.";
+
+// basilisk
+::Const.Strings.PerkDescription.NggH_Basilisk_AimTheHead <- "\'Go for the head, go for the kill.\'"
+	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
+		+ "\n• For each successful hit to head, gains a stack of \"Aim For The Head\"."
+		+ "\n• For each stack of \"Aim For The Head\", gains [color=" + ::Const.UI.Color.PositiveValue + "]+12.5%[/color] damage on hit to head. Double the bonus if you have [color=" + ::Const.UI.Color.NegativeValue + "]Head Hunter[/color] perk too."
+		+ "\n• Upon reaching the sixth stacks or more, stack count will be reset down to [color=" + ::Const.UI.Color.NegativeValue + "]1[/color]. [color=" + ::Const.UI.Color.NegativeValue + "]Landing a hit to body[/color] will reset the stack count down to [color=" + ::Const.UI.Color.NegativeValue + "]0[/color]";
 
 // add more 
 ::Const.Strings.PerkDescription.LegendLithe = "Medium armor provides a sweet spot between movement and protection."
