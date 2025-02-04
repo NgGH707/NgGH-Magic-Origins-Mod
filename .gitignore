@@ -4,5 +4,6 @@
 brushes/
 gfx/mods/brushes/
 *.zip
+*.bbbuilder/
 .editorconfig
 .utils/
