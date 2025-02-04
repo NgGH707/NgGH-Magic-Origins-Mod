@@ -46,7 +46,7 @@
 		}
 	}
 
-	q.tactical_onQueryBrothersList = function()
+	q.tactical_onQueryBrothersList = @() function()
 	{
 		local entities = ::Tactical.Entities.getInstancesOfFaction(::Const.Faction.Player);
 		local pets = ::Tactical.Entities.getInstancesOfFaction(::Const.Faction.PlayerAnimals);

@@ -1,7 +1,7 @@
 ::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/warwolf", function ( q )
 {
 	if (!::Is_AccessoryCompanions_Exist) {
-		q.setVariant <- function( _v )
+		q.setVariant = @() function( _v )
 		{
 			m.Items.getAppearance().Body = "bust_wolf_0" + _v;
 			getSprite("body").setBrush("bust_wolf_0" + _v + "_body");

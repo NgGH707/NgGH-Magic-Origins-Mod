@@ -1,4 +1,4 @@
-::Nggh_MagicConcept.HooksMod.hook("scripts/skills/racial/werewolf_racial", function(q) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/skills/racial/legend_werewolf_racial", function(q) 
 {
 	q.m.ConversionRate <- 0.25;
 

@@ -45,7 +45,7 @@
 		return ret;
 	}
 
-	q.onCombatFinished = function() 
+	q.onCombatFinished = @() function() 
 	{
 		m.IsSpent = false;
 	}

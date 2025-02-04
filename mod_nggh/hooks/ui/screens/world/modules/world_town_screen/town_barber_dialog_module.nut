@@ -1,6 +1,6 @@
 ::Nggh_MagicConcept.HooksMod.hook("scripts/ui/screens/world/modules/world_town_screen/town_barber_dialog_module", function(q) 
 {
-	q.queryRosterInformation = function()
+	q.queryRosterInformation = @() function()
 	{
 		local roster = [];
 
@@ -28,7 +28,7 @@
 		};
 	}
 
-	q.onEntrySelected = function( _entityID )
+	q.onEntrySelected = @() function( _entityID )
 	{
 		local roster = ::World.getTemporaryRoster();
 		roster.clear();
@@ -98,7 +98,7 @@
 		return temp.getImagePath();
 	}
 
-	q.onChangeAppearance = function( _entityID )
+	q.onChangeAppearance = @() function( _entityID )
 	{
 		local bro = ::Tactical.getEntityByID(_entityID);
 		local temp = ::World.getTemporaryRoster().getAll()[0];

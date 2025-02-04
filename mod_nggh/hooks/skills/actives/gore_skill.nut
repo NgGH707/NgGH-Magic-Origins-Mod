@@ -29,7 +29,7 @@
 		getContainer().add(::new("scripts/skills/actives/nggh_mod_gore_skill_zoc"));
 	}
 
-	q.getTooltip <- function()
+	q.getTooltip = @() function()
 	{
 		local ret = getDefaultTooltip();
 

@@ -3,7 +3,7 @@ if (!::Is_AccessoryCompanions_Exist)
 	// make wolf_item have an actual right icon for it wolf variant
 	::Nggh_MagicConcept.HooksMod.hook("scripts/items/accessory/wolf_item", function(q) 
 	{
-	    q.setEntity <- function( _e )
+	    q.setEntity = @() function( _e )
 		{
 			m.Entity = _e;
 

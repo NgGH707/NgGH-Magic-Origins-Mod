@@ -13,7 +13,7 @@
 		return ret;
 	}
 
-	obj.setCharming = function( _f )
+	q.setCharming = @() function( _f )
 	{
 		if (_f == m.IsCharming)
 			return;

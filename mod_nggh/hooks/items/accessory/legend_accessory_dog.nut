@@ -1,4 +1,4 @@
-::Nggh_MagicConcept.HooksMod.hook("scripts/items/accessory/accessory_dog", function(q) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/items/accessory/legend_accessory_dog", function(q) 
 {
 	q.onActorDied = @(__original) function( _onTile )
 	{
