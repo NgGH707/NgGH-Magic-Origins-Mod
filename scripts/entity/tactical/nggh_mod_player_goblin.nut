@@ -438,8 +438,7 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 	{
 		this.nggh_mod_inhuman_player.onAfterInit();
 
-		if (::Is_PTR_Exist)
-		{
+		if (::Is_PTR_Exist) {
 			local racial = ::new("scripts/skills/racial/ptr_goblin_racial");
 			racial.m.IsSerialized = false;
 			this.getSkills().add(racial);
@@ -622,10 +621,8 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 
 		this.getBackground().addPerk(::Const.Perks.PerkDefs.BoondockBlade, 0);
 
-		if (!this.m.Skills.hasSkill("trait.intensive_training_trait"))
-		{
-			this.m.Skills.add(::new("scripts/skills/traits/intensive_training_trait"));
-		}
+		if (!this.m.Skills.hasSkill("trait.legend_intensive_training_trait"))
+			this.m.Skills.add(::new("scripts/skills/traits/legend_intensive_training_trait"));
 
 		this.getFlags().set("Type", _type);
 		this.updateVariant();
@@ -636,17 +633,11 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		local type;
 
 		if (_variant >= 0 && _variant < ::Const.Goblin.Variants.len())
-		{
 			type = ::Const.Goblin.Variants[_variant];
-		}
 		else if (_pickRandom)
-		{
 			type = ::MSU.Class.WeightedContainer(::Const.Goblin.VariantRolls).roll();
-		}
 		else
-		{
 			type = ::Const.Goblin.Variants[0]
-		}
 
 		local body = this.getSprite("body");
 		body.varySaturation(0.1);
@@ -747,19 +738,8 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 	function assignGoblinShamanEquipment()
 	{
 		this.m.Items.equip(::new("scripts/items/weapons/greenskins/goblin_staff"));
-
-		/*
-		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
-		{
-			this.m.Items.equip(::new("scripts/items/armor/greenskins/goblin_shaman_armor"));
-			this.m.Items.equip(::new("scripts/items/helmets/greenskins/goblin_shaman_helmet"));
-		}
-		else 
-		*/
-		{
-		    this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_goblin_shaman_armor"));
-			this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_shaman_helmet"));
-		}
+		this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_goblin_shaman_armor"));
+		this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_shaman_helmet"));
 
 		// a shaman after all, so they should have stuffs a shaman or witch doctor should have
 		// a random potion
@@ -784,19 +764,8 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		this.m.Items.equip(::new("scripts/items/ammo/quiver_of_bolts"));
 		this.m.Items.equip(::new("scripts/items/weapons/greenskins/goblin_crossbow"));
 		this.m.Items.addToBag(::new("scripts/items/weapons/greenskins/goblin_falchion"));
-		
-		/*
-		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
-		{
-			this.m.Items.equip(::new("scripts/items/armor/greenskins/goblin_leader_armor"));
-			this.m.Items.equip(::new("scripts/items/helmets/greenskins/goblin_leader_helmet"));
-		}
-		else
-		*/ 
-		{
-		    this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_goblin_leader_armor"));
-			this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_leader_helmet"));
-		}
+		this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_goblin_leader_armor"));
+		this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_leader_helmet"));
 	}
 
 	function assignGoblinWolfriderEquipment()
@@ -810,60 +779,30 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		this.m.Items.addToBag(::new("scripts/items/weapons/greenskins/" + weapons[1]));
 		this.m.Items.addToBag(::new("scripts/items/weapons/greenskins/goblin_spiked_balls"));
 
-		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Offhand) == null)
-		{
+		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Offhand) == null) {
 			this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand([
 				"shields/greenskins/goblin_light_shield",
 				"shields/greenskins/goblin_heavy_shield"
 			])));
 		}
 
-		/*
-		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
-		{
-			this.m.Items.equip(::new("scripts/items/armor/greenskins/" + ::MSU.Array.rand([
-				"goblin_medium_armor",
-				"goblin_heavy_armor"
-			])));
-			
-			if (::Math.rand(1, 100) <= 50)
-			{
-				local h = ::new("scripts/items/helmets/greenskins/goblin_light_helmet");
-				h.m.Variant = 1;
-				h.updateVariant();
-				this.m.Items.equip(h);
-			}
-			else
-			{
-				this.m.Items.equip(::new("scripts/items/helmets/greenskins/goblin_heavy_helmet"));
-			}
-		}
-		else 
-		*/
-		{
-			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_" + ::MSU.Array.rand([
-				"goblin_medium_armor",
-				"goblin_heavy_armor"
-			])));
+		this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_" + ::MSU.Array.rand([
+			"goblin_medium_armor",
+			"goblin_heavy_armor"
+		])));
 
-			if (::Math.rand(1, 100) <= 50)
-			{
-				local h = ::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_light_helmet");
-				h.m.Variant = 1;
-				h.updateVariant();
-				this.m.Items.equip(h);
-			}
-			else
-			{
-				this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_heavy_helmet"));
-			} 
+		if (::Math.rand(1, 100) <= 50) {
+			local h = ::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_light_helmet");
+			h.m.Variant = 1;
+			h.updateVariant();
+			this.m.Items.equip(h);
 		}
+		else
+			this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_heavy_helmet"));
 
 		// here is the mount, very good boi OwO too :head_pet:
 		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Accessory) == null)
-		{
 			this.getItems().equip(::new("scripts/items/accessory/wolf_item"));
-		}
 	}
 
 	function assignGoblinAmbusherEquipment()
@@ -874,24 +813,11 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 		])));
 		this.m.Items.equip(::new("scripts/items/ammo/quiver_of_arrows"));
 		this.m.Items.addToBag(::new("scripts/items/weapons/greenskins/goblin_notched_blade"));
+		this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_goblin_skirmisher_armor"));
+		this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_skirmisher_helmet"));
 
 		if (::Math.rand(1, 100) <= 40)
-		{
 			this.m.Items.addToBag(::new("scripts/items/accessory/poison_item"));
-		}
-
-		/*
-		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
-		{
-			this.m.Items.equip(::new("scripts/items/armor/greenskins/goblin_skirmisher_armor"));
-			this.m.Items.equip(::new("scripts/items/helmets/greenskins/goblin_skirmisher_helmet"));
-		}
-		else
-		*/
-		{
-			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_goblin_skirmisher_armor"));
-			this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_skirmisher_helmet"));
-		}
 	}
 
 	function assignGoblinFighterEquipment()
@@ -905,24 +831,17 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 
 		// pick side arm
 		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Mainhand).getID() == "weapon.goblin_falchion")
-		{
 			this.m.Items.addToBag(::new("scripts/items/weapons/greenskins/goblin_spiked_balls"));
-		}
 		else
-		{
 			this.m.Items.addToBag(::new("scripts/items/weapons/greenskins/goblin_notched_blade"));
-		}
 
-		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Offhand) == null)
-		{
-			if (::Math.rand(1, 100) <= 50)
-			{
+		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Offhand) == null) {
+			if (::Math.rand(1, 100) <= 50) {
 				// a bit bias for net thrower
 				::World.Assets.getOrigin().addScenarioPerk(this.getBackground(), ::Const.Perks.PerkDefs.LegendNetRepair, 1);
 				this.m.Items.equip(::new("scripts/items/tools/throwing_net"));
 			}
-			else
-			{
+			else {
 				this.m.Items.equip(::new("scripts/items/" + ::MSU.Array.rand([
 					"shields/greenskins/goblin_light_shield",
 					"shields/greenskins/goblin_heavy_shield"
@@ -930,46 +849,19 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 			}
 		}
 
-		/*
-		if (::Legends.Mod.ModSettings.getSetting("UnlayeredArmor").getValue())
-		{
-			this.m.Items.equip(::new("scripts/items/armor/greenskins/" + ::MSU.Array.rand([
-				"goblin_medium_armor",
-				"goblin_heavy_armor"
-			])));
-			
-			if (::Math.rand(1, 100) <= 50)
-			{
-				local h = ::new("scripts/items/helmets/greenskins/goblin_light_helmet");
-				h.m.Variant = 1;
-				h.updateVariant();
-				this.m.Items.equip(h);
-			}
-			else
-			{
-				this.m.Items.equip(::new("scripts/items/helmets/greenskins/goblin_heavy_helmet"));
-			}
-		}
-		else 
-		*/
-		{
-			this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_" + ::MSU.Array.rand([
-				"goblin_medium_armor",
-				"goblin_heavy_armor"
-			])));
+		this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_" + ::MSU.Array.rand([
+			"goblin_medium_armor",
+			"goblin_heavy_armor"
+		])));
 
-			if (::Math.rand(1, 100) <= 50)
-			{
-				local h = ::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_light_helmet");
-				h.m.Variant = 1;
-				h.updateVariant();
-				this.m.Items.equip(h);
-			}
-			else
-			{
-				this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_heavy_helmet"));
-			} 
+		if (::Math.rand(1, 100) <= 50) {
+			local h = ::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_light_helmet");
+			h.m.Variant = 1;
+			h.updateVariant();
+			this.m.Items.equip(h);
 		}
+		else
+			this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_goblin_heavy_helmet"));
 	}
 
 	function assignRandomEquipment()
@@ -1085,17 +977,11 @@ this.nggh_mod_player_goblin <- ::inherit("scripts/entity/tactical/nggh_mod_inhum
 	function onAfterUnequip( _item )
 	{
 		if (_item.getSlotType() == ::Const.ItemSlot.Accessory)
-		{
 			this.m.Mount.onAccessoryUnequip();
-		}
 		else if (_item.isItemType(::Const.Items.ItemType.Helmet))
-		{
 			this.m.IsWearingGoblinHelmet = false;
-		}
 		else if (_item.isItemType(::Const.Items.ItemType.Armor))
-		{
 			this.m.IsWearingGoblinArmor = false;
-		}
 	}
 
 	function getPossibleSprites( _type )

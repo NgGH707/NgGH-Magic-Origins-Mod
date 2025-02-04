@@ -9,19 +9,12 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 	function setBody( _b )
 	{
 		if (_b == null)
-		{
 			this.m.Body = null;
-		}
-		else
-		{
+		else {
 			if (typeof _b == "instance")
-			{
 				this.m.Body = _b;
-			}
 			else
-			{
 				this.m.Body = ::WeakTableRef(_b);
-			}
 		}
 	}
 
@@ -240,24 +233,17 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 	function onDamageReceived( _attacker, _skill, _hitInfo )
 	{
 		if (!this.isAlive() || !this.isPlacedOnMap())
-		{
 			return 0;
-		}
 
 		if (_hitInfo.DamageRegular == 0 && _hitInfo.DamageArmor == 0)
-		{
 			return 0;
-		}
 
 		if (typeof _attacker == "instance")
-		{
 			_attacker = _attacker.get();
-		}
 
 		_hitInfo.BodyPart = ::Const.BodyPart.Body;
 
-		if (_attacker != null && _attacker.isAlive() && _attacker.isPlayerControlled() && !this.isPlayerControlled())
-		{
+		if (_attacker != null && _attacker.isAlive() && _attacker.isPlayerControlled() && !this.isPlayerControlled()) {
 			this.setDiscovered(true);
 			this.getTile().addVisibilityForFaction(::Const.Faction.Player);
 			this.getTile().addVisibilityForCurrentEntity();
@@ -269,9 +255,7 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 		local dmgMult = p.DamageReceivedTotalMult;
 
 		if (_skill != null)
-		{
 			dmgMult = dmgMult * (_skill.isRanged() ? p.DamageReceivedRangedMult : p.DamageReceivedMeleeMult);
-		}
 
 		_hitInfo.DamageRegular -= p.DamageRegularReduction;
 		_hitInfo.DamageArmor -= p.DamageArmorReduction;
@@ -280,8 +264,7 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 		local armor = 0;
 		local armorDamage = 0;
 
-		if (_hitInfo.DamageDirect < 1.0)
-		{
+		if (_hitInfo.DamageDirect < 1.0) {
 			armor = p.Armor[_hitInfo.BodyPart] * p.ArmorMult[_hitInfo.BodyPart];
 			armorDamage = ::Math.min(armor, _hitInfo.DamageArmor);
 			armor = armor - armorDamage;
@@ -294,9 +277,7 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 		damage = damage + ::Math.maxf(0.0, _hitInfo.DamageRegular * _hitInfo.DamageDirect * p.DamageReceivedDirectMult - armor * ::Const.Combat.ArmorDirectDamageMitigationMult);
 
 		if (armor <= 0 || _hitInfo.DamageDirect >= 1.0)
-		{
 			damage = damage + ::Math.max(0, _hitInfo.DamageRegular * ::Math.maxf(0.0, 1.0 - _hitInfo.DamageDirect * p.DamageReceivedDirectMult) - armorDamage);
-		}
 
 		damage = damage * _hitInfo.BodyDamageMult;
 		damage = ::Math.max(0, ::Math.max(::Math.round(damage), ::Math.min(::Math.round(_hitInfo.DamageMinimum), ::Math.round(_hitInfo.DamageMinimum * p.DamageReceivedTotalMult))));
@@ -305,8 +286,7 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 		this.m.Skills.onDamageReceived(_attacker, _hitInfo.DamageInflictedHitpoints, _hitInfo.DamageInflictedArmor);
 		//this.m.Racial.onDamageReceived(_attacker, _hitInfo.DamageInflictedHitpoints, _hitInfo.DamageInflictedArmor);
 
-		if (armorDamage > 0 && !this.isHiddenToPlayer() && _hitInfo.IsPlayingArmorSound)
-		{
+		if (armorDamage > 0 && !this.isHiddenToPlayer() && _hitInfo.IsPlayingArmorSound) {
 			local armorHitSound = this.getItems().getAppearance().ImpactSound[_hitInfo.BodyPart];
 
 			if (armorHitSound.len() > 0)
@@ -565,8 +545,7 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )
 	{
-		if (_tile != null)
-		{
+		if (_tile != null) {
 			this.m.IsCorpseFlipped = ::Math.rand(0, 100) < 50;
 			local body = this.getSprite("body");
 			local decal = _tile.spawnDetail(this.m.IsStollWurm ? "bust_stollwurm_tail_01_dead" : "bust_lindwurm_tail_01_dead", this.Const.Tactical.DetailFlag.Corpse, this.m.IsCorpseFlipped);
@@ -596,8 +575,7 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 	{
 		this.actor.kill(_killer, _skill, _fatalityType, _silent);
 
-		if (this.m.Body != null && !this.m.Body.isNull() && this.m.Body.isAlive() && !this.m.Body.isDying())
-		{
+		if (this.m.Body != null && !this.m.Body.isNull() && this.m.Body.isAlive() && !this.m.Body.isDying()) {
 			this.m.Body.kill(_killer, _skill, _fatalityType, _silent);
 			this.m.Body = null;
 		}
@@ -613,8 +591,7 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 
 	function onInit()
 	{
-		if (this.m.ParentID != 0)
-		{
+		if (this.m.ParentID != 0) {
 			this.setBody(::Tactical.getEntityByID(this.m.ParentID));
 			this.m.BaseProperties = this.m.Body.getBaseProperties();
 			this.m.Items = this.m.Body.getItems();
@@ -624,13 +601,9 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 		this.actor.onInit();
 
 		if (this.m.Body != null && !this.m.Body.isNull())
-		{
 			this.m.BaseProperties = this.m.Body.getBaseProperties();
-		}
 		else
-		{
 			this.m.IsUsingDefaultStats = true;
-		}
 		
 		local b = this.m.BaseProperties;
 		this.m.ActionPoints = b.ActionPoints;
@@ -661,8 +634,7 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 	{
 		local b = this.m.BaseProperties;
 		
-		if (this.m.IsUsingDefaultStats)
-		{
+		if (this.m.IsUsingDefaultStats) {
 			b.setValues(::Const.EntityType.LegendStollwurm ? ::Const.Tactical.Actor.LegendStollwurm : ::Const.Tactical.Actor.Lindwurm);
 			b.IsAffectedByNight = false;
 			b.IsAffectedByRain = false;
@@ -704,23 +676,18 @@ this.nggh_mod_lindwurm_tail_player <- ::inherit("scripts/entity/tactical/nggh_mo
 	{
 		this.nggh_mod_player_beast.onActorKilled(_actor, _tile, _skill);
 		
-		if (this.m.Body != null && !this.m.Body.isNull() && this.m.Body.isAlive() && !this.m.Body.isDying())
-		{
+		if (this.m.Body != null && !this.m.Body.isNull() && this.m.Body.isAlive() && !this.m.Body.isDying()) {
 			local stats = this.m.Body.getSkills().getSkillByID("special.stats_collector");
 
 			if (stats != null)
-			{
 				stats.onTargetKilled(_actor, _skill);
-			}
 		}
 	}
 	
 	function addXP( _xp, _scale = true )
 	{	
 		if (this.m.Body != null && !this.m.Body.isNull() && this.m.Body.isAlive() && !this.m.Body.isDying())
-		{
 			this.m.Body.addXP(_xp, _scale);
-		}
 	}
 
 });

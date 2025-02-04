@@ -125,9 +125,7 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 	function playSound( _type, _volume, _pitch = 1.0 )
 	{
 		if (_type == ::Const.Sound.ActorEvent.DamageReceived && !this.isArmedWithShield())
-		{
 			_type = ::Const.Sound.ActorEvent.Other1;
-		}
 
 		this.nggh_mod_player_beast.playSound(_type, _volume, _pitch);
 	}
@@ -137,8 +135,7 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		this.nggh_mod_player_beast.onDeath(_killer, _skill, _tile, _fatalityType);
 		local flip = this.m.IsCorpseFlipped;
 
-		if (_tile != null)
-		{
+		if (_tile != null) {
 			local body = this.getSprite("body");
 			local head = this.getSprite("head");
 			local decal = _tile.spawnDetail(body.getBrush().Name + "_dead", ::Const.Tactical.DetailFlag.Corpse, flip);
@@ -150,13 +147,11 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 			decal.Saturation = head.Saturation;
 			decal.Scale = 0.95;
 
-			if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Arrow)
-			{
+			if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Arrow) {
 				decal = _tile.spawnDetail(body.getBrush().Name + "_dead_arrows", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Scale = 0.95;
 			}
-			else if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Javelin)
-			{
+			else if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Javelin) {
 				decal = _tile.spawnDetail(body.getBrush().Name + "_dead_javelin", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Scale = 0.95;
 			}
@@ -174,8 +169,7 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 			_tile.Properties.set("Corpse", corpse);
 			::Tactical.Entities.addCorpse(_tile);
 
-			if (_fatalityType != ::Const.FatalityType.Unconscious)
-			{
+			if (_fatalityType != ::Const.FatalityType.Unconscious) {
 				local n = 1 + (::Math.rand(1, 100) <= ::World.Assets.getExtraLootChance() ? 1 : 0);
 
 				for( local i = 0; i < n; ++i )
@@ -183,26 +177,18 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 					local r = ::Math.rand(1, 100);
 
 					if (r <= 40)
-					{
 						::new("scripts/items/misc/" + (this.isGreenWood() ? "legend_ancient_green_wood_item" : "ancient_wood_item")).drop(_tile);
-					}
 					else if (r <= 80)
-					{
 						::new("scripts/items/misc/glowing_resin_item").drop(_tile);
-					}
 					else
-					{
 						::new("scripts/items/misc/heart_of_the_forest_item").drop(_tile);
-					}
 				}
 			}
 
 			::new("scripts/items/misc/ancient_amber_item").drop(_tile);
 
 			if (::Math.rand(1, 100) <= 5)
-			{
 				::new("scripts/items/misc/" + (this.isGreenWood() ? "legend_ancient_green_wood_item" : "ancient_wood_item")).drop(_tile);
-			}
 		}
 	}
 
@@ -210,21 +196,14 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 	{
 		this.nggh_mod_player_beast.onCombatStart();
 
-		if (!this.isArmedWithShield())
-		{
+		if (!this.isArmedWithShield()) {
 			if (this.getHitpointsPct() >= 0.5 && ::Math.rand(1, 100) <= 50)
-			{
 				return;
-			}
 			
 			if (this.isGreenWood())
-			{
 				this.getItems().equip(::new("scripts/items/shields/beasts/legend_greenwood_schrat_shield"));
-			}
 			else 
-			{
 			 	this.getItems().equip(::new("scripts/items/shields/beasts/schrat_shield"));
-			}
 		}
 
 		this.changeWeather();
@@ -233,9 +212,7 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 	function changeWeather()
 	{
 		if (::Tactical.Entities.getFlags().get("WeatherIsChanged"))
-		{
 			return;
-		}
 
 		local clouds = ::Tactical.getWeather().createCloudSettings();
 		clouds.Type = this.getconsttable().CloudType.Fog;
@@ -322,9 +299,7 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (!this.hasSprite(a))
-			{
 				continue;
-			}
 
 			this.setSpriteOffset(a, v);
 			this.getSprite(a).Scale = 1.05;
@@ -383,14 +358,10 @@ this.nggh_mod_schrat_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 	function canEquipThis( _item )
 	{
 		if (_item.getSlotType() == ::Const.ItemSlot.Offhand)
-		{
 			return _item.isItemType(::Const.Items.ItemType.Shield);
-		}
-
+		
 		return true;
 	}
-	////
-
 
 	function getPossibleSprites( _layer )
 	{

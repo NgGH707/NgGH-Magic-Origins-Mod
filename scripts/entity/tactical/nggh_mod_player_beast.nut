@@ -261,8 +261,8 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 		else if (::Math.rand(1, 100) <= 1)
 			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscChampion, 6);
 
-		if (!this.m.Skills.hasSkill("trait.intensive_training_trait"))
-			this.m.Skills.add(::new("scripts/skills/traits/intensive_training_trait"));
+		if (!this.m.Skills.hasSkill("trait.legend_intensive_training_trait"))
+			this.m.Skills.add(::new("scripts/skills/traits/legend_intensive_training_trait"));
 
 		this.getFlags().set("Type", _type);
 		this.updateVariant();

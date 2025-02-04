@@ -270,20 +270,15 @@ this.nggh_mod_spider_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 			_tile.Properties.set("Corpse", corpse);
 			::Tactical.Entities.addCorpse(_tile);
 
-			if (_fatalityType != ::Const.FatalityType.Unconscious)
-			{
+			if (_fatalityType != ::Const.FatalityType.Unconscious) {
 				local n = 1 + (::Math.rand(1, 100) <= ::World.Assets.getExtraLootChance() ? 1 : 0);
 
 				for( local i = 0; i < n; ++i )
 				{
 					if (::Math.rand(1, 100) <= 50)
-					{
 						::new("scripts/items/misc/" + (this.isRedback() ? "legend_redback_poison_gland_item" : "poison_gland_item")).drop(_tile);
-					}
 					else
-					{
 						::new("scripts/items/misc/spider_silk_item").drop(_tile);
-					}
 				}
 			}
 
@@ -396,10 +391,8 @@ this.nggh_mod_spider_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (!this.hasSprite(a))
-			{
 				continue;
-			}
-
+			
 			this.setSpriteOffset(a, v);
 			this.getSprite(a).Scale = s;
 		}
@@ -419,10 +412,8 @@ this.nggh_mod_spider_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		local injury = this.getSprite("injury");
 
 		if (_randomziedSize || _size == 0.0)
-		{
 			_size = _isRedback ? ::Math.rand(90, 100) * 0.01 : ::Math.rand(75, 95) * 0.01;
-		}
-
+		
 		switch (true) 
 		{
 		case _isRedback:
@@ -450,19 +441,13 @@ this.nggh_mod_spider_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		this.m.CurrentProperties = clone b;
 		
 		if (::Math.rand(0, 100) < 90)
-		{
 			body.varySaturation(0.3);
-		}
 
 		if (::Math.rand(0, 100) < 90)
-		{
 			body.varyColor(0.1, 0.1, 0.1);
-		}
 
 		if (::Math.rand(0, 100) < 90)
-		{
 			body.varyBrightness(0.1);
-		}
 
 		legs_front.Color = body.Color;
 		legs_front.Saturation = body.Saturation;
@@ -486,8 +471,7 @@ this.nggh_mod_spider_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 	{
 		this.nggh_mod_player_beast.onRender();
 
-		if (this.m.DistortTargetA == null)
-		{
+		if (this.m.DistortTargetA == null) {
 			this.m.DistortTargetA = this.m.IsFlipping ? ::createVec(0, 1.0 * this.m.Size) : ::createVec(0, -1.0 * this.m.Size);
 			this.m.DistortTargetB = !this.m.IsFlipping ? ::createVec(-0.5 * this.m.Size, 0) : ::createVec(0.5 * this.m.Size, 0);
 			this.m.DistortTargetC = !this.m.IsFlipping ? ::createVec(0.5 * this.m.Size, 0) : ::createVec(-0.5 * this.m.Size, 0);
@@ -503,13 +487,10 @@ this.nggh_mod_spider_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (this.getSprite(a).HasBrush && this.getSprite(a).Visible)
-			{
 				this.moveSpriteOffset(a, this.m.DistortTargetPrevHelmet, this.m.DistortTargetHelmet, 1.0, this.m.DistortAnimationStartTimeA);
-			}
 		}
 
-		if (this.moveSpriteOffset("head", this.m.DistortTargetPrevA, this.m.DistortTargetA, 1.0, this.m.DistortAnimationStartTimeA))
-		{
+		if (this.moveSpriteOffset("head", this.m.DistortTargetPrevA, this.m.DistortTargetA, 1.0, this.m.DistortAnimationStartTimeA)) {
 			this.m.DistortAnimationStartTimeA = ::Time.getVirtualTimeF();
 			this.m.DistortTargetPrevA = this.m.DistortTargetA;
 			this.m.DistortTargetA = this.m.IsFlipping ? ::createVec(0, 1.0 * this.m.Size) : ::createVec(0, -1.0 * this.m.Size);

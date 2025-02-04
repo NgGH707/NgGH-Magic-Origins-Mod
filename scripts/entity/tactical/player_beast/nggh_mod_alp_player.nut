@@ -107,22 +107,16 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 	function playIdleSound()
 	{
 		if (::Math.rand(1, 100) <= 50)
-		{
 			this.playSound(::Const.Sound.ActorEvent.Other1, ::Const.Sound.Volume.Actor * ::Const.Sound.Volume.ActorIdle * this.m.SoundVolume[::Const.Sound.ActorEvent.Other1] * this.m.SoundVolumeOverall * (::Math.rand(50, 90) * 0.01) * (this.isHiddenToPlayer ? 0.5 : 1.0), this.m.SoundPitch * (::Math.rand(50, 100) * 0.01));
-		}
 		else
-		{
 			this.playSound(::Const.Sound.ActorEvent.Idle, ::Const.Sound.Volume.Actor * ::Const.Sound.Volume.ActorIdle * this.m.SoundVolume[::Const.Sound.ActorEvent.Idle] * this.m.SoundVolumeOverall * (::Math.rand(50, 100) * 0.01) * (this.isHiddenToPlayer ? 0.5 : 1.0), this.m.SoundPitch * (::Math.rand(60, 105) * 0.01));
-		}
 	}
 
 	function onCombatStart()
 	{
 		// alps are like vampire, they don't like the sun OwO
 		if (::World.getTime().IsDaytime)
-		{
 			this.m.Skills.add(::new("scripts/skills/special/nggh_mod_day_effect"));
-		}
 
 		this.nggh_mod_player_beast.onCombatStart();
 	}
@@ -236,43 +230,29 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 			_tile.Properties.set("Corpse", corpse);
 			::Tactical.Entities.addCorpse(_tile);
 
-			if (_fatalityType != ::Const.FatalityType.Unconscious)
-			{
+			if (_fatalityType != ::Const.FatalityType.Unconscious) {
 				local n = 1 + (::Math.rand(1, 100) <= ::World.Assets.getExtraLootChance() ? 1 : 0);
-				if (this.isDemonAlp())
-				{
-					local r = ::Math.rand(1, 100);
+				if (this.isDemonAlp()) {
 					local loot;
 
-					if (r <= 50)
-					{
+					if (::Math.rand(1, 100) <= 50)
 						loot = ::new("scripts/items/misc/legend_demon_alp_skin_item");
-					}
 					else
-					{
 						loot = ::new("scripts/items/misc/legend_demon_third_eye_item");
-					}
 					
 					loot.drop(_tile);
 				}
 
 				for( local i = 0; i < n; i = ++i )
 				{
-					local r = ::Math.rand(1, 100);
-					local loot;
+					local loot, r = ::Math.rand(1, 100);
 
 					if (r <= 40)
-					{
 						loot = ::new("scripts/items/misc/parched_skin_item");
-					}
 					else if (r <= 80)
-					{
 						loot = ::new("scripts/items/misc/third_eye_item");
-					}
 					else
-					{
 						loot = ::new("scripts/items/misc/petrified_scream_item");
-					}
 
 					loot.drop(_tile);
 				}
@@ -285,9 +265,7 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 		foreach( ally in ::Tactical.Entities.getInstancesOfFaction(::Const.Faction.PlayerAnimals) )
 		{
 			if (ally.getFlags().has("alp_shadow") && ally.getFlags().get("Source") == this.getID())
-			{
 				ally.killSilently();
-			}
 		}
 	}
 
@@ -386,12 +364,8 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
-			if (!this.hasSprite(a))
-			{
-				continue;
-			}
-
-			this.setSpriteOffset(a, v);
+			if (this.hasSprite(a))
+				this.setSpriteOffset(a, v);
 		}
 
 		this.setAlwaysApplySpriteOffset(true);
@@ -435,26 +409,17 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 		this.addDefaultBackground(type, _isElite);
 
 		if (_assignEquipment > 2)
-		{
 			_assignEquipment = ::Math.rand(0, 2);
-		}
 
-		if (_assignEquipment == 1)
-		{
-			this.assignMeleeEquipment();
-		}
-		else if (_assignEquipment == 2)
-		{
-			this.assignRangedEquipment();
-		}
+		if (_assignEquipment == 1) this.assignMeleeEquipment();
+		else if (_assignEquipment == 2) this.assignRangedEquipment();
 
 		this.setScenarioValues(type, _isElite);
 	}
 	
 	function assignMeleeEquipment()
 	{
-		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Mainhand) == null)
-		{
+		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Mainhand) == null) {
 			local weapons = [
 				"military_pick",
 				"ancient/falx",
@@ -478,17 +443,13 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 		}
 
 		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Offhand) == null && ::Math.rand(1, 2) == 1)
-		{
 			this.m.Items.equip(::new("scripts/items/shields/greenskins/goblin_heavy_shield"));
-		}
 	}
 
 	function assignRangedEquipment()
 	{
 		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Mainhand) == null)
-		{
 			this.m.Items.equip(::new("scripts/items/weapons/" + (::Math.rand(1, 2) == 1 ? "greenskins/goblin_heavy_bow" : "oriental/composite_bow")));
-		}
 
 		this.m.Items.equip(::new("scripts/items/ammo/quiver_of_arrows"));
 		this.m.Items.addToBag(::new("scripts/items/weapons/greenskins/goblin_notched_blade"));
@@ -522,16 +483,6 @@ this.nggh_mod_alp_player <- ::inherit("scripts/entity/tactical/nggh_mod_player_b
 		local brush = this.getSprite("body").getBrush().Name;
 		app.Body = brush;
 		app.Corpse = brush + "_dead";
-
-		if (this.isDemonAlp())
-		{
-			this.m.BaseProperties.InitiativeForTurnOrderAdditional = 900;
-
-			if (::Nggh_MagicConcept.Mod.ModSettings.getSetting("balance_mode").getValue() && this.m.BaseProperties.Initiative > 900)
-			{
-				this.m.BaseProperties.Initiative -= 925;
-			}
-		}
 	}
 
 	function updateInjuryVisuals( _setDirty = true )

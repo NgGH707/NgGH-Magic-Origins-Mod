@@ -54,9 +54,7 @@ this.nggh_mod_kraken_scenario <- ::inherit("scripts/scenarios/world/starting_sce
 			randomVillage = ::World.EntityManager.getSettlements()[i];
 
 			if (!randomVillage.isMilitary() && !randomVillage.isIsolatedFromRoads() && randomVillage.getSize() <= 1)
-			{
 				break;
-			}
 		}
 
 		local randomVillageTile = randomVillage.getTile();
@@ -69,28 +67,21 @@ this.nggh_mod_kraken_scenario <- ::inherit("scripts/scenarios/world/starting_sce
 			local y = ::Math.rand(::Math.max(2, randomVillageTile.SquareCoords.Y - 3), ::Math.min(::Const.World.Settings.SizeY - 2, randomVillageTile.SquareCoords.Y + 3));
 
 			if (!::World.isValidTileSquare(x, y))
-			{
-			}
-			else
-			{
-				local tile = ::World.getTileSquare(x, y);
+				continue;
 
-				if (tile.Type == ::Const.World.TerrainType.Ocean || tile.Type == ::Const.World.TerrainType.Shore || tile.IsOccupied)
-				{
-				}
-				else if (tile.getDistanceTo(randomVillageTile) <= 1)
-				{
-				}
-				else
-				{
-					local path = ::World.getNavigator().findPath(tile, randomVillageTile, navSettings, 0);
+			local tile = ::World.getTileSquare(x, y);
 
-					if (!path.isEmpty())
-					{
-						randomVillageTile = tile;
-						break;
-					}
-				}
+			if (tile.Type == ::Const.World.TerrainType.Ocean || tile.Type == ::Const.World.TerrainType.Shore || tile.IsOccupied)
+				continue;
+
+			if (tile.getDistanceTo(randomVillageTile) <= 1)
+				continue;
+
+			local path = ::World.getNavigator().findPath(tile, randomVillageTile, navSettings, 0);
+
+			if (!path.isEmpty()) {
+				randomVillageTile = tile;
+				break;
 			}
 		}
 		while (1);
@@ -116,31 +107,22 @@ this.nggh_mod_kraken_scenario <- ::inherit("scripts/scenarios/world/starting_sce
 	function onActorKilled( _actor, _killer, _combatID )
 	{
 		if (::Tactical.State.getStrategicProperties().IsArenaMode)
-		{
 			return;
-		}
 
 		if (_killer == null)
-		{
 			return;
-		}
 
 		if (!_killer.getFlags().has("kraken") && !_killer.getFlags().has("kraken_tentacle"))
-		{
 			return;
-		}
 
 		if ([
 			::Const.BloodType.Red,
 			::Const.BloodType.Dark,
 			::Const.BloodType.Green,
 		].find(_actor.getBloodType()) == null)
-		{
 			return;
-		}
 
-		if (_actor.isPlacedOnMap() && _actor.getTile() != null)
-		{
+		if (_actor.isPlacedOnMap() && _actor.getTile() != null) {
 			local tile = _actor.getTile();
 			local item = ::new("scripts/items/supplies/strange_meat_item");
 			tile.Items.push(item);
@@ -154,9 +136,7 @@ this.nggh_mod_kraken_scenario <- ::inherit("scripts/scenarios/world/starting_sce
 		foreach( bro in ::World.getPlayerRoster().getAll() )
 		{
 			if (bro.getFlags().get("IsPlayerCharacter"))
-			{
 				return true;
-			}
 		}
 
 		return false;

@@ -485,18 +485,14 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 		local isBear = this.isBear();
 
 		if (_item.isItemType(::Const.Items.ItemType.Armor))
-		{
 			return [
 				"armor.body.unhold_armor_heavy",
 				"armor.body.unhold_armor_light",
 			].find(_item.getID()) != null && !isBear;
-		}
 		else if (!isBear && _item.isItemType(::Const.Items.ItemType.Helmet))
-		{
 			return ::Const.Items.NotForUnholdHelmetList.find(_item.getID()) == null;
-		}
-
-		return this.nggh_mod_player_beast.isAbleToEquip(_item);
+		else
+			return this.nggh_mod_player_beast.isAbleToEquip(_item);
 	}
 	
 	/*
@@ -611,14 +607,12 @@ this.nggh_mod_unhold_player <- ::inherit("scripts/entity/tactical/nggh_mod_playe
 			b.DailyFood = 10;
 		}
 
-		if (this.isBear())
-		{	
+		if (this.isBear()) {	
 			this.changeBearSounds();
 			this.getItems().getData()[::Const.ItemSlot.Body][0] = -1;
 			this.getItems().updateAppearance();
 		}
-		else
-		{
+		else {
 			// can use armor for protection
 			this.m.Skills.removeByID("special.cosmetic");
 		}

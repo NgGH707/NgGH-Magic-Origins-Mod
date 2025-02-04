@@ -134,9 +134,7 @@ this.nggh_mod_hyena_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 	function playAttackSound()
 	{
 		if (::Math.rand(1, 100) <= 50)
-		{
 			this.playSound(::Const.Sound.ActorEvent.Attack, ::Const.Sound.Volume.Actor * this.m.SoundVolume[::Const.Sound.ActorEvent.Attack] * (::Math.rand(75, 100) * 0.01), this.m.SoundPitch * 1.15);
-		}
 	}
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )
@@ -144,8 +142,7 @@ this.nggh_mod_hyena_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		this.nggh_mod_player_beast.onDeath(_killer, _skill, _tile, _fatalityType);
 		local flip = this.m.IsCorpseFlipped;
 
-		if (_tile != null)
-		{
+		if (_tile != null) {
 			local body = this.getSprite("body");
 			local head = this.getSprite("head");
 			local decal = _tile.spawnDetail("bust_hyena_01_body_dead", ::Const.Tactical.DetailFlag.Corpse, flip);
@@ -153,15 +150,13 @@ this.nggh_mod_hyena_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 			decal.Saturation = body.Saturation;
 			decal.Scale = 0.95;
 
-			if (_fatalityType != ::Const.FatalityType.Decapitated)
-			{
+			if (_fatalityType != ::Const.FatalityType.Decapitated) {
 				decal = _tile.spawnDetail(head.getBrush().Name + "_dead", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Color = head.Color;
 				decal.Saturation = head.Saturation;
 				decal.Scale = 0.95;
 			}
-			else if (_fatalityType == ::Const.FatalityType.Decapitated)
-			{
+			else if (_fatalityType == ::Const.FatalityType.Decapitated) {
 				local layers = [
 					head.getBrush().Name + "_dead"
 				];
@@ -171,13 +166,11 @@ this.nggh_mod_hyena_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 				decap[0].Scale = 0.95;
 			}
 
-			if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Arrow)
-			{
+			if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Arrow) {
 				decal = _tile.spawnDetail("bust_hyena_01_body_dead_arrows", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Scale = 0.95;
 			}
-			else if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Javelin)
-			{
+			else if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Javelin) {
 				decal = _tile.spawnDetail("bust_hyena_01_body_dead_javelin", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Scale = 0.95;
 			}
@@ -198,32 +191,22 @@ this.nggh_mod_hyena_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 			::Tactical.Entities.addCorpse(_tile);
 
 			if (this.isHigh())
-			{
 				::new("scripts/items/loot/sabertooth_item").drop(_tile);
-			}
 
 			if (_fatalityType == ::Const.FatalityType.Unconscious)
-			{
 				return;
-			}
 
 			local n = 1 + (::Math.rand(1, 100) <= ::World.Assets.getExtraLootChance() ? 1 : 0);
 
 			for( local i = 0; i < n; ++i )
 			{
-				if (::Math.rand(1, 100) <= 50)
-				{
+				if (::Math.rand(1, 100) <= 50) {
 					if (::Math.rand(1, 100) <= 60)
-					{
 						::new("scripts/items/misc/hyena_fur_item").drop(_tile);
-					}
 					else
-					{
 						::new("scripts/items/misc/acidic_saliva_item").drop(_tile);
-					}
 				}
-				else
-				{
+				else {
 					::new("scripts/items/supplies/strange_meat_item").drop(_tile);
 				}
 			}
@@ -291,10 +274,8 @@ this.nggh_mod_hyena_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (!this.hasSprite(a))
-			{
 				continue;
-			}
-
+			
 			this.setSpriteOffset(a, v);
 			this.getSprite(a).Scale = 0.95;
 		}
@@ -316,9 +297,7 @@ this.nggh_mod_hyena_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		local body_blood = this.getSprite("body_blood");
 
 		if (!_isFrenzied && ::Math.rand(1, 100) <= _FrenzyChance)
-		{
 			_isFrenzied = true;
-		}
 
 		switch (true) 
 		{
@@ -340,14 +319,10 @@ this.nggh_mod_hyena_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		this.m.CurrentProperties = clone b;
 		
 		if (::Math.rand(0, 100) < 90)
-		{
 			body.varySaturation(0.2);
-		}
 
 		if (::Math.rand(0, 100) < 90)
-		{
 			body.varyColor(0.05, 0.05, 0.05);
-		}
 		
 		head.Color = body.Color;
 		head.Saturation = body.Saturation;
@@ -359,17 +334,14 @@ this.nggh_mod_hyena_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		this.addDefaultBackground(type, _isElite);
 
 		if (!_isFrenzied)
-		{
 			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHWolfRabies, 6);
-		}
 		
 		this.setScenarioValues(type, _isElite);
 	}
 	
 	function getPossibleSprites( _layer )
 	{
-		if (!this.isHigh())
-		{
+		if (!this.isHigh()) {
 			switch (_layer) 
 			{
 		    case "body":

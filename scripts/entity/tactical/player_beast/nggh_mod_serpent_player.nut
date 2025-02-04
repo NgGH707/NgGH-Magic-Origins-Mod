@@ -111,10 +111,8 @@ this.nggh_mod_serpent_player <- ::inherit("scripts/entity/tactical/nggh_mod_play
 	function playSound( _type, _volume, _pitch = 1.0 )
 	{
 		if (_type == ::Const.Sound.ActorEvent.Move && ::Math.rand(1, 100) <= 33)
-		{
 			return;
-		}
-
+		
 		this.nggh_mod_player_beast.playSound(_type, _volume, _pitch);
 	}
 
@@ -123,23 +121,20 @@ this.nggh_mod_serpent_player <- ::inherit("scripts/entity/tactical/nggh_mod_play
 		this.nggh_mod_player_beast.onDeath(_killer, _skill, _tile, _fatalityType);
 		local flip = this.m.IsCorpseFlipped;
 		
-		if (_tile != null)
-		{
+		if (_tile != null) {
 			local body = this.getSprite("body");
 			local decal = _tile.spawnDetail("bust_snake_body_0" + this.m.Variant + "_dead", ::Const.Tactical.DetailFlag.Corpse, flip);
 			decal.Color = body.Color;
 			decal.Saturation = body.Saturation;
 			decal.Scale = 0.9;
 
-			if (_fatalityType != ::Const.FatalityType.Decapitated)
-			{
+			if (_fatalityType != ::Const.FatalityType.Decapitated) {
 				decal = _tile.spawnDetail("bust_snake_body_0" + this.m.Variant + "_head_dead", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Color = body.Color;
 				decal.Saturation = body.Saturation;
 				decal.Scale = 0.9;
 			}
-			else if (_fatalityType == ::Const.FatalityType.Decapitated)
-			{
+			else if (_fatalityType == ::Const.FatalityType.Decapitated) {
 				local layers = [
 					"bust_snake_body_0" + this.m.Variant + "_head_dead"
 				];
@@ -164,20 +159,15 @@ this.nggh_mod_serpent_player <- ::inherit("scripts/entity/tactical/nggh_mod_play
 			_tile.Properties.set("Corpse", corpse);
 			::Tactical.Entities.addCorpse(_tile);
 
-			if (_fatalityType != ::Const.FatalityType.Unconscious)
-			{
+			if (_fatalityType != ::Const.FatalityType.Unconscious) {
 				local n = 1 + (::Math.rand(1, 100) <= ::World.Assets.getExtraLootChance() ? 1 : 0);
 
 				for( local i = 0; i < n; ++i )
 				{
 					if (::Math.rand(1, 100) <= 60)
-					{
 						::new("scripts/items/misc/serpent_skin_item").drop(_tile);
-					}
 					else
-					{
 						::new("scripts/items/misc/glistening_scales_item").drop(_tile);
-					}
 				}
 			}
 
@@ -265,10 +255,8 @@ this.nggh_mod_serpent_player <- ::inherit("scripts/entity/tactical/nggh_mod_play
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (!this.hasSprite(a))
-			{
 				continue;
-			}
-
+			
 			this.setSpriteOffset(a, v);
 			this.getSprite(a).Scale = 0.7;
 		}
@@ -294,19 +282,13 @@ this.nggh_mod_serpent_player <- ::inherit("scripts/entity/tactical/nggh_mod_play
 		this.m.Variant = ::Math.rand(1, 2);
 		
 		if (this.m.Variant == 2 && ::Math.rand(0, 100) < 90)
-		{
 			body.varySaturation(0.1);
-		}
 
 		if (this.Math.rand(0, 100) < 90)
-		{
 			body.varyColor(0.1, 0.1, 0.1);
-		}
 
 		if (this.Math.rand(0, 100) < 90)
-		{
 			body.varyBrightness(0.1);
-		}
 
 		local injury = this.getSprite("injury");
 		injury.Visible = false;
@@ -325,16 +307,12 @@ this.nggh_mod_serpent_player <- ::inherit("scripts/entity/tactical/nggh_mod_play
 		this.nggh_mod_player_beast.setScenarioValues(_type, _isElite, _randomizedTalents, _setName);
 
 		if (this.m.Skills.hasSkill("racial.champion"))
-		{
 			this.m.BaseProperties.ActionPoints = 10;
-		}
 	}
 
 	function getBarberSpriteChange()
 	{
-		return [
-			"body",
-		];
+		return ["body"];
 	}
 
 	function getPossibleSprites( _layer = "body" )

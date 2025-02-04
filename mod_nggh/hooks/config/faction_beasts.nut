@@ -18,5 +18,8 @@
 ::Const.Tactical.Actor.LegendGreenwoodSchrat.RangedSkill = 60;
 ::Const.Tactical.Actor.LegendGreenwoodSchratSmall.RangedSkill = 70;
 
+// change witch hunter strength rating
+::Const.World.Spawn.Troops.LegendPeasantWitchHunter.Strength = 30;
+
 
 

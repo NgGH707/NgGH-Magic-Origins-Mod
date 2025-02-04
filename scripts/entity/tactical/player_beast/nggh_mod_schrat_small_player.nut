@@ -119,9 +119,7 @@ this.nggh_mod_schrat_small_player <- ::inherit("scripts/entity/tactical/nggh_mod
 		local i = body.getBrush().Name.find("_injured");
 
 		if (i != null)
-		{
 			body.setBrush(body.getBrush().Name.slice(0, i));
-		}
 
 		this.nggh_mod_player_beast.onDeath(_killer, _skill, _tile, _fatalityType);
 		local flip = this.m.IsCorpseFlipped;
@@ -147,13 +145,9 @@ this.nggh_mod_schrat_small_player <- ::inherit("scripts/entity/tactical/nggh_mod
 			this.Tactical.Entities.addCorpse(_tile);
 
 			if (_fatalityType == ::Const.FatalityType.Unconscious)
-			{
 				::new("scripts/items/loot/ancient_amber_item").drop(_tile);
-			}
 			else
-			{
-				::new("scripts/items/misc/" + (this.isGreenWood() ? "legend_ancient_green_wood_item" : "ancient_wood_item")).drop(_tile);
-			}			
+				::new("scripts/items/misc/" + (this.isGreenWood() ? "legend_ancient_green_wood_item" : "ancient_wood_item")).drop(_tile);	
 		}
 	}
 
@@ -248,9 +242,7 @@ this.nggh_mod_schrat_small_player <- ::inherit("scripts/entity/tactical/nggh_mod
 
 	function getBarberSpriteChange()
 	{
-		return [
-			"body",
-		];
+		return ["body"];
 	}
 
 	function getPossibleSprites( _layer = "body" )
@@ -279,27 +271,19 @@ this.nggh_mod_schrat_small_player <- ::inherit("scripts/entity/tactical/nggh_mod
 		local body = this.getSprite("body");
 		
 		if (!body.HasBrush)
-		{
 			return;
-		}
 		
 		local brush = body.getBrush().Name;
 		local isInjuryBrush = brush.find("_injured");
 		local p = this.getHitpoints() / this.getHitpointsMax();
 
 		if (isInjuryBrush != null)
-		{
 			brush = brush.slice(0, isInjuryBrush);
-		}
 
 		if (p >= 0.5)
-		{
 			body.setBrush(brush);
-		}
 		else
-		{
 			body.setBrush(brush + "_injured");
-		}
 
 		this.setDirty(true);
 	}

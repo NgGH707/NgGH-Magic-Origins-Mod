@@ -591,23 +591,15 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 		this.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
 
 		if (_setName)
-		{
 			this.setName(::Const.Strings.EntityName[_type]);
-		}
 
 		if (_isElite || (!_randomizedTalents && ::Math.rand(1, 100) == 1))
-		{
 			this.m.Skills.add(::new("scripts/skills/racial/champion_racial"));
-		}
 		else if (::Math.rand(1, 100) <= 1)
-		{
 			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHMiscChampion, 6);
-		}
 
-		if (!this.m.Skills.hasSkill("trait.intensive_training_trait"))
-		{
-			this.m.Skills.add(::new("scripts/skills/traits/intensive_training_trait"));
-		}
+		if (!this.m.Skills.hasSkill("trait.legend_intensive_training_trait"))
+			this.m.Skills.add(::new("scripts/skills/traits/legend_intensive_training_trait"));
 
 		this.getFlags().set("Type", _type);
 		this.updateVariant();
@@ -664,9 +656,7 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 		this.addDefaultBackground(type, _isElite);
 
 		if (_addUniqueTrait)
-		{
 			this.m.Skills.add(::new("scripts/traits/nggh_mod_born_to_fight_trait"));
-		}
 
 		this.setScenarioValues(type, _isElite);
 		this.assignRandomEquipment();
@@ -1056,15 +1046,13 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 	{
 		local weapons = [];
 
-		if (::Math.rand(1, 100) <= 25)
-		{
+		if (::Math.rand(1, 100) <= 25) {
 			weapons.extend([
 				"greenskins/orc_axe",
 				"greenskins/orc_cleaver",
 			]);
 		}
-		else
-		{
+		else {
 			weapons.extend([
 				"greenskins/legend_skullsmasher",
 				"greenskins/legend_skin_flayer",
@@ -1075,16 +1063,11 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 		this.m.Items.equip(::new("scripts/items/weapons/" + ::MSU.Array.rand(weapons)));
 		
 		// assign shield
-		if (this.m.Items.hasEmptySlot(::Const.ItemSlot.Offhand))
-		{
+		if (this.m.Items.hasEmptySlot(::Const.ItemSlot.Offhand)) {
 			if (::Math.rand(1, 100) <= 2)
-			{
 				this.m.Items.equip(::new("scripts/items/shields/named/named_orc_heavy_shield"));
-			}
 			else
-			{
 				this.m.Items.equip(::new("scripts/items/shields/greenskins/orc_heavy_shield"));
-			}
 		}
 
 		this.m.Items.equip(::new("scripts/items/legend_armor/greenskins/nggh_mod_orc_elite_heavy_armor"));
@@ -1115,9 +1098,7 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 		this.m.Items.equip(::new("scripts/items/weapons/greenskins/" + ::MSU.Array.rand(weapons)));
 
 		if (this.m.Items.getItemAtSlot(::Const.ItemSlot.Offhand) == null)
-		{
 			this.m.Items.equip(::new("scripts/items/shields/greenskins/orc_heavy_shield"));
-		}
 
 		local armors = [
 			"orc_warrior_light_armor",
@@ -1159,14 +1140,10 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 
 		// assign helmet
 		if (::Math.rand(1, 100) <= 33)
-		{
 			this.m.Items.equip(::new("scripts/items/legend_helmets/greenskins/nggh_mod_orc_berserker_helmet"));
-		}
 
 		if (this.Math.rand(1, 100) <= 10)
-		{
 			this.m.Items.addToBag(::new("scripts/items/accessory/berserker_mushrooms_item"));
-		}
 	}
 
 	function assignOrcYoungEquipment()
@@ -1174,12 +1151,9 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 		local weapons = [];
 
 		if (::Math.rand(1, 100) <= 25)
-		{
 			this.m.Items.addToBag(::new("scripts/items/weapons/greenskins/orc_javelin"));
-		}
 
-		if (::Math.rand(1, 100) <= 75)
-		{
+		if (::Math.rand(1, 100) <= 75) {
 			weapons.extend([
 				"greenskins/orc_axe",
 				"greenskins/orc_cleaver",
@@ -1187,8 +1161,7 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 				"greenskins/orc_metal_club"
 			]);
 		}
-		else
-		{
+		else {
 			weapons.extend([
 				"greenskins/goblin_falchion",
 				"hatchet",
@@ -1201,9 +1174,7 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 		
 		// assign shield
 		if (this.m.Items.hasEmptySlot(::Const.ItemSlot.Offhand) && ::Math.rand(1, 100) <= 50)
-		{
 			this.m.Items.equip(::new("scripts/items/shields/greenskins/orc_light_shield"));
-		}
 
 		local armors = [
 			"orc_young_very_light_armor",
@@ -1257,10 +1228,9 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 	function fillModsTalentValues( _stars = 0 , _force = false )
 	{
 		if (this.getBackground() != null && ("Custom" in this.getBackground().m.TempData))
-		{
 			::Nggh_MagicConcept.TalentFiller.fillModdedTalentValues(this , this.getBackground().m.TempData.Custom.Talents , _stars , _force);
-		}
 	}
+	
 
 	function fillTalentValues( _num = null , _force = false )
 	{
@@ -1282,17 +1252,12 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 
 	function isAbleToEquip( _item )
 	{
-		if (_item.isItemType(::Const.Items.ItemType.Armor))
-		{
+		if (_item.isItemType(::Const.Items.ItemType.Armor)) {
 			if (this.isBehemoth())
-			{
 				return _item.getID() == "armor.body.legend_orc_behemoth_armor";
-			}
 
 			if (this.isWarlord())
-			{
 				return _item.getID() == "armor.body.orc_warlord_armor";
-			}
 
 			return ::Const.Items.NotForOrcArmorList.find(_item.getID()) == null;
 		}
@@ -1310,21 +1275,17 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 	{
 		local update = false;
 
-		if (_item.isItemType(this.Const.Items.ItemType.Armor))
-		{
+		if (_item.isItemType(this.Const.Items.ItemType.Armor)) {
 			this.m.IsWearingOrcArmor = ::Const.Items.NotForHumanArmorList.find(_item.getID()) != null;
 			update = true;
 		}
-		else if (_item.isItemType(::Const.Items.ItemType.Helmet))
-		{
+		else if (_item.isItemType(::Const.Items.ItemType.Helmet)) {
 			this.m.IsWearingOrcHelmet = ::Const.Items.NotForHumanHelmetList.find(_item.getID()) != null;
 			update = true;
 		}
 
 		if (update)
-		{
 			this.onAdjustingArmorSprites();
-		}
 	}
 
 	function canEnterBarber()

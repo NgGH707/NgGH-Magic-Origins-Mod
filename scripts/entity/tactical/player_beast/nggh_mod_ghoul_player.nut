@@ -35,8 +35,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 
 	function setSize( _s ) 
 	{
-		if (this.m.Size == _s)
-		{
+		if (this.m.Size == _s) {
 			this.onAdjustingSprite(this.m.Items.getAppearance());
 			return;
 		}
@@ -212,8 +211,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		if (this.getSize() == 1) 
 			return true;
 
-		if (this.onFeastingLeftoverCorpses())
-		{
+		if (this.onFeastingLeftoverCorpses()) {
 			this.improveMood(0.5, "Had a great meal");
 			return true;
 		}
@@ -231,8 +229,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		if (perk == null)
 			return hasEaten;
 
-		if (hasEaten)
-		{
+		if (hasEaten) {
 			perk.applyEffect();
 			return true;
 		}
@@ -246,14 +243,12 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		{
 			local tile = corpses[i];
 
-			if (tile.Properties.get("Corpse") == null)
-			{
+			if (tile.Properties.get("Corpse") == null) {
 				garbage.push(tile);
 				continue;
 			}
 
-		    if (tile.Properties.get("Corpse").IsConsumable)
-		    {
+		    if (tile.Properties.get("Corpse").IsConsumable) {
 				this.getFlags().set("has_eaten", true);
 				this.setHitpoints(::Math.min(this.getHitpoints() + hp, this.getHitpointsMax()));
 				tile.Properties.remove("Corpse");
@@ -279,8 +274,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		local sprite_body = this.getSprite("body");
 		local sprite_head = this.getSprite("head");
 
-		if (_tile != null)
-		{
+		if (_tile != null) {
 			local skin = this.getSprite("body");
 			local decal = _tile.spawnDetail(sprite_body.getBrush().Name + "_dead", ::Const.Tactical.DetailFlag.Corpse, flip);
 			decal.Color = skin.Color;
@@ -288,8 +282,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 			decal.Scale = 0.9;
 			decal.setBrightness(0.9);
 
-			if (_fatalityType == ::Const.FatalityType.Decapitated)
-			{
+			if (_fatalityType == ::Const.FatalityType.Decapitated) {
 				local layers = [
 					sprite_head.getBrush().Name + "_dead"
 				];
@@ -303,8 +296,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 					sprite.setBrightness(0.9);
 				}
 			}
-			else
-			{
+			else {
 				decal = _tile.spawnDetail(sprite_head.getBrush().Name + "_dead", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Color = skin.Color;
 				decal.Saturation = skin.Saturation;
@@ -312,14 +304,12 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 				decal.setBrightness(0.9);
 			}
 
-			if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Arrow)
-			{
+			if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Arrow) {
 				decal = _tile.spawnDetail(sprite_body.getBrush().Name + "_dead_arrows", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Scale = 0.9;
 				decal.setBrightness(0.9);
 			}
-			else if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Javelin)
-			{
+			else if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Javelin) {
 				decal = _tile.spawnDetail(sprite_body.getBrush().Name + "_dead_javelin", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Scale = 0.9;
 				decal.setBrightness(0.9);
@@ -343,9 +333,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 			::new("scripts/items/loot/growth_pearls_item").drop(_tile);
 
 			if (_fatalityType == ::Const.FatalityType.Unconscious)
-			{
 				return;
-			}
 
 			local n = 1 + (::Math.rand(1, 100) <= ::World.Assets.getExtraLootChance() ? 1 : 0);
 			local isSkinGhoul = this.isSkinGhoul();
@@ -355,21 +343,13 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 				local r = ::Math.rand(1, 100);
 
 				if (isSkinGhoul && r <= 35)
-				{
 					::new("scripts/items/misc/legend_skin_ghoul_skin_item").drop(_tile);
-				}
 				else if (r <= 35)
-				{
 					::new("scripts/items/misc/ghoul_teeth_item").drop(_tile);
-				}
 				else if (r <= 70)
-				{
 					::new("scripts/items/misc/ghoul_horn_item").drop(_tile);
-				}
 				else
-				{
 					::new("scripts/items/misc/ghoul_brain_item").drop(_tile);
-				}
 			}
 		}
 	}
@@ -409,8 +389,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 
 		::Tactical.TurnSequenceBar.addEntity(e);
 		
-		if (e.hasSprite("dirt"))
-		{
+		if (e.hasSprite("dirt")) {
 			local slime = e.getSprite("dirt");
 			slime.setBrush("bust_slime");
 			slime.setHorizontalFlipping(!e.isAlliedWithPlayer());
@@ -497,9 +476,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 	function addDefaultStatusSprites()
 	{
 		if (this.m.IsInitGhoul)
-		{
 			this.addSprite("dirt");
-		}
 		
 		local hex = this.addSprite("status_hex");
 		hex.Visible = false;
@@ -515,8 +492,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		rooted.Visible = false;
 		rooted.Scale = this.getSprite("status_rooted_back").Scale;
 
-		if (this.m.MoraleState != ::Const.MoraleState.Ignore)
-		{
+		if (this.m.MoraleState != ::Const.MoraleState.Ignore) {
 			local morale = this.addSprite("morale");
 			morale.Visible = false;
 		}
@@ -540,9 +516,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (!this.hasSprite(a))
-			{
 				continue;
-			}
 			
 			this.setSpriteOffset(a, v);
 			this.getSprite(a).Scale = s;
@@ -590,9 +564,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		this.addDefaultBackground(type, _isElite);
 
 		if (_size > 1)
-		{
 			this.setSize(_size);
-		}
 
 		this.setScenarioValues(type, _isElite);
 	}
@@ -600,29 +572,22 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 	function grow( _instant = false )
 	{
 		if (this.m.Size >= 3)
-		{
 			return;
-		}
 
 		if (!_instant && this.m.Sound[::Const.Sound.ActorEvent.Other1].len() != 0)
-		{
 			::Sound.play(::MSU.Array.rand(this.m.Sound[::Const.Sound.ActorEvent.Other1]), ::Const.Sound.Volume.Actor, this.getPos());
-		}
 
 		this.m.Size = ::Math.min(3, this.m.Size + 1);
 		local isSkinGhoul = this.isSkinGhoul();
 		
-		if (!isSkinGhoul)
-		{
-			if (this.m.Size == 2)
-			{
+		if (!isSkinGhoul) {
+			if (this.m.Size == 2) {
 				this.getSprite("body").setBrush("bust_ghoul_body_02");
 				this.getSprite("head").setBrush("bust_ghoul_02_head_0" + this.m.Variant);
 				this.getSprite("injury").setBrush("bust_ghoul_02_injured");
 				this.getSprite("injury").Visible = false;
 
-				if (!_instant)
-				{
+				if (!_instant) {
 					this.setRenderCallbackEnabled(true);
 					this.m.ScaleStartTime = ::Time.getVirtualTimeF();
 				}
@@ -635,15 +600,13 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 				this.setSpriteOffset("status_rooted", ::createVec(-4, 10));
 				this.setSpriteOffset("status_rooted_back", ::createVec(-4, 10));
 			}
-			else if (this.m.Size == 3)
-			{
+			else if (this.m.Size == 3) {
 				this.getSprite("body").setBrush("bust_ghoul_body_03");
 				this.getSprite("head").setBrush("bust_ghoul_03_head_0" + this.m.Variant);
 				this.getSprite("injury").setBrush("bust_ghoul_03_injured");
 				this.getSprite("injury").Visible = false;
 
-				if (!_instant)
-				{
+				if (!_instant) {
 					this.setRenderCallbackEnabled(true);
 					this.m.ScaleStartTime = ::Time.getVirtualTimeF();
 				}
@@ -657,18 +620,15 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 				this.setSpriteOffset("status_rooted_back", ::createVec(-7, 14));
 			}
 		}
-		else
-		{
-			if (this.m.Size == 2)
-			{
+		else {
+			if (this.m.Size == 2) {
 				this.m.SoundPitch = 1.06;
 				this.getSprite("body").setBrush("bust_ghoulskin_body_02");
 				this.getSprite("head").setBrush("bust_ghoulskin_02_head_0" + this.m.Variant);
 				this.getSprite("injury").setBrush("bust_ghoulskin_02_injured");
 				this.getSprite("injury").Visible = false;
 
-				if (!_instant)
-				{
+				if (!_instant) {
 					this.setRenderCallbackEnabled(true);
 					this.m.ScaleStartTime = ::Time.getVirtualTimeF();
 				}
@@ -681,16 +641,14 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 				this.setSpriteOffset("status_rooted", ::createVec(-4, 10));
 				this.setSpriteOffset("status_rooted_back", ::createVec(-4, 10));
 			}
-			else if (this.m.Size == 3)
-			{
+			else if (this.m.Size == 3) {
 				this.m.SoundPitch = 1.0;
 				this.getSprite("body").setBrush("bust_ghoulskin_body_03");
 				this.getSprite("head").setBrush("bust_ghoulskin_03_head_0" + this.m.Variant);
 				this.getSprite("injury").setBrush("bust_ghoulskin_03_injured");
 				this.getSprite("injury").Visible = false;
 
-				if (!_instant)
-				{
+				if (!_instant) {
 					this.setRenderCallbackEnabled(true);
 					this.m.ScaleStartTime = ::Time.getVirtualTimeF();
 				}
@@ -715,27 +673,21 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 	{
 		this.nggh_mod_player_beast.onRender();
 
-		if (this.m.Size == 2)
-		{
+		if (this.m.Size == 2) {
 			this.getSprite("body").Scale = ::Math.minf(1.0, 0.96 + 0.04 * ((::Time.getVirtualTimeF() - this.m.ScaleStartTime) / 0.3));
 			this.getSprite("head").Scale = ::Math.minf(1.0, 0.96 + 0.04 * ((::Time.getVirtualTimeF() - this.m.ScaleStartTime) / 0.3));
 			this.moveSpriteOffset("body", ::createVec(0, -1), ::createVec(0, 0), 0.3, this.m.ScaleStartTime);
 
 			if (this.moveSpriteOffset("head", ::createVec(0, -1), ::createVec(0, 0), 0.3, this.m.ScaleStartTime))
-			{
 				this.setRenderCallbackEnabled(false);
-			}
 		}
-		else if (this.m.Size == 3)
-		{
+		else if (this.m.Size == 3) {
 			this.getSprite("body").Scale = ::Math.minf(1.0, 0.94 + 0.06 * ((::Time.getVirtualTimeF() - this.m.ScaleStartTime) / 0.3));
 			this.getSprite("head").Scale = ::Math.minf(1.0, 0.94 + 0.06 * ((::Time.getVirtualTimeF() - this.m.ScaleStartTime) / 0.3));
 			this.moveSpriteOffset("body", ::createVec(0, -1), ::createVec(0, 0), 0.3, this.m.ScaleStartTime);
 
 			if (this.moveSpriteOffset("head", ::createVec(0, -1), ::createVec(0, 0), 0.3, this.m.ScaleStartTime))
-			{
 				this.setRenderCallbackEnabled(false);
-			}
 		}
 	}
 
@@ -744,8 +696,7 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 		local s = this.getSize();
 
 		// has to do this cuz tier 1 nacho doesn't have different variant 
-		if (s == 1) 
-		{
+		if (s == 1) {
 			switch (_layer) 
 			{
 		    case "body":

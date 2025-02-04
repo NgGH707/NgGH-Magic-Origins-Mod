@@ -339,7 +339,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 
 			if (data != null && ("onfillTalentsValues" in data) && typeof data.onfillTalentsValues == "function") data.onfillTalentsValues.call(this, _actor.getTalents());
 
-			this.getContainer().add(::new("scripts/skills/traits/intensive_training_trait"));
+			this.getContainer().add(::new("scripts/skills/traits/legend_intensive_training_trait"));
 			_actor.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
 			_actor.getFlags().set("Type", this.m.CharmID);
 			return;

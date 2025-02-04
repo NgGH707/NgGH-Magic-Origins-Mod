@@ -247,9 +247,7 @@ this.nggh_mod_trickster_god_player <- ::inherit("scripts/entity/tactical/nggh_mo
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (!this.hasSprite(a))
-			{
 				continue;
-			}
 
 			this.setSpriteOffset(a, v);
 			this.getSprite(a).Scale = 1.2;

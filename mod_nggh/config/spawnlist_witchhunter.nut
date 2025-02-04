@@ -14,9 +14,6 @@ inquisitor_titles.extend(::Const.Strings.PilgrimTitles);
 	TitleList = inquisitor_titles
 };
 
-// change witch hunter strength rating
-::Const.World.Spawn.Troops.LegendPeasantWitchHunter.Strength = 30;
-
 // new spawnlist
 ::Const.World.Spawn.Nggh_WitchHunter <- {
 	Name = "WitchHunter",

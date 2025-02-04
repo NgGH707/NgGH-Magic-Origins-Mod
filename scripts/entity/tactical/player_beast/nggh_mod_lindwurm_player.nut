@@ -106,10 +106,8 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 	function playSound( _type, _volume, _pitch = 1.0 )
 	{
 		if (_type == ::Const.Sound.ActorEvent.Move && ::Math.rand(1, 100) <= 50)
-		{
 			return;
-		}
-
+		
 		this.nggh_mod_player_beast.playSound(_type, _volume, _pitch);
 	}
 
@@ -171,25 +169,18 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 			_tile.Properties.set("Corpse", corpse);
 			::Tactical.Entities.addCorpse(_tile);
 
-			if (_fatalityType != ::Const.FatalityType.Unconscious)
-			{
+			if (_fatalityType != ::Const.FatalityType.Unconscious) {
 				local isStollwurm = this.isStollwurm();
 				local n = 1 + (::Math.rand(1, 100) <= ::World.Assets.getExtraLootChance() ? 1 : 0);
 
 				for( local i = 0; i < n; ++i )
 				{
 					if (::Math.rand(1, 100) <= 35)
-					{
 						::new("scripts/items/misc/" + (isStollwurm ? "legend_stollwurm_blood_item" : "lindwurm_blood_item")).drop(_tile);
-					}
 					else if (r <= 70)
-					{
 						::new("scripts/items/misc/" + (isStollwurm ? "legend_stollwurm_scales_item" : "lindwurm_scales_item")).drop(_tile);
-					}
 					else
-					{
 						::new("scripts/items/misc/lindwurm_bones_item").drop(_tile);
-					}
 				}
 			}
 
@@ -201,8 +192,7 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 	{
 		this.m.IsDying = true;
 
-		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive())
-		{
+		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive()) {
 			this.m.Tail.kill(_killer, _skill, _fatalityType, _silent);
 			this.m.Tail = null;
 		}
@@ -215,9 +205,7 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		this.nggh_mod_player_beast.updateOverlay();
 
 		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive())
-		{
 			this.m.Tail.updateOverlay();
-		}
 	}
 
 	function setFaction( _f )
@@ -225,9 +213,7 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		this.nggh_mod_player_beast.setFaction(_f);
 
 		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive())
-		{
 			this.m.Tail.setFaction(_f);
-		}
 	}
 
 	function checkMorale( _change, _difficulty, _type = ::Const.MoraleCheckType.Default, _showIconBeforeMoraleIcon = "", _noNewLine = false )
@@ -235,15 +221,12 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		this.nggh_mod_player_beast.checkMorale(_change, _difficulty, _type, _showIconBeforeMoraleIcon, _noNewLine);
 
 		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive())
-		{
 			this.m.Tail.setMoraleState(this.getMoraleState());
-		}
 	}
 	
 	function retreat()
 	{
-		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive())
-		{
+		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive()) {
 			this.m.Tail.m.IsAlive = false;
 			this.m.Tail.die();
 		}
@@ -254,8 +237,7 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 	
 	function onCombatFinished()
 	{
-		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive())
-		{
+		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive()) {
 			this.m.Tail.m.IsAlive = false;
 			this.m.Tail.die();
 		}
@@ -268,12 +250,10 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 	{
 		this.nggh_mod_player_beast.onTurnStart();
 
-		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive())
-		{
+		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive()) {
 			local tail = this.m.Tail;
 
-			::Time.scheduleEvent(::TimeUnit.Virtual, 100, function ( _e )
-			{
+			::Time.scheduleEvent(::TimeUnit.Virtual, 100, function( _e ) {
 				::Tactical.TurnSequenceBar.moveEntityToFront(tail.getID());
 			}.bindenv(this), this);
 		}
@@ -284,19 +264,15 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		this.actor.onMovementFinish(_tile);
 
 		if (this.m.Tail != null && !this.m.Tail.isNull() && this.m.Tail.isAlive())
-		{
 			::Tactical.TurnSequenceBar.moveEntityToFront(this.m.Tail.getID());
-		}
 
-		if (this.m.Tail == null || this.m.Tail.isNull())
-		{
+		if (this.m.Tail == null || this.m.Tail.isNull()) {
 			for( local i = 0; i < 6; ++i )
 			{
 				if (!_tile.hasNextTile(i))
-				{
-				}
-				else if (_tile.getNextTile(i).IsEmpty && !_tile.getNextTile(i).IsOccupiedByActor)
-				{
+					continue;
+
+				if (_tile.getNextTile(i).IsEmpty && !_tile.getNextTile(i).IsOccupiedByActor) {
 					this.spawnTail(_tile.getNextTile(i));
 					break;
 				}
@@ -309,32 +285,23 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		this.nggh_mod_player_beast.onCombatStart();
 
 		if (!this.isPlacedOnMap())
-		{
 			return;
-		}
 
-		if (this.m.Tail == null)
-		{
+		if (this.m.Tail == null) {
 			local myTile = this.getTile();
 			local spawnTile;
 
 			if (myTile.hasNextTile(::Const.Direction.NW) && myTile.getNextTile(::Const.Direction.NW).IsEmpty && !myTile.getNextTile(::Const.Direction.NW).IsOccupiedByActor)
-			{
 				spawnTile = myTile.getNextTile(::Const.Direction.NW);
-			}
 			else if (myTile.hasNextTile(::Const.Direction.SW) && myTile.getNextTile(::Const.Direction.SW).IsEmpty && !myTile.getNextTile(::Const.Direction.SW).IsOccupiedByActor)
-			{
 				spawnTile = myTile.getNextTile(::Const.Direction.SW);
-			}
-			else
-			{
+			else {
 				for( local i = 0; i < 6; ++i )
 				{
 					if (!myTile.hasNextTile(i))
-					{
-					}
-					else if (myTile.getNextTile(i).IsEmpty && !myTile.getNextTile(i).IsOccupiedByActor)
-					{
+						continue;
+
+					if (myTile.getNextTile(i).IsEmpty && !myTile.getNextTile(i).IsOccupiedByActor) {
 						spawnTile = myTile.getNextTile(i);
 						break;
 					}
@@ -342,9 +309,7 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 			}
 
 			if (spawnTile != null)
-			{
 				this.spawnTail(spawnTile);
-			}
 		}
 	}
 
@@ -352,8 +317,7 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 	{
 		local tail = ::Tactical.spawnEntity("scripts/entity/tactical/player_beast/nggh_mod_lindwurm_tail_player", _tile.Coords.X, _tile.Coords.Y, this.getID());		
 		
-		if (tail != null)
-		{
+		if (tail != null) {
 			this.m.Tail = ::WeakTableRef(tail);
 			//this.m.Tail.setBody(this);
 			this.m.Tail.setName(this.getName() + "\'s Tail");
@@ -368,42 +332,33 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		foreach (i, _skill in this.getSkills().m.Skills )
 		{
 			if (_skill == null || _skill.getItem() != null || _skill.m.IsWeaponSkill)
-			{
 				continue;
-			}
 
 			if ([
 				"perk.lindwurm_acid",
 				"perk.intimidate",
 				"perk.ptr_discovered_talent"
 				"perk.gifted",
-				"trait.double_tongued",
-				"trait.seductive",
+				"trait.legend_double_tongued",
+				"trait.legend_seductive",
 				"trait.determined",
-				"trait.gift_of_people",
+				"trait.legend_gift_of_people",
 				"special.mood_check",
 				"special.stats_collector",
 				"terrain.hidden",
 				"terrain.swamp",
 			].find(_skill.getID()) != null)
-			{
 				continue;
-			}
 
 			if (_skill.isType(::Const.SkillType.Background))
-			{
 				continue;
-			}
 
 			if (_skill.isType(::Const.SkillType.Active))
-			{
 				continue;
-			}
 
 		 	local script = ::IO.scriptFilenameByHash(_skill.ClassNameHash);
 
-		   	if (script != null)
-			{
+		   	if (script != null) {
 				local _s = ::new(script)
 				this.m.Tail.getSkills().add(_s);
 				_s.onCombatStarted();
@@ -484,9 +439,7 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (!this.hasSprite(a))
-			{
 				continue;
-			}
 
 			this.setSpriteOffset(a, v);
 			this.getSprite(a).Scale = 1.10;
@@ -526,14 +479,10 @@ this.nggh_mod_lindwurm_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		this.m.CurrentProperties = clone b;
 
 		if (::Math.rand(0, 100) < 90)
-		{
 			body.varySaturation(0.2);
-		}
 
 		if (::Math.rand(0, 100) < 90)
-		{
 			body.varyColor(0.08, 0.08, 0.08);
-		}
 
 		head.Color = body.Color;
 		head.Saturation = body.Saturation;

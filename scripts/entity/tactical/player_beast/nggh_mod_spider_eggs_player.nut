@@ -18,18 +18,9 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 	},
 	function setMode( _m )
 	{
-		if (_m == null)
-		{
-			this.m.Mode = null;
-		}
-		else if (typeof _m == "instance")
-		{
-			this.m.Mode = _m;
-		}
-		else 
-		{
-			this.m.Mode = ::WeakTableRef(_m);			    
-		}
+		if (_m == null) this.m.Mode = null;
+		else if (typeof _m == "instance") this.m.Mode = _m;
+		else this.m.Mode = ::WeakTableRef(_m);			    
 	}
 
 	function getMode()
@@ -39,12 +30,7 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 
 	function isNonCombatant()
 	{
-		if (this.isMounted())
-		{
-			return false;
-		}
-
-		return this.m.IsNonCombatant;
+		return this.isMounted() ? false : this.m.IsNonCombatant;
 	}
 
 	function isAbleToMount()
@@ -180,9 +166,7 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 	function onDamageReceived( _attacker, _skill, _hitInfo )
 	{
 		if (this.isMounted() && ::Math.rand(1, 100) <= ::Const.ChanceToHitMount)
-		{
 			return this.m.Mount.onDamageReceived(_attacker, _skill, _hitInfo);
-		}
 
 		_hitInfo.BodyPart = ::Const.BodyPart.Body;
 		return this.nggh_mod_player_beast.onDamageReceived(_attacker, _skill, _hitInfo);
@@ -190,21 +174,14 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 
 	function isReallyKilled( _fatalityType )
 	{
-		// so salvation for thee
-		return true;
+		return true; // so salvation for thee
 	}
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )
 	{
-		if (!::Tactical.State.isScenarioMode() && _killer != null && _killer.isPlayerControlled())
-		{
-			::updateAchievement("ScrambledEggs", 1, 1);
-		}
-
 		this.nggh_mod_player_beast.onDeath(_killer, _skill, _tile, _fatalityType);
 
-		if (_tile != null)
-		{
+		if (_tile != null) {
 			_tile.spawnDetail("nest_01_dead", ::Const.Tactical.DetailFlag.Corpse, this.m.IsCorpseFlipped);
 
 			this.spawnTerrainDropdownEffect(_tile);
@@ -228,9 +205,7 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 		this.actor.onUpdateInjuryLayer();
 
 		if (this.isMounted())
-		{
 			this.m.Mount.updateInjuryLayer();
-		}
 	}
 
 	function onBeforeCombatStarted()
@@ -364,10 +339,8 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (!this.hasSprite(a))
-			{
 				continue;
-			}
-
+			
 			this.setSpriteOffset(a, v);
 			this.getSprite(a).Scale = 0.85 * this.m.Size;
 		}
@@ -387,20 +360,17 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 		local tooltip = this.nggh_mod_player_beast.getTooltip(_targetedWithSkill);
 
 		// insert additional stat bars to the tooltip
-		if (this.isMounted())
-		{
+		if (this.isMounted()) {
 			local find;
 			foreach (i, t in tooltip)
 			{
-				if (t.id == 3 && t.type == "progressbar")
-				{
+				if (t.id == 3 && t.type == "progressbar") {
 					find = i;
 					break;
 				}
 			}
 
-			if (find != null)
-			{
+			if (find != null) {
 				local toAdd = [];
 				toAdd.push({
 					id = 3,
@@ -454,8 +424,7 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 	{
 		this.actor.onRender();
 
-		if (this.m.DistortTargetA == null)
-		{
+		if (this.m.DistortTargetA == null) {
 			this.m.DistortTargetA = this.m.IsFlipping ? ::createVec(this.m.BodyOffset[0] * this.m.Size, (this.m.BodyOffset[1] + 1.0) * this.m.Size) : ::createVec(this.m.BodyOffset[0] * this.m.Size, (this.m.BodyOffset[1] - 1.0) * this.m.Size);
 			this.m.DistortTargetHelmet = this.m.IsFlipping ? ::createVec(this.m.HelmetOffset[0] * this.m.Size, (this.m.HelmetOffset[1] + 1.0) * this.m.Size) : ::createVec(this.m.HelmetOffset[0] * this.m.Size, (this.m.HelmetOffset[1] - 1.0) * this.m.Size);
 			this.m.DistortAnimationStartTimeA = ::Time.getVirtualTimeF() - ::Math.rand(10, 100) * 0.01;
@@ -464,13 +433,10 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (this.getSprite(a).HasBrush && this.getSprite(a).Visible)
-			{
 				this.moveSpriteOffset(a, this.m.DistortTargetPrevHelmet, this.m.DistortTargetHelmet, 1.0, this.m.DistortAnimationStartTimeA);
-			}
 		}
 
-		if (this.moveSpriteOffset("body", this.m.DistortTargetPrevA, this.m.DistortTargetA, 1.0, this.m.DistortAnimationStartTimeA))
-		{
+		if (this.moveSpriteOffset("body", this.m.DistortTargetPrevA, this.m.DistortTargetA, 1.0, this.m.DistortAnimationStartTimeA)) {
 			this.m.DistortAnimationStartTimeA = ::Time.getVirtualTimeF();
 			this.m.DistortTargetPrevA = this.m.DistortTargetA;
 			this.m.DistortTargetA = this.m.IsFlipping ? ::createVec(this.m.BodyOffset[0] * this.m.Size, (this.m.BodyOffset[1] + 1.0) * this.m.Size) : ::createVec(this.m.BodyOffset[0] * this.m.Size, (this.m.BodyOffset[1] - 1.0) * this.m.Size);
@@ -488,10 +454,8 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 	function onRetreating()
 	{
 		if (!this.isPlacedOnMap())
-		{
 			return;
-		}
-
+		
 		this.getMode().switchMode(true);
 	}
 
@@ -504,26 +468,19 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 			for( local i = 0; i < 6; i = ++i )
 			{
 				if (!myTile.hasNextTile(i))
-				{
-				}
-				else
-				{
-					local nextTile = myTile.getNextTile(i);
+					continue;
 
-					if (!nextTile.IsEmpty || ::Math.abs(nextTile.Level - myTile.Level) > 1)
-					{
-					}
-					else
-					{
-						_tile = nextTile;
-						break;
-					}
-				}
+				local nextTile = myTile.getNextTile(i);
+
+				if (!nextTile.IsEmpty || ::Math.abs(nextTile.Level - myTile.Level) > 1)
+					continue;
+
+				_tile = nextTile;
+				break;
 			}
 		}
 
-		if (_tile == null)
-		{
+		if (_tile == null) {
 			::Tactical.EventLog.log("Fails to spawn Webknecht due to insufficient space");
 			return null;
 		}
@@ -536,8 +493,7 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 
 		foreach( a in ::Tactical.Entities.getInstancesOfFaction(this.getFaction()) )
 		{
-			if (a.getFlags().has("Hexe"))
-			{
+			if (a.getFlags().has("Hexe")) {
 				spawn.getSkills().add(::new("scripts/skills/effects/fake_charmed_effect"));
 				break;
 			}
@@ -547,14 +503,10 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 		this.modifyStats(spawn, this.getSkills().hasSkill("perk.natural_selection"));
 		
 		if (this.getSkills().hasSkill("perk.inherit"))
-		{
 			this.givePerk(spawn);
-		}
-
+		
 		if (!this.getSkills().hasSkill("perk.attach_egg"))
-		{
 			spawn.getFlags().add("attack_mode");
-		}
 
 		spawn.getSkills().update();
 		spawn.setHitpointsPct(1.0);
@@ -568,8 +520,7 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 		local b = _spiderling.getBaseProperties();
 		local lv = this.getLevel();
 
-		if (_isGettingStronger && this.m.Count > 0)
-		{
+		if (_isGettingStronger && this.m.Count > 0) {
 			local count = ::Math.min(9, this.m.Count);
 			local mult = ::Math.pow(1.038, count);
 			b.HitpointsMult *= mult;
@@ -583,9 +534,7 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 			b.ArmorMult = [mult, mult];
 
 			if (::Math.rand(1, 100) <= 10)
-			{
 				b.ActionPoints += 1;
-			}
 		}
 		
 		local mod = lv > 11 ? 11 + (lv - 11) * 0.33 : lv;
@@ -615,14 +564,10 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 		foreach ( p in this.getSkills().query(::Const.SkillType.Perk, true) )
 		{
 			if (!p.isSerialized())
-			{
 				continue;
-			}
 			
 			if (::Const.NoCopyPerks.find(p.getID()) != null)
-			{
 				continue;
-			}
 
 			/* a bit reduntant 
 			if (this.getSkills().hasSkill(p.getID()))
@@ -634,9 +579,7 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 			local script = ::Nggh_MagicConcept.findPerkScriptByID(p.getID());
 
 			if (script == null)
-			{
 				continue;
-			}
 			
 			local perk = this.new(script);
 			_spiderling.getSkills().add(perk);
@@ -660,27 +603,21 @@ this.nggh_mod_spider_eggs_player <- ::inherit("scripts/entity/tactical/nggh_mod_
 	function isAbleToEquip( _item )
 	{
 		if (_item.getSlotType() == ::Const.ItemSlot.Head)
-		{
 			this.m.Head = ::Math.rand(0, 2);
-		}
-
+		
 		return this.nggh_mod_player_beast.isAbleToEquip(_item);
 	}
 
 	function onAfterEquip( _item )
 	{
 		if (_item.getSlotType() == ::Const.ItemSlot.Accessory)
-		{
 			this.m.Mount.onAccessoryEquip(_item);
-		}
 	}
 
 	function onAfterUnequip( _item )
 	{
 		if (_item.getSlotType() == ::Const.ItemSlot.Accessory)
-		{
 			this.m.Mount.onAccessoryUnequip();
-		}
 	}
 
 	function canEnterBarber()

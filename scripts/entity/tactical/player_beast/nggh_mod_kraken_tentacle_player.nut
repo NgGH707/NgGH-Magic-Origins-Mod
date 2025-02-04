@@ -6,13 +6,9 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 	function setParent( _p )
 	{
 		if (_p == null)
-		{
 			this.m.Parent = null;
-		}
 		else
-		{
 			this.m.Parent = typeof _p == "instance" ? _p : ::WeakTableRef(_p);
-		}
 	}
 
 	function getImageOffsetY()
@@ -127,8 +123,7 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 			Tile = _tile,
 			function onCorpseEffect( _data )
 			{
-				if (::Time.getRealTimeF() - _data.Start >= 0.75)
-				{
+				if (::Time.getRealTimeF() - _data.Start >= 0.75) {
 					_tile.clear(::Const.Tactical.DetailFlag.Corpse);
 					return;
 				}
@@ -141,21 +136,16 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 		};
 		::Time.scheduleEvent(::TimeUnit.Real, 10, corpse_data.onCorpseEffect, corpse_data);
 
-		if (::Const.Tactical.TerrainDropdownParticles[_tile.Subtype].len() != 0)
-		{
+		if (::Const.Tactical.TerrainDropdownParticles[_tile.Subtype].len() != 0) {
 			for( local i = 0; i < ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype].len(); i = ++i )
 			{
 				if (::Tactical.getWeather().IsRaining && !::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].ApplyOnRain)
-				{
-				}
-				else
-				{
-					::Tactical.spawnParticleEffect(false, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Brushes, _tile, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Delay, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Quantity, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].LifeTimeQuantity, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].SpawnRate, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Stages);
-				}
+					continue;
+				
+				::Tactical.spawnParticleEffect(false, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Brushes, _tile, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Delay, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Quantity, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].LifeTimeQuantity, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].SpawnRate, ::Const.Tactical.TerrainDropdownParticles[_tile.Subtype][i].Stages);
 			}
 		}
-		else if (::Const.Tactical.RaiseFromGroundParticles.len() != 0)
-		{
+		else if (::Const.Tactical.RaiseFromGroundParticles.len() != 0) {
 			for( local i = 0; i < ::Const.Tactical.RaiseFromGroundParticles.len(); i = ++i )
 			{
 				::Tactical.spawnParticleEffect(false, ::Const.Tactical.RaiseFromGroundParticles[i].Brushes, _tile, ::Const.Tactical.RaiseFromGroundParticles[i].Delay, ::Const.Tactical.RaiseFromGroundParticles[i].Quantity, ::Const.Tactical.RaiseFromGroundParticles[i].LifeTimeQuantity, ::Const.Tactical.RaiseFromGroundParticles[i].SpawnRate, ::Const.Tactical.RaiseFromGroundParticles[i].Stages);
@@ -163,9 +153,7 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 		}
 
 		if (this.m.Parent != null && !this.m.Parent.isNull() && this.m.Parent.isAlive() && !this.m.Parent.isDying())
-		{
 			this.m.Parent.onTentacleDestroyed();
-		}
 
 		::Tactical.getTemporaryRoster().remove(this);
 		this.actor.onDeath(_killer, _skill, _tile, _fatalityType);
@@ -220,25 +208,16 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 	{
 		local body = this.getSprite("body");
 
-		if (this.getHitpointsPct() > 0.5)
-		{
+		if (this.getHitpointsPct() > 0.5) {
 			if (this.getMode() == ::Const.KrakenTentacleMode.Ensnaring)
-			{
 				body.setBrush("bust_kraken_tentacle_01");
-			}
 			else
-			{
 				body.setBrush("bust_kraken_tentacle_02");
-			}
 		}
 		else if (this.getMode() == ::Const.KrakenTentacleMode.Ensnaring)
-		{
 			body.setBrush("bust_kraken_tentacle_01_injured");
-		}
 		else
-		{
 			body.setBrush("bust_kraken_tentacle_02_injured");
-		}
 
 		this.setDirty(true);
 	}
@@ -253,23 +232,18 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 	{
 		this.nggh_mod_player_beast.onActorKilled(_actor, _tile, _skill);
 		
-		if (this.m.Parent != null && !this.m.Parent.isNull() && this.m.Parent.isAlive() && !this.m.Parent.isDying())
-		{
+		if (this.m.Parent != null && !this.m.Parent.isNull() && this.m.Parent.isAlive() && !this.m.Parent.isDying()) {
 			local stats = this.m.Parent.getSkills().getSkillByID("special.stats_collector");
 
 			if (stats != null)
-			{
 				stats.onTargetKilled(_actor, _skill);
-			}
 		}
 	}
 
 	function addXP( _xp, _scale = true )
 	{
 		if (this.m.Parent != null && !this.m.Parent.isNull() && this.m.Parent.isAlive() && !this.m.Parent.isDying())
-		{
 			this.m.Parent.addXP(_xp, _scale);
-		}
 	}
 
 	function onTurnStart()
@@ -286,8 +260,7 @@ this.nggh_mod_kraken_tentacle_player <- ::inherit("scripts/entity/tactical/nggh_
 
 	function updateMode()
 	{
-		if (this.isPlacedOnMap())
-		{
+		if (this.isPlacedOnMap()) {
 			this.m.IsUsingZoneOfControl = this.m.Mode == ::Const.KrakenTentacleMode.Attacking;
 			this.setZoneOfControl(this.getTile(), this.m.Mode == ::Const.KrakenTentacleMode.Attacking);
 		}

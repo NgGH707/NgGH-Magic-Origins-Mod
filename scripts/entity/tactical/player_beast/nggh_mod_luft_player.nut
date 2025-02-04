@@ -56,8 +56,7 @@ this.nggh_mod_luft_player <- ::inherit("scripts/entity/tactical/player_beast/ngg
 	
 	function onAppearanceChanged( _appearance, _setDirty = true )
 	{
-		if (_appearance != null && _appearance.Helmet.len() != 0)
-		{
+		if (_appearance != null && _appearance.Helmet.len() != 0) {
 			_appearance.HelmetDamage = "bust_helmet_86_damaged";
 			_appearance.HelmetLayerVanityLower = "";
 			_appearance.HelmetLayerVanity2Lower = "";
@@ -67,14 +66,10 @@ this.nggh_mod_luft_player <- ::inherit("scripts/entity/tactical/player_beast/ngg
 		}
 
 		if (_appearance.HelmetLayerVanity.len() != 0 && _appearance.HelmetLayerVanity.find("jester_hat") == null)
-		{
 			_appearance.HelmetLayerVanity = "";
-		}
 
 		if (_appearance.HelmetLayerVanity2.len() != 0 && _appearance.HelmetLayerVanity2.find("jester_hat") == null)
-		{
 			_appearance.HelmetLayerVanity2 = "";
-		}
 
 		this.nggh_mod_ghoul_player.onAppearanceChanged(_appearance, _setDirty);
 	}
@@ -121,9 +116,7 @@ this.nggh_mod_luft_player <- ::inherit("scripts/entity/tactical/player_beast/ngg
 	function onTurnStart()
 	{
 		if (!this.isAlive())
-		{
 			return;
-		}
 
 		::Nggh_MagicConcept.spawnQuote("luft_idle_quote_" + ::Math.rand(1, 6), this.getTile());
 		this.nggh_mod_ghoul_player.onTurnStart();
@@ -144,9 +137,7 @@ this.nggh_mod_luft_player <- ::inherit("scripts/entity/tactical/player_beast/ngg
 	function onActorKilled( _actor, _tile, _skill )
 	{
 		if (::Math.rand(1, 100) <= 10)
-		{
 			::Nggh_MagicConcept.spawnQuote("necro_quote_12", this.getTile());
-		}
 
 		this.nggh_mod_ghoul_player.onActorKilled(_actor, _tile, _skill);
 	}
@@ -156,19 +147,15 @@ this.nggh_mod_luft_player <- ::inherit("scripts/entity/tactical/player_beast/ngg
 		this.nggh_mod_ghoul_player.onMovementFinish(_tile);
 
 		if (!this.isAlive())
-		{
 			return;
-		}
-
+		
 		::Nggh_MagicConcept.spawnQuote("luft_move_quote_" + ::Math.rand(1, 3), _tile);
 	}
 
 	function onUpdateInjuryLayer()
 	{
 		if (this.getBackground() != null && this.getBackground().m.IsCharming)
-		{
 			return;
-		}
 
 		this.nggh_mod_ghoul_player.onUpdateInjuryLayer();
 	}
@@ -179,8 +166,7 @@ this.nggh_mod_luft_player <- ::inherit("scripts/entity/tactical/player_beast/ngg
 		local looks = ::World.Flags.getAsInt("looks");
 		local size = 9990 + this.getSize();
 
-		if (looks != size)
-		{
+		if (looks != size) {
 			::World.Flags.set("looks", size);
 			::World.Assets.updateLook(size);
 		}

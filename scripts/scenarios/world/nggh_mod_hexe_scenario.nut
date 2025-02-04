@@ -31,11 +31,8 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		local seed = ::World.Assets.getSeedString().toupper();
 		
 		if (::Const.HexeOrigin.EasterEggSeed.find(seed) != null || this.isLuftName(name))
-		{
 			this.setupLuftStart();
-		}
-		else
-		{
+		else {
 			local forced_start_ID = this.isForceSeed(seed, name);
 			//0:eggs - 1:spider - 2:redback - 3:wolf - 4:white wolf - 5:hyena - 6:serpent - 7:unhold - 8:ghoul - 9:alp - 10:goblin - 11:orc - 12:human - 13:ijirok - 14:lindwurm - 15:schrat - 16:bear - 17:circus
 			::Nggh_MagicConcept.ForceWhipPerk = ::Const.HexeOrigin.SeedsStartWithWhip.find(forced_start_ID) != null;
@@ -58,18 +55,11 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			hexe.fillAttributeLevelUpValues(::Const.XP.MaxLevelWithPerkpoints - 1);
 
 			if (forced_start_ID == null)
-			{
 				this.setupRandomStart();
-			}
-			else
-			{
-				// should be impossible lol
-				if (forced_start_ID == null)
-				{
+			else {
+				if (forced_start_ID == null) // should be impossible lol
 					::logError("forceSeed = null");
-				}
-				else
-				{
+				else {
 					::logInfo("With your seed/name, your start id = " + forced_start_ID);
 					::logInfo("Your starting party would be: " + ::Const.HexeOrigin.StartingRollNames[forced_start_ID]);
 				}
@@ -100,9 +90,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		}
 		
 		if (::Math.rand(1, 100) == 1)
-		{
 			::World.Assets.getStash().add(::new("scripts/items/special/fountain_of_youth_item"));
-		}
 	}
 
 	function onSpawnPlayer()
@@ -154,8 +142,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		::World.State.m.Player = ::World.spawnEntity("scripts/entity/world/player_party", randomVillageTile.Coords.X, randomVillageTile.Coords.Y);
 		::World.Assets.updateLook(::World.Flags.getAsInt("looks"));
 		::World.getCamera().setPos(::World.State.m.Player.getPos());
-		::Time.scheduleEvent(::TimeUnit.Real, 1000, function ( _tag )
-		{
+		::Time.scheduleEvent(::TimeUnit.Real, 1000, function ( _tag ) {
 			::Music.setTrackList(::Const.Music.BeastsTracks, ::Const.Music.CrossFadeTime);
 			::World.Events.fire(eventID);
 		}, null);
@@ -626,7 +613,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			local donation = 0;
 			_hexe.setPlaceInFormation(22);
 			_hexe.getSkills().add(::new(::Const.Perks.PerkDefObjects[::MSU.Array.rand([::Const.Perks.PerkDefs.NggHCharmSpec, ::Const.Perks.PerkDefs.NggHCharmNudist, ::Const.Perks.PerkDefs.NggHCharmAppearance])].Script));
-			_hexe.getSkills().add(::new("scripts/skills/traits/seductive_trait"));
+			_hexe.getSkills().add(::new("scripts/skills/traits/legend_seductive_trait"));
 			_hexe.getItems().addToBag(::new("scripts/items/weapons/barbarians/thorned_whip"));
 
 			for( local i = 0; i < 5; ++i )
@@ -670,7 +657,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			_hexe.setName("Schierke");
 			_hexe.setTitle("");
 			_hexe.getSkills().add(::new("scripts/skills/traits/tiny_trait"));
-			_hexe.getSkills().add(::new("scripts/skills/traits/light_trait"));
+			_hexe.getSkills().add(::new("scripts/skills/traits/legend_light_trait"));
 			_hexe.getItems().equip(::new("scripts/items/weapons/legend_staff_gnarled"));
 			_hexe.getItems().equip(::Const.World.Common.pickHelmet([[1, "dark_cowl"]]));
 			this.addScenarioPerk(_hexe.getBackground(), ::Const.Perks.PerkDefs.LegendMagicMissile);
@@ -685,7 +672,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			this.removeTraitsFrom(guts);
 			this.addScenarioPerk(guts.getBackground(), ::Const.Perks.PerkDefs.SpecSword);
 			guts.getSkills().add(::new("scripts/skills/traits/huge_trait"));
-			guts.getSkills().add(::new("scripts/skills/traits/heavy_trait"));
+			guts.getSkills().add(::new("scripts/skills/traits/legend_heavy_trait"));
 			guts.getSkills().add(::new("scripts/skills/traits/tough_trait"));
 			guts.getSkills().add(::new("scripts/skills/traits/strong_trait"));
 			guts.getSkills().add(::new("scripts/skills/injury_permanent/missing_eye_injury"));
@@ -881,11 +868,8 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		local c = 2;
 
 		if (_credits >= 2)
-		{
 			c = _credits;
-		}
-		else
-		{
+		else {
 			c = ::Math.rand(5, 7)
 
 			if (c >= 7)
@@ -905,8 +889,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		{
 			local r = ::MSU.Array.rand(::Const.HexeOrigin.PossibleStartingPlayers);
 
-			if (r.Cost > _credits)
-			{
+			if (r.Cost > _credits) {
 				++tries;
 				continue;
 			}
@@ -928,14 +911,12 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 		{
 			local starter = roster.create("scripts/entity/tactical/" + script);
 
-			if (script == "player")
-			{
+			if (script == "player") {
 				starter.setStartValuesEx(::Const.CharacterBackgrounds);
 				starter.improveMood(1.0, "Still alive to serve the mistress");
 				starter.getBackground().addPerkGroup(::Const.Perks.NggH_SimpTree.Tree);
 			}
-			else 
-			{
+			else {
 				starter.setStartValuesEx();
 				starter.improveMood(1.0, "Loyal servant");
 			}

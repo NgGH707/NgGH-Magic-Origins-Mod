@@ -140,9 +140,7 @@ this.nggh_mod_direwolf_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 	function playAttackSound()
 	{
 		if (::Math.rand(1, 100) <= 50)
-		{
 			this.playSound(::Const.Sound.ActorEvent.Attack, ::Const.Sound.Volume.Actor * this.m.SoundVolume[::Const.Sound.ActorEvent.Attack] * (::Math.rand(75, 100) * 0.01), this.m.SoundPitch * 1.15);
-		}
 	}
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )
@@ -150,8 +148,7 @@ this.nggh_mod_direwolf_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		this.nggh_mod_player_beast.onDeath(_killer, _skill, _tile, _fatalityType);
 		local flip = this.m.IsCorpseFlipped;
 
-		if (_tile != null)
-		{
+		if (_tile != null) {
 			local body = this.getSprite("body");
 			local head = this.getSprite("head");
 			local head_frenzy = this.getSprite("head_frenzy");
@@ -160,29 +157,24 @@ this.nggh_mod_direwolf_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 			decal.Saturation = body.Saturation;
 			decal.Scale = 0.95;
 
-			if (_fatalityType != ::Const.FatalityType.Decapitated)
-			{
+			if (_fatalityType != ::Const.FatalityType.Decapitated) {
 				decal = _tile.spawnDetail(head.getBrush().Name + "_dead", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Color = head.Color;
 				decal.Saturation = head.Saturation;
 				decal.Scale = 0.95;
 
-				if (head_frenzy.HasBrush)
-				{
+				if (head_frenzy.HasBrush) {
 					decal = _tile.spawnDetail(head_frenzy.getBrush().Name + "_dead", ::Const.Tactical.DetailFlag.Corpse, flip);
 					decal.Scale = 0.95;
 				}
 			}
-			else if (_fatalityType == ::Const.FatalityType.Decapitated)
-			{
+			else if (_fatalityType == ::Const.FatalityType.Decapitated) {
 				local layers = [
 					head.getBrush().Name + "_dead"
 				];
 
 				if (head_frenzy.HasBrush)
-				{
 					layers.push(head_frenzy.getBrush().Name + "_dead");
-				}
 
 				local decap = ::Tactical.spawnHeadEffect(this.getTile(), layers, ::createVec(0, 0), 0.0, "bust_direwolf_head_bloodpool");
 				decap[0].Color = head.Color;
@@ -190,18 +182,14 @@ this.nggh_mod_direwolf_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 				decap[0].Scale = 0.95;
 
 				if (head_frenzy.HasBrush)
-				{
 					decap[1].Scale = 0.95;
-				}
 			}
 
-			if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Arrow)
-			{
+			if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Arrow) {
 				decal = _tile.spawnDetail("bust_direwolf_01_body_dead_arrows", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Scale = 0.95;
 			}
-			else if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Javelin)
-			{
+			else if (_skill && _skill.getProjectileType() == ::Const.ProjectileType.Javelin) {
 				decal = _tile.spawnDetail("bust_direwolf_01_body_dead_javelin", ::Const.Tactical.DetailFlag.Corpse, flip);
 				decal.Scale = 0.95;
 			}
@@ -222,32 +210,22 @@ this.nggh_mod_direwolf_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 			::Tactical.Entities.addCorpse(_tile);
 
 			if (this.isHigh())
-			{
 				::new("scripts/items/loot/sabertooth_item").drop(_tile);
-			}
 
 			if (_fatalityType == ::Const.FatalityType.Unconscious)
-			{
 				return;
-			}
 
 			local n = 1 + (::Math.rand(1, 100) <= ::World.Assets.getExtraLootChance() ? 1 : 0);
 
 			for( local i = 0; i < n; ++i )
 			{
-				if (::Math.rand(1, 100) <= 50)
-				{
+				if (::Math.rand(1, 100) <= 50) {
 					if (::Math.rand(1, 100) <= 70)
-					{
 						::new("scripts/items/misc/" + (this.isWhiteWolf() ? "legend_white_wolf_pelt_item" : "werewolf_pelt_item")).drop(_tile);
-					}
 					else
-					{
 						::new("scripts/items/misc/adrenaline_gland_item").drop(_tile);
-					}
 				}
-				else
-				{
+				else {
 					::new("scripts/items/supplies/strange_meat_item").drop(_tile);
 				}
 			}
@@ -317,9 +295,7 @@ this.nggh_mod_direwolf_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		foreach( a in ::Const.CharacterSprites.Helmets )
 		{
 			if (!this.hasSprite(a))
-			{
 				continue;
-			}
 
 			this.setSpriteOffset(a, v);
 			this.getSprite(a).Scale = 1.05;
@@ -345,9 +321,7 @@ this.nggh_mod_direwolf_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		local body_blood = this.getSprite("body_blood");
 
 		if (!_isFrenzied && !_isWhiteWolf && ::Math.rand(1, 100) <= _FrenzyChance)
-		{
 			_isFrenzied = true;
-		}
 
 		switch (true) 
 		{
@@ -379,14 +353,10 @@ this.nggh_mod_direwolf_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		this.m.CurrentProperties = clone b;
 		
 		if (::Math.rand(0, 100) < 90)
-		{
 			body.varySaturation(0.2);
-		}
 
 		if (::Math.rand(0, 100) < 90)
-		{
 			body.varyColor(0.05, 0.05, 0.05);
-		}
 
 		head.Color = body.Color;
 		head.Saturation = body.Saturation;
@@ -398,9 +368,7 @@ this.nggh_mod_direwolf_player <- ::inherit("scripts/entity/tactical/nggh_mod_pla
 		this.addDefaultBackground(type, _isElite);
 
 		if (!_isWhiteWolf && !_isFrenzied)
-		{
 			this.getBackground().addPerk(::Const.Perks.PerkDefs.NggHWolfRabies, 6);
-		}
 
 		this.setScenarioValues(type, _isElite);
 	}

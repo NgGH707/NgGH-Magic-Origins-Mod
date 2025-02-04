@@ -40,9 +40,7 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 	function setEnraged( _s )
 	{
 		if (this.m.IsEnraged == _s)
-		{
 			return;
-		}
 
 		this.playSound(::Const.Sound.ActorEvent.Other1, ::Const.Sound.Volume.Actor * ::m.SoundVolume[::Const.Sound.ActorEvent.Other1] * this.m.SoundVolumeOverall);
 		this.m.IsEnraged = _s;
@@ -50,26 +48,18 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		foreach( t in this.m.Tentacles )
 		{
 			if (!t.isNull() && t.isAlive() && t.getHitpoints() > 0)
-			{
 				t.setMode(this.m.IsEnraged ? 1 : 0);
-			}
 		}
 	}
 
 	function setMode( _m )
 	{
 		if (_m == null)
-		{
 			this.m.Mode = null;
-		}
 		else if (typeof _m == "instance")
-		{
 			this.m.Mode = _m;
-		}
 		else 
-		{
-			this.m.Mode = ::WeakTableRef(_m);			    
-		}
+			this.m.Mode = ::WeakTableRef(_m);    
 	}
 
 	function getMode()
@@ -161,11 +151,6 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 
 	function onDeath( _killer, _skill, _tile, _fatalityType )
 	{
-		if (!::Tactical.State.isScenarioMode())
-		{
-			::updateAchievement("BeastOfBeasts", 1, 1);
-		}
-
 		this.nggh_mod_player_beast.onDeath(_killer, _skill, _tile, _fatalityType);
 		local flip = this.m.IsCorpseFlipped;
 
@@ -195,33 +180,25 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 			foreach( t in this.m.Tentacles )
 			{
 				if (t.isNull())
-				{
 					continue;
-				}
 
 				t.setParent(null);
 
 				if (t.isPlacedOnMap())
-				{
 					t.killSilently();
-				}
 			}
 
 			this.m.Tentacles = [];
 
 			if (_fatalityType == ::Const.FatalityType.Unconscious)
-			{
 				return;
-			}
 
 			::new("scripts/items/misc/kraken_horn_plate_item").drop(_tile);
 			::new("scripts/items/misc/kraken_horn_plate_item").drop(_tile);
 			::new("scripts/items/misc/kraken_tentacle_item").drop(_tile);
 
 			if (!::Tactical.State.isScenarioMode() && ::World.Assets.getExtraLootChance() > 0)
-			{
 				::new("scripts/items/misc/kraken_horn_plate_item").drop(_tile);
-			}
 		}
 	}
 
@@ -232,25 +209,20 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		foreach( t in this.m.Tentacles )
 		{
 			if (!t.isNull() && t.isAlive())
-			{
 				t.setFaction(_f);
-			}
 		}
 	}
 
 	function onTentacleDestroyed()
 	{
 		if (!this.isAlive() || this.isDying())
-		{
 			return;
-		}
 
 		++this.m.TentaclesDestroyed;
 
 		foreach( i, t in this.m.Tentacles )
 		{
-			if (t.isNull() || t.isDying() || !t.isAlive())
-			{
+			if (t.isNull() || t.isDying() || !t.isAlive()) {
 				this.m.Tentacles.remove(i);
 				break;
 			}
@@ -265,10 +237,8 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		this.onDamageReceived(this, null, hitInfo);
 
 		if (!this.isAlive() || this.isDying())
-		{
 			return;
-		}
-
+		
 		for( local numTentacles = ::Math.max(4, ::Math.min(8, ::Math.ceil(this.getHitpointsPct() * 2.0 * 8))); this.m.Tentacles.len() < numTentacles;  )
 		{
 			local mapSize = ::Tactical.getMapSize();
@@ -281,19 +251,14 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 				local tile = ::Tactical.getTileSquare(x, y);
 
 				if (!tile.IsEmpty)
-				{
-				}
-				else
-				{
-					local tentacle = this.spawnTentacle(tile);
+					continue;
 
-					if (tentacle != null)
-					{
-						tentacle.updateVisibilityForFaction();
-					}
-		
-					break;
-				}
+				local tentacle = this.spawnTentacle(tile);
+
+				if (tentacle != null)
+					tentacle.updateVisibilityForFaction();
+					
+				break;
 			}
 		}
 	}
@@ -304,10 +269,8 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		local ret = this.nggh_mod_player_beast.onDamageReceived(_attacker, _skill, _hitInfo);
 
 		if (!this.m.IsEnraged && this.canBeEnraged())
-		{
 			this.setEnraged(true);
-		}
-
+		
 		return ret;
 	}
 
@@ -316,13 +279,9 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		local body = this.getSprite("body");
 
 		if (this.getHitpointsPct() > 0.5)
-		{
 			body.setBrush("bust_kraken_body_01");
-		}
 		else
-		{
 			body.setBrush("bust_kraken_body_01_injured");
-		}
 
 		this.setDirty(true);
 	}
@@ -365,14 +324,10 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		body.setBrush("bust_kraken_body_01");
 
 		if (::Math.rand(0, 100) < 90)
-		{
 			body.varySaturation(0.2);
-		}
-
+		
 		if (::Math.rand(0, 100) < 90)
-		{
 			body.varyColor(0.08, 0.08, 0.08);
-		}
 		
 		this.addDefaultStatusSprites();
 		this.setSpriteOffset("arrow", ::createVec(20, 190));
@@ -423,9 +378,7 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		foreach( t in this.m.Tentacles )
 		{
 			if (t.isNull())
-			{
 				continue;
-			}
 
 			t.setParent(null);
 		}
@@ -458,14 +411,10 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		foreach ( p in this.getSkills().query(::Const.SkillType.Perk, true) )
 		{
 			if (!p.isSerialized())
-			{
 				continue;
-			}
 
 			if (::Const.NoCopyPerks.find(p.getID()) != null)
-			{
 				continue;
-			}
 
 			/* a bit reduntant 
 			if (this.getSkills().hasSkill(p.getID()))
@@ -477,9 +426,7 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 			local script = ::Nggh_MagicConcept.findPerkScriptByID(p.getID());
 
 			if (script == null)
-			{
 				continue;
-			}
 			
 			local perk = ::new(script);
 			_tentacle.getSkills().add(perk);
@@ -501,8 +448,7 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 				local y = ::Math.rand(::Math.max(0, myTile.SquareCoords.Y - 8), ::Math.min(mapSize.Y - 1, myTile.SquareCoords.Y + 8));
 				local tile = ::Tactical.getTileSquare(x, y);
 
-				if (!tile.IsEmpty)
-				{
+				if (!tile.IsEmpty) {
 					++attempts;
 					continue;
 				}
@@ -523,9 +469,7 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		tentacle.getFlags().set("Source", this.getID());
 
 		if (!_isInstant)
-		{
 			tentacle.riseFromGround(0.75);
-		}
 
 		this.getMode().onChangeAI(tentacle);
 		this.givePerks(tentacle);
@@ -538,9 +482,7 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 	function getTentacleBattleMode()
 	{
 		if (this.getFlags().get("tentacle_autopilot"))
-		{
 			return this.getFlags().getAsInt("tentacle_mode");
-		}
 
 		return ::Const.KrakenTentacleMode.Attacking;
 	}
@@ -586,17 +528,13 @@ this.nggh_mod_kraken_player <- inherit("scripts/entity/tactical/nggh_mod_player_
 		this.nggh_mod_player_beast.onRoundStart();
 
 		if (::Time.getRound() == 1 && this.isAlive())
-		{
 			this.playSound(::Const.Sound.ActorEvent.Other1, ::Const.Sound.Volume.Actor * this.m.SoundVolume[::Const.Sound.ActorEvent.Other1] * this.m.SoundVolumeOverall);
-		}
 	}
 
 	function onRetreating()
 	{
 		if (!this.isPlacedOnMap())
-		{
 			return;
-		}
 
 		this.getMode().switchMode(true);
 	}
