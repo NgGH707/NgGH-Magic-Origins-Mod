@@ -37,11 +37,6 @@ this.nggh_mod_unhold_helmet_heavy <- ::inherit("scripts/items/legend_helmets/leg
 
 	function getLootLayers()
 	{
-		if (::Nggh_MagicConcept.isHexeOrigin() && ::Math.rand(1, 100) <= 50)
-		{
-			return [this];
-		}
-
 		return [::new("scripts/items/legend_helmets/top/legend_helmet_unhold_head_spike")];
 	}
 
