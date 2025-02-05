@@ -84,10 +84,28 @@
 		_properties.RangedDamageMult *= ::Const.AlpWeaponDamageMod;
 	}
 
-	q.teleport = @() function( _tag )
+	q.onDamageReceived = @() function( _attacker, _damageHitpoints, _damageArmor )
 	{
-		foreach( a in ::Tactical.Entities.getInstancesOfFaction(getContainer().getActor().getFaction()) )
+		if (_damageHitpoints >= getContainer().getActor().getHitpoints())
+			return;
+
+		::Sound.play(::MSU.Array.rand(m.SoundOnUse), ::Const.Sound.Volume.Skill);
+		::Time.scheduleEvent(::TimeUnit.Virtual, 30, teleport.bindenv(this), getContainer().getActor().getFaction());
+	}
+
+	q.onDeath = @() function( _fatalityType )
+	{
+		::Sound.play(::MSU.Array.rand(m.SoundOnUse), ::Const.Sound.Volume.Skill);
+		::Time.scheduleEvent(::TimeUnit.Virtual, 30, teleport.bindenv(this), getContainer().getActor().getFaction());
+	}
+
+	q.teleport = @() function( _faction )
+	{
+		foreach( a in ::Tactical.Entities.getInstancesOfFaction(_faction) )
 		{
+			if (!a.isAlive() || a.getHitpoints() <= 0 || !a.getFlags().get("auto_teleport"))
+				continue;
+
 			local b = a.getAIAgent().getBehavior(::Const.AI.Behavior.ID.AlpTeleport);
 
 			if (b == null)
@@ -95,10 +113,7 @@
 
 			local skill = a.getSkills().getSkillByID("actives.alp_teleport");
 
-			if (skill == null || !a.isAlive() || a.getHitpoints() <= 0)
-				continue;
-
-			if (!a.getFlags().get("auto_teleport"))
+			if (skill == null)
 				continue;
 
 			b.onEvaluate(a);
