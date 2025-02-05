@@ -5,7 +5,7 @@
 
 	q.create = @(__original) function()
 	{
-		ws_create();
+		__original();
 		m.Description = "\"Deepthroat\" your foe into your belly. Yum! tasty right?";
 		m.Icon = "skills/active_103.png";
 		m.IconDisabled = "skills/active_103_sw.png";

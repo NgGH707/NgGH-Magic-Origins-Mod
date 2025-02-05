@@ -2,7 +2,7 @@
 {
 	q.create = @(__original) function()
 	{
-		ws_create();
+		__original();
 		m.Description = "Play nice would not grant you victory everytime, a little dirty trick can easily boost your win chance. Wild Nomad uses sand-attack!!!";
 		m.Icon = "skills/active_215.png";
 		m.IconDisabled = "skills/active_215_sw.png";

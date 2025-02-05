@@ -54,7 +54,7 @@
 			_defenderProperties = _actor.getCurrentProperties();
 
 		local mult = 1.0;
-		local perk = getContainer().hasSkill("perk.after_wake");
+		local perk = getContainer().getSkillByID("perk.after_wake");
 		if (perk != null) mult *= perk.getMult();
 		local damage = m.BaseDamage + getAdditionalDamage(_attackerProperties);
 		local loss = ::Math.floor((_defenderProperties.getBravery() + _defenderProperties.MoraleCheckBravery[::Const.MoraleCheckType.MentalAttack] * _defenderProperties.MoraleCheckBraveryMult[::Const.MoraleCheckType.MentalAttack]) * mult * 0.25);

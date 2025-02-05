@@ -29,7 +29,7 @@ perk_nggh_alp_nightmare_mastery <- ::inherit("scripts/skills/skill", {
 
 	function onAfterUpdate( _properties )
 	{
-		local skill = getContainer().hasSkill("actives.nightmare");
+		local skill = getContainer().getSkillByID("actives.nightmare");
 
 		if (skill == null) return;
 
