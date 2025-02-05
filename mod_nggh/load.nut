@@ -13,6 +13,7 @@
 ::include("mod_nggh/config/excluded_traits.nut")
 ::include("mod_nggh/config/attributes_levelup.nut")
 ::include("mod_nggh/config/lucky_rune_loot_table.nut")
+::include("mod_nggh/config/spawnlist_witchhunter.nut")
 
 // perk stuffs
 ::include("mod_nggh/config/perk_strings.nut")
