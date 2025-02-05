@@ -797,7 +797,6 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.HammerTree,
 		::Const.Perks.AxeTree,
 		::Const.Perks.CleaverTree,
-		::Const.Perks.GreatSwordTree,
 		::Const.Perks.SwordTree,
 	],
 	Defense = [
@@ -875,7 +874,6 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.HammerTree,
 		::Const.Perks.AxeTree,
 		::Const.Perks.CleaverTree,
-		::Const.Perks.GreatSwordTree,
 		::Const.Perks.SwordTree,
 	],
 	Defense = [
