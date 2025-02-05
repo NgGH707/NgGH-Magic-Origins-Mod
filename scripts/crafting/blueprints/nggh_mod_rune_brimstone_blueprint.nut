@@ -1,9 +1,10 @@
 this.nggh_mod_rune_brimstone_blueprint <- ::inherit("scripts/crafting/legend_rune", {
-	m = {},
+	m = {
+		Skill = "perk.legend_vala_inscribe_shield"
+	},
 	function create()
 	{
 		this.m.Rune = 106;
-		this.m.Skill = "perk.legend_vala_inscribe_shield";
 		this.legend_rune.create();
 		this.m.ID = "blueprint.legend_rune_brimstone";
 		this.m.Type = ::Const.Items.ItemType.Misc;

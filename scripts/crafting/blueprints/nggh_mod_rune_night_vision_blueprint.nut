@@ -1,9 +1,10 @@
 this.nggh_mod_rune_night_vision_blueprint <- ::inherit("scripts/crafting/legend_rune", {
-	m = {},
+	m = {
+		Skill = "perk.legend_vala_inscribe_helmet"
+	},
 	function create()
 	{
 		this.m.Rune = 107;
-		this.m.Skill = "perk.legend_vala_inscribe_helmet";
 		this.legend_rune.create();
 		this.m.ID = "blueprint.legend_rune_night_vision";
 		this.m.Type = ::Const.Items.ItemType.Misc;

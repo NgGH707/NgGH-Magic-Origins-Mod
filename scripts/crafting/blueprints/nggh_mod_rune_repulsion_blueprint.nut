@@ -1,9 +1,10 @@
 this.nggh_mod_rune_repulsion_blueprint <- ::inherit("scripts/crafting/legend_rune", {
-	m = {},
+	m = {
+		Skill = "perk.legend_vala_inscribe_armor"
+	},
 	function create()
 	{
 		this.m.Rune = 103;
-		this.m.Skill = "perk.legend_vala_inscribe_armor";
 		this.legend_rune.create();
 		this.m.ID = "blueprint.legend_rune_repulsion";
 		this.m.Type = ::Const.Items.ItemType.Misc;
