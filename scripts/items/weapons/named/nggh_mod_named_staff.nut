@@ -59,9 +59,7 @@ this.nggh_mod_named_staff <- ::inherit("scripts/items/weapons/named/named_weapon
 		local upperNum = (this.m.Variant * a) - 1;
 
 		if (this.m.Variant == this.m.Variants.len())
-		{
 			upperNum = ::Const.Nggh_NamedStaff_MagicSkills.len() - 1;
-		}
 
 		this.m.MagicType = ::Math.rand(lowerNum, upperNum);
 	}
@@ -77,21 +75,19 @@ this.nggh_mod_named_staff <- ::inherit("scripts/items/weapons/named/named_weapon
 	{
 		this.named_weapon.onEquip();
 		local skill = ::new("scripts/skills/actives/bash");
-		skill.m.IsStaffBash = true;
+		//skill.m.IsStaffBash = true;
 		skill.m.Icon = "skills/staff_bash_vala.png";
 		skill.m.IconDisabled = "skills/staff_bash_vala_bw.png";
 		this.addSkill(skill);
 
 		skill = ::new("scripts/skills/actives/knock_out");
-		skill.m.IsStaffKnockOut = true;
+		//skill.m.IsStaffKnockOut = true;
 		skill.m.Icon = "skills/staff_knock_out_vala.png";
 		skill.m.IconDisabled = "skills/staff_knock_out_vala_bw.png";
 		this.addSkill(skill);
 
 		if (::Is_PTR_Exist)
-		{
 			this.addSkill(::new("scripts/skills/actives/ptr_staff_sweep_skill"));
-		}
 
 		local data = ::Const.Nggh_NamedStaff_MagicSkills[this.m.MagicType];
 		local magic = ::new("scripts/skills/" + data.Script);
