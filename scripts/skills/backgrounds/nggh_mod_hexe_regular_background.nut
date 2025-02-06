@@ -32,8 +32,7 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 
 		this.m.PerkTreeDynamic.Class.push(::MSU.Array.rand([::Const.Perks.ChefClassTree, ::Const.Perks.BardClassTree]));
 
-		if (::Is_PTR_Exist)
-		{
+		if (::Is_PTR_Exist) {
 			this.m.PerkTreeDynamic = {
 				//ExpertiseMultipliers = [],
 				//WeightMultipliers = [],
@@ -58,18 +57,14 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 			};
 
 			if (::Math.rand(1, 100) <= 25)
-			{
 				this.m.PerkTreeDynamic.Weapon.push(::Const.Perks.SlingTree);
-			}
 		}
 	}
 	
 	function onAdded()
 	{
 		if (this.m.IsNew)
-		{
-			this.getContainer().getActor().getFlags().add("isBonus");
-		}
+			getContainer().getActor().getFlags().add("isBonus");
 		
 		this.nggh_mod_hexe_background.onAdded();
 	}
@@ -177,14 +172,12 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 		local ret = this.nggh_mod_hexe_background.getTooltip();
 
 		if (::World.Flags.get("IsLuftAdventure"))
-		{
 			ret.insert(3, {
 				id = 4,
 				type = "text",
 				icon = "ui/icons/health.png",
 				text = "[color=" + ::Const.UI.Color.PositiveValue + "]Member of Nacho fanclub[/color]"
 			});
-		}
 
 		return ret;
 	}
@@ -234,8 +227,8 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 	function onFinishingPerkTree()
 	{
 		this.addPerk(::Const.Perks.PerkDefs.LegendMagicMissile);
-		this.addPerk(::Const.Perks.PerkDefs.MageLegendMasteryMagicMissileFocus, 3);
-		this.addPerk(::Const.Perks.PerkDefs.MageLegendMasteryMagicMissileMastery, 6);
+		this.addPerk(::Const.Perks.PerkDefs.LegendMagicMissileFocus, 3);
+		this.addPerk(::Const.Perks.PerkDefs.LegendMagicMissileMastery, 6);
 		this.addPerk(::Const.Perks.PerkDefs.LegendPotionBrewer, 3);
 
 		this.addPerkGroup(::Const.Perks.HexeHexTree.Tree);
@@ -267,17 +260,18 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 			::Const.Perks.PerkDefs.NggHCharmEnemySchrat,
 			::Const.Perks.PerkDefs.NggHCharmEnemyLindwurm
 		]), 5);
+
+		/*
 		this.addPerk(::MSU.Array.rand([
 			::Const.Perks.PerkDefs.LegendValaInscribeShield,
 			::Const.Perks.PerkDefs.LegendValaInscribeWeapon,
 			::Const.Perks.PerkDefs.LegendValaInscribeHelmet,
 			::Const.Perks.PerkDefs.LegendValaInscribeArmor
 		]), 2);
+		*/
 
 		if (::Math.rand(1, 100) >= 95)
-		{
 			this.addPerk(::Const.Perks.PerkDefs.NggHMiscFairGame, 2);
-		}
 	}
 
 });
