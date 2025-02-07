@@ -39,7 +39,7 @@
 
 	q.onUpdate = @() function( _properties )
 	{
-		local damage = getBonus(getContainer().getActor());
+		local additionalDamage = getBonus(getContainer().getActor());
 
 		if (additionalDamage > 0) {
 			_properties.DamageRegularMin += additionalDamage;
