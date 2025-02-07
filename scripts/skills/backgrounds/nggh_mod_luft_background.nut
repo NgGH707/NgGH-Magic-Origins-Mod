@@ -3,6 +3,7 @@ this.nggh_mod_luft_background <- ::inherit("scripts/skills/backgrounds/character
 		IsCharming = false,
 		IsDeserializing = false,
 		PerkGroupMultipliers = [],
+		StoredProperties = {},
 	},
 	function create()
 	{
@@ -147,15 +148,16 @@ this.nggh_mod_luft_background <- ::inherit("scripts/skills/backgrounds/character
 
 	function onAdded()
 	{
-		if (this.m.IsNew)
-		{
+		if (this.m.IsNew) {
 			// add the unique flag
 			this.getContainer().getActor().getFlags().set("Hexe", 0);
 			this.getContainer().getActor().getFlags().get("IsSpecial");
-
 			// build stats
 			this.getContainer().getActor().m.StarWeights = this.buildAttributes(null, null);
 			this.addBonusAttributes(this.buildPerkTree());
+		}
+		else if (m.StoredProperties.len() > 0) {
+			::Nggh_MagicConcept.applyBaseProperties(getContainer().getActor(), m.StoredProperties);
 		}
 
 		this.character_background.onAdded();
@@ -491,10 +493,17 @@ this.nggh_mod_luft_background <- ::inherit("scripts/skills/backgrounds/character
 		return a;
 	}
 
+	function onSerialize( _out )
+	{
+		this.character_background.onSerialize(_out);
+		::Nggh_MagicConcept.onSerializeProperties(getContainer().getActor(), _out);
+	}
+
 	function onDeserialize( _in )
 	{
 		this.m.IsDeserializing = true;
 		this.character_background.onDeserialize(_in);
+		::Nggh_MagicConcept.onDeserializeProperties(m.StoredProperties, _in);
 		this.m.IsDeserializing = false;
 	} 
 

@@ -84,47 +84,55 @@ local ws_setValues = ::Const.CharacterProperties.setValues;
 		this.DamageDirectMult = _t.DamageDirectMult;
 	}
 };
-local ws_onSerialize = ::Const.CharacterProperties.onSerialize;
-::Const.CharacterProperties.onSerialize = function( _out )
+
+
+::Nggh_MagicConcept.onSerializeProperties <- function( _actor, _out )
 {
-	ws_onSerialize(_out);
+	local b = _actor.getBaseProperties();
+	_out.writeU8(b.Vision);
+	_out.writeI16(b.ArmorMax[0]);
+	_out.writeI16(b.Armor[0]);
+	_out.writeI16(b.ArmorMax[1]);
+	_out.writeI16(b.Armor[1]);
+	_out.writeI16(b.FatigueRecoveryRate);
+	_out.writeF32(b.MoraleEffectMult);
+	_out.writeF32(b.FatigueEffectMult);
+	_out.writeU8(b.DamageRegularMin);
+	_out.writeU8(b.DamageRegularMax);
+	_out.writeF32(b.DamageRegularMult);
+	_out.writeF32(b.DamageArmorMult);
+	_out.writeF32(b.DamageTotalMult);
+	_out.writeF32(b.DamageDirectAdd);
+	_out.writeF32(b.DamageDirectMult);
+};
 
-	_out.writeU8(this.Vision);
-	_out.writeI16(this.ArmorMax[0]);
-	_out.writeI16(this.Armor[0]);
-	_out.writeI16(this.ArmorMax[1]);
-	_out.writeI16(this.Armor[1]);
-	_out.writeI16(this.FatigueRecoveryRate);
-	_out.writeF32(this.MoraleEffectMult);
-	_out.writeF32(this.FatigueEffectMult);
-	_out.writeU8(this.DamageRegularMin);
-	_out.writeU8(this.DamageRegularMax);
-	_out.writeF32(this.DamageRegularMult);
-	_out.writeF32(this.DamageArmorMult);
-	_out.writeF32(this.DamageTotalMult);
-	_out.writeF32(this.DamageDirectAdd);
-	_out.writeF32(this.DamageDirectMult);
-}
-local ws_onDeserialize = ::Const.CharacterProperties.onDeserialize;
-::Const.CharacterProperties.onDeserialize = function( _in )
+::Nggh_MagicConcept.onDeserializeProperties <- function( _properties, _in )
 {
-	ws_onDeserialize(_in);
+	_properties.clear();
+	_properties.Vision <- _in.readU8();
+	_properties.ArmorMax <- [0, 0];
+	_properties.Armor <- [0, 0];
+	_properties.ArmorMax[0] = _in.readI16();
+	_properties.Armor[0] = _in.readI16();
+	_properties.ArmorMax[1] = _in.readI16();
+	_properties.Armor[1] = _in.readI16();
+	_properties.FatigueRecoveryRate <- _in.readI16();
+	_properties.MoraleEffectMult <- _in.readF32();
+	_properties.FatigueEffectMult <- _in.readF32();
+	_properties.DamageRegularMin <- _in.readU8();
+	_properties.DamageRegularMax <- _in.readU8();
+	_properties.DamageRegularMult <- _in.readF32();
+	_properties.DamageArmorMult <- _in.readF32();
+	_properties.DamageTotalMult <- _in.readF32();
+	_properties.DamageDirectAdd <- _in.readF32();
+	_properties.DamageDirectMult <- _in.readF32();
+};
 
-	this.Vision = _in.readU8();
-	this.ArmorMax[0] = _in.readI16();
-	this.Armor[0] = _in.readI16();
-	this.ArmorMax[1] = _in.readI16();
-	this.Armor[1] = _in.readI16();
-	this.FatigueRecoveryRate = _in.readI16();
-	this.MoraleEffectMult = _in.readF32();
-	this.FatigueEffectMult = _in.readF32();
-	this.DamageRegularMin = _in.readU8();
-	this.DamageRegularMax = _in.readU8();
-	this.DamageRegularMult = _in.readF32();
-	this.DamageArmorMult = _in.readF32();
-	this.DamageTotalMult = _in.readF32();
-	this.DamageDirectAdd = _in.readF32();
-	this.DamageDirectMult = _in.readF32();
-}
-
-
+::Nggh_MagicConcept.applyBaseProperties <- function( _actor, _properties )
+{
+	local b = _actor.getBaseProperties();
+	foreach (k, value in _properties)
+	{
+		b[k] = value;
+	}
+};

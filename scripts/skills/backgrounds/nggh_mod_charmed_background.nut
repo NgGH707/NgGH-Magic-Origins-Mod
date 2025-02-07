@@ -1,5 +1,6 @@
 this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/character_background", {
 	m = {
+		StoredProperties = {},
 		PerkGroupMultipliers = [],
 		HasFixedName = false,
 		IsOnDeserializing = false,
@@ -106,6 +107,9 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 
 	function onAdded()
 	{
+		if (!m.IsNew && m.StoredProperties.len() > 0)
+			::Nggh_MagicConcept.applyBaseProperties(getContainer().getActor(), m.StoredProperties);
+
 		local data = this.getCharmDataByID(this.m.CharmID);
 
 		if (this.isOrc() || this.isGoblin())
@@ -489,8 +493,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		_out.writeBool(this.m.IsSavingModifier);
 		_out.writeBool(this.m.IsSavingBackgroundType);
 
-		if (this.m.IsSavingModifier)
-		{
+		if (this.m.IsSavingModifier) {
 			_out.writeF32(this.m.Modifiers.Ammo);
 			_out.writeF32(this.m.Modifiers.ArmorParts);
 			_out.writeF32(this.m.Modifiers.Meds);
@@ -516,13 +519,14 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			}
 		}
 
-		if (this.m.IsSavingBackgroundType)
-		{
+		if (this.m.IsSavingBackgroundType) {
 			for( local i = 0; i != ::Const.CharmedUtilities.BackgroundTypeToCopy.len(); ++i )
 			{
 				_out.writeBool(this.isBackgroundType(::Const.BackgroundType[::Const.CharmedUtilities.BackgroundTypeToCopy[i]]));
 			}
 		}
+
+		::Nggh_MagicConcept.onSerializeProperties(getContainer().getActor(), _out);
 	}
 
 	function onDeserialize( _in )
@@ -537,8 +541,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		this.m.IsSavingModifier = _in.readBool();
 		this.m.IsSavingBackgroundType = _in.readBool();
 
-		if (this.m.IsSavingModifier)
-		{
+		if (this.m.IsSavingModifier) {
 			this.m.Modifiers.Ammo = _in.readF32();
 			this.m.Modifiers.ArmorParts = _in.readF32();
 			this.m.Modifiers.Meds = _in.readF32();
@@ -564,8 +567,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			}
 		}
 		
-		if (this.m.IsSavingBackgroundType)
-		{
+		if (this.m.IsSavingBackgroundType) {
 			for( local i = 0; i != ::Const.CharmedUtilities.BackgroundTypeToCopy.len(); ++i )
 			{
 				if (_in.readBool())
@@ -573,6 +575,7 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 			}
 		}
 
+		::Nggh_MagicConcept.onDeserializeProperties(m.StoredProperties, _in);
 		this.m.IsOnDeserializing = false;
 	}
 

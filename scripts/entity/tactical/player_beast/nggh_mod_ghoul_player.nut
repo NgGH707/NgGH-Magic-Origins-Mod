@@ -751,14 +751,13 @@ this.nggh_mod_ghoul_player <- ::inherit("scripts/entity/tactical/nggh_mod_player
 	{
 		this.getFlags().set("Size", this.m.Size);
 		this.nggh_mod_player_beast.onSerialize(_out);
-		_out.writeU8(this.m.Size);
 	}
 	
 	function onDeserialize( _in )
 	{
 		this.m.IsLoadingSaveData = true;
 		this.nggh_mod_player_beast.onDeserialize(_in);
-		this.m.Size = _in.readU8();
+		this.m.Size = this.getFlags().getAsInt("Size");
 		this.m.IsLoadingSaveData = false;
 	}
 

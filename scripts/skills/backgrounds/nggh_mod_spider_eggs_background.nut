@@ -3,6 +3,7 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 		DayCount = 0,
 		PerkGroupMultipliers = [],
 		IsOnDeserializing = false,
+		StoredProperties = {},
 	},
 	
 	function create()
@@ -71,10 +72,12 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 	
 	function onAdded()
 	{
-		if (this.m.IsNew)
-		{
+		if (this.m.IsNew) {
 			this.getContainer().getActor().m.StarWeights = this.buildAttributes(null, null);
 			this.addBonusAttributes(this.buildPerkTree());
+		}
+		else if (m.StoredProperties.len() > 0) {
+			::Nggh_MagicConcept.applyBaseProperties(getContainer().getActor(), m.StoredProperties);
 		}
 		
 		this.character_background.onAdded();
@@ -232,6 +235,7 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 	{
 		this.character_background.onSerialize(_out);
 		_out.writeU8(this.m.DayCount);
+		::Nggh_MagicConcept.onSerializeProperties(getContainer().getActor(), _out);
 	}
 
 	function onDeserialize( _in )
@@ -240,6 +244,7 @@ this.nggh_mod_spider_eggs_background <- ::inherit("scripts/skills/backgrounds/ch
 		this.character_background.onDeserialize(_in);
 		this.m.DayCount = _in.readU8();
 		//this.addPerk(::Const.Perks.PerkDefs.NggHEggAttachSpider, 3);
+		::Nggh_MagicConcept.onDeserializeProperties(m.StoredProperties, _in);
 		this.m.IsOnDeserializing = false;
 	}
 
