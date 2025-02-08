@@ -520,9 +520,18 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		}
 
 		if (this.m.IsSavingBackgroundType) {
-			for( local i = 0; i != ::Const.CharmedUtilities.BackgroundTypeToCopy.len(); ++i )
+			local backgroundTypes = [];
+			foreach(k, value in ::Const.BackgroundType)
 			{
-				_out.writeBool(this.isBackgroundType(::Const.BackgroundType[::Const.CharmedUtilities.BackgroundTypeToCopy[i]]));
+				if (isBackgroundType(value))
+					backgroundTypes.push(k);
+			}
+
+			_out.writeI8(backgroundTypes.len());
+
+			foreach (key in backgroundTypes)
+			{
+				_out.writeString(key);
 			}
 		}
 
@@ -568,10 +577,11 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 		}
 		
 		if (this.m.IsSavingBackgroundType) {
-			for( local i = 0; i != ::Const.CharmedUtilities.BackgroundTypeToCopy.len(); ++i )
+			local num = _in.readI8();
+
+			for (local i = 0; i < num; ++i)
 			{
-				if (_in.readBool())
-					this.addBackgroundType(::Const.BackgroundType[::Const.CharmedUtilities.BackgroundTypeToCopy[i]]);
+				addBackgroundType(::Const.BackgroundType[_in.readString()]);
 			}
 		}
 

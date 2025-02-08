@@ -13,14 +13,8 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 	{
 		local e = ::Tactical.getEntityByID(_entityID);
 
-		if (e != null)
-		{
-			this.m.Slaves.push(::WeakTableRef(e));
-		}
-		else
-		{
-			this.m.Slaves.push(0);
-		}
+		if (e != null) this.m.Slaves.push(::WeakTableRef(e));
+		else this.m.Slaves.push(0);
 		
 		this.m.SlavesID.push(_entityID);
 		this.updateCharm();
@@ -30,8 +24,7 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 	{
 		local e, i = this.m.SlavesID.find(_entityID);
 
-		if (i != null)
-		{
+		if (i != null) {
 			this.m.SlavesID.remove(i);
 			e = this.m.Slaves.remove(i);
 		}

@@ -333,9 +333,10 @@ this.nggh_mod_inhuman_player <- ::inherit("scripts/entity/tactical/player", {
 		// don't need for beasts
 		this.setDirty(_setDirty);
 	}
-
+	
 	function onSerialize( _out )
 	{
+		this.m.Gender = 0;
 		this.player.onSerialize(_out);
 		_out.writeU8(this.m.Variant);
 	}
