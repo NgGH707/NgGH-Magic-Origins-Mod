@@ -37,13 +37,11 @@
 		__original(_attacker, _skill, _hitInfo, _properties);
 	}
 
-	q.onDamageReceived = @() function( _attacker, _damageHitpoints, _damageArmor )
+	q.onDamageReceived = @(__original) function( _attacker, _damageHitpoints, _damageArmor )
 	{
-		if (_damageHitpoints > 0 && !m.PreventWakeUp)
-			removeSelf();
+		if (!m.PreventWakeUp)
+			__original(_attacker, _damageHitpoints, _damageArmor);
 
 		m.PreventWakeUp = false;
-
-		__original(_attacker, _damageHitpoints, _damageArmor);
 	}
 });
