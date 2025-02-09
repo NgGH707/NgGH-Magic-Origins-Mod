@@ -105,7 +105,9 @@
 		else {
 			_effect.addFeastStack();
 			_effect.getContainer().update();
-			actor.setHitpoints(::Math.min(actor.getHitpoints() + getHPGain(), actor.getHitpointsMax()));
+			local skill = _effect.getContainer().getSkillByID("actives.gruesome_feast");
+			local hp = skill != null ? skill.getHPGain() : 200;
+			actor.setHitpoints(::Math.min(actor.getHitpoints() + hp, actor.getHitpointsMax()));
 
 			foreach ( injury in _effect.getContainer().getAllSkillsOfType(::Const.SkillType.Injury) )
 			{
