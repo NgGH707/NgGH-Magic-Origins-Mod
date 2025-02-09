@@ -202,47 +202,39 @@ this.nggh_mod_inhuman_player <- ::inherit("scripts/entity/tactical/player", {
 			local killedBy;
 
 			if (_fatalityType == ::Const.FatalityType.Devoured)
-			{
 				killedBy = "Devoured by a Nachzehrer";
-			}
 			else if (_fatalityType == ::Const.FatalityType.Suicide)
-			{
 				killedBy = "Committed Suicide";
-			}
 			else if (_skill.isType(::Const.SkillType.StatusEffect))
-			{
 				killedBy = _skill.getKilledString();
-			}
 			else if (_killer.getID() == this.getID())
-			{
 				killedBy = "Killed in battle";
-			}
-			else
-			{
-				if (_fatalityType == ::Const.FatalityType.Decapitated)
-				{
+			else {
+				if (_fatalityType == ::Const.FatalityType.Decapitated) {
 					killedBy = "Beheaded";
 				}
-				else if (_fatalityType == ::Const.FatalityType.Disemboweled)
-				{
+				else if (_fatalityType == ::Const.FatalityType.Disemboweled) {
 					if (::Math.rand(1, 2) == 1)
-					{
 						killedBy = "Disemboweled";
-					}
 					else
-					{
 						killedBy = "Gutted";
-					}
 				}
-				else
-				{
+				else {
 					killedBy = _skill.getKilledString();
 				}
 
-				killedBy = killedBy + (" by " + _killer.getKilledName());
+				killedBy += " by " + _killer.getKilledName();
 			}
 
-			::World.Statistics.addFallen(this, killedBy);
+			::World.Statistics.addFallen(finalizeFallen({
+				Name = getName(),
+				Time = ::World.getTime().Days,
+				TimeWithCompany = ::Math.max(1, getDaysWithCompany()),
+				Kills = m.LifetimeStats.Kills,
+				Battles = m.LifetimeStats.Battles + 1,
+				KilledBy = killedBy,
+				Expendable = getBackground().getID() == "background.slave"
+			}));
 		}
 	}
 

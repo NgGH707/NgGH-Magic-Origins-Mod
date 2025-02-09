@@ -142,6 +142,14 @@ this.nggh_mod_player_beast <- ::inherit("scripts/entity/tactical/nggh_mod_inhuma
 					decal.setBrush("bust_snake_body_0" + this.m.Variant + "_dead");
 					break;
 
+				case ::Const.EntityType.Spider:
+					decal.setBrush("bust_spider_body_01_dead");
+					break;
+
+				case ::Const.EntityType.LegendRedbackSpider:
+					decal.setBrush("bust_spider_redback_body_01_dead");
+					break;
+
 				default:
 					decal.setBrush(sprite_body.getBrush().Name + "_dead");
 				}
