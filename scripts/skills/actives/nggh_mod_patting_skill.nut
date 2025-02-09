@@ -39,7 +39,7 @@ this.nggh_mod_patting_skill <- ::inherit("scripts/skills/skill", {
 
 	function getTooltip()
 	{
-		local ret = this.skill.getDefaultTooltip();
+		local ret = getDefaultTooltip();
 		
 		ret.push({
 			id = 9,
@@ -49,23 +49,19 @@ this.nggh_mod_patting_skill <- ::inherit("scripts/skills/skill", {
 		});
 		
 		if (this.getContainer().getActor().getCurrentProperties().IsSpecializedInHammers)
-		{
 			ret.push({
 				id = 7,
 				type = "text",
 				icon = "ui/icons/special.png",
 				text = "Has a [color=" + ::Const.UI.Color.PositiveValue + "]50%[/color] chance to distract on a hit"
 			});
-		}
 		else
-		{
 			ret.push({
 				id = 7,
 				type = "text",
 				icon = "ui/icons/special.png",
 				text = "Has a [color=" + ::Const.UI.Color.PositiveValue + "]" + this.m.StunChance + "%[/color] chance to distract on a hit"
 			});
-		}
 
 		return ret;
 	}
@@ -74,15 +70,13 @@ this.nggh_mod_patting_skill <- ::inherit("scripts/skills/skill", {
 	{
 		this.m.FatigueCostMult = _properties.IsSpecializedInHammers ? ::Const.Combat.WeaponSpecFatigueMult : 1.0;
 	}
-	
-	function onBeforeUse( _user , _targetTile )
+
+	function use( _targetTile , _forFree = false )
 	{
-		if (!_user.getFlags().has("luft"))
-		{
-			return;
-		}
+		if (getContainer().getActor().getFlags().has("luft"))
+			::Nggh_MagicConcept.spawnQuote("luft_pet_quote_" + ::Math.rand(1, 5), getContainer().getActor().getTile());
 		
-		::Nggh_MagicConcept.spawnQuote("luft_pet_quote_" + ::Math.rand(1, 5), _user.getTile());
+		return skill.use(_targetTile, _forFree);
 	}
 
 	function onUse( _user, _targetTile )
@@ -92,24 +86,18 @@ this.nggh_mod_patting_skill <- ::inherit("scripts/skills/skill", {
 		local success = this.attackEntity(_user, _targetTile.getEntity());
 
 		if (!_user.isAlive() || _user.isDying())
-		{
 			return success;
-		}
-
-		if (success && _targetTile.IsOccupiedByActor && _targetTile.getEntity().isAlive())
-		{
+		
+		if (success && _targetTile.IsOccupiedByActor && _targetTile.getEntity().isAlive()) {
 			local target = _targetTile.getEntity();
 			local chance = _user.getCurrentProperties().IsSpecializedInHammers ? 50 : this.m.StunChance;
 			target.checkMorale(1, 0, ::Const.MoraleCheckType.Default);
 
-			if (::Math.rand(1, 100) <= chance)
-			{
+			if (::Math.rand(1, 100) <= chance) {
 				target.getSkills().add(::new("scripts/skills/effects/distracted_effect"));
 
 				if (!_user.isHiddenToPlayer() && (_targetTile.IsVisibleForPlayer))
-				{
 					::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_targetTile.getEntity()) + " is distracted due to the pet");
-				}
 			}
 		}
 
@@ -128,9 +116,7 @@ this.nggh_mod_patting_skill <- ::inherit("scripts/skills/skill", {
 			_properties.HitChance[::Const.BodyPart.Head] += 100.0;
 			
 			if (_properties.IsSpecializedInHammers)
-			{
 				_properties.DamageTotalMult *= 1.5;
-			}
 		}
 	}
 
@@ -146,38 +132,26 @@ this.nggh_mod_patting_skill <- ::inherit("scripts/skills/skill", {
 		local actor = this.getContainer().getActor();
 
 		if (this.m.Hit == 0 && this.m.Count > 0)
-		{
 			actor.worsenMood(1.0, "They dodged all my head pats");
-		}
 		else if (this.m.Hit == 0)
-		{
 			actor.worsenMood(0.2, "Can\'t give any head pat in this battle");
-		}
 		else
-		{
 			actor.improveMood(0.2, "Just pet someone in last ballte");
-		}
 
 		if (this.m.Kill != 0)
-		{
 			actor.improveMood(0.2, "I just killed someone with my head pat");
-		}
 	}
 
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
 		if (_skill == this)
-		{
 			++this.m.Hit;
-		}
 	}
 
 	function onTargetKilled( _targetEntity, _skill )
 	{
 		if (_skill = this)
-		{
 			++this.m.Kill;
-		}
 	}
 
 });

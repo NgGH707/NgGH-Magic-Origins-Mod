@@ -101,14 +101,12 @@ this.nggh_mod_nacho_vomit_skill <- ::inherit("scripts/skills/skill", {
 		return _targetTile.IsEmpty;
 	}
 
-	function onBeforeUse( _user , _targetTile )
+	function use( _targetTile , _forFree = false )
 	{
-		if (!_user.getFlags().has("luft"))
-		{
-			return;
-		}
+		if (getContainer().getActor().getFlags().has("luft"))
+			::Nggh_MagicConcept.spawnQuote("luft_eat_quote_" + ::Math.rand(1, 5), getContainer().getActor().getTile());
 		
-		::Nggh_MagicConcept.spawnQuote("luft_eat_quote_" + ::Math.rand(1, 5), _user.getTile());
+		return skill.use(_targetTile, _forFree);
 	}
 
 	function onUse( _user, _targetTile )
@@ -123,34 +121,25 @@ this.nggh_mod_nacho_vomit_skill <- ::inherit("scripts/skills/skill", {
 		local e = _user.onAfterDeath(_targetTile);
 
 		if (e == null)
-		{
 			return false;
-		}
 
 		if (!_user.isHiddenToPlayer() && _targetTile.IsVisibleForPlayer)
-		{
 			::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_user) + " throws up " + ::Const.UI.getColorizedEntityName(e) + " out.");
-		}
 
 		local skill = this.getContainer().getSkillByID("actives.swallow_whole");
 
-		if (skill == null)
-		{
+		if (skill == null) {
 			skill = this.getContainer().getSkillByID("actives.legend_skin_ghoul_swallow_whole");
 			
 			if (skill == null)
-			{
 				return true;
-			}
-			else
-			{
+			else {
 				_user.getSprite("body").setBrush("bust_ghoulskin_body_03");
 				_user.getSprite("head").setBrush("bust_ghoulskin_03_head_0" + _user.m.Head);
 				_user.getSprite("injury").setBrush("bust_ghoulskin_03_injured");
 			}
 		}
-		else
-		{
+		else {
 			_user.getSprite("body").setBrush("bust_ghoul_body_03");
 			_user.getSprite("head").setBrush("bust_ghoul_03_head_0" + _user.m.Head);
 			_user.getSprite("injury").setBrush("bust_ghoul_03_injured");

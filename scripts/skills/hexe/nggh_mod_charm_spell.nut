@@ -213,15 +213,13 @@ this.nggh_mod_charm_spell <- ::inherit("scripts/skills/skill", {
 
 		return true;
 	}
-	
-	function onBeforeUse( _user , _targetTile )
+
+	function use( _targetTile , _forFree = false )
 	{
-		if (!_user.getFlags().has("luft"))
-		{
-			return;
-		}
+		if (getContainer().getActor().getFlags().has("luft"))
+			::Nggh_MagicConcept.spawnQuote("luft_charm_quote_" + ::Math.rand(1, 7), getContainer().getActor().getTile());
 		
-		::Nggh_MagicConcept.spawnQuote("luft_charm_quote_" + ::Math.rand(1, 7), _user.getTile());
+		return skill.use(_targetTile, _forFree);
 	}
 
 	function onUse( _user, _targetTile )

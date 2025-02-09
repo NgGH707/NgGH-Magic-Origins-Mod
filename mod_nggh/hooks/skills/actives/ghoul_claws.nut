@@ -7,7 +7,7 @@
 
 	q.use <- function( _targetTile, _forFree = false )
 	{
-		if (!getContainer().getActor().getFlags().has("luft"))
+		if (getContainer().getActor().getFlags().has("luft"))
 			::Nggh_MagicConcept.spawnQuote("luft_claw_quote_" + ::Math.rand(1, 5), getContainer().getActor().getTile());
 		
 		return skill.use(_targetTile, _forFree);
