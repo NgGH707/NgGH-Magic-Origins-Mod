@@ -2109,7 +2109,7 @@ for (local i = 0; i < ::Const.EntityIcon.len(); ++i)
 //LegendWhiteDirewolf
 ::Const.CharmedUnits.addDefaultEntry(::Const.EntityType.LegendWhiteDirewolf, {
 	StatMod = { Hitpoints = [-200, -150], Bravery = [-40, -25], Stamina = [-80, -40], MeleeSkill = [-12, -10], RangedSkill = [0, 0], MeleeDefense = [-8, -8], RangedDefense = [-8, -8], Initiative = [-45, -35] },
-	Skills = ["racial/werewolf_racial", "actives/legend_white_wolf_bite_skill", "actives/legend_white_wolf_howl_skill"],
+	Skills = ["racial/legend_werewolf_racial", "actives/legend_white_wolf_bite_skill", "actives/legend_white_wolf_howl_skill"],
 	Perks = ["Footwork", "Rotation"],
 	Requirements = ["NggHCharmEnemyDirewolf", "NggHCharmSpec"],
 	Script = "player_beast/nggh_mod_direwolf_player",
@@ -2300,7 +2300,7 @@ for (local i = 0; i < ::Const.EntityIcon.len(); ++i)
 //LegendDemonAlp
 ::Const.CharmedUnits.addDefaultEntry(::Const.EntityType.LegendDemonAlp, {
 	StatMod = { Hitpoints = [0, 0], Bravery = [-50, -50], Stamina = [-50, -25], MeleeSkill = [-5, 5], RangedSkill = [-5, 5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
-	Skills = ["actives/legend_demon_shadows_skill", "actives/horrific_scream", "actives/gruesome_feast", "effects/gruesome_feast_effect"],
+	Skills = ["actives/legend_demon_shadows_skill", "actives/horrific_scream"],
 	Perks = ["Footwork"],
 	Requirements = ["NggHCharmEnemyAlp", "NggHCharmSpec"],
 	Script = "player_beast/nggh_mod_alp_player",
