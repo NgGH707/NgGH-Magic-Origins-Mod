@@ -68,7 +68,7 @@
 		actor.setHitpoints(actor.getHitpoints() + healthAdded);
 
 		if (!actor.isHiddenToPlayer()) {
-			pawnIcon("status_effect_79", actor.getTile());
+			spawnIcon("status_effect_79", actor.getTile());
 
 			if (m.SoundOnUse.len() != 0)
 				::Sound.play(::MSU.Array.rand(m.SoundOnUse), ::Const.Sound.Volume.RacialEffect * 1.25, actor.getPos());
