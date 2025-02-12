@@ -1,7 +1,7 @@
 ::Nggh_MagicConcept <- {
 	ID = "mod_nggh_magic_concept",
 	Name = "NgGH\'s Magic Concept",
-	Version = "3.0.0-beta.82",
+	Version = "3.0.0-beta.83",
 	ForceWhipPerk = false,
 	Class = {},
 };
