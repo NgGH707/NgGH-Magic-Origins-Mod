@@ -163,20 +163,9 @@ this.nggh_mod_summon_flying_skulls_skill <- ::inherit("scripts/skills/skill", {
 		this.m.Cooldown = 1;
 		::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_user) + " has mastered death!");
 
-		if (!_user.getAIAgent().hasKnownOpponent())
-		{
-			local strategy = _user.getAIAgent().getStrategy().update();
-
-			do
-			{
-			}
-			while (!resume strategy);
-		}
-
 		local b = _user.getAIAgent().getBehavior(::Const.AI.Behavior.ID.FlyingSkulls);
 
-		if (b != null)
-		{
+		if (b != null) {
 			b.onEvaluate(_user);
 			return b.onExecute(_user);
 		}

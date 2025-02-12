@@ -288,9 +288,7 @@ this.nggh_mod_encountering_capybara_event <- ::inherit("scripts/events/event", {
 	function onUpdateScore()
 	{
 		if (::World.getPlayerRoster().getAll().len() <= 2)
-		{
 			return;
-		}
 
 		this.m.Score = ::World.Flags.get("IsLuftAdventure") ? ::Math.rand(15, 35) : ::Math.rand(10, 20);
 	}
@@ -304,13 +302,9 @@ this.nggh_mod_encountering_capybara_event <- ::inherit("scripts/events/event", {
 		foreach ( bro in brothers )
 		{
 			if ((bro.getFlags().has("luft") || bro.getFlags().has("IsPlayerCharacter")) && ::Math.rand(1, 100) <= 15)
-			{
 				priority.push(bro);
-			}
 			else
-			{
 				betterThanNothing.push(bro);
-			}
 		}
 
 		if (priority.len() > 0)

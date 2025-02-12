@@ -319,8 +319,7 @@ this.nggh_mod_simps_fight_each_other_event <- ::inherit("scripts/events/event", 
 			}
 
 		});
-	}
-		
+	}		
 
 	function onUpdateScore()
 	{
@@ -343,11 +342,9 @@ this.nggh_mod_simps_fight_each_other_event <- ::inherit("scripts/events/event", 
 		}
 
 		if (!hasHexe || simps < 2)
-		{
 			return;
-		}
 
-		this.m.Score = simps * 20;
+		this.m.Score = simps * 10;
 	}
 
 	function onPrepare()

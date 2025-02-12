@@ -141,17 +141,16 @@ this.nggh_mod_charmed_captive_effect <- ::inherit("scripts/skills/skill", {
 
 				while(garbage.len() != 0)
 				{
-					foreach(g in garbage)
+					for (local i = garbage.len() - 1; i >= 0; ++i)
 					{
-						this.m.Charm.m.Capture.remove(g);
+						this.m.Charm.m.Capture.remove(i);
 					}
 
 					garbage = [];
 
 					foreach (i, c in this.m.Charm.m.Capture)
 					{
-						if (c == null || c.isNull() || c.getID() == id)
-						{
+						if (c == null || c.isNull() || c.getID() == id) {
 							garbage.push(i);
 							break;
 						}

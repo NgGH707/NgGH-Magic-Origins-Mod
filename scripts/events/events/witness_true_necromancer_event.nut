@@ -258,6 +258,9 @@ this.witness_true_necromancer_event <- this.inherit("scripts/events/event", {
 				++count;
 		}
 
+		if (count <= 0)
+			return;
+
 		local score = 25 * count, diff = ::World.getTime().Days - ::World.Statistics.getFlags().getAsInt("MeetNamedTrader");
 
 		if (diff <= 30)

@@ -72,20 +72,9 @@ this.nggh_mod_summon_mirror_image_skill <- ::inherit("scripts/skills/skill", {
 		this.m.IsSpent = true;
 		::Tactical.EventLog.log(::Const.UI.getColorizedEntityName(_user) + " transcends time and place!");
 
-		if (!_user.getAIAgent().hasKnownOpponent())
-		{
-			local strategy = _user.getAIAgent().getStrategy().update();
-
-			do
-			{
-			}
-			while (!resume strategy);
-		}
-
 		local b = _user.getAIAgent().getBehavior(::Const.AI.Behavior.ID.MirrorImage);
 
-		if (b != null)
-		{
+		if (b != null) {
 			b.onEvaluate(_user);
 			return b.onExecute(_user);
 		}

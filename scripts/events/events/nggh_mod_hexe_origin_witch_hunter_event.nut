@@ -129,24 +129,18 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 	function onUpdateScore()
 	{
 		if (::World.getTime().Days < 25)
-		{
 			return;
-		}
 
 		local Hexe = 0;
 
 		foreach( bro in ::World.getPlayerRoster().getAll() )
 		{
 			if (bro.getFlags().has("Hexe"))
-			{
 				++Hexe;
-			}
 		}
 
 		if (Hexe == 0)
-		{
 			return;
-		}
 
 		local playerTile = ::World.State.getPlayer().getTile();
 		local towns = ::World.EntityManager.getSettlements();
@@ -155,42 +149,31 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 		foreach( t in towns )
 		{
 			if (t.isMilitary() || ::isKindOf(t, "city_state"))
-			{
 				continue;
-			}
 
 			local faction = t.getFactionOfType(::Const.FactionType.Settlement);
 
 			if (faction == null)
-			{
 				continue;
-			}
 			else if (faction.getPlayerRelation() >= 90.0)
-			{
 				continue;
-			}
 
-			if (playerTile.getDistanceTo(t.getTile()) <= 10)
-			{
+			if (playerTile.getDistanceTo(t.getTile()) <= 10) {
 				nearTown = true;
 				break;
 			}
 		}
 
 		if (!nearTown)
-		{
 			return;
-		}
 
-		this.m.Score = 22 * Hexe;
+		this.m.Score = 20 * Hexe;
 	}
 
 	function onDetermineStartScreen()
 	{
 		if (!::World.getTime().IsDaytime)
-		{
 			return "Ambush";
-		}
 
 		if ([
 			::Const.World.TerrainType.Swamp,
@@ -198,9 +181,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 			::Const.World.TerrainType.SnowyForest,
 			::Const.World.TerrainType.Mountains,
 		].find(::World.State.getPlayer().getTile().Type) != null)
-		{
 			return "Ambush";
-		}
 
 		return "Encounter";
 	}
@@ -218,28 +199,21 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 		foreach( t in towns )
 		{
 			if (t.isMilitary() || ::isKindOf(t, "city_state"))
-			{
 				continue;
-			}
 
 			local faction = t.getFactionOfType(::Const.FactionType.Settlement);
 
-			if (faction != null)
-			{
+			if (faction != null) {
 				if (faction.getPlayerRelation() >= 90.0)
-				{
 					continue;
-				}
 			}
-			else
-			{
+			else {
 				continue;
 			}
 
 			local d = playerTile.getDistanceTo(t.getTile());
 
-			if (d < nearest)
-			{
+			if (d < nearest) {
 				nearest = d;
 				town = t;
 			}
@@ -249,8 +223,7 @@ this.nggh_mod_hexe_origin_witch_hunter_event <- ::inherit("scripts/events/event"
 
 		foreach (b in ::World.getPlayerRoster().getAll())
 		{
-			if (b.getFlags().has("Hexe"))
-			{
+			if (b.getFlags().has("Hexe")) {
 				this.m.Hexe = b;
 				break;
 			}

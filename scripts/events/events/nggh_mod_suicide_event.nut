@@ -9,8 +9,7 @@ this.nggh_mod_suicide_event <- ::inherit("scripts/events/event", {
 		this.m.Other = null;
 		local brothers = ::World.getPlayerRoster().getAll();
 
-		if (brothers.len() == 1)
-		{
+		if (brothers.len() <= 2) {
 			this.m.Other = this.m.Suicider;
 			return;
 		}
