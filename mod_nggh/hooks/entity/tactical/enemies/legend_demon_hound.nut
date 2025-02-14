@@ -52,7 +52,7 @@
 		getSkills().add(::new("scripts/skills/perks/perk_legend_battleheart"));
 		getSkills().add(::new("scripts/skills/perks/perk_footwork"));
 		getSkills().add(::new("scripts/skills/perks/perk_rotation"));
-		getSkills().add(::new("scripts/skills/racial/werewolf_racial"));
+		getSkills().add(::new("scripts/skills/racial/legend_werewolf_racial"));
 
 		if (::Is_PTR_Exist) {
 			getSkills().add(::new("scripts/skills/perks/perk_ptr_vengeful_spite"));
