@@ -38,7 +38,15 @@ this.nggh_mod_suicide_event <- ::inherit("scripts/events/event", {
 					function getResult( _event )
 					{
 						_event.m.Suicider.getItems().transferToStash(::World.Assets.getStash());
-						::World.Statistics.addFallen(_event.m.Suicider, "Suicided");
+						::World.Statistics.addFallen(_event.m.Suicider.finalizeFallen({
+							Name = _event.m.Suicider.getName(),
+							Time = ::World.getTime().Days,
+							TimeWithCompany = ::Math.max(1, _event.m.Suicider.getDaysWithCompany()),
+							Kills = _event.m.Suicider.m.LifetimeStats.Kills,
+							Battles = _event.m.Suicider.m.LifetimeStats.Battles + 1,
+							KilledBy = "Suicided",
+							Expendable = _event.m.Suicider.getBackground().getID() == "background.slave"
+						}));
 						::World.getPlayerRoster().remove(_event.m.Suicider);
 						_event.m.Suicider = null;
 						_event.m.Other = null;
