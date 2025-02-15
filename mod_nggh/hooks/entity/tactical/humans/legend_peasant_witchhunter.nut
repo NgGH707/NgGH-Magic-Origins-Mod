@@ -71,7 +71,7 @@
 		m.Skills.add(::new("scripts/skills/perks/perk_recover"));
 		m.Skills.add(::new("scripts/skills/perks/perk_legend_net_casting"));
 		m.Skills.add(::new("scripts/skills/perks/perk_legend_assured_conquest"));
-		m.Skills.add(::new("scripts/skills/perks/perk_push_the_advantage"));
+		m.Skills.add(::new("scripts/skills/perks/perk_legend_push_the_advantage"));
 
 		if (::Is_PTR_Exist) {
 			m.Skills.add(::new("scripts/skills/perks/perk_ptr_follow_up"));
