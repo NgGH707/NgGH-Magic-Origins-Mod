@@ -47,7 +47,7 @@ perk_nggh_alp_nightmare_mastery <- ::inherit("scripts/skills/skill", {
 		if (actor.getHitpoints() >= actor.getHitpointsMax())
 			return;
 
-		local heal = ::Math.max(1, ::Math.round(_damageInflictedHitpoints * ::Math.rand(HPDrainMin, HPDrainMax) * 0.01));
+		local heal = ::Math.max(1, ::Math.round(_damageInflictedHitpoints * ::Math.rand(m.HPDrainMin, m.HPDrainMax) * 0.01));
 
 		if (!actor.isHiddenToPlayer()) {
 			spawnIcon("status_effect_81", actor.getTile());
