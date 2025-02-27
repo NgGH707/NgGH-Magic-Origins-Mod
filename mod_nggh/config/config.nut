@@ -311,28 +311,28 @@ foreach (def in ::Const.Perks.PerkDefObjects)
 ::Const.Nggh_NamedStaff_MagicSkills <- [
 	{
 		Name = "Chain Lightning",
-		Script = "actives/legend_chain_lightning",
+		Script = "actives/legend_chain_lightning_skill",
 		AdditionalFatigue = 0,
 		AdditionalAP = 0,
 		Count = 0
 	},
 	{
 		Name = "Call Lightning",
-		Script = "actives/legend_call_lightning",
+		Script = "actives/legend_call_lightning_skill",
 		AdditionalFatigue = 0,
 		AdditionalAP = 0,
 		Count = 0
 	},
 	{
 		Name = "Summon Wolf",
-		Script = "actives/legend_unleash_wolf",
+		Script = "actives/legend_unleash_wolf_skill",
 		AdditionalFatigue = 3,
 		AdditionalAP = -2,
 		Count = 0
 	},
 	{
 		Name = "Magic Missile",
-		Script = "actives/legend_magic_missile",
+		Script = "actives/legend_magic_missile_skill",
 		AdditionalFatigue = 2,
 		AdditionalAP = 0,
 		Count = 0
@@ -346,14 +346,14 @@ foreach (def in ::Const.Perks.PerkDefObjects)
 	},
 	{
 		Name = "Web Bolt",
-		Script = "actives/mage_legend_magic_web_bolt",
+		Script = "actives/legend_magic_web_bolt_skill",
 		AdditionalFatigue = 5,
 		AdditionalAP = 0,
 		Count = 0
 	},
 	{
 		Name = "Darkflight",
-		Script = "actives/legend_darkflight",
+		Script = "actives/legend_darkflight_skill",
 		AdditionalFatigue = 5,
 		AdditionalAP = 0,
 		Count = 0
@@ -367,14 +367,14 @@ foreach (def in ::Const.Perks.PerkDefObjects)
 	},
 	{
 		Name = "Conduct Seance",
-		Script = "actives/legend_raise_undead",
+		Script = "actives/legend_raise_undead_skill",
 		AdditionalFatigue = 5,
 		AdditionalAP = 0,
 		Count = 0
 	},
 	{
 		Name = "Levitate Person",
-		Script = "actives/legend_levitate_person",
+		Script = "actives/legend_levitate_person_skill",
 		AdditionalFatigue = 0,
 		AdditionalAP = 0,
 		Count = 0
