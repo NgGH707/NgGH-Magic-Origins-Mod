@@ -24,7 +24,7 @@
 		m.BaseProperties.MeleeDefense += 5;
 		getSkills().add(::new("scripts/skills/perks/perk_nggh_spider_tough_carapace"));
 		getSkills().add(::new("scripts/skills/perks/perk_nggh_spider_web"));
-		getSkills().add(::new("scripts/skills/perks/perk_push_the_advantage"));
+		getSkills().add(::new("scripts/skills/perks/perk_legend_push_the_advantage"));
 		getSkills().add(::new("scripts/skills/perks/perk_fearsome"));	
 
 		if (!getSkills().hasSkill("perk.spider_bite")) {
