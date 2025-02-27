@@ -179,10 +179,22 @@ if (!("CharmedUnits" in ::Const))
 		local key = this.getDataByKey(_type, "Names");
 		return key != null && (key in ::Const.Strings) ? ::nggh_deepCopy(::Const.Strings[key]) : null;
 	}
+
+	function getEntityType( _type )
+	{
+		foreach (k, value in ::Const.EntityType)
+		{
+			if (typeof value == "integer" && value == _type)
+				return k;
+		}
+
+		return "NULL";
+	}
 	
 	function getAppearance( _entity )
 	{
 		local ret = [];
+		::logInfo(format("Identifying charmed target: %s - %s - %s"), _entity.ClassName, getEntityType(_entity.getType()), ::Const.Strings.EntityName[_entity.getType()]);
 		::logInfo("Processing sprites need to be copied...");
 		foreach (id in ::Const.CharmedUtilities.SpritesToClone)
 		{
