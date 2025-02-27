@@ -168,7 +168,6 @@ this.nggh_mod_charmed_background <- ::inherit("scripts/skills/backgrounds/charac
 
 		if (entity != null && this.m.TempData != null && ("Appearance" in this.m.TempData) && this.m.TempData.Appearance != null && typeof this.m.TempData.Appearance == "array")
 		{
-			::logInfo("Identifying charmed target: " + ::Const.Strings.EntityName[this.m.CharmID]);
 			::logInfo("Copying sprites to a new charmed slave container...");
 			actor.copySpritesFrom(entity, this.m.TempData.Appearance);
 
