@@ -1,52 +1,46 @@
-::Nggh_MagicConcept.HooksMod.hook("scripts/items/rune_sigils/legend_vala_inscription_token", function(q) 
+::Nggh_MagicConcept.HooksMod.hook("scripts/items/shields/shield", function(q) 
 {
-	q.onUse = @(__original) function( _actor, _item = null )
+  	q.onEquipRuneSigil <- function()
 	{
-		if (__original(_actor, _item))
-			return true;
+		item.onEquipRuneSigil();
 
-		local target;
+		switch(m.RuneVariant)
+		{
+		case 100:
+			addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSH_shielding"));
+			break;
 
-		if (m.RuneVariant == 101 || m.RuneVariant == 104 || m.RuneVariant == 105) {
-			target = _actor.getItems().getItemAtSlot(::Const.ItemSlot.Mainhand);
+		case 101:
+			addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSW_unstable"));
+			break;
 
-			if (target == null || target.getID() == "weapon.nggh_ancient_lich_book")
-				return false;
+		case 102:
+			addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSA_thorns"));
+			break;
+
+		case 103:
+			addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSA_repulsion"));
+			break;
+
+		case 104:
+			addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSW_corrosion"));
+			break;
+
+		case 105:
+			addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSW_lucky"));
+			break;
+
+		case 106:
+			addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSS_brimstone"));
+			break;
+
+		case 107:
+			addSkill(::new("scripts/skills/rune_sigils/nggh_mod_RSH_night_vision"));
+			break;
+
+		default:
+			break;
 		}
-		else if (m.RuneVariant == 100 || m.RuneVariant == 107) {
-			target = _actor.getItems().getItemAtSlot(::Const.ItemSlot.Head);
-
-			if (target == null)
-				return false;
-		}
-		else if (m.RuneVariant == 102 || m.RuneVariant == 103) {
-			target = _actor.getItems().getItemAtSlot(::Const.ItemSlot.Body);
-
-			if (target == null)
-				return false;
-		}
-		else if (m.RuneVariant == 106) {
-			target = _actor.getItems().getItemAtSlot(::Const.ItemSlot.Offhand);
-
-			if (target == null || target.getID().find("shield") == null)
-				return false;
-		}
-		else {
-			return false;
-		}
-
-		::Sound.play("sounds/combat/legend_vala_inscribe.wav");
-		local alreadyRuned = target.isRuned();
-		target.setRuneVariant(m.RuneVariant);
-		target.setRuneBonus1(m.RuneBonus1);
-		target.setRuneBonus2(m.RuneBonus2);
-
-		if (!alreadyRuned)
-			target.updateRuneSigil();
-
-		_actor.getItems().unequip(target);
-		_actor.getItems().equip(target);
-		return true;
 	}
 
 	q.getRuneSigilTooltip <- function()
