@@ -41,7 +41,7 @@
 ::Const.Strings.PerkName.NggHEggBreedingMachine <- "Breeding Machine";
 ::Const.Strings.PerkName.NggHEggInherit <- "Inheritance";
 ::Const.Strings.PerkName.NggHEggNaturalSelection <- "Natural Selection";
-::Const.Strings.PerkName.NggHEggAttachSpider <- "I Need an Uber";
+::Const.Strings.PerkName.NggHEggAttachSpider <- "I Need a Lift";
 // spider
 ::Const.Strings.PerkName.NggH_Spider_Bite <- "Puncturing Bite";
 ::Const.Strings.PerkName.NggH_Spider_Venom <- "Poison Mastery";
@@ -348,7 +348,7 @@
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Hatched spiderlings have higher raw stats than those hatched before them.";
 
-::Const.Strings.PerkDescription.NggHEggAttachSpider <- "\'It is sad when you do not have legs. Wishing for a pairs of leg would be asking too much. Well!!! At least you can ask your spider friends or from your own offsprings for an Uber ride.\'"
+::Const.Strings.PerkDescription.NggHEggAttachSpider <- "\'It is sad when you do not have legs. Wishing for a pairs of leg would be asking too much. Well!!! At least you can ask your spider friends for a ride.\'"
 	+ "\n\n[color=" + ::Const.UI.Color.Passive + "][u]Passive:[/u][/color]"
 		+ "\n• Gains the ability to mount on Spiders or certain creatures such as Wardogs, Warhounds, Wolves.";
 // spider
