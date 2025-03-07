@@ -194,7 +194,7 @@ if (!("CharmedUnits" in ::Const))
 	function getAppearance( _entity )
 	{
 		local ret = [];
-		::logInfo(format("Identifying charmed target: %s - %s - %s"), _entity.ClassName, getEntityType(_entity.getType()), ::Const.Strings.EntityName[_entity.getType()]);
+		::logInfo(format("Identifying charmed target: %s - %s - %s", _entity.ClassName, this.getEntityType(_entity.getType()), ::Const.Strings.EntityName[_entity.getType()]));
 		::logInfo("Processing sprites need to be copied...");
 		foreach (id in ::Const.CharmedUtilities.SpritesToClone)
 		{
