@@ -42,13 +42,13 @@ this.perk_nggh_serpent_venom <- ::inherit("scripts/skills/skill", {
 			poison = ::new("scripts/skills/effects/spider_poison_effect");
 			poison.m.IsStacking = false;
 			poison.setDamage(20);
-			poison.setActorID(this.getContainer().getActor().getID());
+			poison.setActor(this.getContainer().getActor());
 			_targetEntity.getSkills().add(poison);
 			poison.m.TurnsLeft = 1;
 			return;
 		}
 		
-		poison.setActorID(id);
+		poison.setActor(this.getContainer().getActor());
 
 		if (poison.getDamage() < 20)
 		{
