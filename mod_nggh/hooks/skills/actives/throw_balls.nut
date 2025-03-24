@@ -14,12 +14,13 @@
 			}
 		}
 
-		ret.insert(i, {
-			id = 7,
-			type = "text",
-			icon = "ui/icons/special.png",
-			text = "Has a [color=" + ::Const.UI.Color.PositiveValue + "]" + m.StaggerChance + "%[/color] chance to stagger on a hit"
-		});
+		if (find != null)
+			ret.insert(find, {
+				id = 7,
+				type = "text",
+				icon = "ui/icons/special.png",
+				text = "Has a [color=" + ::Const.UI.Color.PositiveValue + "]" + m.StaggerChance + "%[/color] chance to stagger on a hit"
+			});
 
 		return ret;
 	}
