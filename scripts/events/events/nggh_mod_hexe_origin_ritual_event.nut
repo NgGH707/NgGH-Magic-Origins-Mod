@@ -324,7 +324,7 @@ this.nggh_mod_hexe_origin_ritual_event <- ::inherit("scripts/events/event", {
 
 		this.m.Screens.push({
 			ID = "Ambush",
-			Text = "[img]gfx/ui/events/event_43.png[/img]%SPEECH_START%That\'s it! We catch you red handed, witch. Burn her! Hang her! Don\'t let her bring her malice curse to our town.\"[/color] A man shouts.\n\nWell-armed men starts to pour out from all side, they must be witch hunters hired by %town%. %hexe% silently thinks.%SPEECH_ON%Those bastards surely want me dead and at a time likes this.%SPEECH_OFF%",
+			Text = "[img]gfx/ui/events/event_43.png[/img]%SPEECH_START%That\'s it! We catch you red handed, witch. Burn her! Hang her! Don\'t let her bring her malice curse to our town.\"%SPEECH_OFF% A man shouts.\n\nWell-armed men starts to pour out from all side, they must be witch hunters hired by %town%. %hexe% silently thinks.%SPEECH_ON%Those bastards surely want me dead and at a time likes this.%SPEECH_OFF%",
 			Image = "",
 			List = [],
 			Characters = [],
