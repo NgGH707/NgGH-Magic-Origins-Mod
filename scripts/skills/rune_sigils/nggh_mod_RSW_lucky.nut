@@ -1,37 +1,29 @@
-this.nggh_mod_RSW_lucky <- ::inherit("scripts/skills/skill", {
+nggh_mod_RSW_lucky <- ::inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false
 	},
 	function create()
 	{
-		this.m.ID = "special.mod_RSW_lucky";
-		this.m.Name = "Rune Sigil: Lucky";
-		this.m.Description = "Rune Sigil: Lucky";
-		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";
-		this.m.Type = ::Const.SkillType.Special | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.VeryLast;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = true;
-		this.m.IsSerialized = false;
+		::Legends.Effects.onCreate(this, ::Legends.Effect.NgGHRswLucky);
+		m.Description = "Rune Sigil: Lucky";
+		m.Icon = "ui/rune_sigils/legend_rune_sigil.png";
+		m.Type = ::Const.SkillType.Special | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.VeryLast;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = true;
 	}
 
 	function onTargetKilled( _targetEntity, _skill )
 	{
-		if (this.m.IsForceEnabled)
-		{
-		}
-		else if (this.getItem() == null || _targetEntity.getXPValue() <= 0)
-		{
+		if (!m.IsForceEnabled && (this.getItem() == null || _targetEntity.getXPValue() <= 0))
 			return;
-		}
 
 		local actor = this.getContainer().getActor();
 		local chance = ::Math.min(100, ::Math.floor(_targetEntity.getXPValue() / ::Const.LuckyRuneChanceModifier));
 		local rolled = ::Math.rand(1, 100);
 		
-		if (rolled > chance)
-		{
+		if (rolled > chance) {
 			::Tactical.EventLog.log("Hope you get lucky next time " + " (Chance: " + chance + ", Rolled: " + rolled + ")");
 			return;
 		}

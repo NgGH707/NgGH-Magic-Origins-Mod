@@ -1,36 +1,28 @@
-this.nggh_mod_RSS_brimstone <- ::inherit("scripts/skills/skill", {
+nggh_mod_RSS_brimstone <- ::inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false,
 	},
 	function create()
 	{
-		this.m.ID = "special.mod_RSS_brimstone";
-		this.m.Name = "Rune Sigil: Brimstone";
-		this.m.Description = "Rune Sigil: Brimstone";
-		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";
-		this.m.Type = ::Const.SkillType.Special | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.VeryLast;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = true;
-		this.m.IsSerialized = false;
+		::Legends.Effects.onCreate(this, ::Legends.Effect.NgGHRssBrimstone);
+		m.Description = "Rune Sigil: Brimstone";
+		m.Icon = "ui/rune_sigils/legend_rune_sigil.png";
+		m.Type = ::Const.SkillType.Special | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.VeryLast;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = true;
 	}
 
 	function onAfterUpdate( _properties )
 	{
-		if (this.m.IsForceEnabled)
-		{
-		}
-		else if (this.getItem() == null)
-		{
+		if (!m.IsForceEnabled && ::MSU.isNull(getItem()))
 			return;
-		}
 
 		_properties.IsImmuneToFire = true;
-		local actor = this.getContainer().getActor();
+		local actor = getContainer().getActor();
 
-		if (actor.isPlacedOnMap())
-		{
+		if (actor.isPlacedOnMap()) {
 			local myTile = actor.getTile();
 			local type = [
 				"legend_firefield",
@@ -39,8 +31,7 @@ this.nggh_mod_RSS_brimstone <- ::inherit("scripts/skills/skill", {
 				"legend_holyflame",
 			];
 
-			if (myTile.Properties.Effect != null && type.find(myTile.Properties.Effect.Type) != null)
-			{
+			if (myTile.Properties.Effect != null && type.find(myTile.Properties.Effect.Type) != null) {
 				_properties.FatigueRecoveryRate += 10;
 				_properties.DamageReceivedRegularMult *= 0.85;
 			}

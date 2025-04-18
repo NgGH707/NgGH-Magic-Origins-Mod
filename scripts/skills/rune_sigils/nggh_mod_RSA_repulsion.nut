@@ -1,30 +1,23 @@
-this.nggh_mod_RSA_repulsion <- ::inherit("scripts/skills/skill", {
+nggh_mod_RSA_repulsion <- ::inherit("scripts/skills/skill", {
 	m = {
 		IsForceEnabled = false
 	},
 	function create()
 	{
-		this.m.ID = "special.mod_RSA_repulsion";
-		this.m.Name = "Rune Sigil: Repulsion";
-		this.m.Description = "Rune Sigil: Repulsion";
-		this.m.Icon = "ui/rune_sigils/legend_rune_sigil.png";
-		this.m.Type = ::Const.SkillType.Special | ::Const.SkillType.StatusEffect;
-		this.m.Order = ::Const.SkillOrder.VeryLast;
-		this.m.IsActive = false;
-		this.m.IsStacking = false;
-		this.m.IsHidden = true;
-		this.m.IsSerialized = false;
+		::Legends.Effects.onCreate(this, ::Legends.Effect.NgGHRsaRepulsion);
+		m.Description = "Rune Sigil: Repulsion";
+		m.Icon = "ui/rune_sigils/legend_rune_sigil.png";
+		m.Type = ::Const.SkillType.Special | ::Const.SkillType.StatusEffect;
+		m.Order = ::Const.SkillOrder.VeryLast;
+		m.IsActive = false;
+		m.IsStacking = false;
+		m.IsHidden = true;
 	}
 
 	function onAfterUpdate( _properties )
 	{
-		if (this.m.IsForceEnabled)
-		{
-		}
-		else if (this.getItem() == null)
-		{
+		if (!m.IsForceEnabled && ::MSU.isNull(getItem()))
 			return;
-		}
 
 		_properties.IsImmuneToKnockBackAndGrab = true;
 	}
@@ -32,38 +25,25 @@ this.nggh_mod_RSA_repulsion <- ::inherit("scripts/skills/skill", {
 	function onDamageReceived( _attacker, _damageHitpoints, _damageArmor )
 	{
 		if (_attacker == null)
-		{
 			return;
-		}
 
-		if (this.m.IsForceEnabled)
-		{
-		}
-		else if (this.getItem() == null)
-		{
+		if (!m.IsForceEnabled && ::MSU.isNull(getItem()))
 			return;
-		}
 
 		if (!_attacker.isAlive() || _attacker.isDying())
-		{
 			return;
-		}
 
 		local actor = this.getContainer().getActor()
 
 		if (_attacker.getID() == actor.getID())
-		{
 			return;
-		}
 
 		if (_damageArmor > 0 && ::Math.rand(1, 100) <= 50)
 		{
 			local knockToTile = this.findTileToKnockBackTo(actor.getTile(), _attacker.getTile());
 
 			if (knockToTile == null)
-			{
 				return;
-			}
 
 			this.applyFatigueDamage(_attacker, 10);
 
@@ -113,47 +93,36 @@ this.nggh_mod_RSA_repulsion <- ::inherit("scripts/skills/skill", {
 	function onKnockedDown( _entity, _tag )
 	{
 		if (_tag.HitInfo.DamageRegular != 0)
-		{
 			_entity.onDamageReceived(_tag.Attacker, _tag.Skill, _tag.HitInfo);
-		}
 	}
 
 	function findTileToKnockBackTo( _userTile, _targetTile )
 	{
 		local dir = _userTile.getDirectionTo(_targetTile);
 
-		if (_targetTile.hasNextTile(dir))
-		{
+		if (_targetTile.hasNextTile(dir)) {
 			local knockToTile = _targetTile.getNextTile(dir);
 
 			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1)
-			{
 				return knockToTile;
-			}
 		}
 
 		local altdir = dir - 1 >= 0 ? dir - 1 : 5;
 
-		if (_targetTile.hasNextTile(altdir))
-		{
+		if (_targetTile.hasNextTile(altdir)) {
 			local knockToTile = _targetTile.getNextTile(altdir);
 
 			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1)
-			{
 				return knockToTile;
-			}
 		}
 
 		altdir = dir + 1 <= 5 ? dir + 1 : 0;
 
-		if (_targetTile.hasNextTile(altdir))
-		{
+		if (_targetTile.hasNextTile(altdir)) {
 			local knockToTile = _targetTile.getNextTile(altdir);
 
 			if (knockToTile.IsEmpty && knockToTile.Level - _targetTile.Level <= 1)
-			{
 				return knockToTile;
-			}
 		}
 
 		return null;
