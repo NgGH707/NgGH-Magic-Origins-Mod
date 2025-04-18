@@ -32,7 +32,7 @@
 				id = 6,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text =  "Each enemy within [color=" + ::Const.UI.Color.PositiveValue + "]" + getMaxRange() + "[/color] tiles radius has a [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color] chance to to be struck by lightning"
+				text =  "Each enemy within [color=" + ::Const.UI.Color.PositiveValue + "]" + getMaxRange() + "[/color] tiles radius has a [color=" + ::Const.UI.Color.PositiveValue + "]15%[/color] chance to be struck by lightning"
 			}
 		]);
 		return ret;

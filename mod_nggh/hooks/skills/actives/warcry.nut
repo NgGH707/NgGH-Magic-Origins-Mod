@@ -45,7 +45,7 @@
 				id = 7,
 				type = "text",
 				icon = "ui/icons/special.png",
-				text = "Removes \'Sleeping\'' status effect of anyone within range"
+				text = "Removes \'Sleeping\' status effect of anyone within range"
 			}
 		]);
 		
