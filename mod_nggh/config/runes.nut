@@ -1,3 +1,74 @@
+// rune effects
+local effectsDefs = [];
+
+::Legends.Effect.NgGHRswCorrosion <- null;
+effectsDefs.push({
+	ID = "special.mod_RSW_corrosion",
+	Script = "scripts/skills/rune_sigils/nggh_mod_RSW_corrosion",
+	Name = "Rune Sigil: Corrosion",
+	Const = "NgGHRswCorrosion"
+});
+
+::Legends.Effect.NgGHRswLucky <- null;
+effectsDefs.push({
+	ID = "special.mod_RSW_lucky",
+	Script = "scripts/skills/rune_sigils/nggh_mod_RSW_lucky",
+	Name = "Rune Sigil: Lucky",
+	Const = "NgGHRswLucky"
+});
+
+::Legends.Effect.NgGHRswUnstable <- null;
+effectsDefs.push({
+	ID = "special.mod_RSW_unstable",
+	Script = "scripts/skills/rune_sigils/nggh_mod_RSW_unstable",
+	Name = "Rune Sigil: Unstable",
+	Const = "NgGHRswUnstable"
+});
+
+::Legends.Effect.NgGHRshNightVision <- null;
+effectsDefs.push({
+	ID = "special.mod_RSH_night_vision",
+	Script = "scripts/skills/rune_sigils/nggh_mod_RSH_night_vision",
+	Name = "Rune Sigil: Night Vision",
+	Const = "NgGHRshNightVision"
+});
+
+::Legends.Effect.NgGHRsaRepulsion <- null;
+effectsDefs.push({
+	ID = "special.mod_RSA_repulsion",
+	Script = "scripts/skills/rune_sigils/nggh_mod_RSA_repulsion",
+	Name = "Rune Sigil: Repulsion",
+	Const = "NgGHRsaRepulsion"
+});
+
+::Legends.Effect.NgGHRshShielding <- null;
+effectsDefs.push({
+	ID = "special.magic_shield",
+	Script = "scripts/skills/rune_sigils/nggh_mod_RSH_shielding",
+	Name = "Magic Barrier",
+	Const = "NgGHRshShielding"
+});
+
+::Legends.Effect.NgGHRsaThorns <- null;
+effectsDefs.push({
+	ID = "special.mod_RSA_thorns",
+	Script = "scripts/skills/rune_sigils/nggh_mod_RSA_thorns",
+	Name = "Rune Sigil: Thorns",
+	Const = "NgGHRsaThorns"
+});
+
+::Legends.Effect.NgGHRssBrimstone <- null;
+effectsDefs.push({
+	ID = "effects.mod_RSS_brimstone",
+	Script = "scripts/skills/rune_sigils/nggh_mod_RSS_brimstone",
+	Name = "Rune Sigil: Brimstone",
+	Const = "NgGHRssBrimstone"
+});
+
+::Legends.Effects.addEffectDefObjects(effectsDefs);
+
+
+// rune defs
 ::Legends.Rune.NgGHRswCorrosion <- ::Legends.Runes.add({
 	ItemType = ::Legends.Runes.Target.Weapon,
 	Name = "Weapon Rune Sigil: Corrosion",
@@ -133,73 +204,3 @@
 		return "This item has the power of the rune sigil of Brimstone:\n[color=" + ::Const.UI.Color.PositiveValue + "]Immune[/color] to fire, gain [color=" + ::Const.UI.Color.NegativeValue + "]+10[/color] Fatigue recovery per turn and a slight damage reduction while standing on fire.";
 	}
 });
-
-
-// rune effects
-local effectsDefs = [];
-
-::Legends.Effect.NgGHRswCorrosion <- null;
-effectsDefs.push({
-	ID = "special.mod_RSW_corrosion",
-	Script = "scripts/skills/rune_sigils/nggh_mod_RSW_corrosion",
-	Name = "Rune Sigil: Corrosion",
-	Const = "NgGHRswCorrosion"
-});
-
-::Legends.Effect.NgGHRswLucky <- null;
-effectsDefs.push({
-	ID = "special.mod_RSW_lucky",
-	Script = "scripts/skills/rune_sigils/nggh_mod_RSW_lucky",
-	Name = "Rune Sigil: Lucky",
-	Const = "NgGHRswLucky"
-});
-
-::Legends.Effect.NgGHRswUnstable <- null;
-effectsDefs.push({
-	ID = "special.mod_RSW_unstable",
-	Script = "scripts/skills/rune_sigils/nggh_mod_RSW_unstable",
-	Name = "Rune Sigil: Unstable",
-	Const = "NgGHRswUnstable"
-});
-
-::Legends.Effect.NgGHRshNightVision <- null;
-effectsDefs.push({
-	ID = "special.mod_RSH_night_vision",
-	Script = "scripts/skills/rune_sigils/nggh_mod_RSH_night_vision",
-	Name = "Rune Sigil: Night Vision",
-	Const = "NgGHRshNightVision"
-});
-
-::Legends.Effect.NgGHRsaRepulsion <- null;
-effectsDefs.push({
-	ID = "special.mod_RSA_repulsion",
-	Script = "scripts/skills/rune_sigils/nggh_mod_RSA_repulsion",
-	Name = "Rune Sigil: Repulsion",
-	Const = "NgGHRsaRepulsion"
-});
-
-::Legends.Effect.NgGHRshShielding <- null;
-effectsDefs.push({
-	ID = "special.magic_shield",
-	Script = "scripts/skills/rune_sigils/nggh_mod_RSH_shielding",
-	Name = "Magic Barrier",
-	Const = "NgGHRshShielding"
-});
-
-::Legends.Effect.NgGHRsaThorns <- null;
-effectsDefs.push({
-	ID = "special.mod_RSA_thorns",
-	Script = "scripts/skills/rune_sigils/nggh_mod_RSA_thorns",
-	Name = "Rune Sigil: Thorns",
-	Const = "NgGHRsaThorns"
-});
-
-::Legends.Effect.NgGHRssBrimstone <- null;
-effectsDefs.push({
-	ID = "effects.mod_RSS_brimstone",
-	Script = "scripts/skills/rune_sigils/nggh_mod_RSS_brimstone",
-	Name = "Rune Sigil: Brimstone",
-	Const = "NgGHRssBrimstone"
-});
-
-::Legends.Effects.addEffectDefObjects(effectsDefs);
