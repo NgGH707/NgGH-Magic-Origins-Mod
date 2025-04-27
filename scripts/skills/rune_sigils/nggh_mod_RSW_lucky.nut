@@ -5,7 +5,7 @@ nggh_mod_RSW_lucky <- ::inherit("scripts/skills/skill", {
 	function create()
 	{
 		::Legends.Effects.onCreate(this, ::Legends.Effect.NgGHRswLucky);
-		m.Description = "Rune Sigil: Lucky";
+		m.Description = "Rune Sigil: Fortune";
 		m.Icon = "ui/rune_sigils/legend_rune_sigil.png";
 		m.Type = ::Const.SkillType.Special | ::Const.SkillType.StatusEffect;
 		m.Order = ::Const.SkillOrder.VeryLast;
@@ -42,7 +42,7 @@ nggh_mod_RSW_lucky <- ::inherit("scripts/skills/skill", {
 		tile.Items.push(item);
 		tile.IsContainingItems = true;
 		item.m.Tile = tile;
-		::Tactical.EventLog.logEx("[color=" + ::Const.UI.Color.NegativeValue + "]Wow!!![/color] you get [color=#0b0084]" + item.getName() + "[/color] as a drop from " + ::Const.UI.getColorizedEntityName(actor) + "\'s Lucky rune");
+		::Tactical.EventLog.logEx("[color=" + ::Const.UI.Color.NegativeValue + "]Wow!!![/color] you get [color=#0b0084]" + item.getName() + "[/color] as a drop from " + ::Const.UI.getColorizedEntityName(actor) + "\'s Fortune rune");
 	}
 
 });

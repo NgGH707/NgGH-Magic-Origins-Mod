@@ -88,7 +88,7 @@ effectsDefs.push({
 
 ::Legends.Rune.NgGHRswLucky <- ::Legends.Runes.add({
 	ItemType = ::Legends.Runes.Target.Weapon,
-	Name = "Weapon Rune Sigil: Lucky",
+	Name = "Weapon Rune Sigil: Fortune",
 	Description = "An inscribed rock that can be attached to a character\'s weapon.",
 	Icon = "rune_sigils/rune_stone_1.png",
 	IconLarge = "rune_sigils/rune_stone_1.png",
@@ -96,10 +96,10 @@ effectsDefs.push({
 	Script = "scripts/items/rune_sigils/legend_vala_inscription_token",
 	setRuneBonus = function(_item, _bonus) {},
 	getTooltip = function(_item) {
-		return "This item has the power of the rune sigil of Lucky:\nKilled enemy has [color=" + ::Const.UI.Color.PositiveValue + "](XP / " + ::Const.LuckyRuneChanceModifier + ")%[/color] to drop a random item, you may get a free named item if you are super lucky!";
+		return "This item has the power of the rune sigil of Fortune:\nKilled enemy has [color=" + ::Const.UI.Color.PositiveValue + "](XP / " + ::Const.LuckyRuneChanceModifier + ")%[/color] to drop a random item, you may get a free named item if you are super lucky!";
 	}
 	getRuneTooltip = function (_item) {
-		return "This item has the power of the rune sigil of Lucky:\nKilled enemy has [color=" + ::Const.UI.Color.PositiveValue + "](XP / " + ::Const.LuckyRuneChanceModifier + ")%[/color] to drop a random item, you may get a free named item if you are super lucky!";
+		return "This item has the power of the rune sigil of Fortune:\nKilled enemy has [color=" + ::Const.UI.Color.PositiveValue + "](XP / " + ::Const.LuckyRuneChanceModifier + ")%[/color] to drop a random item, you may get a free named item if you are super lucky!";
 	}
 });
 
