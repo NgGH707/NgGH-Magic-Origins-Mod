@@ -2,7 +2,6 @@ this.nggh_mod_rune_repulsion <- ::inherit("scripts/items/legend_armor/legend_arm
 	m = {},
 	function create()
 	{
-		this.m.RuneVariant = 103;
 		this.legend_armor_upgrade.create();
 		this.m.ID = "legend_armor_upgrade.legend_rune_repulsion";
 		this.m.Type = ::Const.Items.ArmorUpgrades.Rune;
@@ -19,6 +18,8 @@ this.nggh_mod_rune_repulsion <- ::inherit("scripts/items/legend_armor/legend_arm
 		this.m.SpriteDamagedBack = "";
 		this.m.SpriteCorpseFront = "";
 		this.m.SpriteCorpseBack = "";
+		this.setRuneVariant(::Legends.Rune.NgGHRsaRepulsion);
+		this.setRuneBonus(false);
 		this.m.Value = 1200;
 	}
 

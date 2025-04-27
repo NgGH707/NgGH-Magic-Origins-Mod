@@ -2,7 +2,6 @@ this.nggh_mod_rune_shielding <- ::inherit("scripts/items/legend_helmets/legend_h
 	m = {},
 	function create()
 	{
-		this.m.RuneVariant = 100;
 		this.legend_helmet_upgrade.create();
 		this.m.ID = "legend_helmet_upgrade.legend_rune_shielding";
 		this.m.Type = ::Const.Items.HelmetUpgrades.Rune;
@@ -14,6 +13,8 @@ this.nggh_mod_rune_shielding <- ::inherit("scripts/items/legend_helmets/legend_h
 		this.m.OverlayIcon = "layers/glow_runed_icon.png";
 		this.m.OverlayIconLarge = "layers/glow_runed_icon.png";
 		this.m.Sprite = "bust_legend_helmet_runed";
+		this.setRuneVariant(::Legends.Rune.NgGHRshShielding);
+		this.setRuneBonus(false);
 		this.m.Value = 1200;
 	}
 

@@ -2,7 +2,6 @@ this.nggh_mod_rune_night_vision <- ::inherit("scripts/items/legend_helmets/legen
 	m = {},
 	function create()
 	{
-		this.m.RuneVariant = 107;
 		this.legend_helmet_upgrade.create();
 		this.m.ID = "legend_helmet_upgrade.legend_rune_night_vision";
 		this.m.Type = ::Const.Items.HelmetUpgrades.Rune;
@@ -14,6 +13,8 @@ this.nggh_mod_rune_night_vision <- ::inherit("scripts/items/legend_helmets/legen
 		this.m.OverlayIcon = "layers/glow_runed_icon.png";
 		this.m.OverlayIconLarge = "layers/glow_runed_icon.png";
 		this.m.Sprite = "bust_legend_helmet_runed";
+		this.setRuneVariant(::Legends.Rune.NgGHRshNightVision);
+		this.setRuneBonus(false);
 		this.m.Value = 1200;
 	}
 

@@ -2,7 +2,6 @@ this.nggh_mod_rune_thorns <- ::inherit("scripts/items/legend_armor/legend_armor_
 	m = {},
 	function create()
 	{
-		this.m.RuneVariant = 102;
 		this.legend_armor_upgrade.create();
 		this.m.ID = "legend_armor_upgrade.legend_rune_thorns";
 		this.m.Type = ::Const.Items.ArmorUpgrades.Rune;
@@ -19,6 +18,8 @@ this.nggh_mod_rune_thorns <- ::inherit("scripts/items/legend_armor/legend_armor_
 		this.m.SpriteDamagedBack = "";
 		this.m.SpriteCorpseFront = "";
 		this.m.SpriteCorpseBack = "";
+		this.setRuneVariant(::Legends.Rune.NgGHRsaThorns);
+		this.setRuneBonus(false);
 		this.m.Value = 1200;
 	}
 
