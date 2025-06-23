@@ -8,7 +8,7 @@
 
 		foreach (i, tooltip in ret)
 		{
-			if (tooltip.type == "text" && tooltip.id = 8) {
+			if (tooltip.type == "text" && tooltip.id == 8) {
 				find = i;
 				break;
 			}
