@@ -561,7 +561,7 @@ for (local i = 0; i < ::Const.EntityIcon.len(); ++i)
 	function onBuildPerkTree() {
 		if (::Is_PTR_Exist) addPerkGroup(::Const.Perks.TwoHandedTree.Tree);
 
-		addPerkGroup(::Const.Perks.GreatSwordTree.Tree);
+		addPerkGroup(::Const.Perks.SwordTree.Tree);
 	}
 
 	function onfillTalentsValues( _talents ) {
@@ -2584,7 +2584,7 @@ for (local i = 0; i < ::Const.EntityIcon.len(); ++i)
 			addPerk(::Const.Perks.PerkDefs.BFFencer, 6);
 		}
 
-		addPerkGroup(::Const.Perks.GreatSwordTree.Tree);
+		addPerkGroup(::Const.Perks.SwordTree.Tree);
 		addPerkGroup(::Const.Perks.SwordTree.Tree);
 	},
 
