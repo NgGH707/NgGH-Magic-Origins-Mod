@@ -26,9 +26,9 @@
 		m.Items.unequip(m.Items.getItemAtSlot(::Const.ItemSlot.Mainhand));
 		m.Items.equip(::new("scripts/items/weapons/named/" + ::MSU.Array.rand([
 			"named_heavy_rusty_axe",
-			"named_orc_axe_2h",
-			"named_orc_flail_2h",
-			"named_orc_axe"
+            "legend_named_orc_axe_2h",
+            "legend_named_orc_flail_2h",
+            "named_orc_axe"
 		])));
 
 		local head = m.Items.getItemAtSlot(::Const.ItemSlot.Head);
