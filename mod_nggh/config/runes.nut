@@ -45,7 +45,7 @@ effectsDefs.push({
 effectsDefs.push({
 	ID = "special.magic_shield",
 	Script = "scripts/skills/rune_sigils/nggh_mod_RSH_shielding",
-	Name = "Magic Barrier",
+	Name = "Rune Sigil: Shielding",
 	Const = "NgGHRshShielding"
 });
 
