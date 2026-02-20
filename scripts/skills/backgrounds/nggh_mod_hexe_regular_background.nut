@@ -1,7 +1,7 @@
 this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/nggh_mod_hexe_background", {
 	m = {},
-	function create()
-	{
+
+	function create() {
 		this.nggh_mod_hexe_background.create();
 		this.m.ID = "background.hexe";
 		this.m.Name = "Hexe";
@@ -11,11 +11,11 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 		this.m.Level = ::Math.rand(2, 5);
 		this.addBackgroundType(::Const.BackgroundType.Outlaw);
 		this.m.Modifiers.Enchanting = 0.67;
-		
+
 		this.m.PerkTreeDynamic = {
 			Weapon = [
 				::Const.Perks.DaggerTree,
-				::Const.Perks.StaffTree,
+				::Const.Perks.PolearmTree,
 			],
 			Defense = [
 				::Const.Perks.LightArmorTree
@@ -27,10 +27,15 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 			],
 			Enemy = [],
 			Class = [],
+			Profession = [],
 			Magic = []
 		};
 
-		this.m.PerkTreeDynamic.Class.push(::MSU.Array.rand([::Const.Perks.ChefClassTree, ::Const.Perks.BardClassTree]));
+		if (::Math.rand(0, 1) == 0) {
+			this.m.PerkTreeDynamic.Profession.push(::Const.Perks.ChefProfessionTree);
+		} else {
+			this.m.PerkTreeDynamic.Magic.push(::Const.Perks.BardMagicTree);
+		}
 
 		if (::Is_PTR_Exist) {
 			this.m.PerkTreeDynamic = {
@@ -44,7 +49,7 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 					::Const.Perks.LightArmorTree
 				],
 				Weapon = [
-					::Const.Perks.StaffTree,
+					::Const.Perks.PolearmTree,
 				],
 				Profession = [
 					::Const.Perks.ApothecaryProfessionTree,
@@ -56,21 +61,21 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 				Magic = []
 			};
 
-			if (::Math.rand(1, 100) <= 25)
+			if (::Math.rand(1, 100) <= 25) {
 				this.m.PerkTreeDynamic.Weapon.push(::Const.Perks.SlingTree);
+			}
 		}
 	}
-	
-	function onAdded()
-	{
-		if (this.m.IsNew)
+
+	function onAdded() {
+		if (this.m.IsNew) {
 			getContainer().getActor().getFlags().add("isBonus");
-		
+		}
+
 		this.nggh_mod_hexe_background.onAdded();
 	}
 
-	function setupSoundSettings()
-	{
+	function setupSoundSettings() {
 		local actor = this.getContainer().getActor();
 		actor.m.Sound[::Const.Sound.ActorEvent.NoDamageReceived] = [
 			"sounds/enemies/dlc2/hexe_idle_06.wav",
@@ -155,40 +160,36 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 		this.nggh_mod_hexe_background.setupSoundSettings();
 	}
 
-	function setupDefaultSkills()
-	{
+	function setupDefaultSkills() {
 		this.getContainer().add(::new("scripts/skills/hexe/nggh_mod_hex_spell"));
 		this.getContainer().add(::new("scripts/skills/hexe/nggh_mod_charm_spell"));
 		this.getContainer().add(::new("scripts/skills/hexe/nggh_mod_charm_captive_spell"));
 	}
 
-	function getMagicalDefense()
-	{
+	function getMagicalDefense() {
 		return ::Math.max(1, this.nggh_mod_hexe_background.getMagicalDefense() / 2);
 	}
 
-	function getTooltip()
-	{
+	function getTooltip() {
 		local ret = this.nggh_mod_hexe_background.getTooltip();
 
-		if (::World.Flags.get("IsLuftAdventure"))
+		if (::World.Flags.get("IsLuftAdventure")) {
 			ret.insert(3, {
 				id = 4,
 				type = "text",
 				icon = "ui/icons/health.png",
 				text = "[color=" + ::Const.UI.Color.PositiveValue + "]Member of Nacho fanclub[/color]"
 			});
+		}
 
 		return ret;
 	}
 
-	function onBuildDescription()
-	{
+	function onBuildDescription() {
 		return "The Hexe is a malevolent old crone living in swamps and forests outside of villages alone or in a coven with other Hexen. They’re human, but have long sacrificed their humanity for otherworldly powers. They’re feared, but also worshiped by some. They’re burned at the stake, and yet people seek them out to plead for miracles. They lure and abduct little children to make broth and concoctions out of, they strike terrible pacts with villagers to receive their firstborn, they weave curses and cast hexes. Their huts may or may not be made of candy. With her sorcery, a Hexe can enthrall wild beasts, and even warp the mind of humans, and so will often be found in the company of creatures that serve her";
 	}
 
-	function randomizeStartingStats( _properties )
-	{
+	function randomizeStartingStats(_properties) {
 		_properties.ActionPoints = 9;
 		_properties.Hitpoints = ::Math.rand(50, 55);
 		_properties.Bravery = ::Math.rand(51, 65);
@@ -200,8 +201,7 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 		_properties.Initiative = ::Math.rand(91, 111);
 	}
 
-	function onAddEquipment()
-	{
+	function onAddEquipment() {
 		local items = this.getContainer().getActor().getItems();
 		items.equip(::Const.World.Common.pickArmor([
 			[1, "thick_dark_tunic"]
@@ -214,18 +214,15 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 		]));
 	}
 
-	function onNewDay()
-	{
+	function onNewDay() {
 		local stash = ::World.Assets.getStash();
 
-		if (stash.getNumberOfEmptySlots() > 0 && ::Math.rand(1, 100) <= 10)
-		{
+		if (stash.getNumberOfEmptySlots() > 0 && ::Math.rand(1, 100) <= 10) {
 			stash.add(::new("scripts/items/misc/witch_hair_item"));
 		}
 	}
 
-	function onFinishingPerkTree()
-	{
+	function onFinishingPerkTree() {
 		this.addPerk(::Const.Perks.PerkDefs.LegendMagicMissile);
 		this.addPerk(::Const.Perks.PerkDefs.LegendMagicMissileFocus, 3);
 		this.addPerk(::Const.Perks.PerkDefs.LegendMagicMissileMastery, 6);
@@ -239,9 +236,7 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 		this.addPerk(::Const.Perks.PerkDefs.NggHCharmNudist, 4);
 		this.addPerk(::Const.Perks.PerkDefs.NggHCharmSpec, 6);
 
-
-		if (::Math.rand(1, 100) <= 15)
-		{
+		if (::Math.rand(1, 100) <= 15) {
 			this.addPerk(::Const.Perks.PerkDefs.NggHCharmAppearance, 6);
 		}
 
@@ -270,9 +265,9 @@ this.nggh_mod_hexe_regular_background <- ::inherit("scripts/skills/backgrounds/n
 		]), 2);
 		*/
 
-		if (::Math.rand(1, 100) >= 95)
+		if (::Math.rand(1, 100) >= 95) {
 			this.addPerk(::Const.Perks.PerkDefs.NggHMiscFairGame, 2);
+		}
 	}
 
 });
-

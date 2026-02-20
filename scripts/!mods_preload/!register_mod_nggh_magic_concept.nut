@@ -1,7 +1,7 @@
 ::Nggh_MagicConcept <- {
 	ID = "mod_nggh_magic_concept",
 	Name = "NgGH\'s Magic Concept",
-	Version = "3.0.0-beta.89",
+	Version = "3.0.0-beta.90",
 	ForceWhipPerk = false,
 	Class = {},
 };
@@ -9,10 +9,10 @@
 ::Nggh_MagicConcept.HooksMod <- ::Hooks.register(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, "NecrOwO\'s Forbidden Magic");
 
 // mods need to run this mod
-::Nggh_MagicConcept.HooksMod.require(["mod_msu >= 1.2.7", "mod_legends >= 19.0.0"]);
+::Nggh_MagicConcept.HooksMod.require(["mod_msu >= 1.2.7", "mod_legends >= 19.3.0-alpha1"]);
 
 // this queue is to load the mod
-::Nggh_MagicConcept.HooksMod.queue([">mod_msu", ">mod_legends"], function() {
+::Nggh_MagicConcept.HooksMod.queue([">mod_msu", ">mod_legends"], function () {
 	// define mod class of this mod
 	::Nggh_MagicConcept.Mod <- ::MSU.Class.Mod(::Nggh_MagicConcept.ID, ::Nggh_MagicConcept.Version, ::Nggh_MagicConcept.Name);
 
@@ -30,7 +30,7 @@
 	::Is_PlanYourPerks_Exist <- ::Hooks.hasMod("mod_plan_perks");
 	::Is_AccessoryCompanions_Exist <- ::Hooks.hasMod("mod_AC");
 
-	// set up mod settings 
+	// set up mod settings
 	::Nggh_MagicConcept.mod_settings();
 	::Nggh_MagicConcept.secret_contents();
 
@@ -38,7 +38,7 @@
 	::include("mod_nggh/load.nut");
 });
 
-::Nggh_MagicConcept.HooksMod.queue([">mod_msu", ">mod_legends"], function() {
+::Nggh_MagicConcept.HooksMod.queue([">mod_msu", ">mod_legends"], function () {
 	::include("mod_nggh/config/charmed_units.nut"); // read this last
 	//::nggh_processingEntries();
 	//::nggh_overwriteEntries();

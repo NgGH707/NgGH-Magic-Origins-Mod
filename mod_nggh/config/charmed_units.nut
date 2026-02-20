@@ -2008,8 +2008,8 @@ for (local i = 0; i < ::Const.EntityIcon.len(); ++i)
 
 });
 
-//BanditWarlord
-::Const.CharmedUnits.addDefaultEntry(::Const.EntityType.BanditWarlord, {
+//BanditWarlord (renamed to LegendRobberBaron in 19.3)
+::Const.CharmedUnits.addDefaultEntry(::Const.EntityType.LegendRobberBaron, {
 	StatMod = { Hitpoints = [-60, -60], Bravery = [-70, -60], Stamina = [-50, -50], MeleeSkill = [-30, -30], RangedSkill = [-25, -15], MeleeDefense = [-18, -15], RangedDefense = [-25, -20], Initiative = [-50, -30] },
 	Skills = ["perks/perk_captain"],
 	Perks = ["NineLives", "SunderingStrikes"],

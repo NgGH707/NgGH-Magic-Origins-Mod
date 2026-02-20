@@ -1,6 +1,6 @@
 ::Nggh_MagicConcept.HooksMod.hook("scripts/entity/tactical/enemies/legend_demon_hound", function ( q )
 {
-	q.onFactionChanged <- function()
+	q.onFactionChanged = @() function()
 	{
 		actor.onFactionChanged();
 		local flip = isAlliedWithPlayer();
@@ -27,7 +27,7 @@
 		}
 	}
 
-	q.makeMiniboss <- function()
+	q.makeMiniboss = @() function()
 	{
 		local b = m.BaseProperties;
 		m.XP = ::Const.Tactical.Actor.LegendWhiteDirewolf.XP;

@@ -138,7 +138,7 @@
 		]),
 	],
 	Weapon = [
-		::Const.Perks.StaffTree,
+		::Const.Perks.PolearmTree,
 		::Const.Perks.DaggerTree,
 	]
 	Defense = [

@@ -1,5 +1,4 @@
 /* unused stuffs
-
 ::Const.NecroCorpseType <- array(::Const.EntityType.len() - 2, {});
 // database of all corpses
 // human ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,7 +158,7 @@
 ::Const.NecroCorpseType[::Const.EntityType.BanditVeteran] = {
 	Description = "",
 };
-::Const.NecroCorpseType[::Const.EntityType.BanditWarlord] = {
+::Const.NecroCorpseType[::Const.EntityType.LegendRobberBaron] = {
 	Description = "",
 };
 ::Const.NecroCorpseType[::Const.EntityType.LegendPeasantButcher] = {
@@ -249,8 +248,6 @@
 ::Const.NecroCorpseType[::Const.EntityType.FreeCompanyLeaderLow] = {
 	Description = "",
 };
-
-
 // undead /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ::Const.NecroCorpseType[::Const.EntityType.Zombie] = {
 	Description = "",
@@ -267,7 +264,7 @@
 	IsHuman = true,
 	IsRotten = true,
 };
-::Const.NecroCorpseType[::Const.EntityType.ZombieBetrayer] = { 
+::Const.NecroCorpseType[::Const.EntityType.ZombieBetrayer] = {
 	Description = "",
 	IsHuman = true,
 	IsRotten = true,
@@ -415,8 +412,6 @@
 	IsHeadLess = false,
 	IsBoss = true,
 };
-
-
 // non-human ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ::Const.NecroCorpseType[::Const.EntityType.Ghoul] = {
 	Description = "",
@@ -1149,6 +1144,4 @@
 		},
 	],
 };
-
-
 */

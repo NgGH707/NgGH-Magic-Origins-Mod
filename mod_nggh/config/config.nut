@@ -1,20 +1,17 @@
-
-::Nggh_MagicConcept.isHexeOrigin <- function()
-{
-	return ("Assets" in ::World) && ::World.Assets != null && ::World.Assets.getOrigin() != null && ::World.Assets.getOrigin().getID() == "scenario.hexe";
+::Nggh_MagicConcept.isHexeOrigin <- function () {
+	return ("Assets" in ::World)
+		&& ::World.Assets != null
+		&& ::World.Assets.getOrigin() != null
+		&& ::World.Assets.getOrigin().getID() == "scenario.hexe";
 }
 
-::Nggh_MagicConcept.spawnQuote <- function( _brush, _tile )
-{
+::Nggh_MagicConcept.spawnQuote <- function (_brush, _tile) {
 	::Tactical.spawnSpriteEffect(_brush, ::createColor("#ffffff"), _tile, ::Const.Tactical.Settings.SkillOverlayOffsetX, ::Const.Tactical.Settings.SkillOverlayOffsetY + 30, ::Const.Tactical.Settings.SkillOverlayScale, ::Const.Tactical.Settings.SkillOverlayScale, ::Const.Tactical.Settings.SkillOverlayStayDuration + 750, 0, ::Const.Tactical.Settings.SkillOverlayFadeDuration - 150);
 }
 
-::Nggh_MagicConcept.findPerkDefByID <- function( _id )
-{
-	foreach ( Def in ::Const.Perks.PerkDefObjects )
-	{
-		if (Def.ID == _id)
-		{
+::Nggh_MagicConcept.findPerkDefByID <- function (_id) {
+	foreach (Def in ::Const.Perks.PerkDefObjects) {
+		if (Def.ID == _id) {
 			return Def;
 		}
 	}
@@ -22,20 +19,17 @@
 	return null;
 }
 
-::Nggh_MagicConcept.findPerkScriptByID <- function( _id )
-{
+::Nggh_MagicConcept.findPerkScriptByID <- function (_id) {
 	local Def = ::Nggh_MagicConcept.findPerkDefByID(_id);
 
-	if (Def != null)
-	{
+	if (Def != null) {
 		return Def.Script;
 	}
 
 	return null;
 }
 
-if (!("Passive" in ::Const.UI.Color))
-{
+if (!("Passive" in ::Const.UI.Color)) {
 	::Const.UI.Color.Passive <- "#4f1800";
 	::Const.UI.Color.Active <- "#000ec1";
 }
@@ -88,27 +82,24 @@ if (!("Passive" in ::Const.UI.Color))
 ];
 
 ::Const.Sprites_onFactionChanged <- [
-	"head", 
+	"head",
 	"head_frenzy",
 	"body",
 	"body_rage",
 	"body_blood",
-	"legs_back", 
+	"legs_back",
 	"legs_front",
 	"injury",
 	"injury_body",
-	"quiver", 
-	
+	"quiver",
 	"wolf",
 	"wolf_head",
 	"wolf_armor",
-	
-	"tattoo_head", 
-	"tattoo_body", 
+	"tattoo_head",
+	"tattoo_body",
 ];
 
-if (!("Orc" in ::Const))
-{
+if (!("Orc" in ::Const)) {
 	::Const.Orc <- {};
 }
 
@@ -122,20 +113,20 @@ if (!("Orc" in ::Const))
 ];
 
 ::Const.Orc.VariantRolls <- [
-	[40, ::Const.EntityType.OrcYoung         ], // 72%
-	[ 5, ::Const.EntityType.OrcBerserker     ], // 9%
-	[ 7, ::Const.EntityType.OrcWarrior       ], // 13%
-	[ 1, ::Const.EntityType.OrcWarlord       ], // 2%
-	[ 1, ::Const.EntityType.LegendOrcElite   ], // 2%
-	[ 1, ::Const.EntityType.LegendOrcBehemoth], // 2%
+	[40, ::Const.EntityType.OrcYoung], // 72%
+	[5, ::Const.EntityType.OrcBerserker], // 9%
+	[7, ::Const.EntityType.OrcWarrior], // 13%
+	[1, ::Const.EntityType.OrcWarlord], // 2%
+	[1, ::Const.EntityType.LegendOrcElite], // 2%
+	[1, ::Const.EntityType.LegendOrcBehemoth], // 2%
 ];
 
 ::Const.Orc.HelmetSpriteOffset <- [
-	[ 4,  0],
-	[ 8,  2],
-	[10,  3],
+	[4, 0],
+	[8, 2],
+	[10, 3],
 	[13, 10],
-	[10,  0],
+	[10, 0],
 	[13, 15]
 ];
 
@@ -150,8 +141,7 @@ if (!("Orc" in ::Const))
 
 ::Const.Orc.BerserkerArmorMoraleThreshold <- ::Const.MoraleState.Breaking;
 
-if (!("Goblin" in ::Const))
-{
+if (!("Goblin" in ::Const)) {
 	::Const.Goblin <- {};
 }
 
@@ -166,17 +156,15 @@ if (!("Goblin" in ::Const))
 ];
 
 ::Const.Goblin.VariantRolls <- [
-	[30, ::Const.EntityType.GoblinFighter  ], // 45%
-	[20, ::Const.EntityType.GoblinAmbusher ], // 30%
+	[30, ::Const.EntityType.GoblinFighter], // 45%
+	[20, ::Const.EntityType.GoblinAmbusher], // 30%
 	[10, ::Const.EntityType.GoblinWolfrider], // 15%
-	[ 5, ::Const.EntityType.GoblinLeader   ], // 8.5%
-	[ 1, ::Const.EntityType.GoblinShaman   ], // 1.5%
+	[5, ::Const.EntityType.GoblinLeader], // 8.5%
+	[1, ::Const.EntityType.GoblinShaman], // 1.5%
 ];
 
-::Const.Goblin.SkirmisherArmorSpawnHiding <- function( _tile )
-{
-	if (_tile.IsHidingEntity)
-	{
+::Const.Goblin.SkirmisherArmorSpawnHiding <- function (_tile) {
+	if (_tile.IsHidingEntity) {
 		return false;
 	}
 
@@ -267,16 +255,15 @@ if (!("Goblin" in ::Const))
 	],
 ];
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ::Const.DefaultChangeAttributes <- {
-	Hitpoints = [0, 0], 
-	Bravery = [0, 0], 
-	Stamina = [0, 0], 
-	MeleeSkill = [0, 0], 
-	RangedSkill = [0, 0], 
-	MeleeDefense = [0, 0], 
-	RangedDefense = [0, 0], 
+	Hitpoints = [0, 0],
+	Bravery = [0, 0],
+	Stamina = [0, 0],
+	MeleeSkill = [0, 0],
+	RangedSkill = [0, 0],
+	MeleeDefense = [0, 0],
+	RangedDefense = [0, 0],
 	Initiative = [0, 0]
 };
 
@@ -297,13 +284,13 @@ if (!("Goblin" in ::Const))
 	//"perk_ptr_family_pride",
 ];
 
-foreach (def in ::Const.Perks.PerkDefObjects)
-{
-	if (def.ID.find("_favoured_") == null) continue;
-	
+foreach (def in ::Const.Perks.PerkDefObjects) {
+	if (def.ID.find("_favoured_") == null) {
+		continue;
+	}
+
 	::Const.NoCopyPerks.push(def.ID);
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ::Const.LuckyRuneChanceModifier <- 8;
@@ -402,7 +389,6 @@ foreach (def in ::Const.Perks.PerkDefObjects)
 	},
 ];
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // add a new class for CombatInfo
 ::Const.Tactical.CombatInfo.LootWithoutScript <- [];
@@ -415,18 +401,14 @@ foreach (def in ::Const.Perks.PerkDefObjects)
 // ::Const.Items.addNewItemType("Ancient"); currently not use
 // ::Const.Items.addNewItemType("Corpse"); currently not use
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // new tactical effects
-::Const.Tactical.onApplyShadow <- function( _tile, _entity )
-{
-	if (_entity.getMoraleState() == ::Const.MoraleState.Ignore)
-	{
+::Const.Tactical.onApplyShadow <- function (_tile, _entity) {
+	if (_entity.getMoraleState() == ::Const.MoraleState.Ignore) {
 		return;
 	}
 
-	if (_entity.getFlags().has("alp"))
-	{
+	if (_entity.getFlags().has("alp")) {
 		return;
 	}
 
@@ -434,13 +416,11 @@ foreach (def in ::Const.Perks.PerkDefObjects)
 		::Const.EntityType.Alp,
 		::Const.EntityType.AlpShadow,
 		::Const.EntityType.LegendDemonAlp,
-	].find(_entity.getType()) != null)
-	{
+	].find(_entity.getType()) != null) {
 		return;
 	}
 
-	if (!_entity.getSkills().hasSkill("effects.reign_of_darkness"))
-	{
+	if (!_entity.getSkills().hasSkill("effects.reign_of_darkness")) {
 		_entity.getSkills().add(::new("scripts/skills/effects/nggh_mod_reign_of_darkness_effect"));
 	}
 };
@@ -973,131 +953,112 @@ foreach (def in ::Const.Perks.PerkDefObjects)
 	}
 ];
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // for perk true builder
 ::Const.AvailableFavourdPerks <- [
-//low-tier
-[
-	::Const.Perks.PerkDefs.LegendFavouredEnemyGhoul,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyDirewolf,
-	::Const.Perks.PerkDefs.LegendFavouredEnemySpider,
-	::Const.Perks.PerkDefs.LegendFavouredEnemySkeleton,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyZombie,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyCaravan,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyMercenary,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyNoble,
-	::Const.Perks.PerkDefs.LegendFavouredEnemySoutherner,
-],
-
-//mid-tier
-[
-	::Const.Perks.PerkDefs.LegendFavouredEnemyVampire,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyAlps,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyOrk,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyGoblin,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyBandit,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyNomad,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyBarbarian,
-],
-
-//high-tier
-[
-	::Const.Perks.PerkDefs.LegendFavouredEnemyHexen,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyUnhold,
-	::Const.Perks.PerkDefs.LegendFavouredEnemySchrat,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyLindwurm,
-	::Const.Perks.PerkDefs.LegendFavouredEnemyArcher,
-	::Const.Perks.PerkDefs.LegendFavouredEnemySwordmaster,
-],
+	//low-tier
+	[
+		::Const.Perks.PerkDefs.LegendFavouredEnemyBeast,
+		::Const.Perks.PerkDefs.LegendFavouredEnemyUndead,
+		::Const.Perks.PerkDefs.LegendFavouredEnemyCivilization,
+	],
+	//mid-tier
+	[
+		::Const.Perks.PerkDefs.LegendFavouredEnemyGreenskin,
+		::Const.Perks.PerkDefs.LegendFavouredEnemyOutlaw,
+		::Const.Perks.PerkDefs.LegendFavouredEnemyOccult,
+	],
+	//high-tier
+	[
+		::Const.Perks.PerkDefs.LegendFavouredEnemySwordmaster,
+	],
 ];
 
 ::Const.AvailablePerksForBeast <- [
-//low-tier
-[
-	::Const.Perks.PerkDefs.LegendBackToBasics,
-	::Const.Perks.PerkDefs.Colossus,
-	::Const.Perks.PerkDefs.LegendAlert,
-	::Const.Perks.PerkDefs.CripplingStrikes,
-	::Const.Perks.PerkDefs.Pathfinder,
-	::Const.Perks.PerkDefs.SunderingStrikes,
-	::Const.Perks.PerkDefs.LegendBlendIn,
-	::Const.Perks.PerkDefs.NineLives,
-	::Const.Perks.PerkDefs.FastAdaption,
-	::Const.Perks.PerkDefs.Adrenaline,
-	::Const.Perks.PerkDefs.BagsAndBelts,
-	::Const.Perks.PerkDefs.Recover,
-	::Const.Perks.PerkDefs.Backstabber,
-	::Const.Perks.PerkDefs.SteelBrow,
-	::Const.Perks.PerkDefs.Dodge,
-	::Const.Perks.PerkDefs.LegendComposure,
-	::Const.Perks.PerkDefs.LegendTrueBeliever,
-	::Const.Perks.PerkDefs.LegendEvasion,
-	::Const.Perks.PerkDefs.FortifiedMind,
-	::Const.Perks.PerkDefs.Anticipation,
-	::Const.Perks.PerkDefs.Steadfast,
-	::Const.Perks.PerkDefs.LegendOnslaught,
-	::Const.Perks.PerkDefs.LegendFeint,
-	::Const.Perks.PerkDefs.CoupDeGrace,
-	::Const.Perks.PerkDefs.HoldOut,
-	::Const.Perks.PerkDefs.LegendSprint,
-	::Const.Perks.PerkDefs.Footwork,
-	::Const.Perks.PerkDefs.LegendLacerate,
-	::Const.Perks.PerkDefs.Relentless,
-	::Const.Perks.PerkDefs.Taunt,
-	::Const.Perks.PerkDefs.Rotation,
-	::Const.Perks.PerkDefs.LegendSmackdown,
-	::Const.Perks.PerkDefs.LegendDebilitate,
-	::Const.Perks.PerkDefs.LegendHidden,
-	::Const.Perks.PerkDefs.Gifted,
-],
-
-//mid-tier
-[
-	::Const.Perks.PerkDefs.LegendComposure,
-	::Const.Perks.PerkDefs.LegendTrueBeliever,
-	::Const.Perks.PerkDefs.LegendHairSplitter,
-	::Const.Perks.PerkDefs.Underdog,
-	::Const.Perks.PerkDefs.LegendLithe
-	::Const.Perks.PerkDefs.LegendBloodbath,
-	::Const.Perks.PerkDefs.LoneWolf,
-	::Const.Perks.PerkDefs.Stalwart,
-	::Const.Perks.PerkDefs.Overwhelm,
-	::Const.Perks.PerkDefs.LegendClarity,
-	::Const.Perks.PerkDefs.LegendEscapeArtist,
-	::Const.Perks.PerkDefs.LegendPushTheAdvantage,
-	::Const.Perks.PerkDefs.LegendGatherer,
-	::Const.Perks.PerkDefs.Nimble,
-	::Const.Perks.PerkDefs.LegendTerrifyingVisage,
-	::Const.Perks.PerkDefs.LegendAssuredConquest,
-	::Const.Perks.PerkDefs.LegendSecondWind,
-	::Const.Perks.PerkDefs.HeadHunter,
-	::Const.Perks.PerkDefs.LegendDoubleStrike,
-	::Const.Perks.PerkDefs.DevastatingStrikes,
-],
-
-//high-tier
-[
-	::Const.Perks.PerkDefs.LegendTerrifyingVisage,
-	::Const.Perks.PerkDefs.InspiringPresence,
-	::Const.Perks.PerkDefs.Berserk,
-	::Const.Perks.PerkDefs.LegendTumble,
-	::Const.Perks.PerkDefs.LegendFullForce,
-	::Const.Perks.PerkDefs.LegendVengeance,
-	::Const.Perks.PerkDefs.LegendMindOverBody,
-	::Const.Perks.PerkDefs.LegendReturnFavor,
-	::Const.Perks.PerkDefs.KillingFrenzy,
-	::Const.Perks.PerkDefs.Fearsome,
-	::Const.Perks.PerkDefs.LegendForcefulSwing,
-	::Const.Perks.PerkDefs.LegendPerfectFocus,
-	::Const.Perks.PerkDefs.Indomitable,
-	::Const.Perks.PerkDefs.LegendSlaughterer,
-	::Const.Perks.PerkDefs.LegendFreedomOfMovement,
-	::Const.Perks.PerkDefs.LegendMuscularity,
-	::Const.Perks.PerkDefs.LegendLastStand,
-	::Const.Perks.PerkDefs.LegendRebound,
-	::Const.Perks.PerkDefs.BattleFlow,
-],
+	//low-tier
+	[
+		::Const.Perks.PerkDefs.LegendBackToBasics,
+		::Const.Perks.PerkDefs.Colossus,
+		::Const.Perks.PerkDefs.LegendAlert,
+		::Const.Perks.PerkDefs.CripplingStrikes,
+		::Const.Perks.PerkDefs.Pathfinder,
+		::Const.Perks.PerkDefs.SunderingStrikes,
+		::Const.Perks.PerkDefs.LegendBlendIn,
+		::Const.Perks.PerkDefs.NineLives,
+		::Const.Perks.PerkDefs.FastAdaption,
+		::Const.Perks.PerkDefs.Adrenaline,
+		::Const.Perks.PerkDefs.BagsAndBelts,
+		::Const.Perks.PerkDefs.Recover,
+		::Const.Perks.PerkDefs.Backstabber,
+		::Const.Perks.PerkDefs.SteelBrow,
+		::Const.Perks.PerkDefs.Dodge,
+		::Const.Perks.PerkDefs.LegendComposure,
+		::Const.Perks.PerkDefs.LegendTrueBeliever,
+		::Const.Perks.PerkDefs.LegendEvasion,
+		::Const.Perks.PerkDefs.FortifiedMind,
+		::Const.Perks.PerkDefs.Anticipation,
+		::Const.Perks.PerkDefs.Steadfast,
+		::Const.Perks.PerkDefs.LegendOnslaught,
+		::Const.Perks.PerkDefs.LegendFeint,
+		::Const.Perks.PerkDefs.CoupDeGrace,
+		::Const.Perks.PerkDefs.HoldOut,
+		::Const.Perks.PerkDefs.LegendSprint,
+		::Const.Perks.PerkDefs.Footwork,
+		::Const.Perks.PerkDefs.LegendLacerate,
+		::Const.Perks.PerkDefs.Relentless,
+		::Const.Perks.PerkDefs.Taunt,
+		::Const.Perks.PerkDefs.Rotation,
+		::Const.Perks.PerkDefs.LegendSmackdown,
+		::Const.Perks.PerkDefs.LegendDebilitate,
+		::Const.Perks.PerkDefs.LegendHidden,
+		::Const.Perks.PerkDefs.Gifted,
+	],
+	//mid-tier
+	[
+		::Const.Perks.PerkDefs.LegendComposure,
+		::Const.Perks.PerkDefs.LegendTrueBeliever,
+		::Const.Perks.PerkDefs.LegendHairSplitter,
+		::Const.Perks.PerkDefs.Underdog,
+		::Const.Perks.PerkDefs.LegendLithe,
+		::Const.Perks.PerkDefs.LegendBloodbath,
+		::Const.Perks.PerkDefs.LoneWolf,
+		::Const.Perks.PerkDefs.Stalwart,
+		::Const.Perks.PerkDefs.Overwhelm,
+		::Const.Perks.PerkDefs.LegendClarity,
+		::Const.Perks.PerkDefs.LegendEscapeArtist,
+		::Const.Perks.PerkDefs.LegendPushTheAdvantage,
+		::Const.Perks.PerkDefs.LegendGatherer,
+		::Const.Perks.PerkDefs.Nimble,
+		::Const.Perks.PerkDefs.LegendTerrifyingVisage,
+		::Const.Perks.PerkDefs.LegendAssuredConquest,
+		::Const.Perks.PerkDefs.LegendSecondWind,
+		::Const.Perks.PerkDefs.HeadHunter,
+		::Const.Perks.PerkDefs.LegendDoubleStrike,
+		::Const.Perks.PerkDefs.DevastatingStrikes,
+	],
+	//high-tier
+	[
+		::Const.Perks.PerkDefs.LegendTerrifyingVisage,
+		::Const.Perks.PerkDefs.InspiringPresence,
+		::Const.Perks.PerkDefs.Berserk,
+		::Const.Perks.PerkDefs.LegendTumble,
+		// Removed in 19.2
+		// ::Const.Perks.PerkDefs.LegendFullForce,
+		::Const.Perks.PerkDefs.LegendVengeance,
+		::Const.Perks.PerkDefs.LegendMindOverBody,
+		::Const.Perks.PerkDefs.LegendReturnFavor,
+		::Const.Perks.PerkDefs.KillingFrenzy,
+		::Const.Perks.PerkDefs.Fearsome,
+		::Const.Perks.PerkDefs.LegendForcefulSwing,
+		::Const.Perks.PerkDefs.LegendPerfectFocus,
+		::Const.Perks.PerkDefs.Indomitable,
+		::Const.Perks.PerkDefs.LegendSlaughterer,
+		::Const.Perks.PerkDefs.LegendFreedomOfMovement,
+		::Const.Perks.PerkDefs.LegendMuscularity,
+		::Const.Perks.PerkDefs.LegendLastStand,
+		::Const.Perks.PerkDefs.LegendRebound,
+		::Const.Perks.PerkDefs.BattleFlow,
+	],
 ];
 
 ::Const.HumanoidBeast <- [
@@ -1170,8 +1131,7 @@ foreach (def in ::Const.Perks.PerkDefObjects)
 	"scenario.legends_inquisition",
 	"scenario.sato_escaped_slaves",
 	"scenario.paladins",
-];	
-
+];
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // equimemnt restriction
@@ -1289,7 +1249,7 @@ foreach (def in ::Const.Perks.PerkDefObjects)
 
 /*
 local gt = this.getroottable();
-local lich_armor = { 
+local lich_armor = {
     ID = "ancient/nggh_ancient_lich_attire", // 60
     Script = "",
     Sets = [{
@@ -1301,7 +1261,7 @@ local lich_armor = {
         Plate = [
         ],
         Cloak = [
-			[1, "cloak/nggh_ancient_lich_attire"]        
+			[1, "cloak/nggh_ancient_lich_attire"]
         ],
         Tabard = [
         ],
@@ -1310,7 +1270,7 @@ local lich_armor = {
     }]
 };
 local lich_helmet = {
-    ID = "ancient/nggh_ancient_lich_headpiece", 
+    ID = "ancient/nggh_ancient_lich_headpiece",
     Script = "",
     Sets = [{
         Hoods = [
@@ -1326,13 +1286,10 @@ local lich_helmet = {
         ]
     }]
 }
-
 gt.Const.LegendMod.ArmorObjs.push(lich_armor);
 gt.Const.LegendMod.Armors[lich_armor.ID] <- lich_armor;
 gt.Const.LegendMod.HelmObjs.push(lich_helmet);
 gt.Const.LegendMod.Helmets[lich_helmet.ID] <- lich_helmet;
-
-
 //
 local pretext = "scripts/";
 local ancient_weapons = this.IO.enumerateFiles(pretext + "items/weapons/ancient/");
@@ -1344,17 +1301,14 @@ ancient_weapons.extend([
 	"items/weapons/named/named_legend_great_khopesh",
 	"items/weapons/named/named_warscythe",
 ]);
-
 foreach (directory in ancient_weapons)
 {
 	local idx = directory.find(pretext);
-
 	if (idx != null)
 	{
 		directory = directory.slice(idx + pretext.len());
 	}
-
-	::mods_hookNewObject(directory, function(obj) 
+	::mods_hookNewObject(directory, function(obj)
 	{
 		obj.addItemType(this.Const.Items.ItemType.Ancient);
 	});
@@ -1368,5 +1322,5 @@ foreach (directory in ancient_weapons)
 	"Gosh! I wish i would be jumped scared by a burrowed Stollwurm in a middle of combat. It would be fun to see, I\'m telling you.",
 	"I had a dream about a necromancer origin where you can collect body parts to make your own undead. It likes something coming out of frankenstein movie. I\'m not hating it, switching body parts seems fun to me.",
 	"It\' best to keep a spare named item in your stash. You never know you will meet someone willing to make a deal for it."
-	//A wise man once told me, [color=#bcad8c]Credits[/color] can lead you to a secret.
+ //A wise man once told me, [color=#bcad8c]Credits[/color] can lead you to a secret.
 ]

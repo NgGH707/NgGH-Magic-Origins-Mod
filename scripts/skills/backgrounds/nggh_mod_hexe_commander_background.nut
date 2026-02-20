@@ -10,8 +10,8 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		// perk tree stuff
 		IsHavingWhipTree = false,
 	},
-	function create()
-	{
+
+	function create() {
 		this.nggh_mod_hexe_background.create();
 		this.m.ID = "background.hexe_commander";
 		this.m.Name = "Elder Hexe";
@@ -20,12 +20,11 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		this.m.Hairs = ::Const.HexeOrigin.FakeHair;
 		this.m.IsHavingWhipTree = ::Nggh_MagicConcept.ForceWhipPerk || ::Math.rand(1, 100) <= 45;
 		this.m.Modifiers.Enchanting = 1.0;
-		
+
 		this.setupCustomPerkTree();
 	}
 
-	function forceResetCustomPerkTree()
-	{
+	function forceResetCustomPerkTree() {
 		// refund perks
 		this.getContainer().getActor().resetPerks();
 
@@ -35,10 +34,8 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		this.buildPerkTree();
 	}
 
-	function setupCustomPerkTree()
-	{
-		if (this.m.IsHavingWhipTree)
-		{
+	function setupCustomPerkTree() {
+		if (this.m.IsHavingWhipTree) {
 			this.m.ExcludedTalents = [
 				::Const.Attributes.Hitpoints,
 				::Const.Attributes.RangedSkill,
@@ -53,12 +50,10 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 				"trait.legend_fear_dark",
 				"trait.night_blind",
 				"trait.sureshot",
-				"trait.steady_hands"
-				"trait.tiny",
+				"trait.steady_hands",
+				"trait.tiny"
 			];
-		}
-		else
-		{
+		} else {
 			this.m.Excluded.extend([
 				"trait.firm",
 				"trait.bloodthirsty"
@@ -71,8 +66,7 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		this.addHexenPerks();
 	}
 
-	function getDefaultCustomPerkTree()
-	{
+	function getDefaultCustomPerkTree() {
 		return [
 			[ // 0
 				::Const.Perks.PerkDefs.Pathfinder,
@@ -131,62 +125,70 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		];
 	}
 
-	function addSpecializePerks()
-	{
-		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [::Const.Perks.MediumArmorTree, ::Const.Perks.PhilosophyMagicTree, ::Const.Perks.ChefClassTree,::Const.Perks.HealerClassTree]);
+	function addSpecializePerks() {
+		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [
+			::Const.Perks.MediumArmorTree,
+			::Const.Perks.PhilosophyMagicTree,
+			::Const.Perks.ChefProfessionTree,
+			::Const.Perks.HealerClassTree
+		]);
 
-		if (::Math.rand(1, 100) >= 95)
+		if (::Math.rand(1, 100) >= 95) {
 			this.m.CustomPerkTree[2].push(::Const.Perks.PerkDefs.NggHMiscFairGame);
+		}
 
-		if (::Math.rand(1, 100) == 100)
+		if (::Math.rand(1, 100) == 100) {
 			this.m.CustomPerkTree[6].push(::Const.Perks.PerkDefs.NggHMiscChampion);
+		}
 
-		if (this.m.IsHavingWhipTree) return;
-		
+		if (this.m.IsHavingWhipTree) {
+			return;
+		}
+
 		this.m.CustomPerkTree[0].extend([::Const.Perks.PerkDefs.Bullseye, ::Const.Perks.PerkDefs.LegendMagicMissile]);
 		this.m.CustomPerkTree[2].push(::Const.Perks.PerkDefs.LegendBallistics);
 		this.m.CustomPerkTree[3].push(::Const.Perks.PerkDefs.LegendMagicMissileFocus);
 		this.m.CustomPerkTree[5].push(::Const.Perks.PerkDefs.LegendHeightenedReflexes);
 		this.m.CustomPerkTree[6].push(::Const.Perks.PerkDefs.LegendMagicMissileMastery);
-		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [::Const.Perks.StaffTree, ::Const.Perks.SlingTree]);
+		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, [::Const.Perks.PolearmTree, ::Const.Perks.SlingTree]);
 	}
 
-	function addPTR_Perks()
-	{
-		if (!::Is_PTR_Exist) return;
+	function addPTR_Perks() {
+		if (!::Is_PTR_Exist) {
+			return;
+		}
 
-		local list = [::Const.Perks.LightArmorTree,::Const.Perks.MediumArmorTree,::Const.Perks.TalentedTree];
+		local list = [::Const.Perks.LightArmorTree, ::Const.Perks.MediumArmorTree, ::Const.Perks.TalentedTree];
 
-		if (this.m.IsHavingWhipTree)
-		{
+		if (this.m.IsHavingWhipTree) {
 			this.m.CustomPerkTree[4].push(::Const.Perks.PerkDefs.PTRBloodlust);
 			this.m.CustomPerkTree[6].push(::Const.Perks.PerkDefs.PTRMauler);
 			list.push(::Const.Perks.OneHandedTree);
-		}
-		else
-		{
-			list.extend([::Const.Perks.TwoHandedTree,::Const.Perks.RangedTree]);
+		} else {
+			list.extend([::Const.Perks.TwoHandedTree, ::Const.Perks.RangedTree]);
 		}
 
 		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, list);
 	}
 
-	function addHexenPerks()
-	{
-		local list = [::Const.Perks.HexeHexTree,::Const.Perks.HexeSpecializedHexTree];
+	function addHexenPerks() {
+		local list = [::Const.Perks.HexeHexTree, ::Const.Perks.HexeSpecializedHexTree];
 
-		if (this.m.IsHavingWhipTree)
+		if (this.m.IsHavingWhipTree) {
 			list.push(::Const.Perks.Hexe_BDSM_Tree);
+		}
 
-		list.extend([::Const.Perks.HexeBasicTree,::Const.Perks.HexeBeastCharmTree,::Const.Perks.HexeBeastCharmAdvancedTree]);
+		list.extend([
+			::Const.Perks.HexeBasicTree,
+			::Const.Perks.HexeBeastCharmTree,
+			::Const.Perks.HexeBeastCharmAdvancedTree
+		]);
 
 		this.addPerkTreesToCustomPerkTree(this.m.CustomPerkTree, list);
 	}
 
-	function onAdded()
-	{
-		if (this.m.IsNew)
-		{
+	function onAdded() {
+		if (this.m.IsNew) {
 			this.m.RealHead = ::MSU.Array.rand(::Const.HexeOrigin.TrueHead);
 			this.m.RealHair = ::MSU.Array.rand(::Const.HexeOrigin.TrueHair);
 			this.m.RealBody = ::Const.HexeOrigin.Body[2];
@@ -202,16 +204,14 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		this.nggh_mod_hexe_background.onAdded();
 	}
 
-	function setupSpriteLayers()
-	{
+	function setupSpriteLayers() {
 		this.nggh_mod_hexe_background.setupSpriteLayers();
 		local actor = this.getContainer().getActor().get();
-		local true_body = this.m.RealBody
-		local true_head = this.m.RealHead
-		local true_hair = this.m.RealHair
+		local true_body = this.m.RealBody;
+		local true_head = this.m.RealHead;
+		local true_hair = this.m.RealHair;
 		local old_onDeath = actor.onDeath;
-		actor.onDeath = function( _killer, _skill, _tile, _fatalityType )
-		{
+		actor.onDeath = function (_killer, _skill, _tile, _fatalityType) {
 			local sprite_body = this.getSprite("body");
 			sprite_body.setBrush(true_body);
 			local sprite_head = this.getSprite("head");
@@ -222,8 +222,7 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		}
 	}
 
-	function setupDefaultSkills()
-	{
+	function setupDefaultSkills() {
 		//local mind_break = ::new("scripts/skills/actives/mod_mind_break_skill");
 		//mind_break.m.Order = ::Const.SkillOrder.UtilityTargeted + 1;
 		//this.getContainer().add(mind_break);
@@ -233,19 +232,16 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		this.getContainer().add(::new("scripts/skills/hexe/nggh_mod_charm_captive_spell"));
 	}
 
-	function onBuildDescription()
-	{
+	function onBuildDescription() {
 		return "Every since %name% was a child, she wanted everything, a greedy girl she was. Her plate was always fill with wonderous goodness, dressed in the finest outfit. But she can't have a charming looks or a true authority above others, that is why she stepped in the realm of dark art. \nShe was banished out of her home town for her dreadful deeds but at least she still kept her life, hiding herself in deep forest. With vengeance and greed powered her to seek more power, %name% has become a fearsome crone after years and years worth of practicing black magic and brewing strange potions. She brought waste to the town had banished her, not a single soul was spared, children was brewed into potions to return her youth, the adult were left to feed crows. \nBut soon something expectingly happened, %name% met a fools came to ruin her grand ritual. She was cursed in the end! Beautiful as goddess but powerless to the contract she has been eternally bounded.";
 	}
 
-	function randomizeStartingStats( _properties )
-	{
+	function randomizeStartingStats(_properties) {
 		_properties.ActionPoints = 9;
 		_properties.Hitpoints = ::Math.rand(48, 52);
 		_properties.RangedDefense = 5;
 
-		if (this.m.IsHavingWhipTree)
-		{
+		if (this.m.IsHavingWhipTree) {
 			_properties.Hitpoints += 10;
 			_properties.Bravery = ::Math.rand(42, 52);
 			_properties.Stamina = ::Math.rand(83, 96);
@@ -253,9 +249,7 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 			_properties.RangedSkill = ::Math.rand(40, 45);
 			_properties.MeleeDefense = ::Math.rand(2, 10);
 			_properties.Initiative = ::Math.rand(95, 115);
-		}
-		else
-		{
+		} else {
 			_properties.Bravery = ::Math.rand(45, 55);
 			_properties.Stamina = ::Math.rand(70, 82);
 			_properties.MeleeSkill = ::Math.rand(40, 45);
@@ -265,27 +259,35 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		}
 	}
 
-	function onAddEquipment()
-	{
+	function onAddEquipment() {
 		local items = this.getContainer().getActor().getItems();
 
-		if (this.m.IsHavingWhipTree)
-			items.equip(::new("scripts/items/weapons/" + (::Math.rand(1, 100) <= 33 ? "barbarians/thorned_whip" : "battle_whip")));
-		else
+		if (this.m.IsHavingWhipTree) {
+			items.equip(::new("scripts/items/weapons/" + (::Math.rand(1, 100) <= 33
+				? "barbarians/thorned_whip"
+				: "battle_whip")));
+		} else {
 			items.equip(::new("scripts/items/weapons/greenskins/goblin_staff"));
+		}
 
-		items.equip(::Const.World.Common.pickArmor([[1, "ragged_dark_surcoat"],[1, "thick_dark_tunic"]]));
-		items.equip(::Const.World.Common.pickHelmet([[1, "witchhunter_hat"],[2, "dark_cowl"],[1, "hood"],[1, ""]]));
+		items.equip(::Const.World.Common.pickArmor([
+			[1, "ragged_dark_surcoat"],
+			[1, "thick_dark_tunic"]
+		]));
+		items.equip(::Const.World.Common.pickHelmet([
+			[1, "witchhunter_hat"],
+			[2, "dark_cowl"],
+			[1, "hood"],
+			[1, ""]
+		]));
 	}
 
-	function onCombatStarted()
-	{
+	function onCombatStarted() {
 		local actor = this.getContainer().getActor();
 		local cursed = this.getContainer().hasSkill("effects.cursed");
 		local lesserCursed = this.getContainer().hasSkill("effects.lesser_cursed");
 
-		if (cursed || lesserCursed)
-		{
+		if (cursed || lesserCursed) {
 			actor.m.Sound[::Const.Sound.ActorEvent.NoDamageReceived] = [
 				"sounds/enemies/dlc2/hexe_idle_06.wav",
 				"sounds/enemies/dlc2/hexe_idle_07.wav",
@@ -443,44 +445,42 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		actor.m.SoundVolume[::Const.Sound.ActorEvent.Idle] = 5.0;
 		actor.m.SoundVolume[::Const.Sound.ActorEvent.Other1] = 2.5;
 	}
-	
-	function onNewDay()
-	{
+
+	function onNewDay() {
 		local stash = ::World.Assets.getStash();
 		local days = ::World.Flags.getAsInt("RitualTimer");
 
 		// witch can shred hair a lot XD
-		if (stash.getNumberOfEmptySlots() > 0 && ::Math.rand(1, 100) <= 10)
-			stash.add(::new("scripts/items/misc/" + (::Math.rand(1, 3) == 3 ? "legend_witch_leader_hair_item" : "witch_hair_item")));
+		if (stash.getNumberOfEmptySlots() > 0 && ::Math.rand(1, 100) <= 10) {
+			stash.add(::new("scripts/items/misc/" + (::Math.rand(1, 3) == 3
+				? "legend_witch_leader_hair_item"
+				: "witch_hair_item")));
+		}
 
 		// check for the ritual event
 		::logInfo("Hexe Origin Ritual - Checking the conditions");
 
-		if (days < ::Nggh_MagicConcept.Mod.ModSettings.getSetting("ritual_cooldown").getValue())
-		{
+		if (days < ::Nggh_MagicConcept.Mod.ModSettings.getSetting("ritual_cooldown").getValue()) {
 			::logInfo("Hexe Origin Ritual - Days passed: " + days);
 			::World.Flags.increment("RitualTimer");
 			return;
 		}
-		
-		if (!::World.Events.canFireEvent(true, true))
-		{
+
+		if (!::World.Events.canFireEvent(true, true)) {
 			::logInfo("Hexe Origin Ritual - Failed to start the event. \'::World.Events.canFireEvent\' return false.");
 			return;
 		}
-		
-		if (!::World.Events.fire("event.hexe_origin_ritual"))
-		{
+
+		if (!::World.Events.fire("event.hexe_origin_ritual")) {
 			::logInfo("Hexe Origin Ritual - Failed to start the event. Can not fire the event.");
 			return;
 		}
-		
+
 		::logInfo("Hexe Origin Ritual - Successfully started the event. The timer reset.");
 		::World.Flags.set("RitualTimer", 1);
 	}
 
-	function onSerialize( _out )
-	{
+	function onSerialize(_out) {
 		this.nggh_mod_hexe_background.onSerialize(_out);
 		_out.writeBool(this.m.IsCharming);
 		_out.writeString(this.m.RealHead);
@@ -491,8 +491,7 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 		_out.writeString(this.m.CharmHair);
 	}
 
-	function onDeserialize( _in )
-	{
+	function onDeserialize(_in) {
 		this.nggh_mod_hexe_background.onDeserialize(_in);
 		this.m.IsCharming = _in.readBool();
 		this.m.RealHead = _in.readString();
@@ -504,4 +503,3 @@ this.nggh_mod_hexe_commander_background <- ::inherit("scripts/skills/backgrounds
 	}
 
 });
-

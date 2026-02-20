@@ -1,6 +1,4 @@
-
-if (!("PerksCharmedUnit" in ::Const))
-{
+if (!("PerksCharmedUnit" in ::Const)) {
 	::Const.PerksCharmedUnit <- {};
 }
 
@@ -85,49 +83,34 @@ if (!("PerksCharmedUnit" in ::Const))
 ::Const.PerksCharmedUnit.KrakenTree <- [
 	[
 		::Const.Perks.PerkDefs.SunderingStrikes,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyCaravan,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyBandit,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyGhoul,
+		::Const.Perks.PerkDefs.LegendFavouredEnemyCivilization,
 	],
 	[
 		::Const.Perks.PerkDefs.NggHKrakenDevour,
 		::Const.Perks.PerkDefs.Backstabber,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyZombie,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyGoblin,
+		::Const.Perks.PerkDefs.LegendFavouredEnemyUndead,
 	],
 	[
 		::Const.Perks.PerkDefs.NggHKrakenMove,
-		::Const.Perks.PerkDefs.LegendFavouredEnemySkeleton,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyDirewolf,
-		::Const.Perks.PerkDefs.LegendFavouredEnemySpider,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyNoble,
+		::Const.Perks.PerkDefs.LegendFavouredEnemyBeast,
 	],
 	[
 		::Const.Perks.PerkDefs.NggHKrakenBite,
-		::Const.Perks.PerkDefs.LegendFavouredEnemySoutherner,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyNomad,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyOrk,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyVampire,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyAlps,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyUnhold,
+		::Const.Perks.PerkDefs.LegendFavouredEnemyGreenskin,
+		::Const.Perks.PerkDefs.LegendFavouredEnemyOccult,
 	],
 	[
 		::Const.Perks.PerkDefs.NggHKrakenSwing,
 		::Const.Perks.PerkDefs.Fearsome,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyBarbarian,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyMercenary,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyArcher,
+		::Const.Perks.PerkDefs.LegendFavouredEnemyOutlaw,
 	],
-	[ 
+	[
 		::Const.Perks.PerkDefs.NggHKrakenEnsnare,
 		::Const.Perks.PerkDefs.DevastatingStrikes,
 		::Const.Perks.PerkDefs.Berserk,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyHexen,
-		::Const.Perks.PerkDefs.LegendFavouredEnemySchrat,
 	],
 	[
 		::Const.Perks.PerkDefs.NggHKrakenTentacle,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyLindwurm,
 		::Const.Perks.PerkDefs.LegendFavouredEnemySwordmaster,
 	],
 	[],
@@ -262,7 +245,6 @@ if (!("PerksCharmedUnit" in ::Const))
 	[]
 ];
 
-
 ::Const.PerksCharmedUnit.HyenaTree <- [
 	[
 		::Const.Perks.PerkDefs.FastAdaption,
@@ -396,7 +378,6 @@ if (!("PerksCharmedUnit" in ::Const))
 	[
 		::Const.Perks.PerkDefs.LegendLacerate,
 		::Const.Perks.PerkDefs.ShieldExpert,
-		
 	],
 	[
 		::Const.Perks.PerkDefs.LegendSpecialistShieldSkill,
@@ -445,7 +426,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.LegendGruesomeFeast,
 		::Const.Perks.PerkDefs.DevastatingStrikes,
 	],
-	[	
+	[
 		::Const.Perks.PerkDefs.NggHSerpentBite,
 	],
 	[],
@@ -522,7 +503,8 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.NggHMiscLineBreaker,
 	],
 	[
-		::Const.Perks.PerkDefs.LegendFullForce,
+		// Removed in
+		// ::Const.Perks.PerkDefs.LegendFullForce,
 	],
 	[
 		::Const.Perks.PerkDefs.LegendGruesomeFeast,
@@ -554,7 +536,8 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.PerkDefs.LegendBloodyHarvest,
 	],
 	[
-		::Const.Perks.PerkDefs.LegendFullForce,
+		// Removed in 19.2
+		// ::Const.Perks.PerkDefs.LegendFullForce,
 		::Const.Perks.PerkDefs.NggHMiscLineBreaker,
 	],
 	[
@@ -570,7 +553,6 @@ if (!("PerksCharmedUnit" in ::Const))
 	[],
 	[]
 ];
-
 
 ::Const.PerksCharmedUnit.DemonHound <- [
 	[
@@ -615,7 +597,6 @@ if (!("PerksCharmedUnit" in ::Const))
 	[],
 	[]
 ];
-
 
 /////////////////////////////greenskins////////////////////////////////////////
 
@@ -696,7 +677,7 @@ if (!("PerksCharmedUnit" in ::Const))
 	Weapon = [
 		::Const.Perks.SwordTree,
 		::Const.Perks.DaggerTree,
-		::Const.Perks.StaffTree
+		::Const.Perks.PolearmTree
 	],
 	Defense = [
 		::Const.Perks.LightArmorTree
@@ -717,7 +698,7 @@ if (!("PerksCharmedUnit" in ::Const))
 	]
 };
 
-::Const.PerksCharmedUnit.GoblinWolfrider<- {
+::Const.PerksCharmedUnit.GoblinWolfrider <- {
 	Weapon = [
 		::Const.Perks.SwordTree,
 		::Const.Perks.SpearTree,
@@ -742,7 +723,6 @@ if (!("PerksCharmedUnit" in ::Const))
 	]
 };
 
-
 ::Const.PerksCharmedUnit.OrcYoung <- {
 	Weapon = [
 		::Const.Perks.SwordTree,
@@ -762,7 +742,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.TrainedTree
 	],
 	Enemy = [
-		::Const.Perks.SkeletonTree,
+		::Const.Perks.UndeadTree,
 	],
 	Class = [],
 	Magic = []
@@ -786,7 +766,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.SturdyTree,
 	],
 	Enemy = [
-		::Const.Perks.SkeletonTree,
+		::Const.Perks.UndeadTree,
 	],
 	Class = [],
 	Magic = []
@@ -810,7 +790,7 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.SturdyTree,
 	],
 	Enemy = [
-		::Const.Perks.SkeletonTree,
+		::Const.Perks.UndeadTree,
 	],
 	Class = [],
 	Magic = []
@@ -835,9 +815,9 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.SturdyTree,
 	],
 	Enemy = [
-		::Const.Perks.OrcTree,
-		::Const.Perks.SkeletonTree,
-		::Const.Perks.UnholdTree,
+		::Const.Perks.GreenskinTree,
+		::Const.Perks.UndeadTree,
+		::Const.Perks.BeastTree,
 	],
 	Class = [],
 	Magic = []
@@ -861,9 +841,9 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.SturdyTree,
 	],
 	Enemy = [
-		::Const.Perks.OrcTree,
-		::Const.Perks.SkeletonTree,
-		::Const.Perks.UnholdTree,
+		::Const.Perks.GreenskinTree,
+		::Const.Perks.UndeadTree,
+		::Const.Perks.BeastTree,
 	],
 	Class = [],
 	Magic = []
@@ -886,10 +866,9 @@ if (!("PerksCharmedUnit" in ::Const))
 		::Const.Perks.SturdyTree,
 	],
 	Enemy = [
-		::Const.Perks.OrcTree,
-		::Const.Perks.SkeletonTree,
+		::Const.Perks.GreenskinTree,
+		::Const.Perks.UndeadTree,
 	],
 	Class = [],
 	Magic = []
 };
-

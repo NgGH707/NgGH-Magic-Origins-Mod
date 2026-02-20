@@ -11,7 +11,7 @@
 		m.HasAssignedEquipment = true;
 	}
 
-	q.makeMiniboss <- function()
+	q.makeMiniboss = @() function()
 	{
 		if (!actor.makeMiniboss())
 			return false;
