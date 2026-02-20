@@ -1,6 +1,6 @@
 ::Nggh_MagicConcept.HooksMod.hook("scripts/skills/effects/hex_slave_effect", function(q) 
 {
-	q.applyDamage = @() function(_damage , _caster)
+	q.applyDamage = @() function(_damage , _caster = null)
 	{
 		if (m.SoundOnUse.len() != 0)
 			::Sound.play(::MSU.Array.rand(m.SoundOnUse), ::Const.Sound.Volume.RacialEffect * 1.25, getContainer().getActor().getPos());
