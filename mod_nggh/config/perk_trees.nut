@@ -1,5 +1,5 @@
 ::Const.Perks.Hexe_BDSM_Tree <- {
-	ID = "bdsm",
+	ID = "Hexe_BDSM_Tree",
 	Name = "Dommy Mommy",
 	Descriptions = ["kinky stuffs"],
 	Tree = [
@@ -26,7 +26,7 @@
 };
 
 ::Const.Perks.HexeBeastCharmAdvancedTree <- {
-	ID = "charm 3",
+	ID = "HexeBeastCharmAdvancedTree",
 	Name = "Advanced Charm Beast",
 	Descriptions = ["charm beast advance"],
 	Tree = [
@@ -49,7 +49,7 @@
 };
 
 ::Const.Perks.HexeBeastCharmTree <- {
-	ID = "charm 2",
+	ID = "HexeBeastCharmTree",
 	Name = "Basic Charm Beast",
 	Descriptions = ["charm beast basic"],
 	Tree = [
@@ -71,7 +71,7 @@
 };
 
 ::Const.Perks.HexeBasicTree <- {
-	ID = "charm 1",
+	ID = "HexeBasicTree",
 	Name = "Basic Charm",
 	Descriptions = ["hexe basic"],
 	Tree = [
@@ -94,7 +94,7 @@
 };
 
 ::Const.Perks.HexeHexTree <- {
-	ID = "hex",
+	ID = "HexeHexTree",
 	Name = "Hex",
 	Descriptions = ["hex"],
 	Tree = [
@@ -115,7 +115,7 @@
 };
 
 ::Const.Perks.HexeSpecializedHexTree <- {
-	ID = "specialized hex",
+	ID = "HexeSpecializedHexTree",
 	Name = "Specialized Hex",
 	Descriptions = ["specialized hex"],
 	Tree = [
@@ -135,7 +135,7 @@
 };
 
 ::Const.Perks.LuftTree <- {
-	ID = "luft",
+	ID = "LuftTree",
 	Name = "Luft\'s Tricks",
 	Descriptions = ["Luft"],
 	Tree = [
@@ -173,7 +173,7 @@
 ////////////////////////////////////////////////////
 
 ::Const.Perks.NggH_SimpTree <- {
-	ID = "Simp",
+	ID = "NggH_SimpTree",
 	Name = "Simp",
 	Descriptions = ["Nuh uh! You\'re a simp."],
 	Tree = [
@@ -196,7 +196,7 @@
 };
 
 ::Const.Perks.NggH_MiscTree <- {
-	ID = "Misc",
+	ID = "NggH_MiscTree",
 	Name = "Misc",
 	Descriptions = ["Misc"],
 	Tree = [
@@ -219,7 +219,7 @@
 };
 
 ::Const.Perks.NggH_GoblinMountTree <- {     
-	ID = "Goblin Mount",
+	ID = "NggH_GoblinMountTree",
 	Name = "Mounting",
 	Descriptions = ["goblin mount"],
 	WeightMultipliers = [
@@ -247,7 +247,7 @@
 };
 
 ::Const.Perks.NggH_AlpTree <- {
-	ID = "Alp",
+	ID = "NggH_AlpTree",
 	Name = "Alp",
 	Descriptions = ["alp"],
 	Tree = [
@@ -275,7 +275,7 @@
 };
 
 ::Const.Perks.NggH_DemonAlpTree <- {
-	ID = "Demon Alp",
+	ID = "NggH_DemonAlpTree",
 	Name = "Demonology",
 	Descriptions = ["demon alp"],
 	Tree = [
@@ -300,7 +300,7 @@
 };
 
 ::Const.Perks.NggH_WolfTree <- {
-	ID = "Wolf",
+	ID = "NggH_WolfTree",
 	Name = "Canine",
 	Descriptions = ["wolf"],
 	Tree = [
@@ -322,7 +322,7 @@
 };
 
 ::Const.Perks.NggH_HyenaTree <- {
-	ID = "Hyena",
+	ID = "NggH_HyenaTree",
 	Name = "Canine",
 	Descriptions = ["hyena"],
 	Tree = [
@@ -344,7 +344,7 @@
 };
 
 ::Const.Perks.NggH_NachoTree <- {
-	ID = "Nacho",
+	ID = "NggH_NachoTree",
 	Name = "Ghoul",
 	Descriptions = ["nacho"],
 	Tree = [
@@ -371,7 +371,7 @@
 };
 
 ::Const.Perks.NggH_LindwurmTree <- {
-	ID = "Lindwurm",
+	ID = "NggH_LindwurmTree",
 	Name = "Lindwurm",
 	Descriptions = ["lindwurm"],
 	Tree = [
@@ -394,7 +394,7 @@
 };
 
 ::Const.Perks.NggH_SchratTree <- {
-	ID = "Schrat",
+	ID = "NggH_SchratTree",
 	Name = "Schrat",
 	Descriptions = ["schrat"],
 	Tree = [
@@ -420,7 +420,7 @@
 };
 
 ::Const.Perks.NggH_SmallSchratTree <- {
-	ID = "SmallSchrat",
+	ID = "NggH_SmallSchratTree",
 	Name = "Sapling",
 	Descriptions = ["small schrat"],
 	Tree = [
@@ -437,7 +437,7 @@
 };
 
 ::Const.Perks.NggH_SerpentTree <- {
-	ID = "Serpent",
+	ID = "NggH_SerpentTree",
 	Name = "Serpent",
 	Descriptions = ["serpent"],
 	Tree = [
@@ -461,7 +461,7 @@
 };
 
 ::Const.Perks.NggH_SpiderTree <- {
-	ID = "Webknecht",
+	ID = "NggH_SpiderTree",
 	Name = "Arachnid",
 	Descriptions = ["spider"],
 	Tree = [
@@ -486,7 +486,7 @@
 };
 
 ::Const.Perks.NggH_UnholdTree <- {
-	ID = "Unhold",
+	ID = "NggH_UnholdTree",
 	Name = "Unhold",
 	Descriptions = ["unhold"],
 	Tree = [
@@ -506,7 +506,7 @@
 };
 
 ::Const.Perks.NggH_SpiderHiveTree <- {
-	ID = "Webknecht Eggs",
+	ID = "NggH_SpiderHiveTree",
 	Name = "???",
 	Descriptions = ["spider hive"],
 	Tree = [
@@ -528,7 +528,7 @@
 };
 
 ::Const.Perks.NggH_KrakenTree <- {
-	ID = "Kraken",
+	ID = "NggH_KrakenTree",
 	Name = "Beast of Beasts",
 	Descriptions = ["beast of beasts"],
 	Tree = [
@@ -557,7 +557,7 @@
 //------------------------------
 // undead perk group
 ::Const.Perks.GhostClassTree <- {
-	ID = "Ghost",
+	ID = "GhostClassTree",
 	Name = "Vengeful Spirit",
 	Descriptions = ["ghastly abilities"],
 	Tree = [
