@@ -22,8 +22,7 @@
 ::include("mod_nggh/config/perk_trees.nut")
 ::include("mod_nggh/config/perk_tree_templates.nut")
 
-// update the perk tooltips
-::Const.Perks.updatePerkGroupTooltips();
+// perk tooltips are updated automatically by Legends 19.3 in its afterHooks phase
 
 foreach (file in ::IO.enumerateFiles("mod_nggh/register"))
 {

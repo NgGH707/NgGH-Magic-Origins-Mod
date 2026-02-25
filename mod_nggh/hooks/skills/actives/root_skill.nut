@@ -14,7 +14,7 @@
 			setBaseValue("FatigueCost", 20);
 	}
 
-	q.getTooltip <- function()
+	q.getTooltip = @() function()
 	{
 		local ret = getDefaultUtilityTooltip();
 		ret.extend([

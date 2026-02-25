@@ -13,7 +13,7 @@
 		m.IsHidden = false;
 	}
 
-    q.onUpdate <- function( _properties )
+    q.onUpdate = @() function( _properties )
     {
 		_properties.IsImmuneToFire = true;
     	_properties.IsImmuneToBleeding = true;

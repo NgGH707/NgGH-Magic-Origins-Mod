@@ -1,7 +1,7 @@
 ::Nggh_MagicConcept.HooksMod.hook("scripts/skills/actives/werewolf_bite", function ( q )
 {
-	q.m.IsRestrained <- false;
-	q.m.IsSpent <- false;
+	q.m.IsRestrained = false;
+	q.m.IsSpent = false;
 	q.m.IsFrenzied <- false;
 
 	q.create = @(__original) function()
@@ -12,7 +12,7 @@
 		m.IconDisabled = "skills/active_71_bw.png";
 	}
 
-	q.setRestrained <- function( _f )
+	q.setRestrained = @() function( _f )
 	{
 		m.IsRestrained = _f;
 	}
@@ -22,12 +22,12 @@
 		return !m.IsRestrained ? m.IsIgnoredAsAOO : !getContainer().getActor().isArmedWithRangedWeapon();
 	}
 
-	q.isUsable <- function()
+	q.isUsable = @() function()
 	{
 		return skill.isUsable() && !m.IsSpent;
 	}
 
-	q.onTurnStart <- function()
+	q.onTurnStart = @() function()
 	{
 		m.IsSpent = false;
 	}
@@ -50,7 +50,7 @@
 		return __original(_user, _targetTile);
 	}
 
-	q.onAnySkillUsed <- function( _skill, _targetEntity, _properties )
+	q.onAnySkillUsed = @() function( _skill, _targetEntity, _properties )
 	{
 		if (_skill == this)
 		{

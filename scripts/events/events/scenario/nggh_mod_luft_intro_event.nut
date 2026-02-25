@@ -376,8 +376,8 @@ this.nggh_mod_luft_intro_event <- ::inherit("scripts/events/event", {
 					break;
 
 				case "Warrior Alpha Male (Luke)":
-					def = ::Const.Perks.PerkDefObjects[::Const.Perks.PerkDefs.LegendFavouredEnemyDirewolf];
-					::World.Assets.getOrigin().addScenarioPerk(_event.m.Luft.getBackground(), ::Const.Perks.PerkDefs.LegendFavouredEnemyDirewolf, 2);
+					def = ::Const.Perks.PerkDefObjects[::Const.Perks.PerkDefs.LegendFavouredEnemyBeast];
+					::World.Assets.getOrigin().addScenarioPerk(_event.m.Luft.getBackground(), ::Const.Perks.PerkDefs.LegendFavouredEnemyBeast, 2);
 					break;
 
 				case "Necro":
