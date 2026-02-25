@@ -2310,6 +2310,7 @@ for (local i = 0; i < ::Const.EntityIcon.len(); ++i)
 });
 
 //LegendDemonAlp
+/* disable for now
 ::Const.CharmedUnits.addDefaultEntry(::Const.EntityType.LegendDemonAlp, {
 	StatMod = { Hitpoints = [0, 0], Bravery = [-50, -50], Stamina = [-50, -25], MeleeSkill = [-5, 5], RangedSkill = [-5, 5], MeleeDefense = [-5, -5], RangedDefense = [-5, -5], Initiative = [0, 0] },
 	Skills = ["actives/legend_demon_shadows_skill", "actives/horrific_scream"],
@@ -2328,7 +2329,7 @@ for (local i = 0; i < ::Const.EntityIcon.len(); ++i)
 		Names = "GoblinNames",
 	}
 
-});
+}); */
 
 //LegendHexeLeader
 

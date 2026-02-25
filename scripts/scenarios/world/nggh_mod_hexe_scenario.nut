@@ -759,6 +759,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			break;
 
 		case 22:
+			/*
 			for( local i = 0; i < 2; ++i )
 			{
 				local beast = roster.create("scripts/entity/tactical/player_beast/nggh_mod_alp_player");
@@ -792,6 +793,8 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			_hexe.getBaseProperties().MeleeDefense += 10;
 			_hexe.getSkills().update();
 			_hexe.setHitpoints(1.0);
+			*/
+			this.setupRandomStart(15, false);
 			break;
 
 		case 23:
