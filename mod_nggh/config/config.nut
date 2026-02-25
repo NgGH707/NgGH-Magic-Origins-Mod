@@ -958,19 +958,33 @@ foreach (def in ::Const.Perks.PerkDefObjects) {
 ::Const.AvailableFavourdPerks <- [
 	//low-tier
 	[
-		::Const.Perks.PerkDefs.LegendFavouredEnemyBeast,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyUndead,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyCivilization,
+		::Legends.Perk.LegendFavouredEnemyGhoul,
+		::Legends.Perk.LegendFavouredEnemyDirewolf,
+		::Legends.Perk.LegendFavouredEnemySpider,
+		::Legends.Perk.LegendFavouredEnemySkeleton,
+		::Legends.Perk.LegendFavouredEnemyZombie,
+		::Legends.Perk.LegendFavouredEnemyGoblin,
+		::Legends.Perk.LegendFavouredEnemyCaravan,
+		::Legends.Perk.LegendFavouredEnemyBandit,
+		::Legends.Perk.LegendFavouredEnemyNomad,
+		::Legends.Perk.LegendFavouredEnemyBarbarian,
 	],
 	//mid-tier
 	[
-		::Const.Perks.PerkDefs.LegendFavouredEnemyGreenskin,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyOutlaw,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyOccult,
+		::Legends.Perk.LegendFavouredEnemyAlps,
+		::Legends.Perk.LegendFavouredEnemyOrk,
+		::Legends.Perk.LegendFavouredEnemyMercenary,
+		::Legends.Perk.LegendFavouredEnemyNoble,
+		::Legends.Perk.LegendFavouredEnemySoutherner,
+		::Legends.Perk.LegendFavouredEnemyArcher,
 	],
 	//high-tier
 	[
-		::Const.Perks.PerkDefs.LegendFavouredEnemySwordmaster,
+		::Legends.Perk.LegendFavouredEnemySchrat,
+		::Legends.Perk.LegendFavouredEnemyHexen,
+		::Legends.Perk.LegendFavouredEnemyVampire,
+		::Legends.Perk.LegendFavouredEnemyUnhold,
+		::Legends.Perk.LegendFavouredEnemySwordmaster
 	],
 ];
 

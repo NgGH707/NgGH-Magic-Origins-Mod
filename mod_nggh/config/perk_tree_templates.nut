@@ -83,26 +83,26 @@ if (!("PerksCharmedUnit" in ::Const)) {
 ::Const.PerksCharmedUnit.KrakenTree <- [
 	[
 		::Const.Perks.PerkDefs.SunderingStrikes,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyCivilization,
+		//::Const.Perks.PerkDefs.LegendFavouredEnemyCivilization,
 	],
 	[
 		::Const.Perks.PerkDefs.NggHKrakenDevour,
 		::Const.Perks.PerkDefs.Backstabber,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyUndead,
+		//::Const.Perks.PerkDefs.LegendFavouredEnemyUndead,
 	],
 	[
 		::Const.Perks.PerkDefs.NggHKrakenMove,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyBeast,
+		//::Const.Perks.PerkDefs.LegendFavouredEnemyBeast,
 	],
 	[
 		::Const.Perks.PerkDefs.NggHKrakenBite,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyGreenskin,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyOccult,
+		//::Const.Perks.PerkDefs.LegendFavouredEnemyGreenskin,
+		//::Const.Perks.PerkDefs.LegendFavouredEnemyOccult,
 	],
 	[
 		::Const.Perks.PerkDefs.NggHKrakenSwing,
 		::Const.Perks.PerkDefs.Fearsome,
-		::Const.Perks.PerkDefs.LegendFavouredEnemyOutlaw,
+		//::Const.Perks.PerkDefs.LegendFavouredEnemyOutlaw,
 	],
 	[
 		::Const.Perks.PerkDefs.NggHKrakenEnsnare,
@@ -111,7 +111,7 @@ if (!("PerksCharmedUnit" in ::Const)) {
 	],
 	[
 		::Const.Perks.PerkDefs.NggHKrakenTentacle,
-		::Const.Perks.PerkDefs.LegendFavouredEnemySwordmaster,
+		//::Const.Perks.PerkDefs.LegendFavouredEnemySwordmaster,
 	],
 	[],
 	[],
