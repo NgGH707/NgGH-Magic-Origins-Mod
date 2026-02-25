@@ -670,7 +670,7 @@ this.nggh_mod_player_orc <- ::inherit("scripts/entity/tactical/nggh_mod_inhuman_
 		{
 		case 5:
 			appearance.Body = "legend_orc_behemoth_body_01";
-			this.setSpriteOffset("status_rooted", ::reateVec(0, 5));
+			this.setSpriteOffset("status_rooted", ::createVec(0, 5));
 			this.getSprite("status_rooted").Scale = 0.8;
 			break;
 
