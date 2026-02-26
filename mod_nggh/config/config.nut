@@ -1254,7 +1254,7 @@ local lich_armor = {
     Script = "",
     Sets = [{
         Cloth = [
-        	[1, "cloth/legend_gladiator_harness"]
+        	[1, "cloth/legend_armor_southern_gladiator_harness"]
         ],
         Chain = [
         ],
