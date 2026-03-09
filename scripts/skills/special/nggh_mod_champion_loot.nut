@@ -152,7 +152,7 @@ this.nggh_mod_champion_loot <- ::inherit("scripts/skills/skill", {
 	    case ::Const.EntityType.LegendRedbackSpider:
 	    	this.m.LootScript.extend([
 	    		[2, ["loot/webbed_valuables_item"]],
-        		[1, ["legend_armor/armor/legend_armor_redback_cloak_upgrade"]]
+        		[1, ["legend_armor/cloak/legend_redback_cloak"]]
         	]);
 	        break;
 

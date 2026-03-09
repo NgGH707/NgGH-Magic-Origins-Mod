@@ -676,7 +676,7 @@ this.nggh_mod_hexe_scenario <- ::inherit("scripts/scenarios/world/starting_scena
 			guts.getSkills().add(::new("scripts/skills/traits/tough_trait"));
 			guts.getSkills().add(::new("scripts/skills/traits/strong_trait"));
 			guts.getSkills().add(::new("scripts/skills/injury_permanent/missing_eye_injury"));
-			guts.getItems().equip(::new("scripts/items/weapons/greatsword"));
+			guts.getItems().equip(::new("scripts/items/weapons/legend_zweihander"));
 			guts.getItems().equip(::Const.World.Common.pickHelmet([[1, "full_helm"]]));
 			guts.getItems().equip(::Const.World.Common.pickArmor([[1, "coat_of_plates"]]));
 

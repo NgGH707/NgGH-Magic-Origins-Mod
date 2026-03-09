@@ -12,11 +12,11 @@ this.nggh_mod_named_redback_cloak_upgrade <- ::inherit("scripts/items/armor_upgr
 		this.m.OverlayIcon = "armor_upgrades/icon_named_upgrade_cloak_black.png";
 		this.m.OverlayIconLarge = "armor_upgrades/inventory_named_upgrade_cloak_black.png";
 		this.m.SpriteFront = null;
-		this.m.SpriteBack = "cloak_black";
+		this.m.SpriteBack = "cloak_redback_01";
 		this.m.SpriteDamagedFront = null;
-		this.m.SpriteDamagedBack = "cloak_black_damaged";
+		this.m.SpriteDamagedBack = "cloak_redback_01_damaged";
 		this.m.SpriteCorpseFront = null;
-		this.m.SpriteCorpseBack = "cloak_black_dead";
+		this.m.SpriteCorpseBack = "cloak_redback_01_dead";
 		this.m.Value = 5000;
 		this.m.ConditionModifier = 10;
 		this.m.SpecialValue = 50;

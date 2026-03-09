@@ -7,7 +7,7 @@ this.nggh_mod_named_white_wolf_pelt_legend_upgrade <- ::inherit("scripts/items/l
 	{
 		this.legend_named_armor_upgrade.create();
 		this.m.ID = "legend_named_armor_upgrade.legend_white_wolf_pelt";
-		this.m.Type = ::Const.Items.ArmorUpgrades.Attachment;
+		this.m.Type = ::Const.Items.ArmorUpgrades.Cloak;
 		this.m.Name = "White Wolf Pelt Mantle";
 		this.m.Description = "A pelt taken from a white wolf, cured and sewn together to be worn as a beast hunter\'s trophy around the neck. Donning the skin of a beast like this can turn one into an imposing figure.";
 		this.m.ArmorDescription = "A mantle of the white wolf has been attached to this armor, which transforms the wearer into an imposing figure.";
