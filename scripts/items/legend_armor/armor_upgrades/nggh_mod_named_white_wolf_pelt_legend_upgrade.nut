@@ -3,8 +3,8 @@ this.nggh_mod_named_white_wolf_pelt_legend_upgrade <- ::inherit("scripts/items/l
 		DefaultName = "Pelt Mantle",
 		SpecialValue = 15
 	},
-	function create()
-	{
+
+	function create() {
 		this.legend_named_armor_upgrade.create();
 		this.m.ID = "legend_named_armor_upgrade.legend_white_wolf_pelt";
 		this.m.Type = ::Const.Items.ArmorUpgrades.Cloak;
@@ -15,12 +15,12 @@ this.nggh_mod_named_white_wolf_pelt_legend_upgrade <- ::inherit("scripts/items/l
 		this.m.IconLarge = this.m.Icon;
 		this.m.OverlayIcon = "armor_upgrades/icon_named_upgrade_white_wolf.png";
 		this.m.OverlayIconLarge = "armor_upgrades/inventory_named_upgrade_white_wolf.png";
-		this.m.SpriteFront = "upgrade_white_wolf_front";
-		this.m.SpriteBack = "upgrade_white_wolf_back";
-		this.m.SpriteDamagedFront = "upgrade_white_wolf_front_damaged";
-		this.m.SpriteDamagedBack = "upgrade_white_wolf_back";
-		this.m.SpriteCorpseFront = "upgrade_white_wolf_front_dead";
-		this.m.SpriteCorpseBack = "upgrade_white_wolf_back_dead";
+		this.m.SpriteFront = "cloak_pelt_wolf_white_01_front";
+		this.m.SpriteBack = "cloak_pelt_wolf_white_01_back";
+		this.m.SpriteDamagedFront = "cloak_pelt_wolf_white_01_front_damaged";
+		this.m.SpriteDamagedBack = "cloak_pelt_wolf_white_01_back_damaged";
+		this.m.SpriteCorpseFront = "cloak_pelt_wolf_white_01_front_dead";
+		this.m.SpriteCorpseBack = "cloak_pelt_wolf_white_01_back_dead";
 		this.m.Value = 6000;
 		this.m.Condition = 25;
 		this.m.ConditionMax = 25;
@@ -29,24 +29,20 @@ this.nggh_mod_named_white_wolf_pelt_legend_upgrade <- ::inherit("scripts/items/l
 		this.randomizeValues();
 	}
 
-	function randomizeValues()
-	{
+	function randomizeValues() {
 		this.m.SpecialValue = ::Math.min(30, ::Math.floor(this.m.SpecialValue * ::Math.rand(120, 150) * 0.01));
 		this.m.StaminaModifier = ::Math.min(0, this.m.StaminaModifier + ::Math.rand(0, 2));
 		this.m.Condition = ::Math.floor(this.m.Condition * ::Math.rand(115, 133) * 0.01) * 1.0;
 		this.m.ConditionMax = this.m.Condition;
 	}
 
-	function setName( _prefix = "" )
-	{
-		if (this.m.DefaultName.len() == 0)
-		{
+	function setName(_prefix = "") {
+		if (this.m.DefaultName.len() == 0) {
 			this.m.Name = _prefix;
 			return;
 		}
 
-		if (_prefix.len() == 0)
-		{
+		if (_prefix.len() == 0) {
 			this.m.Name = this.m.DefaultName;
 			return;
 		}
@@ -54,8 +50,7 @@ this.nggh_mod_named_white_wolf_pelt_legend_upgrade <- ::inherit("scripts/items/l
 		this.m.Name = _prefix + "\'s " + this.m.DefaultName;
 	}
 
-	function getTooltip()
-	{
+	function getTooltip() {
 		local result = this.legend_named_armor_upgrade.getTooltip();
 		result.push({
 			id = 15,
@@ -66,8 +61,7 @@ this.nggh_mod_named_white_wolf_pelt_legend_upgrade <- ::inherit("scripts/items/l
 		return result;
 	}
 
-	function onArmorTooltip( _result )
-	{
+	function onArmorTooltip(_result) {
 		_result.push({
 			id = 15,
 			type = "text",
@@ -76,23 +70,19 @@ this.nggh_mod_named_white_wolf_pelt_legend_upgrade <- ::inherit("scripts/items/l
 		});
 	}
 
-	function onUpdateProperties( _properties )
-	{
+	function onUpdateProperties(_properties) {
 		this.legend_named_armor_upgrade.onUpdateProperties(_properties);
 		_properties.Threat += this.m.SpecialValue;
 	}
 
-	function onSerialize( _out )
-	{
+	function onSerialize(_out) {
 		_out.writeI16(this.m.SpecialValue);
 		this.legend_named_armor_upgrade.onSerialize(_out);
 	}
 
-	function onDeserialize( _in )
-	{
+	function onDeserialize(_in) {
 		this.m.SpecialValue = _in.readI16();
 		this.legend_named_armor_upgrade.onDeserialize(_in);
 	}
 
 });
-
